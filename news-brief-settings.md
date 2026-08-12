@@ -31,9 +31,10 @@ Severity levels:
 
 Severity should guide length:
 
-- `C`: Do not omit once selected. Give at least about 20 Chinese characters explaining what happened and why it is low-priority. Do not expand into a full article unless the user asks.
-- `B`: Do not omit once selected. Keep concise, but give the key fact, why it matters, and one caution if needed.
-- `A`: Give enough context to understand scale, trend, and likely next developments.
+- All selected levels should use the same item structure: title with grade, sources, details, optional positions, and analysis. Severity changes the depth and length, not the core format.
+- `C`: Do not omit once selected. Give at least about 20 Chinese characters explaining what happened and why it is low-priority. `C` items may be grouped only when they are closely related routine updates, but each event still needs a concrete explanation.
+- `B`: Do not omit once selected and do not reduce to a table-only summary. Treat each `B` item as a real news item with sources, details, and analysis. For disasters, attacks, public safety incidents, major weather events, disease outbreaks, and market-moving economic news, compare multiple sources when available and include key figures such as deaths, injuries, affected regions, damage, or official estimates.
+- `A`: Give enough context to understand scale, trend, affected stakeholders, uncertainty, and likely next developments.
 - `S`: Explain clearly with sources, affected countries or sectors, escalation paths, uncertainty, and practical reasons to keep watching. If the topic matches the user's interests or may develop quickly, suggest creating a separate monitoring task.
 - `SS`: Treat as a top-level crisis brief. Be explicit about evidence, uncertainty, possible scenarios, and why this crosses from severe news into systemic global risk. Suggest independent monitoring unless the user has already declined it.
 
@@ -111,9 +112,10 @@ If there are no meaningful competing positions, stakeholder differences, or usef
 
 Low-severity handling:
 
-- The brief must distinguish between "no B/C items found" and "B/C items found but not expanded."
+- The brief must distinguish between "no B/C items found" and "B/C items found."
 - If any `B` or `C` items are selected, list them explicitly in the severity summary.
-- `B` and `C` items may be summarized instead of fully expanded, but they still require a short explanation. `C` items must have at least about 20 Chinese characters of explanation.
+- `B` items should normally appear as individual detailed items using the standard item structure. Do not use a separate "B summary table" as the only treatment.
+- `C` items may be grouped when several are genuinely minor and closely related, but the grouped entry must still give each event at least about 20 Chinese characters of explanation.
 - Do not silently drop `B` or `C` items merely because higher-severity items exist.
 
 ## Selection Notes
@@ -128,4 +130,5 @@ Low-severity handling:
 - The news brief format was updated to include Title, Sources, Details, Positions, and Analysis.
 - Positions should be omitted when not useful.
 - Each brief should begin with a severity summary that counts notable items and ranks them with SS/S/A/B/C levels before detailed reporting.
+- B/C items should use the same core format as A/S. B items are individual news items; C items may be grouped only when genuinely minor and related.
 - A five-minute independent test task was requested and created separately from the main daily news task.
