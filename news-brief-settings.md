@@ -50,10 +50,12 @@ Space program severity:
 
 - Do not rate every space launch highly. Routine satellite launches, resupply missions, or crew rotations are usually `C` or `B` unless tied to a larger strategic shift.
 - A new or competing space station is important, but because the International Space Station already exists as precedent, station construction or completion is usually `A` unless it changes the global research or geopolitical order.
+- `S` and `SS` require milestone value, not just a large topic. The event should plausibly become a historical marker that later research, industry, policy, or geopolitical competition builds on.
 - Artemis-level lunar return programs, China's lunar base or "Moon Palace"-level plans, or other national programs aimed at sustained lunar presence may be `A` at announcement because they signal a major strategic direction.
 - The start of construction, successful assembly, or completion of a sustained lunar base, lunar orbital infrastructure, or comparable off-Earth habitation system may be `S`.
 - Semi-permanent or permanent off-Earth bases, especially lunar bases with long-duration habitation or resource use, may be `SS` when they plausibly mark a civilization-level expansion of human infrastructure.
 - Crewed Mars mission announcements may be `A` if still programmatic, `S` when serious construction or launch preparation begins, and `SS` for actual crewed Mars launch, landing, sustained operation, or credible permanent settlement steps.
+- After a milestone is achieved, routine follow-up research should be graded on its own impact. For example, ordinary lunar soil studies after a lunar base is established are usually `A` or `B`, not automatically `S`, unless they produce a major discovery, resource breakthrough, or strategic shift.
 - Downgrade if the plan is vague propaganda, aspirational funding language, or lacks technical milestones. Upgrade only when funding, hardware, launch schedule, international alignment, or construction progress makes the shift concrete.
 
 Each selected news item should use these sections, in this order:
