@@ -29,6 +29,14 @@ Severity levels:
 - `B`: Important but still limited event, such as a new fast-spreading disease before broad regional collapse, meaningful but contained conflict escalation, or a significant policy/economic event.
 - `C`: Routine or low-signal event, such as ordinary seasonal outbreaks, isolated incidents, or minor updates. Usually omit unless context makes it useful.
 
+Severity should guide length:
+
+- `C`: Usually omit. If included, keep the summary under 20 Chinese characters or similarly short.
+- `B`: Keep concise. Give the key fact, why it matters, and one caution if needed.
+- `A`: Give enough context to understand scale, trend, and likely next developments.
+- `S`: Explain clearly with sources, affected countries or sectors, escalation paths, uncertainty, and practical reasons to keep watching. If the topic matches the user's interests or may develop quickly, suggest creating a separate monitoring task.
+- `SS`: Treat as a top-level crisis brief. Be explicit about evidence, uncertainty, possible scenarios, and why this crosses from severe news into systemic global risk. Suggest independent monitoring unless the user has already declined it.
+
 Each selected news item should use these sections, in this order:
 
 1. Severity Summary
