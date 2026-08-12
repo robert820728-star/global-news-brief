@@ -24,7 +24,7 @@ The severity summary should:
 Severity levels:
 
 - `SS`: Extreme global/systemic crisis risk, such as multiple major wars merging, several great powers being pulled in, or a plausible near-term world-war scenario.
-- `S`: Severe international or regional crisis, such as multi-country war expansion, large-scale lockdowns across countries, major financial/systemic shock, or fast-moving pandemic-level spread.
+- `S`: Severe international or regional crisis, or a world-branching milestone candidate: an event with realistic potential to redirect later history, research, industry, policy, security, or civilization-scale development.
 - `A`: Major event requiring attention, such as serious war escalation, multi-country disease spread, very high casualties, major disaster, or strategically important political/economic shock.
 - `B`: Important but still limited event, such as a new fast-spreading disease before broad regional collapse, meaningful but contained conflict escalation, or a significant policy/economic event.
 - `C`: Routine or low-signal event, such as ordinary seasonal outbreaks, isolated incidents, or minor updates. Usually omit unless context makes it useful.
@@ -45,6 +45,14 @@ High-impact but unverified claims:
 - If evidence weakens, downgrade from `S` to `A` or `B`, but still report the downgrade as important when the claim itself changed markets, research priorities, public policy, or scientific understanding.
 - If disproven, treat the debunking as a meaningful follow-up rather than pretending the event was never important.
 - Example: an LK-99-like room-temperature superconductivity claim can start as `S` while the world is trying to replicate it, then move to `A/B` as replication fails, and later become a concise but important postmortem about scientific replication and material misidentification.
+
+Milestone and world-branching events:
+
+- `S` may apply when an event has credible potential to become a historical branch point: something later generations may treat as a before/after marker, even if the practical effects take years to unfold.
+- This includes confirmed or strongly credible breakthroughs in mathematics, physics, computing, biology, energy, space infrastructure, medicine, geopolitics, or security when they may redirect major research programs, industries, state strategy, or civilization-scale development.
+- Example: a proof of the Riemann Hypothesis may be `S` because it would be a foundational mathematical milestone with possible downstream effects across number theory, cryptography, computation, and theoretical science, even if ordinary daily life does not change immediately.
+- Do not downgrade a branch-point event only because it is abstract, academic, or slow-moving. Grade by long-term structural impact, not only immediate casualties, money, or visible chaos.
+- Still avoid hype: if a claimed milestone is weak, vague, or not accepted by relevant experts, label the uncertainty clearly and downgrade as evidence weakens.
 
 Space program severity:
 
