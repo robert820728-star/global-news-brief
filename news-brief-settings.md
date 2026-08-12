@@ -37,6 +37,15 @@ Severity should guide length:
 - `S`: Explain clearly with sources, affected countries or sectors, escalation paths, uncertainty, and practical reasons to keep watching. If the topic matches the user's interests or may develop quickly, suggest creating a separate monitoring task.
 - `SS`: Treat as a top-level crisis brief. Be explicit about evidence, uncertainty, possible scenarios, and why this crosses from severe news into systemic global risk. Suggest independent monitoring unless the user has already declined it.
 
+High-impact but unverified claims:
+
+- Severity measures how urgently the item deserves attention, not only how certain it already is.
+- A claim may be rated `S` when it is still unverified if the potential impact is world-changing, the claim is technically plausible enough to merit serious review, and independent verification is actively developing.
+- Always label such items as unverified, uncertain, or awaiting replication. Do not write as if the claim is already true.
+- If evidence weakens, downgrade from `S` to `A` or `B`, but still report the downgrade as important when the claim itself changed markets, research priorities, public policy, or scientific understanding.
+- If disproven, treat the debunking as a meaningful follow-up rather than pretending the event was never important.
+- Example: an LK-99-like room-temperature superconductivity claim can start as `S` while the world is trying to replicate it, then move to `A/B` as replication fails, and later become a concise but important postmortem about scientific replication and material misidentification.
+
 Each selected news item should use these sections, in this order:
 
 1. Severity Summary
