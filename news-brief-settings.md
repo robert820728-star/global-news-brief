@@ -1,181 +1,261 @@
-# News Brief Settings
+# 新聞簡報設定
 
-## Purpose
+## 目的
 
-Track the user's daily news brief rules in a versioned text file so future changes can be reviewed and restored from git history.
+用版本化文字檔保存使用者的每日新聞簡報規則，讓後續修改可以被檢查、追蹤與還原。
 
-## Schedule
+## 排程
 
-- Main daily news brief: keep the existing official scheduled task unchanged unless explicitly requested.
-- Independent tests: create separate tasks when requested. Do not merge, pause, modify, or otherwise interfere with existing news tasks unless explicitly requested.
-- Time window: each run should judge news from the actual execution time looking back 24 hours.
+- 正式每日新聞簡報：除非使用者明確要求，否則保留既有正式排程，不任意修改。
+- 獨立測試：使用者要求測試時，建立獨立任務；不得合併、暫停、修改或干擾既有新聞任務。
+- 時間範圍：每次執行時，以實際執行時間往回推 24 小時判斷新聞。
 
-## Output Format
+## 模組化流程
 
-Every brief must be divided into exactly three top-level blocks, in this order:
+新聞簡報必須以「事件處理流程」執行，不是用單一自由寫稿提示一次生成。搜尋階段不得直接開始撰寫最終簡報。
+
+### 步驟一：候選海選
+
+- 廣泛搜尋過去 24 小時內的候選事件，範圍包含國際、台灣、中國、金融、科技/資安、文化/媒體、災害、公衛、科學/太空等類別。
+- 海選階段只收集候選事件，不寫最終段落。
+- 候選數量上限只允許作為防止搜尋爆量的操作限制，不得變成最終入選目標或固定篇數。
+- 每個原始候選只保留精簡工作欄位：暫定標題、來源連結、區域/影響範圍、類別、時間，以及一句「可能重要的原因」。
+
+### 步驟二：事件去重
+
+- 排名之前，先合併描述同一底層事件的多篇報導。
+- 不同標題、股票代碼、翻譯、來源語言、後續角度，只要描述同一發展，就視為同一事件。
+- 每個合併後事件保留最強或最接近原始資訊的來源。
+- 不得因為某事件報導很多，就擠掉較少報導但獨立且值得知道的事件。
+
+### 步驟三：入選門檻
+
+- 每個去重後事件都必須先通過使用者的「值得知道」標準，再進入寫稿。
+- 只有具備明確重要性的事件才入選，例如公共安全、治理、地緣政治、國家或區域相關性、重大公司或市場影響、產業結構、科技/資安含義、文化意義，或能揭示社會趨勢的訊號。
+- 不得只因為新聞很新、很多媒體報導、情緒很大、或剛好搜得到就入選。
+- 只要明確通過標準，就必須納入，即使當天簡報變長。
+- 弱事件必須刪除，即使當天簡報變短。
+
+### 步驟四：事件分析卡
+
+每個入選事件在最終輸出前，必須先建立後台事件分析卡：
+
+1. `事件名稱`
+2. `嚴重度`
+3. `影響範圍`
+4. `來源`
+5. `為何入選`
+6. `事件細節`
+7. `各方說法`，只在有用時保留
+8. `分析判斷`
+9. `升級/降級條件`
+
+事件分析卡是後台規劃結構。最終回答必須使用下方公開輸出格式，不得把未整理的工作筆記顯示給使用者。
+
+不得向使用者顯示事件分析卡本身。最終簡報不得出現「事件分析卡」、「為何入選」、「影響範圍」、「背景脈絡」、「不確定性」、「後續觸發條件」等內部欄位名，除非它們已自然整合進公開格式。
+
+事件分析卡的作用是提高 `事件細節`、`分析`、`後續觀察` 的品質，同時保持讀者版簡報外觀接近既有格式。
+
+### 步驟五：簡報組裝
+
+- 只有在入選事件的事件分析卡完成後，才開始組裝最終簡報。
+- 最終輸出必須只有三個頂層區塊，且順序固定：`今日總覽`、`逐條詳報`、`後續觀察`。
+- `今日總覽` 中，必須明確分成三個小節：`台灣版`、`中國版`、`國際版`；每個小節內用緊湊清單列出事件，每個入選事件都要有事件號碼，嚴重度放在事件名稱最後。
+- `逐條詳報` 中，依事件分析卡擴寫每個事件，並使用標準條目結構。
+- `後續觀察` 中，只放需要持續追蹤，或有明確升級、降級、移除條件的事件。
+- 最終讀者版格式必須乾淨。模組化流程是為了改善篩選與分析，不是把輸出變成資料庫清單。
+
+### 步驟六：品質檢查
+
+回覆簡報前，必須檢查：
+
+- 三個頂層區塊存在，且順序正確。
+- `今日總覽` 易讀，且明確分成 `台灣版`、`中國版`、`國際版` 三個小節；沒有把多個事件標題塞成同一段；每個事件都有事件號碼，嚴重度放在事件名稱最後，且條目之間沒有多餘空行。
+- 重要的 `B` 與 `C` 事件沒有因為高嚴重度事件存在而被漏掉。
+- 低嚴重度項目各自都有明確的入選理由。
+- 沒有為了平衡分類或湊數量加入填充新聞。
+- 重複報導已合併成事件，而不是拆成多個條目重複出現。
+- 最終讀者版不得出現英文欄位名；公開欄位必須使用繁體中文。
+
+## 輸出格式
+
+每次簡報都必須依序分成三個頂層區塊：
 
 1. `今日總覽`
 2. `逐條詳報`
 3. `後續觀察`
 
-Do not collapse these three blocks into a single continuous list. Do not replace the third block with scattered comments inside each item.
+不得把三個區塊合併成連續清單。不得用分散在各條新聞內的補充文字取代第三區塊。
 
-### Block 1: 今日總覽
+### 區塊一：今日總覽
 
-Start each brief with a severity summary before the detailed news items.
+每次簡報開頭都要先放緊湊總覽，再進入逐條新聞。
 
-The severity summary should:
+總覽應該：
 
-- State how many news items are worth noting today.
-- Group items by severity level when useful.
-- Use a vertical bullet list or short grouped list where each selected event appears on its own line. Do not compress multiple event titles into one paragraph or one comma-separated sentence.
-- Prefer the readable pattern:
-  - `S`
-  - `荷姆茲/紅海航運與能源供應風險升高`
-  - `A+`
-  - `剛果民主共和國伊波拉病例與死亡數續升`
-- A compact inline form such as `Russia-Ukraine war escalation - A` is allowed only for very short briefs with fewer than five selected items.
-- Keep the list factual and avoid exaggeration. Upgrade severity only when evidence supports wider impact, rapid escalation, cross-border spread, systemic risk, or unusually high casualties.
+- 說明今天有幾則新聞值得注意，並可簡短列出三個版本各有幾則。
+- 必須分成 `台灣版`、`中國版`、`國際版` 三個小節。這三個小節屬於 `今日總覽` 內部，不是新的頂層區塊。
+- 每個小節內使用緊湊直向清單，讓每個入選事件各自成行並加上事件號碼。不得把多個事件標題壓成同一段或逗號串。
+- 不要依嚴重度分組，不要單獨列出分級標籤；嚴重度只放在事件名稱最後。
+- 小節標題與條目之間不得插入空行；條目之間不得插入空行。手機閱讀優先，避免不必要的垂直留白。
+- 優先使用易讀樣式：
+  - `台灣版`
+  - `T1. 台灣政府系統遭疑似中國相關自主 AI 網攻 - A`
+  - `T2. 台灣大哥大公開收購精誠資訊，目標取得過半控制權 - B`
+  - `中國版`
+  - `C1. 朱鎔基逝世，中國改革開放政治記憶事件 - B`
+  - `國際版`
+  - `I1. 荷姆茲/紅海航運與能源供應風險升高 - S`
+- 入選事件少於五則時，也維持同樣的「號碼 + 事件名稱 + 等級」格式。
+- 保持事實性，避免誇大。只有當證據支持更廣影響、快速升級、跨境擴散、系統性風險或異常高傷亡時，才上調嚴重度。
+- `今日總覽` 的事件號碼必須與 `逐條詳報` 的條目編號一致，方便使用者在手機上對照。建議台灣版用 `T1/T2`，中國版用 `C1/C2`，國際版用 `I1/I2`。
 
-### Block 2: 逐條詳報
+### 區塊二：逐條詳報
 
-After the overview, provide the selected news items using the standard item structure.
+總覽之後，依標準條目結構呈現入選新聞。
 
-Severity levels:
+`逐條詳報` 應與 `今日總覽` 使用相同事件編號，例如 `T1`、`C1`、`I1`。每個詳報標題應包含事件編號、事件名稱與嚴重度，方便從總覽跳回詳報。
 
-- `SS`: Extreme global/systemic crisis risk, such as multiple major wars merging, several great powers being pulled in, or a plausible near-term world-war scenario.
-- `S`: Severe international or regional crisis, or a major structural turning point with realistic potential to redirect later history, research, industry, policy, security, or long-term development.
-- `A`: Major event requiring attention, such as serious war escalation, multi-country disease spread, very high casualties, major disaster, or strategically important political/economic shock.
-- `B`: Important but still limited event, such as a new fast-spreading disease before broad regional collapse, meaningful but contained conflict escalation, or a significant policy/economic event.
-- `C`: Routine or low-signal event, such as ordinary seasonal outbreaks, isolated incidents, or minor updates. Include when it enters the scan result, but keep it short.
+嚴重度等級：
 
-Severity should guide length:
+- `SS`：極端全球性或系統性危機風險，例如多場重大戰爭合流、數個大國被捲入，或短期內具可信世界大戰風險。
+- `S`：嚴重國際或區域危機，或重大結構轉折，具備真實可能性改變後續歷史、研究、產業、政策、安全或長期發展。
+- `A`：必須注意的重大事件，例如嚴重戰爭升級、多國疾病擴散、極高傷亡、重大災害，或重要政治/經濟衝擊。
+- `B`：重要但影響仍有限的事件，例如尚未造成廣泛區域崩潰的新興疾病、有意義但受限的衝突升級，或重要政策/經濟事件。
+- `C`：常規或低訊號事件，例如季節性疫情、孤立事件或小型更新。若進入掃描結果且值得知道，可以納入，但保持精簡。
 
-- All selected levels should use the same item structure: title with grade, sources, details, optional positions, and analysis. Severity changes the depth and length, not the core format.
-- Once an item is selected, it must have a clear reason why it is worth knowing. Grade only changes urgency and depth. Do not treat `C` as "unimportant"; treat it as "limited impact, but still worth noting."
-- `C`: Do not omit once selected. Aim for about 50-100 Chinese characters when useful, enough to explain the basic beginning, development, and why it remains low-priority. `C` items may be grouped only when they are closely related routine updates, but each event still needs a concrete explanation. Do not reduce interesting low-severity items to a bare one-line label.
-- `B`: Do not omit once selected and do not reduce to a table-only summary. Treat each `B` item as a real news item with sources, details, and analysis. For disasters, attacks, public safety incidents, major weather events, disease outbreaks, and market-moving economic news, compare multiple sources when available and include key figures such as deaths, injuries, affected regions, damage, or official estimates.
-- `A`: Give enough context to understand scale, trend, affected stakeholders, uncertainty, and likely next developments.
-- `S`: Explain clearly with sources, affected countries or sectors, escalation paths, uncertainty, and practical reasons to keep watching. If the topic matches the user's interests or may develop quickly, suggest creating a separate monitoring task.
-- `SS`: Treat as a top-level crisis brief. Be explicit about evidence, uncertainty, possible scenarios, and why this crosses from severe news into systemic global risk. Suggest independent monitoring unless the user has already declined it.
+嚴重度應該影響篇幅：
 
-High-impact but unverified claims:
+- 所有入選等級都使用相同核心結構：標題含等級、來源、事件細節、必要時的各方說法、分析。嚴重度只改變深度與篇幅，不改變核心格式。
+- 事件一旦入選，就必須說清楚為什麼值得知道。等級只代表急迫性與深度，不代表 `C` 可以當成不重要垃圾。
+- `C`：入選後不得省略。視需要約 50-100 個中文字，說明基本起因、發展，以及為何仍維持低優先級。只有在多個事件確實密切相關且都偏例行時，才可合併；但每個事件仍需有具體說明。不得把有趣的低嚴重度事件壓成裸標題。
+- `B`：入選後不得省略，也不得只用表格摘要帶過。每個 `B` 都應視為正式新聞條目，包含來源、細節與分析。對災害、攻擊、公共安全、重大天氣、疾病、會影響市場的經濟新聞，若有多個來源，應交叉比較並列出死亡、受傷、影響地區、損害或官方估計等關鍵數字。
+- `A`：提供足夠背景，讓讀者理解規模、趨勢、受影響對象、不確定性與可能後續。
+- `S`：清楚說明來源、受影響國家或產業、升級路徑、不確定性，以及為什麼值得持續觀察。若主題符合使用者興趣或可能快速發展，可建議建立獨立監控任務。
+- `SS`：視為頂層危機簡報處理。必須明確說明證據、不確定性、可能情境，以及為何已從嚴重新聞跨入全球系統性風險。除非使用者已拒絕，否則建議獨立監控。
 
-- Severity measures how urgently the item deserves attention, not only how certain it already is.
-- A claim may be rated `S` when it is still unverified if the potential impact is world-changing, the claim is technically plausible enough to merit serious review, and independent verification is actively developing.
-- Always label such items as unverified, uncertain, or awaiting replication. Do not write as if the claim is already true.
-- If evidence weakens, downgrade from `S` to `A` or `B`, but still report the downgrade as important when the claim itself changed markets, research priorities, public policy, or scientific understanding.
-- If disproven, treat the debunking as a meaningful follow-up rather than pretending the event was never important.
-- Example: an LK-99-like room-temperature superconductivity claim can start as `S` while the world is trying to replicate it, then move to `A/B` as replication fails, and later become a concise but important postmortem about scientific replication and material misidentification.
-- If an LK-99-like claim or comparable "holy grail" breakthrough is independently confirmed by multiple credible teams and points toward reproducible application, upgrade to `SS`. Confirmed room-temperature ambient-pressure superconductivity would qualify because it could reshape energy systems, electronics, magnets, transportation, medical imaging, and major scientific infrastructure.
+高影響但未驗證主張：
 
-Milestone and structural turning-point events:
+- 嚴重度衡量的是事件值得注意的急迫性，不只衡量已確認程度。
+- 若某主張仍未驗證，但潛在影響足以改變世界、技術上具備一定可信度，且獨立驗證正在進行，可以評為 `S`。
+- 這類事件必須清楚標示「尚未驗證」、「仍不確定」或「等待重現」。不得寫得像已經成立。
+- 若證據轉弱，可從 `S` 降到 `A` 或 `B`，但仍要把降級本身視為重要後續，因為主張可能已影響市場、研究方向、公共政策或科學理解。
+- 若已被推翻，應把闢謠視為有意義的後續，而不是假裝事件從未重要。
+- 例如類似 LK-99 的室溫超導主張，在全球嘗試重現時可先列 `S`；重現失敗後降為 `A/B`；最後可成為關於科學重現與材料誤判的簡短但重要覆盤。
+- 若類似 LK-99 或其他「聖杯級」突破經多個可信團隊獨立確認，並指向可重現應用，升為 `SS`。已確認的常溫常壓超導符合此級別，因為它可能重塑能源系統、電子、磁體、交通、醫療影像與大型科學基礎設施。
 
-- `S` may apply when an event has credible potential to become a structural turning point: something later analysis may treat as a before/after marker, even if the practical effects take years to unfold.
-- This includes confirmed or strongly credible breakthroughs in mathematics, physics, computing, biology, energy, space infrastructure, medicine, geopolitics, or security when they may redirect major research programs, industries, state strategy, or civilization-scale development.
-- Example: a proof of the Riemann Hypothesis may be `S` because it would be a foundational mathematical milestone with possible downstream effects across number theory, cryptography, computation, and theoretical science, even if ordinary daily life does not change immediately.
-- Do not downgrade a turning-point event only because it is abstract, academic, or slow-moving. Grade by long-term structural impact, not only immediate casualties, money, or visible chaos.
-- Still avoid hype: if a claimed milestone is weak, vague, or not accepted by relevant experts, label the uncertainty clearly and downgrade as evidence weakens.
+里程碑與結構轉折事件：
 
-Scope-adjusted severity:
+- 當事件具備可信的結構轉折潛力時，可評為 `S`：也就是後續分析可能把它視為前後分界點，即使實際效果需多年才展開。
+- 這包含數學、物理、運算、生物、能源、太空基礎建設、醫學、地緣政治或安全領域的已確認或高度可信突破，前提是它可能改變大型研究計畫、產業、國家戰略或文明尺度發展。
+- 例如黎曼猜想若被證明，可評為 `S`，因為它是基礎數學里程碑，可能對數論、密碼學、運算與理論科學產生下游影響，即使普通日常生活不會立刻改變。
+- 不得只因為事件抽象、學術或發展緩慢就降級。嚴重度應依長期結構影響判斷，不只看即時傷亡、金額或可見混亂。
+- 仍要避免炒作：若里程碑主張薄弱、含糊或未被相關專家接受，必須清楚標示不確定性，並隨證據轉弱降級。
 
-- Use three reporting scopes: global/international, China-Taiwan/national, and local/regional. The smaller the scope, the lower the threshold for `A` or `S`, because a smaller event can still materially affect a country, province, city, or the user's daily life.
-- Global/international scope should keep stricter thresholds. A single-country disaster outside Taiwan or China is usually `B` unless casualties, economic impact, diplomatic consequences, supply chains, migration, energy, finance, or regional stability make it broader.
-- China-Taiwan/national scope can use more flexible thresholds. `S` may mean a turning point for Taiwan or China, not necessarily the whole world. `A` may include major disasters, serious public safety events, national-level technology or economic developments, major policy changes, or high-risk criminal cases with broad public concern.
-- Local/regional scope should prioritize direct relevance and disruption. Events in Taiwan, China, and especially Jiangsu-Zhejiang-Shanghai should be weighted higher than comparable events elsewhere because the user lives and works around Suzhou.
-- Disease outbreaks should be graded by scope. Cross-province spread in China or cross-county/city spread in Taiwan can justify `A` or `S-` if growth is fast, containment is uncertain, or healthcare/public order impact is significant, even if the same scale would be lower globally.
-- Major disasters should be graded by both casualty scale and relevance. Examples such as the 921 earthquake, the Sichuan earthquake, or the Weiguan Jinlong building collapse may be `A` or higher in China-Taiwan/national scope. A large earthquake affecting only one foreign country may be `B` unless wider impacts emerge.
-- High-technology, industrial, or economic developments in Taiwan or China may be upgraded when they affect national competitiveness, semiconductors, advanced manufacturing, energy, exports, employment, capital markets, or long-term strategy.
-- Major criminal cases may be upgraded when they involve unusual violence, public safety risk, systemic failure, cross-region effects, major social fear, or policy consequences. Avoid sensational wording; explain the public-risk reason for the grade.
-- Deaths or major health events involving former or current top national leaders should be included for the directly relevant country edition. For China, the death of a former premier, Politburo Standing Committee member, president, party general secretary, or equivalent national leader is at least `B` in the China/Taiwan-national scope, because it has historical, political-memory, elite-politics, and official-narrative significance even when no immediate policy change follows.
-- Major Taiwanese corporate transactions should be included when they affect listed companies, large market value, control rights, telecom, finance, technology, IT services, semiconductors, infrastructure, employment, or national competitiveness. Public tender offers or control-seeking acquisitions of major listed companies are usually at least `C`, and can be `B` when the transaction size, market structure, or strategic sector impact is meaningful.
-- Taiwan cultural, media, internet, creator-economy, film, television, or entertainment-sector events should be included when they mark the cancellation, shutdown, transformation, or funding stress of a widely recognized institution, award, platform, festival, or public figure's project. These are often `C`, but not filler when they reveal structural pressure in media, sponsorship, creator economics, or public culture.
-- Assassination threats or credible security threats against a sitting head of state, especially a U.S. president, Chinese leader, Taiwanese president, Japanese prime minister, or other major-power leader, are usually at least `B` even if the attack does not occur. Upgrade to `A` or higher when the threat involves a state actor, military weapon, secret evacuation, aircraft security, congressional oversight, cross-border escalation, or active conflict.
-- Military force used against ships, aircraft, bases, or personnel in an active crisis zone is usually at least `B`, and may be `A` or `S` when it affects major shipping lanes, energy routes, blockade enforcement, civilian vessels, casualties, or risk of state-to-state escalation.
-- Taiwan-adjacent military activity involving China plus a third country's forces should usually be at least `B` in Taiwan/China scope and can be `A` when it occurs east of Taiwan, around sensitive approaches, during Taiwan military exercises, or when it suggests normalization of foreign participation in China's Taiwan-area military narrative.
+依範圍調整嚴重度：
 
-Repeated or overlapping regional impact:
+- 使用三種報導範圍：全球/國際、中國台灣/國家、地方/區域。範圍越小，`A` 或 `S` 門檻可相對降低，因為較小事件仍可能實質影響一個國家、省市或使用者日常。
+- 全球/國際範圍應維持較嚴格門檻。單一外國災害通常為 `B`，除非傷亡、經濟影響、外交後果、供應鏈、移民、能源、金融或區域穩定讓它外溢。
+- 中國台灣/國家範圍可更彈性。`S` 可代表對台灣或中國的轉折，不一定是全世界轉折。`A` 可包含重大災害、嚴重公共安全事件、國家級科技或經濟發展、重大政策變化，或引發廣泛公共關切的高風險刑案。
+- 地方/區域範圍應優先看直接相關性與干擾。台灣、中國，尤其江蘇、浙江、上海的事件，應比其他地區同類事件提高權重，因為使用者生活與工作圈接近蘇州。
+- 疾病疫情應依範圍判斷。中國跨省或台灣跨縣市快速擴散時，若成長快速、防控不明或醫療/公共秩序衝擊顯著，可評為 `A` 或 `S-`，即使同規模放在全球簡報會較低。
+- 重大災害應同時看傷亡規模與相關性。九二一地震、汶川地震、維冠金龍大樓倒塌等事件，在中國台灣/國家範圍可評為 `A` 或更高。僅影響單一外國的大地震通常為 `B`，除非出現更廣影響。
+- 台灣或中國的高科技、工業、經濟發展，若影響國家競爭力、半導體、先進製造、能源、出口、就業、資本市場或長期戰略，應提高權重。
+- 重大刑案若涉及異常暴力、公共安全風險、系統失靈、跨區域效應、重大社會恐懼或政策後果，可提高等級。避免獵奇用語；應說明公共風險理由。
+- 前任或現任國家高層領導人的死亡或重大健康事件，對直接相關國家版本應納入。對中國而言，前總理、政治局常委、國家主席、黨總書記或同等級國家領導人逝世，在中國/台灣國家範圍至少為 `B`，因其具有歷史、政治記憶、菁英政治與官方敘事意義，即使沒有立即政策變化。
+- 台灣重大企業交易若影響上市公司、大市值、控制權、電信、金融、科技、資訊服務、半導體、基礎設施、就業或國家競爭力，應納入。重大上市公司的公開收購或取得控制權交易通常至少為 `C`，若交易規模、市場結構或戰略產業影響明顯，可評為 `B`。
+- 台灣文化、媒體、網路、創作者經濟、電影、電視或娛樂產業事件，若代表知名機構、獎項、平台、影展或公眾人物專案取消、停辦、轉型或資金壓力，應納入。這類事件常為 `C`，但若能揭示媒體、贊助、創作者經濟或公共文化的結構壓力，就不是填充新聞。
+- 針對現任國家元首的暗殺威脅或可信安全威脅，尤其美國總統、中國領導人、台灣總統、日本首相或其他主要大國領導人，通常至少為 `B`。若涉及國家行為者、軍事武器、秘密撤離、航空安全、國會監督、跨境升級或現役衝突，升為 `A` 或更高。
+- 在現役危機區對船舶、航空器、基地或人員動用軍事力量，通常至少為 `B`；若影響主要航道、能源路線、封鎖執行、民用船隻、傷亡或國家間升級風險，可評為 `A` 或 `S`。
+- 涉及中國加第三國軍力的台灣周邊軍事活動，在台灣/中國範圍通常至少為 `B`；若發生於台灣東部、敏感通道、台灣軍演期間，或暗示外國參與中國台海軍事敘事常態化，可評為 `A`。
 
-- For typhoons, floods, heat waves, cold waves, disease waves, transport disruption, and similar repeated-impact events, avoid repeating the same basic explanation for every affected region.
-- Choose one main affected region for detailed explanation based on severity, user relevance, population, infrastructure, or economic impact. Summarize other affected regions briefly in the same item.
-- If Jiangsu-Zhejiang-Shanghai is affected, mention it clearly and raise practical relevance, especially for transport, work, safety, travel, supply chains, and local public services.
+重複或重疊的區域影響：
 
-Tone:
+- 颱風、洪水、熱浪、寒流、疾病波、交通中斷等重複影響事件，避免對每個受影響區域重複同一套基本說明。
+- 應依嚴重度、使用者相關性、人口、基礎設施或經濟影響，選一個主要受影響區域詳述，再在同一條目中簡短帶出其他區域。
+- 若江蘇、浙江、上海受影響，必須明確提及並提高實用相關性，尤其是交通、工作、安全、旅行、供應鏈與地方公共服務。
 
-- Keep the news brief professional, objective, and source-grounded. The user's informal metaphors are for internal calibration only; do not reproduce them as the brief's public style.
-- It is acceptable to write with urgency when facts justify it, but avoid dramatic, apocalyptic, or exaggerated wording.
-- Prefer terms such as "structural turning point", "systemic risk", "national-level impact", "regional disruption", "public safety risk", and "long-term strategic impact".
+語氣：
 
-Disease outbreak severity:
+- 新聞簡報必須專業、客觀、有來源依據。使用者的口語比喻只作為內部校準，不得照搬成公開簡報風格。
+- 事實支持時可以寫出急迫感，但避免戲劇化、末日式或誇張用語。
+- 優先使用「結構轉折」、「系統性風險」、「國家級影響」、「區域干擾」、「公共安全風險」、「長期戰略影響」等措辭。
 
-- Do not grade disease severity by fear alone. Consider transmission mode, fatality risk, healthcare burden, public health capacity, border spread, local compliance, contact tracing feasibility, vaccine or treatment availability, and whether spread is accelerating despite containment.
-- Ebola crossing into another country is usually `A+` or `S-`: it is highly dangerous and politically significant, but it does not automatically become `S` if the receiving country has strong isolation, contact tracing, healthcare capacity, and public cooperation.
-- Upgrade Ebola or similar high-fatality outbreaks to `S` when cross-border chains keep expanding, healthcare systems are overwhelmed, multiple countries report sustained local transmission, or containment measures are visibly failing.
-- Upgrade to `SS` only if a high-fatality outbreak becomes broadly international, containment breaks across several regions, or the pathogen changes in a way that materially increases transmissibility while retaining severe outcomes.
-- Downgrade when imported cases are isolated quickly, contacts are traced, and no sustained local transmission appears. Still report the event because the downside risk is large even when the most likely outcome is containment.
+疫情嚴重度：
 
-Space program severity:
+- 不得只用恐懼感判斷疫情嚴重度。應考慮傳播方式、致死風險、醫療負擔、公衛能力、跨境擴散、地方配合度、接觸者追蹤可行性、疫苗或治療可得性，以及疫情是否在防控下仍加速。
+- 伊波拉跨境進入另一國通常為 `A+` 或 `S-`：它高度危險且具政治意義，但若接收國具備強隔離、接觸追蹤、醫療能力與民眾配合，並不自動成為 `S`。
+- 當伊波拉或類似高致死率疫情的跨境傳播鏈持續擴大、醫療系統被壓垮、多國出現持續本土傳播，或防控措施明顯失效時，升為 `S`。
+- 只有當高致死率疫情廣泛國際化、多區域防控失敗，或病原體出現實質提高傳播力且仍保留嚴重後果的變化時，才升為 `SS`。
+- 若境外移入病例被快速隔離、接觸者完成追蹤，且未出現持續本土傳播，則降級。仍需報導，因為即使最可能結果是控制住，下行風險仍然很大。
 
-- Do not rate every space launch highly. Routine satellite launches, resupply missions, or crew rotations are usually `C` or `B` unless tied to a larger strategic shift.
-- A new or competing space station is important, but because the International Space Station already exists as precedent, station construction or completion is usually `A` unless it changes the global research or geopolitical order.
-- `S` and `SS` require milestone value, not just a large topic. The event should plausibly become a historical marker that later research, industry, policy, or geopolitical competition builds on.
-- Artemis-level lunar return programs, China's lunar base or "Moon Palace"-level plans, or other national programs aimed at sustained lunar presence may be `A` at announcement because they signal a major strategic direction.
-- The start of construction, successful assembly, or completion of a sustained lunar base, lunar orbital infrastructure, or comparable off-Earth habitation system may be `S`.
-- Semi-permanent or permanent off-Earth bases, especially lunar bases with long-duration habitation or resource use, may be `SS` when they plausibly mark a civilization-level expansion of human infrastructure.
-- Crewed Mars mission announcements may be `A` if still programmatic, `S` when serious construction or launch preparation begins, and `SS` for actual crewed Mars launch, landing, sustained operation, or credible permanent settlement steps.
-- After a milestone is achieved, routine follow-up research should be graded on its own impact. For example, ordinary lunar soil studies after a lunar base is established are usually `A` or `B`, not automatically `S`, unless they produce a major discovery, resource breakthrough, or strategic shift.
-- Downgrade if the plan is vague propaganda, aspirational funding language, or lacks technical milestones. Upgrade only when funding, hardware, launch schedule, international alignment, or construction progress makes the shift concrete.
+太空計畫嚴重度：
 
-Each selected news item in `逐條詳報` should use these sections, in this order:
+- 不得把所有太空發射都評很高。例行衛星發射、補給任務或載人輪換通常為 `C` 或 `B`，除非與更大戰略變化相關。
+- 新的或競爭性的太空站很重要，但因國際太空站已有先例，太空站建造或完成通常為 `A`，除非它改變全球研究或地緣政治秩序。
+- `S` 與 `SS` 需要里程碑價值，不只是題目很大。事件應該可能成為後續研究、產業、政策或地緣競爭依附的歷史標記。
+- 阿提米絲等級的重返月球計畫、中國月球基地或「月宮」等級規劃，或其他以持續月球存在為目標的國家計畫，在宣布時可評為 `A`，因其代表重大戰略方向。
+- 若持續性月球基地、月球軌道基礎建設或類似地外居住系統開始建造、成功組裝或完成，可評為 `S`。
+- 半永久或永久地外基地，尤其具備長期居住或資源利用的月球基地，若可信地標誌人類基礎設施向地外擴張，可評為 `SS`。
+- 載人火星任務若仍停留於計畫宣布，可評為 `A`；正式進入嚴肅建造或發射準備時評為 `S`；實際載人發射、登陸、持續運作或可信永久定居步驟，評為 `SS`。
+- 里程碑達成後，例行後續研究應依自身影響分級。例如月球基地建立後，一般月壤研究通常為 `A` 或 `B`，不自動維持 `S`，除非產生重大發現、資源突破或戰略轉折。
+- 若計畫只是模糊宣傳、願景式預算語言，或缺乏技術里程碑，應降級。只有資金、硬體、發射時程、國際結盟或建造進度讓轉變具體化時，才升級。
 
-1. Title
-2. Sources
-3. Details
-4. Positions
-5. Analysis
+`逐條詳報` 的每個入選新聞條目，必須依序使用以下公開欄位：
 
-If there are no meaningful competing positions, stakeholder differences, or useful angles to compare, omit the Positions section entirely.
+1. 標題
+2. 來源
+3. 事件細節
+4. 各方說法
+5. 分析
 
-### Block 3: 後續觀察
+若沒有有意義的不同立場、利害關係人差異或值得比較的角度，省略 `各方說法`。
 
-End each brief with a concise follow-up block.
+### 區塊三：後續觀察
 
-The follow-up block should:
+每次簡報最後都要用精簡的後續觀察收尾。
 
-- List events that deserve continued monitoring, especially `S`, `A`, fast-moving `B`, and unusual `C` items with possible legal, market, technology, public safety, or geopolitical follow-through.
-- State what would make each monitored item upgrade, downgrade, or disappear from future briefs.
-- Keep it concise. This is not a second full analysis section.
-- If nothing needs follow-up, explicitly say there are no notable follow-up items.
+後續觀察區塊應該：
 
-Low-severity handling:
+- 列出值得持續追蹤的事件，尤其 `S`、`A`、快速變化的 `B`，以及具備法律、市場、科技、公共安全或地緣政治後續的不尋常 `C`。
+- 說明每個觀察項目在什麼條件下會升級、降級或從未來簡報消失。
+- 保持精簡。這不是第二個完整分析區。
+- 若沒有需要追蹤的項目，明確寫出「目前沒有值得特別追蹤的後續項目」。
 
-- The brief must distinguish between "no B/C items found" and "B/C items found."
-- If any `B` or `C` items are selected, list them explicitly in the severity summary.
-- `B` items should normally appear as individual detailed items using the standard item structure. Do not use a separate "B summary table" as the only treatment.
-- `C` items may be grouped when several are genuinely minor and closely related, but the grouped entry must still give each event enough explanation, usually about 50-100 Chinese characters when the item has an interesting origin, development, business angle, legal angle, technology angle, or consumer impact.
-- Do not silently drop `B` or `C` items merely because higher-severity items exist.
+低嚴重度處理：
 
-## Selection Notes
+- 簡報必須區分「沒有找到 `B/C` 項目」與「找到 `B/C` 項目」。
+- 若有任何 `B` 或 `C` 項目入選，必須在 `今日總覽` 對應版本的小節清單中明確列出，並在事件名稱最後標示等級。
+- `B` 項目通常應以獨立詳報條目呈現，並使用標準結構。不得只用單獨的 `B` 摘要表格當作唯一處理。
+- `C` 項目可在確實輕微且密切相關時合併，但合併條目仍須給每個事件足夠說明。若事件具備有趣起因、發展、商業角度、法律角度、科技角度或消費者影響，通常應有約 50-100 個中文字說明。
+- 不得因為高嚴重度事件存在，就默默刪除 `B` 或 `C` 項目。
 
-- Prioritize genuinely important Taiwan, China, and international event news.
-- Include entertainment, film, television, documentaries, or cultural items only when they are exceptional, highly influential, or useful for serious discussion.
-- Avoid filler items added only to satisfy a category.
-- Duplicate coverage is allowed for independent test tasks; each task should judge importance on its own.
+## 入選備註
 
-Broader source scanning should not lower the selection bar:
+- 優先選入真正重要的台灣、中國與國際事件新聞。
+- 娛樂、電影、電視、紀錄片或文化項目，只有在特別例外、高度具影響力，或適合嚴肅討論時才納入。
+- 避免只為滿足分類而加入填充項目。
+- 獨立測試任務允許重複報導；每個任務應自行判斷重要性。
 
-- Expanding the source pool is for discovery, not for padding the brief.
-- A scanned item should be selected only when it has a clear reason to be worth knowing: public safety, governance, geopolitics, national or regional relevance, major company or market impact, industry structure, technology/security implications, cultural significance, or an unusually revealing social signal.
-- Do not include ordinary celebrity updates, routine product releases, minor stock moves, isolated local incidents, routine corporate announcements, or low-context social-media chatter unless they reveal a broader pattern or affect a relevant public, market, cultural, or safety question.
-- If the only reason to include an item is that a source published it, omit it.
-- If the item is interesting but low-impact, include it as `C` only when the brief can explain why it is worth knowing and why it stays low-severity.
-- Keep the brief selective. A wider scan should improve recall of important or interesting items, not turn the output into a general news feed.
+擴大來源掃描不得降低入選門檻：
 
-## Current Confirmed State
+- 擴大來源池是為了提高發現能力，不是為了填滿簡報。
+- 候選數量上限只是操作保護，不是編輯目標。不得強迫最終簡報包含固定數量。
+- 只要事件明確通過使用者的入選標準，就納入；即使當天真的很多事，簡報變長也可以。
+- 不重要的項目就放掉，即使入選清單很短。安靜的一天只有幾則，仍優於用弱新聞灌水。
+- 不得機械限制 `B` 或 `C` 數量。每個事件都套用同一個「值得知道」測試；通過的低嚴重度事件應保留，弱事件則不論分類都刪除。
+- 掃描到的事件只有在具備明確值得知道的理由時才入選：公共安全、治理、地緣政治、國家或區域相關性、重大公司或市場影響、產業結構、科技/資安含義、文化意義，或能揭示社會趨勢的訊號。
+- 不得納入普通名人近況、例行產品發布、小幅股價波動、孤立地方事件、例行企業公告或低脈絡社群話題，除非它們揭示更大模式，或影響相關公共、市場、文化或安全問題。
+- 若唯一入選理由只是「某個來源報導了」，就刪除。
+- 若事件有趣但影響有限，只有在簡報能說明它為何值得知道、以及為何仍維持低嚴重度時，才可列為 `C`。
+- 保持選擇性。更廣掃描應提高重要或有趣事件的召回率，不該把輸出變成一般新聞流水帳。
 
-- The news brief format was updated to include Title, Sources, Details, Positions, and Analysis.
-- Positions should be omitted when not useful.
-- Each brief should begin with a severity summary that counts notable items and ranks them with SS/S/A/B/C levels before detailed reporting.
-- B/C items should use the same core format as A/S. B items are individual news items; C items may be grouped only when genuinely minor and related.
-- C items may use about 50-100 Chinese characters when useful so their context and significance are clear, even though they remain low-severity.
-- A five-minute independent test task was requested and created separately from the main daily news task.
+## 目前確認狀態
+
+- 新聞簡報格式已更新為包含：標題、來源、事件細節、各方說法、分析。
+- `各方說法` 無用時應省略。
+- 每次簡報應先以緊湊總覽開頭，統計值得注意項目，並在每個事件名稱最後標示 `SS/S/A/B/C` 等級。
+- `B/C` 項目應使用與 `A/S` 相同的核心格式。`B` 是獨立新聞條目；`C` 只有在確實輕微且相關時才可合併。
+- `C` 項目在有用時可使用約 50-100 個中文字，讓脈絡與意義清楚，即使它仍屬低嚴重度。
+- 曾要求建立五分鐘後的獨立測試任務，且該任務應與正式每日新聞任務分開。
+- 最終讀者版所有公開欄位必須使用繁體中文，不得顯示英文欄位名。
