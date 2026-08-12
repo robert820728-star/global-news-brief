@@ -45,6 +45,7 @@ High-impact but unverified claims:
 - If evidence weakens, downgrade from `S` to `A` or `B`, but still report the downgrade as important when the claim itself changed markets, research priorities, public policy, or scientific understanding.
 - If disproven, treat the debunking as a meaningful follow-up rather than pretending the event was never important.
 - Example: an LK-99-like room-temperature superconductivity claim can start as `S` while the world is trying to replicate it, then move to `A/B` as replication fails, and later become a concise but important postmortem about scientific replication and material misidentification.
+- If an LK-99-like claim or comparable "holy grail" breakthrough is independently confirmed by multiple credible teams and points toward reproducible application, upgrade to `SS`. Confirmed room-temperature ambient-pressure superconductivity would qualify because it could reshape energy systems, electronics, magnets, transportation, medical imaging, and major scientific infrastructure.
 
 Milestone and world-branching events:
 
