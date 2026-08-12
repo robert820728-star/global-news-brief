@@ -12,14 +12,34 @@ Track the user's daily news brief rules in a versioned text file so future chang
 
 ## Output Format
 
+Every brief must be divided into exactly three top-level blocks, in this order:
+
+1. `今日總覽`
+2. `逐條詳報`
+3. `後續觀察`
+
+Do not collapse these three blocks into a single continuous list. Do not replace the third block with scattered comments inside each item.
+
+### Block 1: 今日總覽
+
 Start each brief with a severity summary before the detailed news items.
 
 The severity summary should:
 
 - State how many news items are worth noting today.
 - Group items by severity level when useful.
-- Use compact one-line entries, such as `Russia-Ukraine war escalation - A`.
+- Use a vertical bullet list or short grouped list where each selected event appears on its own line. Do not compress multiple event titles into one paragraph or one comma-separated sentence.
+- Prefer the readable pattern:
+  - `S`
+  - `荷姆茲/紅海航運與能源供應風險升高`
+  - `A+`
+  - `剛果民主共和國伊波拉病例與死亡數續升`
+- A compact inline form such as `Russia-Ukraine war escalation - A` is allowed only for very short briefs with fewer than five selected items.
 - Keep the list factual and avoid exaggeration. Upgrade severity only when evidence supports wider impact, rapid escalation, cross-border spread, systemic risk, or unusually high casualties.
+
+### Block 2: 逐條詳報
+
+After the overview, provide the selected news items using the standard item structure.
 
 Severity levels:
 
@@ -32,6 +52,7 @@ Severity levels:
 Severity should guide length:
 
 - All selected levels should use the same item structure: title with grade, sources, details, optional positions, and analysis. Severity changes the depth and length, not the core format.
+- Once an item is selected, it must have a clear reason why it is worth knowing. Grade only changes urgency and depth. Do not treat `C` as "unimportant"; treat it as "limited impact, but still worth noting."
 - `C`: Do not omit once selected. Aim for about 50-100 Chinese characters when useful, enough to explain the basic beginning, development, and why it remains low-priority. `C` items may be grouped only when they are closely related routine updates, but each event still needs a concrete explanation. Do not reduce interesting low-severity items to a bare one-line label.
 - `B`: Do not omit once selected and do not reduce to a table-only summary. Treat each `B` item as a real news item with sources, details, and analysis. For disasters, attacks, public safety incidents, major weather events, disease outbreaks, and market-moving economic news, compare multiple sources when available and include key figures such as deaths, injuries, affected regions, damage, or official estimates.
 - `A`: Give enough context to understand scale, trend, affected stakeholders, uncertainty, and likely next developments.
@@ -66,6 +87,12 @@ Scope-adjusted severity:
 - Major disasters should be graded by both casualty scale and relevance. Examples such as the 921 earthquake, the Sichuan earthquake, or the Weiguan Jinlong building collapse may be `A` or higher in China-Taiwan/national scope. A large earthquake affecting only one foreign country may be `B` unless wider impacts emerge.
 - High-technology, industrial, or economic developments in Taiwan or China may be upgraded when they affect national competitiveness, semiconductors, advanced manufacturing, energy, exports, employment, capital markets, or long-term strategy.
 - Major criminal cases may be upgraded when they involve unusual violence, public safety risk, systemic failure, cross-region effects, major social fear, or policy consequences. Avoid sensational wording; explain the public-risk reason for the grade.
+- Deaths or major health events involving former or current top national leaders should be included for the directly relevant country edition. For China, the death of a former premier, Politburo Standing Committee member, president, party general secretary, or equivalent national leader is at least `B` in the China/Taiwan-national scope, because it has historical, political-memory, elite-politics, and official-narrative significance even when no immediate policy change follows.
+- Major Taiwanese corporate transactions should be included when they affect listed companies, large market value, control rights, telecom, finance, technology, IT services, semiconductors, infrastructure, employment, or national competitiveness. Public tender offers or control-seeking acquisitions of major listed companies are usually at least `C`, and can be `B` when the transaction size, market structure, or strategic sector impact is meaningful.
+- Taiwan cultural, media, internet, creator-economy, film, television, or entertainment-sector events should be included when they mark the cancellation, shutdown, transformation, or funding stress of a widely recognized institution, award, platform, festival, or public figure's project. These are often `C`, but not filler when they reveal structural pressure in media, sponsorship, creator economics, or public culture.
+- Assassination threats or credible security threats against a sitting head of state, especially a U.S. president, Chinese leader, Taiwanese president, Japanese prime minister, or other major-power leader, are usually at least `B` even if the attack does not occur. Upgrade to `A` or higher when the threat involves a state actor, military weapon, secret evacuation, aircraft security, congressional oversight, cross-border escalation, or active conflict.
+- Military force used against ships, aircraft, bases, or personnel in an active crisis zone is usually at least `B`, and may be `A` or `S` when it affects major shipping lanes, energy routes, blockade enforcement, civilian vessels, casualties, or risk of state-to-state escalation.
+- Taiwan-adjacent military activity involving China plus a third country's forces should usually be at least `B` in Taiwan/China scope and can be `A` when it occurs east of Taiwan, around sensitive approaches, during Taiwan military exercises, or when it suggests normalization of foreign participation in China's Taiwan-area military narrative.
 
 Repeated or overlapping regional impact:
 
@@ -99,16 +126,26 @@ Space program severity:
 - After a milestone is achieved, routine follow-up research should be graded on its own impact. For example, ordinary lunar soil studies after a lunar base is established are usually `A` or `B`, not automatically `S`, unless they produce a major discovery, resource breakthrough, or strategic shift.
 - Downgrade if the plan is vague propaganda, aspirational funding language, or lacks technical milestones. Upgrade only when funding, hardware, launch schedule, international alignment, or construction progress makes the shift concrete.
 
-Each selected news item should use these sections, in this order:
+Each selected news item in `逐條詳報` should use these sections, in this order:
 
-1. Severity Summary
-2. Title
-3. Sources
-4. Details
-5. Positions
-6. Analysis
+1. Title
+2. Sources
+3. Details
+4. Positions
+5. Analysis
 
 If there are no meaningful competing positions, stakeholder differences, or useful angles to compare, omit the Positions section entirely.
+
+### Block 3: 後續觀察
+
+End each brief with a concise follow-up block.
+
+The follow-up block should:
+
+- List events that deserve continued monitoring, especially `S`, `A`, fast-moving `B`, and unusual `C` items with possible legal, market, technology, public safety, or geopolitical follow-through.
+- State what would make each monitored item upgrade, downgrade, or disappear from future briefs.
+- Keep it concise. This is not a second full analysis section.
+- If nothing needs follow-up, explicitly say there are no notable follow-up items.
 
 Low-severity handling:
 
@@ -124,6 +161,15 @@ Low-severity handling:
 - Include entertainment, film, television, documentaries, or cultural items only when they are exceptional, highly influential, or useful for serious discussion.
 - Avoid filler items added only to satisfy a category.
 - Duplicate coverage is allowed for independent test tasks; each task should judge importance on its own.
+
+Broader source scanning should not lower the selection bar:
+
+- Expanding the source pool is for discovery, not for padding the brief.
+- A scanned item should be selected only when it has a clear reason to be worth knowing: public safety, governance, geopolitics, national or regional relevance, major company or market impact, industry structure, technology/security implications, cultural significance, or an unusually revealing social signal.
+- Do not include ordinary celebrity updates, routine product releases, minor stock moves, isolated local incidents, routine corporate announcements, or low-context social-media chatter unless they reveal a broader pattern or affect a relevant public, market, cultural, or safety question.
+- If the only reason to include an item is that a source published it, omit it.
+- If the item is interesting but low-impact, include it as `C` only when the brief can explain why it is worth knowing and why it stays low-severity.
+- Keep the brief selective. A wider scan should improve recall of important or interesting items, not turn the output into a general news feed.
 
 ## Current Confirmed State
 
