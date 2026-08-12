@@ -24,15 +24,15 @@ The severity summary should:
 Severity levels:
 
 - `SS`: Extreme global/systemic crisis risk, such as multiple major wars merging, several great powers being pulled in, or a plausible near-term world-war scenario.
-- `S`: Severe international or regional crisis, or a world-branching milestone candidate: an event with realistic potential to redirect later history, research, industry, policy, security, or civilization-scale development.
+- `S`: Severe international or regional crisis, or a major structural turning point with realistic potential to redirect later history, research, industry, policy, security, or long-term development.
 - `A`: Major event requiring attention, such as serious war escalation, multi-country disease spread, very high casualties, major disaster, or strategically important political/economic shock.
 - `B`: Important but still limited event, such as a new fast-spreading disease before broad regional collapse, meaningful but contained conflict escalation, or a significant policy/economic event.
-- `C`: Routine or low-signal event, such as ordinary seasonal outbreaks, isolated incidents, or minor updates. Usually omit unless context makes it useful.
+- `C`: Routine or low-signal event, such as ordinary seasonal outbreaks, isolated incidents, or minor updates. Include when it enters the scan result, but keep it short.
 
 Severity should guide length:
 
-- `C`: Usually omit. If included, keep the summary under 20 Chinese characters or similarly short.
-- `B`: Keep concise. Give the key fact, why it matters, and one caution if needed.
+- `C`: Do not omit once selected. Give at least about 20 Chinese characters explaining what happened and why it is low-priority. Do not expand into a full article unless the user asks.
+- `B`: Do not omit once selected. Keep concise, but give the key fact, why it matters, and one caution if needed.
 - `A`: Give enough context to understand scale, trend, and likely next developments.
 - `S`: Explain clearly with sources, affected countries or sectors, escalation paths, uncertainty, and practical reasons to keep watching. If the topic matches the user's interests or may develop quickly, suggest creating a separate monitoring task.
 - `SS`: Treat as a top-level crisis brief. Be explicit about evidence, uncertainty, possible scenarios, and why this crosses from severe news into systemic global risk. Suggest independent monitoring unless the user has already declined it.
@@ -47,13 +47,36 @@ High-impact but unverified claims:
 - Example: an LK-99-like room-temperature superconductivity claim can start as `S` while the world is trying to replicate it, then move to `A/B` as replication fails, and later become a concise but important postmortem about scientific replication and material misidentification.
 - If an LK-99-like claim or comparable "holy grail" breakthrough is independently confirmed by multiple credible teams and points toward reproducible application, upgrade to `SS`. Confirmed room-temperature ambient-pressure superconductivity would qualify because it could reshape energy systems, electronics, magnets, transportation, medical imaging, and major scientific infrastructure.
 
-Milestone and world-branching events:
+Milestone and structural turning-point events:
 
-- `S` may apply when an event has credible potential to become a historical branch point: something later generations may treat as a before/after marker, even if the practical effects take years to unfold.
+- `S` may apply when an event has credible potential to become a structural turning point: something later analysis may treat as a before/after marker, even if the practical effects take years to unfold.
 - This includes confirmed or strongly credible breakthroughs in mathematics, physics, computing, biology, energy, space infrastructure, medicine, geopolitics, or security when they may redirect major research programs, industries, state strategy, or civilization-scale development.
 - Example: a proof of the Riemann Hypothesis may be `S` because it would be a foundational mathematical milestone with possible downstream effects across number theory, cryptography, computation, and theoretical science, even if ordinary daily life does not change immediately.
-- Do not downgrade a branch-point event only because it is abstract, academic, or slow-moving. Grade by long-term structural impact, not only immediate casualties, money, or visible chaos.
+- Do not downgrade a turning-point event only because it is abstract, academic, or slow-moving. Grade by long-term structural impact, not only immediate casualties, money, or visible chaos.
 - Still avoid hype: if a claimed milestone is weak, vague, or not accepted by relevant experts, label the uncertainty clearly and downgrade as evidence weakens.
+
+Scope-adjusted severity:
+
+- Use three reporting scopes: global/international, China-Taiwan/national, and local/regional. The smaller the scope, the lower the threshold for `A` or `S`, because a smaller event can still materially affect a country, province, city, or the user's daily life.
+- Global/international scope should keep stricter thresholds. A single-country disaster outside Taiwan or China is usually `B` unless casualties, economic impact, diplomatic consequences, supply chains, migration, energy, finance, or regional stability make it broader.
+- China-Taiwan/national scope can use more flexible thresholds. `S` may mean a turning point for Taiwan or China, not necessarily the whole world. `A` may include major disasters, serious public safety events, national-level technology or economic developments, major policy changes, or high-risk criminal cases with broad public concern.
+- Local/regional scope should prioritize direct relevance and disruption. Events in Taiwan, China, and especially Jiangsu-Zhejiang-Shanghai should be weighted higher than comparable events elsewhere because the user lives and works around Suzhou.
+- Disease outbreaks should be graded by scope. Cross-province spread in China or cross-county/city spread in Taiwan can justify `A` or `S-` if growth is fast, containment is uncertain, or healthcare/public order impact is significant, even if the same scale would be lower globally.
+- Major disasters should be graded by both casualty scale and relevance. Examples such as the 921 earthquake, the Sichuan earthquake, or the Weiguan Jinlong building collapse may be `A` or higher in China-Taiwan/national scope. A large earthquake affecting only one foreign country may be `B` unless wider impacts emerge.
+- High-technology, industrial, or economic developments in Taiwan or China may be upgraded when they affect national competitiveness, semiconductors, advanced manufacturing, energy, exports, employment, capital markets, or long-term strategy.
+- Major criminal cases may be upgraded when they involve unusual violence, public safety risk, systemic failure, cross-region effects, major social fear, or policy consequences. Avoid sensational wording; explain the public-risk reason for the grade.
+
+Repeated or overlapping regional impact:
+
+- For typhoons, floods, heat waves, cold waves, disease waves, transport disruption, and similar repeated-impact events, avoid repeating the same basic explanation for every affected region.
+- Choose one main affected region for detailed explanation based on severity, user relevance, population, infrastructure, or economic impact. Summarize other affected regions briefly in the same item.
+- If Jiangsu-Zhejiang-Shanghai is affected, mention it clearly and raise practical relevance, especially for transport, work, safety, travel, supply chains, and local public services.
+
+Tone:
+
+- Keep the news brief professional, objective, and source-grounded. The user's informal metaphors are for internal calibration only; do not reproduce them as the brief's public style.
+- It is acceptable to write with urgency when facts justify it, but avoid dramatic, apocalyptic, or exaggerated wording.
+- Prefer terms such as "structural turning point", "systemic risk", "national-level impact", "regional disruption", "public safety risk", and "long-term strategic impact".
 
 Disease outbreak severity:
 
@@ -85,6 +108,13 @@ Each selected news item should use these sections, in this order:
 6. Analysis
 
 If there are no meaningful competing positions, stakeholder differences, or useful angles to compare, omit the Positions section entirely.
+
+Low-severity handling:
+
+- The brief must distinguish between "no B/C items found" and "B/C items found but not expanded."
+- If any `B` or `C` items are selected, list them explicitly in the severity summary.
+- `B` and `C` items may be summarized instead of fully expanded, but they still require a short explanation. `C` items must have at least about 20 Chinese characters of explanation.
+- Do not silently drop `B` or `C` items merely because higher-severity items exist.
 
 ## Selection Notes
 
