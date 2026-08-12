@@ -55,6 +55,14 @@ Milestone and world-branching events:
 - Do not downgrade a branch-point event only because it is abstract, academic, or slow-moving. Grade by long-term structural impact, not only immediate casualties, money, or visible chaos.
 - Still avoid hype: if a claimed milestone is weak, vague, or not accepted by relevant experts, label the uncertainty clearly and downgrade as evidence weakens.
 
+Disease outbreak severity:
+
+- Do not grade disease severity by fear alone. Consider transmission mode, fatality risk, healthcare burden, public health capacity, border spread, local compliance, contact tracing feasibility, vaccine or treatment availability, and whether spread is accelerating despite containment.
+- Ebola crossing into another country is usually `A+` or `S-`: it is highly dangerous and politically significant, but it does not automatically become `S` if the receiving country has strong isolation, contact tracing, healthcare capacity, and public cooperation.
+- Upgrade Ebola or similar high-fatality outbreaks to `S` when cross-border chains keep expanding, healthcare systems are overwhelmed, multiple countries report sustained local transmission, or containment measures are visibly failing.
+- Upgrade to `SS` only if a high-fatality outbreak becomes broadly international, containment breaks across several regions, or the pathogen changes in a way that materially increases transmissibility while retaining severe outcomes.
+- Downgrade when imported cases are isolated quickly, contacts are traced, and no sustained local transmission appears. Still report the event because the downside risk is large even when the most likely outcome is containment.
+
 Space program severity:
 
 - Do not rate every space launch highly. Routine satellite launches, resupply missions, or crew rotations are usually `C` or `B` unless tied to a larger strategic shift.
