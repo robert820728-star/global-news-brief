@@ -1,5 +1,5 @@
-version: 2
-project_name: 每日新聞
+version: 3
+schedule_name: 每日新聞
 
 language:
   mode: auto
@@ -17,7 +17,8 @@ timezone:
 
 daily_run_time: "06:00"
 conversation_mode: standalone_new_chat_each_run
-conversation_title: "YYYY/MM/DD 每日新聞"
+conversation_title: 每日新聞
+content_date_heading: "YYYY/MM/DD 每日新聞"
 
 sections:
   mode: default
