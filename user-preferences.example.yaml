@@ -1,40 +1,59 @@
-version: 1
+version: 2
 project_name: 每日新聞
-language: 繁體中文
-timezone: Asia/Taipei
+
+language:
+  mode: auto
+  priority:
+    - explicit_user_setting
+    - current_conversation_language
+  fallback: 繁體中文
+
+timezone:
+  mode: auto
+  priority:
+    - account_or_device
+    - current_workspace
+  fallback: Asia/Taipei
+
 daily_run_time: "06:00"
+conversation_mode: standalone_new_chat_each_run
 conversation_title: "YYYY/MM/DD 每日新聞"
 
-location:
-  country_or_region: 台灣
-  city: null
-
 sections:
-  - name: 台灣
-    code: TWN
-    scope:
-      - 台灣
-    priority: highest
-    daily_limit: 5
-    minimum_grade: C-
+  mode: default
+  default:
+    - name: 台灣
+      code: TWN
+      scope:
+        - 台灣
+      priority: highest
+      daily_limit: 5
+      minimum_grade: C-
 
-  - name: 中國
-    code: CHN
-    scope:
-      - 中國
-    priority: high
-    daily_limit: 5
-    minimum_grade: C-
+    - name: 中國
+      code: CHN
+      scope:
+        - 中國
+      priority: high
+      daily_limit: 5
+      minimum_grade: C-
 
-  - name: 世界
-    code: GLB
-    scope:
-      - 跨國事件
-      - 全球性事件
-      - 未被其他板塊涵蓋的重要事件
-    priority: high
-    daily_limit: 8
-    minimum_grade: C-
+    - name: 世界
+      code: GLB
+      scope:
+        - 跨國事件
+        - 全球性事件
+        - 未被其他板塊涵蓋的重要事件
+      priority: high
+      daily_limit: 8
+      minimum_grade: C-
+
+  custom_examples:
+    - 日本
+    - 歐盟
+    - 北美
+    - 非洲
+    - 東南亞
 
 topic_weights:
   public_policy: high
