@@ -20,7 +20,6 @@
 
 - 排程及結果對話名稱固定為「每日新聞」。
 - 每份讀者版第一行固定為執行地日期的 `YYYY/MM/DD 每日新聞`。
-- 不要求建立 ChatGPT 專案，也不宣稱排程結果能自動歸入專案。
 
 詳細步驟請見 [INSTALL.md](INSTALL.md)，個人設定格式請見 [user-preferences.example.yaml](user-preferences.example.yaml)，排程執行提示詞請見 [daily-schedule-prompt.md](daily-schedule-prompt.md)。
 
