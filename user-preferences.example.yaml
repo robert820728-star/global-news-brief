@@ -1,0 +1,54 @@
+version: 1
+project_name: 每日新聞
+language: 繁體中文
+timezone: Asia/Taipei
+daily_run_time: "06:00"
+conversation_title: "YYYY/MM/DD 每日新聞"
+
+location:
+  country_or_region: 台灣
+  city: null
+
+sections:
+  - name: 台灣
+    code: TWN
+    scope:
+      - 台灣
+    priority: highest
+    daily_limit: 5
+    minimum_grade: C-
+
+  - name: 中國
+    code: CHN
+    scope:
+      - 中國
+    priority: high
+    daily_limit: 5
+    minimum_grade: C-
+
+  - name: 世界
+    code: GLB
+    scope:
+      - 跨國事件
+      - 全球性事件
+      - 未被其他板塊涵蓋的重要事件
+    priority: high
+    daily_limit: 8
+    minimum_grade: C-
+
+topic_weights:
+  public_policy: high
+  economy: high
+  technology: high
+  international_relations: high
+  public_safety: high
+  disaster: highest
+  epidemic: highest
+  science_and_natural_history: medium_high
+  entertainment: low
+  industry_wide_culture_platform_games_esports: medium
+
+deduplication:
+  one_primary_section_per_event: true
+  world_section_is_fallback: true
+  allow_cross_section_duplicates: false
