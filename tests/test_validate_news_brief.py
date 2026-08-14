@@ -125,6 +125,18 @@ def valid_manifest():
                             "outcome": "attached",
                         }
                     ],
+                    "professional_visual_required": True,
+                    "professional_visual_status": "ready",
+                    "professional_source_checks": [
+                        {
+                            "source_url": "https://example.com/source",
+                            "checked": True,
+                            "usable_image_found": True,
+                            "attempts": 1,
+                            "outcome": "attached",
+                        }
+                    ],
+                    "professional_omission_reason": None,
                     "assets": [
                         {
                             "path": "sandbox:/tmp/image.png",
@@ -261,6 +273,12 @@ class ValidatorTests(unittest.TestCase):
         manifest["events"][0]["images"]["source_checks"] = []
         errors = VALIDATOR.validate_manifest_data(manifest)
         self.assertTrue(any("缺少來源頁圖片檢查紀錄" in error for error in errors))
+
+    def test_professional_visual_cannot_be_replaced_by_news_photo(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["images"]["assets"][0]["kind"] = "news_photo"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("合格專業資訊圖" in error for error in errors))
 
     def test_ready_manifest_requires_completed_recovery(self):
         manifest = valid_manifest()
