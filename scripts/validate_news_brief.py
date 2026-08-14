@@ -20,6 +20,7 @@ ALLOWED_GRADES = {
     "SS", "S+", "S", "S-", "A+", "A", "A-",
     "B+", "B", "B-", "C+", "C", "C-",
 }
+GRADE_BASE_RANK = {"C": 1, "B": 2, "A": 3, "S": 4}
 SINGLE_SOURCE_NOTE = "目前僅找到一個可靠來源，尚無其他獨立來源交叉確認。"
 STAGE_OWNERS = {
     "verify-news-events": "verification",
@@ -137,6 +138,85 @@ def _validate_media_result(
             }:
                 errors.append(f"{asset_label}.kind 無效")
     return paths
+
+
+def _is_grade_b_or_above(grade: Any) -> bool:
+    if grade == "SS":
+        return True
+    if not isinstance(grade, str) or not grade:
+        return False
+    return GRADE_BASE_RANK.get(grade[0], 0) >= GRADE_BASE_RANK["B"]
+
+
+def _validate_image_gate(
+    event: dict[str, Any],
+    final_status: Any,
+    errors: list[str],
+) -> None:
+    """Block final delivery when B+ source-image discovery or attachment work is incomplete."""
+    if not _is_grade_b_or_above(event.get("grade")):
+        return
+
+    event_id = str(event.get("event_id", "事件"))
+    images = event.get("images")
+    if not isinstance(images, dict):
+        return
+    if images.get("required") is not True:
+        errors.append(f"{event_id}.images：B 級以上事件必須啟用圖片檢查")
+
+    checks = images.get("source_checks")
+    if not isinstance(checks, list) or not checks:
+        errors.append(f"{event_id}.images 缺少來源頁圖片檢查紀錄")
+        return
+
+    verification = event.get("verification")
+    sources = verification.get("sources", []) if isinstance(verification, dict) else []
+    expected_urls = {
+        source.get("url") for source in sources
+        if isinstance(source, dict) and isinstance(source.get("url"), str)
+    }
+    checked_urls: set[str] = set()
+    usable_found = False
+    for index, check in enumerate(checks, start=1):
+        label = f"{event_id}.images.source_checks[{index}]"
+        if not isinstance(check, dict):
+            errors.append(f"{label} 必須是物件")
+            continue
+        _need(
+            check,
+            ["source_url", "checked", "usable_image_found", "attempts", "outcome"],
+            label,
+            errors,
+        )
+        source_url = check.get("source_url")
+        if isinstance(source_url, str) and source_url:
+            checked_urls.add(source_url)
+        if check.get("checked") is not True:
+            errors.append(f"{label} 尚未完成來源頁圖片檢查")
+        if not isinstance(check.get("attempts"), int) or check.get("attempts", 0) < 1:
+            errors.append(f"{label}.attempts 必須至少為 1")
+        if check.get("outcome") not in {"attached", "no_usable_image", "acquisition_failed"}:
+            errors.append(f"{label}.outcome 無效")
+        if check.get("usable_image_found") is True:
+            usable_found = True
+
+    missing_urls = expected_urls - checked_urls
+    if missing_urls:
+        errors.append(
+            f"{event_id}.images 尚未檢查所有引用來源頁：{', '.join(sorted(missing_urls))}"
+        )
+
+    if final_status != "ready":
+        return
+    if usable_found:
+        if images.get("status") != "ready" or not images.get("assets"):
+            errors.append(
+                f"{event_id}.images 已找到可用來源圖片，未附上合格附件前不得完成簡報"
+            )
+    elif images.get("status") != "omitted":
+        errors.append(
+            f"{event_id}.images 未找到可用來源圖片時，必須以 omitted 保存後台原因"
+        )
 
 
 def validate_manifest_data(data: dict[str, Any]) -> list[str]:
@@ -365,6 +445,7 @@ def validate_manifest_data(data: dict[str, Any]) -> list[str]:
 
         map_paths = _validate_media_result(label, "map", event.get("map"), errors)
         image_paths = _validate_media_result(label, "images", event.get("images"), errors)
+        _validate_image_gate(event, final_status, errors)
         if final_status == "ready":
             for field_name in ("map", "images"):
                 field_value = event.get(field_name)
