@@ -19,6 +19,7 @@
    - `schemas/news-event-manifest.schema.json`
    - `schemas/news-candidate-audit.schema.json`
    - `.agents/skills/audit-news-candidates/SKILL.md`
+   - `.agents/skills/build-news-maps/SKILL.md`
 2. 明確依 `daily-news-brief` 主控技能執行。主控技能必須依序使用：
    - `select-news-events`
    - `audit-news-candidates`
@@ -31,7 +32,9 @@
 4. 以實際執行時間往前精確 24 小時搜尋新聞。
 5. 先執行 `scripts/preprocess_news_candidates.py`，以程式處理時間窗、網址正規化、完全重複及初步聚類；此步驟不得決定入選或評級。
 6. 先建立事件資料，再按固定模組逐步補充。任何模組不得重新生成整份事件清單或刪除其他模組已完成的地圖、資料圖表、圖片、來源與分析。
-7. 完成後套用 `news-brief-template.md`。若環境可執行程式，使用 `scripts/validate_news_brief.py` 驗證事件資料與讀者版；若格式驗證失敗，才讀取 `news-brief-examples.md` 的相關正反例並局部修正。
+7. 完成後套用 `news-brief-template.md`。若環境可執行程式，先使用 `scripts/validate_map_decisions.py --input <manifest>` 驗證每個入選事件均完成地圖需求判定，再使用 `scripts/validate_news_brief.py` 驗證事件資料與讀者版；任一驗證失敗都不得輸出 `ready` 讀者版。若格式驗證失敗，才讀取 `news-brief-examples.md` 的相關正反例並局部修正。
+   - 每個入選事件都必須有明確 `map.required` 判定；`not_required` 是需要理由的結果，不是預設值。
+   - 海域、沿岸、島嶼、保護區、珊瑚礁、棲地、物種分布／遷徙、擴散、路線、跨境、多州／多省／多國、災害範圍等強地理訊號，必須由 `build-news-maps` 明確複核。若仍判定不需要，`map.rationale` 必須承認命中的空間訊號並具體說明為何定位、範圍或路線不增加理解；否則視為地圖漏判並只重跑該事件的 `build-news-maps`。
    - B 以上事件必須逐一記錄引用來源頁的圖片檢查結果。
    - 任一來源已找到可用圖片時，至少一張本地附件完成視覺驗收前，最終狀態不得為 `ready`，也不得輸出讀者版。
    - 圖片取得中斷只重跑 `collect-news-images`；不得以自製地圖或 `omitted` 取代已存在的來源圖片。
