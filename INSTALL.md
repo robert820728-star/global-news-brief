@@ -9,7 +9,8 @@
 3. 每次執行建立獨立結果對話，對話名稱固定為「每日新聞」。
 4. 每份內容第一行顯示當天日期：`YYYY/MM/DD 每日新聞`。
 5. 每次執行重新讀取本 repo 最新規則與排程保存的個人偏好。
-6. 首次安裝後立即執行一次測試並驗收。
+6. 監控板塊確認後，初始化並驗收每個板塊的可重用區域底圖規格；事件地圖以板塊底圖作為第一層上下文，再依事件建立局部定位、範圍或路線圖。
+7. 首次安裝後立即執行一次測試並驗收。
 
 ## 使用者啟動指令
 
@@ -34,6 +35,8 @@
   - `schemas/news-candidate-audit.schema.json`
   - `scripts/preprocess_news_candidates.py`
   - `scripts/validate_news_brief.py`
+  - `scripts/validate_map_decisions.py`
+  - `scripts/initialize_section_basemaps.py`
   - `scripts/manage_candidate_audit.py`
   - `scripts/recover_news_run.py`
   - `news-brief-settings.md`
@@ -87,6 +90,18 @@
 - 國家優先使用 ISO 3166-1 alpha-3；區域或組織使用清楚、穩定且不衝突的三碼。
 - 事件編號格式固定為 `XXX-01`、`XXX-02`。
 
+### 板塊底圖初始化
+
+板塊名稱、範圍與三碼代碼確定後，在建立排程前初始化區域底圖：
+
+1. 檢查 `maps/generated/sections/<CODE>-base.json` 是否已有與目前板塊範圍相符的底圖規格。
+2. 沒有時使用 `scripts/initialize_section_basemaps.py` 建立板塊底圖規格；國家優先依 ISO 國界，自訂區域依成員國／區域與合理全域範圍建立。
+3. 若環境可執行 Python／Matplotlib，立即由 `maps/source/world-countries.geojson` 或更高解析度的 repo 地理資料產生 `maps/generated/sections/<CODE>-base.png` 與 `.svg`。
+4. 必須完成視覺驗收：板塊沒有被裁掉、投影與比例可讀、跨日期變更線／太平洋區域沒有錯誤斷裂、主要成員與周邊地理上下文可辨識。
+5. 驗收後將 metadata 的 `status` 設為 `ready`、`visual_checked` 設為 `true`。只有規格、沒有實際圖檔時保持 `spec_ready`，不得假稱已生成底圖。
+6. 沒有 repository 寫入權限時，可在使用者持久工作區保存同等的底圖與 metadata；兩者皆不可用時，排程仍可建立，但首次測試必須明確驗證事件地圖能由世界底圖現場生成，不得假稱板塊底圖已持久保存。
+7. 每日事件地圖不得把板塊底圖直接當作完成品。板塊底圖是第一層上下文；`build-news-maps` 仍須依事件來源增加點位、範圍、路線、高亮或必要的局部圖。
+
 ### 篇幅與門檻
 
 - 未指定時沿用 `user-preferences.example.yaml` 的預設值。
@@ -125,6 +140,8 @@
   - 排程與可控制的結果對話名稱是否為「每日新聞」。
   - 內容第一行是否為當天的 `YYYY/MM/DD 每日新聞`。
   - 板塊、三碼事件編號、語言、時區、24 小時時間窗、來源、地圖、圖片與三個頂層區塊是否正確。
+  - 每個自訂板塊是否有已驗收的 section basemap；若環境無法持久生成，是否如實標記降級並確認事件地圖仍可現場生成。
+  - 所有事件是否都完成 map decision；命中海域、保護區、棲地、遷徙、擴散、路線、跨境、災害範圍等強地理訊號卻判定 not_required 時，是否被 `scripts/validate_map_decisions.py` 攔截。
   - 所有事件是否都完成多來源搜尋；只有一個可靠來源時是否照常收錄、保留原等級並顯示固定來源限制文字。
   - 地圖與圖片是否同時保留，且沒有因後段處理而覆蓋來源、標題、等級或其他附件。
 - 若環境可執行 Python，另執行 `python3 -m unittest discover -s tests -v` 確認驗證器正常。
