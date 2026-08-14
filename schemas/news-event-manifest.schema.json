@@ -275,16 +275,34 @@
     },
     "imageResult": {
       "type": "object",
-      "required": ["required", "status", "assets", "omission_reason"],
+      "required": ["required", "status", "source_checks", "assets", "omission_reason"],
       "properties": {
         "required": { "type": "boolean" },
         "status": { "enum": ["pending", "ready", "not_required", "omitted"] },
+        "source_checks": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/imageSourceCheck" }
+        },
         "assets": {
           "type": "array",
           "maxItems": 5,
           "items": { "$ref": "#/$defs/imageAsset" }
         },
         "omission_reason": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "imageSourceCheck": {
+      "type": "object",
+      "required": ["source_url", "checked", "usable_image_found", "attempts", "outcome"],
+      "properties": {
+        "source_url": { "type": "string", "format": "uri" },
+        "checked": { "const": true },
+        "usable_image_found": { "type": "boolean" },
+        "attempts": { "type": "integer", "minimum": 1 },
+        "outcome": {
+          "enum": ["attached", "no_usable_image", "acquisition_failed"]
+        }
       },
       "additionalProperties": false
     },
