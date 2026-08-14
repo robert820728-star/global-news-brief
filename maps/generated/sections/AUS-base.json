@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "code": "AUS",
+  "name": "澳洲",
+  "scope": ["Australia"],
+  "source_geojson": "maps/source/world-countries.geojson",
+  "bounds": [110.0, 155.0, -45.0, -9.0],
+  "projection": "regional",
+  "central_lon": 134.0,
+  "standard_lat": -27.0,
+  "status": "spec_ready",
+  "visual_checked": false,
+  "png_path": "maps/generated/sections/AUS-base.png",
+  "svg_path": "maps/generated/sections/AUS-base.svg",
+  "purpose": "section_context_basemap"
+}
