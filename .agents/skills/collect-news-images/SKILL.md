@@ -16,7 +16,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - B 以上事件：`images.required` 固定為 `true`，逐一開啟 `verification.sources` 的來源頁檢查圖片，不得直接以「無圖」結案。
 - 每個引用來源都必須寫入 `images.source_checks`；記錄是否找到可用圖片、嘗試次數與結果。
 - 任一來源找到可信且相關圖片後，`images.status` 只能在至少一張附件通過驗收後改為 `ready`。
-- 已找到可用圖片但下載或截圖失敗時，狀態維持 `pending` 或 `failed`，回到本技能重試；不得改成 `omitted` 後交付。
+- 已找到可用圖片但下載或截圖失敗時，`images.status` 維持 `pending`，並把圖片階段標成失敗後回到本技能重試；不得改成 `omitted` 後交付。
 - 只有全部引用來源都已檢查且均無可用圖片，才可使用 `omitted`，並保存具體後台原因。
 - C／C−事件：不強制；圖片能明顯幫助理解政策、產業、統計或事件內容時可以加入。
 - 圖片取得失敗不改變事件等級。
