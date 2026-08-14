@@ -101,6 +101,15 @@ def valid_manifest():
                 "images": {
                     "required": True,
                     "status": "ready",
+                    "source_checks": [
+                        {
+                            "source_url": "https://example.com/source",
+                            "checked": True,
+                            "usable_image_found": True,
+                            "attempts": 1,
+                            "outcome": "attached",
+                        }
+                    ],
                     "assets": [
                         {
                             "path": "sandbox:/tmp/image.png",
@@ -196,6 +205,21 @@ class ValidatorTests(unittest.TestCase):
         text = valid_brief().replace("sandbox:/tmp/image.png", "sandbox:/tmp/other.png")
         errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
         self.assertTrue(any("漏放圖片附件" in error for error in errors))
+
+    def test_ready_manifest_blocks_omitted_image_when_source_has_one(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["images"]["status"] = "omitted"
+        manifest["events"][0]["images"]["assets"] = []
+        manifest["events"][0]["images"]["omission_reason"] = "取得失敗"
+        manifest["events"][0]["images"]["source_checks"][0]["outcome"] = "acquisition_failed"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("未附上合格附件前不得完成簡報" in error for error in errors))
+
+    def test_b_grade_requires_all_source_pages_checked(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["images"]["source_checks"] = []
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("缺少來源頁圖片檢查紀錄" in error for error in errors))
 
 
 if __name__ == "__main__":
