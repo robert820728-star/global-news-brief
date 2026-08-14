@@ -356,7 +356,12 @@
     },
     "imageResult": {
       "type": "object",
-      "required": ["required", "status", "source_checks", "assets", "omission_reason"],
+      "required": [
+        "required", "status", "source_checks",
+        "professional_visual_required", "professional_visual_status",
+        "professional_source_checks", "professional_omission_reason",
+        "assets", "omission_reason"
+      ],
       "properties": {
         "required": { "type": "boolean" },
         "status": { "enum": ["pending", "ready", "not_required", "omitted"] },
@@ -364,6 +369,15 @@
           "type": "array",
           "items": { "$ref": "#/$defs/imageSourceCheck" }
         },
+        "professional_visual_required": { "type": "boolean" },
+        "professional_visual_status": {
+          "enum": ["pending", "ready", "not_required", "not_available"]
+        },
+        "professional_source_checks": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/imageSourceCheck" }
+        },
+        "professional_omission_reason": { "type": ["string", "null"] },
         "assets": {
           "type": "array",
           "maxItems": 5,
