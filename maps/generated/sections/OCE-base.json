@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "code": "OCE",
+  "name": "大洋洲",
+  "scope": ["Australia", "New Zealand", "Melanesia", "Micronesia", "Polynesia"],
+  "source_geojson": "maps/source/world-countries.geojson",
+  "bounds": [110.0, 240.0, -55.0, 30.0],
+  "projection": "pacific_centered",
+  "central_lon": 175.0,
+  "standard_lat": -15.0,
+  "status": "spec_ready",
+  "visual_checked": false,
+  "png_path": "maps/generated/sections/OCE-base.png",
+  "svg_path": "maps/generated/sections/OCE-base.svg",
+  "purpose": "section_context_basemap"
+}
