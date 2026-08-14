@@ -2,19 +2,20 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/robert820728-star/global-news-brief/schemas/news-event-manifest.schema.json",
   "title": "每日新聞事件清單",
-  "description": "五個新聞技能共用的最終事件資料格式。子技能只能修改自己擁有的欄位。",
+  "description": "六個新聞技能共用的最終事件資料格式。子技能只能修改自己擁有的欄位。",
   "type": "object",
   "required": [
     "schema_version",
     "run",
     "sections",
     "stage_status",
+    "recovery",
     "events",
     "final_status"
   ],
   "properties": {
     "schema_version": {
-      "const": "1.0.0"
+      "const": "1.1.0"
     },
     "run": {
       "type": "object",
@@ -55,11 +56,13 @@
         "verify-news-events": { "$ref": "#/$defs/stageState" },
         "build-news-maps": { "$ref": "#/$defs/stageState" },
         "collect-news-images": { "$ref": "#/$defs/stageState" },
+        "recover-news-run": { "$ref": "#/$defs/stageState" },
         "render": { "$ref": "#/$defs/stageState" },
         "validate": { "$ref": "#/$defs/stageState" }
       },
       "additionalProperties": false
     },
+    "recovery": { "$ref": "#/$defs/recoveryState" },
     "events": {
       "type": "array",
       "items": { "$ref": "#/$defs/event" }
@@ -72,6 +75,79 @@
   "$defs": {
     "stageState": {
       "enum": ["pending", "running", "completed", "failed", "skipped"]
+    },
+    "recoveryState": {
+      "type": "object",
+      "required": [
+        "status",
+        "max_attempts_per_target",
+        "attempts",
+        "unresolved_targets"
+      ],
+      "properties": {
+        "status": { "enum": ["pending", "recovering", "completed", "exhausted"] },
+        "max_attempts_per_target": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "attempts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/recoveryAttempt" }
+        },
+        "unresolved_targets": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/recoveryTarget" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "recoveryAttempt": {
+      "type": "object",
+      "required": [
+        "target_stage",
+        "event_id",
+        "attempt",
+        "started_at",
+        "ended_at",
+        "outcome",
+        "error_code",
+        "message"
+      ],
+      "properties": {
+        "target_stage": {
+          "enum": [
+            "verify-news-events",
+            "build-news-maps",
+            "collect-news-images",
+            "render",
+            "validate"
+          ]
+        },
+        "event_id": { "type": ["string", "null"], "pattern": "^[A-Z]{3}-[0-9]{2,3}$" },
+        "attempt": { "type": "integer", "minimum": 1 },
+        "started_at": { "type": "string", "format": "date-time" },
+        "ended_at": { "type": "string", "format": "date-time" },
+        "outcome": { "enum": ["succeeded", "failed"] },
+        "error_code": { "type": ["string", "null"] },
+        "message": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "recoveryTarget": {
+      "type": "object",
+      "required": ["target_stage", "event_id", "last_error_code", "last_message"],
+      "properties": {
+        "target_stage": {
+          "enum": [
+            "verify-news-events",
+            "build-news-maps",
+            "collect-news-images",
+            "render",
+            "validate"
+          ]
+        },
+        "event_id": { "type": ["string", "null"], "pattern": "^[A-Z]{3}-[0-9]{2,3}$" },
+        "last_error_code": { "type": ["string", "null"] },
+        "last_message": { "type": "string" }
+      },
+      "additionalProperties": false
     },
     "event": {
       "type": "object",

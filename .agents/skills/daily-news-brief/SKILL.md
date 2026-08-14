@@ -70,7 +70,19 @@ description: Orchestrate a complete daily news brief from a precise rolling time
 
 圖片技能只能修改 `images`。不得重建事件物件、刪除地圖或變更來源、標題與等級。
 
-### 六、完整性檢查
+### 六、自主恢復
+
+使用 `recover-news-run`：
+
+- 每個階段完成後及最終輸出前，執行 `python3 scripts/recover_news_run.py plan --input /path/to/news-event-manifest.json`。
+- 只重跑回復計畫指定的事件與失敗模組；已完成的事件、地圖、圖片與驗證資料不得重做或清空。
+- 同一事件同一模組最多嘗試三次，每次結果寫入 `recovery.attempts`，成功後重新執行對應驗證。
+- 圖片模組依序重試原圖下載、重新載入或來源頁截圖、替代可靠來源；不得用地圖或文字佔位替代。
+- 重試耗盡時將狀態設為 `exhausted` 與 `failed`，明確回報故障；不得無聲中止或假稱完成。
+
+恢復技能負責判斷與調度，不得直接修改 `verification`、`map` 或 `images`；實際修復仍由原欄位擁有技能完成。
+
+### 七、完整性檢查
 
 在寫稿前確認：
 
@@ -81,6 +93,7 @@ description: Orchestrate a complete daily news brief from a precise rolling time
 - B 以上事件必須完成所有引用來源頁的圖片檢查。任何來源已找到可用圖片時，至少一張合格附件必須存在；否則不得把最終狀態設為 `ready`。
 - 圖片模組若因工具或下載錯誤中斷，保持未完成並只重跑圖片模組；不得以地圖成功、文字完成或省略圖片作為替代。
 - 任一模組失敗時，只重試該模組或該事件，不得從頭生成全部事件。
+- `recovery.status` 必須為 `completed`，且不得有未解決目標，才能進入讀者版輸出。
 
 環境可執行程式時，先執行：
 
@@ -88,7 +101,7 @@ description: Orchestrate a complete daily news brief from a precise rolling time
 python3 scripts/validate_news_brief.py manifest --input /path/to/news-event-manifest.json
 ```
 
-### 七、輸出讀者版
+### 八、輸出讀者版
 
 - 從事件資料渲染，不重新搜尋或重新判斷。
 - 套用 `news-brief-template.md`。
@@ -96,7 +109,7 @@ python3 scripts/validate_news_brief.py manifest --input /path/to/news-event-mani
 - 圖片與圖說成對；不得留下文字佔位。
 - 只輸出日期行與今日總覽、逐條詳報、後續觀察三個二級標題。
 
-### 八、最終驗證
+### 九、最終驗證
 
 執行：
 
@@ -106,7 +119,7 @@ python3 scripts/validate_news_brief.py brief \
   --input /path/to/news-brief.md
 ```
 
-若失敗，只修正驗證訊息指出的欄位。通過前不得送出。
+若失敗，交由 `recover-news-run` 建立局部恢復計畫，只修正驗證訊息指出的欄位。通過前不得送出。
 
 ## 失敗處理
 
@@ -115,3 +128,4 @@ python3 scripts/validate_news_brief.py brief \
 - 圖片失敗：重試原圖下載、來源頁截圖或替代來源圖；已確認來源有圖時，附件通過驗收前禁止輸出整份簡報。
 - 格式失敗：修正模板渲染；不能重新生成新聞內容。
 - 來源互相矛盾：保留差異並調整確定語氣；只有事件核心被證偽時，才回到選題階段重新處理。
+- 執行中斷或工具暫時故障：由 `recover-news-run` 偵測未完成狀態並局部重跑；不得等待人工發現才恢復。

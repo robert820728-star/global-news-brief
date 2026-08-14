@@ -2,19 +2,20 @@
 
 ## 原則
 
-事件資料是所有技能的唯一交接物。每個技能只補充自己的欄位，不得重建整個物件。最終資料必須符合 repo 根目錄的 `schemas/news-event-manifest.schema.json`，目前版本固定為 `1.0.0`。
+事件資料是所有技能的唯一交接物。每個技能只補充自己的欄位，不得重建整個物件。最終資料必須符合 repo 根目錄的 `schemas/news-event-manifest.schema.json`，目前版本固定為 `1.1.0`。
 
 ## 欄位所有權
 
 | 技能 | 可修改欄位 |
 |---|---|
-| daily-news-brief | run、sections、stage_status、final_status |
+| daily-news-brief | run、sections、detail |
 | select-news-events | event_id、primary_section、title、grade、selection |
 | verify-news-events | verification |
 | build-news-maps | map |
 | collect-news-images | images |
+| recover-news-run | recovery、stage_status、final_status |
 
-`detail` 由主控依 selection 與 verification 組裝；子技能不得直接重寫最終文章。
+`detail` 由主控依 selection 與 verification 組裝；其他子技能不得直接重寫最終文章。恢復技能只能建立恢復計畫、記錄嘗試及更新階段與最終狀態；它必須調用原欄位擁有技能修復資料，不得直接修改事件內容。
 
 地圖與圖片附件都必須保存實際寬高及視覺驗收結果。網址只能放在來源欄；讀者可見附件路徑必須是絕對本地路徑或 `sandbox:/` 絕對路徑。
 

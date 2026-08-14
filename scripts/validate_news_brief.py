@@ -27,6 +27,13 @@ STAGE_OWNERS = {
     "build-news-maps": "map",
     "collect-news-images": "images",
 }
+RECOVERABLE_STAGES = {
+    "verify-news-events",
+    "build-news-maps",
+    "collect-news-images",
+    "render",
+    "validate",
+}
 REQUIRED_H2 = ["今日總覽", "逐條詳報", "後續觀察"]
 BACKEND_PHRASES = [
     "本則 B 以上事件",
@@ -223,12 +230,12 @@ def validate_manifest_data(data: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     _need(
         data,
-        ["schema_version", "run", "sections", "stage_status", "events", "final_status"],
+        ["schema_version", "run", "sections", "stage_status", "recovery", "events", "final_status"],
         "manifest",
         errors,
     )
-    if data.get("schema_version") != "1.0.0":
-        errors.append("schema_version 必須是 1.0.0")
+    if data.get("schema_version") != "1.1.0":
+        errors.append("schema_version 必須是 1.1.0")
 
     run = data.get("run")
     if not isinstance(run, dict):
@@ -257,6 +264,7 @@ def validate_manifest_data(data: dict[str, Any]) -> list[str]:
         "verify-news-events",
         "build-news-maps",
         "collect-news-images",
+        "recover-news-run",
         "render",
         "validate",
     ]
@@ -274,6 +282,70 @@ def validate_manifest_data(data: dict[str, Any]) -> list[str]:
             for stage_name in expected_stages:
                 if stage_status.get(stage_name) != "completed":
                     errors.append(f"final_status 為 ready 時 {stage_name} 必須 completed")
+
+    recovery = data.get("recovery")
+    if not isinstance(recovery, dict):
+        errors.append("recovery 必須是物件")
+    else:
+        _need(
+            recovery,
+            ["status", "max_attempts_per_target", "attempts", "unresolved_targets"],
+            "recovery",
+            errors,
+        )
+        recovery_status = recovery.get("status")
+        if recovery_status not in {"pending", "recovering", "completed", "exhausted"}:
+            errors.append(f"recovery.status 無效：{recovery_status}")
+        max_attempts = recovery.get("max_attempts_per_target")
+        if not isinstance(max_attempts, int) or not 1 <= max_attempts <= 5:
+            errors.append("recovery.max_attempts_per_target 必須介於 1 至 5")
+            max_attempts = 3
+        attempts = recovery.get("attempts")
+        highest_attempt: dict[tuple[Any, Any], int] = {}
+        if not isinstance(attempts, list):
+            errors.append("recovery.attempts 必須是陣列")
+        else:
+            for index, attempt in enumerate(attempts, start=1):
+                label = f"recovery.attempts[{index}]"
+                if not isinstance(attempt, dict):
+                    errors.append(f"{label} 必須是物件")
+                    continue
+                _need(
+                    attempt,
+                    [
+                        "target_stage", "event_id", "attempt", "started_at",
+                        "ended_at", "outcome", "error_code", "message",
+                    ],
+                    label,
+                    errors,
+                )
+                stage = attempt.get("target_stage")
+                if stage not in RECOVERABLE_STAGES:
+                    errors.append(f"{label}.target_stage 無效：{stage}")
+                number = attempt.get("attempt")
+                if not isinstance(number, int) or number < 1:
+                    errors.append(f"{label}.attempt 必須至少為 1")
+                    continue
+                key = (stage, attempt.get("event_id"))
+                expected = highest_attempt.get(key, 0) + 1
+                if number != expected:
+                    errors.append(f"{label}.attempt 應為 {expected}，實際為 {number}")
+                highest_attempt[key] = number
+                if number > max_attempts:
+                    errors.append(f"{label} 超過單一目標重試上限 {max_attempts}")
+                if attempt.get("outcome") not in {"succeeded", "failed"}:
+                    errors.append(f"{label}.outcome 無效")
+        unresolved = recovery.get("unresolved_targets")
+        if not isinstance(unresolved, list):
+            errors.append("recovery.unresolved_targets 必須是陣列")
+            unresolved = []
+        if final_status == "ready":
+            if recovery_status != "completed":
+                errors.append("final_status 為 ready 時 recovery.status 必須 completed")
+            if unresolved:
+                errors.append("final_status 為 ready 時不得有未解決恢復目標")
+        if recovery_status == "exhausted" and final_status != "failed":
+            errors.append("recovery exhausted 時 final_status 必須 failed")
 
     sections = data.get("sections")
     section_codes: set[str] = set()

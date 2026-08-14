@@ -16,7 +16,7 @@ SPEC.loader.exec_module(VALIDATOR)
 def valid_manifest():
     note = VALIDATOR.SINGLE_SOURCE_NOTE
     return {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "run": {
             "generated_at": "2026-08-14T06:00:00+08:00",
             "timezone": "Asia/Taipei",
@@ -30,8 +30,15 @@ def valid_manifest():
             "verify-news-events": "completed",
             "build-news-maps": "completed",
             "collect-news-images": "completed",
+            "recover-news-run": "completed",
             "render": "completed",
             "validate": "completed",
+        },
+        "recovery": {
+            "status": "completed",
+            "max_attempts_per_target": 3,
+            "attempts": [],
+            "unresolved_targets": [],
         },
         "events": [
             {
@@ -220,6 +227,29 @@ class ValidatorTests(unittest.TestCase):
         manifest["events"][0]["images"]["source_checks"] = []
         errors = VALIDATOR.validate_manifest_data(manifest)
         self.assertTrue(any("缺少來源頁圖片檢查紀錄" in error for error in errors))
+
+    def test_ready_manifest_requires_completed_recovery(self):
+        manifest = valid_manifest()
+        manifest["recovery"]["status"] = "recovering"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("recovery.status 必須 completed" in error for error in errors))
+
+    def test_recovery_attempts_are_sequential_and_bounded(self):
+        manifest = valid_manifest()
+        manifest["recovery"]["attempts"] = [
+            {
+                "target_stage": "collect-news-images",
+                "event_id": "TWN-01",
+                "attempt": 2,
+                "started_at": "2026-08-14T06:00:00+08:00",
+                "ended_at": "2026-08-14T06:01:00+08:00",
+                "outcome": "failed",
+                "error_code": "timeout",
+                "message": "逾時",
+            }
+        ]
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("attempt 應為 1" in error for error in errors))
 
 
 if __name__ == "__main__":
