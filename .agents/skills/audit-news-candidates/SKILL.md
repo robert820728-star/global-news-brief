@@ -33,9 +33,18 @@ description: Maintain a rolling fourteen-day audit of all news candidates, inclu
 
 政策決定、傷亡或病例顯著跳升、跨境擴散、軍事外交轉折、重大市場反應、災害階段改變、正式調查結論或企業正式決策屬實質更新。重述背景、輕微波動或相同轉載不算。
 
-## 保存
+## 保存與降級
 
-優先更新工作區 `state/candidate-audit.json`；工作區無跨次保存但有 repository 寫入權限時更新同一路徑；兩者皆不可用時保存本輪 JSON 附件並如實標記未延續。
+十四天歷史是增強功能，不是每日簡報的執行門檻。先讀取目前可取得的 `state/candidate-audit.json` 作為歷史基準，再依可用能力保存：
+
+1. 有可持久保存的使用者工作區：更新工作區的 `state/candidate-audit.json`。
+2. 工作區無法跨次保存，但有 repository 寫入權限：更新 repository 同一路徑。
+3. 沒有寫入權限但可輸出附件：輸出本輪候選稽核 JSON，供後續執行匯入。
+4. 以上皆不可用：只在本次執行中完成候選決策與比較，將歷史模式標記為 `current_run_only`。
+
+沒有 GitHub 帳號、repository 寫入權限或持久工作區時，仍必須完成本輪稽核並繼續驗證、圖片、地圖與讀者版。不得因歷史無法保存而排除事件、降低評級、把最終狀態設為失敗或停止輸出。
+
+只有實際載入歷史資料時才可聲稱完成十四天比較；否則在內部紀錄標記 `no_persisted_history` 或 `current_run_only`，不得把後台限制寫進讀者版。
 
 ```bash
 python3 scripts/manage_candidate_audit.py append --history state/candidate-audit.json --run /path/to/run.json --output state/candidate-audit.json --retention-days 14
