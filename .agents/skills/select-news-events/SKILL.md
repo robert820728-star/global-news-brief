@@ -89,3 +89,14 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 
 不得寫入或清空 `verification`、`map`、`images` 及讀者版詳報。
 
+
+
+## 全候選決策
+
+將每個聚類候選交給 `audit-news-candidates`，包含暫定等級、決定、理由、候選網址、`dedup_key` 與 `continuity_key`。
+
+- `D`：有資訊但未達每日簡報門檻。
+- `E`：低價值、舊聞、宣傳、未查證或不適合。
+- D／E 不配置事件編號、不進入最終事件資料、不出現在讀者版。
+- 不得以篇數、同級過多或版面長度排除候選。
+- 暫定 B 以上未入選而沒有理由時，本階段不得標示完成。

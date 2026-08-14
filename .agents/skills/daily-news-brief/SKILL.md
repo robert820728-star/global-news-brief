@@ -129,3 +129,8 @@ python3 scripts/validate_news_brief.py brief \
 - 格式失敗：修正模板渲染；不能重新生成新聞內容。
 - 來源互相矛盾：保留差異並調整確定語氣；只有事件核心被證偽時，才回到選題階段重新處理。
 - 執行中斷或工具暫時故障：由 `recover-news-run` 偵測未完成狀態並局部重跑；不得等待人工發現才恢復。
+
+
+## 候選稽核階段
+
+選題後、驗證前使用 `audit-news-candidates`：保存全部候選的十四天紀錄，比較持續事件，並檢查暫定 B 以上未入選候選都有理由。D／E 只供內部追蹤。稽核失敗只重跑 `select-news-events` 與 `audit-news-candidates`，不得清空其他模組。

@@ -62,3 +62,14 @@ python3 scripts/recover_news_run.py record \
 - 沒有失敗目標：直接記錄 `completed`，不得為形式重跑任何模組。
 
 只有完整驗證通過，才可把 `recover-news-run`、`validate` 與 `final_status` 分別設為 `completed`、`completed` 與 `ready`。
+
+
+## 候選稽核恢復
+
+| 失敗位置 | 只重跑 |
+|---|---|
+| 候選缺少決定或理由 | `audit-news-candidates` |
+| 暫定 B 以上候選無故消失 | `select-news-events`，再執行 `audit-news-candidates` |
+| 十四天裁切或持續事件比較失敗 | `audit-news-candidates` |
+
+D／E 只修復稽核資料；單一可靠來源不得改寫成排除理由。
