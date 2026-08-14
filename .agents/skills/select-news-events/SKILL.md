@@ -75,12 +75,14 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 
 ### 五、評級
 
-依 `news-brief-settings.md` 的嚴重度標準評定 `SS` 至 `C-`：
+評定災害、疫情、事故、公共安全與人道事件前，必須完整讀取 `references/severity-rubric.md`。依 `news-brief-settings.md` 的嚴重度標準評定 `SS` 至 `C-`：
 
 - 評級只看影響範圍、強度、持續性、轉折性與結構意義。
 - 不依來源篇數、圖片震撼度、媒體聲量或使用者個人興趣抬高等級。
 - 產業型平台、網文、創作者經濟、遊戲或電競制度事件可列 `C`／`C-`；重大監管或商業模式轉折可升至 `B`。
 - C 級只代表影響較低，不代表查證或格式可以縮水。
+- 災害、疫情與公共安全事件列為 `A-` 以上時，`selection.reason` 必須明列死亡／重傷、直接受影響人口、地理範圍與關鍵系統中實際觸發的項目。
+- 不得把一般受傷等同重傷，不得把警報覆蓋人口等同直接受影響人口，也不得由單張震撼圖片推高評級。
 
 ### 六、編號
 
