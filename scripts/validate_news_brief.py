@@ -240,6 +240,44 @@ def _validate_image_gate(
             f"{event_id}.images 未找到可用來源圖片時，必須以 omitted 保存後台原因"
         )
 
+    professional_required = images.get("professional_visual_required")
+    professional_status = images.get("professional_visual_status")
+    professional_checks = images.get("professional_source_checks")
+    if not isinstance(professional_required, bool):
+        errors.append(f"{event_id}.images.professional_visual_required 必須是布林值")
+        return
+    if professional_status not in {"pending", "ready", "not_required", "not_available"}:
+        errors.append(f"{event_id}.images.professional_visual_status 無效")
+        return
+    if professional_required:
+        if not isinstance(professional_checks, list) or not professional_checks:
+            errors.append(f"{event_id}.images 缺少官方專業圖資搜尋紀錄")
+            return
+        professional_found = any(
+            isinstance(item, dict) and item.get("usable_image_found") is True
+            for item in professional_checks
+        )
+        professional_assets = [
+            asset for asset in images.get("assets", [])
+            if isinstance(asset, dict)
+            and asset.get("kind") in {"official_information", "professional_information"}
+        ]
+        if final_status == "ready" and professional_found:
+            if professional_status != "ready" or not professional_assets:
+                errors.append(
+                    f"{event_id}.images 已找到官方專業圖資，未附上合格專業資訊圖前不得完成簡報"
+                )
+        elif final_status == "ready" and professional_status != "not_available":
+            errors.append(
+                f"{event_id}.images 未找到官方專業圖資時，必須記錄 not_available"
+            )
+        if professional_status == "not_available" and not images.get("professional_omission_reason"):
+            errors.append(f"{event_id}.images 專業圖資無法取得時必須保存具體原因")
+    elif professional_status != "not_required":
+        errors.append(
+            f"{event_id}.images 不需要專業圖資時，professional_visual_status 必須是 not_required"
+        )
+
 
 def validate_manifest_data(data: dict[str, Any]) -> list[str]:
     errors: list[str] = []
