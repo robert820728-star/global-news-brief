@@ -133,4 +133,4 @@ python3 scripts/validate_news_brief.py brief \
 
 ## 候選稽核階段
 
-選題後、驗證前使用 `audit-news-candidates`：保存全部候選的十四天紀錄，比較持續事件，並檢查暫定 B 以上未入選候選都有理由。D／E 只供內部追蹤。稽核失敗只重跑 `select-news-events` 與 `audit-news-candidates`，不得清空其他模組。
+選題後、驗證前使用 `audit-news-candidates`：保存全部候選的十四天紀錄，比較持續事件，並檢查暫定 B 以上未入選候選都有理由。D／E 只供內部追蹤。稽核內容或理由驗證失敗時，只重跑 `select-news-events` 與 `audit-news-candidates`，不得清空其他模組。無法跨次保存歷史不屬於稽核失敗；改用目前可讀歷史或本輪資料並繼續後續流程。
