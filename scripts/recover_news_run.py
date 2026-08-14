@@ -128,6 +128,26 @@ def recovery_plan(data: dict[str, Any]) -> list[dict[str, Any]]:
         elif usable_found and (images.get("status") != "ready" or not images.get("assets")):
             add("collect-news-images", event_id, "已找到可用圖片但尚無合格附件")
 
+        professional_required = images.get("professional_visual_required") is True
+        professional_checks = images.get("professional_source_checks", [])
+        professional_found = any(
+            isinstance(item, dict) and item.get("usable_image_found") is True
+            for item in professional_checks
+        )
+        professional_assets = [
+            item for item in images.get("assets", [])
+            if isinstance(item, dict)
+            and item.get("kind") in {"official_information", "professional_information"}
+        ]
+        if professional_required and not professional_checks:
+            add("collect-news-images", event_id, "尚未搜尋事件類型對應的官方專業圖資")
+        elif professional_required and professional_found and (
+            images.get("professional_visual_status") != "ready" or not professional_assets
+        ):
+            add("collect-news-images", event_id, "已找到官方專業圖資但尚無合格附件")
+        elif professional_required and images.get("professional_visual_status") == "pending":
+            add("collect-news-images", event_id, "官方專業圖資階段仍為 pending")
+
     return list(planned.values())
 
 
