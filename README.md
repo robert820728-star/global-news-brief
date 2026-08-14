@@ -1,6 +1,6 @@
 # global-news-brief
 
-可版本化、可分享、可個人化的每日新聞簡報規格。
+可版本化、可分享、可個人化，而且能逐階段驗收的每日新聞簡報工作流。
 
 ## 快速安裝
 
@@ -23,10 +23,37 @@
 
 詳細步驟請見 [INSTALL.md](INSTALL.md)，個人設定格式請見 [user-preferences.example.yaml](user-preferences.example.yaml)，排程執行提示詞請見 [daily-schedule-prompt.md](daily-schedule-prompt.md)。
 
+## 模組化架構
+
+工作流固定使用五個 repo 技能，透過同一份事件清單交接；後段技能不能重建事件或刪除前段成果。
+
+| 階段 | 技能 | 唯一負責內容 |
+|---|---|---|
+| 主控 | `daily-news-brief` | 精確時間窗、模組順序、詳報組裝、最終輸出與驗收 |
+| 海選 | `select-news-events` | 候選、事件去重、板塊、編號、入選與評級 |
+| 複查 | `verify-news-events` | 多來源、原始／官方回查、主張台帳、差異與不確定性 |
+| 地圖 | `build-news-maps` | 自製定位地圖及其驗收 |
+| 圖片 | `collect-news-images` | 官方資訊圖、新聞配圖、下載／截圖與視覺驗收 |
+
+所有技能共用 `schemas/news-event-manifest.schema.json`。欄位所有權與最終讀者版由 `scripts/validate_news_brief.py` 檢查，因此新增地圖不會清空圖片，補圖片也不會覆蓋來源或評級。
+
 ## 核心文件
 
-- `news-brief-settings.md`：篩選、驗證、地圖與圖片規則
+- `.agents/skills/`：五個可獨立維護的工作流技能
+- `schemas/news-event-manifest.schema.json`：跨技能事件資料契約
+- `scripts/validate_news_brief.py`：事件資料、欄位所有權與讀者版驗證器
+- `news-brief-settings.md`：編輯偏好、收納、分級與共通規則
 - `news-brief-template.md`：讀者版硬模板
 - `news-brief-examples.md`：正確與錯誤範例
 - `user-preferences.example.yaml`：使用者可覆寫的地區與主題偏好
 - `daily-schedule-prompt.md`：每日獨立排程的固定執行提示詞
+
+## 本地驗證
+
+```bash
+python3 -m unittest discover -s tests -v
+python3 scripts/validate_news_brief.py manifest --input /path/to/news-event-manifest.json
+python3 scripts/validate_news_brief.py brief --manifest /path/to/news-event-manifest.json --input /path/to/news-brief.md
+```
+
+驗證器只依標準函式庫執行，不需要另裝 Python 套件。

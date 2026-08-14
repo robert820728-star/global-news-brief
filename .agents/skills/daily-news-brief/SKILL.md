@@ -1,0 +1,116 @@
+---
+name: daily-news-brief
+description: Orchestrate a complete daily news brief from a precise rolling time window. Use when running, testing, installing, or repairing this repository's daily news workflow, especially when candidate selection, verification, maps, images, formatting, and final validation must execute in a fixed order without later stages deleting earlier results.
+---
+
+# 每日新聞主控
+
+以事件資料為唯一交接物，不直接用一段提示詞完成搜尋到成稿的全部工作。
+
+## 必讀
+
+1. 讀取 repo 根目錄的 `news-brief-settings.md`。
+2. 讀取排程或使用者保存的偏好；沒有時使用 `user-preferences.example.yaml`。
+3. 讀取 `references/manifest-contract.md`。
+4. 讀取 `schemas/news-event-manifest.schema.json`。
+5. 在輸出前讀取 `news-brief-template.md`。
+6. 只有驗證失敗或需要判斷正反例時，才讀取 `news-brief-examples.md` 相關段落。
+
+## 固定流程
+
+### 一、建立執行資料
+
+- 以實際執行時間與使用者時區計算精確 24 小時窗口。
+- 建立空白事件資料，記錄版本、語言、時區、窗口起訖、板塊順序與模組狀態。
+- 不得先寫讀者版。
+
+### 二、選題
+
+使用 `select-news-events`：
+
+- 海選候選。
+- 依底層事件聚類去重。
+- 套用使用者偏好及收納門檻。
+- 配置板塊、事件編號、標題與等級。
+- 保存選題快照，作為後續欄位所有權比較基準。
+
+不得讓後續技能自行新增、刪除、重新編號或改評級。若查證發現實質錯誤，回到此階段由主控明確處理。
+
+### 三、驗證
+
+逐事件使用 `verify-news-events`：
+
+- 搜尋獨立來源。
+- 回查官方、原始或最接近原始的資料。
+- 拆分關鍵主張並記錄支持、矛盾與不確定性。
+- 產生讀者版來源、各方說法與語氣建議。
+- 單一可靠來源可以保留，且不得因此自動降級或移除。
+
+驗證技能只能修改 `verification`。完成後比較前後事件資料；若其他欄位變動，撤銷越權變更並重做該事件。
+
+### 四、地圖
+
+對具空間意義的事件使用 `build-news-maps`：
+
+- 判斷是否需要自製定位圖。
+- 以合適尺度的全域底圖標點、高亮、範圍或路線。
+- 驗收地圖後寫入 `map`。
+- 不需要地圖時明確記錄判斷，但讀者版省略地圖欄。
+
+地圖技能只能修改 `map`，且不得把專業資訊圖移入地圖欄。
+
+### 五、圖片
+
+使用 `collect-news-images`：
+
+- B 以上事件若引用來源有圖，必須嘗試取得；C 級依資訊價值決定。
+- 優先取得官方或專業資訊圖，再保留互補的新聞現場照或來源配圖。
+- 下載或截圖為可直接顯示的本地附件，完成視覺、時間與內容驗收。
+- 將合格附件寫入 `images`。
+
+圖片技能只能修改 `images`。不得重建事件物件、刪除地圖或變更來源、標題與等級。
+
+### 六、完整性檢查
+
+在寫稿前確認：
+
+- 每個事件仍保有選題、驗證、地圖與圖片階段已完成的欄位。
+- `map.assets` 與 `images.assets` 分開保存。
+- 單一可靠來源事件有來源限制文字，但等級未被自動改變。
+- 所有附件都有路徑、圖說、來源、驗收狀態；地圖不計入圖片數量。
+- 任一模組失敗時，只重試該模組或該事件，不得從頭生成全部事件。
+
+環境可執行程式時，先執行：
+
+```bash
+python3 scripts/validate_news_brief.py manifest --input /path/to/news-event-manifest.json
+```
+
+### 七、輸出讀者版
+
+- 從事件資料渲染，不重新搜尋或重新判斷。
+- 套用 `news-brief-template.md`。
+- 事件資料內所有已驗收的地圖與圖片都必須出現在對應詳報。
+- 圖片與圖說成對；不得留下文字佔位。
+- 只輸出日期行與今日總覽、逐條詳報、後續觀察三個二級標題。
+
+### 八、最終驗證
+
+執行：
+
+```bash
+python3 scripts/validate_news_brief.py brief \
+  --manifest /path/to/news-event-manifest.json \
+  --input /path/to/news-brief.md
+```
+
+若失敗，只修正驗證訊息指出的欄位。通過前不得送出。
+
+## 失敗處理
+
+- 搜尋不足：回到驗證技能補查，不影響原評級。
+- 地圖失敗：重試地圖技能；不能拿官方資訊圖冒充定位圖。
+- 圖片失敗：重試下載、截圖或替代來源圖；不能只留圖說。
+- 格式失敗：修正模板渲染；不能重新生成新聞內容。
+- 來源互相矛盾：保留差異並調整確定語氣；只有事件核心被證偽時，才回到選題階段重新處理。
+

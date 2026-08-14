@@ -22,7 +22,19 @@
 ## 一、驗證來源
 
 - 確認 repo 可讀取。
-- 確認 `news-brief-settings.md`、`news-brief-template.md`、`news-brief-examples.md`、`user-preferences.example.yaml` 與 `daily-schedule-prompt.md` 存在。
+- 確認下列核心檔案存在：
+  - `.agents/skills/daily-news-brief/SKILL.md`
+  - `.agents/skills/select-news-events/SKILL.md`
+  - `.agents/skills/verify-news-events/SKILL.md`
+  - `.agents/skills/build-news-maps/SKILL.md`
+  - `.agents/skills/collect-news-images/SKILL.md`
+  - `schemas/news-event-manifest.schema.json`
+  - `scripts/validate_news_brief.py`
+  - `news-brief-settings.md`
+  - `news-brief-template.md`
+  - `news-brief-examples.md`
+  - `user-preferences.example.yaml`
+  - `daily-schedule-prompt.md`
 - 若核心文件缺失或互相衝突，先回報，不建立不完整排程。
 
 ## 二、只詢問三件事
@@ -86,6 +98,7 @@
 - 新聞時間窗：每次實際執行時間往前精確 24 小時。
 - 規則來源：每次重新讀取 GitHub 最新版核心文件。
 - 個人偏好：保存在使用者自己的排程設定，不回寫公共 repo。
+- 執行流程：固定由 `daily-news-brief` 依序調用海選、複查、地圖、圖片技能，再套用模板；不得把整個流程改寫成單一臨時提示詞。
 
 ## 五、首次測試
 
@@ -95,6 +108,9 @@
   - 排程與可控制的結果對話名稱是否為「每日新聞」。
   - 內容第一行是否為當天的 `YYYY/MM/DD 每日新聞`。
   - 板塊、三碼事件編號、語言、時區、24 小時時間窗、來源、地圖、圖片與三個頂層區塊是否正確。
+  - 所有事件是否都完成多來源搜尋；只有一個可靠來源時是否照常收錄、保留原等級並顯示固定來源限制文字。
+  - 地圖與圖片是否同時保留，且沒有因後段處理而覆蓋來源、標題、等級或其他附件。
+- 若環境可執行 Python，另執行 `python3 -m unittest discover -s tests -v` 確認驗證器正常。
 - 若測試失敗，只修正失敗環節，不重新詢問已確認的偏好。
 
 ## 分享方式

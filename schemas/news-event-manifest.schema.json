@@ -1,0 +1,338 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/robert820728-star/global-news-brief/schemas/news-event-manifest.schema.json",
+  "title": "每日新聞事件清單",
+  "description": "五個新聞技能共用的最終事件資料格式。子技能只能修改自己擁有的欄位。",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "run",
+    "sections",
+    "stage_status",
+    "events",
+    "final_status"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "run": {
+      "type": "object",
+      "required": [
+        "generated_at",
+        "timezone",
+        "window_start",
+        "window_end",
+        "language"
+      ],
+      "properties": {
+        "generated_at": { "type": "string", "format": "date-time" },
+        "timezone": { "type": "string", "minLength": 1 },
+        "window_start": { "type": "string", "format": "date-time" },
+        "window_end": { "type": "string", "format": "date-time" },
+        "language": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": true
+    },
+    "sections": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["code", "name", "order"],
+        "properties": {
+          "code": { "type": "string", "pattern": "^[A-Z]{3}$" },
+          "name": { "type": "string", "minLength": 1 },
+          "order": { "type": "integer", "minimum": 1 }
+        },
+        "additionalProperties": true
+      }
+    },
+    "stage_status": {
+      "type": "object",
+      "properties": {
+        "select-news-events": { "$ref": "#/$defs/stageState" },
+        "verify-news-events": { "$ref": "#/$defs/stageState" },
+        "build-news-maps": { "$ref": "#/$defs/stageState" },
+        "collect-news-images": { "$ref": "#/$defs/stageState" },
+        "render": { "$ref": "#/$defs/stageState" },
+        "validate": { "$ref": "#/$defs/stageState" }
+      },
+      "additionalProperties": false
+    },
+    "events": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/event" }
+    },
+    "final_status": {
+      "enum": ["draft", "ready", "failed"]
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "stageState": {
+      "enum": ["pending", "running", "completed", "failed", "skipped"]
+    },
+    "event": {
+      "type": "object",
+      "required": [
+        "event_id",
+        "primary_section",
+        "title",
+        "grade",
+        "selection",
+        "verification",
+        "map",
+        "images",
+        "detail"
+      ],
+      "properties": {
+        "event_id": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,3}$" },
+        "primary_section": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "title": { "type": "string", "minLength": 1 },
+        "grade": {
+          "enum": [
+            "SS", "S+", "S", "S-", "A+", "A", "A-",
+            "B+", "B", "B-", "C+", "C", "C-"
+          ]
+        },
+        "selection": { "$ref": "#/$defs/selection" },
+        "verification": { "$ref": "#/$defs/verification" },
+        "map": { "$ref": "#/$defs/mapResult" },
+        "images": { "$ref": "#/$defs/imageResult" },
+        "detail": { "$ref": "#/$defs/detail" }
+      },
+      "additionalProperties": false
+    },
+    "selection": {
+      "type": "object",
+      "required": [
+        "dedup_key",
+        "category",
+        "impact_scope",
+        "reason",
+        "candidate_urls",
+        "news_time",
+        "event_time"
+      ],
+      "properties": {
+        "dedup_key": { "type": "string", "minLength": 1 },
+        "category": { "type": "string", "minLength": 1 },
+        "impact_scope": { "type": "string", "minLength": 1 },
+        "reason": { "type": "string", "minLength": 1 },
+        "candidate_urls": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "format": "uri" }
+        },
+        "news_time": { "type": "string", "minLength": 1 },
+        "event_time": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "verification": {
+      "type": "object",
+      "required": [
+        "status",
+        "finding",
+        "search_performed",
+        "independent_source_count",
+        "sources",
+        "claims",
+        "uncertainties",
+        "source_limit_note",
+        "positions",
+        "reader_wording",
+        "verified_at"
+      ],
+      "properties": {
+        "status": { "enum": ["pending", "completed", "failed"] },
+        "finding": {
+          "enum": [
+            "pending",
+            "corroborated",
+            "single_reliable_source",
+            "conflicting",
+            "insufficient"
+          ]
+        },
+        "search_performed": { "type": "boolean" },
+        "independent_source_count": { "type": "integer", "minimum": 0 },
+        "sources": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/source" }
+        },
+        "claims": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/claim" }
+        },
+        "uncertainties": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "source_limit_note": { "type": ["string", "null"] },
+        "positions": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "reader_wording": { "type": "string" },
+        "verified_at": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "source_id",
+        "name",
+        "url",
+        "role",
+        "producer",
+        "independence_group",
+        "published_at",
+        "accessed_at",
+        "evidence_type",
+        "claim_ids",
+        "limitations"
+      ],
+      "properties": {
+        "source_id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri" },
+        "role": { "type": "string", "minLength": 1 },
+        "producer": { "type": "string", "minLength": 1 },
+        "independence_group": { "type": "string", "minLength": 1 },
+        "published_at": { "type": ["string", "null"] },
+        "accessed_at": { "type": "string", "minLength": 1 },
+        "evidence_type": {
+          "enum": ["supports", "partially_supports", "contradicts", "background"]
+        },
+        "claim_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "limitations": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "additionalProperties": true
+    },
+    "claim": {
+      "type": "object",
+      "required": ["claim_id", "text", "status", "source_ids"],
+      "properties": {
+        "claim_id": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1 },
+        "status": {
+          "enum": ["supported", "partially_supported", "conflicting", "unverified"]
+        },
+        "source_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "additionalProperties": true
+    },
+    "mapResult": {
+      "type": "object",
+      "required": ["required", "status", "rationale", "assets", "omission_reason"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "status": { "enum": ["pending", "ready", "not_required", "omitted"] },
+        "rationale": { "type": "string" },
+        "assets": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/mapAsset" }
+        },
+        "omission_reason": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "mapAsset": {
+      "type": "object",
+      "required": [
+        "path",
+        "caption",
+        "source_urls",
+        "visual_checked",
+        "width",
+        "height"
+      ],
+      "properties": {
+        "path": { "type": "string", "pattern": "^(sandbox:)?/" },
+        "caption": { "type": "string", "minLength": 1 },
+        "source_urls": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "format": "uri" }
+        },
+        "visual_checked": { "const": true },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": true
+    },
+    "imageResult": {
+      "type": "object",
+      "required": ["required", "status", "assets", "omission_reason"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "status": { "enum": ["pending", "ready", "not_required", "omitted"] },
+        "assets": {
+          "type": "array",
+          "maxItems": 5,
+          "items": { "$ref": "#/$defs/imageAsset" }
+        },
+        "omission_reason": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "imageAsset": {
+      "type": "object",
+      "required": [
+        "path",
+        "caption",
+        "source_name",
+        "source_url",
+        "kind",
+        "published_at",
+        "visual_checked",
+        "time_checked",
+        "width",
+        "height"
+      ],
+      "properties": {
+        "path": { "type": "string", "pattern": "^(sandbox:)?/" },
+        "caption": { "type": "string", "minLength": 1 },
+        "source_name": { "type": "string", "minLength": 1 },
+        "source_url": { "type": "string", "format": "uri" },
+        "kind": {
+          "enum": ["official_information", "professional_information", "news_photo"]
+        },
+        "published_at": { "type": ["string", "null"] },
+        "visual_checked": { "const": true },
+        "time_checked": { "const": true },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": true
+    },
+    "detail": {
+      "type": "object",
+      "required": ["overview_time", "time", "event_details", "positions", "analysis", "follow_up"],
+      "properties": {
+        "overview_time": { "type": "string", "minLength": 1 },
+        "time": { "type": "string", "minLength": 1 },
+        "event_details": { "type": "string", "minLength": 1 },
+        "positions": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "analysis": { "type": "string", "minLength": 1 },
+        "follow_up": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    }
+  }
+}
