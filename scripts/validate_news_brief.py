@@ -146,10 +146,46 @@ def _validate_media_result(
                 errors.append(f"{asset_label} 缺少資料來源")
             if asset.get("data_checked") is not True:
                 errors.append(f"{asset_label} 尚未完成數據驗收")
-            if asset.get("chart_type") not in {"bar", "line", "area", "scatter", "pie", "table"}:
+            chart_type = asset.get("chart_type")
+            chart_purpose = asset.get("chart_purpose")
+            if chart_type not in {"metric_card", "bar", "line", "area", "scatter", "pie", "table"}:
                 errors.append(f"{asset_label}.chart_type 無效")
-            if not isinstance(asset.get("data_points"), int) or asset.get("data_points", 0) < 2:
-                errors.append(f"{asset_label} 必須包含至少兩個可比較資料點")
+            if chart_purpose not in {"single_metric", "comparison", "trend", "proportion", "distribution", "lookup"}:
+                errors.append(f"{asset_label}.chart_purpose 無效")
+            if not isinstance(asset.get("data_points"), int) or asset.get("data_points", 0) < 1:
+                errors.append(f"{asset_label} 必須包含至少一個具體數值")
+            labels = asset.get("labels")
+            values = asset.get("numeric_values")
+            if not isinstance(labels, list) or len(labels) < 1 or not all(
+                isinstance(item, str) and item.strip() for item in labels
+            ):
+                errors.append(f"{asset_label} 必須列出至少一個實際繪製的資料標籤")
+            if not isinstance(values, list) or len(values) < 1 or not all(
+                isinstance(item, (int, float)) and not isinstance(item, bool) for item in values
+            ):
+                errors.append(f"{asset_label} 必須列出至少一個實際繪製的具體數值")
+            if isinstance(labels, list) and isinstance(values, list) and len(labels) != len(values):
+                errors.append(f"{asset_label} 資料標籤與數值數量不一致")
+            if isinstance(values, list) and asset.get("data_points") != len(values):
+                errors.append(f"{asset_label}.data_points 必須等於實際繪製數值數量")
+            if not isinstance(asset.get("unit"), str) or not asset.get("unit", "").strip():
+                errors.append(f"{asset_label} 缺少一致的數值單位")
+            if chart_type == "metric_card":
+                if chart_purpose != "single_metric":
+                    errors.append(f"{asset_label} 單項數據卡的用途必須是 single_metric")
+                if isinstance(values, list) and len(values) != 1:
+                    errors.append(f"{asset_label} 單項數據卡只能呈現一個具體數值")
+                if not isinstance(asset.get("highlight_reason"), str) or not asset.get("highlight_reason", "").strip():
+                    errors.append(f"{asset_label} 單項數據卡缺少凸顯理由")
+            elif isinstance(values, list) and len(values) < 2:
+                errors.append(f"{asset_label} 比較或趨勢圖至少需要兩個同口徑數值")
+            if chart_type in {"bar", "line", "area", "scatter"}:
+                if not isinstance(asset.get("x_axis_label"), str) or not asset.get("x_axis_label", "").strip():
+                    errors.append(f"{asset_label} 缺少 X 軸標籤")
+                if not isinstance(asset.get("y_axis_label"), str) or not asset.get("y_axis_label", "").strip():
+                    errors.append(f"{asset_label} 缺少 Y 軸標籤")
+            if chart_type == "line" and isinstance(values, list) and len(values) < 3:
+                errors.append(f"{asset_label} 折線圖至少需要三個時間點；兩點比較應改用柱狀圖")
         else:
             if asset.get("time_checked") is not True:
                 errors.append(f"{asset_label} 尚未完成時間驗收")
