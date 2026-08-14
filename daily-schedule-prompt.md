@@ -19,24 +19,25 @@
    - `user-preferences.example.yaml`
    - `schemas/news-event-manifest.schema.json`
    - `schemas/news-candidate-audit.schema.json`
-2. 明確依 `daily-news-brief` 主控技能執行。主控技能必須依序使用：
+2. 先執行 `scripts/preprocess_news_candidates.py`，以程式處理時間窗、網址正規化、完全重複及初步聚類；此步驟不得決定入選或評級。
+3. 明確依 `daily-news-brief` 主控技能執行。主控技能必須依序使用：
    - `select-news-events`
    - `audit-news-candidates`
    - `verify-news-events`
    - `build-news-maps`
    - `collect-news-images`
    - `recover-news-run`
-3. 讀取排程保存的個人偏好。個人偏好只覆寫板塊、順序、權重、篇數、最低等級、主題、語言、時區與執行時間，不得覆寫查證、欄位所有權、地圖、圖片及驗收規則。
-4. 以實際執行時間往前精確 24 小時搜尋新聞。
-5. 先建立事件資料，再按固定模組逐步補充。任何模組不得重新生成整份事件清單或刪除其他模組已完成的地圖、圖片、來源與分析。
-6. 完成後套用 `news-brief-template.md`。若環境可執行程式，使用 `scripts/validate_news_brief.py` 驗證事件資料與讀者版；若格式驗證失敗，才讀取 `news-brief-examples.md` 的相關正反例並局部修正。
+4. 讀取排程保存的個人偏好。個人偏好只覆寫板塊、順序、權重、篇數、最低等級、主題、語言、時區與執行時間，不得覆寫查證、欄位所有權、地圖、圖片及驗收規則。
+5. 以實際執行時間往前精確 24 小時搜尋新聞。
+6. 先建立事件資料，再按固定模組逐步補充。任何模組不得重新生成整份事件清單或刪除其他模組已完成的地圖、圖片、來源與分析。
+7. 完成後套用 `news-brief-template.md`。若環境可執行程式，使用 `scripts/validate_news_brief.py` 驗證事件資料與讀者版；若格式驗證失敗，才讀取 `news-brief-examples.md` 的相關正反例並局部修正。
    - B 以上事件必須逐一記錄引用來源頁的圖片檢查結果。
    - 任一來源已找到可用圖片時，至少一張本地附件完成視覺驗收前，最終狀態不得為 `ready`，也不得輸出讀者版。
    - 圖片取得中斷只重跑 `collect-news-images`；不得以自製地圖或 `omitted` 取代已存在的來源圖片。
    - 每階段完成後及輸出前使用 `recover-news-run` 檢查未完成、失敗與驗證錯誤；只重跑失敗事件與原欄位擁有技能。
    - 同一事件同一模組最多重試三次。成功後重新驗證；耗盡時明確輸出故障回報，不得無聲結束或假稱完成。
-7. 未設定偏好時使用台灣 `TWN`、中國 `CHN`、世界 `GLB`，語言為繁體中文，時區為 `Asia/Taipei`。
-8. 若時間窗內沒有事件通過門檻，仍輸出當日日期與三個固定區塊，簡短說明沒有事件通過門檻；不得以舊聞補數量。
+8. 未設定偏好時使用台灣 `TWN`、中國 `CHN`、世界 `GLB`，語言為繁體中文，時區為 `Asia/Taipei`。
+9. 若時間窗內沒有事件通過門檻，仍輸出當日日期與三個固定區塊，簡短說明沒有事件通過門檻；不得以舊聞補數量。
 
 ## 最終輸出
 
