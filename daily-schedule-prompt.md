@@ -13,12 +13,15 @@
 
 1. 重新讀取 repo `robert820728-star/global-news-brief` 最新版：
    - `.agents/skills/daily-news-brief/SKILL.md`
+   - `.agents/skills/audit-news-candidates/SKILL.md`
    - `news-brief-settings.md`
    - `news-brief-template.md`
    - `user-preferences.example.yaml`
    - `schemas/news-event-manifest.schema.json`
+   - `schemas/news-candidate-audit.schema.json`
 2. 明確依 `daily-news-brief` 主控技能執行。主控技能必須依序使用：
    - `select-news-events`
+   - `audit-news-candidates`
    - `verify-news-events`
    - `build-news-maps`
    - `collect-news-images`
@@ -48,8 +51,12 @@
 
 ## 兩週候選稽核
 
-- 海選後、驗證前完整執行 `audit-news-candidates`，更新 `state/candidate-audit.json` 並只保留十四天。
+- 海選後、驗證前完整執行 `audit-news-candidates`；十四天歷史是增強功能，不是每日簡報的執行門檻。
 - 全部候選都要記錄決定與理由；D／E 只留內部，不得輸出讀者版。
 - 暫定 B 以上候選不得無聲消失；理由缺漏時只重跑 `select-news-events` 與 `audit-news-candidates`。
 - 持續事件比較十四天內新增、未變與狀態轉折；無實質更新可不重複入選，但必須留下比較說明。
-- 單一可靠來源不得成為排除理由。若執行環境無法跨次保存，保存本輪稽核附件且不得假稱歷史已更新。
+- 單一可靠來源不得成為排除理由。
+- 歷史讀取與保存依序採用：可讀的既有 `state/candidate-audit.json`、使用者可持久保存的工作區、具有寫入權限的 repository。可同時使用時，以可持久保存且不會影響公共範本的使用者工作區為優先。
+- 沒有 GitHub 帳號、repository 寫入權限或持久工作區時，仍完成本輪候選決策、D／E 分類與讀者版；十四天比較降級為本輪或目前可讀歷史，不得中止簡報。
+- 無法跨次保存時，可輸出本輪稽核附件供下次匯入；若附件也無法保存，只在本次執行中使用並如實標記「未延續歷史」，不得假稱十四天歷史已更新。
+- 稽核保存失敗不得改變事件評級、入選結果、圖片／地圖處理或最終輸出狀態。
