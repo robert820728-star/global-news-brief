@@ -25,12 +25,15 @@
 - 確認下列核心檔案存在：
   - `.agents/skills/daily-news-brief/SKILL.md`
   - `.agents/skills/select-news-events/SKILL.md`
+  - `.agents/skills/audit-news-candidates/SKILL.md`
   - `.agents/skills/verify-news-events/SKILL.md`
   - `.agents/skills/build-news-maps/SKILL.md`
   - `.agents/skills/collect-news-images/SKILL.md`
   - `.agents/skills/recover-news-run/SKILL.md`
   - `schemas/news-event-manifest.schema.json`
+  - `schemas/news-candidate-audit.schema.json`
   - `scripts/validate_news_brief.py`
+  - `scripts/manage_candidate_audit.py`
   - `scripts/recover_news_run.py`
   - `news-brief-settings.md`
   - `news-brief-template.md`
@@ -38,6 +41,8 @@
   - `user-preferences.example.yaml`
   - `daily-schedule-prompt.md`
 - 若核心文件缺失或互相衝突，先回報，不建立不完整排程。
+- 使用公開 repo 不要求 GitHub 帳號。讀取規則、執行每日簡報、來源驗證、地圖與圖片功能不需要 repository 寫入權限。
+- 十四天候選回查為增強功能：有持久工作區或 repository 寫入權限時保存跨日歷史；沒有時降級為本輪稽核，不得阻止每日簡報。
 
 ## 二、只詢問三件事
 
@@ -100,7 +105,8 @@
 - 新聞時間窗：每次實際執行時間往前精確 24 小時。
 - 規則來源：每次重新讀取 GitHub 最新版核心文件。
 - 個人偏好：保存在使用者自己的排程設定，不回寫公共 repo。
-- 執行流程：固定由 `daily-news-brief` 依序調用海選、複查、地圖、圖片與自主恢復技能，再套用模板；不得把整個流程改寫成單一臨時提示詞。
+- 執行流程：固定由 `daily-news-brief` 依序調用海選、候選稽核、複查、地圖、圖片與自主恢復技能，再套用模板；不得把整個流程改寫成單一臨時提示詞。
+- 候選歷史：優先保存於使用者可持久工作區；工作區不可用且使用者有 repository 寫入權限時才回寫。兩者皆無時照常執行，僅不保證跨日十四天回查。
 
 ## 五、首次測試
 
@@ -117,4 +123,4 @@
 
 ## 分享方式
 
-接收者在自己的新對話貼上 repo 網址並執行啟動指令。每個人各自授權建立排程並保存自己的偏好。
+接收者在自己的新對話貼上 repo 網址並執行啟動指令。每個人各自授權建立排程並保存自己的偏好。沒有 GitHub 帳號也可使用完整每日新聞流程；只有跨日候選歷史的保存能力會依工作區權限降級。
