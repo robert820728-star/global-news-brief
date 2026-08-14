@@ -1,6 +1,6 @@
 ---
 name: build-news-maps
-description: Decide whether a selected news event needs geographic context and create a self-made locator map from repository basemaps. Use for events where location, range, spread, route, affected area, sea lane, epicenter region, border, or spatial relationship materially improves understanding.
+description: Decide whether a selected news event needs geographic context and create a self-made locator map from repository basemaps. Use for events where location, range, spread, route, affected area, sea lane, epicenter region, border, habitat, migration corridor, protected area, or spatial relationship materially improves understanding.
 ---
 
 # 新聞定位地圖
@@ -11,16 +11,41 @@ description: Decide whether a selected news event needs geographic context and c
 
 讀取 `references/map-policy.md`。需要底圖時讀取 repo 的 `maps/README.md`、`maps/source/` 與 `scripts/render_base_maps.py`。
 
+## 逐事件強制判定
+
+每一個已入選事件都必須進入本技能並產生明確的 map decision；不得因為事件主要分類是統計、保育、政策、產業、科技或其他非地理分類而跳過。
+
+每則事件完成後，`map` 必須且只能落在下列兩類之一：
+
+1. `required: true`，並進一步完成地圖或依恢復規則記錄失敗；
+2. `required: false`、`status: not_required`，且 `rationale` 必須具體說明為什麼地理位置、範圍、路線或空間關係不影響讀者理解。
+
+禁止留下未判定狀態後直接進入讀者版；也禁止只因為「已有地名」、「事件屬統計新聞」或「正文可用文字說清楚」就自動判定不需要地圖。
+
 ## 判斷是否需要
 
-只有位置或範圍本身有助於理解事件時才使用地圖：
+只要位置、範圍、路線、棲地或空間關係本身有助於理解事件，就使用地圖。下列為強地理訊號，原則上應判定 `required: true`；若例外判定不需要，`rationale` 必須逐項解釋原因：
 
 - 疫情擴散至多省、多州或多國。
 - 地震、海嘯、火山、野火、洪水、熱浪、乾旱與大範圍天災。
 - 運河、海峽、港口、海域、航線、封鎖線、邊境與軍事衝突區。
-- 讀者難以直接定位、且位置會改變風險判斷的事件。
+- 海洋保育區、珊瑚礁、漁場、海洋污染範圍、海洋熱浪、保護區、棲地與物種遷徙廊道。
+- 陸域保護區、森林、流域、濕地、野生動物棲地、遷徙路線或人獸衝突熱區。
+- 讀者難以直接定位、且位置會改變風險判斷的城市、島嶼、海域或區域。
+- 事件涉及兩個以上地點之間的移動、擴散、依存或空間比較，例如航線、跨境移動、供應鏈瓶頸、遷徙帶。
 
-僅僅出現地名不代表需要地圖。公司財報、科技產品、數學猜想、獎項、一般政策表態、空間站與純技術事件通常不需要。
+僅僅出現地名不代表需要地圖。公司財報、科技產品、數學猜想、獎項、一般政策表態、空間站與純技術事件通常不需要；但只要其核心影響與特定地理範圍、路線、保護區或空間關係有關，仍必須回到上述強地理訊號判斷。
+
+### 防漏判檢查
+
+在寫入 `map.required = false` 前，必須對事件標題、`selection.category`、`selection.impact_scope`、`selection.reason`、已驗證主張與詳報內容做一次空間線索掃描。若出現下列概念之一，不得直接 `not_required`：
+
+- 海域、沿岸、海峽、港口、島嶼、礁區、保護區、國家公園、流域、森林、棲地；
+- 遷徙、擴散、蔓延、路線、航線、跨境、跨州、跨省、多地、多國；
+- 震央、火場、洪水範圍、警戒區、污染範圍、事故位置、救援區域；
+- 物種分布、繁殖地、覓食區、遷徙帶、人獸衝突熱點。
+
+只要命中且位置有助理解，就必須 `required: true`。例如「大堡礁鯨豚互動增加」即使主要呈現的是通報統計，事件仍涉及明確海洋保護區與座頭鯨遷徙帶，應建立區域定位圖，而不是因為它是統計／保育新聞而省略。
 
 ## 選擇尺度
 
@@ -60,6 +85,8 @@ description: Decide whether a selected news event needs geographic context and c
 - 高亮、標點或範圍與事件來源一致。
 - 圖說、標題與公開文字使用繁體中文。
 - 地圖檔案沒有被寫入 `images.assets`。
+
+另外，每一個已入選事件都必須完成 map decision coverage 檢查：事件數量必須等於已完成 `map.required` 判定的事件數量。任何事件缺少決定、仍為未判定，或命中強地理訊號卻沒有具體不需要理由，都視為本階段失敗，交由 `recover-news-run` 只重跑該事件的 `build-news-maps`。
 
 ## 輸出
 
