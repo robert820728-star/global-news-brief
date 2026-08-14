@@ -32,6 +32,7 @@
   - `.agents/skills/recover-news-run/SKILL.md`
   - `schemas/news-event-manifest.schema.json`
   - `schemas/news-candidate-audit.schema.json`
+  - `scripts/preprocess_news_candidates.py`
   - `scripts/validate_news_brief.py`
   - `scripts/manage_candidate_audit.py`
   - `scripts/recover_news_run.py`
@@ -91,6 +92,14 @@
 - 未指定時沿用 `user-preferences.example.yaml` 的預設值。
 - 板塊增加時不得為了填滿每區而加入低價值新聞。
 - 同一事件只放在一個主要板塊，跨國系統性事件才優先放全球板塊。
+
+## 模型與執行環境
+
+- 預設安裝不要求 Ollama、本地 GPU 或額外模型帳號。
+- 每次先使用 `scripts/preprocess_news_candidates.py` 完成確定性的時間窗、網址正規化與初步重複聚類，再由模型判斷語意與公共價值。
+- 若使用者已有 Ollama 或低成本模型服務，可在個人偏好啟用小模型分類；小模型只能做主題、板塊、實體與合併建議，不得單獨排除候選或決定最終評級。
+- 暫定 B 以上及政治、選舉、軍事、外交、金融市場、重大企業與科技、災害、疫情、公共安全事件，固定交由高階模型複核。
+- 雲端排程不能直接假設可連線使用者電腦上的 Ollama；未確認端點可用時必須跳過小模型層，不得中止每日新聞。
 
 ## 四、建立每日獨立排程
 
