@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/robert820728-star/global-news-brief/schemas/news-event-manifest.schema.json",
   "title": "每日新聞事件清單",
-  "description": "六個新聞技能共用的最終事件資料格式。子技能只能修改自己擁有的欄位。",
+  "description": "新聞技能共用的最終事件資料格式。子技能只能修改自己擁有的欄位。",
   "type": "object",
   "required": [
     "schema_version",
@@ -55,6 +55,7 @@
         "select-news-events": { "$ref": "#/$defs/stageState" },
         "verify-news-events": { "$ref": "#/$defs/stageState" },
         "build-news-maps": { "$ref": "#/$defs/stageState" },
+        "build-news-charts": { "$ref": "#/$defs/stageState" },
         "collect-news-images": { "$ref": "#/$defs/stageState" },
         "recover-news-run": { "$ref": "#/$defs/stageState" },
         "render": { "$ref": "#/$defs/stageState" },
@@ -115,6 +116,7 @@
           "enum": [
             "verify-news-events",
             "build-news-maps",
+            "build-news-charts",
             "collect-news-images",
             "render",
             "validate"
@@ -138,6 +140,7 @@
           "enum": [
             "verify-news-events",
             "build-news-maps",
+            "build-news-charts",
             "collect-news-images",
             "render",
             "validate"
@@ -159,6 +162,7 @@
         "selection",
         "verification",
         "map",
+        "charts",
         "images",
         "detail"
       ],
@@ -175,6 +179,7 @@
         "selection": { "$ref": "#/$defs/selection" },
         "verification": { "$ref": "#/$defs/verification" },
         "map": { "$ref": "#/$defs/mapResult" },
+        "charts": { "$ref": "#/$defs/chartResult" },
         "images": { "$ref": "#/$defs/imageResult" },
         "detail": { "$ref": "#/$defs/detail" }
       },
@@ -367,6 +372,48 @@
         "omission_reason": { "type": ["string", "null"] }
       },
       "additionalProperties": false
+    },
+    "chartResult": {
+      "type": "object",
+      "required": ["required", "status", "rationale", "assets", "omission_reason"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "status": { "enum": ["pending", "ready", "not_required", "omitted"] },
+        "rationale": { "type": "string" },
+        "assets": {
+          "type": "array",
+          "maxItems": 3,
+          "items": { "$ref": "#/$defs/chartAsset" }
+        },
+        "omission_reason": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "chartAsset": {
+      "type": "object",
+      "required": [
+        "path", "caption", "source_names", "source_urls", "chart_type",
+        "data_points", "visual_checked", "data_checked", "width", "height"
+      ],
+      "properties": {
+        "path": { "type": "string", "pattern": "^(sandbox:)?/" },
+        "caption": { "type": "string", "minLength": 1 },
+        "source_names": {
+          "type": "array", "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "source_urls": {
+          "type": "array", "minItems": 1,
+          "items": { "type": "string", "format": "uri" }
+        },
+        "chart_type": { "enum": ["bar", "line", "area", "scatter", "pie", "table"] },
+        "data_points": { "type": "integer", "minimum": 2 },
+        "visual_checked": { "const": true },
+        "data_checked": { "const": true },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": true
     },
     "imageSourceCheck": {
       "type": "object",

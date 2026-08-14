@@ -1,11 +1,11 @@
 ---
 name: collect-news-images
-description: Collect, download or screenshot, prioritize, visually inspect, and attach reliable news images for selected events. Use after verification when a news brief needs official information graphics, maps, charts, route or hazard products, and complementary source photos without losing existing event data.
+description: Collect, download or screenshot, prioritize, visually inspect, and attach official or media-published news images for selected events. Use after verification regardless of whether self-made maps or charts already exist; source images must remain an independent output and cannot be replaced by generated graphics.
 ---
 
 # 新聞圖片取得與驗收
 
-只修改事件資料的 `images`。不得修改事件編號、板塊、標題、等級、驗證內容或自製定位地圖。
+只修改事件資料的 `images`。不得修改事件編號、板塊、標題、等級、驗證內容、自製定位地圖或自製資料圖表。
 
 ## 必讀
 
@@ -21,6 +21,8 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - C／C−事件：不強制；圖片能明顯幫助理解政策、產業、統計或事件內容時可以加入。
 - 圖片取得失敗不改變事件等級。
 - 自製定位地圖由 `build-news-maps` 處理，不得放進 `images`。
+- 自製資料圖表由 `build-news-charts` 處理，不得放進 `images`。
+- `map.status` 或 `charts.status` 已是 `ready`，不代表圖片階段完成；仍須逐一檢查來源頁並取得官方或媒體實際發布的合格圖片。
 
 ## 雙軌選圖
 
@@ -42,6 +44,14 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 本則引用媒體的新聞頁首圖或具實質資訊的照片。
 
 官方資訊圖成功不代表刪除新聞配圖；兩者互補時都保留。
+
+## 禁止以自製內容冒充來源圖片
+
+- 不得自行把新聞文字、各方立場、摘要、結論或三個數字排成卡片後寫入 `images.assets`。
+- 不得把「俄羅斯／烏克蘭及盟友」、「安全評估／全面否認」等純文字對照卡當成新聞圖片。
+- 自製圖表只限至少兩個可比較的數值、時間序列、比例或分布；必須寫入獨立 `charts` 欄位。
+- 自製圖表的圖說須標示「本簡報依○○資料製作」，不得宣稱為該媒體或官方發布的圖片。
+- 即使已有合格自製圖表，B 以上事件的來源圖片硬閘門仍照常生效；自製圖表不得計入圖片 1 至 5 張，也不得滿足「至少一張來源圖片附件」要求。
 
 ## 數量與順序
 

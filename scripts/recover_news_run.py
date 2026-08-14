@@ -14,6 +14,7 @@ GRADE_RANK = {"C": 1, "B": 2, "A": 3, "S": 4}
 RECOVERABLE_STAGES = {
     "verify-news-events",
     "build-news-maps",
+    "build-news-charts",
     "collect-news-images",
     "render",
     "validate",
@@ -97,6 +98,11 @@ def recovery_plan(data: dict[str, Any]) -> list[dict[str, Any]]:
         if isinstance(map_result, dict) and map_result.get("required") is True:
             if map_result.get("status") in {"pending", "omitted"}:
                 add("build-news-maps", event_id, "必要定位地圖未完成")
+
+        charts = event.get("charts", {})
+        if isinstance(charts, dict) and charts.get("required") is True:
+            if charts.get("status") in {"pending", "omitted"}:
+                add("build-news-charts", event_id, "必要資料圖表未完成")
 
         images = event.get("images", {})
         if not isinstance(images, dict) or not is_b_or_above(event.get("grade")):

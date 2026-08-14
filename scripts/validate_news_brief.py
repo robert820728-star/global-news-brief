@@ -25,11 +25,13 @@ SINGLE_SOURCE_NOTE = "目前僅找到一個可靠來源，尚無其他獨立來�
 STAGE_OWNERS = {
     "verify-news-events": "verification",
     "build-news-maps": "map",
+    "build-news-charts": "charts",
     "collect-news-images": "images",
 }
 RECOVERABLE_STAGES = {
     "verify-news-events",
     "build-news-maps",
+    "build-news-charts",
     "collect-news-images",
     "render",
     "validate",
@@ -82,7 +84,7 @@ def _validate_media_result(
         return set()
 
     required_keys = ["required", "status", "assets", "omission_reason"]
-    if field == "map":
+    if field in {"map", "charts"}:
         required_keys.append("rationale")
     _need(result, required_keys, label, errors)
 
@@ -110,6 +112,8 @@ def _validate_media_result(
         errors.append(f"{label} 省略時必須保存後台原因")
     if field == "images" and len(assets) > 5:
         errors.append(f"{label} 超過每則 5 張圖片上限")
+    if field == "charts" and len(assets) > 3:
+        errors.append(f"{label} 超過每則 3 張自製資料圖表上限")
 
     paths: set[str] = set()
     for index, asset in enumerate(assets, start=1):
@@ -135,6 +139,17 @@ def _validate_media_result(
             urls = asset.get("source_urls")
             if not isinstance(urls, list) or not urls:
                 errors.append(f"{asset_label} 缺少定位依據來源")
+        elif field == "charts":
+            urls = asset.get("source_urls")
+            names = asset.get("source_names")
+            if not isinstance(urls, list) or not urls or not isinstance(names, list) or not names:
+                errors.append(f"{asset_label} 缺少資料來源")
+            if asset.get("data_checked") is not True:
+                errors.append(f"{asset_label} 尚未完成數據驗收")
+            if asset.get("chart_type") not in {"bar", "line", "area", "scatter", "pie", "table"}:
+                errors.append(f"{asset_label}.chart_type 無效")
+            if not isinstance(asset.get("data_points"), int) or asset.get("data_points", 0) < 2:
+                errors.append(f"{asset_label} 必須包含至少兩個可比較資料點")
         else:
             if asset.get("time_checked") is not True:
                 errors.append(f"{asset_label} 尚未完成時間驗收")
@@ -263,6 +278,7 @@ def validate_manifest_data(data: dict[str, Any]) -> list[str]:
         "select-news-events",
         "verify-news-events",
         "build-news-maps",
+        "build-news-charts",
         "collect-news-images",
         "recover-news-run",
         "render",
@@ -391,7 +407,7 @@ def validate_manifest_data(data: dict[str, Any]) -> list[str]:
             event,
             [
                 "event_id", "primary_section", "title", "grade", "selection",
-                "verification", "map", "images", "detail",
+                "verification", "map", "charts", "images", "detail",
             ],
             label,
             errors,
@@ -516,10 +532,11 @@ def validate_manifest_data(data: dict[str, Any]) -> list[str]:
                             errors.append(f"{claim_label} 引用不存在的來源：{source_id}")
 
         map_paths = _validate_media_result(label, "map", event.get("map"), errors)
+        chart_paths = _validate_media_result(label, "charts", event.get("charts"), errors)
         image_paths = _validate_media_result(label, "images", event.get("images"), errors)
         _validate_image_gate(event, final_status, errors)
         if final_status == "ready":
-            for field_name in ("map", "images"):
+            for field_name in ("map", "charts", "images"):
                 field_value = event.get(field_name)
                 if isinstance(field_value, dict) and field_value.get("status") == "pending":
                     errors.append(f"{label}.{field_name} 尚未完成判斷")
@@ -669,9 +686,11 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
                 errors.append(f"{event_id} 讀者版缺少單一來源說明")
 
         map_result = event.get("map", {})
+        chart_result = event.get("charts", {})
         image_result = event.get("images", {})
         for field, result, marker in (
             ("地圖", map_result, "**地圖：**"),
+            ("資料圖表", chart_result, "**資料圖表：**"),
             ("圖片", image_result, "**圖片：**"),
         ):
             if not isinstance(result, dict):

@@ -29,6 +29,7 @@ def valid_manifest():
             "select-news-events": "completed",
             "verify-news-events": "completed",
             "build-news-maps": "completed",
+            "build-news-charts": "completed",
             "collect-news-images": "completed",
             "recover-news-run": "completed",
             "render": "completed",
@@ -103,6 +104,13 @@ def valid_manifest():
                             "height": 900,
                         }
                     ],
+                    "omission_reason": None,
+                },
+                "charts": {
+                    "required": False,
+                    "status": "not_required",
+                    "rationale": "本事件不需要數據比較圖表",
+                    "assets": [],
                     "omission_reason": None,
                 },
                 "images": {
@@ -219,6 +227,32 @@ class ValidatorTests(unittest.TestCase):
         manifest["events"][0]["images"]["assets"] = []
         manifest["events"][0]["images"]["omission_reason"] = "取得失敗"
         manifest["events"][0]["images"]["source_checks"][0]["outcome"] = "acquisition_failed"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("未附上合格附件前不得完成簡報" in error for error in errors))
+
+    def test_ready_chart_does_not_replace_required_source_image(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["charts"] = {
+            "required": True,
+            "status": "ready",
+            "rationale": "比較兩個統計值",
+            "assets": [{
+                "path": "sandbox:/tmp/chart.png",
+                "caption": "資料圖表一：本簡報依官方資料製作。",
+                "source_names": ["官方來源"],
+                "source_urls": ["https://example.com/source"],
+                "chart_type": "bar",
+                "data_points": 2,
+                "visual_checked": True,
+                "data_checked": True,
+                "width": 1200,
+                "height": 800,
+            }],
+            "omission_reason": None,
+        }
+        manifest["events"][0]["images"]["status"] = "omitted"
+        manifest["events"][0]["images"]["assets"] = []
+        manifest["events"][0]["images"]["omission_reason"] = "取得失敗"
         errors = VALIDATOR.validate_manifest_data(manifest)
         self.assertTrue(any("未附上合格附件前不得完成簡報" in error for error in errors))
 

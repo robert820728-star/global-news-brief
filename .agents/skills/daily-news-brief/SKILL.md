@@ -1,6 +1,6 @@
 ---
 name: daily-news-brief
-description: Orchestrate a complete daily news brief from a precise rolling time window. Use when running, testing, installing, or repairing this repository's daily news workflow, especially when candidate selection, verification, maps, images, formatting, and final validation must execute in a fixed order without later stages deleting earlier results.
+description: Orchestrate a complete daily news brief from a precise rolling time window. Use when selection, verification, self-made maps, optional data charts, official or media images, formatting, recovery, and final validation must execute in a fixed order without one visual type replacing another.
 ---
 
 # 每日新聞主控
@@ -17,16 +17,6 @@ description: Orchestrate a complete daily news brief from a precise rolling time
 6. 只有驗證失敗或需要判斷正反例時，才讀取 `news-brief-examples.md` 相關段落。
 
 ## 固定流程
-
-## 分層執行原則
-
-- 先以 `scripts/preprocess_news_candidates.py` 處理時間窗、網址正規化及初步重複聚類，避免把確定性工作反覆交給模型。
-- 小模型是可選加速層，不是必要依賴。沒有 Ollama、本地服務或低成本模型時，流程仍必須使用規則加高階模型完成。
-- 小模型只做分類、標籤與合併建議；不得單獨排除候選、決定最終等級、拆解最小主張或完成事實查核。
-- 高階模型保留給重大候選複核、語意聚類、評級、主張拆解、多來源矛盾、官方說法定位、分析及最終編纂。
-- 每個事件獨立處理與保存階段結果；不得把全部候選與全部來源重複塞入每一次模型請求。
-- 任何成本或速率限制最佳化都不得降低海選召回率，也不得讓政治、軍事、外交、金融市場、重大科技、災害、疫情及公共安全事件無聲消失。
-
 
 ### 一、建立執行資料
 
@@ -69,7 +59,11 @@ description: Orchestrate a complete daily news brief from a precise rolling time
 
 地圖技能只能修改 `map`，且不得把專業資訊圖移入地圖欄。
 
-### 五、圖片
+### 五、自製資料圖表
+
+數值比較、趨勢、比例或分布確實有助理解時使用 `build-news-charts`。純文字摘要或立場卡禁止製作。圖表只寫入 `charts`，不得取代來源圖片。
+
+### 六、圖片
 
 使用 `collect-news-images`：
 
@@ -78,9 +72,9 @@ description: Orchestrate a complete daily news brief from a precise rolling time
 - 下載或截圖為可直接顯示的本地附件，完成視覺、時間與內容驗收。
 - 將合格附件寫入 `images`。
 
-圖片技能只能修改 `images`。不得重建事件物件、刪除地圖或變更來源、標題與等級。
+圖片技能只能修改 `images`。不得重建事件物件、刪除地圖或圖表，或變更來源、標題與等級。已有自製圖表不影響來源圖片硬閘門。
 
-### 六、自主恢復
+### 七、自主恢復
 
 使用 `recover-news-run`：
 
@@ -92,12 +86,13 @@ description: Orchestrate a complete daily news brief from a precise rolling time
 
 恢復技能負責判斷與調度，不得直接修改 `verification`、`map` 或 `images`；實際修復仍由原欄位擁有技能完成。
 
-### 七、完整性檢查
+### 八、完整性檢查
 
 在寫稿前確認：
 
 - 每個事件仍保有選題、驗證、地圖與圖片階段已完成的欄位。
-- `map.assets` 與 `images.assets` 分開保存。
+- `map.assets`、`charts.assets` 與 `images.assets` 分開保存。
+- 自製圖表不得包含純文字摘要卡，也不得讓圖片階段跳過來源頁檢查。
 - 單一可靠來源事件有來源限制文字，但等級未被自動改變。
 - 所有附件都有路徑、圖說、來源、驗收狀態；地圖不計入圖片數量。
 - B 以上事件必須完成所有引用來源頁的圖片檢查。任何來源已找到可用圖片時，至少一張合格附件必須存在；否則不得把最終狀態設為 `ready`。
@@ -111,15 +106,15 @@ description: Orchestrate a complete daily news brief from a precise rolling time
 python3 scripts/validate_news_brief.py manifest --input /path/to/news-event-manifest.json
 ```
 
-### 八、輸出讀者版
+### 九、輸出讀者版
 
 - 從事件資料渲染，不重新搜尋或重新判斷。
 - 套用 `news-brief-template.md`。
-- 事件資料內所有已驗收的地圖與圖片都必須出現在對應詳報。
+- 事件資料內所有已驗收的地圖、資料圖表與圖片都必須出現在對應詳報。
 - 圖片與圖說成對；不得留下文字佔位。
 - 只輸出日期行與今日總覽、逐條詳報、後續觀察三個二級標題。
 
-### 九、最終驗證
+### 十、最終驗證
 
 執行：
 
@@ -139,8 +134,3 @@ python3 scripts/validate_news_brief.py brief \
 - 格式失敗：修正模板渲染；不能重新生成新聞內容。
 - 來源互相矛盾：保留差異並調整確定語氣；只有事件核心被證偽時，才回到選題階段重新處理。
 - 執行中斷或工具暫時故障：由 `recover-news-run` 偵測未完成狀態並局部重跑；不得等待人工發現才恢復。
-
-
-## 候選稽核階段
-
-選題後、驗證前使用 `audit-news-candidates`：保存全部候選的十四天紀錄，比較持續事件，並檢查暫定 B 以上未入選候選都有理由。D／E 只供內部追蹤。稽核內容或理由驗證失敗時，只重跑 `select-news-events` 與 `audit-news-candidates`，不得清空其他模組。無法跨次保存歷史不屬於稽核失敗；改用目前可讀歷史或本輪資料並繼續後續流程。
