@@ -13,7 +13,11 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 
 ## 適用門檻
 
-- B 以上事件：只要本則引用來源提供可信且相關圖片，必須嘗試下載或截圖。
+- B 以上事件：`images.required` 固定為 `true`，逐一開啟 `verification.sources` 的來源頁檢查圖片，不得直接以「無圖」結案。
+- 每個引用來源都必須寫入 `images.source_checks`；記錄是否找到可用圖片、嘗試次數與結果。
+- 任一來源找到可信且相關圖片後，`images.status` 只能在至少一張附件通過驗收後改為 `ready`。
+- 已找到可用圖片但下載或截圖失敗時，狀態維持 `pending` 或 `failed`，回到本技能重試；不得改成 `omitted` 後交付。
+- 只有全部引用來源都已檢查且均無可用圖片，才可使用 `omitted`，並保存具體後台原因。
 - C／C−事件：不強制；圖片能明顯幫助理解政策、產業、統計或事件內容時可以加入。
 - 圖片取得失敗不改變事件等級。
 - 自製定位地圖由 `build-news-maps` 處理，不得放進 `images`。
@@ -71,7 +75,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 影像沒有誤導性裁切，文字可辨識。
 - 不是無關舊照、資料庫示意照或被錯誤歸屬的畫面。
 
-失敗時依取得順序重試；仍失敗才省略圖片及其圖說。不得只留下「圖一」文字。
+失敗時依取得順序重試。若來源已確認有可用圖片，重試仍失敗也不得省略後交付；維持未完成狀態，讓主控只重跑圖片模組。不得只留下「圖一」文字。
 
 ## 時間與區域
 
@@ -95,6 +99,11 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 
 - `images.required`
 - `images.status`
+- `images.source_checks[].source_url`
+- `images.source_checks[].checked`
+- `images.source_checks[].usable_image_found`
+- `images.source_checks[].attempts`
+- `images.source_checks[].outcome`
 - `images.assets[].path`
 - `images.assets[].caption`
 - `images.assets[].source_name`
@@ -107,4 +116,4 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - `images.assets[].height`
 - `images.omission_reason`
 
-沒有來源圖片或重試失敗時，保存後台原因但讀者版省略圖片欄。
+所有來源確實沒有圖片時，保存後台原因但讀者版省略圖片欄。來源有圖但取得失敗時不得進入讀者版輸出。
