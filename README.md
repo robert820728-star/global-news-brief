@@ -4,9 +4,17 @@
 
 ## 快速安裝
 
-在新的 ChatGPT 對話貼上本 repo 網址，並輸入：
+在新的 ChatGPT 或 Codex 對話貼上本 repo 網址，並完整輸入：
 
-> 請讀取此 GitHub repo 的 INSTALL.md，協助我設定個人偏好與每日新聞排程。任何建立或修改排程的動作都先取得我的確認。
+> 請讀取此 GitHub repo 的 INSTALL.md。先從 `.agents/skills/` 下載並安裝完整的五個新聞技能及其必要檔案，逐一驗證後，再協助我設定個人偏好與每日新聞排程。不得只讀取 `SKILL.md` 就宣稱安裝成功；任何建立或修改技能與排程的動作都先取得我的確認。
+
+GPT 應先處理技能，再詢問偏好與排程：
+
+1. 能安裝技能時，下載五個完整技能資料夾並逐一驗證。
+2. 在本 repo 工作目錄內執行時，使用 `.agents/skills/` 的 repo 級技能。
+3. 只有讀取 GitHub 的能力、無法安裝技能時，必須明確說明並改成每次重新讀取，不得假稱已安裝。
+
+詳細的下載、驗證與降級流程以 [INSTALL.md](INSTALL.md) 為準。
 
 安裝時只需確認三件事：
 
@@ -21,7 +29,7 @@
 - 排程及結果對話名稱固定為「每日新聞」。
 - 每份讀者版第一行固定為執行地日期的 `YYYY/MM/DD 每日新聞`。
 
-詳細步驟請見 [INSTALL.md](INSTALL.md)，個人設定格式請見 [user-preferences.example.yaml](user-preferences.example.yaml)，排程執行提示詞請見 [daily-schedule-prompt.md](daily-schedule-prompt.md)。
+個人設定格式請見 [user-preferences.example.yaml](user-preferences.example.yaml)，排程執行提示詞請見 [daily-schedule-prompt.md](daily-schedule-prompt.md)。
 
 ## 模組化架構
 
