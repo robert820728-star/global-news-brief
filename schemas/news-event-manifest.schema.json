@@ -407,7 +407,8 @@
       "type": "object",
       "required": [
         "path", "caption", "source_names", "source_urls", "chart_type",
-        "data_points", "visual_checked", "data_checked", "width", "height"
+        "data_points", "labels", "numeric_values", "unit", "chart_purpose",
+        "visual_checked", "data_checked", "width", "height"
       ],
       "properties": {
         "path": { "type": "string", "pattern": "^(sandbox:)?/" },
@@ -420,8 +421,21 @@
           "type": "array", "minItems": 1,
           "items": { "type": "string", "format": "uri" }
         },
-        "chart_type": { "enum": ["bar", "line", "area", "scatter", "pie", "table"] },
-        "data_points": { "type": "integer", "minimum": 2 },
+        "chart_type": { "enum": ["metric_card", "bar", "line", "area", "scatter", "pie", "table"] },
+        "chart_purpose": { "enum": ["single_metric", "comparison", "trend", "proportion", "distribution", "lookup"] },
+        "data_points": { "type": "integer", "minimum": 1 },
+        "labels": {
+          "type": "array", "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "numeric_values": {
+          "type": "array", "minItems": 1,
+          "items": { "type": "number" }
+        },
+        "unit": { "type": "string", "minLength": 1 },
+        "highlight_reason": { "type": ["string", "null"] },
+        "x_axis_label": { "type": ["string", "null"] },
+        "y_axis_label": { "type": ["string", "null"] },
         "visual_checked": { "const": true },
         "data_checked": { "const": true },
         "width": { "type": "integer", "minimum": 1 },
