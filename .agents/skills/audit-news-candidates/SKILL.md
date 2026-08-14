@@ -9,6 +9,13 @@ description: Maintain a rolling fourteen-day audit of all news candidates, inclu
 
 ## 流程
 
+## 成本與模型邊界
+
+候選歷史讀寫、十四天裁切、`dedup_key`／`continuity_key` 比對、理由完整性、來源數計數及 D／E 保存均以程式完成，不使用大型模型重算整份稽核。
+
+只有下列工作需要模型：判斷持續事件是否有實質轉折、檢查暫定 B 以上事件是否被錯誤排除、辨認不同標題是否其實是同一底層事件。可選小模型只能提出標籤或合併建議；最終排除、降為 D／E 或重大事件合併須由高階模型確認。
+
+
 1. 讀取本輪全部聚類候選與最近十四天 `state/candidate-audit.json`。
 2. 以 `dedup_key` 去重，以 `continuity_key` 連接跨日事件。
 3. 每筆記錄 `selected`、`excluded`、`merged` 或 `deferred`，並附理由代碼與繁體中文說明。
