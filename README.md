@@ -23,14 +23,21 @@
 
 詳細步驟請見 [INSTALL.md](INSTALL.md)，個人設定格式請見 [user-preferences.example.yaml](user-preferences.example.yaml)，排程執行提示詞請見 [daily-schedule-prompt.md](daily-schedule-prompt.md)。
 
+## 不需要 GitHub 帳號
+
+公開 repo 的規則、技能、模板、地圖與圖片流程都可直接讀取；沒有 GitHub 帳號或寫入權限仍可產生完整每日新聞。
+
+十四天候選回查採漸進式保存：優先使用可持久工作區，其次使用具寫入權限的 repository。若兩者皆不可用，系統仍完成本輪海選、D／E 內部分級、來源複查與讀者版，只是不保證跨日保存十四天歷史。此降級不得影響事件評級、入選、圖片、地圖或最終輸出。
+
 ## 模組化架構
 
-工作流固定使用六個 repo 技能，透過同一份事件清單交接；後段技能不能重建事件或刪除前段成果。
+工作流固定使用七個 repo 技能，透過同一份事件清單交接；後段技能不能重建事件或刪除前段成果。
 
 | 階段 | 技能 | 唯一負責內容 |
 |---|---|---|
 | 主控 | `daily-news-brief` | 精確時間窗、模組順序、詳報組裝、最終輸出與驗收 |
 | 海選 | `select-news-events` | 候選、事件去重、板塊、編號、入選與評級 |
+| 稽核 | `audit-news-candidates` | 十四天候選紀錄、排除理由、D／E 內部分級與持續事件比較 |
 | 複查 | `verify-news-events` | 多來源、原始／官方回查、主張台帳、差異與不確定性 |
 | 地圖 | `build-news-maps` | 自製定位地圖及其驗收 |
 | 圖片 | `collect-news-images` | 官方資訊圖、新聞配圖、下載／截圖與視覺驗收 |
@@ -40,8 +47,10 @@
 
 ## 核心文件
 
-- `.agents/skills/`：六個可獨立維護的工作流技能
+- `.agents/skills/`：七個可獨立維護的工作流技能
 - `schemas/news-event-manifest.schema.json`：跨技能事件資料契約
+- `schemas/news-candidate-audit.schema.json`：候選稽核與十四天歷史資料契約
+- `scripts/manage_candidate_audit.py`：候選歷史裁切、附加與驗證工具
 - `scripts/validate_news_brief.py`：事件資料、欄位所有權與讀者版驗證器
 - `scripts/recover_news_run.py`：產生局部恢復計畫並記錄重試結果
 - `news-brief-settings.md`：編輯偏好、收納、分級與共通規則
