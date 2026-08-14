@@ -23,7 +23,41 @@ content_date_heading: "YYYY/MM/DD 每日新聞"
 workflow:
   orchestrator: daily-news-brief
   event_manifest_schema: schemas/news-event-manifest.schema.json
+  candidate_preprocessor: scripts/preprocess_news_candidates.py
   validator: scripts/validate_news_brief.py
+
+model_routing:
+  mode: auto
+  deterministic_preprocessing: true
+  lightweight_model:
+    enabled: optional
+    provider: auto
+    allowed_tasks:
+      - topic_tagging
+      - section_tagging
+      - entity_tagging
+      - merge_suggestions
+    may_exclude_candidates: false
+    required_for_installation: false
+  high_capability_model:
+    required_for:
+      - major_or_uncertain_candidates
+      - provisional_grading
+      - semantic_deduplication
+      - claim_decomposition
+      - multi_source_verification
+      - contradiction_analysis
+      - final_editing
+  mandatory_escalation:
+    minimum_provisional_grade: B
+    categories:
+      - politics_and_elections
+      - military_and_diplomacy
+      - financial_markets
+      - major_companies_and_technology
+      - disasters_and_epidemics
+      - public_safety
+    low_confidence: true
 
 sections:
   mode: default
