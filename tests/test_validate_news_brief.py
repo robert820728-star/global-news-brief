@@ -255,6 +255,13 @@ class ValidatorTests(unittest.TestCase):
                 "source_urls": ["https://example.com/source"],
                 "chart_type": "bar",
                 "data_points": 2,
+                "labels": ["原預測", "最新預測"],
+                "numeric_values": [9.64, 11.05],
+                "unit": "%",
+                "chart_purpose": "comparison",
+                "highlight_reason": None,
+                "x_axis_label": "預測版本",
+                "y_axis_label": "經濟成長率（%）",
                 "visual_checked": True,
                 "data_checked": True,
                 "width": 1200,
@@ -267,6 +274,95 @@ class ValidatorTests(unittest.TestCase):
         manifest["events"][0]["images"]["omission_reason"] = "取得失敗"
         errors = VALIDATOR.validate_manifest_data(manifest)
         self.assertTrue(any("未附上合格附件前不得完成簡報" in error for error in errors))
+
+    def test_text_card_cannot_pass_as_chart(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["charts"] = {
+            "required": True,
+            "status": "ready",
+            "rationale": "比較雙方立場",
+            "assets": [{
+                "path": "sandbox:/tmp/text-card.png",
+                "caption": "雙方立場摘要。",
+                "source_names": ["可靠來源"],
+                "source_urls": ["https://example.com/source"],
+                "chart_type": "bar",
+                "data_points": 2,
+                "labels": ["俄羅斯", "烏克蘭及盟友"],
+                "numeric_values": [],
+                "unit": "",
+                "chart_purpose": "comparison",
+                "highlight_reason": None,
+                "x_axis_label": "立場",
+                "y_axis_label": "",
+                "visual_checked": True,
+                "data_checked": True,
+                "width": 1200,
+                "height": 800,
+            }],
+            "omission_reason": None,
+        }
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("至少一個實際繪製的具體數值" in error for error in errors))
+
+    def test_two_point_line_chart_is_rejected(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["charts"] = {
+            "required": True,
+            "status": "ready",
+            "rationale": "比較前後預測",
+            "assets": [{
+                "path": "sandbox:/tmp/two-point-line.png",
+                "caption": "前後預測比較。",
+                "source_names": ["官方來源"],
+                "source_urls": ["https://example.com/source"],
+                "chart_type": "line",
+                "data_points": 2,
+                "labels": ["原預測", "最新預測"],
+                "numeric_values": [9.64, 11.05],
+                "unit": "%",
+                "chart_purpose": "trend",
+                "highlight_reason": None,
+                "x_axis_label": "預測版本",
+                "y_axis_label": "經濟成長率（%）",
+                "visual_checked": True,
+                "data_checked": True,
+                "width": 1200,
+                "height": 800,
+            }],
+            "omission_reason": None,
+        }
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("折線圖至少需要三個時間點" in error for error in errors))
+
+    def test_single_verified_metric_card_is_allowed(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["charts"] = {
+            "required": True,
+            "status": "ready",
+            "rationale": "凸顯核心傷亡數字",
+            "assets": [{
+                "path": "sandbox:/tmp/metric-card.png",
+                "caption": "資料卡一：本簡報依官方資料製作。",
+                "source_names": ["官方來源"],
+                "source_urls": ["https://example.com/source"],
+                "chart_type": "metric_card",
+                "chart_purpose": "single_metric",
+                "data_points": 1,
+                "labels": ["受傷人數"],
+                "numeric_values": [36],
+                "unit": "人",
+                "highlight_reason": "此為事件最重要的公共安全規模指標",
+                "x_axis_label": None,
+                "y_axis_label": None,
+                "visual_checked": True,
+                "data_checked": True,
+                "width": 1200,
+                "height": 800,
+            }],
+            "omission_reason": None,
+        }
+        self.assertEqual([], VALIDATOR.validate_manifest_data(manifest))
 
     def test_b_grade_requires_all_source_pages_checked(self):
         manifest = valid_manifest()
