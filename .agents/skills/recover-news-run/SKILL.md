@@ -71,5 +71,6 @@ python3 scripts/recover_news_run.py record \
 | 候選缺少決定或理由 | `audit-news-candidates` |
 | 暫定 B 以上候選無故消失 | `select-news-events`，再執行 `audit-news-candidates` |
 | 十四天裁切或持續事件比較失敗 | `audit-news-candidates` |
+| 無 GitHub 寫入權限或無持久工作區 | 不重跑；標記稽核歷史降級並繼續 |
 
-D／E 只修復稽核資料；單一可靠來源不得改寫成排除理由。
+D／E 只修復稽核資料；單一可靠來源不得改寫成排除理由。歷史無法跨次保存不是執行故障，不得觸發整輪重跑或阻止讀者版輸出。
