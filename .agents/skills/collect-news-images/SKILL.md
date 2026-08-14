@@ -24,6 +24,16 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 自製資料圖表由 `build-news-charts` 處理，不得放進 `images`。
 - `map.status` 或 `charts.status` 已是 `ready`，不代表圖片階段完成；仍須逐一檢查來源頁並取得官方或媒體實際發布的合格圖片。
 
+## 官方專業圖資硬閘門
+
+- B 以上事件若屬氣象、災害、疫情、公共衛生、地震、海嘯、野火、戰爭、航運或其他具有專業監測產品的類型，`images.professional_visual_required` 固定為 `true`。
+- 先依事件類型與主要影響地區，主動搜尋主管機關、監測機構、地方政府或專業組織的圖資；不得只檢查新聞來源頁後就宣告沒有專業圖。
+- 每個查過的官方或專業頁面都寫入 `images.professional_source_checks`。至少涵蓋中央主管機關與主要受影響地區主管單位；跨國事件再查國際組織或受影響國官方來源。
+- 找到與事件時間、地區及主張相符的專業圖時，至少一張 `kind` 為 `official_information` 或 `professional_information` 的本地附件通過視覺與時間驗收前，`images.professional_visual_status` 不得設為 `ready`，整則事件也不得交付。
+- 專業圖下載或截圖失敗時，依「原始下載資產 → 官方產品頁截圖 → 官方歷史／存檔頁 → 地方主管機關 → 主要媒體引用的同一官方圖」重試；不得因第一次取得失敗就改用現場照結案。
+- 只有完成上述搜尋且確實沒有符合事件階段的專業圖，才可把 `images.professional_visual_status` 設為 `not_available`，並在 `images.professional_omission_reason` 保存具體後台原因。
+- 自製定位地圖、自製資料圖表、新聞照片與頁首圖均不能滿足專業圖資硬閘門；反之，專業圖資也不能取代來源頁新聞配圖硬閘門。兩者必須各自完成。
+
 ## 雙軌選圖
 
 ### 資訊圖
@@ -34,6 +44,15 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 官方震央、震度、烈度、海嘯警戒圖。
 - 疫情統計、曲線、分布與病例圖。
 - 戰況、航線、災害影響、財務或政策圖表。
+
+事件類型有慣用監測產品時，必須優先找對應產品，而不是只找任何一張「看起來專業」的圖：
+
+- 豪雨／淹水：解析雨量、累積雨量、雷達、淹水風險、土砂災害風險或警戒區域圖。
+- 颱風：官方路徑、警戒區、雨量、雷達或衛星圖。
+- 地震／海嘯：震央、震度／烈度、海嘯警戒或預估影響圖。
+- 疫情：官方病例趨勢、地理分布、死亡或醫療負荷圖。
+- 野火／熱浪：火場範圍、衛星熱點、疏散區、溫度異常或健康風險圖。
+- 航運／軍事：官方航行警告、限制區、航線、設施或經驗證的影響圖。
 
 ### 新聞配圖
 
@@ -90,6 +109,8 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 ## 時間與區域
 
 - 專業資訊圖必須接近新聞更新或事件階段。
+- 專業圖的發布時間、有效時間與統計截止必須逐張檢查；不得以過期預測圖或較早事件圖補位。
+- 來源選擇跟隨主要影響地區。例如日本豪雨先查日本氣象廳、地方氣象台與地方防災單位；中國防汛查中國氣象局、中央氣象台與受影響省市單位。
 - 颱風仍影響台灣時優先台灣官方圖；已登陸或殘餘環流主要影響其他地區時，改查主要影響地區官方氣象與防災圖。
 - 不得用多日前早期預測圖冒充最新災情；殘餘環流事件優先最新雨量、降雨落區、警戒、防汛、雷達、衛星或災害影響圖。
 - 地震圖一優先官方震央或震度圖；疫情圖一優先最新官方統計或分布圖；現場照片排後。
@@ -114,6 +135,10 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - `images.source_checks[].usable_image_found`
 - `images.source_checks[].attempts`
 - `images.source_checks[].outcome`
+- `images.professional_visual_required`
+- `images.professional_visual_status`
+- `images.professional_source_checks[]`
+- `images.professional_omission_reason`
 - `images.assets[].path`
 - `images.assets[].caption`
 - `images.assets[].source_name`
