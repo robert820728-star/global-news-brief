@@ -230,11 +230,12 @@ def add_padding(bounds, pad_ratio=0.035):
 def render(name: str, spec: dict):
     polygons = [project_ring(ring, spec) for ring in collect_polygons(spec["file"], spec)]
     fig, ax = plt.subplots(figsize=spec["figsize"], dpi=180)
+    style = spec.get("style", {})
     collection = PolyCollection(
         polygons,
-        facecolors="#f3e6b8",
-        edgecolors="#53606f",
-        linewidths=0.42,
+        facecolors=style.get("land_fill", "#f3e6b8"),
+        edgecolors=style.get("boundary_color", "#53606f"),
+        linewidths=float(style.get("boundary_width", 0.42)),
         antialiaseds=True,
     )
     ax.add_collection(collection)
@@ -243,7 +244,7 @@ def render(name: str, spec: dict):
     ax.set_xlim(minx, maxx)
     ax.set_ylim(miny, maxy)
     ax.set_aspect("equal", adjustable="box")
-    ax.set_facecolor("#ffffff")
+    ax.set_facecolor(style.get("background", "#ffffff"))
     ax.axis("off")
     fig.tight_layout(pad=0.12)
     OUT.mkdir(parents=True, exist_ok=True)
@@ -252,9 +253,41 @@ def render(name: str, spec: dict):
     plt.close(fig)
 
 
+def section_specs():
+    """Load initialized custom-section map specifications."""
+    directory = OUT / "sections"
+    if not directory.is_dir():
+        return
+    for metadata_path in sorted(directory.glob("*-base.json")):
+        with metadata_path.open("r", encoding="utf-8") as handle:
+            metadata = json.load(handle)
+        source_path = ROOT / metadata["source_geojson"]
+        spec = {
+            "file": source_path,
+            "title": metadata.get("name", metadata["code"]),
+            "figsize": (8.5, 7.0),
+            "bounds": tuple(metadata["bounds"]),
+            "projection": metadata.get("projection", "regional"),
+            "standard_lat": metadata.get("standard_lat") or 0.0,
+            "central_lon": metadata.get("central_lon"),
+            "style": metadata.get("style", {}),
+        }
+        if spec["projection"] in {"pacific_centered", "robinson_pacific"}:
+            spec["cut_lon"] = metadata.get("cut_lon", -30.0)
+        yield f"sections/{metadata['code']}-base", spec, metadata_path, metadata
+
+
 def main():
     for name, spec in MAPS.items():
         render(name, spec)
+    for name, spec, metadata_path, metadata in section_specs() or ():
+        render(name, spec)
+        metadata["status"] = "rendered_pending_visual_check"
+        metadata["visual_checked"] = False
+        metadata_path.write_text(
+            json.dumps(metadata, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
 
 
 if __name__ == "__main__":
