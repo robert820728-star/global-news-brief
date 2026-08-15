@@ -59,7 +59,7 @@
 | 全球／其他國家或區域 | `maps/source/world-countries.geojson` |
 | 自訂板塊 | `maps/generated/sections/<CODE>-base.json` 指定的來源與範圍 |
 
-自訂板塊必須輸出淡黃色陸地、清楚深色行政界線的 `maps/generated/sections/<CODE>-base.png`／`.svg`。區域板塊至少保留成員國國界；若 repository 有相應省、州、縣市資料，必須保留該層級內部行政界線。不得用圖片搜尋結果或官方專業資訊圖冒充板塊底圖。
+自訂板塊必須輸出淡黃色陸地、清楚深色行政界線的 `maps/generated/sections/<CODE>-base.png`／`.svg`。單一國家必須以 ISO 三碼透過 `scripts/fetch_admin_boundaries.py` 從固定來源取得 ADM1；不論選擇美國、英國、法國或其他國家皆使用同一流程，禁止硬編碼國家特例。跨國區域至少保留成員國國界。ADM1 無法取得時必須失敗並恢復，不得降級成無行政區底圖；不得用圖片搜尋結果或官方專業資訊圖冒充板塊底圖。
 
 使用 `scripts/render_base_maps.py` 產生淡黃色底圖；可用 `maps/generated/taiwan-counties-yellow-v2.png`、`maps/generated/china-provinces-yellow-v2.png` 與 `maps/generated/world-countries-pacific-robinson-yellow-v2.png` 對照核准比例與投影。若檔名更新，以 `maps/README.md` 為準。
 
