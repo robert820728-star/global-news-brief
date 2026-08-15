@@ -1,5 +1,9 @@
 # News Brief Base Maps
 
+## Canonical style
+
+All self-rendered section and event maps must load `maps/style.json` with style id `yellow-admin-v2`. The approved visual references are the Taiwan, China, and Pacific-centered world `yellow-v2` maps in `maps/generated/`. A new section may change geographic extent and administrative level only; blue backgrounds, platform-default maps, satellite styles, or alternate color systems are not valid outputs.
+
 Reusable base maps for news brief location highlighting.
 
 ## Files
