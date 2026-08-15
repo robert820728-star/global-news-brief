@@ -1,5 +1,15 @@
 # 定位地圖規則
 
+## 唯一核准風格
+
+所有自製底圖與事件定位圖固定使用 `maps/style.json` 的 `yellow-admin-v2`。風格基準是：
+
+- `maps/generated/taiwan-counties-yellow-v2.png`
+- `maps/generated/china-provinces-yellow-v2.png`
+- `maps/generated/world-countries-pacific-robinson-yellow-v2.png`
+
+新板塊只能改變範圍、尺度、行政層級、標點、高亮與路線，不能改變底色和視覺語言。藍色底圖、深色底圖、網路地圖截圖、平台預設地圖及其他 renderer 的預設風格全部不合格；必須回到 `scripts/render_base_maps.py` 修復。
+
 ## 每則事件都要有判定
 
 所有入選事件都必須完成一次地圖需求判定，不得因主要類別看似不是地理新聞而跳過。`not_required` 是一個需要理由的判定結果，不是預設值。
