@@ -26,6 +26,7 @@ description: Detect, isolate, retry, and revalidate failed stages in the daily n
 | `map` | `build-news-maps` 的該事件 |
 | `images` | `collect-news-images` 的該事件 |
 | 讀者版缺欄、順序或附件 | `render` |
+| 讀者版草稿或發布檔不存在 | `render`，完成後接續 `validate` 與發布閘門 |
 | 資料或版面驗證失敗 | 依錯誤欄位路由；無法定位時重跑 `validate` |
 
 圖片失敗時，每一輪依序採用：原圖下載、重新載入來源頁後下載或截圖、同一事件的另一個可靠來源。每輪都重新開啟並視覺驗收，不沿用失敗頁面狀態。地圖不得替代圖片。
@@ -44,7 +45,9 @@ description: Detect, isolate, retry, and revalidate failed stages in the daily n
 使用：
 
 ```bash
-python3 scripts/recover_news_run.py plan --input /path/to/news-event-manifest.json
+python3 scripts/recover_news_run.py plan \
+  --input /path/to/news-event-manifest.json \
+  --brief /path/to/news-brief.md
 
 python3 scripts/recover_news_run.py record \
   --input /path/to/news-event-manifest.json \
