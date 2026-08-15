@@ -1,45 +1,40 @@
 # Daily news executable workspace bootstrap
 
-This file is the **pre-checkpoint entrypoint** for scheduled runs. It exists to close the gap where the GitHub connector can read repository content but the execution shell does not yet have a repository filesystem.
+This file is the **pre-checkpoint entrypoint** for scheduled runs. Stage -1 must create a real executable workspace before any repository Python script is allowed to run.
 
-## Stage -1: repository materialization
+## Design
+
+The scheduled environment may let the GitHub connector read repository objects while the shell has no GitHub network path and no checked-out worktree. Therefore Stage -1 uses a **verified runtime capsule** instead of trying to materialize the full repository blob-by-blob through the model channel.
+
+The capsule is generated in GitHub Actions from the repository runtime closure, compressed as deterministic `tar.xz`, base64-encoded, split into small UTF-8 text chunks, and checked into `bootstrap/`. Large generated PNG/SVG files and tests are not transported. Canonical map source data and render scripts are included so derived basemaps can be rebuilt locally.
+
+## Stage -1: verified runtime capsule
 
 Before executing any `scripts/*.py`, do all of the following:
 
-1. Use the GitHub connector to resolve the latest `main` commit SHA for `robert820728-star/global-news-brief`.
-2. Do not assume that a repository visible through the GitHub connector already exists in the shell. Inspect the writable execution filesystem for a usable `global-news-brief` workspace.
-3. If the workspace is absent, incomplete, or belongs to a different commit, create a fresh writable workspace. **Do not use `git clone`, `curl`, `wget`, raw GitHub HTTP from the shell, or any other shell-network fallback.** The scheduled sandbox may allow the GitHub connector while denying shell DNS/network access.
-4. Through the GitHub connector, fetch the recursive Git tree at the exact resolved commit and materialize the **full tracked commit tree** into the local workspace. Fetch text as exact UTF-8 bytes when available; fetch binary blobs as base64/blob bytes and decode locally. Preserve repository-relative paths. Never synthesize missing scripts or copy files from an older run.
-5. For every materialized blob, record:
-   - repository-relative `path`
-   - GitHub `source_blob_sha`
-   - local `sha256`
-   - local byte `size`
-6. Write `<workspace>/bootstrap-workspace.json` with this shape:
+1. Use the GitHub connector to resolve the latest `main` commit SHA and fetch its recursive Git tree. Do not assume connector visibility means the shell already has a repository.
+2. From that exact commit, fetch `bootstrap/capsule-manifest.json` and its Git blob SHA. Require:
+   - `repository = robert820728-star/global-news-brief`
+   - `materialization_method = github-connector-capsule`
+   - `materialization_scope = verified-runtime-capsule`
+   - a non-empty `runtime_files` list and `chunks` list.
+3. Fail stale capsules closed. Compare every `runtime_files[].path` and `source_blob_sha` in the manifest with the same path in the latest `main` recursive tree. Also fetch latest commit metadata and require `manifest.source_commit` to be either the latest commit itself or its first parent. If any runtime path is missing/different, or the source-commit relation is stale, stop with `repository materialization / executable workspace acquisition`.
+4. Fetch `bootstrap/bootstrap_loader.py` from the same latest commit. Validate its connector-returned Git blob SHA against both the latest tree and `manifest.loader.source_blob_sha`. Write it to a temporary writable staging directory.
+5. Fetch every chunk named by `manifest.chunks[]` from `bootstrap/<chunk-name>` as UTF-8 text from the same latest commit. Write each exact returned string to the staging directory. Do not synthesize, truncate, concatenate in the model response, or use shell network access.
+6. Write the exact manifest JSON to the staging directory as `capsule-manifest.json` and run the loader locally:
 
-```json
-{
-  "schema_version": "1.0.0",
-  "status": "completed",
-  "repository": "robert820728-star/global-news-brief",
-  "ref": "main",
-  "commit_sha": "<resolved-main-commit-sha>",
-  "materialization_method": "github-connector",
-  "materialization_scope": "full-commit-tree",
-  "workspace_root": "<absolute-workspace-path>",
-  "materialized_at": "<ISO-8601 timestamp>",
-  "files": [
-    {
-      "path": "scripts/news_run_checkpoint.py",
-      "source_blob_sha": "<git-blob-sha>",
-      "sha256": "<local-sha256>",
-      "size": 12345
-    }
-  ]
-}
+```bash
+python3 <staging>/bootstrap_loader.py \
+  --manifest <staging>/capsule-manifest.json \
+  --chunks-dir <staging> \
+  --workspace <workspace> \
+  --commit-sha <latest-main-commit-sha> \
+  --manifest-blob-sha <manifest-git-blob-sha>
 ```
 
-7. Change the shell working directory to that workspace. Only then initialize the news checkpoint:
+The loader verifies every chunk SHA-256 and size, reconstructs/decodes the payload, validates payload SHA-256, rejects unsafe tar members, extracts to a fresh workspace, and validates every runtime file by path, size, SHA-256 and Git blob SHA before writing `<workspace>/bootstrap-workspace.json`.
+
+7. Only after the loader returns success, change the shell working directory to `<workspace>` and initialize the news checkpoint:
 
 ```bash
 python3 scripts/news_run_checkpoint.py init \
@@ -50,16 +45,28 @@ python3 scripts/news_run_checkpoint.py init \
   --bootstrap-receipt <workspace>/bootstrap-workspace.json
 ```
 
-`news_run_checkpoint.py init` is fail-closed: it rechecks the bootstrap receipt, required runtime files, local SHA-256 values, Git blob SHA values, repository identity, commit identity, and workspace root. If bootstrap validation fails, no news checkpoint may be created.
+`news_run_checkpoint.py init` is fail-closed and rechecks the bootstrap receipt plus current executable workspace bytes. No checkpoint means no news pipeline and no reader-facing brief.
+
+## Transport policy
+
+Preferred future transport, when the host exposes it, is a direct connector file/artifact -> mounted filesystem path. Until then, the supported fallback is the checked-in compressed text capsule described above.
+
+Never use shell `git clone`, `curl`, `wget`, raw GitHub HTTP, or another shell-network fallback for Stage -1. The connector is the only GitHub transport authority in the scheduled sandbox.
+
+## Capsule maintenance
+
+Repository changes are followed by `.github/workflows/build-bootstrap-capsule.yml`. The workflow applies the checkpoint migration if needed, builds the capsule, verifies it against the checked-out runtime closure, runs focused bootstrap/checkpoint tests, and commits the generated manifest/chunks back to `main`.
+
+The capsule is intentionally runtime-only. It includes settings, schemas, skills, executable scripts, map source/style/reference inputs, state seed, and bootstrap loader. It excludes tests from the payload, documentation not needed at runtime, old releases, and derived map PNG/SVG outputs.
 
 ## Reuse rule
 
-A pre-existing workspace may be reused only when its bootstrap receipt validates against the same exact `main` commit and the current local bytes. If `main` changed, if any required file changed, or if the receipt is missing/stale, rematerialize the workspace from the connector before starting the run.
+A pre-existing workspace may be reused only if its `bootstrap-workspace.json` validates against the exact latest `main` commit and all current local bytes. If `main` changed, the receipt is stale, or any required runtime file changed, rerun Stage -1.
 
 ## Failure semantics
 
-If the GitHub connector cannot provide a required tree/blob, or the execution environment cannot write the workspace, report the earliest failure as:
+Any failure before `news_run_checkpoint.py init` is reported as:
 
 `repository materialization / executable workspace acquisition`
 
-This is a hard environment blocker and occurs **before** `news-run-checkpoint.json` initialization. Do not mislabel it as source-scan, preprocessing, validation, image, map, or publisher failure. Do not bypass the repository pipeline by manually producing a news brief.
+Do not mislabel it as source-scan, preprocessing, validation, image, map, or publisher failure. Do not bypass the repository pipeline by manually producing a news brief.

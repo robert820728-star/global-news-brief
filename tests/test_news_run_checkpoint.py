@@ -30,10 +30,19 @@ def make_bootstrap(root: Path):
         "repository": MODULE.REPOSITORY_FULL_NAME,
         "ref": "main",
         "commit_sha": "a" * 40,
-        "materialization_method": "github-connector",
-        "materialization_scope": "full-commit-tree",
+        "materialization_method": "github-connector-capsule",
+        "materialization_scope": "verified-runtime-capsule",
         "workspace_root": str(root.resolve()),
         "materialized_at": "2026-08-16T00:00:00+08:00",
+        "capsule": {
+            "source_commit": "b" * 40,
+            "manifest_blob_sha": "c" * 40,
+            "manifest_sha256": "d" * 64,
+            "payload_sha256": "e" * 64,
+            "runtime_fingerprint": "f" * 64,
+            "chunk_count": 1,
+            "chunks": [{"name": "capsule.part0001.txt", "sha256": "1" * 64, "size": 8}],
+        },
         "files": files,
     }
     receipt_path = root / "bootstrap-workspace.json"

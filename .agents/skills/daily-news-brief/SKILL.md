@@ -1,6 +1,6 @@
 ---
 name: daily-news-brief
-description: Orchestrate the complete daily news brief with connector-backed workspace bootstrap, audited selection, persistent pre-manifest recovery, event-level recovery, visual validation, and one fail-closed delivery gate.
+description: Orchestrate the complete daily news brief with verified runtime-capsule bootstrap, audited selection, persistent pre-manifest recovery, event-level recovery, visual validation, and one fail-closed delivery gate.
 ---
 
 # 每日新聞主控
@@ -9,9 +9,11 @@ description: Orchestrate the complete daily news brief with connector-backed wor
 
 ## Stage -1：可執行工作區
 
-在本技能任何 Python 流程開始前，必須先依 repo 根目錄 `bootstrap-workspace.md` 完成 repository materialization。GitHub connector「看得到 repo」不等於 shell 已有 repo；若本地工作樹不存在或不是最新 `main` 的同一 commit，必須用 GitHub connector 逐 blob 物化完整 tracked tree 到可寫 workspace，不得用 shell `git clone`／`curl`／`wget` 當 fallback。
+在本技能任何 Python 流程開始前，必須先依 repo 根目錄 `bootstrap-workspace.md` 完成 verified runtime capsule bootstrap。GitHub connector「看得到 repo」不等於 shell 已有 repo；不得再逐 blob 物化完整 tracked tree，也不得用 shell `git clone`／`curl`／`wget` 當 fallback。
 
-bootstrap 完成後必須產生 `bootstrap-workspace.json`。`news_run_checkpoint.py init` 必須收到 `--bootstrap-receipt` 並驗證 repository、commit SHA、workspace root、必要 runtime 檔案、SHA-256 與 Git blob SHA。驗證不通過時不得建立 checkpoint，也不得人工繞過 scripts 直接出新聞。
+Stage -1 必須從同一個最新 `main` commit 取得 `bootstrap/capsule-manifest.json`、`bootstrap/bootstrap_loader.py` 與 manifest 指定的所有文字 chunks；先用最新 recursive tree 驗證 manifest 的 runtime blob SHA 與 capsule freshness，再把 chunks 精確寫到 shell staging directory，由 loader 在本地驗 chunk SHA-256、payload SHA-256、tar 安全性與每個 runtime file 的 path/size/SHA-256/Git blob SHA。只有 loader 成功產生 `bootstrap-workspace.json` 後，才可進入 checkpoint。
+
+`news_run_checkpoint.py init` 必須收到 `--bootstrap-receipt` 並重新驗證 repository、commit SHA、workspace root、capsule metadata、必要 runtime 檔案、SHA-256 與 Git blob SHA。驗證不通過時不得建立 checkpoint，也不得人工繞過 scripts 直接出新聞。
 
 ## 必讀
 
@@ -30,14 +32,14 @@ python3 scripts/news_run_checkpoint.py init --output <checkpoint> --run-id <run-
 4. `select-news-events`：依設定評級與門檻挑選事件；每筆保存 `grading_evidence`。C 以上不得無故消失；邊境衝突與長期戰爭例行更新依既定 continuity 規則處理。
 5. `audit-news-candidates`：所有候選都留下 selected/excluded/merged/deferred 與明確理由，完成十站 source-scan 證據驗證及十四天候選歷史。本輪 candidate audit 綁定 checkpoint。
 6. `materialize-manifest`：只能把 audit 中 selected event ids 物化為 manifest，兩者必須一一對應；完成後綁定 manifest。從這一步起，事件內容只由 manifest 驅動。
-7. `verify-news-events` → `build-news-maps` → `build-news-charts` → `collect-news-images`：各技能只改自己的欄位。地圖、圖表、圖片互相獨立，不得互相替代。來源圖有合格圖片時必須取得並視覺驗收；需要專業官方資訊圖的事件不能用一般照片取代。地圖使用完整 canonical basemap、繁體中文地名、既定 yellow-admin-v2 規格。
+7. `verify-news-events` → `build-news-maps` → `build-news-charts` → `collect-news-images`：各技能只改自己的欄位。地圖、圖表、圖片互相獨立，不得互相替代。來源圖有合格圖片時必須取得並視覺驗收；需要專業官方資訊圖的事件不能用一般照片取代。地圖使用完整 canonical basemap、繁體中文地名、既定 yellow-admin-v2 規格。capsule 不搬運可重建的 generated PNG/SVG；需要時由 capsule 內的 canonical map source/style 與 renderer 在本地重建。
 8. 每個 post-manifest stage 結束後使用 `recover_news_run.py plan --input <manifest> --brief <brief>` 檢查事件級失敗；同時更新同一 checkpoint。不得對 `recover_news_run.py` 虛構 `--checkpoint` 參數。
 9. 從 manifest 渲染讀者版，綁定 `render` 的 `brief` artifact，再跑 `validate_map_decisions.py`、`validate_news_brief.py brief` 與 unique-delivery-gate 檢查。失敗只局部恢復，不直接輸出草稿。
 10. 發布只能由 `scripts/publish_news_brief.py` 建立 release 與 receipt。最終交付只能執行 `--deliver-receipt ... --checkpoint <checkpoint>`；receipt 不是通行證本身，canonical publisher 在真正輸出 bytes 前會再次驗證目前 bootstrap binding、checkpoint、candidate audit/source scan、manifest、讀者版、附件與 map decisions。任何一項失敗 stdout 必須為空並返回恢復流程。
 
 ## 恢復邏輯
 
-Checkpoint 前的 Stage -1 失敗：重新執行 `bootstrap-workspace.md` 的 connector materialization；不得改用手工新聞或 shell 網路 clone。
+Checkpoint 前的 Stage -1 失敗：重新執行 `bootstrap-workspace.md` 的 verified runtime capsule bootstrap，只重抓缺失／驗證失敗 chunk；不得改用手工新聞、逐 blob full-tree 搬運或 shell 網路 clone。
 
 Manifest 前：
 
