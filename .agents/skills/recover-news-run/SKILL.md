@@ -14,8 +14,9 @@ description: Detect, isolate, retry, and revalidate failed stages in the daily n
 3. 每次只重跑一個「模組＋事件」；根層渲染與驗證失敗則只重跑該階段。
 4. 重跑前保存快照，重跑後執行欄位所有權驗證及完整事件資料驗證。
 5. 通過才記錄成功；仍失敗則記錄錯誤類型並依替代路徑重試。
-6. 同一目標最多三次；成功即停止，禁止為湊滿次數繼續執行。
-7. 不得清空或重建已通過的事件、來源、地圖、圖片及分析。
+6. 每種恢復策略最多三次；成功即停止該策略並繼續後續階段。單一策略耗盡時切換下一策略，不得結束整輪。
+7. 沒有讀者版草稿或沒有可交付檔案時，必須把 `render`、`validate` 或其上游失敗模組加入恢復計畫，修復後繼續到發布成功。
+8. 不得清空或重建已通過的事件、來源、地圖、圖片及分析。
 
 ## 目標路由
 
@@ -57,11 +58,13 @@ python3 scripts/recover_news_run.py record \
 
 ## 結束條件
 
-- 所有目標通過：`recovery.status = completed`，`unresolved_targets` 必須為空，再執行完整 manifest 與 brief 驗證。
-- 達三次仍失敗：`recovery.status = exhausted`，`final_status = failed`，保存未解決目標並回報故障；禁止靜默結束或假稱完成。
-- 沒有失敗目標：直接記錄 `completed`，不得為形式重跑任何模組。
+- 所有目標通過：`recovery.status = completed`，`unresolved_targets` 必須為空，再執行完整 manifest、brief 與發布閘門驗證。
+- 單一策略達三次仍失敗：保持 `recovery.status = recovering`，切換下一取得、渲染或驗證策略並繼續；不得因此把 `final_status` 設為 `failed`。
+- 所有已知策略均失敗：重新解析最新驗證錯誤並改派原欄位擁有模組；只要仍屬可修復錯誤，就不得中止。
+- 只有權限明確拒絕、執行環境禁止建立附件或外部服務持續不可用等硬阻擋，才能設為 `exhausted`／`failed`，並保存 checkpoint 供下次從原階段恢復。
+- 沒有失敗目標且可交付檔案已存在：記錄 `completed`，不得為形式重跑任何模組。
 
-只有完整驗證通過，才可把 `recover-news-run`、`validate` 與 `final_status` 分別設為 `completed`、`completed` 與 `ready`。
+只有完整驗證及 `scripts/publish_news_brief.py` 通過，才可把 `recover-news-run`、`validate` 與 `final_status` 分別設為 `completed`、`completed` 與 `ready`。缺少可交付檔案時，即使其他狀態已 completed，也必須重新開啟 `render`／`validate` 恢復目標。
 
 
 ## 候選稽核恢復
