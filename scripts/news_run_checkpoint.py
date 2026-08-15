@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 SCHEMA_VERSION = "1.1.0"
-BOOTSTRAP_SCHEMA_VERSION = "1.0.0"
+BOOTSTRAP_SCHEMA_VERSION = "1.1.0"
 REPOSITORY_FULL_NAME = "robert820728-star/global-news-brief"
 REPO_ROOT = Path(__file__).resolve().parents[1]
 BOOTSTRAP_REQUIRED_PATHS = (
@@ -118,10 +118,27 @@ def validate_bootstrap_receipt(
     commit_sha = str(receipt.get("commit_sha", ""))
     if len(commit_sha) not in {40, 64} or not HEX_RE.fullmatch(commit_sha):
         errors.append("bootstrap.commit_sha 必須是 Git commit hex SHA")
-    if receipt.get("materialization_method") != "github-connector":
-        errors.append("bootstrap.materialization_method 必須是 github-connector")
-    if receipt.get("materialization_scope") != "full-commit-tree":
-        errors.append("bootstrap.materialization_scope 必須是 full-commit-tree")
+    if receipt.get("materialization_method") != "github-connector-capsule":
+        errors.append("bootstrap.materialization_method 必須是 github-connector-capsule")
+    if receipt.get("materialization_scope") != "verified-runtime-capsule":
+        errors.append("bootstrap.materialization_scope 必須是 verified-runtime-capsule")
+    capsule = receipt.get("capsule")
+    if not isinstance(capsule, dict):
+        errors.append("bootstrap.capsule 必須是物件")
+    else:
+        manifest_blob_sha = str(capsule.get("manifest_blob_sha", ""))
+        if len(manifest_blob_sha) != 40 or not HEX_RE.fullmatch(manifest_blob_sha):
+            errors.append("bootstrap.capsule.manifest_blob_sha 無效")
+        for field in ("manifest_sha256", "payload_sha256", "runtime_fingerprint"):
+            value = str(capsule.get(field, ""))
+            if len(value) != 64 or not HEX_RE.fullmatch(value):
+                errors.append(f"bootstrap.capsule.{field} 無效")
+        chunks = capsule.get("chunks")
+        if not isinstance(chunks, list) or not chunks:
+            errors.append("bootstrap.capsule.chunks 必須是非空陣列")
+        elif capsule.get("chunk_count") != len(chunks):
+            errors.append("bootstrap.capsule.chunk_count 不符")
+
     try:
         workspace = Path(str(receipt.get("workspace_root", ""))).resolve()
         if workspace != root:

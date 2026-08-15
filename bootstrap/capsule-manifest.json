@@ -1,0 +1,518 @@
+{
+  "archive": "tar.xz",
+  "chunk_count": 42,
+  "chunk_size": 8192,
+  "chunks": [
+    {
+      "name": "capsule.part0001.txt",
+      "sha256": "a1c4f83b03886f9129f69074888d4ab6bfd7848ace6f7f8f5437fa97fb0e4279",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0002.txt",
+      "sha256": "3a364f4e51cb629597a665abec4b6f03fcdc9783b70e4649e6afeeb73e54ffb2",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0003.txt",
+      "sha256": "3457356badbf6884a1b75766465e9668a4589e1326eb02f06d0505d5ca5f8cfd",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0004.txt",
+      "sha256": "5cd084711af2ef7c130af01eb60fc47915f86cd06990a303af5c1d0a9853cea4",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0005.txt",
+      "sha256": "bd3c91a0b6bcb2d57e134dfcb9c8e8adbaf952874e8bcc3b42116014364ddf27",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0006.txt",
+      "sha256": "1790c4f58498f5d2cee4006d296055c213581c5cf78fc9d4dd8385c52700bbb3",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0007.txt",
+      "sha256": "55d1f6bb1745ca0c3bdd2ea6c8e53dddc517f4abfe9f5f02789a035799ebacbe",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0008.txt",
+      "sha256": "8a564670b142fcd3a8c3e0515cd9b84c4a1728810cfe5964fc524073776a87cf",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0009.txt",
+      "sha256": "b82c949264463b4980ad35f75c2dda3b7f32c5a5af393dd405871d493b255fec",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0010.txt",
+      "sha256": "75f8ae6a8576a3c770577383706b42a465c8b9669820556a7dd56e9e2b1d4d80",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0011.txt",
+      "sha256": "1ee338c2792c468ed394a79e0474c979a5c37cc24fc3785c8e4399aba1b4e39a",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0012.txt",
+      "sha256": "8a6c287a8760c7c813124de15991a096473a2bb324cd06033e42f9ee49e30efa",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0013.txt",
+      "sha256": "03cd9c26e04e1f42fa5a2662582aef4b4eeb81ffc8733d5743c4a330682049a2",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0014.txt",
+      "sha256": "494a8ca7bc479aac1888d479412489c86837e1cfb4fd42b5222ab743729102b9",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0015.txt",
+      "sha256": "7f220d8bf668acf76eacb3e6321b204366c1064cb8e5750292b7625a5ed9cca2",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0016.txt",
+      "sha256": "e8fe2a155cc0fe78f055d0bd95f797ed810643ac0ebf1971059ebb935c203f20",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0017.txt",
+      "sha256": "41542e520648752797bc149fd3514c39767bea8012c397af44a8109911340efc",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0018.txt",
+      "sha256": "7f28e63e9cbb32a832d347bc1f8a65cee6e391c43c26255fbe047efe090024fb",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0019.txt",
+      "sha256": "e24bfc6896b0e6095d2e7a181b49e51d76647ae8f71b81445aedb7728b2ddd1a",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0020.txt",
+      "sha256": "b3ea695bc2ba150a17c70708e9536584bee3e3bbe923afae1193e8189b956339",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0021.txt",
+      "sha256": "79f2725c3f34a29bb65ecf0e3de90ee00f64d4da0118031c8107b31ca4514e2b",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0022.txt",
+      "sha256": "4f210ece9b4eaeb9e30a83d466c6388456989edabe7414ed347fc44e14f1f28e",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0023.txt",
+      "sha256": "6a4e2a59fc2bfe32a650819417d2164b79290bd02119c36ed845850b82a0b134",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0024.txt",
+      "sha256": "807fa7f02455a2793b7350db4292e4cfb5df0b34413102889c5af5f66cd6b54e",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0025.txt",
+      "sha256": "d115e4f216878c31bf830a8dc262723246dbeddf1a3066b9632ba2219809f839",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0026.txt",
+      "sha256": "1bd81d14c7a903ae72412a276c6d3bf6ae4e45989b3e79539840af56103f75cc",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0027.txt",
+      "sha256": "eebc9106dc70b06f0d73071c9d96d9b651947b6c41bf607683547e0c13fa2f5e",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0028.txt",
+      "sha256": "7864974b59898beddf3baa76b67911d9a4224dc09457ae13c7c8aa667c4c621b",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0029.txt",
+      "sha256": "b83e71c8b3230e883d3c3d8bfcfdfdb2bcc5cd1e7e74d5adef16f8f9fc1581cf",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0030.txt",
+      "sha256": "852da091c5cd936e274faa18b825fe17ae202238f6e0008bc1de76dd1a570353",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0031.txt",
+      "sha256": "9fc77dcc8c69a969487e8ec5934b91ce818cb24b00f6997a937af5cdfc6b65d0",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0032.txt",
+      "sha256": "72167ae4ec9339a2817d03abdc3dc91b7f32a5852e1accbb116299d99ece01db",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0033.txt",
+      "sha256": "1f7e93b613fca3c876c20046cd57a7cdb8092c75c8fdde806d626fdbb9feb3b5",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0034.txt",
+      "sha256": "23bb48a94885d4b4de8a12a3dd0d385e705c8400b9606416d50607a157df4a88",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0035.txt",
+      "sha256": "1b28573e96f4e494331a6fbd1da6e2a9dea72cd4a38cd98c84cdd17ecf12d06e",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0036.txt",
+      "sha256": "c2ba35ad471c859c97a297e05022b9f188d1a168c900cea336e691ecaa2ddcd4",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0037.txt",
+      "sha256": "596acef7e379969019e785a374ceb005ddcb0054ae6c09bb272d6872235524bd",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0038.txt",
+      "sha256": "183e098e91c63cc2cb1da638288dbaef072e58bdd0a0fa5a666eb185e1ab7c1e",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0039.txt",
+      "sha256": "56e10dd3f645ea7ba5df3bd89e180e027df449a26852decd49996251c80e2db1",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0040.txt",
+      "sha256": "03b2ae2dd046e23be65e01a4216dc05fb360476afdc710da74512140ffb03cf7",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0041.txt",
+      "sha256": "681a7bb0f240a7f929cc6832ef495585d5e0d8ee3d73204ba3a369554ea47f54",
+      "size": 8192
+    },
+    {
+      "name": "capsule.part0042.txt",
+      "sha256": "87a6dce371c60b770e8e2ebaab5cc722980d0fffe96f7ff4c1d1ae3c67b6f65e",
+      "size": 1600
+    }
+  ],
+  "encoded_size": 337472,
+  "encoding": "base64",
+  "loader": {
+    "path": "bootstrap/bootstrap_loader.py",
+    "sha256": "74c446842d168660f3bb5aa591245dec6d8c188665f01e0730722a00d94a88b8",
+    "size": 7951,
+    "source_blob_sha": "9710e936d3fa0809fb832784602e98ff75802d11"
+  },
+  "materialization_method": "github-connector-capsule",
+  "materialization_scope": "verified-runtime-capsule",
+  "payload_sha256": "0bb5a4acc221dfa6349e2b07460a2dec5d90b3c91c30fc1dd5918510ce3a4aeb",
+  "payload_size": 253104,
+  "repository": "robert820728-star/global-news-brief",
+  "runtime_file_count": 47,
+  "runtime_files": [
+    {
+      "path": ".agents/skills/audit-news-candidates/SKILL.md",
+      "sha256": "ef0cc751067bd39b9b03b5b093a16caa8a738945ca7ca645067ad799f54f16fd",
+      "size": 5259,
+      "source_blob_sha": "1672320dd177858f1d034754a5541a7c2706bb21"
+    },
+    {
+      "path": ".agents/skills/build-news-charts/SKILL.md",
+      "sha256": "d632a10abd40daf9cc075f8433682eb4fafeb472f56dedee1bae368e12e5bcde",
+      "size": 5056,
+      "source_blob_sha": "c5f9c2b23f36fb55eb5094837ab3143670d1af57"
+    },
+    {
+      "path": ".agents/skills/build-news-maps/SKILL.md",
+      "sha256": "552cc88daea612e75525ab60589f1438e1d7825d1fb81de513910a78b6363181",
+      "size": 8463,
+      "source_blob_sha": "c9890937d12ddd5ec5b1278c93b94b748e1beaba"
+    },
+    {
+      "path": ".agents/skills/build-news-maps/references/map-policy.md",
+      "sha256": "8f2f522dae371a655847bd0b69b53f606afbdcf288f0f039bbb91efba02ff964",
+      "size": 5185,
+      "source_blob_sha": "8594b9465e7ddde6e01c69c0410ca3b5293b0805"
+    },
+    {
+      "path": ".agents/skills/collect-news-images/SKILL.md",
+      "sha256": "296fe33e2b59b7be5035b95be6e575623730fce1aa28ea4262763c86ff6ae013",
+      "size": 10643,
+      "source_blob_sha": "4738658b4a0ced1cf4c40d853053613b95916db3"
+    },
+    {
+      "path": ".agents/skills/collect-news-images/references/image-policy.md",
+      "sha256": "10fa835ade7e3ae85454a59072c0315033e6f984a5cd85518e75fec6a9204d61",
+      "size": 4337,
+      "source_blob_sha": "5d33c1937f095d013c1dfa6aea90e4523368d62a"
+    },
+    {
+      "path": ".agents/skills/daily-news-brief/SKILL.md",
+      "sha256": "e213379ab409f74de6eacf1657bee8e8db4ae70a34fb1be912b78beed3ca0748",
+      "size": 6232,
+      "source_blob_sha": "4244a14bfe7be8df1828a5fd30d63bbf9fba3fc4"
+    },
+    {
+      "path": ".agents/skills/daily-news-brief/references/manifest-contract.md",
+      "sha256": "1664447c7de7dc17abd56697ca921225ad62bc3d90161f6d55e3faaf5a0b3c86",
+      "size": 2257,
+      "source_blob_sha": "8ba4f2158f063279f714216cbd5e4e4b887492c7"
+    },
+    {
+      "path": ".agents/skills/recover-news-run/SKILL.md",
+      "sha256": "1ebc6d2469306310f43d48dbc851b01af7b4a9cfc5caf77ceb8de4ac1949b7af",
+      "size": 3706,
+      "source_blob_sha": "c9b7b69c5ce1effdefa5b0f9f74839f3d38f141a"
+    },
+    {
+      "path": ".agents/skills/select-news-events/SKILL.md",
+      "sha256": "c028a8837745ff8d4ca135cc28f1b8c2c2184a185b944a0e5abf253a19922dcc",
+      "size": 8010,
+      "source_blob_sha": "768f5a2872fa02b6e977eddf7df9c02aff5f3f56"
+    },
+    {
+      "path": ".agents/skills/select-news-events/references/severity-rubric.md",
+      "sha256": "1faa6758946f1a60d158692cd447c42ab9fef225a10fb5c020e32171c756689e",
+      "size": 10483,
+      "source_blob_sha": "b99368f0c1e87a95964e5ec426b637c8599836ba"
+    },
+    {
+      "path": ".agents/skills/select-news-events/references/source-scan-evidence.md",
+      "sha256": "ae91a4e3ed1bb205ad2f61e6f8cee01b79297f8198b7ad14f845008f4846a11e",
+      "size": 1777,
+      "source_blob_sha": "77e7aa40938429dcc822df1ac0eeea3b165617fc"
+    },
+    {
+      "path": ".agents/skills/verify-news-events/SKILL.md",
+      "sha256": "6ffaed0b4d24f5f5279454bfcef5337b2e3ec78ca64d5b49d8281ed4832ca021",
+      "size": 4773,
+      "source_blob_sha": "211826536e286aa44558d61b310d1bfe69f2f322"
+    },
+    {
+      "path": ".agents/skills/verify-news-events/references/source-routing.md",
+      "sha256": "7b88c9759c9c263ab2e81716c3f39580dfeb9cc8cc28713d2f54f44ec62b9d96",
+      "size": 3470,
+      "source_blob_sha": "fe19b43737e12da77e4bbf7632b87e3f32e8f325"
+    },
+    {
+      "path": "bootstrap-workspace.md",
+      "sha256": "d0a0a1330b40a6557493640d256f27ac08d9034e778b459a46a16146cdd4dccb",
+      "size": 5304,
+      "source_blob_sha": "1178d1fcf7c6db43c54578db55ef1376a1dbb9c4"
+    },
+    {
+      "path": "bootstrap/bootstrap_loader.py",
+      "sha256": "74c446842d168660f3bb5aa591245dec6d8c188665f01e0730722a00d94a88b8",
+      "size": 7951,
+      "source_blob_sha": "9710e936d3fa0809fb832784602e98ff75802d11"
+    },
+    {
+      "path": "daily-schedule-prompt.md",
+      "sha256": "8bcb262a04b7cbe1e5ef1cd72305dd2bca401be5367a64930c7085aa472d6f4f",
+      "size": 8914,
+      "source_blob_sha": "3111ecd80a59c6e4721a35655c0080039c7a0ee2"
+    },
+    {
+      "path": "maps/README.md",
+      "sha256": "ccbf39384aca9021507d2583ba70653fbde89cb19dd58efa763c2b42cb797c67",
+      "size": 2616,
+      "source_blob_sha": "00f6714bafd7db42c25307057d991261021f73b0"
+    },
+    {
+      "path": "maps/generated/sections/AUS-base.json",
+      "sha256": "8da58e8b0247d23fe02d7eb2b4a94fe2ff52ce51be03d0ff97a6a5553b36dbc4",
+      "size": 467,
+      "source_blob_sha": "32675549bede759181cca004babd2dfdd4378137"
+    },
+    {
+      "path": "maps/generated/sections/OCE-base.json",
+      "sha256": "43a2500701291617181271cc1174f109dc999a04beec4227f399f3941916844d",
+      "size": 533,
+      "source_blob_sha": "f8e3581347932d80f2c142af49427dd80209f50c"
+    },
+    {
+      "path": "maps/source/china-provinces.geojson",
+      "sha256": "5bc22fc08d7d8ae547ef9ee93d2584e777ef9734e3197e561dd3c4b7857ac2f0",
+      "size": 54465,
+      "source_blob_sha": "ca5a96f030f4cfdfe89b2c97f2fac3cd659fda43"
+    },
+    {
+      "path": "maps/source/taiwan-counties-alt.geojson",
+      "sha256": "9f22f7880a602c1156da1ad4f190f88eec90c4f4f629bf1665c6625805128aef",
+      "size": 91873,
+      "source_blob_sha": "d9121cf44a9410cfc3201ce1d1b7338fcd68bd01"
+    },
+    {
+      "path": "maps/source/world-countries.geojson",
+      "sha256": "6866c877d39cba9c357620878839b336d569f8c662d3cfab4cb1dbe2d39c977f",
+      "size": 838726,
+      "source_blob_sha": "1e6ab74c7042f97013be69ceec798be8e1aff27d"
+    },
+    {
+      "path": "maps/style.json",
+      "sha256": "49521efb500b060da0bf06d2bb58f273d5125161e18b891d297ad32f1f676577",
+      "size": 754,
+      "source_blob_sha": "882e7f94eab878abbbaa6e055195cd73ec73882a"
+    },
+    {
+      "path": "news-brief-examples.md",
+      "sha256": "283dbd3d87a3f2a4a53f6207b79471f8b1f703ce275a91a44c3bfcb65c91fc58",
+      "size": 30970,
+      "source_blob_sha": "9b018b872b9dbd3af8b7deaf0e3327cad093b36a"
+    },
+    {
+      "path": "news-brief-settings.md",
+      "sha256": "4372eb156376e60bb2bd55c5bad0ee0e95f1889c5787ef9e9395e61fb1a8b630",
+      "size": 19490,
+      "source_blob_sha": "9fd116c57a8a1c73f86ec577a06faba686e20f32"
+    },
+    {
+      "path": "news-brief-template.md",
+      "sha256": "7e826cb6bb3d9d69f3911fa9d29b6b57d8d81e33feee0ecb2e753a800f263dd3",
+      "size": 7223,
+      "source_blob_sha": "fbe15865f4cf6424c3ba56a971cd2c77ad6a6cf8"
+    },
+    {
+      "path": "news-source-pool.json",
+      "sha256": "92d7f5ef954f20920dd0e424e526dbed6cbd263ec1a8fc86ef90d8994f353afd",
+      "size": 3793,
+      "source_blob_sha": "767e842791b994f2a380a708ab1fe31db7d40c29"
+    },
+    {
+      "path": "schemas/news-candidate-audit.schema.json",
+      "sha256": "95d5997503548ded0ac0932885014e0961ba5f00bb036f7d2aaefe5e18990589",
+      "size": 8418,
+      "source_blob_sha": "29887176cf55678468194f80aa1ce2766a060592"
+    },
+    {
+      "path": "schemas/news-event-manifest.schema.json",
+      "sha256": "75e2ab3789fb791fe5606b548fc65ab755bb3265e4359dca21157efc0b42daf3",
+      "size": 17653,
+      "source_blob_sha": "4885219f27d1ad9e296a8da40c1a3650c2048c4a"
+    },
+    {
+      "path": "scripts/apply_bootstrap_capsule_migration.py",
+      "sha256": "5576a5ed8e4383baa8769de6cb0d24e444f93fa1cbd36353196faba40bc041d8",
+      "size": 3147,
+      "source_blob_sha": "205e553cb7266772f9f059e45e5fc4c4b1d5e8ef"
+    },
+    {
+      "path": "scripts/build_bootstrap_capsule.py",
+      "sha256": "2d1bc7ded96917d92338e4074574f400994106dad73e46f80c1351747d0209a5",
+      "size": 7196,
+      "source_blob_sha": "4a2eee7d7d9b551dfe6d79d58a5c9d6ad5d835b9"
+    },
+    {
+      "path": "scripts/check_unique_delivery_gate.py",
+      "sha256": "ba4be225682f0f5e5748bece11636b8082eaf721078a7aee6fb0e0ae73da0f32",
+      "size": 7465,
+      "source_blob_sha": "41830ac26385c0b78d78727b842e29b1f844ce8c"
+    },
+    {
+      "path": "scripts/fetch_admin_boundaries.py",
+      "sha256": "dd1d3a30f8b31021e905c97cb59127b81161e5b94a375298826ea0b07ee0cdc2",
+      "size": 3177,
+      "source_blob_sha": "3659d147f5228a29f8f7f53f880acef30f793b7f"
+    },
+    {
+      "path": "scripts/initialize_section_basemaps.py",
+      "sha256": "1361b1d90ec1b0d124f43f50603217234438f259842af7e556a0c9d0619a20d5",
+      "size": 6966,
+      "source_blob_sha": "685abe25db81f68370c2e80a02820b9b87c9dd0a"
+    },
+    {
+      "path": "scripts/manage_candidate_audit.py",
+      "sha256": "eeb13535854ff91fb1ab6126dc2a79552db5241f18e0ef14ae1b1437132a4e73",
+      "size": 22776,
+      "source_blob_sha": "21006cae0577d4a0ad58546f465b1b2346d92243"
+    },
+    {
+      "path": "scripts/news_run_checkpoint.py",
+      "sha256": "2dd15304d4a4399363a900429b2ae3eed164d74b72ea8f2877118d8ba21df5b8",
+      "size": 17490,
+      "source_blob_sha": "fecbc2c355f85595576fbf3d74eaa3ec99f90b07"
+    },
+    {
+      "path": "scripts/preprocess_news_candidates.py",
+      "sha256": "4595ebd654386e4cff6bce749f7681062dc179bb19ba55d33b2061c7524ec712",
+      "size": 5218,
+      "source_blob_sha": "06f82e37c3484e6f7bbe75a39c9b3fdfa10ff649"
+    },
+    {
+      "path": "scripts/publish_news_brief.py",
+      "sha256": "e40cec75c7ec093e6d10c18e2e03010d1b2e2f90ef6b45ab413b951ea9deffc7",
+      "size": 12062,
+      "source_blob_sha": "f8bf437d27ee646246511e75b50008bd833222b2"
+    },
+    {
+      "path": "scripts/recover_news_run.py",
+      "sha256": "1fb32499125ef0fc46885ef03aacc77ca21f2ae1afe4172604c440e24979586c",
+      "size": 15186,
+      "source_blob_sha": "0cc0d98d395082a9b4a7a668a28bd55808710c95"
+    },
+    {
+      "path": "scripts/render_base_maps.py",
+      "sha256": "f41c0ff835d5ab3003bcdac0948bf25c2f02ac7b53ee1151260d825d8db5d087",
+      "size": 11176,
+      "source_blob_sha": "b19a2551abf356bcbc30fc6eddfe0e30b3116f63"
+    },
+    {
+      "path": "scripts/validate_map_decisions.py",
+      "sha256": "588c70431ec8ecde750e14b5f3f01a65bdacc2356836530c22c1d827d6fd098d",
+      "size": 7414,
+      "source_blob_sha": "9279b9100d519265d2aefb7e3dfa0bc60340a312"
+    },
+    {
+      "path": "scripts/validate_news_brief.py",
+      "sha256": "77abf962a9d45aee7504c42519f3dcd232bb587e7d2c928971fd11734b7656d1",
+      "size": 54450,
+      "source_blob_sha": "a0c7374532f40795f4c7fb9c7729d85eaa64c35d"
+    },
+    {
+      "path": "scripts/validate_source_scan_evidence.py",
+      "sha256": "b6b2d976ffd2cd6e973b9952b23852a4b52161fdcd66dc5d0f7310a214e01748",
+      "size": 8255,
+      "source_blob_sha": "1e0a65ef2d9ba4b7e518ee7a934d19ad0fb4cf6c"
+    },
+    {
+      "path": "scripts/verify_bootstrap_capsule.py",
+      "sha256": "3ae01f99ecf85dfdfff6360986127b40bfaa7990eed85203dffc9838c84bdb32",
+      "size": 2758,
+      "source_blob_sha": "afa7138a89ab83c2ff452c32a7949664b72355e4"
+    },
+    {
+      "path": "state/candidate-audit.json",
+      "sha256": "89bdd80c0eb751d1609744e1555dde876b58e3043ffc90a1fa2b543357f4c4df",
+      "size": 98,
+      "source_blob_sha": "9118accb947dd5f2473ca24a4881c5ad67efae00"
+    },
+    {
+      "path": "user-preferences.example.yaml",
+      "sha256": "d5faa85d76d222928a31a746be6ca1c6009294e40f75a4255f66387def846573",
+      "size": 2740,
+      "source_blob_sha": "975abc6358051b07e61ef41e9d25da068c1dfd1c"
+    }
+  ],
+  "runtime_fingerprint": "a8eafe358a94b11909d6e85622e76847e76b144b2b17d20b31b74491c5fea34b",
+  "schema_version": "1.0.0",
+  "source_commit": "b51bc21dd051bde523ccb0312238286d5b48b87d"
+}
