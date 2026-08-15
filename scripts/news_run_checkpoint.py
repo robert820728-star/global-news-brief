@@ -1,20 +1,51 @@
 #!/usr/bin/env python3
-"""Persistent pre-manifest checkpoint for the daily news pipeline.
+"""Persistent checkpoint for the daily news pipeline.
 
-The checkpoint exists before a manifest does, so early failures can be recovered
-without inventing a partial manifest. Completed stages can bind named artifacts by
-SHA-256; the release gate rechecks those bindings before delivery.
+Repository materialization happens before this script can run. That pre-checkpoint
+bootstrap is therefore represented by a separate bootstrap receipt. `init` refuses
+to create the news checkpoint unless the receipt proves that the exact GitHub
+blobs needed by the runtime exist in the executable workspace.
 """
 from __future__ import annotations
 
 import argparse
 import hashlib
 import json
+import re
 from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-SCHEMA_VERSION = "1.0.0"
+SCHEMA_VERSION = "1.1.0"
+BOOTSTRAP_SCHEMA_VERSION = "1.0.0"
+REPOSITORY_FULL_NAME = "robert820728-star/global-news-brief"
+REPO_ROOT = Path(__file__).resolve().parents[1]
+BOOTSTRAP_REQUIRED_PATHS = (
+    "bootstrap-workspace.md",
+    "daily-schedule-prompt.md",
+    "news-brief-settings.md",
+    "news-brief-template.md",
+    "user-preferences.example.yaml",
+    "news-source-pool.json",
+    "schemas/news-event-manifest.schema.json",
+    "schemas/news-candidate-audit.schema.json",
+    ".agents/skills/daily-news-brief/SKILL.md",
+    ".agents/skills/select-news-events/SKILL.md",
+    ".agents/skills/audit-news-candidates/SKILL.md",
+    ".agents/skills/verify-news-events/SKILL.md",
+    ".agents/skills/build-news-maps/SKILL.md",
+    ".agents/skills/build-news-charts/SKILL.md",
+    ".agents/skills/collect-news-images/SKILL.md",
+    ".agents/skills/recover-news-run/SKILL.md",
+    "scripts/news_run_checkpoint.py",
+    "scripts/preprocess_news_candidates.py",
+    "scripts/manage_candidate_audit.py",
+    "scripts/recover_news_run.py",
+    "scripts/validate_map_decisions.py",
+    "scripts/validate_news_brief.py",
+    "scripts/check_unique_delivery_gate.py",
+    "scripts/publish_news_brief.py",
+)
 PRE_MANIFEST_STAGES = (
     "source-scan",
     "preprocess-news-candidates",
@@ -31,6 +62,7 @@ POST_MANIFEST_STAGES = (
 )
 RELEASE_REQUIRED_STAGES = PRE_MANIFEST_STAGES + POST_MANIFEST_STAGES
 VALID_STATUSES = {"pending", "running", "completed", "failed"}
+HEX_RE = re.compile(r"^[0-9a-fA-F]+$")
 
 
 def now_iso() -> str:
@@ -42,6 +74,14 @@ def sha256_file(path: Path) -> str:
     with path.open("rb") as handle:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
+    return digest.hexdigest()
+
+
+def git_blob_sha1(path: Path) -> str:
+    data = path.read_bytes()
+    digest = hashlib.sha1()
+    digest.update(f"blob {len(data)}\0".encode("ascii"))
+    digest.update(data)
     return digest.hexdigest()
 
 
@@ -58,7 +98,98 @@ def save(path: str | Path, data: dict[str, Any]) -> None:
     destination.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def create_checkpoint(run_id: str, window_start: str, window_end: str) -> dict[str, Any]:
+def _safe_repo_path(value: str) -> bool:
+    path = Path(value)
+    return bool(value.strip()) and not path.is_absolute() and ".." not in path.parts
+
+
+def validate_bootstrap_receipt(
+    receipt: dict[str, Any], repo_root: str | Path = REPO_ROOT
+) -> list[str]:
+    """Validate connector-materialized repository bytes against a bootstrap receipt."""
+    errors: list[str] = []
+    root = Path(repo_root).resolve()
+    if receipt.get("schema_version") != BOOTSTRAP_SCHEMA_VERSION:
+        errors.append(f"bootstrap.schema_version 必須是 {BOOTSTRAP_SCHEMA_VERSION}")
+    if receipt.get("status") != "completed":
+        errors.append("bootstrap.status 必須是 completed")
+    if receipt.get("repository") != REPOSITORY_FULL_NAME:
+        errors.append(f"bootstrap.repository 必須是 {REPOSITORY_FULL_NAME}")
+    commit_sha = str(receipt.get("commit_sha", ""))
+    if len(commit_sha) not in {40, 64} or not HEX_RE.fullmatch(commit_sha):
+        errors.append("bootstrap.commit_sha 必須是 Git commit hex SHA")
+    if receipt.get("materialization_method") != "github-connector":
+        errors.append("bootstrap.materialization_method 必須是 github-connector")
+    if receipt.get("materialization_scope") != "full-commit-tree":
+        errors.append("bootstrap.materialization_scope 必須是 full-commit-tree")
+    try:
+        workspace = Path(str(receipt.get("workspace_root", ""))).resolve()
+        if workspace != root:
+            errors.append("bootstrap.workspace_root 與目前 executable repo root 不一致")
+    except OSError:
+        errors.append("bootstrap.workspace_root 無法解析")
+
+    files = receipt.get("files")
+    if not isinstance(files, list) or not files:
+        return errors + ["bootstrap.files 必須是非空陣列"]
+    seen: set[str] = set()
+    for index, item in enumerate(files):
+        if not isinstance(item, dict):
+            errors.append(f"bootstrap.files[{index}] 必須是物件")
+            continue
+        rel = str(item.get("path", ""))
+        if not _safe_repo_path(rel):
+            errors.append(f"bootstrap.files[{index}].path 非法：{rel}")
+            continue
+        if rel in seen:
+            errors.append(f"bootstrap.files 路徑重複：{rel}")
+            continue
+        seen.add(rel)
+        local = root / rel
+        if not local.is_file():
+            errors.append(f"bootstrap materialized file 不存在：{rel}")
+            continue
+        expected_size = item.get("size")
+        if not isinstance(expected_size, int) or expected_size != local.stat().st_size:
+            errors.append(f"bootstrap 檔案大小不符：{rel}")
+        expected_sha256 = str(item.get("sha256", ""))
+        if len(expected_sha256) != 64 or not HEX_RE.fullmatch(expected_sha256):
+            errors.append(f"bootstrap sha256 無效：{rel}")
+        elif sha256_file(local) != expected_sha256.lower():
+            errors.append(f"bootstrap sha256 不符：{rel}")
+        source_blob_sha = str(item.get("source_blob_sha", ""))
+        if len(source_blob_sha) != 40 or not HEX_RE.fullmatch(source_blob_sha):
+            errors.append(f"bootstrap source_blob_sha 無效：{rel}")
+        elif git_blob_sha1(local) != source_blob_sha.lower():
+            errors.append(f"bootstrap Git blob SHA 不符：{rel}")
+
+    missing_required = sorted(set(BOOTSTRAP_REQUIRED_PATHS) - seen)
+    for rel in missing_required:
+        errors.append(f"bootstrap 缺少 runtime 必要檔案：{rel}")
+    return errors
+
+
+def bootstrap_binding(receipt_path: str | Path, receipt: dict[str, Any]) -> dict[str, Any]:
+    path = Path(receipt_path)
+    return {
+        "repository": receipt.get("repository"),
+        "commit_sha": receipt.get("commit_sha"),
+        "materialization_method": receipt.get("materialization_method"),
+        "receipt": {
+            "path": str(path.resolve()),
+            "sha256": sha256_file(path),
+            "size": path.stat().st_size,
+        },
+    }
+
+
+def create_checkpoint(
+    run_id: str,
+    window_start: str,
+    window_end: str,
+    bootstrap: dict[str, Any] | None = None,
+    bootstrap_required: bool = False,
+) -> dict[str, Any]:
     timestamp = now_iso()
     return {
         "schema_version": SCHEMA_VERSION,
@@ -67,6 +198,8 @@ def create_checkpoint(run_id: str, window_start: str, window_end: str) -> dict[s
         "window_end": window_end,
         "created_at": timestamp,
         "updated_at": timestamp,
+        "bootstrap": bootstrap,
+        "bootstrap_required": bootstrap_required,
         "stage_status": {stage: "pending" for stage in RELEASE_REQUIRED_STAGES},
         "stage_evidence": {},
         "recovery": {
@@ -120,6 +253,35 @@ def mark_stage(
     return data
 
 
+def _validate_bootstrap_binding(data: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    binding = data.get("bootstrap")
+    if not isinstance(binding, dict):
+        return ["checkpoint 缺少 bootstrap workspace binding"]
+    if binding.get("repository") != REPOSITORY_FULL_NAME:
+        errors.append("checkpoint.bootstrap.repository 不符")
+    commit_sha = str(binding.get("commit_sha", ""))
+    if len(commit_sha) not in {40, 64} or not HEX_RE.fullmatch(commit_sha):
+        errors.append("checkpoint.bootstrap.commit_sha 無效")
+    receipt_binding = binding.get("receipt")
+    if not isinstance(receipt_binding, dict):
+        return errors + ["checkpoint.bootstrap 缺少 receipt binding"]
+    receipt_path = Path(str(receipt_binding.get("path", "")))
+    if not receipt_path.is_file():
+        return errors + [f"bootstrap receipt 不存在：{receipt_path}"]
+    if sha256_file(receipt_path) != receipt_binding.get("sha256"):
+        errors.append("bootstrap receipt SHA-256 已變更")
+        return errors
+    try:
+        receipt = load(receipt_path)
+    except (OSError, ValueError, json.JSONDecodeError) as error:
+        return errors + [f"bootstrap receipt 無法讀取：{error}"]
+    if receipt.get("commit_sha") != binding.get("commit_sha"):
+        errors.append("checkpoint.bootstrap.commit_sha 與 receipt 不一致")
+    errors += validate_bootstrap_receipt(receipt, REPO_ROOT)
+    return errors
+
+
 def validate_checkpoint(
     data: dict[str, Any],
     required_stages: tuple[str, ...] = RELEASE_REQUIRED_STAGES,
@@ -131,6 +293,8 @@ def validate_checkpoint(
         errors.append("checkpoint.run_id 不得為空")
     if not str(data.get("window_start", "")).strip() or not str(data.get("window_end", "")).strip():
         errors.append("checkpoint 必須保存 window_start/window_end")
+    if data.get("bootstrap_required") or data.get("bootstrap") is not None:
+        errors += _validate_bootstrap_binding(data)
     status = data.get("stage_status")
     if not isinstance(status, dict):
         return errors + ["checkpoint.stage_status 必須是物件"]
@@ -181,7 +345,6 @@ def verify_bound_artifact(
     return errors
 
 
-
 def recovery_plan(data: dict[str, Any]) -> list[dict[str, Any]]:
     """Return the earliest incomplete pre-manifest stage for local resume."""
     status = data.get("stage_status", {})
@@ -198,6 +361,7 @@ def recovery_plan(data: dict[str, Any]) -> list[dict[str, Any]]:
             }]
     return []
 
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     subs = parser.add_subparsers(dest="command", required=True)
@@ -207,6 +371,7 @@ def main() -> int:
     init.add_argument("--run-id", required=True)
     init.add_argument("--window-start", required=True)
     init.add_argument("--window-end", required=True)
+    init.add_argument("--bootstrap-receipt", required=True)
 
     mark = subs.add_parser("mark")
     mark.add_argument("--input", required=True)
@@ -224,7 +389,25 @@ def main() -> int:
 
     args = parser.parse_args()
     if args.command == "init":
-        save(args.output, create_checkpoint(args.run_id, args.window_start, args.window_end))
+        receipt_path = Path(args.bootstrap_receipt)
+        try:
+            receipt = load(receipt_path)
+            errors = validate_bootstrap_receipt(receipt, REPO_ROOT)
+        except (OSError, ValueError, json.JSONDecodeError) as error:
+            errors = [f"bootstrap receipt 無法讀取：{error}"]
+            receipt = {}
+        if errors:
+            for error in errors:
+                print("BOOTSTRAP FAIL:", error)
+            return 2
+        checkpoint = create_checkpoint(
+            args.run_id,
+            args.window_start,
+            args.window_end,
+            bootstrap_binding(receipt_path, receipt),
+            bootstrap_required=True,
+        )
+        save(args.output, checkpoint)
         print(args.output)
         return 0
     if args.command == "mark":

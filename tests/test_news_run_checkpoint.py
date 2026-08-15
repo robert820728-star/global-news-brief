@@ -1,4 +1,5 @@
 import importlib.util
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -11,39 +12,98 @@ assert SPEC.loader is not None
 SPEC.loader.exec_module(MODULE)
 
 
+def make_bootstrap(root: Path):
+    files = []
+    for rel in MODULE.BOOTSTRAP_REQUIRED_PATHS:
+        path = root / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(("fixture:" + rel).encode("utf-8"))
+        files.append({
+            "path": rel,
+            "source_blob_sha": MODULE.git_blob_sha1(path),
+            "sha256": MODULE.sha256_file(path),
+            "size": path.stat().st_size,
+        })
+    receipt = {
+        "schema_version": MODULE.BOOTSTRAP_SCHEMA_VERSION,
+        "status": "completed",
+        "repository": MODULE.REPOSITORY_FULL_NAME,
+        "ref": "main",
+        "commit_sha": "a" * 40,
+        "materialization_method": "github-connector",
+        "materialization_scope": "full-commit-tree",
+        "workspace_root": str(root.resolve()),
+        "materialized_at": "2026-08-16T00:00:00+08:00",
+        "files": files,
+    }
+    receipt_path = root / "bootstrap-workspace.json"
+    receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+    return receipt, receipt_path
+
+
 class NewsRunCheckpointTests(unittest.TestCase):
     def test_incomplete_checkpoint_is_fail_closed(self):
         checkpoint = MODULE.create_checkpoint(
-            "run-1", "2026-08-14T00:00:00+08:00", "2026-08-15T00:00:00+08:00"
+            "run-1", "2026-08-14T00:00:00+08:00", "2026-08-15T00:00:00+08:00",
+            bootstrap_required=True,
         )
         errors = MODULE.validate_checkpoint(checkpoint)
+        self.assertTrue(any("bootstrap" in item for item in errors))
         self.assertTrue(any("source-scan" in item for item in errors))
 
     def test_completed_stages_and_bound_artifacts_validate(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            audit = root / "audit.json"
-            manifest = root / "manifest.json"
-            brief = root / "brief.md"
-            audit.write_text("{}", encoding="utf-8")
-            manifest.write_text("{}", encoding="utf-8")
-            brief.write_text("brief", encoding="utf-8")
-            checkpoint = MODULE.create_checkpoint(
-                "run-1", "2026-08-14T00:00:00+08:00", "2026-08-15T00:00:00+08:00"
-            )
-            for stage in MODULE.RELEASE_REQUIRED_STAGES:
-                artifacts = []
-                if stage == "audit-news-candidates":
-                    artifacts = [f"candidate_audit={audit}"]
-                elif stage == "materialize-manifest":
-                    artifacts = [f"manifest={manifest}"]
-                elif stage == "render":
-                    artifacts = [f"brief={brief}"]
-                MODULE.mark_stage(checkpoint, stage, "completed", artifacts)
-            self.assertEqual(MODULE.validate_checkpoint(checkpoint), [])
-            self.assertEqual(
-                MODULE.verify_bound_artifact(checkpoint, "render", "brief", brief), []
-            )
+            receipt, receipt_path = make_bootstrap(root)
+            original_root = MODULE.REPO_ROOT
+            MODULE.REPO_ROOT = root
+            try:
+                audit = root / "audit.json"
+                manifest = root / "manifest.json"
+                brief = root / "brief.md"
+                audit.write_text("{}", encoding="utf-8")
+                manifest.write_text("{}", encoding="utf-8")
+                brief.write_text("brief", encoding="utf-8")
+                checkpoint = MODULE.create_checkpoint(
+                    "run-1",
+                    "2026-08-14T00:00:00+08:00",
+                    "2026-08-15T00:00:00+08:00",
+                    MODULE.bootstrap_binding(receipt_path, receipt),
+                    bootstrap_required=True,
+                )
+                for stage in MODULE.RELEASE_REQUIRED_STAGES:
+                    artifacts = []
+                    if stage == "audit-news-candidates":
+                        artifacts = [f"candidate_audit={audit}"]
+                    elif stage == "materialize-manifest":
+                        artifacts = [f"manifest={manifest}"]
+                    elif stage == "render":
+                        artifacts = [f"brief={brief}"]
+                    MODULE.mark_stage(checkpoint, stage, "completed", artifacts)
+                self.assertEqual(MODULE.validate_checkpoint(checkpoint), [])
+                self.assertEqual(
+                    MODULE.verify_bound_artifact(checkpoint, "render", "brief", brief), []
+                )
+            finally:
+                MODULE.REPO_ROOT = original_root
+
+    def test_workspace_tamper_invalidates_bootstrap(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            receipt, receipt_path = make_bootstrap(root)
+            original_root = MODULE.REPO_ROOT
+            MODULE.REPO_ROOT = root
+            try:
+                checkpoint = MODULE.create_checkpoint(
+                    "run", "a", "b", MODULE.bootstrap_binding(receipt_path, receipt),
+                    bootstrap_required=True,
+                )
+                target = root / MODULE.BOOTSTRAP_REQUIRED_PATHS[0]
+                target.write_text("changed", encoding="utf-8")
+                errors = MODULE.validate_checkpoint(checkpoint, required_stages=())
+                self.assertTrue(any("bootstrap" in item and "不符" in item for item in errors))
+            finally:
+                MODULE.REPO_ROOT = original_root
 
     def test_bound_artifact_change_invalidates_checkpoint_binding(self):
         with tempfile.TemporaryDirectory() as directory:
