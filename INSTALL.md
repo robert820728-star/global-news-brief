@@ -51,6 +51,7 @@
   - `scripts/validate_news_brief.py`
   - `scripts/validate_map_decisions.py`
   - `scripts/initialize_section_basemaps.py`
+  - `maps/style.json`
   - `scripts/manage_candidate_audit.py`
   - `scripts/recover_news_run.py`
   - `scripts/publish_news_brief.py`
@@ -156,6 +157,7 @@
   - 內容第一行是否為當天的 `YYYY/MM/DD 每日新聞`。
   - 板塊、三碼事件編號、語言、時區、24 小時時間窗、來源、地圖、圖片與三個頂層區塊是否正確。
   - 每個自訂板塊是否有已驗收的 section basemap；若環境無法持久生成，是否如實標記降級並確認事件地圖仍可現場生成。
+  - 所有自製地圖是否固定使用 `maps/style.json` 的 `yellow-admin-v2`，並與台灣、中國、世界三張核准參考圖保持淡黃色陸地、灰色行政界線與白色背景；藍底或平台預設地圖必須判定失敗並重跑。
   - 所有事件是否都完成 map decision；命中海域、保護區、棲地、遷徙、擴散、路線、跨境、災害範圍等強地理訊號卻判定 not_required 時，是否被 `scripts/validate_map_decisions.py` 攔截。
   - 所有事件是否都完成多來源搜尋；只有一個可靠來源時是否照常收錄、保留原等級並顯示固定來源限制文字。
   - 地圖與圖片是否同時保留，且沒有因後段處理而覆蓋來源、標題、等級或其他附件。
