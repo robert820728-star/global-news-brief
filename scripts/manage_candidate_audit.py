@@ -11,6 +11,19 @@ import validate_source_scan_evidence
 
 AUTO_SELECT = {"SS", "S+", "S", "S-", "A+", "A", "A-", "B+", "B", "B-", "C+", "C"}
 LOW_GRADES = {"D", "E"}
+GRADE_ORDER = {
+    "E": 0, "D": 1, "C-": 2, "C": 3, "C+": 4,
+    "B-": 5, "B": 6, "B+": 7, "A-": 8, "A": 9, "A+": 10,
+    "S-": 11, "S": 12, "S+": 13, "SS": 14,
+}
+TEMPLATE_GRADE_REASONS = {
+    "依公共影響評級",
+    "具有公共影響",
+    "值得持續追蹤",
+    "具有公共價值",
+    "事件具可驗證的政策、安全或民生影響，值得持續追蹤。",
+    "事件明確影響公共安全、治理、經濟或區域關係，但範圍仍有限。",
+}
 REASON_CODES = {
     "selected_threshold_met", "c_minus_selected_need", "c_minus_reserve",
     "outside_time_window", "duplicate_merged", "continuation_no_material_change",
@@ -59,6 +72,15 @@ def validate(data, source_pool=None):
             errors.append("news-source-pool.json 必須將無實質新增的重複停辦降為 C- 或 D")
         if cultural_rule.get("material_change_requires_regrading") is not True:
             errors.append("news-source-pool.json 必須要求出現實質變化時重新評級")
+        conflict_rule = source_pool.get("conflict_grading_policy", {})
+        if conflict_rule.get("border_skirmish_default_grade") != "D":
+            errors.append("news-source-pool.json 必須將非例外邊境小衝突固定為 D")
+        if conflict_rule.get("ongoing_conflict_routine_update_default_grade") != "D":
+            errors.append("news-source-pool.json 必須將長期戰爭常態更新固定為 D")
+        if conflict_rule.get("parent_conflict_grade_inheritance_forbidden") is not True:
+            errors.append("news-source-pool.json 必須禁止沿用母衝突等級")
+        if conflict_rule.get("source_count_must_not_change_grade") is not True:
+            errors.append("news-source-pool.json 必須禁止來源數量改變評級")
         if ranking.get("method") != "public_value_v1" or sum(ranking.get("dimensions", {}).values()) != 100:
             errors.append("news-source-pool.json 的 public_value_v1 權重必須合計 100")
 
@@ -185,6 +207,98 @@ def validate(data, source_pool=None):
                 errors.append(label + " reason_code 無效")
             if not isinstance(candidate.get("grade_reason"), str) or not candidate["grade_reason"].strip():
                 errors.append(label + " 缺少 SS–E 評級理由")
+            elif candidate["grade_reason"].strip() in TEMPLATE_GRADE_REASONS:
+                errors.append(label + " grade_reason 使用禁止的模板理由，必須寫出事件特有的影響與本期增量")
+            grading = candidate.get("grading_evidence")
+            if not isinstance(grading, dict):
+                errors.append(label + " 缺少結構化 grading_evidence；不得只填 grade_reason")
+                grading = {}
+            required_grading = {
+                "impact_scope_level", "direct_consequences", "structural_significance",
+                "window_material_changes", "why_current_grade", "why_not_higher",
+                "why_not_lower", "border_conflict_review", "ongoing_conflict_review",
+            }
+            missing_grading = sorted(required_grading - set(grading))
+            if missing_grading:
+                errors.append(label + " grading_evidence 缺少：" + ", ".join(missing_grading))
+            if grading.get("impact_scope_level") not in {
+                "facility", "local", "subregional", "national", "multinational", "global"
+            }:
+                errors.append(label + " impact_scope_level 無效")
+            for field in ("direct_consequences", "window_material_changes"):
+                value = grading.get(field)
+                if not isinstance(value, list) or any(not isinstance(item, str) or not item.strip() for item in value):
+                    errors.append(label + f" {field} 必須是具體文字陣列")
+            for field in ("structural_significance", "why_current_grade", "why_not_higher", "why_not_lower"):
+                if not isinstance(grading.get(field), str) or not grading[field].strip():
+                    errors.append(label + f" {field} 不得為空")
+
+            border = grading.get("border_conflict_review")
+            if not isinstance(border, dict):
+                errors.append(label + " 缺少 border_conflict_review")
+                border = {}
+            border_keys = {
+                "is_border_conflict", "formal_war", "de_facto_war_scale",
+                "related_to_monitored_section", "user_weight_elevated",
+                "default_d_applied", "exception_reason",
+            }
+            if border_keys - set(border):
+                errors.append(label + " border_conflict_review 欄位不完整")
+            border_default_d = (
+                border.get("is_border_conflict") is True
+                and border.get("formal_war") is not True
+                and border.get("de_facto_war_scale") is not True
+                and border.get("related_to_monitored_section") is not True
+                and border.get("user_weight_elevated") is not True
+            )
+            if border_default_d:
+                if grade != "D":
+                    errors.append(label + " 非監控板塊且未加權的邊境小衝突必須評為 D，不得升至 C 以上")
+                if border.get("default_d_applied") is not True:
+                    errors.append(label + " 邊境小衝突必須記錄 default_d_applied=true")
+            elif border.get("is_border_conflict") is True and grade not in LOW_GRADES:
+                if not isinstance(border.get("exception_reason"), str) or not border["exception_reason"].strip():
+                    errors.append(label + " 邊境衝突解除 D 級預設時必須保存具體例外理由")
+
+            ongoing = grading.get("ongoing_conflict_review")
+            if not isinstance(ongoing, dict):
+                errors.append(label + " 缺少 ongoing_conflict_review")
+                ongoing = {}
+            ongoing_keys = {
+                "is_ongoing_conflict", "same_conflict_as_history", "routine_incident",
+                "material_change", "change_types", "reversal_or_escalation_possible",
+                "external_system_impact", "continuity_discount_applied", "exception_reason",
+            }
+            if ongoing_keys - set(ongoing):
+                errors.append(label + " ongoing_conflict_review 欄位不完整")
+            routine_conflict = (
+                ongoing.get("is_ongoing_conflict") is True
+                and ongoing.get("same_conflict_as_history") is True
+                and ongoing.get("routine_incident") is True
+                and ongoing.get("material_change") is not True
+                and ongoing.get("reversal_or_escalation_possible") is not True
+                and ongoing.get("external_system_impact") is not True
+            )
+            if routine_conflict:
+                if grade != "D":
+                    errors.append(label + " 長期戰爭的常態小衝突／例行更新必須評為 D，不得繼承母事件等級")
+                if ongoing.get("continuity_discount_applied") is not True:
+                    errors.append(label + " 長期戰爭常態事件必須套用 continuity_discount_applied=true")
+            elif ongoing.get("is_ongoing_conflict") is True and grade not in LOW_GRADES:
+                change_types = ongoing.get("change_types")
+                exception_triggered = (
+                    ongoing.get("material_change") is True
+                    or ongoing.get("reversal_or_escalation_possible") is True
+                    or ongoing.get("external_system_impact") is True
+                )
+                if not exception_triggered:
+                    errors.append(label + " 長期戰爭未證明戰局／和平進程／外部系統的實質變化，不得解除 D 級折扣")
+                if not isinstance(change_types, list) or not change_types:
+                    errors.append(label + " 長期戰爭解除 D 級折扣時必須列出 change_types")
+                if not isinstance(ongoing.get("exception_reason"), str) or not ongoing["exception_reason"].strip():
+                    errors.append(label + " 長期戰爭解除 D 級折扣時必須保存具體新進展")
+            if GRADE_ORDER.get(grade, -1) >= GRADE_ORDER["B-"] and not grading.get("direct_consequences"):
+                errors.append(label + " B- 以上必須列出至少一項已發生的直接公共後果")
             source_ids = candidate.get("source_ids")
             candidate_urls = candidate.get("candidate_urls")
             if not isinstance(candidate_urls, list) or not candidate_urls:

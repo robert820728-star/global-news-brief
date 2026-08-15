@@ -14,6 +14,24 @@
     "repeat_without_material_change_allowed_grades": ["C-", "D"],
     "material_change_requires_regrading": true
   },
+  "conflict_grading_policy": {
+    "border_skirmish_default_grade": "D",
+    "border_exceptions": [
+      "monitored_section",
+      "elevated_war_or_border_weight",
+      "formal_war",
+      "de_facto_war_scale"
+    ],
+    "ongoing_conflict_routine_update_default_grade": "D",
+    "ongoing_conflict_exceptions": [
+      "battlefield_reversal_or_material_escalation",
+      "peace_or_ceasefire_material_change",
+      "new_country_or_theatre",
+      "external_system_impact"
+    ],
+    "parent_conflict_grade_inheritance_forbidden": true,
+    "source_count_must_not_change_grade": true
+  },
   "ranking": {
     "method": "public_value_v1",
     "score_range": [0, 100],

@@ -68,7 +68,28 @@ def write_valid_audit(root):
         })
     candidate = {
         "candidate_id": "cand-1", "dedup_key": "test-event", "title": "測試事件",
-        "section": "TWN", "provisional_grade": "B", "grade_reason": "具有公共影響",
+        "section": "TWN", "provisional_grade": "B",
+        "grade_reason": "本期政策正式生效並造成可驗證的全國公共服務影響，因此評為 B。",
+        "grading_evidence": {
+            "impact_scope_level": "national",
+            "direct_consequences": ["全國公共服務規則正式改變"],
+            "structural_significance": "政策正式生效",
+            "window_material_changes": ["本期完成法定程序"],
+            "why_current_grade": "具全國性實質政策影響",
+            "why_not_higher": "沒有跨國或重大系統危機",
+            "why_not_lower": "政策已正式生效而非僅為表態",
+            "border_conflict_review": {
+                "is_border_conflict": False, "formal_war": False, "de_facto_war_scale": False,
+                "related_to_monitored_section": False, "user_weight_elevated": False,
+                "default_d_applied": False, "exception_reason": None,
+            },
+            "ongoing_conflict_review": {
+                "is_ongoing_conflict": False, "same_conflict_as_history": False,
+                "routine_incident": False, "material_change": False, "change_types": [],
+                "reversal_or_escalation_possible": False, "external_system_impact": False,
+                "continuity_discount_applied": False, "exception_reason": None,
+            },
+        },
         "decision": "selected", "reason_code": "selected_threshold_met", "reason": "達到B級",
         "selected_event_id": "TWN-01", "candidate_urls": [url for item in coverage for url in item["selected_item_urls"]],
         "source_ids": [item["source_id"] for item in source_pool["sources"]],

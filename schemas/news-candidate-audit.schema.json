@@ -75,7 +75,7 @@
     },
     "candidate": {
       "type": "object",
-      "required": ["candidate_id", "dedup_key", "title", "section", "provisional_grade", "grade_reason", "decision", "reason_code", "reason", "source_ids", "source_audit", "continuity"],
+      "required": ["candidate_id", "dedup_key", "title", "section", "provisional_grade", "grade_reason", "grading_evidence", "decision", "reason_code", "reason", "source_ids", "source_audit", "continuity"],
       "properties": {
         "candidate_id": {"type": "string"},
         "dedup_key": {"type": "string"},
@@ -84,6 +84,50 @@
         "section": {"type": "string", "pattern": "^[A-Z]{3}$"},
         "provisional_grade": {"enum": ["SS", "S+", "S", "S-", "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "E"]},
         "grade_reason": {"type": "string", "minLength": 1},
+        "grading_evidence": {
+          "type": "object",
+          "required": ["impact_scope_level", "direct_consequences", "structural_significance", "window_material_changes", "why_current_grade", "why_not_higher", "why_not_lower", "border_conflict_review", "ongoing_conflict_review"],
+          "properties": {
+            "impact_scope_level": {"enum": ["facility", "local", "subregional", "national", "multinational", "global"]},
+            "direct_consequences": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "structural_significance": {"type": "string", "minLength": 1},
+            "window_material_changes": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "why_current_grade": {"type": "string", "minLength": 1},
+            "why_not_higher": {"type": "string", "minLength": 1},
+            "why_not_lower": {"type": "string", "minLength": 1},
+            "border_conflict_review": {
+              "type": "object",
+              "required": ["is_border_conflict", "formal_war", "de_facto_war_scale", "related_to_monitored_section", "user_weight_elevated", "default_d_applied", "exception_reason"],
+              "properties": {
+                "is_border_conflict": {"type": "boolean"},
+                "formal_war": {"type": "boolean"},
+                "de_facto_war_scale": {"type": "boolean"},
+                "related_to_monitored_section": {"type": "boolean"},
+                "user_weight_elevated": {"type": "boolean"},
+                "default_d_applied": {"type": "boolean"},
+                "exception_reason": {"type": ["string", "null"]}
+              },
+              "additionalProperties": false
+            },
+            "ongoing_conflict_review": {
+              "type": "object",
+              "required": ["is_ongoing_conflict", "same_conflict_as_history", "routine_incident", "material_change", "change_types", "reversal_or_escalation_possible", "external_system_impact", "continuity_discount_applied", "exception_reason"],
+              "properties": {
+                "is_ongoing_conflict": {"type": "boolean"},
+                "same_conflict_as_history": {"type": "boolean"},
+                "routine_incident": {"type": "boolean"},
+                "material_change": {"type": "boolean"},
+                "change_types": {"type": "array", "items": {"enum": ["battlefield_reversal", "material_escalation", "peace_or_ceasefire_change", "new_country_or_theatre", "external_system_impact"]}},
+                "reversal_or_escalation_possible": {"type": "boolean"},
+                "external_system_impact": {"type": "boolean"},
+                "continuity_discount_applied": {"type": "boolean"},
+                "exception_reason": {"type": ["string", "null"]}
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
         "decision": {"enum": ["selected", "excluded", "merged", "deferred"]},
         "reason_code": {"enum": ["selected_threshold_met", "c_minus_selected_need", "c_minus_reserve", "outside_time_window", "duplicate_merged", "continuation_no_material_change", "below_public_value_threshold", "unreliable_or_unverified", "superseded_by_later_update", "wrong_scope", "processing_failure", "search_recall_failure"]},
         "reason": {"type": "string", "minLength": 1},

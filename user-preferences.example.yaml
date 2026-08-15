@@ -103,6 +103,16 @@ topic_weights:
   science_and_natural_history: medium_high
   entertainment: low
   industry_wide_culture_platform_games_esports: medium
+  war: normal
+  border_conflict: normal
+
+conflict_grading:
+  border_skirmish_default_grade: D
+  monitored_section_exception: true
+  elevated_weight_exception: true
+  de_facto_war_exception: true
+  ongoing_conflict_routine_update_default_grade: D
+  require_material_change_to_remove_discount: true
 
 deduplication:
   one_primary_section_per_event: true

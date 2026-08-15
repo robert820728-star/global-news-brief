@@ -21,12 +21,39 @@ def source_pool():
 def candidate(grade="C", decision="selected", reason_code="selected_threshold_met"):
     return {
         "candidate_id": "c", "dedup_key": "c", "title": "測試", "section": "GLB",
-        "provisional_grade": grade, "grade_reason": "依公共影響評級",
+        "provisional_grade": grade,
+        "grade_reason": "本期出現可驗證的新制度變化，影響範圍與直接後果符合目前級距。",
+        "grading_evidence": grading_evidence(grade),
         "decision": decision, "reason_code": reason_code, "reason": "決定理由",
         "selected_event_id": "GLB-01" if decision == "selected" else None,
         "candidate_urls": ["https://example.com/reuters"], "source_ids": ["reuters"],
         "source_audit": {"reliable_source_count": 2},
         "continuity": {"status": "new", "material_changes": [], "unchanged_elements": [], "comparison_note": "首次"},
+    }
+
+
+def grading_evidence(grade="C"):
+    return {
+        "impact_scope_level": "national",
+        "direct_consequences": ["已造成可驗證的公共服務變化"] if grade not in {"C", "C-", "D", "E"} else [],
+        "structural_significance": "形成可追蹤的制度或公共風險訊號",
+        "window_material_changes": ["本期首次正式確認事件"],
+        "why_current_grade": "影響範圍與本期增量符合目前級距",
+        "why_not_higher": "尚未造成更廣泛的跨國或系統性影響",
+        "why_not_lower": "存在具體且可驗證的新進展",
+        "border_conflict_review": {
+            "is_border_conflict": False, "formal_war": False,
+            "de_facto_war_scale": False, "related_to_monitored_section": False,
+            "user_weight_elevated": False, "default_d_applied": False,
+            "exception_reason": None,
+        },
+        "ongoing_conflict_review": {
+            "is_ongoing_conflict": False, "same_conflict_as_history": False,
+            "routine_incident": False, "material_change": False,
+            "change_types": [], "reversal_or_escalation_possible": False,
+            "external_system_impact": False, "continuity_discount_applied": False,
+            "exception_reason": None,
+        },
     }
 
 
@@ -155,6 +182,73 @@ class CandidateAuditTests(unittest.TestCase):
     def test_d_and_e_are_audit_only(self):
         errors = MODULE.validate(valid_audit([candidate("D")]), source_pool())
         self.assertTrue(any("D/E 不得入選" in error for error in errors))
+
+    def test_grade_reason_template_is_rejected(self):
+        item = candidate()
+        item["grade_reason"] = "值得持續追蹤"
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("模板理由" in error for error in errors))
+
+    def test_non_monitored_border_skirmish_is_forced_to_d(self):
+        item = candidate("B", "selected")
+        review = item["grading_evidence"]["border_conflict_review"]
+        review.update({"is_border_conflict": True, "default_d_applied": False})
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("邊境小衝突必須評為 D" in error for error in errors))
+
+        item = candidate("D", "excluded", "below_public_value_threshold")
+        review = item["grading_evidence"]["border_conflict_review"]
+        review.update({"is_border_conflict": True, "default_d_applied": True})
+        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
+
+    def test_monitored_border_conflict_can_be_regraded_with_reason(self):
+        item = candidate("C", "selected")
+        review = item["grading_evidence"]["border_conflict_review"]
+        review.update({
+            "is_border_conflict": True,
+            "related_to_monitored_section": True,
+            "exception_reason": "事件直接涉及使用者監控板塊，解除預設 D 後依實際影響評級。",
+        })
+        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
+
+    def test_routine_ongoing_war_update_is_forced_to_d(self):
+        item = candidate("B", "selected")
+        review = item["grading_evidence"]["ongoing_conflict_review"]
+        review.update({
+            "is_ongoing_conflict": True, "same_conflict_as_history": True,
+            "routine_incident": True, "continuity_discount_applied": False,
+        })
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("長期戰爭的常態小衝突" in error for error in errors))
+
+    def test_external_system_impact_can_remove_war_discount(self):
+        item = candidate("B+", "selected")
+        review = item["grading_evidence"]["ongoing_conflict_review"]
+        review.update({
+            "is_ongoing_conflict": True, "same_conflict_as_history": True,
+            "routine_incident": False, "material_change": True,
+            "change_types": ["external_system_impact"],
+            "external_system_impact": True,
+            "exception_reason": "主要航道通行量下降，油價與保險成本出現可驗證的異常上升。",
+        })
+        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
+
+    def test_ongoing_war_cannot_bypass_discount_by_marking_non_routine_only(self):
+        item = candidate("B", "selected")
+        review = item["grading_evidence"]["ongoing_conflict_review"]
+        review.update({
+            "is_ongoing_conflict": True, "same_conflict_as_history": True,
+            "routine_incident": False, "change_types": ["material_escalation"],
+            "exception_reason": "僅宣稱不是例行事件，但沒有任何實質變化證據。",
+        })
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("未證明戰局" in error for error in errors))
+
+    def test_b_minus_or_higher_requires_direct_consequence(self):
+        item = candidate("B-", "selected")
+        item["grading_evidence"]["direct_consequences"] = []
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("B- 以上" in error for error in errors))
 
 
 if __name__ == "__main__":
