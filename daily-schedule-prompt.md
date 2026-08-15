@@ -1,84 +1,83 @@
 # 每日新聞固定排程提示詞
 
-本文件是排程執行規格，不是讀者版內容。
+本文件是排程執行規格，不是讀者版內容。既有選稿、來源、地圖、圖表、圖片與版面細節以 `news-brief-settings.md`、各技能與 schema 為準；本文件定義不可繞過的執行順序、恢復與交付契約。
 
 ## 對話與日期
 
-- 排程名稱固定為「每日新聞」。
-- 每次執行使用獨立結果對話；可控制名稱時，名稱只能是「每日新聞」。
-- 讀者版第一行固定為執行地日期 `YYYY/MM/DD 每日新聞`，每次重新計算。
-- 日期行後用一句話列出本期新聞總數及各板塊數量，例如「本期共 19 則新聞：台灣 3 則、中國 6 則、世界 10 則。」數字必須由本輪 manifest 計算。
-- 不得在讀者版加入完成通知、執行說明、安裝狀態、專案歸屬或後台限制。
+- 排程名稱固定為「每日新聞」，每次執行使用獨立結果對話；可控制名稱時只能叫「每日新聞」。
+- 第一行固定為執行地日期 `YYYY/MM/DD 每日新聞`；下一個非空白行由本輪 manifest 計算新膞總數與各板塊數量。
+- 讀者版不得加入完成通知、執行說明、安裝狀態、專案歸屬、驗證日誌或後台限制。
+
+## 唯一交付閘門
+
+`DELIVERY_GATE_CANONICAL=scripts/publish_news_brief.py`
+
+- 只有 canonical publisher 可以建立可交付 release；任何模型直接��寫、草稿檔、manifest、技能輸出、驗證器 stdout、舊 release、其他 script 或手動複製內容都不是成品。
+- manifest 出現以前必須先建立 `news-run-checkpoint.json`，保存本輪 `run-id`、精確 24 小時時間窗、pre-manifest 階段狀態與 artifact SHA-256。沒有 manifest 不是停止或略過恢復的理由。
+- publisher 每次嘗試發布前先刪除同一 output directory 內既有 `news-brief.md` 與 `release-receipt.json`，再重新驗證 checkpoint、候選稽核、來源掃描證據、manifest、視覺附件、讀者版與 repository 唯一閘門不變式；失敗不得留下本輪 receipt。
+- receipt 綁定 canonical publisher、交付契約、checkpoint、manifest、candidate audit、source pool、輸入 brief 與 release 的 SHA-256。任何一項變更都使交付失效。
+- 最終不得「先驗證再自行讀檔」。必須由 canonical publisher 在同一次呼叫內驗證 receipt 與**目前 checkpoint**，再直接輸出已驗證的 release bytes；stdout 才是唯一可送給使用者的內容。
+- `scripts/check_unique_delivery_gate.py` 必須確認 repository 的 scripts 內沒有第二支程式使用保留發布檔名，且本文件只宣告一個 canonical gate 與一個 canonical delivery command。
 
 ## 每次執行
 
-1. 重新讀取 repo `robert820728-star/global-news-brief` 最新版：
-   - `.agents/skills/daily-news-brief/SKILL.md`
-   - `news-brief-settings.md`
-   - `news-brief-template.md`
-   - `user-preferences.example.yaml`
-   - `schemas/news-event-manifest.schema.json`
-   - `schemas/news-candidate-audit.schema.json`
-   - `news-source-pool.json`
-   - `.agents/skills/audit-news-candidates/SKILL.md`
-   - `.agents/skills/build-news-maps/SKILL.md`
-2. 明確依 `daily-news-brief` 主控技能執行。主控技能必須依序使用：
-   - `select-news-events`
-   - `audit-news-candidates`
-   - `verify-news-events`
-   - `build-news-maps`
-   - `build-news-charts`
-   - `collect-news-images`
-   - `recover-news-run`
-3. 讀取排程保存的個人偏好。個人偏好只覆寫板塊、順序、權重、C-候補取用主題、語言、時區與執行時間；不得設定篇數上限、改變 C 級自動收錄門檻，或覆寫查證、欄位所有權、地圖、圖片及驗收規則。
-4. 以實際執行時間往前精確 24 小時搜尋新聞。
-5. 先執行 `scripts/preprocess_news_candidates.py`，以程式處理時間窗、網址正規化、完全重複及初步聚類；此步驟不得決定入選或評級。
-   - 固定逐一掃描 `news-source-pool.json` 核心來源；每站必須依 `.agents/skills/select-news-events/references/source-scan-evidence.md` 保存原始快照、SHA-256、連續翻頁鏈與停止證據。只有證明已掃到 `window_start` 或來源明確耗盡才可完成；不得自行填寫來源筆數、以首頁冒充文章，或把 403、登入牆、逾時、解析失敗當作掃描終點。驗證器由快照重算時間窗清單，不使用任何最低篇數或等級數量門檻。
-   - 每站對驗證後的時間窗全部條目完成重要度排序，有 30 則以上取前 30 則，不足 30 則取全部，排名 30 之後命中重大災害、疫情、戰爭、軍事外交、選舉、央行金融、重大資安、關鍵基礎設施、重大科研、文化產業／創作者生態／平台制度轉折或官方警報者強制追加。再做跨站／跨語言去重並逐筆評為 SS–E、附評級理由。
-   - 每筆評級必須另存結構化 `grading_evidence`，包含影響範圍、直接後果、結構意義、本期實質增量、為何不是更高／更低級，以及邊境衝突與長期戰爭連續性判定。模板理由、死亡／戰爭關鍵字或母事件等級不得代替逐案判斷。
-   - 非監控板塊且未提高戰爭／邊境權重的國際邊境小衝突，未達正式或事實戰爭時固定為 D。長期戰爭中的同類小衝突與例行傷亡更新也固定為 D；只有戰局反轉／實質升級、和平進程變化、新國家／新戰線，或油價、航運、能源、糧食、金融、難民、供應鏈出現可驗證的實質外部影響時，才解除折扣重新評級。
-6. 先建立事件資料，再按固定模組逐步補充。任何模組不得重新生成整份事件清單或刪除其他模組已完成的地圖、資料圖表、圖片、來源與分析。
-   - 入選逐事件套用絕對最低等級，禁止任何板塊篇數、總篇數或等級配額。達標者不論數量全部入選，未達標者不論當日新聞多寡全部排除。
-7. 完成後套用 `news-brief-template.md`。必須先建立 manifest 與讀者版草稿檔，再使用 `scripts/validate_map_decisions.py --input <manifest>` 驗證每個入選事件均完成地圖需求判定，接著使用 `scripts/validate_news_brief.py brief --manifest <manifest> --input <brief>` 驗證事件資料與讀者版。不得在沒有 manifest、讀者版草稿檔或驗證結果時直接於對話中生成成品；任一驗證失敗都不得輸出 `ready` 讀者版。
-   - 驗證失敗、讀者版草稿不存在或沒有可交付檔案時，不得結束執行。立即使用 `scripts/recover_news_run.py plan --input <manifest> --brief <brief>` 定位中斷階段，只重跑錯誤所屬模組；修復後重新渲染、重新驗證並繼續，直到發布閘門成功產生可交付檔。
-   - 最終只能使用 `scripts/publish_news_brief.py --manifest <manifest> --audit <candidate-audit> --source-pool news-source-pool.json --brief <brief> --output-dir <release-dir>` 建立發布檔案。發布器在同一閘門確認十站原始掃描證據、時間邊界、前30入池、SS–E與理由、C-取用、14天稽核、入選事件完整性及圖片附件；只能原樣輸出該程式產生的 `news-brief.md`。
-   - 若格式驗證失敗，才讀取 `news-brief-examples.md` 的相關正反例並局部修正。
-   - 每個入選事件都必須有明確 `map.required` 判定；`not_required` 是需要理由的結果，不是預設值。
-   - 所有板塊地圖必須始終顯示完整板塊底圖：`TWN` 完整台灣、`CHN` 完整中國、`GLB` 完整世界，自訂國家或區域亦為完整板塊。只能在其上疊加定位標記、標籤、路線或影響範圍；禁止裁切或局部放大。manifest 未記錄完整畫布 `canvas_scope` 與 canonical `base_map` 時，立即由 `recover-news-run` 退回 `build-news-maps` 重做，通過後續行發布。
-   - 每個地圖點位必須直接顯示具體地名並保存 `place_labels`；禁止純數字標記。地圖圖說只解釋地點與事件的關係，不得重複「完整世界／板塊行政界線底圖」或以「標記1為……」解碼。
-   - `place_labels` 與圖面地名必須符合輸出語言；繁體中文輸出時不得只使用 `Venezuela`、`Oman coast` 等英文標籤。字型不可用時必須恢復製圖階段，禁止降級交付。
-   - 海域、沿岸、島嶼、保護區、珊瑚礁、棲地、物種分布／遷徙、擴散、路線、跨境、多州／多省／多國、災害範圍等強地理訊號，必須由 `build-news-maps` 明確複核。若仍判定不需要，`map.rationale` 必須承認命中的空間訊號並具體說明為何定位、範圍或路線不增加理解；否則視為地圖漏判並只重跑該事件的 `build-news-maps`。
-   - 所有入選事件不分評級都必須逐一檢查每個引用來源頁的官方／媒體圖片，保存檢查時間、方法、本地頁面證據與檢出的圖片網址；有圖時必須下載或截圖。C+、C、C-、已有地圖或已有圖表均不得跳過。
-   - 任一來源已找到可用圖片但尚無本地合格附件時，保持 `recovering` 並由 `recover-news-run` 退回 `collect-news-images` 重做；成功後重新渲染、驗證並續行發布，不得省略圖片結案。
-   - 圖片取得中斷只重跑 `collect-news-images`；不得以自製地圖或 `omitted` 取代已存在的來源圖片。
-   - 自製資料圖表只在數值比較、趨勢、比例或分布有實質價值時建立；禁止製作純文字摘要卡或立場卡。
-   - 地圖、自製資料圖表、官方或媒體來源圖片三者獨立；自製資料圖表不得取代來源圖片，也不得讓圖片硬閘門提前完成。
-   - 三種視覺的附件路徑與完成狀態必須兩兩獨立；任一類不得取代、關閉或借用另一類附件。
-   - 氣象、災害、疫情、地震、海嘯、野火、戰爭、航運、漏油與海洋污染等事件不分評級另設官方專業圖資硬閘門。必須依事件內容判定並主動搜尋同期官方圖資，禁止用事件編號白名單或評級門檻跳過。定位地圖、自製圖表、媒體現場照均不得替代，專業圖也不得取代媒體／來源配圖。
-   - 每階段完成後及輸出前使用 `recover-news-run` 檢查未完成、失敗與驗證錯誤；只重跑失敗事件與原欄位擁有技能。
-   - 同一事件同一模組最多重試三次。成功後重新驗證；耗盡時明確輸出故障回報，不得無聲結束或假稱完成。
-8. 未設定偏好時使用台灣 `TWN`、中國 `CHN`、世界 `GLB`，語言為繁體中文，時區為 `Asia/Taipei`。
-9. 若時間窗內沒有事件通過門檻，仍輸出當日日期與三個固定區塊，簡短說明沒有事件通過門檻；不得以舊聞補數量。
+1. 重新讀取最新 `main`：`.agents/skills/daily-news-brief/SKILL.md`、`news-brief-settings.md`、`news-brief-template.md`、`user-preferences.example.yaml`、兩份 schema、`news-source-pool.json`、`audit-news-candidates`、`build-news-maps`、`recover-news-run` 技能，以及 `scripts/news_run_checkpoint.py`、`scripts/publish_news_brief.py`、`scripts/check_unique_delivery_gate.py`。格式失敗時才讀 `news-brief-examples.md` 相關段落。
+2. 主控技能固定依序使用 `select-news-events` → `audit-news-candidates` → `verify-news-events` → `build-news-maps` → `build-news-charts` → `collect-news-images` → `recover-news-run`。偏好只能覆寫板塊、順序、權重、C-候補主題、語言、時區與執行時間，不得改查證、門檻、欄位所有權、地圖、圖片、恢復或交付規則。
+3. 以實際執行時間往前精確 24 小時，建立唯一 `<run-id>`；任何來源掃描之前先執行：
+
+```bash
+python3 scripts/news_run_checkpoint.py init --output <checkpoint> --run-id <run-id> --window-start <window-start> --window-end <window-end>
+```
+
+   本輪只能沿用這一份 `<checkpoint>`；禁止另建 checkpoint 規避失敗狀態。
+4. Manifest 前固定依序完成並更新 checkpoint：
+   - `source-scan`：逐一掃描 `news-source-pool.json` 核心來源；每站保存原始快照、SHA-256、連續翻頁鏈與停止證據。只有證明已掃到 `window_start` 或來源明確耗盡才可完成；403、登入牆、逾時或解析失敗不是終點。
+   - `preprocess-news-candidates`：執行 `scripts/preprocess_news_candidates.py`；只處理時間窗、網址正規化、完全重複與初步聚類，不得決定入選或評級。
+   - `select-news-events`：每站對驗證後時間窗全部條目排序，30 則以上取前 30，不足取全部；排名 30 後命中重大災害、疫情、戰爭、軍事外交、選舉、央行金融、重大資安、關鍵基礎設施、重大科研、文化產業／創作者生態／平台制度轉折或官方警報者強制追加，再跨站／跨語言去重並逐筆評 SS–E。
+   - 每筆保存事件特有 `grading_evidence`；非監控板塊一般邊境小衝突、長期戰爭例行同類小衝突／傷亡更新依既有規則固定 D，除非有可驗證的戰局、和平、新戰線或外部系統實質轉折。
+   - `audit-news-candidates`：完成本輪 candidate audit；完成時以 `--artifact candidate_audit=<candidate-audit>` 綁定 checkpoint。
+   - `materialize-manifest`：只能由已通過 audit 的 selected event ids 建立 manifest；完成時以 `--artifact manifest=<manifest>` 綁定 checkpoint。
+   - 每階段都使用 `scripts/news_run_checkpoint.py mark` 將同一 checkpoint 標成 `running`、`completed` 或 `failed`；完成與失敗都不得只留在模型記憶。
+5. Manifest 前若程序消失、stage 為 `running`／`failed`／`pending`、或任何階段未完成，執行：
+
+```bash
+python3 scripts/news_run_checkpoint.py plan --input <checkpoint>
+```
+
+   只恢復回報的**最早未完成階段**，成功後更新 checkpoint 並從下一階段續行；不得因 manifest 不存在而終止。
+6. Manifest 建立後，先固定事件清單，再由各技能只修改自己欄位。禁止後段模組重建事件、刪除其他模組的 map/charts/images/sources/analysis，禁止篇數、板塊或等級配額。每個 `verify-news-events`、`build-news-maps`、`build-news-charts`、`collect-news-images` 完成／失敗後，同步更新 checkpoint。
+7. 既有視覺硬閘門全部保留：每事件明確判定 `map.required`；必要地圖使用完整 canonical 板塊畫布與輸出語言地名；map/charts/images 三類附件獨立且不得互相替代。所有入選事件不分評級逐一檢查每個引用來源頁圖片並保存本地 evidence；找到圖卻沒有合格附件時保持 recovering。氣象、災害、疫情、地震、海嘯、野火、戰爭、軍事、航運、漏油／海洋污染等依事件內容另有官方專業圖資硬閘門，不得用評級或事件編號跳過。
+8. Manifest 後每階段及輸出前使用既有恢復器：
+
+```bash
+python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
+```
+
+   只重跑失敗事件與原欄位擁有模組；一般取得、渲染、格式、地圖、圖片與驗證錯誤不得無聲結束。硬性權限／環境阻擋才可停止，並保留 checkpoint。
+9. 從 manifest 渲染 `<brief>`；不得重新搜尋或重新評級。以 `--artifact brief=<brief>` 將 checkpoint 的 `render` 標成 completed，然後執行 `validate_map_decisions.py` 與 `validate_news_brief.py brief`。任一驗證失敗立即回到局部恢復，不得直接在對話輸出草稿。
+10. 只有以下命令可以建立 release：
+
+```bash
+python3 scripts/publish_news_brief.py --checkpoint <checkpoint> --manifest <manifest> --audit <candidate-audit> --source-pool news-source-pool.json --brief <brief> --output-dir <release-dir>
+```
+
+   publisher 必須同時確認 pre-manifest checkpoint、十站原始掃描證據與時間邊界、前 30 入池與強制例外、SS–E 與理由、14 天候選稽核、selected→manifest 一致性、地圖、圖片、附件與讀者版；成功後才建立 release + receipt。
+11. **真正交付只允許執行以下一次命令，並將其 stdout 原樣送出；不得在前後補字、摘要、重寫、重新讀檔或拼接：**
+
+```bash
+python3 scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-receipt.json --checkpoint <checkpoint>
+```
+
+   命令非 0 結束即視為未交付，回到恢復／發布流程；禁止改拿草稿或舊 release 補交。
+12. 未設定偏好時使用台灣 `TWN`、中國 `CHN`、世界 `GLB`，繁體中文，`Asia/Taipei`。若時間窗內沒有事件達標，仍需完成 checkpoint、空事件 manifest、驗證、發布與 receipt 交付，不得用舊聞補數量。
 
 ## 兩週候選稽核
 
-- 海選後、驗證前完整執行 `audit-news-candidates`；十四天歷史是增強功能，不是每日簡報的執行門檻。
-- 全部候選都要記錄決定與理由；D／E 只留內部，不得輸出讀者版。
-- 每個去重候選都必須保存 SS–E 評級及理由；C 以上不得無聲消失，C-取用必須有明確需求理由。缺漏時只重跑 `select-news-events` 與 `audit-news-candidates`。
-- `scripts/manage_candidate_audit.py validate` 必須驗證 `grading_evidence` 與衝突降權；未通過時不得發布，也不得以刪除候選規避，必須局部重評後繼續。
-- 持續事件比較十四天內新增、未變與狀態轉折；無實質更新可不重複入選，但必須留下比較說明。
-- 單一可靠來源不得成為排除理由。
-- 歷史讀取與保存依序採用：可讀的既有 `state/candidate-audit.json`、使用者可持久保存的工作區、具有寫入權限的 repository。可同時使用時，以可持久保存且不會影響公共範本的使用者工作區為優先。
-- 沒有 GitHub 帳號、repository 寫入權限或持久工作區時，仍完成本輪候選決策、D／E 分類與讀者版；十四天比較降級為本輪或目前可讀歷史，不得中止簡報。
-- 無法跨次保存時，可輸出本輪稽核附件供下次匯入；若附件也無法保存，只在本次執行中使用並如實標記「未延續歷史」，不得假稱十四天歷史已更新。
-- 稽核保存失敗不得改變事件評級、入選結果、圖片、地圖、資料圖表或最終輸出狀態。
+- 全部候選保存決定、SS–E、理由與持續事件比較；D/E 只留內部，C 以上不得無聲消失，C-取用需明確需求理由。
+- `scripts/manage_candidate_audit.py validate` 未通過時不得發布；不得刪候選規避。
+- 十四天歷史跨次保存是增強功能；沒有持久工作區／repo 寫權可降級，但**本輪** candidate audit、來源掃描證據、決定與 selected→manifest 對應不可降級。
+- 單一可靠來源不得成為排除或自動降級理由。
 
-## 最終輸出
+## 最終輸出格式
 
-日期行及固定新聞數量摘要之後只能保留：
-
-- `今日總覽`
-- `逐條詳報`
-- `後續觀察`
-
-不得輸出事件資料、技能執行紀錄、驗證報告或任何前言。
+日期行與數量摘要之後只能保留 `今日總覽`、`逐條詳報`、`後續觀察` 三個二級標題；詳細版面依 `news-brief-template.md`。此節只定義 release 內容，不授權任何繞過 `--deliver-receipt` 的交付方式。
