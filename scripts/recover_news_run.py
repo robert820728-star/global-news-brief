@@ -29,9 +29,9 @@ RECOVERY_STRATEGIES = {
     ),
     "build-news-maps": (
         "regenerate-from-section-basemap",
-        "change-map-scale",
-        "alternate-render-path",
-        "rediagnose-map-input",
+        "change-map-scale-with-canonical-style",
+        "repair-canonical-yellow-renderer",
+        "rediagnose-map-input-without-style-change",
     ),
     "build-news-charts": (
         "repair-data-contract",
