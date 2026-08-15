@@ -113,7 +113,8 @@ def valid_audit(candidates=None, per_source_count=1):
     return {
         "schema_version": "1.1.0", "retention_days": 14, "updated_at": now,
         "runs": [{"run_id": "r", "generated_at": now, "window_start": window_start, "window_end": window_end,
-                  "source_coverage": coverage, "raw_item_count": 10 * min(per_source_count, 30),
+                  "source_coverage": coverage,
+                  "raw_item_count": len(coverage) * min(per_source_count, 30),
                   "deduplicated_candidate_count": len(items), "candidates": items}],
     }
 
@@ -125,8 +126,34 @@ class CandidateAuditTests(unittest.TestCase):
         errors = MODULE.validate(valid_audit(), pool)
         self.assertTrue(any("首次停辦最低為 C" in error for error in errors))
 
-    def test_ten_sources_each_take_top_thirty(self):
+    def test_all_configured_sources_each_take_top_thirty(self):
         self.assertEqual([], MODULE.validate(valid_audit(per_source_count=73), source_pool()))
+
+    def test_source_coverage_count_is_driven_by_source_pool(self):
+        pool = source_pool()
+        self.assertEqual(15, len(pool["sources"]))
+        self.assertEqual([], MODULE.validate(valid_audit(), pool))
+
+        missing = valid_audit()
+        missing["runs"][0]["source_coverage"].pop()
+        missing["runs"][0]["raw_item_count"] -= 1
+        errors = MODULE.validate(missing, pool)
+        self.assertTrue(any("全部 15 個核心來源" in error for error in errors))
+
+        extra = valid_audit()
+        duplicate = dict(extra["runs"][0]["source_coverage"][-1])
+        duplicate["source_id"] = "unexpected"
+        extra["runs"][0]["source_coverage"].append(duplicate)
+        extra["runs"][0]["raw_item_count"] += duplicate["selected_for_pool_count"]
+        errors = MODULE.validate(extra, pool)
+        self.assertTrue(any("全部 15 個核心來源" in error for error in errors))
+
+    def test_section_source_contract_matches_flat_source_order(self):
+        pool = source_pool()
+        pool["section_sources"]["GLB"] = pool["section_sources"]["GLB"][:-1]
+        errors = MODULE.validate(valid_audit(), pool)
+        self.assertTrue(any("primary_sources_per_section" in error for error in errors))
+        self.assertTrue(any("展開順序" in error for error in errors))
 
     def test_source_with_more_than_thirty_cannot_submit_fewer(self):
         audit = valid_audit(per_source_count=73)

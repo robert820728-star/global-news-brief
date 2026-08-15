@@ -116,7 +116,7 @@ def write_valid_audit(root: Path):
             "run_id": "run-1", "generated_at": "2026-08-14T06:00:00+08:00",
             "window_start": "2026-08-13T06:00:00+08:00",
             "window_end": "2026-08-14T06:00:00+08:00",
-            "source_coverage": coverage, "raw_item_count": 10,
+            "source_coverage": coverage, "raw_item_count": len(coverage),
             "deduplicated_candidate_count": 1, "candidates": [candidate],
         }],
     }
@@ -276,4 +276,4 @@ class PublisherTests(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main((
+    unittest.main()

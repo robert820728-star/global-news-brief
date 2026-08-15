@@ -56,12 +56,35 @@ def validate(data, source_pool=None):
     source_by_id = {}
     if source_pool:
         expected_sources = [item["source_id"] for item in source_pool.get("sources", [])]
+        expected_source_count = len(expected_sources)
+        section_sources = source_pool.get("section_sources", {})
+        configured_per_section = source_pool.get("primary_sources_per_section")
+        flattened_section_sources = [
+            source_id
+            for source_ids in section_sources.values()
+            for source_id in source_ids
+        ] if isinstance(section_sources, dict) else []
         per_source_limit = source_pool.get("per_source_rank_limit", 30)
         allowed_overflow_triggers = set(source_pool.get("mandatory_overflow_triggers", []))
         source_scan_evidence_required = source_pool.get("source_scan_evidence_required") is True
         source_by_id = {item["source_id"]: item for item in source_pool.get("sources", [])}
-        if len(expected_sources) != 10 or len(set(expected_sources)) != 10:
-            errors.append("news-source-pool.json 必須恰好定義 10 個唯一來源")
+        if not expected_sources or len(set(expected_sources)) != expected_source_count:
+            errors.append("news-source-pool.json 必須定義至少一個且全部唯一的核心來源")
+        if (
+            not isinstance(configured_per_section, int)
+            or configured_per_section < 1
+            or not isinstance(section_sources, dict)
+            or not section_sources
+            or any(
+                not isinstance(source_ids, list)
+                or len(source_ids) != configured_per_section
+                or len(set(source_ids)) != len(source_ids)
+                for source_ids in section_sources.values()
+            )
+        ):
+            errors.append("section_sources 每個板塊必須符合 primary_sources_per_section 且不得重複")
+        if flattened_section_sources != expected_sources:
+            errors.append("section_sources 展開順序必須與 sources 完全一致")
         if not source_scan_evidence_required:
             errors.append("news-source-pool.json 必須鎖定 source_scan_evidence_required=true")
         ranking = source_pool.get("ranking", {})
@@ -92,7 +115,10 @@ def validate(data, source_pool=None):
             coverage = []
         coverage_ids = [item.get("source_id") for item in coverage if isinstance(item, dict)]
         if expected_sources is not None and coverage_ids != expected_sources:
-            errors.append(run_label + " 必須依固定順序完成 10 個核心來源確認")
+            errors.append(
+                run_label
+                + f" 必須依來源池固定順序完成全部 {len(expected_sources)} 個核心來源確認"
+            )
 
         raw_total = 0
         for source_index, item in enumerate(coverage, 1):
@@ -188,7 +214,7 @@ def validate(data, source_pool=None):
                 errors.append(label + f" 入池網址必須精確等於站內排序前 {per_source_limit} 則加強制例外")
             raw_total += selected
         if run.get("raw_item_count") != raw_total:
-            errors.append(run_label + ".raw_item_count 必須等於十站入池數量總和")
+            errors.append(run_label + ".raw_item_count 必須等於全部核心來源入池數量總和")
 
         candidates = run.get("candidates", [])
         if run.get("deduplicated_candidate_count") != len(candidates):
@@ -329,7 +355,7 @@ def validate(data, source_pool=None):
         if len(candidate_url_list) != len(set(candidate_url_list)):
             errors.append(run_label + " 去重候選之間重複占用同一原始網址")
         if set(candidate_url_list) != set(pool_urls):
-            errors.append(run_label + " 每個十站入池網址都必須歸屬一個去重候選，禁止候選無聲消失")
+            errors.append(run_label + " 每個核心來源入池網址都必須歸屬一個去重候選，禁止候選無聲消失")
     return errors
 
 

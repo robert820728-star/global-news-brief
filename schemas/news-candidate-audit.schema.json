@@ -66,7 +66,7 @@
         "generated_at": {"type": "string", "format": "date-time"},
         "window_start": {"type": "string", "format": "date-time"},
         "window_end": {"type": "string", "format": "date-time"},
-        "source_coverage": {"type": "array", "minItems": 10, "maxItems": 10, "items": {"$ref": "#/$defs/sourceCoverage"}},
+        "source_coverage": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/sourceCoverage"}},
         "raw_item_count": {"type": "integer", "minimum": 0, "maximum": 500},
         "deduplicated_candidate_count": {"type": "integer", "minimum": 0},
         "candidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}}
