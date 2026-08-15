@@ -1,4 +1,7 @@
 import importlib.util
+import hashlib
+import json
+import tempfile
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
@@ -28,15 +31,38 @@ def candidate(grade="C", decision="selected", reason_code="selected_threshold_me
 
 
 def valid_audit(candidates=None, per_source_count=1):
+    evidence_root = Path(tempfile.mkdtemp(prefix="source-scan-test-"))
+    window_start = "2026-08-13T06:00:00+08:00"
+    window_end = "2026-08-14T06:00:00+08:00"
     coverage = []
     for item in source_pool()["sources"]:
         source_id = item["source_id"]
         ranked_items = [
             {"url": f"https://example.com/{source_id}/{index}", "title": f"{source_id}-{index}",
-             "published_at": "2026-08-14T05:00:00+00:00", "importance_score": 100 - index / 10,
+             "published_at": "2026-08-13T05:00:00+00:00", "importance_score": 100 - index / 10,
              "importance_reason": "依公共影響、範圍與結構意義排序"}
             for index in range(per_source_count)
         ]
+        old_url = f"https://example.com/{source_id}/before-window"
+        old_time = "2026-08-12T21:00:00+00:00"
+        snapshot_text = " ".join(
+            part for ranked in ranked_items
+            for part in (ranked["url"], ranked["published_at"])
+        ) + f" {old_url} {old_time}"
+        snapshot_path = evidence_root / f"{source_id}.html"
+        snapshot_path.write_text(snapshot_text, encoding="utf-8")
+        extracted = [
+            {"url": ranked["url"], "title": ranked["title"], "published_at": ranked["published_at"], "url_evidence": ranked["url"], "published_evidence": ranked["published_at"]}
+            for ranked in ranked_items
+        ] + [{"url": old_url, "title": "時間邊界", "published_at": old_time, "url_evidence": old_url, "published_evidence": old_time}]
+        scan = {
+            "schema_version": "1.0.0", "collector": "candidate-audit-test-fixture", "generated_at": window_end,
+            "window_start": window_start, "window_end": window_end,
+            "pages": [{"request_url": item["homepage"], "fetched_at": window_end, "http_status": 200, "snapshot_path": str(snapshot_path), "sha256": hashlib.sha256(snapshot_text.encode()).hexdigest(), "next_url": None, "extracted_items": extracted}],
+            "terminal_proof": {"type": "crossed_window_start", "page_index": 1, "witness_url": old_url},
+        }
+        scan_path = evidence_root / f"{source_id}.json"
+        scan_path.write_text(json.dumps(scan), encoding="utf-8")
         coverage.append({
             "source_id": source_id, "status": "completed",
             "within_window_count": per_source_count, "ranked_count": per_source_count,
@@ -45,6 +71,8 @@ def valid_audit(candidates=None, per_source_count=1):
             "selected_item_urls": [item["url"] for item in ranked_items[:30]],
             "mandatory_overflow_items": [],
             "ranking_completed": True, "ranking_method": "public_value_v1", "failure_reason": None,
+            "scan_window_start": window_start, "scan_window_end": window_end,
+            "scan_evidence_path": str(scan_path),
         })
     items = candidates if candidates is not None else [candidate()]
     all_urls = [url for item in coverage for url in item["selected_item_urls"]]
@@ -54,10 +82,10 @@ def valid_audit(candidates=None, per_source_count=1):
     if items and len(all_urls) > len(items):
         items[0]["candidate_urls"].extend(all_urls[len(items):])
         items[0]["source_ids"] = sorted({url.split("/")[3] for url in items[0]["candidate_urls"]})
-    now = datetime.now(timezone.utc).isoformat()
+    now = window_end
     return {
         "schema_version": "1.1.0", "retention_days": 14, "updated_at": now,
-        "runs": [{"run_id": "r", "generated_at": now, "window_start": now, "window_end": now,
+        "runs": [{"run_id": "r", "generated_at": now, "window_start": window_start, "window_end": window_end,
                   "source_coverage": coverage, "raw_item_count": 10 * min(per_source_count, 30),
                   "deduplicated_candidate_count": len(items), "candidates": items}],
     }

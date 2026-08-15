@@ -1,0 +1,177 @@
+#!/usr/bin/env python3
+"""Validate evidence that a source scan reached the rolling-window boundary.
+
+The gate deliberately has no minimum item count. A source with zero items is valid
+only when its snapshots prove either exhaustion or traversal past window_start.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import sys
+from datetime import datetime
+from pathlib import Path
+from urllib.parse import urlsplit, urlunsplit
+
+
+def parse_time(value):
+    return datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+
+
+def normalize_url(value):
+    parts = urlsplit(value)
+    return urlunsplit((parts.scheme.lower(), parts.netloc.lower(), parts.path.rstrip("/"), parts.query, ""))
+
+
+def local_path(value):
+    return Path(str(value).removeprefix("sandbox:"))
+
+
+def validate_scan(scan, coverage, source, label="source_scan"):
+    errors = []
+    if not isinstance(scan, dict):
+        return [f"{label} 缺少可重算的來源掃描證據"]
+    required = {"schema_version", "collector", "generated_at", "window_start", "window_end", "pages", "terminal_proof"}
+    missing = sorted(required - set(scan))
+    if missing:
+        errors.append(f"{label} 缺少欄位：{', '.join(missing)}")
+        return errors
+    if scan.get("schema_version") != "1.0.0":
+        errors.append(f"{label}.schema_version 必須是 1.0.0")
+    if not str(scan.get("collector", "")).strip():
+        errors.append(f"{label}.collector 必須記錄實際抓取器")
+    try:
+        start, end = parse_time(scan["window_start"]), parse_time(scan["window_end"])
+    except (TypeError, ValueError):
+        return errors + [f"{label} 時間窗無法解析"]
+    pages = scan.get("pages")
+    if not isinstance(pages, list) or not pages:
+        return errors + [f"{label}.pages 必須保存至少一頁原始回應"]
+
+    all_items = []
+    previous_next = None
+    for index, page in enumerate(pages, 1):
+        page_label = f"{label}.pages[{index}]"
+        if not isinstance(page, dict):
+            errors.append(f"{page_label} 必須是物件")
+            continue
+        for key in ("request_url", "fetched_at", "http_status", "snapshot_path", "sha256", "next_url", "extracted_items"):
+            if key not in page:
+                errors.append(f"{page_label} 缺少 {key}")
+        request_url = page.get("request_url")
+        if index > 1 and previous_next != request_url:
+            errors.append(f"{page_label} 與上一頁 next_url 不連續")
+        previous_next = page.get("next_url")
+        if page.get("http_status") != 200:
+            errors.append(f"{page_label} HTTP 狀態不是 200；不得把中斷當作掃描完成")
+        snapshot = local_path(page.get("snapshot_path", ""))
+        if not snapshot.is_file():
+            errors.append(f"{page_label} 原始快照不存在：{snapshot}")
+            content = ""
+        else:
+            raw = snapshot.read_bytes()
+            digest = hashlib.sha256(raw).hexdigest()
+            if digest != page.get("sha256"):
+                errors.append(f"{page_label} 快照 SHA-256 不符")
+            content = raw.decode("utf-8", errors="ignore")
+        items = page.get("extracted_items")
+        if not isinstance(items, list):
+            errors.append(f"{page_label}.extracted_items 必須是陣列")
+            continue
+        for item_index, item in enumerate(items, 1):
+            item_label = f"{page_label}.extracted_items[{item_index}]"
+            if not isinstance(item, dict):
+                errors.append(f"{item_label} 必須是物件")
+                continue
+            for key in ("url", "title", "published_at", "url_evidence", "published_evidence"):
+                if not str(item.get(key, "")).strip():
+                    errors.append(f"{item_label} 缺少 {key}")
+            if item.get("url_evidence") not in content:
+                errors.append(f"{item_label}.url_evidence 不存在於原始快照")
+            if item.get("published_evidence") not in content:
+                errors.append(f"{item_label}.published_evidence 不存在於原始快照")
+            all_items.append(item)
+
+    urls = [item.get("url") for item in all_items]
+    if len(urls) != len(set(urls)):
+        errors.append(f"{label} 跨頁解析出重複文章網址")
+    homepage = normalize_url(source.get("homepage", ""))
+    for index, url in enumerate(urls, 1):
+        if not isinstance(url, str) or not url.startswith(("http://", "https://")):
+            errors.append(f"{label} 第 {index} 筆不是有效文章網址")
+        elif normalize_url(url) == homepage:
+            errors.append(f"{label} 第 {index} 筆以來源首頁冒充單篇新聞")
+
+    terminal = scan.get("terminal_proof")
+    if not isinstance(terminal, dict):
+        errors.append(f"{label}.terminal_proof 必須是物件")
+    else:
+        kind = terminal.get("type")
+        page_index = terminal.get("page_index")
+        if not isinstance(page_index, int) or not 1 <= page_index <= len(pages):
+            errors.append(f"{label}.terminal_proof.page_index 無效")
+        elif kind == "crossed_window_start":
+            witness_url = terminal.get("witness_url")
+            witness = next((item for item in pages[page_index - 1].get("extracted_items", []) if item.get("url") == witness_url), None)
+            if witness is None:
+                errors.append(f"{label} 時間邊界見證文章不存在於指定快照")
+            else:
+                try:
+                    if parse_time(witness.get("published_at")) > start:
+                        errors.append(f"{label} 見證文章尚未抵達 window_start")
+                except (TypeError, ValueError):
+                    errors.append(f"{label} 見證文章時間無法解析")
+        elif kind == "source_exhausted":
+            page = pages[page_index - 1]
+            marker = terminal.get("terminal_marker")
+            snapshot = local_path(page.get("snapshot_path", ""))
+            content = snapshot.read_text(encoding="utf-8", errors="ignore") if snapshot.is_file() else ""
+            if page.get("next_url") is not None:
+                errors.append(f"{label} 宣告來源耗盡時最後一頁仍有 next_url")
+            if not isinstance(marker, str) or not marker or marker not in content:
+                errors.append(f"{label} 來源耗盡標記不存在於原始快照")
+        else:
+            errors.append(f"{label}.terminal_proof.type 只能是 crossed_window_start 或 source_exhausted")
+
+    within = []
+    for item in all_items:
+        try:
+            published = parse_time(item.get("published_at"))
+        except (TypeError, ValueError):
+            errors.append(f"{label} 文章時間無法解析：{item.get('url')}")
+            continue
+        if start < published <= end:
+            within.append(item)
+    ranked = coverage.get("ranked_items", [])
+    ranked_urls = [item.get("url") for item in ranked if isinstance(item, dict)]
+    within_urls = [item.get("url") for item in within]
+    if set(ranked_urls) != set(within_urls) or len(ranked_urls) != len(within_urls):
+        errors.append(f"{label} 原始快照重算的24小時文章與 ranked_items 不一致")
+    if coverage.get("within_window_count") != len(within):
+        errors.append(f"{label} within_window_count 必須由原始快照重算，不得自行填寫")
+    if scan.get("window_start") != coverage.get("scan_window_start") or scan.get("window_end") != coverage.get("scan_window_end"):
+        errors.append(f"{label} 掃描證據時間窗與來源稽核時間窗不一致")
+    return errors
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--scan", required=True)
+    parser.add_argument("--coverage", required=True)
+    parser.add_argument("--source", required=True)
+    args = parser.parse_args()
+    scan = json.loads(Path(args.scan).read_text(encoding="utf-8"))
+    coverage = json.loads(Path(args.coverage).read_text(encoding="utf-8"))
+    source = json.loads(Path(args.source).read_text(encoding="utf-8"))
+    errors = validate_scan(scan, coverage, source)
+    for error in errors:
+        print("FAIL:", error)
+    if not errors:
+        print("OK")
+    return int(bool(errors))
+
+
+if __name__ == "__main__":
+    sys.exit(main())

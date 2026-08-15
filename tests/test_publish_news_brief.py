@@ -1,4 +1,5 @@
 import json
+import hashlib
 import subprocess
 import sys
 import tempfile
@@ -19,9 +20,34 @@ def write_valid_audit(root):
     coverage = []
     for item in source_pool["sources"]:
         source_id = item["source_id"]
+        article_url = f"https://example.com/{source_id}"
+        old_url = f"https://example.com/{source_id}/old"
+        article_time = "2026-08-13T05:00:00+00:00"
+        old_time = "2026-08-12T21:00:00+00:00"
+        snapshot_text = f"{article_url} {article_time} {old_url} {old_time}"
+        snapshot_path = root / f"{source_id}-scan.html"
+        snapshot_path.write_text(snapshot_text, encoding="utf-8")
+        scan = {
+            "schema_version": "1.0.0", "collector": "publisher-test-fixture",
+            "generated_at": "2026-08-14T06:00:00+08:00",
+            "window_start": "2026-08-13T06:00:00+08:00",
+            "window_end": "2026-08-14T06:00:00+08:00",
+            "pages": [{
+                "request_url": item["homepage"], "fetched_at": "2026-08-14T06:00:00+08:00",
+                "http_status": 200, "snapshot_path": str(snapshot_path),
+                "sha256": hashlib.sha256(snapshot_text.encode()).hexdigest(), "next_url": None,
+                "extracted_items": [
+                    {"url": article_url, "title": source_id, "published_at": article_time, "url_evidence": article_url, "published_evidence": article_time},
+                    {"url": old_url, "title": "old", "published_at": old_time, "url_evidence": old_url, "published_evidence": old_time},
+                ],
+            }],
+            "terminal_proof": {"type": "crossed_window_start", "page_index": 1, "witness_url": old_url},
+        }
+        scan_path = root / f"{source_id}-scan.json"
+        scan_path.write_text(json.dumps(scan), encoding="utf-8")
         ranked_items = [{
-            "url": f"https://example.com/{source_id}", "title": source_id,
-            "published_at": "2026-08-14T05:00:00+00:00", "importance_score": 80,
+            "url": article_url, "title": source_id,
+            "published_at": article_time, "importance_score": 80,
             "importance_reason": "具有公共影響",
         }]
         coverage.append({
@@ -31,11 +57,14 @@ def write_valid_audit(root):
             "ranked_count": 1,
             "ranked_items": ranked_items,
             "selected_for_pool_count": 1,
-            "selected_item_urls": [f"https://example.com/{source_id}"],
+            "selected_item_urls": [article_url],
             "mandatory_overflow_items": [],
             "ranking_completed": True,
             "ranking_method": "public_value_v1",
             "failure_reason": None,
+            "scan_window_start": "2026-08-13T06:00:00+08:00",
+            "scan_window_end": "2026-08-14T06:00:00+08:00",
+            "scan_evidence_path": str(scan_path),
         })
     candidate = {
         "candidate_id": "cand-1", "dedup_key": "test-event", "title": "測試事件",

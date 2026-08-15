@@ -13,7 +13,7 @@
   "$defs": {
     "sourceCoverage": {
       "type": "object",
-      "required": ["source_id", "status", "within_window_count", "ranked_count", "ranked_items", "selected_for_pool_count", "selected_item_urls", "mandatory_overflow_items", "ranking_completed", "ranking_method", "failure_reason"],
+      "required": ["source_id", "status", "within_window_count", "ranked_count", "ranked_items", "selected_for_pool_count", "selected_item_urls", "mandatory_overflow_items", "ranking_completed", "ranking_method", "failure_reason", "scan_window_start", "scan_window_end", "scan_evidence_path"],
       "properties": {
         "source_id": {"type": "string"},
         "status": {"enum": ["completed", "failed"]},
@@ -52,6 +52,9 @@
         "ranking_completed": {"type": "boolean"},
         "ranking_method": {"const": "public_value_v1"},
         "failure_reason": {"type": ["string", "null"]}
+        ,"scan_window_start": {"type": "string", "format": "date-time"}
+        ,"scan_window_end": {"type": "string", "format": "date-time"}
+        ,"scan_evidence_path": {"type": "string", "pattern": "^(sandbox:)?/"}
       },
       "additionalProperties": true
     },

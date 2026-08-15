@@ -7,6 +7,8 @@ import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+import validate_source_scan_evidence
+
 AUTO_SELECT = {"SS", "S+", "S", "S-", "A+", "A", "A-", "B+", "B", "B-", "C+", "C"}
 LOW_GRADES = {"D", "E"}
 REASON_CODES = {
@@ -37,12 +39,18 @@ def validate(data, source_pool=None):
     expected_sources = None
     per_source_limit = 30
     allowed_overflow_triggers = set()
+    source_scan_evidence_required = False
+    source_by_id = {}
     if source_pool:
         expected_sources = [item["source_id"] for item in source_pool.get("sources", [])]
         per_source_limit = source_pool.get("per_source_rank_limit", 30)
         allowed_overflow_triggers = set(source_pool.get("mandatory_overflow_triggers", []))
+        source_scan_evidence_required = source_pool.get("source_scan_evidence_required") is True
+        source_by_id = {item["source_id"]: item for item in source_pool.get("sources", [])}
         if len(expected_sources) != 10 or len(set(expected_sources)) != 10:
             errors.append("news-source-pool.json 必須恰好定義 10 個唯一來源")
+        if not source_scan_evidence_required:
+            errors.append("news-source-pool.json 必須鎖定 source_scan_evidence_required=true")
         ranking = source_pool.get("ranking", {})
         cultural_rule = source_pool.get("cultural_industry_event_rule", {})
         if cultural_rule.get("first_large_award_suspension_min_grade") != "C":
@@ -78,6 +86,25 @@ def validate(data, source_pool=None):
             overflow_items = item.get("mandatory_overflow_items")
             if item.get("status") != "completed":
                 errors.append(label + " 來源掃描未完成；禁止與圖片確認一起通過發布閘門")
+            if source_scan_evidence_required:
+                for field in ("scan_window_start", "scan_window_end", "scan_evidence_path"):
+                    if not item.get(field):
+                        errors.append(label + f" 缺少 {field}；不得自行宣告來源掃描完成")
+                evidence_path = item.get("scan_evidence_path")
+                if item.get("scan_window_start") != run.get("window_start") or item.get("scan_window_end") != run.get("window_end"):
+                    errors.append(label + " 掃描證據時間窗必須與本輪精確24小時時間窗一致")
+                if isinstance(evidence_path, str) and evidence_path:
+                    local = Path(evidence_path.removeprefix("sandbox:"))
+                    if not local.is_file():
+                        errors.append(label + f" 掃描證據檔不存在：{evidence_path}")
+                    else:
+                        try:
+                            scan = load(local)
+                            errors.extend(validate_source_scan_evidence.validate_scan(
+                                scan, item, source_by_id.get(item.get("source_id"), {}), label + ".scan_evidence"
+                            ))
+                        except (OSError, ValueError, json.JSONDecodeError) as error:
+                            errors.append(label + f" 掃描證據無法讀取：{error}")
             if item.get("ranking_completed") is not True:
                 errors.append(label + " 尚未完成站內重要度排序")
             if item.get("ranking_method") != "public_value_v1":

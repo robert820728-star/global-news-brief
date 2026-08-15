@@ -16,7 +16,7 @@ description: Maintain a rolling fourteen-day audit of all news candidates, inclu
 只有下列工作需要模型：判斷持續事件是否有實質轉折、檢查暫定 B 以上事件是否被錯誤排除、辨認不同標題是否其實是同一底層事件。可選小模型只能提出標籤或合併建議；最終排除、降為 D／E 或重大事件合併須由高階模型確認。
 
 
-1. 讀取本輪全部聚類候選、`news-source-pool.json` 與最近十四天 `state/candidate-audit.json`。確認核心來源逐站完成掃描；每站有 30 則以上必須取前 30 則，不足 30 則取全部，並核對排名外強制例外。
+1. 讀取本輪全部聚類候選、`news-source-pool.json`、每站來源掃描證據與最近十四天 `state/candidate-audit.json`。先由 `scripts/validate_source_scan_evidence.py` 驗證快照雜湊、翻頁鏈與停止證據並重算時間窗清單；不得採信自行填寫的來源筆數。確認核心來源逐站完成掃描後，每站有 30 則以上必須取前 30 則，不足 30 則取全部，並核對排名外強制例外。
 2. 以 `dedup_key` 去重，以 `continuity_key` 連接跨日事件。
 3. 每筆記錄 `selected`、`excluded`、`merged` 或 `deferred`，並附理由代碼與繁體中文說明。
 4. 記錄可靠來源數、獨立群組、官方／原始來源及來源限制。

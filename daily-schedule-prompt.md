@@ -33,12 +33,13 @@
 3. 讀取排程保存的個人偏好。個人偏好只覆寫板塊、順序、權重、C-候補取用主題、語言、時區與執行時間；不得設定篇數上限、改變 C 級自動收錄門檻，或覆寫查證、欄位所有權、地圖、圖片及驗收規則。
 4. 以實際執行時間往前精確 24 小時搜尋新聞。
 5. 先執行 `scripts/preprocess_news_candidates.py`，以程式處理時間窗、網址正規化、完全重複及初步聚類；此步驟不得決定入選或評級。
-   - 固定逐一掃描 `news-source-pool.json` 核心來源；每站對時間窗內全部可見條目完成重要度排序，有 30 則以上取前 30 則，不足 30 則取全部，排名 30 之後命中重大災害、疫情、戰爭、軍事外交、選舉、央行金融、重大資安、關鍵基礎設施、重大科研、文化產業／創作者生態／平台制度轉折或官方警報者強制追加。再做跨站／跨語言去重並逐筆評為 SS–E、附評級理由。
+   - 固定逐一掃描 `news-source-pool.json` 核心來源；每站必須依 `.agents/skills/select-news-events/references/source-scan-evidence.md` 保存原始快照、SHA-256、連續翻頁鏈與停止證據。只有證明已掃到 `window_start` 或來源明確耗盡才可完成；不得自行填寫來源筆數、以首頁冒充文章，或把 403、登入牆、逾時、解析失敗當作掃描終點。驗證器由快照重算時間窗清單，不使用任何最低篇數或等級數量門檻。
+   - 每站對驗證後的時間窗全部條目完成重要度排序，有 30 則以上取前 30 則，不足 30 則取全部，排名 30 之後命中重大災害、疫情、戰爭、軍事外交、選舉、央行金融、重大資安、關鍵基礎設施、重大科研、文化產業／創作者生態／平台制度轉折或官方警報者強制追加。再做跨站／跨語言去重並逐筆評為 SS–E、附評級理由。
 6. 先建立事件資料，再按固定模組逐步補充。任何模組不得重新生成整份事件清單或刪除其他模組已完成的地圖、資料圖表、圖片、來源與分析。
    - 入選逐事件套用絕對最低等級，禁止任何板塊篇數、總篇數或等級配額。達標者不論數量全部入選，未達標者不論當日新聞多寡全部排除。
 7. 完成後套用 `news-brief-template.md`。必須先建立 manifest 與讀者版草稿檔，再使用 `scripts/validate_map_decisions.py --input <manifest>` 驗證每個入選事件均完成地圖需求判定，接著使用 `scripts/validate_news_brief.py brief --manifest <manifest> --input <brief>` 驗證事件資料與讀者版。不得在沒有 manifest、讀者版草稿檔或驗證結果時直接於對話中生成成品；任一驗證失敗都不得輸出 `ready` 讀者版。
    - 驗證失敗、讀者版草稿不存在或沒有可交付檔案時，不得結束執行。立即使用 `scripts/recover_news_run.py plan --input <manifest> --brief <brief>` 定位中斷階段，只重跑錯誤所屬模組；修復後重新渲染、重新驗證並繼續，直到發布閘門成功產生可交付檔。
-   - 最終只能使用 `scripts/publish_news_brief.py --manifest <manifest> --audit <candidate-audit> --source-pool news-source-pool.json --brief <brief> --output-dir <release-dir>` 建立發布檔案。發布器在同一閘門確認十站海選、SS–E與理由、C-取用、14天稽核、入選事件完整性及圖片附件；只能原樣輸出該程式產生的 `news-brief.md`。
+   - 最終只能使用 `scripts/publish_news_brief.py --manifest <manifest> --audit <candidate-audit> --source-pool news-source-pool.json --brief <brief> --output-dir <release-dir>` 建立發布檔案。發布器在同一閘門確認十站原始掃描證據、時間邊界、前30入池、SS–E與理由、C-取用、14天稽核、入選事件完整性及圖片附件；只能原樣輸出該程式產生的 `news-brief.md`。
    - 若格式驗證失敗，才讀取 `news-brief-examples.md` 的相關正反例並局部修正。
    - 每個入選事件都必須有明確 `map.required` 判定；`not_required` 是需要理由的結果，不是預設值。
    - 所有板塊地圖必須始終顯示完整板塊底圖：`TWN` 完整台灣、`CHN` 完整中國、`GLB` 完整世界，自訂國家或區域亦為完整板塊。只能在其上疊加定位標記、標籤、路線或影響範圍；禁止裁切或局部放大。manifest 未記錄完整畫布 `canvas_scope` 與 canonical `base_map` 時，立即由 `recover-news-run` 退回 `build-news-maps` 重做，通過後續行發布。

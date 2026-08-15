@@ -11,7 +11,7 @@ description: Orchestrate a complete daily news brief from a precise rolling time
 
 1. 讀取 repo 根目錄的 `news-brief-settings.md`。
 2. 讀取排程或使用者保存的偏好；沒有時使用 `user-preferences.example.yaml`。
-3. 讀取 `news-source-pool.json`；核心來源逐站各取時間窗內重要度前 30 則並追加合格強制例外，不得跨站合計截斷。
+3. 讀取 `news-source-pool.json` 與 `select-news-events/references/source-scan-evidence.md`；核心來源逐站保存原始快照與時間邊界證據，由程式重算完整時間窗清單，再各取重要度前 30 則並追加合格強制例外，不得跨站合計截斷。不得使用最低篇數或等級數量門檻。
 4. 讀取 `references/manifest-contract.md`。
 5. 讀取 `schemas/news-event-manifest.schema.json` 與 `schemas/news-candidate-audit.schema.json`。
 6. 在輸出前讀取 `news-brief-template.md`。

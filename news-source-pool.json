@@ -2,6 +2,7 @@
   "schema_version": "1.0.0",
   "window_hours": 24,
   "per_source_rank_limit": 30,
+  "source_scan_evidence_required": true,
   "mandatory_overflow_triggers": [
     "major_disaster", "epidemic", "war_or_military", "diplomacy_escalation",
     "election", "central_bank_or_financial_shock", "major_cybersecurity",
