@@ -5,6 +5,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from PIL import Image
+
 from test_validate_news_brief import valid_brief, valid_manifest
 
 
@@ -18,8 +20,8 @@ class PublisherTests(unittest.TestCase):
             root = Path(directory)
             map_path = root / "map.png"
             image_path = root / "image.png"
-            map_path.write_bytes(b"map")
-            image_path.write_bytes(b"image")
+            Image.new("RGB", (100, 100), "#f3e6b8").save(map_path)
+            Image.new("RGB", (100, 100), "#cccccc").save(image_path)
             manifest = valid_manifest()
             manifest["events"][0]["map"]["assets"][0]["path"] = str(map_path)
             manifest["events"][0]["images"]["assets"][0]["path"] = str(image_path)
@@ -56,6 +58,46 @@ class PublisherTests(unittest.TestCase):
                 (release_dir / "release-receipt.json").read_text(encoding="utf-8")
             )
             self.assertEqual(receipt["status"], "ready")
+
+    def test_publish_blocks_blue_map_even_when_metadata_claims_canonical_style(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            map_path = root / "map.png"
+            image_path = root / "image.png"
+            Image.new("RGB", (100, 100), "#4d88c7").save(map_path)
+            Image.new("RGB", (100, 100), "#cccccc").save(image_path)
+            manifest = valid_manifest()
+            manifest["events"][0]["map"]["assets"][0]["path"] = str(map_path)
+            manifest["events"][0]["images"]["assets"][0]["path"] = str(image_path)
+            brief = valid_brief().replace(
+                "sandbox:/tmp/map.png", str(map_path)
+            ).replace(
+                "sandbox:/tmp/image.png", str(image_path)
+            )
+            manifest_path = root / "manifest.json"
+            brief_path = root / "brief.md"
+            manifest_path.write_text(
+                json.dumps(manifest, ensure_ascii=False), encoding="utf-8"
+            )
+            brief_path.write_text(brief, encoding="utf-8")
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(PUBLISHER),
+                    "--manifest",
+                    str(manifest_path),
+                    "--brief",
+                    str(brief_path),
+                    "--output-dir",
+                    str(root / "release"),
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("藍色背景比例過高", result.stderr)
+            self.assertFalse((root / "release" / "news-brief.md").exists())
 
     def test_publish_blocks_missing_attachment(self):
         with tempfile.TemporaryDirectory() as directory:
