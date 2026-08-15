@@ -14,6 +14,33 @@ import validate_map_decisions
 import validate_news_brief
 
 
+def local_attachment_path(value: str) -> Path:
+    if value.startswith("sandbox:"):
+        value = value.removeprefix("sandbox:")
+    return Path(value)
+
+
+def attachment_errors(manifest: dict) -> list[str]:
+    errors: list[str] = []
+    for event in manifest.get("events", []):
+        if not isinstance(event, dict):
+            continue
+        event_id = event.get("event_id", "事件")
+        for field in ("map", "charts", "images"):
+            result = event.get(field, {})
+            assets = result.get("assets", []) if isinstance(result, dict) else []
+            for index, asset in enumerate(assets, start=1):
+                path = asset.get("path") if isinstance(asset, dict) else None
+                if not isinstance(path, str):
+                    continue
+                local = local_attachment_path(path)
+                if not local.is_file() or local.stat().st_size < 1:
+                    errors.append(
+                        f"{event_id}.{field}.assets[{index}] 附件不存在或為空：{path}"
+                    )
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", required=True)
@@ -38,6 +65,7 @@ def main() -> int:
         return 2
 
     errors = []
+    errors.extend(attachment_errors(manifest))
     errors.extend(validate_map_decisions.validate(manifest))
     errors.extend(validate_news_brief.validate_brief_text(manifest, brief))
     if errors:
