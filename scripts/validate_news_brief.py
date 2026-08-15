@@ -46,6 +46,19 @@ BACKEND_PHRASES = [
     "來源無圖",
     "視覺驗收成功",
 ]
+FORBIDDEN_RENDER_TOKENS = (
+    "async_image_group",
+    "charts_widget_v2",
+    "genui",
+    "<gallery",
+    "<carousel",
+)
+FIGURE_PREFIXES = {
+    "map": "地圖",
+    "charts": "資料圖表",
+    "images": "圖",
+}
+CHINESE_NUMERALS = ("一", "二", "三", "四", "五")
 
 
 def load_json(path: str | Path) -> dict[str, Any]:
@@ -195,6 +208,20 @@ def _validate_media_result(
                 "official_information", "professional_information", "news_photo"
             }:
                 errors.append(f"{asset_label}.kind 無效")
+    if field == "images":
+        kinds = [
+            asset.get("kind") for asset in assets
+            if isinstance(asset, dict)
+        ]
+        seen_news_photo = False
+        for kind in kinds:
+            if kind == "news_photo":
+                seen_news_photo = True
+            elif seen_news_photo and kind in {"official_information", "professional_information"}:
+                errors.append(
+                    f"{label} 圖片順序錯誤：官方或專業資訊圖必須排在新聞照片之前"
+                )
+                break
     return paths
 
 
@@ -421,8 +448,8 @@ def validate_manifest_data(data: dict[str, Any]) -> list[str]:
                 if number != expected:
                     errors.append(f"{label}.attempt 應為 {expected}，實際為 {number}")
                 highest_attempt[key] = number
-                if number > max_attempts:
-                    errors.append(f"{label} 超過單一目標重試上限 {max_attempts}")
+                # max_attempts_per_target is a per-strategy rotation threshold;
+                # total attempts may exceed it while recovery continues with a new strategy.
                 if attempt.get("outcome") not in {"succeeded", "failed"}:
                     errors.append(f"{label}.outcome 無效")
         unresolved = recovery.get("unresolved_targets")
@@ -699,6 +726,9 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
     for phrase in BACKEND_PHRASES:
         if phrase in text:
             errors.append(f"讀者版含有後台文字：{phrase}")
+    for token in FORBIDDEN_RENDER_TOKENS:
+        if token in text:
+            errors.append(f"讀者版使用禁止的圖廊、疊圖或動態元件：{token}")
 
     events = data.get("events", [])
     expected_ids = [event.get("event_id") for event in events if isinstance(event, dict)]
@@ -754,6 +784,17 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
         elif positions != sorted(positions):
             errors.append(f"{event_id} 詳報欄位順序錯誤")
 
+        ordered_markers = [
+            marker for marker in (
+                "**時間：**", "**來源：**", "**地圖：**", "**資料圖表：**",
+                "**圖片：**", "**事件細節：**", "**各方說法：**", "**分析：**",
+            )
+            if marker in block
+        ]
+        marker_positions = [block.find(marker) for marker in ordered_markers]
+        if marker_positions != sorted(marker_positions):
+            errors.append(f"{event_id} 地圖、資料圖表、圖片或文字欄位順序錯誤")
+
         verification = event.get("verification", {})
         if isinstance(verification, dict) and verification.get("finding") == "single_reliable_source":
             if SINGLE_SOURCE_NOTE not in block:
@@ -762,25 +803,47 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
         map_result = event.get("map", {})
         chart_result = event.get("charts", {})
         image_result = event.get("images", {})
-        for field, result, marker in (
-            ("地圖", map_result, "**地圖：**"),
-            ("資料圖表", chart_result, "**資料圖表：**"),
-            ("圖片", image_result, "**圖片：**"),
+        for field_key, field, result, marker in (
+            ("map", "地圖", map_result, "**地圖：**"),
+            ("charts", "資料圖表", chart_result, "**資料圖表：**"),
+            ("images", "圖片", image_result, "**圖片：**"),
         ):
             if not isinstance(result, dict):
                 continue
             assets = result.get("assets", []) if isinstance(result.get("assets"), list) else []
             if result.get("status") == "ready" and marker not in block:
                 errors.append(f"{event_id} 有合格{field}但讀者版缺少{field}欄")
-            for asset in assets:
+            asset_positions: list[int] = []
+            for asset_index, asset in enumerate(assets, start=1):
                 if not isinstance(asset, dict):
                     continue
                 path = asset.get("path")
                 caption = asset.get("caption")
-                if isinstance(path, str) and path not in block:
-                    errors.append(f"{event_id} 漏放{field}附件：{path}")
-                if isinstance(caption, str) and caption not in block:
+                number = CHINESE_NUMERALS[asset_index - 1]
+                expected_prefix = f"{FIGURE_PREFIXES[field_key]}{number}"
+                if isinstance(path, str):
+                    markdown_pattern = re.compile(
+                        rf"!\[{re.escape(expected_prefix)}[^\]]*\]\({re.escape(path)}\)"
+                    )
+                    match = markdown_pattern.search(block)
+                    if not match:
+                        errors.append(
+                            f"{event_id} {field}附件必須逐張使用 Markdown 並依序標示"
+                            f"{expected_prefix}：{path}"
+                        )
+                    else:
+                        asset_positions.append(match.start())
+                if not isinstance(caption, str) or not caption.startswith(expected_prefix + "："):
+                    errors.append(f"{event_id} {field}圖說必須以 {expected_prefix}：開頭")
+                elif caption not in block:
                     errors.append(f"{event_id} 漏放{field}圖說：{caption}")
+                elif isinstance(path, str):
+                    path_position = block.find(path)
+                    caption_position = block.find(caption)
+                    if path_position >= 0 and caption_position <= path_position:
+                        errors.append(f"{event_id} {expected_prefix}圖說必須緊接在附件之後")
+            if asset_positions != sorted(asset_positions):
+                errors.append(f"{event_id} {field}附件順序與 manifest 不一致")
     return errors
 
 
