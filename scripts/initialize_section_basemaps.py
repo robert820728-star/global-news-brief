@@ -71,6 +71,12 @@ def initialize(section: dict[str, Any]) -> Path:
         "png_path": f"maps/generated/sections/{code}-base.png",
         "svg_path": f"maps/generated/sections/{code}-base.svg",
         "purpose": "section_context_basemap",
+        "style": {
+            "land_fill": "#f3e6b8",
+            "boundary_color": "#53606f",
+            "background": "#ffffff",
+            "boundary_level": "country_or_best_available_internal_administration",
+        },
     }
     path = OUT / f"{code}-base.json"
     path.write_text(json.dumps(metadata, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
