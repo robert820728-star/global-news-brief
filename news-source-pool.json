@@ -1,8 +1,15 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "window_hours": 24,
   "per_source_rank_limit": 30,
+  "primary_sources_per_section": 5,
   "source_scan_evidence_required": true,
+  "acquisition_policy": {
+    "route_order": ["structured_direct", "html_direct", "browser_rendered", "same_source_alternate"],
+    "browser_fallback_triggers": ["robots_denied", "http_403", "unsupported_mime", "dynamic_content_missing", "timeout", "parse_failure"],
+    "cross_source_substitution_forbidden": true,
+    "browser_snapshot_required": true
+  },
   "mandatory_overflow_triggers": [
     "major_disaster", "epidemic", "war_or_military", "diplomacy_escalation",
     "election", "central_bank_or_financial_shock", "major_cybersecurity",
@@ -16,19 +23,9 @@
   },
   "conflict_grading_policy": {
     "border_skirmish_default_grade": "D",
-    "border_exceptions": [
-      "monitored_section",
-      "elevated_war_or_border_weight",
-      "formal_war",
-      "de_facto_war_scale"
-    ],
+    "border_exceptions": ["monitored_section", "elevated_war_or_border_weight", "formal_war", "de_facto_war_scale"],
     "ongoing_conflict_routine_update_default_grade": "D",
-    "ongoing_conflict_exceptions": [
-      "battlefield_reversal_or_material_escalation",
-      "peace_or_ceasefire_material_change",
-      "new_country_or_theatre",
-      "external_system_impact"
-    ],
+    "ongoing_conflict_exceptions": ["battlefield_reversal_or_material_escalation", "peace_or_ceasefire_material_change", "new_country_or_theatre", "external_system_impact"],
     "parent_conflict_grade_inheritance_forbidden": true,
     "source_count_must_not_change_grade": true
   },
@@ -45,16 +42,30 @@
     },
     "tie_breakers": ["newer_published_at", "more_direct_primary_evidence", "stable_url"]
   },
+  "section_sources": {
+    "TWN": ["cna", "pts", "udn", "ltn", "economic_daily"],
+    "CHN": ["xinhua", "caixin", "chinanews", "thepaper", "yicai"],
+    "GLB": ["reuters", "ap", "bbc", "nikkei", "reliefweb"]
+  },
   "sources": [
-    {"source_id":"reuters","name":"Reuters","homepage":"https://www.reuters.com/","regions":["TWN","CHN","GLB"],"categories":["politics","economy","business","technology","conflict","disaster"],"role":"independent_wire"},
-    {"source_id":"ap","name":"Associated Press","homepage":"https://apnews.com/","regions":["GLB"],"categories":["breaking","politics","conflict","disaster","public_safety"],"role":"independent_wire"},
-    {"source_id":"cna","name":"中央通訊社","homepage":"https://www.cna.com.tw/","regions":["TWN","CHN","GLB"],"categories":["taiwan","politics","economy","technology","public_safety"],"role":"taiwan_wire"},
-    {"source_id":"xinhua","name":"新華社／新華網","homepage":"https://www.xinhuanet.com/","regions":["CHN","GLB"],"categories":["china","policy","disaster","official_positions"],"role":"china_state_primary"},
-    {"source_id":"caixin","name":"財新","homepage":"https://www.caixin.com/","regions":["CHN","GLB"],"categories":["china","economy","finance","business","investigations"],"role":"china_independent_business"},
-    {"source_id":"bbc","name":"BBC News","homepage":"https://www.bbc.com/news","regions":["GLB"],"categories":["world","politics","conflict","society","science"],"role":"public_service_media"},
-    {"source_id":"nikkei","name":"Nikkei Asia","homepage":"https://asia.nikkei.com/","regions":["TWN","CHN","GLB"],"categories":["asia","economy","supply_chain","technology","business"],"role":"asia_business_media"},
-    {"source_id":"nature","name":"Nature News","homepage":"https://www.nature.com/news","regions":["GLB"],"categories":["science","medicine","climate","research"],"role":"scientific_journalism"},
-    {"source_id":"who_don","name":"WHO Disease Outbreak News","homepage":"https://www.who.int/emergencies/disease-outbreak-news","regions":["GLB"],"categories":["public_health","epidemic"],"role":"official_primary"},
-    {"source_id":"reliefweb","name":"UN OCHA ReliefWeb","homepage":"https://reliefweb.int/updates","regions":["GLB"],"categories":["humanitarian","disaster","conflict","displacement"],"role":"official_aggregator"}
+    {"source_id":"cna","name":"中央通訊社","homepage":"https://www.cna.com.tw/list/aall.aspx","section":"TWN","categories":["politics","economy","technology","public_safety"],"role":"taiwan_wire"},
+    {"source_id":"pts","name":"公視新聞網","homepage":"https://news.pts.org.tw/","section":"TWN","categories":["public_policy","society","politics","public_safety"],"role":"public_service_media"},
+    {"source_id":"udn","name":"聯合新聞網","homepage":"https://udn.com/news/index","section":"TWN","categories":["politics","society","economy","international"],"role":"general_media"},
+    {"source_id":"ltn","name":"自由時報","homepage":"https://news.ltn.com.tw/","section":"TWN","categories":["politics","society","international","public_safety"],"role":"general_media"},
+    {"source_id":"economic_daily","name":"經濟日報","homepage":"https://money.udn.com/","section":"TWN","categories":["economy","finance","business","technology"],"role":"business_media"},
+    {"source_id":"xinhua","name":"新華社／新華網","homepage":"https://www.news.cn/","section":"CHN","categories":["policy","economy","disaster","official_positions"],"role":"china_state_primary"},
+    {"source_id":"caixin","name":"財新","homepage":"https://www.caixin.com/","section":"CHN","categories":["economy","finance","business","investigations"],"role":"china_independent_business"},
+    {"source_id":"chinanews","name":"中國新聞網","homepage":"https://www.chinanews.com.cn/","section":"CHN","categories":["politics","society","economy","regional"],"role":"china_wire"},
+    {"source_id":"thepaper","name":"澎湃新聞","homepage":"https://www.thepaper.cn/","section":"CHN","categories":["society","policy","business","public_safety"],"role":"general_media"},
+    {"source_id":"yicai","name":"第一財經","homepage":"https://www.yicai.com/","section":"CHN","categories":["economy","finance","business","technology"],"role":"business_media"},
+    {"source_id":"reuters","name":"Reuters","homepage":"https://www.reuters.com/world/","section":"GLB","categories":["politics","economy","business","technology","conflict","disaster"],"role":"independent_wire"},
+    {"source_id":"ap","name":"Associated Press","homepage":"https://apnews.com/world-news","section":"GLB","categories":["breaking","politics","conflict","disaster","public_safety"],"role":"independent_wire"},
+    {"source_id":"bbc","name":"BBC News","homepage":"https://www.bbc.com/news","section":"GLB","categories":["world","politics","conflict","society","science"],"role":"public_service_media"},
+    {"source_id":"nikkei","name":"Nikkei Asia","homepage":"https://asia.nikkei.com/","section":"GLB","categories":["asia","economy","supply_chain","technology","business"],"role":"asia_business_media"},
+    {"source_id":"reliefweb","name":"UN OCHA ReliefWeb","homepage":"https://reliefweb.int/updates","section":"GLB","categories":["humanitarian","disaster","conflict","displacement"],"role":"official_aggregator"}
+  ],
+  "specialist_supplements": [
+    {"source_id":"nature","name":"Nature News","homepage":"https://www.nature.com/news","categories":["science","medicine","climate","research"],"trigger":"science_or_research"},
+    {"source_id":"who_don","name":"WHO Disease Outbreak News","homepage":"https://www.who.int/emergencies/disease-outbreak-news","categories":["public_health","epidemic"],"trigger":"public_health_or_epidemic"}
   ]
 }

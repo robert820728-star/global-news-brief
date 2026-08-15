@@ -39,6 +39,7 @@
 - 確認 repo 可讀取。
 - 確認下列核心檔案存在：
   - `.agents/skills/daily-news-brief/SKILL.md`
+  - `.agents/skills/acquire-news-candidates/SKILL.md`
   - `.agents/skills/select-news-events/SKILL.md`
   - `.agents/skills/audit-news-candidates/SKILL.md`
   - `.agents/skills/verify-news-events/SKILL.md`
@@ -47,8 +48,10 @@
   - `.agents/skills/recover-news-run/SKILL.md`
   - `schemas/news-event-manifest.schema.json`
   - `schemas/news-candidate-audit.schema.json`
+  - `schemas/news-source-candidate-list.schema.json`
   - `news-source-pool.json`
   - `scripts/preprocess_news_candidates.py`
+  - `scripts/build_source_candidate_list.py`
   - `scripts/validate_news_brief.py`
   - `scripts/validate_map_decisions.py`
   - `scripts/initialize_section_basemaps.py`

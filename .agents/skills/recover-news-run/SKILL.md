@@ -36,7 +36,7 @@ python3 scripts/news_run_checkpoint.py mark \
   --artifact <name>=<path> --message "<result>"
 ```
 
-`source-scan` 必須保存十站原始快照、連續翻頁／停止證據、邊界證據與 SHA-256；403、登入牆、逾時、解析失敗是切換合法來源或重試的理由，不得被誤記成「掃描完成」。`audit-news-candidates` 完成後把 candidate audit 綁定到 checkpoint；`materialize-manifest` 只可由 audit 中的 selected event ids 物化 manifest，完成後綁定 manifest。
+`source-scan` 必須保存15站原始快照、連續翻頁／停止證據、邊界證據與 SHA-256。直接介面遭遇403、robots、不支援 MIME、逾時、解析失敗或動態內容未載入時，固定切換 `browser_rendered`；瀏覽器仍失敗才切同站分類頁、搜尋頁、RSS、API 或存檔入口。不得因第一條路徑失敗停止整輪，也不得以別站補足。`audit-news-candidates` 完成後把 candidate audit 綁定到 checkpoint；`materialize-manifest` 只可由 audit 中的 selected event ids 物化 manifest，完成後綁定 manifest。
 
 ## 2. Manifest 後
 

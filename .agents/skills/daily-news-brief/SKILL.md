@@ -17,7 +17,7 @@ Stage -1 必須從同一個最新 `main` commit 取得 `bootstrap/capsule-manife
 
 ## 必讀
 
-先讀 `bootstrap-workspace.md`、`news-brief-settings.md`、`news-brief-template.md`、`user-preferences.example.yaml` 或本輪偏好、`news-source-pool.json`、兩份 schema、`references/manifest-contract.md`、`scripts/news_run_checkpoint.py`、`scripts/check_unique_delivery_gate.py`、`scripts/publish_news_brief.py`，以及 `select-news-events`、`audit-news-candidates`、`verify-news-events`、`build-news-maps`、`build-news-charts`、`collect-news-images`、`recover-news-run` 技能。格式驗證失敗才查 `news-brief-examples.md` 對應段落。
+先讀 `bootstrap-workspace.md`、`news-brief-settings.md`、`news-brief-template.md`、`user-preferences.example.yaml` 或本輪偏好、`news-source-pool.json`、全部三份 schema、`references/manifest-contract.md`、`scripts/news_run_checkpoint.py`、`scripts/build_source_candidate_list.py`、`scripts/check_unique_delivery_gate.py`、`scripts/publish_news_brief.py`，以及 `acquire-news-candidates`、`select-news-events`、`audit-news-candidates`、`verify-news-events`、`build-news-maps`、`build-news-charts`、`collect-news-images`、`recover-news-run` 技能。格式驗證失敗才查 `news-brief-examples.md` 對應段落。
 
 ## 固定流程
 
@@ -27,10 +27,10 @@ Stage -1 必須從同一個最新 `main` commit 取得 `bootstrap/capsule-manife
 python3 scripts/news_run_checkpoint.py init --output <checkpoint> --run-id <run-id> --window-start <window-start> --window-end <window-end> --bootstrap-receipt <bootstrap-receipt>
 ```
 
-2. `source-scan`：逐站保存原始快照、SHA-256、翻頁／停止、邊界與時間證據。403、登入牆、逾時或解析失敗不得假裝完成；恢復時用 `news_run_checkpoint.py plan --input <checkpoint>` 找最早未完成 stage。
+2. `source-scan`：調用 `acquire-news-candidates` 掃描每板塊5站、合計15個主要來源，逐站保存原始快照、SHA-256、翻頁／停止、邊界與時間證據，並產生 `work/source-candidates.json`。直接讀取失敗立即改用完整瀏覽器；瀏覽器仍失敗才切同站替代入口。恢復時用 `news_run_checkpoint.py plan --input <checkpoint>` 找最早未完成 stage。
 3. `preprocess-news-candidates`：只做時間窗、URL 正規化、完全重複與初步聚類，不做選稿或評級。
 4. `select-news-events`：依設定評級與門檻挑選事件；每筆保存 `grading_evidence`。C 以上不得無故消失；邊境衝突與長期戰爭例行更新依既定 continuity 規則處理。
-5. `audit-news-candidates`：所有候選都留下 selected/excluded/merged/deferred 與明確理由，完成十站 source-scan 證據驗證及十四天候選歷史。本輪 candidate audit 綁定 checkpoint。
+5. `audit-news-candidates`：所有候選都留下 selected/excluded/merged/deferred 與明確理由，完成15站 source-scan 證據驗證及十四天候選歷史。本輪 candidate audit 綁定 checkpoint。
 6. `materialize-manifest`：只能把 audit 中 selected event ids 物化為 manifest，兩者必須一一對應；完成後綁定 manifest。從這一步起，事件內容只由 manifest 驅動。
 7. `verify-news-events` → `build-news-maps` → `build-news-charts` → `collect-news-images`：各技能只改自己的欄位。地圖、圖表、圖片互相獨立，不得互相替代。來源圖有合格圖片時必須取得並視覺驗收；需要專業官方資訊圖的事件不能用一般照片取代。地圖使用完整 canonical basemap、繁體中文地名、既定 yellow-admin-v2 規格。capsule 不搬運可重建的 generated PNG/SVG；需要時由 capsule 內的 canonical map source/style 與 renderer 在本地重建。
 8. 每個 post-manifest stage 結束後使用 `recover_news_run.py plan --input <manifest> --brief <brief>` 檢查事件級失敗；同時更新同一 checkpoint。不得對 `recover_news_run.py` 虛構 `--checkpoint` 參數。

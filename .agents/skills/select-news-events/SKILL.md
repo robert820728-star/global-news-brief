@@ -13,7 +13,8 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 - 使用者板塊、順序、主題權重與最低等級；篇數上限不是有效設定。
 - repo 根目錄 `news-brief-settings.md`。
 - 候選來源網址與基本中繼資料。
-- `news-source-pool.json` 固定十個核心來源。
+- `news-source-pool.json` 依板塊固定的15個主要來源（每板塊5站）。
+- `work/source-candidates.json`，必須先由 `acquire-news-candidates` 產生並通過 schema 與逐站證據驗證。
 
 ## 流程
 
@@ -34,7 +35,7 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 
 ### 一、廣泛海選
 
-逐站掃描核心來源。先完整讀取 `references/source-scan-evidence.md`，保存原始快照、SHA-256、連續翻頁鏈及時間邊界或來源耗盡證據；驗證器必須從快照重算清單，禁止模型自行宣告筆數。403、robots、登入牆、逾時、解析失敗或動態內容未載入都必須恢復，不得標成完成。不得以來源數量、總候選數或任何等級數量作為成功門檻。
+不得在本技能臨時重新抓新聞。先調用 `acquire-news-candidates` 逐站掃描15個主要來源，保存原始快照、SHA-256、連續翻頁鏈及時間邊界或來源耗盡證據，再讀取其候選清單。驗證器必須從快照重算清單，禁止模型自行宣告筆數。直接連結遇到403、robots、不支援 MIME、逾時、解析失敗或動態內容未載入時，必須切換完整瀏覽器渲染並保存 DOM；不得把第一種工具失敗當成來源不可讀。不得以總候選數或任何等級數量作為成功門檻。
 
 每站確認完整抵達精確 24 小時邊界後，再按公共價值排序；有 30 則以上取前 30 則，不足 30 則全部入池，排名 30 之後命中 `news-source-pool.json` 強制例外者仍須追加。不得以其他來源補足某站失敗。文化產業、創作者生態或平台制度轉折是強制例外，不得因娛樂新聞整體降權而漏掉。保存每站來源確認紀錄後才可跨站去重。
 
