@@ -1,0 +1,23 @@
+{
+  "style_id": "yellow-admin-v2",
+  "reference_assets": [
+    "maps/generated/taiwan-counties-yellow-v2.png",
+    "maps/generated/china-provinces-yellow-v2.png",
+    "maps/generated/world-countries-pacific-robinson-yellow-v2.png"
+  ],
+  "colors": {
+    "land_fill": "#f3e6b8",
+    "boundary_color": "#53606f",
+    "background": "#ffffff",
+    "primary_highlight": "#c7362f",
+    "secondary_highlight": "#f28e2b",
+    "point_marker": "#8b1e1e"
+  },
+  "line_width": 0.42,
+  "requirements": {
+    "show_administrative_boundaries": true,
+    "full_context_before_local_detail": true,
+    "forbid_unapproved_background_colors": true,
+    "forbid_alternate_map_style": true
+  }
+}
