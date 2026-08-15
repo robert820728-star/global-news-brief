@@ -152,6 +152,16 @@ def _validate_media_result(
             urls = asset.get("source_urls")
             if not isinstance(urls, list) or not urls:
                 errors.append(f"{asset_label} 缺少定位依據來源")
+            if asset.get("style_id") != "yellow-admin-v2":
+                errors.append(
+                    f"{asset_label} 未使用核准的 yellow-admin-v2 黃底行政界線風格"
+                )
+            if asset.get("style_reference") != "maps/style.json":
+                errors.append(f"{asset_label} 未綁定 maps/style.json")
+            if asset.get("generator") != "scripts/render_base_maps.py":
+                errors.append(
+                    f"{asset_label} 未使用 canonical renderer，禁止其他藍底或平台預設地圖"
+                )
         elif field == "charts":
             urls = asset.get("source_urls")
             names = asset.get("source_names")
