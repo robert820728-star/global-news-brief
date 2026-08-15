@@ -51,6 +51,7 @@
   - `scripts/validate_news_brief.py`
   - `scripts/validate_map_decisions.py`
   - `scripts/initialize_section_basemaps.py`
+  - `scripts/fetch_admin_boundaries.py`
   - `maps/style.json`
   - `scripts/manage_candidate_audit.py`
   - `scripts/recover_news_run.py`
@@ -111,7 +112,7 @@
 板塊名稱、範圍與三碼代碼確定後，在建立排程前初始化區域底圖：
 
 1. 檢查 `maps/generated/sections/<CODE>-base.json` 是否已有與目前板塊範圍相符的底圖規格。
-2. 沒有時使用 `scripts/initialize_section_basemaps.py` 建立板塊底圖規格；國家優先依 ISO 國界，自訂區域依成員國／區域與合理全域範圍建立。
+2. 沒有時使用 `scripts/initialize_section_basemaps.py` 建立板塊底圖規格。單一國家一律以 ISO 3166-1 alpha-3 三碼呼叫 `scripts/fetch_admin_boundaries.py`，從固定的 geoBoundaries gbOpen 來源下載 ADM1（州、省、郡、都道府縣等第一級行政區）並自動計算範圍；不得為日本、澳洲、美國等國家各寫特例。跨國區域才使用成員國國界與明確區域範圍。ADM1 取得或驗證失敗時必須進入恢復流程，不得退回無行政區的底圖。
 3. 若環境可執行 Python／Matplotlib，立即由 `maps/source/world-countries.geojson` 或更高解析度的 repo 地理資料產生 `maps/generated/sections/<CODE>-base.png` 與 `.svg`。
 4. 必須完成視覺驗收：板塊沒有被裁掉、投影與比例可讀、跨日期變更線／太平洋區域沒有錯誤斷裂、主要成員與周邊地理上下文可辨識。
 5. 驗收後將 metadata 的 `status` 設為 `ready`、`visual_checked` 設為 `true`。只有規格、沒有實際圖檔時保持 `spec_ready`，不得假稱已生成底圖。
