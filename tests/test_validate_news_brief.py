@@ -98,6 +98,9 @@ def valid_manifest():
                         {
                             "path": "sandbox:/tmp/map.png",
                             "caption": "地圖一：事件位置，依來源資料整理。",
+                            "style_id": "yellow-admin-v2",
+                            "style_reference": "maps/style.json",
+                            "generator": "scripts/render_base_maps.py",
                             "source_urls": ["https://example.com/source"],
                             "visual_checked": True,
                             "width": 1200,
@@ -219,6 +222,14 @@ class ValidatorTests(unittest.TestCase):
         manifest = valid_manifest()
         self.assertEqual("B", manifest["events"][0]["grade"])
         self.assertEqual([], VALIDATOR.validate_manifest_data(manifest))
+
+    def test_blue_or_noncanonical_map_style_is_rejected(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["map"]["assets"][0]["style_id"] = "blue-default"
+        manifest["events"][0]["map"]["assets"][0]["generator"] = "platform-map"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("yellow-admin-v2" in error for error in errors))
+        self.assertTrue(any("canonical renderer" in error for error in errors))
 
     def test_stage_guard_catches_map_stage_deleting_images(self):
         before = valid_manifest()
