@@ -279,7 +279,7 @@ def section_specs():
             "projection": metadata.get("projection", "regional"),
             "standard_lat": metadata.get("standard_lat") or 0.0,
             "central_lon": metadata.get("central_lon"),
-            "style_id": metadata.get("style_id"),
+            "style_id": metadata.get("style_id", STYLE_CONFIG["style_id"]),
             "style": metadata.get("style", {}),
         }
         if spec["projection"] in {"pacific_centered", "robinson_pacific"}:
@@ -292,6 +292,17 @@ def main():
         render(name, spec)
     for name, spec, metadata_path, metadata in section_specs() or ():
         render(name, spec)
+        metadata["style_id"] = STYLE_CONFIG["style_id"]
+        metadata["style_reference"] = "maps/style.json"
+        metadata["generator"] = "scripts/render_base_maps.py"
+        metadata["style"] = {
+            "land_fill": CANONICAL_STYLE["land_fill"],
+            "boundary_color": CANONICAL_STYLE["boundary_color"],
+            "background": CANONICAL_STYLE["background"],
+            "boundary_level": metadata.get("style", {}).get(
+                "boundary_level", "country_or_best_available_internal_administration"
+            ),
+        }
         metadata["status"] = "rendered_pending_visual_check"
         metadata["visual_checked"] = False
         metadata_path.write_text(
