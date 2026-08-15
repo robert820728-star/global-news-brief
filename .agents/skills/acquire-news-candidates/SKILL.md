@@ -1,6 +1,6 @@
 ---
 name: acquire-news-candidates
-description: Acquire complete rolling-window article lists from the configured daily-news sources, switch from direct retrieval to a rendered browser when direct routes fail, and materialize auditable source candidate lists before news selection, grading, deduplication, or verification.
+description: Acquire complete rolling-window article lists from prevalidated daily-news sources through stable non-browser routes, optionally use a rendered browser only when permitted, and materialize auditable source candidate lists before selection or grading.
 ---
 
 # 取得新聞候選清單
@@ -20,11 +20,11 @@ description: Acquire complete rolling-window article lists from the configured d
 
 1. 官方 API、JSON、RSS 或其他結構化直接介面。
 2. 普通 HTML 列表、分類頁、站內搜尋或 sitemap。
-3. 直接方式遇到 robots、403、不支援 MIME、動態內容未載入、逾時或解析失敗，立即改用完整瀏覽器渲染；不得把第一種工具失敗寫成來源不可讀。
-4. 瀏覽器仍失敗時，改用同一網站的另一個合法列表、搜尋、分類或存檔入口。
-5. 同一來源所有合法路徑均失敗才交給 `recover-news-run`。不得拿別站文章冒充該站掃描完成。
+3. 改用同一網站的另一個合法列表、搜尋、分類、存檔或結構化入口。
+4. 只有目前工具契約明確允許時，才可用完整瀏覽器渲染補足動態內容；瀏覽器不得是排程完成的必要依賴。
+5. 同一來源的非瀏覽器合法路徑均失敗即交給 `recover-news-run`。若主來源長期不相容，必須在排程外完成同標準替代來源健康檢查並更新來源池；不得在本輪拿別站文章冒充該站掃描完成。
 
-瀏覽器必須保存完整 DOM 快照；若能取得網路回應狀態一併保存。快照視同 HTML 原始證據，必須計算 SHA-256，並讓驗證器能在快照中找到網址、時間與摘要原文。
+若實際使用瀏覽器，必須保存完整 DOM 快照；若能取得網路回應狀態一併保存。快照視同 HTML 原始證據，必須計算 SHA-256，並讓驗證器能在快照中找到網址、時間與摘要原文。
 
 ## 逐站完成條件
 
@@ -40,10 +40,10 @@ description: Acquire complete rolling-window article lists from the configured d
 - `published_at`、`url`
 - `categories`
 - `importance_hint`：只寫可能重要的具體原因，不做最終評級
-- `acquisition_route`：實際成功的 `structured_direct`、`html_direct`、`browser_rendered` 或 `same_source_alternate`
+- `acquisition_route`：實際成功的 `structured_direct`、`html_direct`、`same_source_alternate` 或在允許時使用的 `browser_rendered`
 - `snapshot_path`、`page_index`
 
-標題或摘要缺失時，必須進入同站文章頁或瀏覽器補齊；不得留下只有首頁網址的候選。
+標題或摘要缺失時，必須進入同站文章頁或可用的同站替代入口補齊；只有工具契約允許時才用瀏覽器。不得留下只有首頁網址的候選。
 
 ## 產物
 

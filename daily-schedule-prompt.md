@@ -76,7 +76,7 @@ python3 scripts/news_run_checkpoint.py init \
 
 1. `source-scan`
    - 必須先調用 `acquire-news-candidates`，依 `news-source-pool.json` 掃描每板塊5站、合計15個主要來源並產生 `work/source-candidates.json`。
-   - 直接 API／RSS／HTML 失敗時立即切換完整瀏覽器渲染並保存 DOM；瀏覽器仍失敗才改同站替代入口，不得直接停止整輪或用別站補足。
+   - 直接 API／RSS／HTML 失敗時先切同站替代入口；只有目前工具契約明確允許時才可用完整瀏覽器渲染並保存 DOM。瀏覽器不得是完成排程的必要依賴，不得用別站冒充該站本輪掃描完成。
 2. `preprocess-news-candidates`
 3. `select-news-events`
 4. `audit-news-candidates`
