@@ -20,6 +20,47 @@ RECOVERABLE_STAGES = {
     "validate",
 }
 
+RECOVERY_STRATEGIES = {
+    "verify-news-events": (
+        "repeat-source-search",
+        "alternate-source-route",
+        "official-primary-recheck",
+        "rediagnose-claims",
+    ),
+    "build-news-maps": (
+        "regenerate-from-section-basemap",
+        "change-map-scale",
+        "alternate-render-path",
+        "rediagnose-map-input",
+    ),
+    "build-news-charts": (
+        "repair-data-contract",
+        "regenerate-chart",
+        "alternate-chart-format",
+        "rediagnose-chart-input",
+    ),
+    "collect-news-images": (
+        "source-original-download",
+        "official-page-screenshot",
+        "official-archive-or-local-authority",
+        "media-copy-of-official-visual",
+        "alternate-reliable-source",
+        "rediagnose-image-input",
+    ),
+    "render": (
+        "rerender-from-manifest",
+        "repair-markdown-layout",
+        "rebuild-release-draft",
+        "rediagnose-render-input",
+    ),
+    "validate": (
+        "repair-reported-field",
+        "rerun-owning-stage",
+        "full-release-revalidation",
+        "rediagnose-validation-input",
+    ),
+}
+
 
 def load(path: str) -> dict[str, Any]:
     with Path(path).open("r", encoding="utf-8") as handle:
@@ -62,22 +103,32 @@ def attempt_counts(data: dict[str, Any]) -> dict[str, int]:
     return counts
 
 
-def recovery_plan(data: dict[str, Any]) -> list[dict[str, Any]]:
+def recovery_plan(
+    data: dict[str, Any],
+    brief_path: str | None = None,
+) -> list[dict[str, Any]]:
     recovery = data.get("recovery", {})
     max_attempts = recovery.get("max_attempts_per_target", 3) if isinstance(recovery, dict) else 3
+    max_attempts = max(1, int(max_attempts))
     counts = attempt_counts(data)
     planned: dict[str, dict[str, Any]] = {}
 
     def add(stage: str, event_id: str | None, reason: str) -> None:
         key = target_key(stage, event_id)
         used = counts.get(key, 0)
+        strategies = RECOVERY_STRATEGIES.get(stage, ("rediagnose-and-resume",))
+        strategy_index = min(used // max_attempts, len(strategies) - 1)
+        strategy_attempt = used % max_attempts + 1
         planned[key] = {
             "target_stage": stage,
             "event_id": event_id,
             "reason": reason,
             "next_attempt": used + 1,
-            "attempts_remaining": max(0, int(max_attempts) - used),
-            "exhausted": used >= int(max_attempts),
+            "strategy": strategies[strategy_index],
+            "strategy_attempt": strategy_attempt,
+            "attempts_remaining_in_strategy": max_attempts - strategy_attempt,
+            "continue_required": True,
+            "exhausted": False,
         }
 
     stages = data.get("stage_status", {})
@@ -148,6 +199,26 @@ def recovery_plan(data: dict[str, Any]) -> list[dict[str, Any]]:
         elif professional_required and images.get("professional_visual_status") == "pending":
             add("collect-news-images", event_id, "官方專業圖資階段仍為 pending")
 
+    stages = data.get("stage_status", {})
+    core_stages = (
+        "select-news-events",
+        "verify-news-events",
+        "build-news-maps",
+        "build-news-charts",
+        "collect-news-images",
+    )
+    core_complete = isinstance(stages, dict) and all(
+        stages.get(stage) == "completed" for stage in core_stages
+    )
+    if brief_path and core_complete:
+        brief = Path(brief_path)
+        if not brief.is_file() or not brief.read_text(encoding="utf-8").strip():
+            add("render", None, "讀者版草稿不存在或為空，必須重新渲染")
+        elif stages.get("render") != "completed":
+            add("render", None, "讀者版存在但 render 尚未完成")
+        elif stages.get("validate") != "completed" or data.get("final_status") != "ready":
+            add("validate", None, "讀者版尚未完成最終驗證與發布準備")
+
     return list(planned.values())
 
 
@@ -200,23 +271,18 @@ def record(args: argparse.Namespace) -> int:
         }
     recovery["unresolved_targets"] = list(unresolved.values())
 
-    limit = int(recovery.get("max_attempts_per_target", 3))
-    if args.outcome == "failed" and attempt >= limit:
-        recovery["status"] = "exhausted"
-        data["final_status"] = "failed"
-        data.setdefault("stage_status", {})["recover-news-run"] = "failed"
-    elif args.outcome == "failed":
+    if args.outcome == "failed":
+        # A failed attempt rotates to the next recovery strategy after the
+        # per-strategy threshold. It is not a terminal run failure.
         recovery["status"] = "recovering"
+        if data.get("final_status") == "failed":
+            data["final_status"] = "draft"
         data.setdefault("stage_status", {})["recover-news-run"] = "running"
     else:
         remaining = recovery_plan(data)
-        if any(not item["exhausted"] for item in remaining):
+        if remaining:
             recovery["status"] = "recovering"
             data.setdefault("stage_status", {})["recover-news-run"] = "running"
-        elif remaining:
-            recovery["status"] = "exhausted"
-            data["final_status"] = "failed"
-            data.setdefault("stage_status", {})["recover-news-run"] = "failed"
         else:
             recovery["status"] = "completed"
             recovery["unresolved_targets"] = []
@@ -232,6 +298,7 @@ def main() -> int:
 
     plan_parser = subparsers.add_parser("plan")
     plan_parser.add_argument("--input", required=True)
+    plan_parser.add_argument("--brief")
 
     record_parser = subparsers.add_parser("record")
     record_parser.add_argument("--input", required=True)
@@ -245,7 +312,13 @@ def main() -> int:
 
     args = parser.parse_args()
     if args.command == "plan":
-        print(json.dumps(recovery_plan(load(args.input)), ensure_ascii=False, indent=2))
+        print(
+            json.dumps(
+                recovery_plan(load(args.input), brief_path=args.brief),
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
         return 0
     return record(args)
 
