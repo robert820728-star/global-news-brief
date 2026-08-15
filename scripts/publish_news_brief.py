@@ -10,6 +10,8 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+from PIL import Image
+
 import validate_map_decisions
 import validate_news_brief
 
@@ -18,6 +20,38 @@ def local_attachment_path(value: str) -> Path:
     if value.startswith("sandbox:"):
         value = value.removeprefix("sandbox:")
     return Path(value)
+
+
+def validate_canonical_map_pixels(path: Path, label: str) -> list[str]:
+    errors: list[str] = []
+    if path.suffix.lower() not in {".png", ".jpg", ".jpeg"}:
+        return errors
+    try:
+        with Image.open(path) as image:
+            image = image.convert("RGB")
+            image.thumbnail((320, 320))
+            pixels = list(image.getdata())
+    except (OSError, ValueError) as error:
+        return [f"{label} 無法讀取地圖像素：{error}"]
+    if not pixels:
+        return [f"{label} 地圖沒有可驗收像素"]
+    yellow = 0
+    blue = 0
+    for red, green, blue_value in pixels:
+        if (
+            abs(red - 243) <= 20
+            and abs(green - 230) <= 20
+            and abs(blue_value - 184) <= 20
+        ):
+            yellow += 1
+        if blue_value > red + 20 and blue_value > green + 10:
+            blue += 1
+    total = len(pixels)
+    if yellow / total < 0.01:
+        errors.append(f"{label} 未檢出核准的淡黃色陸地底色 #f3e6b8")
+    if blue / total > 0.05:
+        errors.append(f"{label} 藍色背景比例過高，不符合 yellow-admin-v2")
+    return errors
 
 
 def attachment_errors(manifest: dict) -> list[str]:
@@ -37,6 +71,12 @@ def attachment_errors(manifest: dict) -> list[str]:
                 if not local.is_file() or local.stat().st_size < 1:
                     errors.append(
                         f"{event_id}.{field}.assets[{index}] 附件不存在或為空：{path}"
+                    )
+                elif field == "map":
+                    errors.extend(
+                        validate_canonical_map_pixels(
+                            local, f"{event_id}.{field}.assets[{index}]"
+                        )
                     )
     return errors
 
