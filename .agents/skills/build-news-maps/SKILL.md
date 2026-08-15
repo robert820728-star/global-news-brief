@@ -9,7 +9,7 @@ description: Decide whether a selected news event needs geographic context and c
 
 ## 必讀
 
-讀取 `references/map-policy.md`。需要底圖時讀取 repo 的 `maps/README.md`、`maps/source/` 與 `scripts/render_base_maps.py`。
+讀取 `references/map-policy.md` 與 `maps/style.json`。需要底圖時讀取 repo 的 `maps/README.md`、`maps/source/` 與 `scripts/render_base_maps.py`。台灣、中國、世界三張 `yellow-v2` 成品是唯一核准風格基準，不得自行選擇其他底色或地圖樣式。
 
 ## 逐事件強制判定
 
@@ -58,7 +58,7 @@ description: Decide whether a selected news event needs geographic context and c
 
 ## 製圖
 
-- 使用淡黃色陸地底色、清楚邊界與高對比高亮色。
+- 固定使用 `maps/style.json` 的 `yellow-admin-v2`：淡黃色陸地 `#f3e6b8`、灰色行政界線 `#53606f`、白色背景 `#ffffff`、紅色主要事件區、橙色次要影響區及深紅點位。禁止藍底、深色底、衛星底圖或任何未核准配色。
 - 依來源資料標點、高亮行政區、繪製範圍或簡化路線。
 - 不捏造精確邊界；來源只支持點位時只標點，支持行政區時才高亮行政區。
 - 圖說使用繁體中文，註明「依來源資料整理／標示」。
@@ -85,6 +85,7 @@ description: Decide whether a selected news event needs geographic context and c
 - 高亮、標點或範圍與事件來源一致。
 - 圖說、標題與公開文字使用繁體中文。
 - 地圖檔案沒有被寫入 `images.assets`。
+- `map.assets[].style_id` 必須是 `yellow-admin-v2`，`style_reference` 必須是 `maps/style.json`；任一顏色或行政界線風格不符即驗收失敗並重跑 canonical renderer。
 
 另外，每一個已入選事件都必須完成 map decision coverage 檢查：事件數量必須等於已完成 `map.required` 判定的事件數量。任何事件缺少決定、仍為未判定，或命中強地理訊號卻沒有具體不需要理由，都視為本階段失敗，交由 `recover-news-run` 只重跑該事件的 `build-news-maps`。
 
@@ -97,6 +98,9 @@ description: Decide whether a selected news event needs geographic context and c
 - `map.rationale`
 - `map.assets[].path`
 - `map.assets[].caption`
+- `map.assets[].style_id`
+- `map.assets[].style_reference`
+- `map.assets[].generator`
 - `map.assets[].source_urls`
 - `map.assets[].visual_checked`
 - `map.assets[].width`
