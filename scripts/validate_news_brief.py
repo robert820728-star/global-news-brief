@@ -162,6 +162,22 @@ def _validate_media_result(
                 errors.append(
                     f"{asset_label} 未使用 canonical renderer，禁止其他藍底或平台預設地圖"
                 )
+            event_section = label.split(".", 1)[0].split("-", 1)[0]
+            expected_scope = "full_world" if event_section == "GLB" else "full_section"
+            if asset.get("canvas_scope") != expected_scope:
+                errors.append(
+                    f"{asset_label} 必須顯示完整板塊底圖，禁止裁切或局部放大"
+                )
+            canonical_base_maps = {
+                "TWN": "maps/generated/taiwan-counties-yellow-v2.png",
+                "CHN": "maps/generated/china-provinces-yellow-v2.png",
+                "GLB": "maps/generated/world-countries-pacific-robinson-yellow-v2.png",
+            }
+            expected_base_map = canonical_base_maps.get(event_section)
+            if expected_base_map and asset.get("base_map") != expected_base_map:
+                errors.append(
+                    f"{asset_label} 未綁定 {event_section} canonical 完整板塊底圖"
+                )
         elif field == "charts":
             urls = asset.get("source_urls")
             names = asset.get("source_names")
@@ -742,6 +758,53 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
 
     events = data.get("events", [])
     expected_ids = [event.get("event_id") for event in events if isinstance(event, dict)]
+
+    overview_match = re.search(
+        r"(?ms)^## 今日總覽\s*$\n(.*?)^## 逐條詳報\s*$", text
+    )
+    if overview_match:
+        overview = overview_match.group(1)
+        event_sections = {
+            event.get("primary_section") for event in events if isinstance(event, dict)
+        }
+        expected_sections = [
+            section for section in data.get("sections", [])
+            if isinstance(section, dict) and section.get("code") in event_sections
+        ]
+        expected_section_names = [section.get("name") for section in expected_sections]
+        actual_section_names = re.findall(r"(?m)^### (.+)$", overview)
+        if actual_section_names != expected_section_names:
+            errors.append("今日總覽必須依設定順序為每個有事件的板塊建立獨立標題與表格")
+        section_blocks = list(re.finditer(
+            r"(?ms)^### (.+?)\s*$\n(.*?)(?=^### |\Z)", overview
+        ))
+        event_section_by_id = {
+            event.get("event_id"): event.get("primary_section")
+            for event in events if isinstance(event, dict)
+        }
+        section_code_by_name = {
+            section.get("name"): section.get("code") for section in expected_sections
+        }
+        seen_overview_ids: set[str] = set()
+        for section_match in section_blocks:
+            section_name, section_body = section_match.groups()
+            section_code = section_code_by_name.get(section_name)
+            if section_body.count("| 編號 | 時間 | 事件 | 等級 |") != 1:
+                errors.append(f"今日總覽板塊「{section_name}」必須只有一張獨立表格")
+            for line in section_body.splitlines():
+                if not line.lstrip().startswith("|"):
+                    continue
+                cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+                if len(cells) == 4 and EVENT_ID_RE.fullmatch(cells[0]):
+                    event_id = cells[0]
+                    seen_overview_ids.add(event_id)
+                    if section_code is None or event_section_by_id.get(event_id) != section_code:
+                        errors.append(f"今日總覽事件 {event_id} 被放入錯誤板塊「{section_name}」")
+        if seen_overview_ids != set(expected_ids):
+            errors.append("今日總覽各板塊表格的事件集合與事件資料不一致")
+    else:
+        errors.append("無法解析今日總覽板塊")
+
     detail_matches = [
         match for match in (DETAIL_HEADING_RE.fullmatch(line.strip()) for line in text.splitlines())
         if match

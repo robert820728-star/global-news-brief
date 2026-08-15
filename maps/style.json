@@ -18,6 +18,8 @@
     "show_administrative_boundaries": true,
     "full_context_before_local_detail": true,
     "forbid_unapproved_background_colors": true,
-    "forbid_alternate_map_style": true
+    "forbid_alternate_map_style": true,
+    "all_sections_require_full_canvas": true,
+    "forbid_crop_or_zoom": true
   }
 }

@@ -47,6 +47,7 @@
   - `.agents/skills/recover-news-run/SKILL.md`
   - `schemas/news-event-manifest.schema.json`
   - `schemas/news-candidate-audit.schema.json`
+  - `news-source-pool.json`
   - `scripts/preprocess_news_candidates.py`
   - `scripts/validate_news_brief.py`
   - `scripts/validate_map_decisions.py`

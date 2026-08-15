@@ -67,16 +67,14 @@ sections:
       scope:
         - 台灣
       priority: highest
-      daily_limit: 5
-      minimum_grade: C-
+      minimum_grade: C
 
     - name: 中國
       code: CHN
       scope:
         - 中國
       priority: high
-      daily_limit: 5
-      minimum_grade: C-
+      minimum_grade: C
 
     - name: 世界
       code: GLB
@@ -85,8 +83,7 @@ sections:
         - 全球性事件
         - 未被其他板塊涵蓋的重要事件
       priority: high
-      daily_limit: 8
-      minimum_grade: C-
+      minimum_grade: C
 
   custom_examples:
     - 日本

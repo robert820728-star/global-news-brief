@@ -1,1 +1,97 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"每日新聞候選事件稽核","type":"object","required":["schema_version","retention_days","updated_at","runs"],"properties":{"schema_version":{"const":"1.0.0"},"retention_days":{"type":"integer","minimum":1,"maximum":90},"updated_at":{"type":"string","format":"date-time"},"runs":{"type":"array","items":{"$ref":"#/$defs/run"}}},"additionalProperties":false,"$defs":{"run":{"type":"object","required":["run_id","generated_at","window_start","window_end","candidates"],"properties":{"run_id":{"type":"string"},"generated_at":{"type":"string","format":"date-time"},"window_start":{"type":"string","format":"date-time"},"window_end":{"type":"string","format":"date-time"},"candidates":{"type":"array","items":{"$ref":"#/$defs/candidate"}}},"additionalProperties":true},"candidate":{"type":"object","required":["candidate_id","dedup_key","title","section","provisional_grade","decision","reason_code","reason","source_audit","continuity"],"properties":{"candidate_id":{"type":"string"},"dedup_key":{"type":"string"},"continuity_key":{"type":["string","null"]},"title":{"type":"string"},"section":{"type":"string","pattern":"^[A-Z]{3}$"},"provisional_grade":{"enum":["SS","S+","S","S-","A+","A","A-","B+","B","B-","C+","C","C-","D","E"]},"decision":{"enum":["selected","excluded","merged","deferred"]},"reason_code":{"enum":["selected_threshold_met","outside_time_window","duplicate_merged","continuation_no_material_change","below_public_value_threshold","unreliable_or_unverified","superseded_by_later_update","wrong_scope","processing_failure","search_recall_failure"]},"reason":{"type":"string","minLength":1},"selected_event_id":{"type":["string","null"]},"candidate_urls":{"type":"array","items":{"type":"string","format":"uri"}},"source_audit":{"type":"object","required":["search_performed","reliable_source_count","independent_group_count","official_or_primary_found","source_limit_note"],"additionalProperties":true},"continuity":{"type":"object","required":["status","material_changes","unchanged_elements","comparison_note"],"additionalProperties":true}},"additionalProperties":true}}}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "每日新聞候選事件稽核",
+  "type": "object",
+  "required": ["schema_version", "retention_days", "updated_at", "runs"],
+  "properties": {
+    "schema_version": {"const": "1.1.0"},
+    "retention_days": {"type": "integer", "const": 14},
+    "updated_at": {"type": "string", "format": "date-time"},
+    "runs": {"type": "array", "items": {"$ref": "#/$defs/run"}}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sourceCoverage": {
+      "type": "object",
+      "required": ["source_id", "status", "within_window_count", "ranked_count", "ranked_items", "selected_for_pool_count", "selected_item_urls", "mandatory_overflow_items", "ranking_completed", "ranking_method", "failure_reason"],
+      "properties": {
+        "source_id": {"type": "string"},
+        "status": {"enum": ["completed", "failed"]},
+        "within_window_count": {"type": "integer", "minimum": 0},
+        "ranked_count": {"type": "integer", "minimum": 0},
+        "ranked_items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["url", "title", "published_at", "importance_score", "importance_reason"],
+            "properties": {
+              "url": {"type": "string", "format": "uri"},
+              "title": {"type": "string", "minLength": 1},
+              "published_at": {"type": "string", "format": "date-time"},
+              "importance_score": {"type": "number", "minimum": 0, "maximum": 100},
+              "importance_reason": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": true
+          }
+        },
+        "selected_for_pool_count": {"type": "integer", "minimum": 0},
+        "selected_item_urls": {"type": "array", "items": {"type": "string", "format": "uri"}},
+        "mandatory_overflow_items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["url", "trigger", "reason"],
+            "properties": {
+              "url": {"type": "string", "format": "uri"},
+              "trigger": {"type": "string"},
+              "reason": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": false
+          }
+        },
+        "ranking_completed": {"type": "boolean"},
+        "ranking_method": {"const": "public_value_v1"},
+        "failure_reason": {"type": ["string", "null"]}
+      },
+      "additionalProperties": true
+    },
+    "run": {
+      "type": "object",
+      "required": ["run_id", "generated_at", "window_start", "window_end", "source_coverage", "raw_item_count", "deduplicated_candidate_count", "candidates"],
+      "properties": {
+        "run_id": {"type": "string"},
+        "generated_at": {"type": "string", "format": "date-time"},
+        "window_start": {"type": "string", "format": "date-time"},
+        "window_end": {"type": "string", "format": "date-time"},
+        "source_coverage": {"type": "array", "minItems": 10, "maxItems": 10, "items": {"$ref": "#/$defs/sourceCoverage"}},
+        "raw_item_count": {"type": "integer", "minimum": 0, "maximum": 500},
+        "deduplicated_candidate_count": {"type": "integer", "minimum": 0},
+        "candidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}}
+      },
+      "additionalProperties": true
+    },
+    "candidate": {
+      "type": "object",
+      "required": ["candidate_id", "dedup_key", "title", "section", "provisional_grade", "grade_reason", "decision", "reason_code", "reason", "source_ids", "source_audit", "continuity"],
+      "properties": {
+        "candidate_id": {"type": "string"},
+        "dedup_key": {"type": "string"},
+        "continuity_key": {"type": ["string", "null"]},
+        "title": {"type": "string"},
+        "section": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "provisional_grade": {"enum": ["SS", "S+", "S", "S-", "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "E"]},
+        "grade_reason": {"type": "string", "minLength": 1},
+        "decision": {"enum": ["selected", "excluded", "merged", "deferred"]},
+        "reason_code": {"enum": ["selected_threshold_met", "c_minus_selected_need", "c_minus_reserve", "outside_time_window", "duplicate_merged", "continuation_no_material_change", "below_public_value_threshold", "unreliable_or_unverified", "superseded_by_later_update", "wrong_scope", "processing_failure", "search_recall_failure"]},
+        "reason": {"type": "string", "minLength": 1},
+        "c_minus_use_reason": {"type": ["string", "null"]},
+        "selected_event_id": {"type": ["string", "null"]},
+        "candidate_urls": {"type": "array", "minItems": 1, "items": {"type": "string", "format": "uri"}},
+        "source_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "source_audit": {"type": "object", "required": ["search_performed", "reliable_source_count", "independent_group_count", "official_or_primary_found", "source_limit_note"], "additionalProperties": true},
+        "continuity": {"type": "object", "required": ["status", "material_changes", "unchanged_elements", "comparison_note"], "additionalProperties": true}
+      },
+      "additionalProperties": true
+    }
+  }
+}

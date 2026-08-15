@@ -4,6 +4,8 @@
 
 All self-rendered section and event maps must load `maps/style.json` with style id `yellow-admin-v2`. The approved visual references are the Taiwan, China, and Pacific-centered world `yellow-v2` maps in `maps/generated/`. A new section may change geographic extent and administrative level only; blue backgrounds, platform-default maps, satellite styles, or alternate color systems are not valid outputs.
 
+Every event map is permanently bound to its complete section canvas: full Taiwan for `TWN`, full China for `CHN`, and the complete Pacific-centered world for `GLB`. Custom country or regional sections likewise retain their complete initialized section basemap. Event maps may add only markers, labels, routes, or affected-area overlays. Cropping, zooming to the event location, or substituting a local locator map is forbidden. The manifest must record `canvas_scope: full_section` (`full_world` for `GLB`) and the canonical `base_map`.
+
 Reusable base maps for news brief location highlighting.
 
 ## Custom sections

@@ -49,11 +49,11 @@ description: Decide whether a selected news event needs geographic context and c
 
 ## 選擇尺度
 
-- 台灣地方事件：使用台灣縣市界線底圖。
-- 中國省域事件：使用中國省份界線底圖。
-- 跨國或其他國家事件：使用太平洋置中的世界底圖。
+- 台灣地方事件：始終使用完整台灣縣市界線底圖，不得依事件位置裁切或放大。
+- 中國省域事件：始終使用完整中國省份界線底圖，不得依事件位置裁切或放大。
+- 跨國或其他國家事件：始終使用完整、太平洋置中的世界底圖，不得依事件國家或區域裁切或放大。
 - 自訂單一國家板塊：以 ISO 3166-1 alpha-3 三碼執行 `fetch_admin_boundaries.py`，固定從 geoBoundaries gbOpen 取得 ADM1，並由資料自動計算範圍；美國、英國、法國、日本、澳洲及其他國家全部走同一解析器，禁止國家特例。自訂跨國區域才使用世界國界資料與成員國範圍。兩者都必須先產生 `maps/generated/sections/<CODE>-base.png` 的淡黃色行政界線底圖；ADM1 缺失、底圖尚未生成或未通過視覺驗收時，重跑 `initialize_section_basemaps.py` 與 `render_base_maps.py`，不得改用圖片搜尋、空白底圖、無內部分界國圖或一般新聞圖片。
-- 需要局部圖時，先提供可辨識其所在位置的全域圖。不得只給一張無法辨認國家或區域的裁切形狀。
+- 定位圖不提供局部放大圖。事件位置、路線與影響範圍一律疊加在完整板塊底圖；不得另用裁切圖替代或追加局部圖。
 - 南極事件不得裁掉南極洲；世界底圖保持全域完整。
 
 ## 製圖
@@ -105,6 +105,8 @@ description: Decide whether a selected news event needs geographic context and c
 - `map.assets[].visual_checked`
 - `map.assets[].width`
 - `map.assets[].height`
+- `map.assets[].canvas_scope`（`GLB` 固定 `full_world`，其他板塊固定 `full_section`）
+- `map.assets[].base_map`（固定為該板塊 canonical 完整底圖）
 - `map.omission_reason`
 
 不需要時使用 `status: not_required`；需要但重試失敗時使用 `status: omitted` 並保存後台原因。讀者版不顯示原因。

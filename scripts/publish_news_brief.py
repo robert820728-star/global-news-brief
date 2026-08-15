@@ -14,6 +14,10 @@ from PIL import Image
 
 import validate_map_decisions
 import validate_news_brief
+import manage_candidate_audit
+
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def local_attachment_path(value: str) -> Path:
@@ -81,17 +85,44 @@ def attachment_errors(manifest: dict) -> list[str]:
     return errors
 
 
+def candidate_confirmation_errors(audit: dict, manifest: dict, source_pool: dict) -> list[str]:
+    errors = manage_candidate_audit.validate(audit, source_pool)
+    runs = audit.get("runs", [])
+    if not runs:
+        return errors + ["候選稽核沒有本輪紀錄"]
+    latest = runs[-1]
+    selected_ids = {
+        candidate.get("selected_event_id")
+        for candidate in latest.get("candidates", [])
+        if candidate.get("decision") == "selected"
+    }
+    selected_ids.discard(None)
+    manifest_ids = {
+        event.get("event_id") for event in manifest.get("events", []) if isinstance(event, dict)
+    }
+    if selected_ids != manifest_ids:
+        errors.append("候選稽核的入選事件與 manifest 不一致；禁止漏放達標事件或額外補新聞")
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", required=True)
+    parser.add_argument("--audit", required=True)
+    parser.add_argument("--source-pool", default=str(ROOT / "news-source-pool.json"))
     parser.add_argument("--brief", required=True)
     parser.add_argument("--output-dir", required=True)
     args = parser.parse_args()
 
     manifest_path = Path(args.manifest)
+    audit_path = Path(args.audit)
+    source_pool_path = Path(args.source_pool)
     brief_path = Path(args.brief)
     if not manifest_path.is_file():
         print("RELEASE BLOCKED: manifest 不存在", file=sys.stderr)
+        return 2
+    if not audit_path.is_file() or not source_pool_path.is_file():
+        print("RELEASE BLOCKED: 候選稽核或固定來源池不存在", file=sys.stderr)
         return 2
     if not brief_path.is_file() or not brief_path.read_text(encoding="utf-8").strip():
         print("RELEASE BLOCKED: 讀者版草稿不存在或為空；回到 render", file=sys.stderr)
@@ -99,12 +130,15 @@ def main() -> int:
 
     try:
         manifest = validate_news_brief.load_json(manifest_path)
+        audit = validate_news_brief.load_json(audit_path)
+        source_pool = validate_news_brief.load_json(source_pool_path)
         brief = brief_path.read_text(encoding="utf-8")
     except (OSError, ValueError, json.JSONDecodeError) as error:
         print(f"RELEASE BLOCKED: {error}", file=sys.stderr)
         return 2
 
     errors = []
+    errors.extend(candidate_confirmation_errors(audit, manifest, source_pool))
     errors.extend(attachment_errors(manifest))
     errors.extend(validate_map_decisions.validate(manifest))
     errors.extend(validate_news_brief.validate_brief_text(manifest, brief))
@@ -125,9 +159,11 @@ def main() -> int:
         "status": "ready",
         "published_at": datetime.now().astimezone().isoformat(timespec="seconds"),
         "manifest": str(manifest_path.resolve()),
+        "candidate_audit": str(audit_path.resolve()),
         "brief": str(release_path.resolve()),
         "sha256": digest,
         "validators": {
+            "source_pool_candidates_and_images": "passed",
             "map_decisions": "passed",
             "manifest_and_brief": "passed",
         },

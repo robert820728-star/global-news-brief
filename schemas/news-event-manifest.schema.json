@@ -356,7 +356,11 @@
         },
         "visual_checked": { "const": true },
         "width": { "type": "integer", "minimum": 1 },
-        "height": { "type": "integer", "minimum": 1 }
+        "height": { "type": "integer", "minimum": 1 },
+        "canvas_scope": {
+          "enum": ["full_world", "full_section", "regional_detail"]
+        },
+        "base_map": { "type": "string", "minLength": 1 }
       },
       "additionalProperties": true
     },

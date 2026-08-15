@@ -105,6 +105,8 @@ def valid_manifest():
                             "visual_checked": True,
                             "width": 1200,
                             "height": 900,
+                            "canvas_scope": "full_section",
+                            "base_map": "maps/generated/taiwan-counties-yellow-v2.png",
                         }
                     ],
                     "omission_reason": None,
@@ -176,7 +178,7 @@ def valid_brief():
 
 ## 今日總覽
 
-### 台灣版
+### 台灣
 
 | 編號 | 時間 | 事件 | 等級 |
 |---|---|---|---|
@@ -231,6 +233,26 @@ class ValidatorTests(unittest.TestCase):
         self.assertTrue(any("yellow-admin-v2" in error for error in errors))
         self.assertTrue(any("canonical renderer" in error for error in errors))
 
+    def test_twn_map_rejects_local_zoom(self):
+        manifest = valid_manifest()
+        asset = manifest["events"][0]["map"]["assets"][0]
+        asset["canvas_scope"] = "regional_detail"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("禁止裁切或局部放大" in error for error in errors))
+
+    def test_glb_map_requires_complete_world_basemap(self):
+        manifest = valid_manifest()
+        manifest["sections"][0] = {"code": "GLB", "name": "世界", "order": 1}
+        event = manifest["events"][0]
+        event["event_id"] = "GLB-01"
+        event["primary_section"] = "GLB"
+        asset = event["map"]["assets"][0]
+        asset["canvas_scope"] = "full_section"
+        asset["base_map"] = "maps/generated/sections/JPN-base.png"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("禁止裁切或局部放大" in error for error in errors))
+        self.assertTrue(any("canonical 完整板塊底圖" in error for error in errors))
+
     def test_stage_guard_catches_map_stage_deleting_images(self):
         before = valid_manifest()
         after = copy.deepcopy(before)
@@ -246,6 +268,15 @@ class ValidatorTests(unittest.TestCase):
         )
         errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
         self.assertTrue(any("禁止的圖廊、疊圖或動態元件" in error for error in errors))
+
+    def test_overview_rejects_cross_section_mixed_table(self):
+        text = valid_brief().replace(
+            "## 逐條詳報",
+            "### 中國\n\n| 編號 | 時間 | 事件 | 等級 |\n|---|---|---|---|\n| TWN-01 | 8/14 05:30 | 測試事件 | B |\n\n## 逐條詳報",
+        )
+        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        self.assertTrue(any("獨立標題與表格" in error for error in errors))
+        self.assertTrue(any("錯誤板塊" in error for error in errors))
 
     def test_brief_requires_numbered_markdown_attachment(self):
         text = valid_brief().replace(

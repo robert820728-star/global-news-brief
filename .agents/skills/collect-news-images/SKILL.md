@@ -106,6 +106,10 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 
 失敗時依取得順序重試。若來源已確認有可用圖片，重試仍失敗也不得省略後交付；維持未完成狀態，讓主控只重跑圖片模組。不得只留下「圖一」文字。
 
+## 與候選來源確認共同發布
+
+圖片驗收與候選來源確認在 `publish_news_brief.py` 同一個 fail-closed 閘門執行。發布時必須同時提供候選稽核檔；任一來源未完成、未按站內前 30 則及強制例外入池、候選缺少 SS–E 評級理由、達標事件漏入 manifest，或圖片附件／來源頁確認失敗，均不得產生 release。圖片技能不修改候選稽核；候選問題仍回到 `select-news-events`／`audit-news-candidates` 修復。
+
 ## 時間與區域
 
 - 專業資訊圖必須接近新聞更新或事件階段。

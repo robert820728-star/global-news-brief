@@ -16,13 +16,15 @@ description: Maintain a rolling fourteen-day audit of all news candidates, inclu
 只有下列工作需要模型：判斷持續事件是否有實質轉折、檢查暫定 B 以上事件是否被錯誤排除、辨認不同標題是否其實是同一底層事件。可選小模型只能提出標籤或合併建議；最終排除、降為 D／E 或重大事件合併須由高階模型確認。
 
 
-1. 讀取本輪全部聚類候選與最近十四天 `state/candidate-audit.json`。
+1. 讀取本輪全部聚類候選、`news-source-pool.json` 與最近十四天 `state/candidate-audit.json`。確認核心來源逐站完成掃描；每站有 30 則以上必須取前 30 則，不足 30 則取全部，並核對排名外強制例外。
 2. 以 `dedup_key` 去重，以 `continuity_key` 連接跨日事件。
 3. 每筆記錄 `selected`、`excluded`、`merged` 或 `deferred`，並附理由代碼與繁體中文說明。
 4. 記錄可靠來源數、獨立群組、官方／原始來源及來源限制。
 5. 記錄持續事件的新增、未變、狀態轉折與本輪決定。
 6. 附加本輪並刪除十四天前紀錄。
 7. 暫定 B 以上未入選卻沒有理由時，回到海選補查。
+
+任何 `SS` 至 `C` 候選只能是 `selected` 或同事件的 `merged`。`C-` 預設為 `deferred`／`c_minus_reserve`，取用時必須使用 `c_minus_selected_need` 並保存具體理由。若核心內容查證失敗或未達公共價值，評為 `D`／`E`；不得保留達標評級再以相對重要性、篇數、版面或來源數排除／延後。
 
 ## 內部等級
 
@@ -54,6 +56,6 @@ description: Maintain a rolling fourteen-day audit of all news candidates, inclu
 只有實際載入歷史資料時才可聲稱完成十四天比較；否則在內部紀錄標記 `no_persisted_history` 或 `current_run_only`，不得把後台限制寫進讀者版。
 
 ```bash
-python3 scripts/manage_candidate_audit.py append --history state/candidate-audit.json --run /path/to/run.json --output state/candidate-audit.json --retention-days 14
-python3 scripts/manage_candidate_audit.py validate --input state/candidate-audit.json
+python3 scripts/manage_candidate_audit.py append --history state/candidate-audit.json --run /path/to/run.json --output state/candidate-audit.json --source-pool news-source-pool.json --retention-days 14
+python3 scripts/manage_candidate_audit.py validate --input state/candidate-audit.json --source-pool news-source-pool.json
 ```

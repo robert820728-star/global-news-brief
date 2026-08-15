@@ -1,9 +1,133 @@
-import json,subprocess,sys
-from datetime import datetime,timedelta,timezone
+import importlib.util
+import unittest
+from datetime import datetime, timezone
 from pathlib import Path
-S=Path(__file__).resolve().parents[1]/"scripts"/"manage_candidate_audit.py"
-def c(g="D",d="excluded",r="below_public_value_threshold",n=2):return {"candidate_id":"c","dedup_key":"c","title":"測試","section":"GLB","provisional_grade":g,"decision":d,"reason_code":r,"reason":"理由","source_audit":{"reliable_source_count":n},"continuity":{"status":"new","material_changes":[],"unchanged_elements":[],"comparison_note":"首次"}}
-def test_prune(tmp_path):
- now=datetime(2026,8,14,tzinfo=timezone.utc);old=now-timedelta(days=15);h={"runs":[{"run_id":"o","generated_at":old.isoformat(),"candidates":[c()]}]};r={"run_id":"n","generated_at":now.isoformat(),"window_start":now.isoformat(),"window_end":now.isoformat(),"candidates":[c()]};hp,rp,op=tmp_path/"h",tmp_path/"r",tmp_path/"o";hp.write_text(json.dumps(h));rp.write_text(json.dumps(r));q=subprocess.run([sys.executable,str(S),"append","--history",str(hp),"--run",str(rp),"--output",str(op)]);assert q.returncode==0;assert [x["run_id"] for x in json.loads(op.read_text())["runs"]]==["n"]
-def test_single_source_not_exclusion(tmp_path):
- now=datetime.now(timezone.utc).isoformat();d={"schema_version":"1.0.0","runs":[{"run_id":"r","generated_at":now,"candidates":[c("A","excluded","unreliable_or_unverified",1)]}]};p=tmp_path/"a";p.write_text(json.dumps(d));q=subprocess.run([sys.executable,str(S),"validate","--input",str(p)]);assert q.returncode==1
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SPEC = importlib.util.spec_from_file_location("manage_candidate_audit", ROOT / "scripts" / "manage_candidate_audit.py")
+MODULE = importlib.util.module_from_spec(SPEC)
+assert SPEC.loader is not None
+SPEC.loader.exec_module(MODULE)
+
+
+def source_pool():
+    return MODULE.load(ROOT / "news-source-pool.json")
+
+
+def candidate(grade="C", decision="selected", reason_code="selected_threshold_met"):
+    return {
+        "candidate_id": "c", "dedup_key": "c", "title": "測試", "section": "GLB",
+        "provisional_grade": grade, "grade_reason": "依公共影響評級",
+        "decision": decision, "reason_code": reason_code, "reason": "決定理由",
+        "selected_event_id": "GLB-01" if decision == "selected" else None,
+        "candidate_urls": ["https://example.com/reuters"], "source_ids": ["reuters"],
+        "source_audit": {"reliable_source_count": 2},
+        "continuity": {"status": "new", "material_changes": [], "unchanged_elements": [], "comparison_note": "首次"},
+    }
+
+
+def valid_audit(candidates=None, per_source_count=1):
+    coverage = []
+    for item in source_pool()["sources"]:
+        source_id = item["source_id"]
+        ranked_items = [
+            {"url": f"https://example.com/{source_id}/{index}", "title": f"{source_id}-{index}",
+             "published_at": "2026-08-14T05:00:00+00:00", "importance_score": 100 - index / 10,
+             "importance_reason": "依公共影響、範圍與結構意義排序"}
+            for index in range(per_source_count)
+        ]
+        coverage.append({
+            "source_id": source_id, "status": "completed",
+            "within_window_count": per_source_count, "ranked_count": per_source_count,
+            "ranked_items": ranked_items,
+            "selected_for_pool_count": min(per_source_count, 30),
+            "selected_item_urls": [item["url"] for item in ranked_items[:30]],
+            "mandatory_overflow_items": [],
+            "ranking_completed": True, "ranking_method": "public_value_v1", "failure_reason": None,
+        })
+    items = candidates if candidates is not None else [candidate()]
+    all_urls = [url for item in coverage for url in item["selected_item_urls"]]
+    for index, item in enumerate(items):
+        item["candidate_urls"] = [all_urls[index]] if index < len(all_urls) else []
+        item["source_ids"] = [all_urls[index].split("/")[3]] if index < len(all_urls) else []
+    if items and len(all_urls) > len(items):
+        items[0]["candidate_urls"].extend(all_urls[len(items):])
+        items[0]["source_ids"] = sorted({url.split("/")[3] for url in items[0]["candidate_urls"]})
+    now = datetime.now(timezone.utc).isoformat()
+    return {
+        "schema_version": "1.1.0", "retention_days": 14, "updated_at": now,
+        "runs": [{"run_id": "r", "generated_at": now, "window_start": now, "window_end": now,
+                  "source_coverage": coverage, "raw_item_count": 10 * min(per_source_count, 30),
+                  "deduplicated_candidate_count": len(items), "candidates": items}],
+    }
+
+
+class CandidateAuditTests(unittest.TestCase):
+    def test_cultural_suspension_novelty_rule_is_locked(self):
+        pool = source_pool()
+        pool["cultural_industry_event_rule"]["first_large_award_suspension_min_grade"] = "C-"
+        errors = MODULE.validate(valid_audit(), pool)
+        self.assertTrue(any("首次停辦最低為 C" in error for error in errors))
+
+    def test_ten_sources_each_take_top_thirty(self):
+        self.assertEqual([], MODULE.validate(valid_audit(per_source_count=73), source_pool()))
+
+    def test_source_with_more_than_thirty_cannot_submit_fewer(self):
+        audit = valid_audit(per_source_count=73)
+        audit["runs"][0]["source_coverage"][0]["selected_for_pool_count"] = 29
+        audit["runs"][0]["source_coverage"][0]["selected_item_urls"].pop()
+        audit["runs"][0]["raw_item_count"] -= 1
+        errors = MODULE.validate(audit, source_pool())
+        self.assertTrue(any("前 30 則" in error for error in errors))
+
+    def test_ranked_item_after_thirty_requires_mandatory_trigger(self):
+        audit = valid_audit(per_source_count=35)
+        source = audit["runs"][0]["source_coverage"][0]
+        overflow_url = source["ranked_items"][32]["url"]
+        source["mandatory_overflow_items"] = [{
+            "url": overflow_url,
+            "trigger": "cultural_industry_or_creator_ecosystem",
+            "reason": "獨立獎項停辦反映創作者生態與資金結構，不得因排名截斷",
+        }]
+        source["selected_item_urls"].append(overflow_url)
+        source["selected_for_pool_count"] += 1
+        audit["runs"][0]["raw_item_count"] += 1
+        audit["runs"][0]["candidates"][0]["candidate_urls"].append(overflow_url)
+        self.assertEqual([], MODULE.validate(audit, source_pool()))
+        source["mandatory_overflow_items"][0]["trigger"] = "celebrity_gossip"
+        errors = MODULE.validate(audit, source_pool())
+        self.assertTrue(any("觸發類型無效" in error for error in errors))
+
+    def test_every_source_item_must_reach_a_deduplicated_candidate(self):
+        audit = valid_audit()
+        audit["runs"][0]["candidates"][0]["candidate_urls"].pop()
+        errors = MODULE.validate(audit, source_pool())
+        self.assertTrue(any("禁止候選無聲消失" in error for error in errors))
+
+    def test_c_and_above_must_be_selected_without_quota(self):
+        items = []
+        for index in range(30):
+            item = candidate("S")
+            item["candidate_id"] = item["dedup_key"] = str(index)
+            item["selected_event_id"] = f"GLB-{index + 1:02d}"
+            items.append(item)
+        self.assertEqual([], MODULE.validate(valid_audit(items, per_source_count=3), source_pool()))
+        items[0]["decision"] = "excluded"
+        errors = MODULE.validate(valid_audit(items, per_source_count=3), source_pool())
+        self.assertTrue(any("C 以上必須入選" in error for error in errors))
+
+    def test_c_minus_requires_explicit_use_reason(self):
+        item = candidate("C-", "selected", "c_minus_selected_need")
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("C- 取用" in error for error in errors))
+        item["c_minus_use_reason"] = "使用者明確追蹤此主題"
+        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
+
+    def test_d_and_e_are_audit_only(self):
+        errors = MODULE.validate(valid_audit([candidate("D")]), source_pool())
+        self.assertTrue(any("D/E 不得入選" in error for error in errors))
+
+
+if __name__ == "__main__":
+    unittest.main()

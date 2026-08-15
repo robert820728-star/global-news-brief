@@ -11,10 +11,11 @@ description: Orchestrate a complete daily news brief from a precise rolling time
 
 1. 讀取 repo 根目錄的 `news-brief-settings.md`。
 2. 讀取排程或使用者保存的偏好；沒有時使用 `user-preferences.example.yaml`。
-3. 讀取 `references/manifest-contract.md`。
-4. 讀取 `schemas/news-event-manifest.schema.json`。
-5. 在輸出前讀取 `news-brief-template.md`。
-6. 只有驗證失敗或需要判斷正反例時，才讀取 `news-brief-examples.md` 相關段落。
+3. 讀取 `news-source-pool.json`；核心來源逐站各取時間窗內重要度前 30 則並追加合格強制例外，不得跨站合計截斷。
+4. 讀取 `references/manifest-contract.md`。
+5. 讀取 `schemas/news-event-manifest.schema.json` 與 `schemas/news-candidate-audit.schema.json`。
+6. 在輸出前讀取 `news-brief-template.md`。
+7. 只有驗證失敗或需要判斷正反例時，才讀取 `news-brief-examples.md` 相關段落。
 
 ## 固定流程
 
@@ -106,6 +107,7 @@ description: Orchestrate a complete daily news brief from a precise rolling time
 - 自製圖表不得包含純文字摘要卡，也不得讓圖片階段跳過來源頁檢查。
 - 單一可靠來源事件有來源限制文字，但等級未被自動改變。
 - 所有附件都有路徑、圖說、來源、驗收狀態；地圖不計入圖片數量。
+- 所有地圖都保留完整板塊畫布：台灣完整台灣、中國完整中國、世界完整世界；任何裁切或局部放大一律退回 `build-news-maps`，不得發布。
 - B 以上事件必須完成所有引用來源頁的圖片檢查。任何來源已找到可用圖片時，至少一張合格附件必須存在；否則不得把最終狀態設為 `ready`。
 - 圖片模組若因工具或下載錯誤中斷，保持未完成並只重跑圖片模組；不得以地圖成功、文字完成或省略圖片作為替代。
 - 任一模組失敗時，只重試該模組或該事件，不得從頭生成全部事件。
@@ -135,7 +137,7 @@ python3 scripts/validate_news_brief.py brief \
   --input /path/to/news-brief.md
 ```
 
-若失敗，交由 `recover-news-run` 建立局部恢復計畫，只修正驗證訊息指出的欄位；修復後必須重新渲染並重新驗證，不得中止。驗證通過後仍須執行 `scripts/publish_news_brief.py`，只有發布器產生的 `release/news-brief.md` 可以送出。
+若失敗，交由 `recover-news-run` 建立局部恢復計畫，只修正驗證訊息指出的欄位；修復後必須重新渲染並重新驗證，不得中止。驗證通過後仍須執行 `scripts/publish_news_brief.py --audit <candidate-audit> --source-pool news-source-pool.json`；候選來源確認與圖片確認共同通過後，只有發布器產生的 `release/news-brief.md` 可以送出。
 
 ## 失敗處理
 
