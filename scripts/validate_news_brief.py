@@ -61,6 +61,15 @@ FIGURE_PREFIXES = {
 CHINESE_NUMERALS = ("一", "二", "三", "四", "五")
 REDUNDANT_MAP_CAPTION_RE = re.compile(r"完整(?:世界|台灣|中國|板塊)?.{0,8}(?:地圖|底圖|行政界線)")
 NUMERIC_MARKER_RE = re.compile(r"標記\s*[0-9０-９一二三四五六七八九十]+")
+TRADITIONAL_CHINESE_LANGUAGE_RE = re.compile(r"繁體|正體|zh[-_](?:tw|hant)", re.IGNORECASE)
+CJK_RE = re.compile(r"[\u3400-\u9fff]")
+PROFESSIONAL_VISUAL_RE = re.compile(
+    r"颱風|風暴|豪雨|洪水|淹水|乾旱|熱浪|地震|海嘯|火山|野火|疫情|傳染病|"
+    r"公共衛生|戰爭|軍事|航運|海峽|航道|漏油|油污|海洋污染|化學事故|核事故|"
+    r"typhoon|storm|flood|drought|heatwave|earthquake|tsunami|volcano|wildfire|"
+    r"outbreak|epidemic|war|military|shipping|oil spill|marine pollution",
+    re.IGNORECASE,
+)
 
 
 def load_json(path: str | Path) -> dict[str, Any]:
@@ -87,11 +96,25 @@ def _validate_asset_path(path: Any, label: str, errors: list[str]) -> None:
         errors.append(f"{label} 路徑必須是絕對路徑或 sandbox 絕對路徑：{path}")
 
 
+def _professional_visual_expected(event: dict[str, Any]) -> bool:
+    selection = event.get("selection") if isinstance(event.get("selection"), dict) else {}
+    detail = event.get("detail") if isinstance(event.get("detail"), dict) else {}
+    text = " ".join(
+        str(value) for value in (
+            event.get("title", ""), selection.get("category", ""),
+            selection.get("impact_scope", ""), selection.get("reason", ""),
+            detail.get("event_details", ""), detail.get("analysis", ""),
+        ) if value
+    )
+    return bool(PROFESSIONAL_VISUAL_RE.search(text))
+
+
 def _validate_media_result(
     event_id: str,
     field: str,
     result: Any,
     errors: list[str],
+    output_language: str = "",
 ) -> set[str]:
     label = f"{event_id}.{field}"
     if not isinstance(result, dict):
@@ -174,6 +197,12 @@ def _validate_media_result(
                 for item in labels
             ):
                 errors.append(f"{asset_label}.place_labels 必須是具體地名，不得使用 1、2、3 等純數字")
+            elif TRADITIONAL_CHINESE_LANGUAGE_RE.search(output_language) and any(
+                not CJK_RE.search(item) for item in labels
+            ):
+                errors.append(
+                    f"{asset_label}.place_labels 必須符合輸出語言繁體中文，不得只使用英文或其他語言地名"
+                )
             caption = asset.get("caption", "")
             if isinstance(caption, str) and REDUNDANT_MAP_CAPTION_RE.search(caption):
                 errors.append(f"{asset_label} 圖說不得重複說明世界／板塊底圖或行政界線")
@@ -281,16 +310,14 @@ def _validate_image_gate(
     final_status: Any,
     errors: list[str],
 ) -> None:
-    """Block final delivery when B+ source-image discovery or attachment work is incomplete."""
-    if not _is_grade_b_or_above(event.get("grade")):
-        return
+    """Block delivery unless every selected event has evidence-backed source-image checks."""
 
     event_id = str(event.get("event_id", "事件"))
     images = event.get("images")
     if not isinstance(images, dict):
         return
     if images.get("required") is not True:
-        errors.append(f"{event_id}.images：B 級以上事件必須啟用圖片檢查")
+        errors.append(f"{event_id}.images：所有入選事件都必須啟用來源圖片檢查")
 
     checks = images.get("source_checks")
     if not isinstance(checks, list) or not checks:
@@ -305,6 +332,7 @@ def _validate_image_gate(
     }
     checked_urls: set[str] = set()
     usable_found = False
+    usable_source_urls: set[str] = set()
     for index, check in enumerate(checks, start=1):
         label = f"{event_id}.images.source_checks[{index}]"
         if not isinstance(check, dict):
@@ -312,7 +340,11 @@ def _validate_image_gate(
             continue
         _need(
             check,
-            ["source_url", "checked", "usable_image_found", "attempts", "outcome"],
+            [
+                "source_url", "checked", "checked_at", "inspection_method",
+                "evidence_path", "detected_image_urls", "usable_image_found",
+                "attempts", "outcome", "failure_detail",
+            ],
             label,
             errors,
         )
@@ -321,12 +353,37 @@ def _validate_image_gate(
             checked_urls.add(source_url)
         if check.get("checked") is not True:
             errors.append(f"{label} 尚未完成來源頁圖片檢查")
+        checked_at = check.get("checked_at")
+        if not isinstance(checked_at, str) or not checked_at.strip():
+            errors.append(f"{label}.checked_at 必須記錄實際檢查時間")
+        if check.get("inspection_method") not in {"browser", "html_extract", "official_api"}:
+            errors.append(f"{label}.inspection_method 無效")
+        evidence_path = check.get("evidence_path")
+        _validate_asset_path(evidence_path, f"{label}.evidence_path", errors)
+        detected_urls = check.get("detected_image_urls")
+        if not isinstance(detected_urls, list) or any(
+            not isinstance(url, str) or not url.startswith(("http://", "https://"))
+            for url in detected_urls
+        ):
+            errors.append(f"{label}.detected_image_urls 必須是已檢出的圖片網址陣列")
         if not isinstance(check.get("attempts"), int) or check.get("attempts", 0) < 1:
             errors.append(f"{label}.attempts 必須至少為 1")
         if check.get("outcome") not in {"attached", "no_usable_image", "acquisition_failed"}:
             errors.append(f"{label}.outcome 無效")
         if check.get("usable_image_found") is True:
             usable_found = True
+            if isinstance(source_url, str):
+                usable_source_urls.add(source_url)
+            if not detected_urls:
+                errors.append(f"{label} 宣告找到圖片但沒有保存檢出的圖片網址")
+            if check.get("outcome") != "attached":
+                errors.append(f"{label} 找到可用圖片時 outcome 必須是 attached")
+        elif check.get("outcome") == "no_usable_image" and not check.get("failure_detail"):
+            errors.append(f"{label} 宣告來源無可用圖片時必須保存具體判定理由")
+        if check.get("usable_image_found") is False and check.get("outcome") == "attached":
+            errors.append(f"{label} 未找到可用圖片時 outcome 不得是 attached")
+        if check.get("outcome") == "acquisition_failed" and final_status == "ready":
+            errors.append(f"{label} 圖片取得失敗尚未恢復，禁止發布")
 
     missing_urls = expected_urls - checked_urls
     if missing_urls:
@@ -336,6 +393,15 @@ def _validate_image_gate(
 
     if final_status != "ready":
         return
+    assets = images.get("assets", []) if isinstance(images.get("assets"), list) else []
+    asset_source_urls = {
+        asset.get("source_url") for asset in assets if isinstance(asset, dict)
+    }
+    missing_attachments = usable_source_urls - asset_source_urls
+    if missing_attachments:
+        errors.append(
+            f"{event_id}.images 找到來源圖片但缺少對應附件：{', '.join(sorted(missing_attachments))}"
+        )
     if usable_found:
         if images.get("status") != "ready" or not images.get("assets"):
             errors.append(
@@ -347,6 +413,11 @@ def _validate_image_gate(
         )
 
     professional_required = images.get("professional_visual_required")
+    expected_professional = _professional_visual_expected(event)
+    if professional_required is not expected_professional:
+        errors.append(
+            f"{event_id}.images.professional_visual_required 必須依事件類型判定為 {str(expected_professional).lower()}，不得使用事件編號或評級白名單"
+        )
     professional_status = images.get("professional_visual_status")
     professional_checks = images.get("professional_source_checks")
     if not isinstance(professional_required, bool):
@@ -368,6 +439,48 @@ def _validate_image_gate(
             if isinstance(asset, dict)
             and asset.get("kind") in {"official_information", "professional_information"}
         ]
+        for index, check in enumerate(professional_checks, start=1):
+            label = f"{event_id}.images.professional_source_checks[{index}]"
+            if not isinstance(check, dict):
+                errors.append(f"{label} 必須是物件")
+                continue
+            _need(
+                check,
+                [
+                    "source_url", "checked", "checked_at", "inspection_method",
+                    "evidence_path", "detected_image_urls", "usable_image_found",
+                    "attempts", "outcome", "failure_detail",
+                ],
+                label,
+                errors,
+            )
+            _validate_asset_path(check.get("evidence_path"), f"{label}.evidence_path", errors)
+            if check.get("checked") is not True:
+                errors.append(f"{label} 尚未完成官方專業圖資檢查")
+            if not isinstance(check.get("checked_at"), str) or not check.get("checked_at", "").strip():
+                errors.append(f"{label}.checked_at 必須記錄實際檢查時間")
+            if check.get("inspection_method") not in {"browser", "html_extract", "official_api"}:
+                errors.append(f"{label}.inspection_method 無效")
+            detected_urls = check.get("detected_image_urls")
+            if not isinstance(detected_urls, list) or any(
+                not isinstance(url, str) or not url.startswith(("http://", "https://"))
+                for url in detected_urls
+            ):
+                errors.append(f"{label}.detected_image_urls 必須是已檢出的圖片網址陣列")
+            if not isinstance(check.get("attempts"), int) or check.get("attempts", 0) < 1:
+                errors.append(f"{label}.attempts 必須至少為 1")
+            if check.get("outcome") not in {"attached", "no_usable_image", "acquisition_failed"}:
+                errors.append(f"{label}.outcome 無效")
+            if check.get("usable_image_found") is True and not detected_urls:
+                errors.append(f"{label} 宣告找到官方圖資但沒有保存圖片網址")
+            if check.get("usable_image_found") is True and check.get("outcome") != "attached":
+                errors.append(f"{label} 找到官方圖資時 outcome 必須是 attached")
+            if check.get("usable_image_found") is False and check.get("outcome") == "attached":
+                errors.append(f"{label} 未找到官方圖資時 outcome 不得是 attached")
+            if check.get("outcome") == "no_usable_image" and not check.get("failure_detail"):
+                errors.append(f"{label} 宣告無官方圖資時必須保存具體判定理由")
+            if check.get("outcome") == "acquisition_failed" and final_status == "ready":
+                errors.append(f"{label} 官方圖資取得失敗尚未恢復，禁止發布")
         if final_status == "ready" and professional_found:
             if professional_status != "ready" or not professional_assets:
                 errors.append(
@@ -675,18 +788,26 @@ def validate_manifest_data(data: dict[str, Any]) -> list[str]:
                         if source_id not in source_ids:
                             errors.append(f"{claim_label} 引用不存在的來源：{source_id}")
 
-        map_paths = _validate_media_result(label, "map", event.get("map"), errors)
-        chart_paths = _validate_media_result(label, "charts", event.get("charts"), errors)
-        image_paths = _validate_media_result(label, "images", event.get("images"), errors)
+        output_language = str(run.get("language", "")) if isinstance(run, dict) else ""
+        map_paths = _validate_media_result(label, "map", event.get("map"), errors, output_language)
+        chart_paths = _validate_media_result(label, "charts", event.get("charts"), errors, output_language)
+        image_paths = _validate_media_result(label, "images", event.get("images"), errors, output_language)
         _validate_image_gate(event, final_status, errors)
         if final_status == "ready":
             for field_name in ("map", "charts", "images"):
                 field_value = event.get(field_name)
                 if isinstance(field_value, dict) and field_value.get("status") == "pending":
                     errors.append(f"{label}.{field_name} 尚未完成判斷")
-        overlap = map_paths & image_paths
-        if overlap:
-            errors.append(f"{label} 同一附件同時出現在地圖與圖片：{', '.join(sorted(overlap))}")
+        for left_name, left_paths, right_name, right_paths in (
+            ("地圖", map_paths, "資料圖表", chart_paths),
+            ("地圖", map_paths, "圖片", image_paths),
+            ("資料圖表", chart_paths, "圖片", image_paths),
+        ):
+            overlap = left_paths & right_paths
+            if overlap:
+                errors.append(
+                    f"{label} 同一附件同時出現在{left_name}與{right_name}：{', '.join(sorted(overlap))}"
+                )
 
         detail = event.get("detail")
         if not isinstance(detail, dict):

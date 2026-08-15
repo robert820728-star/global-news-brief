@@ -342,7 +342,9 @@
         "visual_checked",
         "width",
         "height",
-        "place_labels"
+        "place_labels",
+        "canvas_scope",
+        "base_map"
       ],
       "properties": {
         "path": { "type": "string", "pattern": "^(sandbox:)?/" },
@@ -379,7 +381,7 @@
         "assets", "omission_reason"
       ],
       "properties": {
-        "required": { "type": "boolean" },
+        "required": { "const": true },
         "status": { "enum": ["pending", "ready", "not_required", "omitted"] },
         "source_checks": {
           "type": "array",
@@ -461,15 +463,23 @@
     },
     "imageSourceCheck": {
       "type": "object",
-      "required": ["source_url", "checked", "usable_image_found", "attempts", "outcome"],
+      "required": ["source_url", "checked", "checked_at", "inspection_method", "evidence_path", "detected_image_urls", "usable_image_found", "attempts", "outcome", "failure_detail"],
       "properties": {
         "source_url": { "type": "string", "format": "uri" },
         "checked": { "const": true },
+        "checked_at": { "type": "string", "format": "date-time" },
+        "inspection_method": { "enum": ["browser", "html_extract", "official_api"] },
+        "evidence_path": { "type": "string", "pattern": "^(sandbox:)?/" },
+        "detected_image_urls": {
+          "type": "array",
+          "items": { "type": "string", "format": "uri" }
+        },
         "usable_image_found": { "type": "boolean" },
         "attempts": { "type": "integer", "minimum": 1 },
         "outcome": {
           "enum": ["attached", "no_usable_image", "acquisition_failed"]
-        }
+        },
+        "failure_detail": { "type": ["string", "null"] }
       },
       "additionalProperties": false
     },

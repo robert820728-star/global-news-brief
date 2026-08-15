@@ -82,6 +82,20 @@ def attachment_errors(manifest: dict) -> list[str]:
                             local, f"{event_id}.{field}.assets[{index}]"
                         )
                     )
+        images = event.get("images", {})
+        if isinstance(images, dict):
+            for check_group in ("source_checks", "professional_source_checks"):
+                for index, check in enumerate(images.get(check_group, []), start=1):
+                    if not isinstance(check, dict):
+                        continue
+                    path = check.get("evidence_path")
+                    if not isinstance(path, str):
+                        continue
+                    local = local_attachment_path(path)
+                    if not local.is_file() or local.stat().st_size < 1:
+                        errors.append(
+                            f"{event_id}.images.{check_group}[{index}] 檢查證據不存在或為空：{path}"
+                        )
     return errors
 
 

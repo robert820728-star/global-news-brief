@@ -60,7 +60,8 @@ description: Decide whether a selected news event needs geographic context and c
 
 - 固定使用 `maps/style.json` 的 `yellow-admin-v2`：淡黃色陸地 `#f3e6b8`、灰色行政界線 `#53606f`、白色背景 `#ffffff`、紅色主要事件區、橙色次要影響區及深紅點位。禁止藍底、深色底、衛星底圖或任何未核准配色。
 - 依來源資料標點、高亮行政區、繪製範圍或簡化路線。
-- 每個點位直接在圖面標示具體地名，並把相同名稱保存到 `map.assets[].place_labels`。禁止只畫 `1`、`2`、`3` 等純數字再由圖說解碼；優先使用輸出語言，字型不可用時使用通行當地或英文地名。
+- 每個點位直接在圖面標示具體地名，並把相同名稱保存到 `map.assets[].place_labels`。禁止只畫 `1`、`2`、`3` 等純數字再由圖說解碼。
+- 地名標籤必須使用 `run.language` 指定的輸出語言。輸出為繁體中文時，每個標籤及圖面文字都必須包含繁體中文地名，例如「委內瑞拉」「阿曼外海」「荷姆茲海峽」；不得只寫 `Venezuela`、`Oman coast` 或 `Strait of Hormuz`。缺少可用字型時必須修復字型或 renderer 後重跑，不得降級成英文交付。
 - 不捏造精確邊界；來源只支持點位時只標點，支持行政區時才高亮行政區。
 - 圖說使用繁體中文，直接說明該地點、範圍或路線對事件代表什麼。不得重複描述「完整世界／台灣／中國底圖」「行政界線」，也不得寫「標記1為……」。
 - 不把自製定位圖偽裝成官方預測、警戒或統計圖。
@@ -85,6 +86,7 @@ description: Decide whether a selected news event needs geographic context and c
 - 國界、省界或縣市界線符合所需尺度。
 - 高亮、標點或範圍與事件來源一致。
 - 圖說、標題與公開文字使用繁體中文。
+- `map.assets[].place_labels` 與圖面標籤符合 `run.language`；繁體中文輸出不得出現只有拉丁字母的地名標籤。
 - 地圖檔案沒有被寫入 `images.assets`。
 - `map.assets[].style_id` 必須是 `yellow-admin-v2`，`style_reference` 必須是 `maps/style.json`；任一顏色或行政界線風格不符即驗收失敗並重跑 canonical renderer。
 

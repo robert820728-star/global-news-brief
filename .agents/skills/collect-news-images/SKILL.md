@@ -13,22 +13,25 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 
 ## 適用門檻
 
-- B 以上事件：`images.required` 固定為 `true`，逐一開啟 `verification.sources` 的來源頁檢查圖片，不得直接以「無圖」結案。
-- 每個引用來源都必須寫入 `images.source_checks`；記錄是否找到可用圖片、嘗試次數與結果。
+- 所有入選事件（SS 至 C-）：`images.required` 固定為 `true`，逐一開啟 `verification.sources` 的來源頁檢查圖片；評級不得作為跳過圖片流程的條件。
+- 每個引用來源都必須寫入 `images.source_checks`；除是否找到可用圖片、嘗試次數與結果外，必須保存 `checked_at`、`inspection_method`、本地 `evidence_path`、`detected_image_urls` 與 `failure_detail`。
+- `evidence_path` 必須是頁面截圖、保存頁面或可重現檢查結果的本地證據；發布器會確認檔案實際存在。宣告 `no_usable_image` 時不得只填布林值，必須有頁面證據與具體理由。
+- 偵測到官方或媒體圖片時，必須下載原圖或截取來源頁中的實際圖片，並以相同 `source_url` 寫入 `images.assets`；找到圖片卻沒有對應附件時維持 `pending` 並恢復。
 - 任一來源找到可信且相關圖片後，`images.status` 只能在至少一張附件通過驗收後改為 `ready`。
 - 已找到可用圖片但下載或截圖失敗時，`images.status` 維持 `pending`，並把圖片階段標成失敗後回到本技能重試；不得改成 `omitted` 後交付。
 - 只有全部引用來源都已檢查且均無可用圖片，才可使用 `omitted`，並保存具體後台原因。
-- C／C−事件：不強制；圖片能明顯幫助理解政策、產業、統計或事件內容時可以加入。
 - 圖片取得失敗不改變事件等級。
 - 自製定位地圖由 `build-news-maps` 處理，不得放進 `images`。
 - 自製資料圖表由 `build-news-charts` 處理，不得放進 `images`。
+- `map.assets`、`charts.assets`、`images.assets` 三組附件路徑必須兩兩不重複；任何一種視覺完成都不能改變另外兩種的需求、狀態、檢查紀錄或附件。
 - `map.status` 或 `charts.status` 已是 `ready`，不代表圖片階段完成；仍須逐一檢查來源頁並取得官方或媒體實際發布的合格圖片。
 
 ## 官方專業圖資硬閘門
 
-- B 以上事件若屬氣象、災害、疫情、公共衛生、地震、海嘯、野火、戰爭、航運或其他具有專業監測產品的類型，`images.professional_visual_required` 固定為 `true`。
+- 任何入選事件若屬氣象、災害、疫情、公共衛生、地震、海嘯、火山、野火、洪水、乾旱、熱浪、戰爭、軍事、航運、海峽／航道、漏油、油污、海洋污染、化學或核事故，`images.professional_visual_required` 固定為 `true`；此判定必須依事件內容完成，禁止使用評級門檻或事件編號白名單。
 - 先依事件類型與主要影響地區，主動搜尋主管機關、監測機構、地方政府或專業組織的圖資；不得只檢查新聞來源頁後就宣告沒有專業圖。
 - 每個查過的官方或專業頁面都寫入 `images.professional_source_checks`。至少涵蓋中央主管機關與主要受影響地區主管單位；跨國事件再查國際組織或受影響國官方來源。
+- 官方專業圖資檢查同樣必須保存檢查時間、方法、本地頁面證據、檢出的圖片網址與判定理由；取得失敗必須進入恢復流程，不能改寫成 `not_available`。
 - 找到與事件時間、地區及主張相符的專業圖時，至少一張 `kind` 為 `official_information` 或 `professional_information` 的本地附件通過視覺與時間驗收前，`images.professional_visual_status` 不得設為 `ready`，整則事件也不得交付。
 - 專業圖下載或截圖失敗時，依「原始下載資產 → 官方產品頁截圖 → 官方歷史／存檔頁 → 地方主管機關 → 主要媒體引用的同一官方圖」重試；不得因第一次取得失敗就改用現場照結案。
 - 只有完成上述搜尋且確實沒有符合事件階段的專業圖，才可把 `images.professional_visual_status` 設為 `not_available`，並在 `images.professional_omission_reason` 保存具體後台原因。
@@ -70,7 +73,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 不得把「俄羅斯／烏克蘭及盟友」、「安全評估／全面否認」等純文字對照卡當成新聞圖片。
 - 自製圖表只限至少兩個可比較的數值、時間序列、比例或分布；必須寫入獨立 `charts` 欄位。
 - 自製圖表的圖說須標示「本簡報依○○資料製作」，不得宣稱為該媒體或官方發布的圖片。
-- 即使已有合格自製圖表，B 以上事件的來源圖片硬閘門仍照常生效；自製圖表不得計入圖片 1 至 5 張，也不得滿足「至少一張來源圖片附件」要求。
+- 即使已有合格自製圖表，所有入選事件的來源圖片硬閘門仍照常生效；自製圖表不得計入圖片 1 至 5 張，也不得滿足「至少一張來源圖片附件」要求。
 
 ## 數量與順序
 
@@ -136,9 +139,14 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - `images.status`
 - `images.source_checks[].source_url`
 - `images.source_checks[].checked`
+- `images.source_checks[].checked_at`
+- `images.source_checks[].inspection_method`
+- `images.source_checks[].evidence_path`
+- `images.source_checks[].detected_image_urls`
 - `images.source_checks[].usable_image_found`
 - `images.source_checks[].attempts`
 - `images.source_checks[].outcome`
+- `images.source_checks[].failure_detail`
 - `images.professional_visual_required`
 - `images.professional_visual_status`
 - `images.professional_source_checks[]`

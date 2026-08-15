@@ -62,11 +62,17 @@ class PublisherTests(unittest.TestCase):
             root = Path(directory)
             map_path = root / "map.png"
             image_path = root / "image.png"
+            source_check_path = root / "source-check.png"
+            professional_check_path = root / "professional-check.png"
             Image.new("RGB", (100, 100), "#f3e6b8").save(map_path)
             Image.new("RGB", (100, 100), "#cccccc").save(image_path)
+            Image.new("RGB", (100, 100), "#ffffff").save(source_check_path)
+            Image.new("RGB", (100, 100), "#ffffff").save(professional_check_path)
             manifest = valid_manifest()
             manifest["events"][0]["map"]["assets"][0]["path"] = str(map_path)
             manifest["events"][0]["images"]["assets"][0]["path"] = str(image_path)
+            manifest["events"][0]["images"]["source_checks"][0]["evidence_path"] = str(source_check_path)
+            manifest["events"][0]["images"]["professional_source_checks"][0]["evidence_path"] = str(professional_check_path)
             brief = valid_brief().replace(
                 "sandbox:/tmp/map.png", str(map_path)
             ).replace(
@@ -109,11 +115,17 @@ class PublisherTests(unittest.TestCase):
             root = Path(directory)
             map_path = root / "map.png"
             image_path = root / "image.png"
+            source_check_path = root / "source-check.png"
+            professional_check_path = root / "professional-check.png"
             Image.new("RGB", (100, 100), "#4d88c7").save(map_path)
             Image.new("RGB", (100, 100), "#cccccc").save(image_path)
+            Image.new("RGB", (100, 100), "#ffffff").save(source_check_path)
+            Image.new("RGB", (100, 100), "#ffffff").save(professional_check_path)
             manifest = valid_manifest()
             manifest["events"][0]["map"]["assets"][0]["path"] = str(map_path)
             manifest["events"][0]["images"]["assets"][0]["path"] = str(image_path)
+            manifest["events"][0]["images"]["source_checks"][0]["evidence_path"] = str(source_check_path)
+            manifest["events"][0]["images"]["professional_source_checks"][0]["evidence_path"] = str(professional_check_path)
             brief = valid_brief().replace(
                 "sandbox:/tmp/map.png", str(map_path)
             ).replace(

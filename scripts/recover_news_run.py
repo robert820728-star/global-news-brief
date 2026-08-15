@@ -168,7 +168,7 @@ def recovery_plan(
                 add("build-news-charts", event_id, "必要資料圖表未完成")
 
         images = event.get("images", {})
-        if not isinstance(images, dict) or not is_b_or_above(event.get("grade")):
+        if not isinstance(images, dict):
             continue
         checks = images.get("source_checks", [])
         sources = verification.get("sources", []) if isinstance(verification, dict) else []
@@ -186,6 +186,14 @@ def recovery_plan(
         )
         if expected_urls - checked_urls:
             add("collect-news-images", event_id, "尚未檢查全部引用來源頁")
+        elif any(
+            not isinstance(item, dict)
+            or not item.get("evidence_path")
+            or not item.get("checked_at")
+            or "detected_image_urls" not in item
+            for item in checks
+        ):
+            add("collect-news-images", event_id, "來源頁圖片檢查缺少可驗證證據")
         elif images.get("status") == "pending":
             add("collect-news-images", event_id, "圖片階段仍為 pending")
         elif usable_found and (images.get("status") != "ready" or not images.get("assets")):

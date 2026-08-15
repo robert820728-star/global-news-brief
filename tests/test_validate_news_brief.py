@@ -45,13 +45,13 @@ def valid_manifest():
             {
                 "event_id": "TWN-01",
                 "primary_section": "TWN",
-                "title": "測試事件",
+                "title": "測試地震事件",
                 "grade": "B",
                 "selection": {
                     "dedup_key": "test-event",
-                    "category": "公共安全",
+                    "category": "地震與海嘯",
                     "impact_scope": "台灣",
-                    "reason": "具有公共影響",
+                    "reason": "地震造成公共安全影響",
                     "candidate_urls": ["https://example.com/news"],
                     "news_time": "2026-08-14T05:30:00+08:00",
                     "event_time": "2026-08-14T05:00:00+08:00",
@@ -126,9 +126,14 @@ def valid_manifest():
                         {
                             "source_url": "https://example.com/source",
                             "checked": True,
+                            "checked_at": "2026-08-14T06:00:00+08:00",
+                            "inspection_method": "browser",
+                            "evidence_path": "sandbox:/tmp/source-check.png",
+                            "detected_image_urls": ["https://example.com/image.png"],
                             "usable_image_found": True,
                             "attempts": 1,
                             "outcome": "attached",
+                            "failure_detail": None,
                         }
                     ],
                     "professional_visual_required": True,
@@ -137,9 +142,14 @@ def valid_manifest():
                         {
                             "source_url": "https://example.com/source",
                             "checked": True,
+                            "checked_at": "2026-08-14T06:00:00+08:00",
+                            "inspection_method": "browser",
+                            "evidence_path": "sandbox:/tmp/professional-check.png",
+                            "detected_image_urls": ["https://example.com/image.png"],
                             "usable_image_found": True,
                             "attempts": 1,
                             "outcome": "attached",
+                            "failure_detail": None,
                         }
                     ],
                     "professional_omission_reason": None,
@@ -162,7 +172,7 @@ def valid_manifest():
                 "detail": {
                     "overview_time": "8/14 05:30",
                     "time": "新聞時間：8/14 05:30；事件時間：8/14 05:00。",
-                    "event_details": "據官方來源指出，事件已發生。",
+                    "event_details": "據官方來源指出，地震事件已發生。",
                     "positions": [],
                     "analysis": "事件具有公共影響，但仍缺少獨立來源。",
                     "follow_up": "追蹤是否出現其他獨立來源。",
@@ -185,11 +195,11 @@ def valid_brief():
 
 | 編號 | 時間 | 事件 | 等級 |
 |---|---|---|---|
-| TWN-01 | 8/14 05:30 | 測試事件 | B |
+| TWN-01 | 8/14 05:30 | 測試地震事件 | B |
 
 ## 逐條詳報
 
-### TWN-01. 測試事件 - B
+### TWN-01. 測試地震事件 - B
 
 **時間：**新聞時間：8/14 05:30；事件時間：8/14 05:00。
 
@@ -207,7 +217,7 @@ def valid_brief():
 
 圖一：官方資訊圖（來源：官方來源）。
 
-**事件細節：**據官方來源指出，事件已發生。
+**事件細節：**據官方來源指出，地震事件已發生。
 
 **分析：**事件具有公共影響，但仍缺少獨立來源。
 
@@ -239,6 +249,12 @@ class ValidatorTests(unittest.TestCase):
         manifest["events"][0]["map"]["assets"][0]["place_labels"] = ["1"]
         errors = VALIDATOR.validate_manifest_data(manifest)
         self.assertTrue(any("純數字" in error for error in errors))
+
+    def test_traditional_chinese_output_rejects_english_only_map_label(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["map"]["assets"][0]["place_labels"] = ["Venezuela"]
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("必須符合輸出語言繁體中文" in error for error in errors))
 
     def test_map_rejects_redundant_canvas_caption(self):
         manifest = valid_manifest()
@@ -449,6 +465,58 @@ class ValidatorTests(unittest.TestCase):
         manifest["events"][0]["images"]["source_checks"] = []
         errors = VALIDATOR.validate_manifest_data(manifest)
         self.assertTrue(any("缺少來源頁圖片檢查紀錄" in error for error in errors))
+
+    def test_c_plus_still_requires_all_source_pages_checked(self):
+        manifest = valid_manifest()
+        event = manifest["events"][0]
+        event["grade"] = "C+"
+        event["images"]["required"] = False
+        event["images"]["status"] = "not_required"
+        event["images"]["source_checks"] = []
+        event["images"]["assets"] = []
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("所有入選事件都必須啟用來源圖片檢查" in error for error in errors))
+        self.assertTrue(any("缺少來源頁圖片檢查紀錄" in error for error in errors))
+
+    def test_oil_spill_requires_professional_visual_by_event_type(self):
+        manifest = valid_manifest()
+        event = manifest["events"][0]
+        event["title"] = "阿曼外海大型漏油"
+        event["selection"]["category"] = "海洋污染"
+        event["detail"]["event_details"] = "油污擴散至保護區。"
+        event["images"]["professional_visual_required"] = False
+        event["images"]["professional_visual_status"] = "not_required"
+        event["images"]["professional_source_checks"] = []
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("必須依事件類型判定為 true" in error for error in errors))
+
+    def test_no_usable_image_requires_inspection_evidence_and_reason(self):
+        manifest = valid_manifest()
+        check = manifest["events"][0]["images"]["source_checks"][0]
+        check["usable_image_found"] = False
+        check["outcome"] = "no_usable_image"
+        check["detected_image_urls"] = []
+        check["evidence_path"] = None
+        check["failure_detail"] = None
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("缺少附件路徑" in error for error in errors))
+        self.assertTrue(any("必須保存具體判定理由" in error for error in errors))
+
+    def test_chart_attachment_cannot_replace_or_duplicate_image(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["charts"] = {
+            "required": True, "status": "ready", "rationale": "數值比較",
+            "assets": [{
+                "path": "sandbox:/tmp/image.png", "caption": "資料圖表一：比較。",
+                "source_names": ["官方來源"], "source_urls": ["https://example.com/source"],
+                "chart_type": "bar", "chart_purpose": "comparison", "data_points": 2,
+                "labels": ["甲", "乙"], "numeric_values": [1, 2], "unit": "人",
+                "highlight_reason": None, "x_axis_label": "類別", "y_axis_label": "人數",
+                "visual_checked": True, "data_checked": True, "width": 800, "height": 600,
+            }], "omission_reason": None,
+        }
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("同一附件同時出現在資料圖表與圖片" in error for error in errors))
 
     def test_professional_visual_cannot_be_replaced_by_news_photo(self):
         manifest = valid_manifest()

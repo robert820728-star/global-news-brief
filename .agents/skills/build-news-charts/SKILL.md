@@ -66,7 +66,7 @@ description: Build optional self-made data charts for verified news events when 
 - `charts`、`map`、`images` 三者獨立，互不覆寫、互不計數。
 - 自製圖表不計入來源圖片 1 至 5 張上限。
 - 自製圖表不得取代官方統計圖、媒體照片、來源頁首圖或其他來源圖片。
-- B 以上事件即使已有圖表，仍必須完整執行 `collect-news-images` 的來源頁檢查與圖片硬閘門。
+- 所有入選事件即使已有圖表，仍必須完整執行 `collect-news-images` 的來源頁檢查；事件類型命中時另須完成官方專業圖資硬閘門。
 
 ## 驗收
 
