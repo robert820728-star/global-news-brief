@@ -383,7 +383,7 @@ def _validate_image_gate(
         if check.get("usable_image_found") is False and check.get("outcome") == "attached":
             errors.append(f"{label} 未找到可用圖片時 outcome 不得是 attached")
         if check.get("outcome") == "acquisition_failed" and final_status == "ready":
-            errors.append(f"{label} 圖片取得失敗尚未恢復，禁止發布")
+            errors.append(f"{label} 圖片取得失敗尚未恢復，必須送回 collect-news-images 重做")
 
     missing_urls = expected_urls - checked_urls
     if missing_urls:
@@ -480,7 +480,7 @@ def _validate_image_gate(
             if check.get("outcome") == "no_usable_image" and not check.get("failure_detail"):
                 errors.append(f"{label} 宣告無官方圖資時必須保存具體判定理由")
             if check.get("outcome") == "acquisition_failed" and final_status == "ready":
-                errors.append(f"{label} 官方圖資取得失敗尚未恢復，禁止發布")
+                errors.append(f"{label} 官方圖資取得失敗尚未恢復，必須送回 collect-news-images 重做")
         if final_status == "ready" and professional_found:
             if professional_status != "ready" or not professional_assets:
                 errors.append(

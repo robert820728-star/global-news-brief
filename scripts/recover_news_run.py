@@ -8,6 +8,7 @@ import json
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+import re
 
 
 GRADE_RANK = {"C": 1, "B": 2, "A": 3, "S": 4}
@@ -60,6 +61,9 @@ RECOVERY_STRATEGIES = {
         "rediagnose-validation-input",
     ),
 }
+
+TRADITIONAL_CHINESE_LANGUAGE_RE = re.compile(r"繁體|正體|zh[-_](?:tw|hant)", re.IGNORECASE)
+CJK_RE = re.compile(r"[\u3400-\u9fff]")
 
 
 def load(path: str) -> dict[str, Any]:
@@ -161,6 +165,25 @@ def recovery_plan(
         if isinstance(map_result, dict) and map_result.get("required") is True:
             if map_result.get("status") in {"pending", "omitted"}:
                 add("build-news-maps", event_id, "必要定位地圖未完成")
+            else:
+                expected_scope = "full_world" if str(event_id).startswith("GLB-") else "full_section"
+                output_language = str(data.get("run", {}).get("language", ""))
+                for asset in map_result.get("assets", []):
+                    if not isinstance(asset, dict):
+                        add("build-news-maps", event_id, "地圖附件格式無效")
+                        break
+                    labels = asset.get("place_labels")
+                    if not isinstance(labels, list) or not labels:
+                        add("build-news-maps", event_id, "地圖缺少直接標示的具體地名")
+                        break
+                    if TRADITIONAL_CHINESE_LANGUAGE_RE.search(output_language) and any(
+                        not isinstance(label, str) or not CJK_RE.search(label) for label in labels
+                    ):
+                        add("build-news-maps", event_id, "地圖地名未使用繁體中文，必須重新製圖")
+                        break
+                    if asset.get("canvas_scope") != expected_scope or not asset.get("base_map"):
+                        add("build-news-maps", event_id, "地圖未使用完整 canonical 板塊底圖")
+                        break
 
         charts = event.get("charts", {})
         if isinstance(charts, dict) and charts.get("required") is True:
@@ -196,6 +219,11 @@ def recovery_plan(
             add("collect-news-images", event_id, "來源頁圖片檢查缺少可驗證證據")
         elif images.get("status") == "pending":
             add("collect-news-images", event_id, "圖片階段仍為 pending")
+        elif any(
+            isinstance(item, dict) and item.get("outcome") == "acquisition_failed"
+            for item in checks
+        ):
+            add("collect-news-images", event_id, "來源圖片取得失敗，必須切換策略後重做")
         elif usable_found and (images.get("status") != "ready" or not images.get("assets")):
             add("collect-news-images", event_id, "已找到可用圖片但尚無合格附件")
 
@@ -212,6 +240,19 @@ def recovery_plan(
         ]
         if professional_required and not professional_checks:
             add("collect-news-images", event_id, "尚未搜尋事件類型對應的官方專業圖資")
+        elif professional_required and any(
+            isinstance(item, dict) and item.get("outcome") == "acquisition_failed"
+            for item in professional_checks
+        ):
+            add("collect-news-images", event_id, "官方專業圖資取得失敗，必須切換策略後重做")
+        elif professional_required and any(
+            not isinstance(item, dict)
+            or not item.get("evidence_path")
+            or not item.get("checked_at")
+            or "detected_image_urls" not in item
+            for item in professional_checks
+        ):
+            add("collect-news-images", event_id, "官方專業圖資檢查缺少可驗證證據")
         elif professional_required and professional_found and (
             images.get("professional_visual_status") != "ready" or not professional_assets
         ):

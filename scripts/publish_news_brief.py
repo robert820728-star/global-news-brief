@@ -157,10 +157,10 @@ def main() -> int:
     errors.extend(validate_map_decisions.validate(manifest))
     errors.extend(validate_news_brief.validate_brief_text(manifest, brief))
     if errors:
-        print("RELEASE BLOCKED", file=sys.stderr)
+        print("RELEASE NEEDS REPAIR", file=sys.stderr)
         for error in errors:
             print(f"- {error}", file=sys.stderr)
-        print("ACTION: 執行 recover_news_run.py plan，修復後重新發布", file=sys.stderr)
+        print("ACTION: 立即執行 recover_news_run.py plan，只重做失敗模組；重新驗證後自動續行發布", file=sys.stderr)
         return 1
 
     output_dir = Path(args.output_dir)

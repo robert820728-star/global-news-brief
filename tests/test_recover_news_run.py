@@ -12,6 +12,59 @@ SPEC.loader.exec_module(MODULE)
 
 
 class RecoveryControllerTests(unittest.TestCase):
+    @staticmethod
+    def _manifest():
+        return {
+            "stage_status": {},
+            "recovery": {"status": "recovering", "max_attempts_per_target": 3, "attempts": [], "unresolved_targets": []},
+            "events": [{
+                "event_id": "TWN-01",
+                "verification": {"status": "completed", "sources": []},
+                "map": {"required": False, "status": "not_required"},
+                "images": {"status": "ready", "source_checks": [], "assets": []},
+            }],
+            "final_status": "draft",
+        }
+
+    def test_english_only_map_label_routes_back_to_map_stage(self):
+        manifest = self._manifest()
+        manifest["run"] = {"language": "繁體中文"}
+        manifest["events"][0]["map"] = {
+            "required": True,
+            "status": "ready",
+            "assets": [{
+                "place_labels": ["Venezuela"],
+                "canvas_scope": "full_world",
+                "base_map": "maps/generated/world-pacific-yellow-v2.png",
+            }],
+        }
+        manifest["events"][0]["event_id"] = "GLB-01"
+        plan = MODULE.recovery_plan(manifest)
+        self.assertTrue(any(item["target_stage"] == "build-news-maps" for item in plan))
+
+    def test_failed_official_visual_acquisition_routes_back_to_images(self):
+        manifest = self._manifest()
+        images = manifest["events"][0].setdefault("images", {})
+        images.update({
+            "source_checks": [],
+            "status": "ready",
+            "assets": [],
+            "professional_visual_required": True,
+            "professional_visual_status": "pending",
+            "professional_source_checks": [{
+                "checked_at": "2026-08-15T10:00:00+08:00",
+                "evidence_path": "/tmp/evidence.png",
+                "detected_image_urls": ["https://example.com/official.png"],
+                "usable_image_found": True,
+                "outcome": "acquisition_failed",
+            }],
+        })
+        plan = MODULE.recovery_plan(manifest)
+        self.assertTrue(any(
+            item["target_stage"] == "collect-news-images" and "重做" in item["reason"]
+            for item in plan
+        ))
+
     def test_plan_targets_only_failed_image_stage(self):
         manifest = {
             "stage_status": {"collect-news-images": "failed"},
