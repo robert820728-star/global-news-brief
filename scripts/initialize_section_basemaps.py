@@ -30,6 +30,7 @@ PRESETS: dict[str, dict[str, Any]] = {
         "source_url": "https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/AUS/ADM1/geoBoundaries-AUS-ADM1_simplified.geojson",
         "boundary_level": "state_or_territory",
         "source_license": "CC BY 4.0",
+        "base_country_iso": "AUS",
     },
     "JPN": {
         "name": "日本",
@@ -42,6 +43,7 @@ PRESETS: dict[str, dict[str, Any]] = {
         "source_url": "https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/JPN/ADM1/geoBoundaries-JPN-ADM1_simplified.geojson",
         "boundary_level": "prefecture",
         "source_license": "Open Database License 1.0",
+        "base_country_iso": "JPN",
     },
     "OCE": {
         "name": "大洋洲",
@@ -101,6 +103,7 @@ def initialize(section: dict[str, Any]) -> Path:
         "source_geojson": str(source.relative_to(ROOT)),
         "source_url": section.get("source_url"),
         "source_license": section.get("source_license"),
+        "base_country_iso": section.get("base_country_iso"),
         "bounds": section["bounds"],
         "projection": section.get("projection", "regional"),
         "central_lon": section.get("central_lon"),
