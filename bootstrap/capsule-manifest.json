@@ -155,7 +155,7 @@
     },
     {
       "name": "capsule.part0031.txt",
-      "sha256": "5019b62956fe255bc3e3c473cdf29fa6910123dcd6749e866b57ec22857070f4",
+      "sha256": "0c020ab6e2b45f77a265e0cd6890777690952481e3e9b408ee3fd3d58985f1cd",
       "size": 8192
     },
     {
@@ -180,41 +180,41 @@
     },
     {
       "name": "capsule.part0036.txt",
-      "sha256": "ad802e58368cfa825aa0a0f5ea9422193ddd10d93480bcea590c6eaf9a8d558d",
+      "sha256": "c18035a5c3b02d5ea971da51e186adb23412f5541a0f5650eaa2db362f3d84bd",
       "size": 8192
     },
     {
       "name": "capsule.part0037.txt",
-      "sha256": "c394f8a115d418b18c1d949e10ce3a60acd00240e018fdc4a33f42367ad8d264",
+      "sha256": "27e43e628a6b2951bfb1cbb19a91280830e10c4d153279de89d9fc8f3cedf935",
       "size": 8192
     },
     {
       "name": "capsule.part0038.txt",
-      "sha256": "da149a448924b34f07599f67c41dbfbd14c7990fcca335d07b16a619ce1f598e",
+      "sha256": "6ec984467d12a0ecd651c89931d5050ecf8709bdd947cd3822507c8c90e15516",
       "size": 8192
     },
     {
       "name": "capsule.part0039.txt",
-      "sha256": "fac2afb7dd8e8fc316cd6718996a8f57cf4b9fccb39b065e703a41bad6679370",
+      "sha256": "40145440faba85b32e0bea97c853dd042e1e3354f7abe09b7f5aec34828bf777",
       "size": 8192
     },
     {
       "name": "capsule.part0040.txt",
-      "sha256": "2cb955c1bca81c1df50fb3b3a3076c14d92db66c7efaa8318147476122a5f54e",
+      "sha256": "4bf29f33a3e3ea1bd5ec494a1473d40fa28473671c1539a52524521611575b5c",
       "size": 8192
     },
     {
       "name": "capsule.part0041.txt",
-      "sha256": "592b65226d3712232194114f6c5dd95705c80343ebcbbc34398e7381364e5ba0",
+      "sha256": "f6025501967d00cfa74b179bcb739350c7e04d8a614e42db25da6f9aee7efccf",
       "size": 8192
     },
     {
       "name": "capsule.part0042.txt",
-      "sha256": "360a549c9a27cd627e5c9b0cd43bbba1cc91a9a66f65b87c7cbf1d9bcd0db760",
-      "size": 664
+      "sha256": "18e3a6a92f87c0079e6a96e6159111fa21fabb16a852584305aa22327c734b38",
+      "size": 736
     }
   ],
-  "encoded_size": 336536,
+  "encoded_size": 336608,
   "encoding": "base64",
   "loader": {
     "path": "bootstrap/bootstrap_loader.py",
@@ -224,10 +224,10 @@
   },
   "materialization_method": "github-connector-capsule",
   "materialization_scope": "verified-runtime-capsule",
-  "payload_sha256": "83d6f30091725193c4ff570508dbf928bf030bd34e2a0cab01772670c3c58be1",
-  "payload_size": 252400,
+  "payload_sha256": "0007e4ac59ae82234c1116a39aa8cc70d05d4feced1560a8150c63241d664b7d",
+  "payload_size": 252456,
   "repository": "robert820728-star/global-news-brief",
-  "runtime_file_count": 47,
+  "runtime_file_count": 48,
   "runtime_files": [
     {
       "path": ".agents/skills/audit-news-candidates/SKILL.md",
@@ -422,6 +422,12 @@
       "source_blob_sha": "4a2eee7d7d9b551dfe6d79d58a5c9d6ad5d835b9"
     },
     {
+      "path": "scripts/build_bootstrap_capsule_v11.py",
+      "sha256": "32ca2f18ff5ed62edbd672a05c2e1821472c17f2dfc939b063f5bc6f27f1220c",
+      "size": 119,
+      "source_blob_sha": "d68ee4b4c302908866a18075c3cd021449786bd9"
+    },
+    {
       "path": "scripts/check_unique_delivery_gate.py",
       "sha256": "ba4be225682f0f5e5748bece11636b8082eaf721078a7aee6fb0e0ae73da0f32",
       "size": 7465,
@@ -512,7 +518,7 @@
       "source_blob_sha": "975abc6358051b07e61ef41e9d25da068c1dfd1c"
     }
   ],
-  "runtime_fingerprint": "939726fe65f87ae8fbf632158a1fb4e179700a34c1cfcc7cfdd7384a899cc8ca",
+  "runtime_fingerprint": "6a18be0d66ed44d92672cf1e09f579445f0cf2351b70a1af069b00f5c1fa7b19",
   "schema_version": "1.0.0",
-  "source_commit": "ff4a9adb764bd62b078b855f6710318269a3353d"
+  "source_commit": "27dc6072c6fd77edbad741887cb8b1687ba4f0d2"
 }
