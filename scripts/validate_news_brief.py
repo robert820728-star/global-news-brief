@@ -819,7 +819,7 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
                     continue
                 path = asset.get("path")
                 caption = asset.get("caption")
-                number = CHINESE_NUMERALS[asset_index - 1]
+                number = CHINESE_NUMERALS[asset_index - 1] if asset_index <= len(CHINESE_NUMERALS) else str(asset_index)
                 expected_prefix = f"{FIGURE_PREFIXES[field_key]}{number}"
                 if isinstance(path, str):
                     markdown_pattern = re.compile(
