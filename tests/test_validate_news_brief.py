@@ -228,6 +228,22 @@ class ValidatorTests(unittest.TestCase):
         errors = VALIDATOR.validate_stage_data(before, after, "build-news-maps")
         self.assertTrue(any("越權修改 TWN-01.images" in error for error in errors))
 
+    def test_brief_rejects_gallery_or_dynamic_image_group(self):
+        text = valid_brief().replace(
+            "![圖一](sandbox:/tmp/image.png)",
+            'genui{"async_image_group":{"query":"test"}}',
+        )
+        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        self.assertTrue(any("禁止的圖廊、疊圖或動態元件" in error for error in errors))
+
+    def test_brief_requires_numbered_markdown_attachment(self):
+        text = valid_brief().replace(
+            "![圖一](sandbox:/tmp/image.png)",
+            "![官方圖片](sandbox:/tmp/image.png)",
+        )
+        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        self.assertTrue(any("逐張使用 Markdown 並依序標示圖一" in error for error in errors))
+
     def test_brief_catches_missing_image(self):
         text = valid_brief().replace("sandbox:/tmp/image.png", "sandbox:/tmp/other.png")
         errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
