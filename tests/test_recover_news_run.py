@@ -31,7 +31,38 @@ class RecoveryControllerTests(unittest.TestCase):
         self.assertIn(("collect-news-images", None, "階段狀態為 failed"), targets)
         self.assertIn(("collect-news-images", "GLB-01", "尚未檢查全部引用來源頁"), targets)
 
-    def test_third_failure_exhausts_target(self):
+    def test_missing_brief_reopens_render_after_core_stages_complete(self):
+        manifest = {
+            "stage_status": {
+                "select-news-events": "completed",
+                "verify-news-events": "completed",
+                "build-news-maps": "completed",
+                "build-news-charts": "completed",
+                "collect-news-images": "completed",
+                "render": "completed",
+                "validate": "completed",
+            },
+            "recovery": {
+                "status": "completed",
+                "max_attempts_per_target": 3,
+                "attempts": [],
+                "unresolved_targets": [],
+            },
+            "events": [],
+            "final_status": "ready",
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            missing = Path(directory) / "news-brief.md"
+            plan = MODULE.recovery_plan(manifest, brief_path=str(missing))
+        self.assertTrue(
+            any(
+                item["target_stage"] == "render"
+                and item["continue_required"]
+                for item in plan
+            )
+        )
+
+    def test_third_failure_rotates_strategy_without_stopping_run(self):
         manifest = {
             "stage_status": {"collect-news-images": "failed", "recover-news-run": "in_progress"},
             "recovery": {
@@ -57,9 +88,18 @@ class RecoveryControllerTests(unittest.TestCase):
             })()
             MODULE.record(args)
             result = json.loads(output.read_text(encoding="utf-8"))
-        self.assertEqual(result["recovery"]["status"], "exhausted")
-        self.assertEqual(result["stage_status"]["recover-news-run"], "failed")
-        self.assertEqual(result["final_status"], "failed")
+        self.assertEqual(result["recovery"]["status"], "recovering")
+        self.assertEqual(result["stage_status"]["recover-news-run"], "running")
+        self.assertEqual(result["final_status"], "draft")
+        plan = MODULE.recovery_plan(result)
+        target = next(
+            item for item in plan
+            if item["target_stage"] == "collect-news-images"
+            and item["event_id"] == "GLB-01"
+        )
+        self.assertEqual(target["strategy"], "official-page-screenshot")
+        self.assertTrue(target["continue_required"])
+        self.assertFalse(target["exhausted"])
 
 
 if __name__ == "__main__":
