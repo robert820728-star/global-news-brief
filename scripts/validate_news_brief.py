@@ -828,8 +828,8 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
                     match = markdown_pattern.search(block)
                     if not match:
                         errors.append(
-                            f"{event_id} {field}附件必須逐張使用 Markdown 並依序標示"
-                            f"{expected_prefix}：{path}"
+                            f"{event_id} 漏放{field}附件或格式錯誤：必須逐張使用 Markdown "
+                            f"並依序標示{expected_prefix}：{path}"
                         )
                     else:
                         asset_positions.append(match.start())
