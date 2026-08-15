@@ -13,6 +13,13 @@ from matplotlib.collections import PolyCollection
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "maps" / "source"
 OUT = ROOT / "maps" / "generated"
+STYLE_PATH = ROOT / "maps" / "style.json"
+with STYLE_PATH.open("r", encoding="utf-8") as style_handle:
+    STYLE_CONFIG = json.load(style_handle)
+CANONICAL_STYLE = {
+    **STYLE_CONFIG["colors"],
+    "boundary_width": STYLE_CONFIG.get("line_width", 0.42),
+}
 
 
 MAPS = {
@@ -230,7 +237,9 @@ def add_padding(bounds, pad_ratio=0.035):
 def render(name: str, spec: dict):
     polygons = [project_ring(ring, spec) for ring in collect_polygons(spec["file"], spec)]
     fig, ax = plt.subplots(figsize=spec["figsize"], dpi=180)
-    style = spec.get("style", {})
+    style = {**CANONICAL_STYLE, **spec.get("style", {})}
+    if spec.get("style_id", STYLE_CONFIG["style_id"]) != STYLE_CONFIG["style_id"]:
+        raise ValueError("地圖 style_id 不符合 maps/style.json")
     collection = PolyCollection(
         polygons,
         facecolors=style.get("land_fill", "#f3e6b8"),
@@ -270,6 +279,7 @@ def section_specs():
             "projection": metadata.get("projection", "regional"),
             "standard_lat": metadata.get("standard_lat") or 0.0,
             "central_lon": metadata.get("central_lon"),
+            "style_id": metadata.get("style_id"),
             "style": metadata.get("style", {}),
         }
         if spec["projection"] in {"pacific_centered", "robinson_pacific"}:
