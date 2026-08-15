@@ -52,7 +52,7 @@ description: Decide whether a selected news event needs geographic context and c
 - 台灣地方事件：使用台灣縣市界線底圖。
 - 中國省域事件：使用中國省份界線底圖。
 - 跨國或其他國家事件：使用太平洋置中的世界底圖。
-- 自訂國家或區域板塊：以世界底圖為全域範本，建立該國或區域底圖；保留國界或內部行政界線。
+- 自訂國家或區域板塊：必須先使用 `maps/generated/sections/<CODE>-base.png` 的淡黃色行政界線底圖；以世界地理資料建立該國或區域範圍，保留國界及資料可用的內部行政界線。底圖尚未生成或未通過視覺驗收時，重跑 `initialize_section_basemaps.py` 與 `render_base_maps.py`，不得改用圖片搜尋、空白底圖或一般新聞圖片。
 - 需要局部圖時，先提供可辨識其所在位置的全域圖。不得只給一張無法辨認國家或區域的裁切形狀。
 - 南極事件不得裁掉南極洲；世界底圖保持全域完整。
 
