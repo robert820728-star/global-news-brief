@@ -19,7 +19,8 @@
 完成後，每次排程都會重新讀取 repo 最新規則，並以獨立結果對話輸出當日新聞：
 
 - 排程及結果對話名稱固定為「每日新聞」。
-- 每份讀者版第一行固定為執行地日期的 `YYYY/MM/DD 每日新聞`。
+- 每份讀者版第一行固定為執行地日期的 `YYYY/MM/DD 每日新聞`，下一行自動列出本期總數與各板塊數量。
+- 地圖點位直接標示地名；圖說只解釋地點與事件的關係，不以 1、2、3 代碼或重複底圖描述增加閱讀負擔。
 
 詳細步驟請見 [INSTALL.md](INSTALL.md)，個人設定格式請見 [user-preferences.example.yaml](user-preferences.example.yaml)，排程執行提示詞請見 [daily-schedule-prompt.md](daily-schedule-prompt.md)。
 

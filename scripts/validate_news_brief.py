@@ -59,6 +59,8 @@ FIGURE_PREFIXES = {
     "images": "圖",
 }
 CHINESE_NUMERALS = ("一", "二", "三", "四", "五")
+REDUNDANT_MAP_CAPTION_RE = re.compile(r"完整(?:世界|台灣|中國|板塊)?.{0,8}(?:地圖|底圖|行政界線)")
+NUMERIC_MARKER_RE = re.compile(r"標記\s*[0-9０-９一二三四五六七八九十]+")
 
 
 def load_json(path: str | Path) -> dict[str, Any]:
@@ -162,6 +164,21 @@ def _validate_media_result(
                 errors.append(
                     f"{asset_label} 未使用 canonical renderer，禁止其他藍底或平台預設地圖"
                 )
+            labels = asset.get("place_labels")
+            if not isinstance(labels, list) or not labels:
+                errors.append(f"{asset_label} 缺少地名標籤；禁止只用數字標記")
+            elif any(
+                not isinstance(item, str)
+                or not item.strip()
+                or re.fullmatch(r"[0-9０-９一二三四五六七八九十]+", item.strip())
+                for item in labels
+            ):
+                errors.append(f"{asset_label}.place_labels 必須是具體地名，不得使用 1、2、3 等純數字")
+            caption = asset.get("caption", "")
+            if isinstance(caption, str) and REDUNDANT_MAP_CAPTION_RE.search(caption):
+                errors.append(f"{asset_label} 圖說不得重複說明世界／板塊底圖或行政界線")
+            if isinstance(caption, str) and NUMERIC_MARKER_RE.search(caption):
+                errors.append(f"{asset_label} 圖說不得以標記1、2、3代替地名")
             event_section = label.split(".", 1)[0].split("-", 1)[0]
             expected_scope = "full_world" if event_section == "GLB" else "full_section"
             if asset.get("canvas_scope") != expected_scope:
@@ -745,6 +762,20 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
     if not nonempty or not DATE_LINE_RE.fullmatch(nonempty[0]):
         errors.append("讀者版第一個非空白行必須是 YYYY/MM/DD 每日新聞")
 
+    section_counts = []
+    events = data.get("events", [])
+    for section in data.get("sections", []):
+        if not isinstance(section, dict):
+            continue
+        count = sum(
+            1 for event in events
+            if isinstance(event, dict) and event.get("primary_section") == section.get("code")
+        )
+        section_counts.append(f"{section.get('name')} {count} 則")
+    expected_summary = f"本期共 {len(events)} 則新聞：{'、'.join(section_counts)}。"
+    if len(nonempty) < 2 or nonempty[1] != expected_summary:
+        errors.append(f"日期行後必須簡短列出本期新聞總數與各板塊數量：{expected_summary}")
+
     h2 = re.findall(r"(?m)^## (.+)$", text)
     if h2 != REQUIRED_H2:
         errors.append("讀者版只能有今日總覽、逐條詳報、後續觀察三個二級標題，且順序固定")
@@ -756,7 +787,6 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
         if token in text:
             errors.append(f"讀者版使用禁止的圖廊、疊圖或動態元件：{token}")
 
-    events = data.get("events", [])
     expected_ids = [event.get("event_id") for event in events if isinstance(event, dict)]
 
     overview_match = re.search(

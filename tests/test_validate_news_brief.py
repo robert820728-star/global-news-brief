@@ -105,6 +105,7 @@ def valid_manifest():
                             "visual_checked": True,
                             "width": 1200,
                             "height": 900,
+                            "place_labels": ["測試地點"],
                             "canvas_scope": "full_section",
                             "base_map": "maps/generated/taiwan-counties-yellow-v2.png",
                         }
@@ -176,6 +177,8 @@ def valid_brief():
     note = VALIDATOR.SINGLE_SOURCE_NOTE
     return f"""2026/08/14 每日新聞
 
+本期共 1 則新聞：台灣 1 則。
+
 ## 今日總覽
 
 ### 台灣
@@ -224,6 +227,25 @@ class ValidatorTests(unittest.TestCase):
         manifest = valid_manifest()
         self.assertEqual("B", manifest["events"][0]["grade"])
         self.assertEqual([], VALIDATOR.validate_manifest_data(manifest))
+
+    def test_brief_requires_manifest_derived_news_count_summary(self):
+        errors = VALIDATOR.validate_brief_text(
+            valid_manifest(), valid_brief().replace("本期共 1 則新聞：台灣 1 則。\n\n", "")
+        )
+        self.assertTrue(any("本期新聞總數" in error for error in errors))
+
+    def test_map_requires_named_place_labels(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["map"]["assets"][0]["place_labels"] = ["1"]
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("純數字" in error for error in errors))
+
+    def test_map_rejects_redundant_canvas_caption(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["map"]["assets"][0]["caption"] = "地圖一：完整世界行政界線底圖；標記1為測試地點。"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("不得重複說明" in error for error in errors))
+        self.assertTrue(any("不得以標記1" in error for error in errors))
 
     def test_blue_or_noncanonical_map_style_is_rejected(self):
         manifest = valid_manifest()

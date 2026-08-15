@@ -341,7 +341,8 @@
         "source_urls",
         "visual_checked",
         "width",
-        "height"
+        "height",
+        "place_labels"
       ],
       "properties": {
         "path": { "type": "string", "pattern": "^(sandbox:)?/" },
@@ -357,6 +358,11 @@
         "visual_checked": { "const": true },
         "width": { "type": "integer", "minimum": 1 },
         "height": { "type": "integer", "minimum": 1 },
+        "place_labels": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
         "canvas_scope": {
           "enum": ["full_world", "full_section", "regional_detail"]
         },

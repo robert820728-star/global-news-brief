@@ -125,7 +125,7 @@ python3 scripts/validate_news_brief.py manifest --input /path/to/news-event-mani
 - 套用 `news-brief-template.md`。
 - 事件資料內所有已驗收的地圖、資料圖表與圖片都必須出現在對應詳報。
 - 圖片與圖說成對；不得留下文字佔位。
-- 只輸出日期行與今日總覽、逐條詳報、後續觀察三個二級標題。
+- 只輸出日期行、由 manifest 計算的本期新聞數量摘要，以及今日總覽、逐條詳報、後續觀察三個二級標題。
 
 ### 十、最終驗證
 
