@@ -6,6 +6,12 @@ All self-rendered section and event maps must load `maps/style.json` with style 
 
 Reusable base maps for news brief location highlighting.
 
+## Custom sections
+
+- Single-country sections use `scripts/fetch_admin_boundaries.py` with the ISO alpha-3 code to download ADM1 from geoBoundaries gbOpen. Data and provenance are cached under `maps/cache/`, and bounds are calculated from the downloaded geometry.
+- Multi-country regions use `maps/source/world-countries.geojson` and an explicit regional extent.
+- Every country uses this same resolver and the `yellow-admin-v2` renderer. Country-specific downloaders and platform-default maps are forbidden.
+
 ## Files
 
 | Map | Source data | Boundary level | Generated preview |
