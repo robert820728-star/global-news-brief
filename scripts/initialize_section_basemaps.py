@@ -71,6 +71,9 @@ def initialize(section: dict[str, Any]) -> Path:
         "png_path": f"maps/generated/sections/{code}-base.png",
         "svg_path": f"maps/generated/sections/{code}-base.svg",
         "purpose": "section_context_basemap",
+        "style_id": "yellow-admin-v2",
+        "style_reference": "maps/style.json",
+        "generator": "scripts/render_base_maps.py",
         "style": {
             "land_fill": "#f3e6b8",
             "boundary_color": "#53606f",
