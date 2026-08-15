@@ -19,7 +19,9 @@ MANIFEST_PATH = CAPSULE_DIR / "capsule-manifest.json"
 CHUNK_PREFIX = "capsule.part"
 CHUNK_SUFFIX = ".txt"
 CHUNK_SIZE = 8192
-SCHEMA_VERSION = "1.0.0"
+LINE_WIDTH = 256
+BLOCK_LINES = 8
+SCHEMA_VERSION = "1.1.0"
 REPOSITORY = "robert820728-star/global-news-brief"
 MATERIALIZATION_METHOD = "github-connector-capsule"
 MATERIALIZATION_SCOPE = "verified-runtime-capsule"
@@ -132,8 +134,29 @@ def deterministic_tar_bytes(root: Path, records: list[dict]) -> bytes:
     return buffer.getvalue()
 
 
+def frame_chunk(text: str, line_width: int = LINE_WIDTH,
+                block_lines: int = BLOCK_LINES) -> tuple[bytes, list[dict]]:
+    if line_width <= 0 or block_lines <= 0:
+        raise ValueError("line_width and block_lines must be positive")
+    lines = [text[i:i + line_width] for i in range(0, len(text), line_width)]
+    raw_lines = [(line + "\n").encode("ascii") for line in lines]
+    raw = b"".join(raw_lines)
+    blocks = []
+    for block_index, start in enumerate(range(0, len(raw_lines), block_lines), start=1):
+        block_raw = b"".join(raw_lines[start:start + block_lines])
+        blocks.append({
+            "index": block_index,
+            "start_line": start + 1,
+            "end_line": min(start + block_lines, len(raw_lines)),
+            "size": len(block_raw),
+            "sha256": sha256_bytes(block_raw),
+        })
+    return raw, blocks
+
+
 def build_capsule(root: Path = ROOT, output_dir: Path | None = None,
-                  source_commit: str = "", chunk_size: int = CHUNK_SIZE) -> dict:
+                  source_commit: str = "", chunk_size: int = CHUNK_SIZE,
+                  line_width: int = LINE_WIDTH, block_lines: int = BLOCK_LINES) -> dict:
     root = root.resolve()
     output_dir = (output_dir or (root / "bootstrap")).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -151,9 +174,18 @@ def build_capsule(root: Path = ROOT, output_dir: Path | None = None,
         text = encoded[start:start + chunk_size]
         name = f"{CHUNK_PREFIX}{index:04d}{CHUNK_SUFFIX}"
         path = output_dir / name
-        path.write_text(text, encoding="ascii", newline="")
-        raw = text.encode("ascii")
-        chunks.append({"name": name, "sha256": sha256_bytes(raw), "size": len(raw)})
+        raw, blocks = frame_chunk(text, line_width=line_width, block_lines=block_lines)
+        path.write_bytes(raw)
+        chunks.append({
+            "name": name,
+            "sha256": sha256_bytes(raw),
+            "size": len(raw),
+            "encoded_sha256": sha256_bytes(text.encode("ascii")),
+            "encoded_size": len(text),
+            "line_count": len(raw.splitlines()),
+            "block_count": len(blocks),
+            "blocks": blocks,
+        })
 
     loader_path = root / "bootstrap/bootstrap_loader.py"
     loader_data = loader_path.read_bytes()
@@ -166,6 +198,8 @@ def build_capsule(root: Path = ROOT, output_dir: Path | None = None,
         "encoding": "base64",
         "archive": "tar.xz",
         "chunk_size": chunk_size,
+        "line_width": line_width,
+        "retrieval_block_lines": block_lines,
         "chunk_count": len(chunks),
         "encoded_size": len(encoded),
         "payload_sha256": sha256_bytes(payload),
@@ -195,12 +229,16 @@ def main() -> int:
     parser.add_argument("--output-dir")
     parser.add_argument("--source-commit", default=os.environ.get("GITHUB_SHA", ""))
     parser.add_argument("--chunk-size", type=int, default=CHUNK_SIZE)
+    parser.add_argument("--line-width", type=int, default=LINE_WIDTH)
+    parser.add_argument("--block-lines", type=int, default=BLOCK_LINES)
     args = parser.parse_args()
     manifest = build_capsule(
         Path(args.root),
         Path(args.output_dir) if args.output_dir else None,
         args.source_commit,
         args.chunk_size,
+        args.line_width,
+        args.block_lines,
     )
     print(json.dumps({
         "status": "completed",
@@ -208,6 +246,8 @@ def main() -> int:
         "chunk_count": manifest["chunk_count"],
         "payload_size": manifest["payload_size"],
         "encoded_size": manifest["encoded_size"],
+        "line_width": manifest["line_width"],
+        "retrieval_block_lines": manifest["retrieval_block_lines"],
         "runtime_fingerprint": manifest["runtime_fingerprint"],
     }, ensure_ascii=False))
     return 0

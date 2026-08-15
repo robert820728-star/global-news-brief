@@ -8,20 +8,25 @@ The scheduled environment may let the GitHub connector read repository objects w
 
 The capsule is generated in GitHub Actions from the repository runtime closure, compressed as deterministic `tar.xz`, base64-encoded, split into small UTF-8 text chunks, and checked into `bootstrap/`. Large generated PNG/SVG files and tests are not transported. Canonical map source data and render scripts are included so derived basemaps can be rebuilt locally.
 
+Connector responses can truncate long single lines, so capsule schema `1.1.0` uses explicit transport framing: each logical chunk remains at most 8192 Base64 characters, but chunk files are wrapped at 256 ASCII characters per LF-terminated line and grouped into verified retrieval blocks of at most 8 lines. See `bootstrap/TRANSPORT_FORMAT.md` for the framing contract.
+
 ## Stage -1: verified runtime capsule
 
 Before executing any `scripts/*.py`, do all of the following:
 
 1. Use the GitHub connector to resolve the latest `main` commit SHA and fetch its recursive Git tree. Do not assume connector visibility means the shell already has a repository.
 2. From that exact commit, fetch `bootstrap/capsule-manifest.json` and its Git blob SHA. Require:
+   - `schema_version = 1.1.0`
    - `repository = robert820728-star/global-news-brief`
    - `materialization_method = github-connector-capsule`
    - `materialization_scope = verified-runtime-capsule`
-   - a non-empty `runtime_files` list and `chunks` list.
+   - positive `line_width` and `retrieval_block_lines`
+   - non-empty `runtime_files` and `chunks` lists.
 3. Fail stale capsules closed. Compare every `runtime_files[].path` and `source_blob_sha` in the manifest with the same path in the latest `main` recursive tree. Also fetch latest commit metadata and require `manifest.source_commit` to be either the latest commit itself or its first parent. If any runtime path is missing/different, or the source-commit relation is stale, stop with `repository materialization / executable workspace acquisition`.
 4. Fetch `bootstrap/bootstrap_loader.py` from the same latest commit. Validate its connector-returned Git blob SHA against both the latest tree and `manifest.loader.source_blob_sha`. Write it to a temporary writable staging directory.
-5. Fetch every chunk named by `manifest.chunks[]` from `bootstrap/<chunk-name>` as UTF-8 text from the same latest commit. Write each exact returned string to the staging directory. Do not synthesize, truncate, concatenate in the model response, or use shell network access.
-6. Write the exact manifest JSON to the staging directory as `capsule-manifest.json` and run the loader locally:
+5. **Do not fetch an entire chunk in one connector response.** For every chunk in `manifest.chunks[]`, iterate its `blocks[]` in order. Fetch `bootstrap/<chunk-name>` from the same latest commit with the exact `start_line` and `end_line` declared by that block. Each block is intentionally at most 8 lines / 2048 Base64 characters plus LF bytes. Write the returned block bytes to a temporary block file using canonical LF endings, then locally verify the block `size` and `sha256`. A truncated or altered block must be retried by the same line range; never accept partial text.
+6. After all blocks for one chunk validate, concatenate the verified block files in order into the canonical chunk file. Locally verify the complete chunk `size` and `sha256`, then verify the unwrapped Base64 `encoded_size` and `encoded_sha256`. Only after every chunk passes may Stage -1 continue. This makes connector truncation a small-block retry instead of a whole-run failure.
+7. Write the exact manifest JSON to the staging directory as `capsule-manifest.json` and run the loader locally:
 
 ```bash
 python3 <staging>/bootstrap_loader.py \
@@ -32,9 +37,9 @@ python3 <staging>/bootstrap_loader.py \
   --manifest-blob-sha <manifest-git-blob-sha>
 ```
 
-The loader verifies every chunk SHA-256 and size, reconstructs/decodes the payload, validates payload SHA-256, rejects unsafe tar members, extracts to a fresh workspace, and validates every runtime file by path, size, SHA-256 and Git blob SHA before writing `<workspace>/bootstrap-workspace.json`.
+The loader independently revalidates canonical line framing, every retrieval block, every complete chunk, the reconstructed Base64 stream, payload SHA-256, tar safety, and every runtime file by path, size, SHA-256 and Git blob SHA before writing `<workspace>/bootstrap-workspace.json`.
 
-7. Only after the loader returns success, change the shell working directory to `<workspace>` and initialize the news checkpoint:
+8. Only after the loader returns success, change the shell working directory to `<workspace>` and initialize the news checkpoint:
 
 ```bash
 python3 scripts/news_run_checkpoint.py init \
@@ -49,13 +54,13 @@ python3 scripts/news_run_checkpoint.py init \
 
 ## Transport policy
 
-Preferred future transport, when the host exposes it, is a direct connector file/artifact -> mounted filesystem path. Until then, the supported fallback is the checked-in compressed text capsule described above.
+Preferred future transport, when the host exposes it, is a direct connector file/artifact -> mounted filesystem path. Until then, the supported fallback is the checked-in compressed text capsule with segmented line-range retrieval.
 
 Never use shell `git clone`, `curl`, `wget`, raw GitHub HTTP, or another shell-network fallback for Stage -1. The connector is the only GitHub transport authority in the scheduled sandbox.
 
 ## Capsule maintenance
 
-Repository changes are followed by `.github/workflows/build-bootstrap-capsule.yml`. The workflow applies the checkpoint migration if needed, builds the capsule, verifies it against the checked-out runtime closure, runs focused bootstrap/checkpoint tests, and commits the generated manifest/chunks back to `main`.
+Repository changes are followed by `.github/workflows/build-bootstrap-capsule.yml`. The workflow builds the capsule, verifies it against the checked-out runtime closure, runs focused bootstrap/checkpoint tests, and commits only the generated manifest/chunks back to `main`. Python bytecode and cache directories must never be committed.
 
 The capsule is intentionally runtime-only. It includes settings, schemas, skills, executable scripts, map source/style/reference inputs, state seed, and bootstrap loader. It excludes tests from the payload, documentation not needed at runtime, old releases, and derived map PNG/SVG outputs.
 

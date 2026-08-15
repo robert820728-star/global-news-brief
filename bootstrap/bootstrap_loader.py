@@ -13,7 +13,7 @@ import tempfile
 from datetime import datetime
 from pathlib import Path, PurePosixPath
 
-SCHEMA_VERSION = "1.0.0"
+SCHEMA_VERSION = "1.1.0"
 REPOSITORY = "robert820728-star/global-news-brief"
 METHOD = "github-connector-capsule"
 SCOPE = "verified-runtime-capsule"
@@ -45,7 +45,74 @@ def load_manifest(path: Path) -> dict:
         raise ValueError("capsule materialization_method mismatch")
     if data.get("materialization_scope") != SCOPE:
         raise ValueError("capsule materialization_scope mismatch")
+    for field in ("chunk_size", "line_width", "retrieval_block_lines"):
+        value = data.get(field)
+        if not isinstance(value, int) or value <= 0:
+            raise ValueError(f"capsule {field} must be a positive integer")
     return data
+
+
+def verify_chunk_transport(item: dict, raw: bytes, line_width: int,
+                           block_lines: int) -> str:
+    name = str(item.get("name", ""))
+    if len(raw) != item.get("size"):
+        raise ValueError(f"chunk size mismatch: {name}")
+    if sha256_bytes(raw) != item.get("sha256"):
+        raise ValueError(f"chunk sha256 mismatch: {name}")
+    if b"\r" in raw:
+        raise ValueError(f"chunk contains non-canonical CR line ending: {name}")
+    if raw and not raw.endswith(b"\n"):
+        raise ValueError(f"chunk missing final LF: {name}")
+    try:
+        text = raw.decode("ascii")
+    except UnicodeDecodeError as error:
+        raise ValueError(f"chunk is not ASCII: {name}") from error
+
+    raw_lines = raw.splitlines(keepends=True)
+    lines = text.splitlines()
+    if item.get("line_count") != len(lines):
+        raise ValueError(f"chunk line_count mismatch: {name}")
+    for index, line in enumerate(lines, start=1):
+        if not line:
+            raise ValueError(f"chunk empty line: {name}:{index}")
+        if index < len(lines) and len(line) != line_width:
+            raise ValueError(f"chunk non-final line width mismatch: {name}:{index}")
+        if len(line) > line_width:
+            raise ValueError(f"chunk line too wide: {name}:{index}")
+
+    blocks = item.get("blocks")
+    if not isinstance(blocks, list) or not blocks:
+        raise ValueError(f"chunk blocks missing: {name}")
+    if item.get("block_count") != len(blocks):
+        raise ValueError(f"chunk block_count mismatch: {name}")
+    expected_start = 1
+    for block_index, block in enumerate(blocks, start=1):
+        if block.get("index") != block_index:
+            raise ValueError(f"chunk block index mismatch: {name}:{block_index}")
+        start_line = block.get("start_line")
+        end_line = block.get("end_line")
+        if start_line != expected_start or not isinstance(end_line, int) or end_line < start_line:
+            raise ValueError(f"chunk block line range mismatch: {name}:{block_index}")
+        if end_line - start_line + 1 > block_lines:
+            raise ValueError(f"chunk block exceeds retrieval_block_lines: {name}:{block_index}")
+        if end_line > len(raw_lines):
+            raise ValueError(f"chunk block line range exceeds chunk: {name}:{block_index}")
+        block_raw = b"".join(raw_lines[start_line - 1:end_line])
+        if len(block_raw) != block.get("size"):
+            raise ValueError(f"chunk block size mismatch: {name}:{block_index}")
+        if sha256_bytes(block_raw) != block.get("sha256"):
+            raise ValueError(f"chunk block sha256 mismatch: {name}:{block_index}")
+        expected_start = end_line + 1
+    if expected_start != len(raw_lines) + 1:
+        raise ValueError(f"chunk blocks do not cover all lines: {name}")
+
+    encoded = "".join(lines)
+    encoded_raw = encoded.encode("ascii")
+    if len(encoded_raw) != item.get("encoded_size"):
+        raise ValueError(f"chunk encoded_size mismatch: {name}")
+    if sha256_bytes(encoded_raw) != item.get("encoded_sha256"):
+        raise ValueError(f"chunk encoded_sha256 mismatch: {name}")
+    return encoded
 
 
 def verify_chunks(manifest: dict, chunks_dir: Path) -> bytes:
@@ -55,17 +122,15 @@ def verify_chunks(manifest: dict, chunks_dir: Path) -> bytes:
         raise ValueError("capsule chunks missing")
     if manifest.get("chunk_count") != len(chunks):
         raise ValueError("capsule chunk_count mismatch")
+    line_width = manifest["line_width"]
+    block_lines = manifest["retrieval_block_lines"]
     for item in chunks:
         name = str(item.get("name", ""))
         if "/" in name or "\\" in name or not name.startswith("capsule.part"):
             raise ValueError(f"unsafe chunk name: {name}")
         path = chunks_dir / name
         raw = path.read_bytes()
-        if len(raw) != item.get("size"):
-            raise ValueError(f"chunk size mismatch: {name}")
-        if sha256_bytes(raw) != item.get("sha256"):
-            raise ValueError(f"chunk sha256 mismatch: {name}")
-        pieces.append(raw.decode("ascii"))
+        pieces.append(verify_chunk_transport(item, raw, line_width, block_lines))
     encoded = "".join(pieces)
     if len(encoded) != manifest.get("encoded_size"):
         raise ValueError("capsule encoded_size mismatch")

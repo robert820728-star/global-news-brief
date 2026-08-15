@@ -1,3 +1,4 @@
+import hashlib
 import importlib.util
 import json
 import shutil
@@ -45,6 +46,39 @@ class BootstrapCapsuleTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             files = LOADER.extract_verified(payload, manifest, Path(directory))
             self.assertEqual(len(files), manifest["runtime_file_count"])
+
+    def test_chunks_are_line_framed_for_segmented_connector_reads(self):
+        manifest_path = ROOT / "bootstrap/capsule-manifest.json"
+        manifest = LOADER.load_manifest(manifest_path)
+        self.assertEqual(manifest["line_width"], 256)
+        self.assertEqual(manifest["retrieval_block_lines"], 8)
+        for item in manifest["chunks"]:
+            raw = (ROOT / "bootstrap" / item["name"]).read_bytes()
+            self.assertTrue(raw.endswith(b"\n"))
+            self.assertNotIn(b"\r", raw)
+            raw_lines = raw.splitlines(keepends=True)
+            lines = raw.decode("ascii").splitlines()
+            self.assertEqual(len(lines), item["line_count"])
+            self.assertTrue(all(len(line) <= manifest["line_width"] for line in lines))
+            if len(lines) > 1:
+                self.assertTrue(all(len(line) == manifest["line_width"] for line in lines[:-1]))
+            rebuilt = b""
+            expected_start = 1
+            for block in item["blocks"]:
+                self.assertEqual(block["start_line"], expected_start)
+                self.assertLessEqual(
+                    block["end_line"] - block["start_line"] + 1,
+                    manifest["retrieval_block_lines"],
+                )
+                fragment = b"".join(raw_lines[block["start_line"] - 1:block["end_line"]])
+                self.assertEqual(len(fragment), block["size"])
+                self.assertEqual(hashlib.sha256(fragment).hexdigest(), block["sha256"])
+                rebuilt += fragment
+                expected_start = block["end_line"] + 1
+            self.assertEqual(rebuilt, raw)
+            encoded = "".join(lines).encode("ascii")
+            self.assertEqual(len(encoded), item["encoded_size"])
+            self.assertEqual(hashlib.sha256(encoded).hexdigest(), item["encoded_sha256"])
 
 
 if __name__ == "__main__":
