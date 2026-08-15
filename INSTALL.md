@@ -53,6 +53,7 @@
   - `scripts/initialize_section_basemaps.py`
   - `scripts/manage_candidate_audit.py`
   - `scripts/recover_news_run.py`
+  - `scripts/publish_news_brief.py`
   - `news-brief-settings.md`
   - `news-brief-template.md`
   - `news-brief-examples.md`
@@ -159,7 +160,7 @@
   - 所有事件是否都完成多來源搜尋；只有一個可靠來源時是否照常收錄、保留原等級並顯示固定來源限制文字。
   - 地圖與圖片是否同時保留，且沒有因後段處理而覆蓋來源、標題、等級或其他附件。
 - 若環境可執行 Python，另執行 `python3 -m unittest discover -s tests -v` 確認驗證器正常。
-- 若測試失敗，只修正失敗環節，不重新詢問已確認的偏好。
+- 若測試失敗，只修正失敗環節，不重新詢問已確認的偏好；不得在沒有可交付檔案時結束，必須由自主恢復定位中斷階段、修復並繼續，直到發布閘門產生 `release/news-brief.md`。
 
 ## 分享方式
 
