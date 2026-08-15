@@ -87,11 +87,13 @@ description: Orchestrate a complete daily news brief from a precise rolling time
 
 使用 `recover-news-run`：
 
-- 每個階段完成後及最終輸出前，執行 `python3 scripts/recover_news_run.py plan --input /path/to/news-event-manifest.json`。
-- 只重跑回復計畫指定的事件與失敗模組；已完成的事件、地圖、圖片與驗證資料不得重做或清空。
-- 同一事件同一模組最多嘗試三次，每次結果寫入 `recovery.attempts`，成功後重新執行對應驗證。
-- 圖片模組依序重試原圖下載、重新載入或來源頁截圖、替代可靠來源；不得用地圖或文字佔位替代。
-- 重試耗盡時將狀態設為 `exhausted` 與 `failed`，明確回報故障；不得無聲中止或假稱完成。
+- 每個階段完成後及最終輸出前，執行 `python3 scripts/recover_news_run.py plan --input /path/to/news-event-manifest.json --brief /path/to/news-brief.md`。
+- 驗證失敗、讀者版不存在或發布檔未產生時，不得結束；恢復計畫必須定位到原欄位擁有模組，修復後自動回到渲染、驗證與發布。
+- 只重跑恢復計畫指定的事件與失敗模組；已完成的事件、地圖、圖片與驗證資料不得重做或清空。
+- 每種恢復策略最多嘗試 `recovery.max_attempts_per_target` 次；同一策略耗盡後切換下一策略，不得把單一路徑失敗當成整輪終止條件。
+- 圖片依序切換原圖下載、官方產品頁截圖、官方存檔或地方主管機關、主要媒體引用的同一官方圖、替代可靠來源；不得用地圖、圖廊或文字佔位替代。
+- 格式錯誤依序重新依 manifest 渲染、局部修復 Markdown、重建發布檔；每次修復後重新執行完整驗證。
+- 只有權限明確拒絕、執行環境禁止建立附件或外部服務持續不可用等不可由本流程排除的硬阻擋，才可留下 `exhausted`／`failed`；一般取得、渲染、格式與驗證錯誤必須保持 `recovering` 並繼續。
 
 恢復技能負責判斷與調度，不得直接修改 `verification`、`map` 或 `images`；實際修復仍由原欄位擁有技能完成。
 
@@ -133,7 +135,7 @@ python3 scripts/validate_news_brief.py brief \
   --input /path/to/news-brief.md
 ```
 
-若失敗，交由 `recover-news-run` 建立局部恢復計畫，只修正驗證訊息指出的欄位。通過前不得送出。
+若失敗，交由 `recover-news-run` 建立局部恢復計畫，只修正驗證訊息指出的欄位；修復後必須重新渲染並重新驗證，不得中止。驗證通過後仍須執行 `scripts/publish_news_brief.py`，只有發布器產生的 `release/news-brief.md` 可以送出。
 
 ## 失敗處理
 
