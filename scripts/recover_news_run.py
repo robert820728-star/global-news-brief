@@ -137,6 +137,18 @@ def recovery_plan(
             if stage in RECOVERABLE_STAGES and state == "failed":
                 add(stage, None, "階段狀態為 failed")
 
+    unresolved = recovery.get("unresolved_targets", []) if isinstance(recovery, dict) else []
+    for target in unresolved if isinstance(unresolved, list) else []:
+        if not isinstance(target, dict):
+            continue
+        stage = target.get("target_stage")
+        if stage in RECOVERABLE_STAGES:
+            add(
+                stage,
+                target.get("event_id"),
+                target.get("last_message") or "先前失敗目標仍未解決",
+            )
+
     for event in data.get("events", []) if isinstance(data.get("events"), list) else []:
         if not isinstance(event, dict):
             continue
