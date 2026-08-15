@@ -114,7 +114,11 @@ def collect_polygons(path: Path, spec: dict):
     with path.open("r", encoding="utf-8") as fh:
         data = json.load(fh)
     polygons = []
+    filter_iso3 = spec.get("filter_iso3")
     for feature in data.get("features", []):
+        properties = feature.get("properties", {})
+        if filter_iso3 and properties.get("ISO_A3") != filter_iso3:
+            continue
         for ring in iter_rings(feature.get("geometry")):
             if spec.get("projection") in {"pacific_centered", "robinson_pacific"}:
                 polygons.extend(split_cutline_for_pacific(ring, spec.get("cut_lon", -30.0)))
@@ -240,6 +244,19 @@ def render(name: str, spec: dict):
     style = {**CANONICAL_STYLE, **spec.get("style", {})}
     if spec.get("style_id", STYLE_CONFIG["style_id"]) != STYLE_CONFIG["style_id"]:
         raise ValueError("地圖 style_id 不符合 maps/style.json")
+    base_country_iso = spec.get("base_country_iso")
+    if base_country_iso:
+        base_spec = {**spec, "filter_iso3": base_country_iso}
+        base_rings = collect_polygons(SOURCE / "world-countries.geojson", base_spec)
+        base_polygons = [project_ring(ring, spec) for ring in base_rings]
+        ax.add_collection(
+            PolyCollection(
+                base_polygons,
+                facecolors=style.get("land_fill", "#f3e6b8"),
+                edgecolors="none",
+                antialiaseds=True,
+            )
+        )
     collection = PolyCollection(
         polygons,
         facecolors=style.get("land_fill", "#f3e6b8"),
@@ -279,6 +296,7 @@ def section_specs():
             "projection": metadata.get("projection", "regional"),
             "standard_lat": metadata.get("standard_lat") or 0.0,
             "central_lon": metadata.get("central_lon"),
+            "base_country_iso": metadata.get("base_country_iso"),
             "style_id": metadata.get("style_id", STYLE_CONFIG["style_id"]),
             "style": metadata.get("style", {}),
         }
