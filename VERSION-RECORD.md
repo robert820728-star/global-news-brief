@@ -1,5 +1,16 @@
 # 版本紀錄 / Version Record
 
+## v0.2.3-fresh-main-resolution — 2026-08-17
+
+- 建立原因 / Reason: 排程在 GitHub `main` 已更新後仍解析到舊的 `e08d99c`，並執行該舊版的 PowerShell-only 路徑。 / The scheduled run resolved old commit `e08d99c` after GitHub `main` had advanced, then executed that old version's PowerShell-only path.
+- 確認原因 / Confirmed cause: 舊契約只要求「解析最新 main」，未定義防快取端點、交叉確認方式，也未禁止分支列舉、模型記憶或既有 workspace 成為版本來源。 / The old contract only said to resolve the latest main; it defined neither cache-busting endpoints nor cross-checking and did not prohibit branch enumeration, model memory, or an existing workspace from becoming the version authority.
+- 實作方式 / Approach: 每輪以兩個不同 fresh UTC nonce 直接讀取 GitHub `git/ref/heads/main` 與 `commits/main` API，要求 SHA 一致；一致後只在本輪固定該 SHA，下一輪重新解析。 / Each run directly reads the GitHub `git/ref/heads/main` and `commits/main` APIs with distinct fresh UTC nonces and requires matching SHAs; the SHA is pinned only within that run and resolved again next run.
+- 變更入口 / Changed entry points: `daily-schedule-prompt.md`, `bootstrap-workspace.md`, `INSTALL.md`, `README.md`, `tests/test_pipeline_contract.py`.
+- 重要設定 / Important configuration: 不得列舉 repository branches，不得沿用前次 SHA、排程建立時 SHA、舊 workspace 或模型記憶；雙端點不一致只可用全新 nonce 重試一次。 / Repository branches must not be enumerated, and no previous/setup SHA, old workspace, or model memory may be reused; endpoint disagreement permits only one retry with new nonces.
+- 驗證方式 / Validation: freshness contract RED→GREEN、capsule 重建與驗證、完整 unittest、Ubuntu CI、GitHub remote blob 與最新 `main` 查核。 / Freshness contract red-green, capsule rebuild and verification, full unittest, Ubuntu CI, and GitHub remote blob/latest-main checks.
+- 結果 / Result: freshness focused test 通過，完整回歸 121/121 通過；capsule verify 通過，runtime 55 檔、44 chunks，fingerprint `e285b940153e51b9caad49ffea18baf83bdf8ab0e5714189c0818050763d440b`。 / The focused freshness test passes, the full regression passes 121/121, and capsule verification passes with 55 runtime files, 44 chunks, and fingerprint `e285b940153e51b9caad49ffea18baf83bdf8ab0e5714189c0818050763d440b`.
+- 下一決定 / Next decision: 更新既有手機 Scheduled Task 的保存指令一次，再立即重跑；之後每輪會自行解析最新 `main`。 / Update the existing mobile Scheduled Task's saved instruction once and rerun immediately; later runs will resolve fresh `main` automatically.
+
 ## v0.2.2-cross-platform-runtime — 2026-08-17
 
 - 建立原因 / Reason: 手機排程已成功建立 capsule workspace，但 canonical runtime 強制執行 Windows `powershell.exe`，在非 Windows 宿主於新聞搜尋前停止。 / The mobile task materialized the capsule workspace but the canonical runtime required Windows `powershell.exe`, so a non-Windows host stopped before news search.
@@ -60,89 +71,30 @@
 - 變更入口 / Changed entry points: `scripts/materialize_source_scans.py`, `daily-schedule-prompt.md`.
 - 重要設定 / Important configuration: 每站 ranked_items 保存完整24小時海選；每項六分數總和精確等於 importance_score；route probe 不直接視為 source scan。 / Each source retains the full 24-hour shortlist; six scores sum exactly to importance_score; a route probe is not treated as a source scan.
 - 驗證方式 / Validation: 2 個 RED→GREEN materializer 測試；重用第2輪15站 snapshots 的 live materialization；逐站 evidence validator；完整 unittest；capsule rebuild/verify；五分鐘後第3輪排程。 / Two materializer red-green tests; live materialization from Round 2's 15 snapshots; per-source evidence validation; full unittest; capsule rebuild/verify; Round 3 scheduling after five minutes.
-- 目前結果 / Current result: live 15/15 source scans、388 筆 ranked items、六項分數完整，evidence validator 0 errors；完整回歸 94/95，唯一失敗為待重建 capsule。 / Live materialization produced 15/15 source scans and 388 ranked items with complete six-part scores and zero evidence errors; regression is 94/95 with only the pending capsule rebuild failing.
-- 下一決定 / Next decision: 重建 capsule，五分鐘後執行第3輪完整下游驗收。 / Rebuild the capsule and run Round 3 end-to-end downstream acceptance after five minutes.
-
-- 追加修正 / Follow-up fix: 排程前 live coverage 發現 TVBS、新華與半島三站為0筆；改為解析 TVBS 首頁序列化 article props、新華世界頁 URL 日期、半島當日 sitemap，並修正中國新聞網 `M-D HH:MM` 時間。 / A pre-schedule live check found zero items for TVBS, Xinhua, and Al Jazeera; the fix parses TVBS serialized article props, Xinhua World URL dates, the Al Jazeera daily sitemap, and China News `M-D HH:MM` timestamps.
-- 追加驗證 / Follow-up validation: 15/15 來源皆有候選，共451筆 ranked items；六項分數完整，逐站 evidence validator 0 errors。 / All 15 sources now contain candidates, totaling 451 ranked items; six-part scores are complete and per-source evidence validation reports zero errors.
-
-## v0.1.3-child — 2026-08-16
-
-- 建立原因 / Reason: 第3輪 source-scan 已完成488筆，但 canonical preprocessor 只讀 `candidates`，而正式 source list 使用 `items`，導致輸出0筆。 / Round 3 completed 488 source items, but the canonical preprocessor read only `candidates` while the source list uses `items`, producing zero output.
-- 回復來源 / Rollback source: `c1cf849`（完整15站 source capsule）。 / `c1cf849` (the complete 15-source capsule).
-- 實作方式 / Approach: preprocessor 優先讀取正式 `items`，並保留舊 `candidates` 相容性；非陣列輸入明確失敗。 / The preprocessor now prefers canonical `items`, retains legacy `candidates` compatibility, and explicitly rejects non-array input.
-- 變更入口 / Changed entry points: `scripts/preprocess_news_candidates.py`.
-- 驗證方式 / Validation: 2個 RED→GREEN schema tests；重放第3輪正式 source list；完整 unittest；capsule rebuild/verify；五分鐘後第4輪排程。 / Two schema red-green tests; replay of the Round 3 canonical source list; full unittest; capsule rebuild/verify; Round 4 scheduled after five minutes.
-- 目前結果 / Current result: 488/488 candidates、480 clusters、0筆遺失。 / 488/488 candidates, 480 clusters, zero dropped items.
-- 下一決定 / Next decision: 重建 capsule 並重跑完整下游驗收。 / Rebuild the capsule and rerun full downstream acceptance.
-
-## v0.1.4-child — 2026-08-16
-
-- 建立原因 / Reason: 第4輪已通過 verify，但 canonical map renderer 依賴未安裝的 matplotlib，停在 `build-news-maps`。 / Round 4 passed verification but stopped at `build-news-maps` because the canonical renderer depended on unavailable matplotlib.
-- 回復來源 / Rollback source: `d46eba5`（preprocessor 修正版 capsule）。 / `d46eba5` (the fixed-preprocessor capsule).
-- 實作方式 / Approach: 以 verified runtime 已有的 Pillow 重寫同一 canonical renderer，維持 GeoJSON、投影、style、PNG/SVG 與 metadata 契約。 / Reimplemented the same canonical renderer with Pillow already present in the verified runtime, preserving GeoJSON, projections, styles, PNG/SVG, and metadata contracts.
-- 變更入口 / Changed entry points: `scripts/render_base_maps.py`.
-- 驗證方式 / Validation: matplotlib 缺失 RED；Pillow fixture GREEN；台灣／中國／世界三份正式 GeoJSON live render；完整 unittest；capsule rebuild/verify；五分鐘後第5輪排程。 / Missing-matplotlib red test; Pillow fixture green test; live rendering of the Taiwan, China, and world GeoJSON maps; full unittest; capsule rebuild/verify; Round 5 after five minutes.
-- 目前結果 / Current result: 三組 PNG/SVG 均成功產生；世界圖 1800×1044，無 matplotlib import。 / All three PNG/SVG pairs render successfully; the world map is 1800×1044 with no matplotlib import.
-- 下一決定 / Next decision: 重建 capsule 並從新 run 驗收 maps 以後的流程。 / Rebuild the capsule and validate the post-map pipeline in a new run.
-
-## v0.1.5-child — 2026-08-16
-
-- 建立原因 / Reason: 第5輪內容、地圖、圖片與讀者版已通過，但發現 capsule 缺少 route config、audit 首次輸出不建父目錄、renderer 改寫 receipt 綁定 metadata，以及 CRLF 分隔線在 publisher 中被誤判。 / Round 5 passed content, maps, images, and reader validation, but exposed a missing route config in the capsule, missing parent-directory creation for first audit output, renderer mutation of receipt-bound metadata, and CRLF separator miscounting in the publisher.
-- 回復來源 / Rollback source: `6af66e5`（v0.1.4 Pillow renderer capsule）。 / `6af66e5` (the v0.1.4 Pillow-renderer capsule).
-- 實作方式 / Approach: 將 route config 納入 runtime closure；audit append 自建父目錄；renderer 將 section metadata 視為唯讀；brief validator 同時接受 LF／CRLF 分隔線；排程固定使用 workspace bundled Python。 / Added the route config to the runtime closure, made audit append create its parent directory, made section metadata read-only to the renderer, accepted both LF and CRLF separators, and pinned scheduled execution to the workspace bundled Python.
-- 變更入口 / Changed entry points: `scripts/build_bootstrap_capsule.py`, `scripts/manage_candidate_audit.py`, `scripts/render_base_maps.py`, `scripts/validate_news_brief.py`, `daily-schedule-prompt.md`.
-- 驗證方式 / Validation: 4個針對第5輪 blocker 的 RED→GREEN 測試、完整 unittest、capsule rebuild/verify、修改後五分鐘第6輪排程。 / Four red-green tests for the Round 5 blockers, full unittest, capsule rebuild/verify, and Round 6 scheduled five minutes after modification.
-- 目前結果 / Current result: 4/4 blocker regression tests、105/105 完整回歸與 capsule verify 全部通過；runtime closure 為53檔，fingerprint `1bd201e80c549e81f25303fcd9cad262a116428ffa81b3ad157e97c12e653719`。 / All 4 blocker regressions, the full 105/105 suite, and capsule verification pass; the runtime closure contains 53 files with fingerprint `1bd201e80c549e81f25303fcd9cad262a116428ffa81b3ad157e97c12e653719`.
-- 下一決定 / Next decision: 修改後五分鐘以全新 run 執行第6輪 canonical publisher 驗收。 / Run Round 6 canonical publisher acceptance from a fresh run five minutes after the modification.
-
-## v0.1.6-child — 2026-08-16
-
-- 建立原因 / Reason: 第6輪已正式發布，但首次操作仍遇到 ExecutionPolicy、aggregate validator 輸入與早期 manifest checkpoint binding 三個可恢復警告。 / Round 6 published successfully but still encountered three recoverable first-attempt warnings involving ExecutionPolicy, aggregate validator inputs, and an early manifest checkpoint binding.
-- 回復來源 / Rollback source: `b512af4`（第6輪已驗證 capsule）。 / `b512af4` (the Round 6 verified capsule).
-- 實作方式 / Approach: 固定 PowerShell bypass 啟動方式；validator 直接從 aggregate coverage/source pool 解析來源；render 階段強制綁定最終 brief 與 manifest，publisher 僅驗最終 binding。 / Pinned the PowerShell bypass invocation, made the validator resolve sources from aggregate coverage/source pool files, and required render to bind the final brief and manifest so the publisher checks only the final binding.
-- 變更入口 / Changed entry points: `scripts/validate_source_scan_evidence.py`, `scripts/news_run_checkpoint.py`, `scripts/publish_news_brief.py`, `daily-schedule-prompt.md`.
-- 驗證方式 / Validation: 3個 RED→GREEN 零恢復測試、完整 unittest、capsule rebuild/verify、修改後五分鐘第7輪排程。 / Three red-green zero-recovery tests, full unittest, capsule rebuild/verify, and Round 7 scheduled five minutes after modification.
-- 目前結果 / Current result: 3/3 零恢復測試、108/108 完整回歸與 capsule verify 全部通過；fingerprint `891b2dbb7a151628bcf1585e0ac433f0229e5c75cdee375e092226371b3f650c`。 / All 3 zero-recovery tests, the full 108/108 suite, and capsule verification pass; fingerprint `891b2dbb7a151628bcf1585e0ac433f0229e5c75cdee375e092226371b3f650c`.
-- 下一決定 / Next decision: 以全新 run 驗證 source scan、validator 與 publisher 均第一次成功。 / Verify in a fresh run that source scan, validation, and publishing all succeed on the first attempt.
-
-## v0.1.7-child — 2026-08-16
-
-- 建立原因 / Reason: 第7輪 canonical fetch 與 materializer 首次成功，但 PowerShell 未指定 UTF-8 解析 aggregate source pool，逐站 validator 在0/15時首敗停止。 / Round 7 passed canonical fetch and materialization on the first attempt, but PowerShell parsed the aggregate source pool without explicit UTF-8 and stopped before any of the 15 validators ran.
-- 回復來源 / Rollback source: `ca97a65`（第7輪 capsule）。 / `ca97a65` (the Round 7 capsule).
-- 實作方式 / Approach: 為 canonical evidence validator 新增 `--scan-dir` 批次模式，由 Python 以 UTF-8 直接讀 aggregate coverage/source pool 並依 source_id 驗證全部站點。 / Added a `--scan-dir` batch mode to the canonical evidence validator so Python directly reads aggregate coverage/source pool files as UTF-8 and validates every source by source_id.
-- 變更入口 / Changed entry points: `scripts/validate_source_scan_evidence.py`, `daily-schedule-prompt.md`.
-- 驗證方式 / Validation: 1個 RED→GREEN 批次 CLI 測試、完整 unittest、capsule rebuild/verify、修改後五分鐘第8輪排程。 / One red-green batch CLI test, full unittest, capsule rebuild/verify, and Round 8 scheduled five minutes after modification.
-- 目前結果 / Current result: 批次 CLI 測試、109/109 完整回歸與 capsule verify 全部通過；fingerprint `9a489646356f7fdb0eb599a86e110fbd7b8f659b96011280bdd2122961742426`。 / The batch CLI test, full 109/109 suite, and capsule verification pass; fingerprint `9a489646356f7fdb0eb599a86e110fbd7b8f659b96011280bdd2122961742426`.
-- 下一決定 / Next decision: 全新 run 驗證15站批次 evidence gate 與其後完整發布鏈。 / Verify the 15-source batch evidence gate and full downstream publication chain in a fresh run.
-
-## v0.1.8-child — 2026-08-16
-
-- 建立原因 / Reason: 第8輪在新聞流程開始前，workspace dependency locator 超過 Stage -1 的3分36秒硬停止時間。 / Round 8 hit the 3-minute-36-second Stage -1 hard stop while waiting for the workspace dependency locator, before the news pipeline began.
-- 回復來源 / Rollback source: `d1fe0e1`（第8輪 capsule）。 / `d1fe0e1` (the Round 8 capsule).
-- 實作方式 / Approach: 新增 canonical PowerShell resolver，從目前宿主的 Codex runtime 固定位置解析 bundled Python，並在回傳前實際匯入 Pillow；排程不得先等待 locator。 / Added a canonical PowerShell resolver that finds bundled Python at the current host's stable Codex runtime path and imports Pillow before returning; scheduled runs no longer wait for the locator first.
-- 變更入口 / Changed entry points: `scripts/resolve_bundled_python.ps1`, `daily-schedule-prompt.md`.
-- 重要設定 / Important configuration: resolver 首次失敗即停止 Stage -1；不得在同輪改走 locator 掩蓋失敗。 / A first resolver failure stops Stage -1; the same run must not hide it by falling back to the locator.
-- 驗證方式 / Validation: 1個 Windows RED→GREEN resolver 整合測試、完整 unittest、capsule rebuild/verify、修改後五分鐘第9輪排程。 / One Windows red-green resolver integration test, full unittest, capsule rebuild/verification, and Round 9 scheduled five minutes after modification.
-- 目前結果 / Current result: resolver 定向測試、110/110 完整回歸與 capsule verify 全部通過；runtime closure 為54檔，fingerprint `cce53272190fe7074b4b5fcff75d02bf75962babfcf9f5233dd6563764b7023b`。 / The targeted resolver test, full 110/110 suite, and capsule verification pass; the runtime closure contains 54 files with fingerprint `cce53272190fe7074b4b5fcff75d02bf75962babfcf9f5233dd6563764b7023b`.
-- 下一決定 / Next decision: 以全新 run 驗證 resolver、15站批次 evidence gate 與完整發布鏈均第一次成功。 / Verify in a fresh run that the resolver, 15-source batch evidence gate, and full publication chain all succeed on the first attempt.
-
-## v0.1.9-child — 2026-08-16
-
-- 建立原因 / Reason: 第9輪通過來源、十四天稽核與 manifest materialization，但在圖片階段前誤用 final-manifest validator，22個事件皆因尚未建立 `images.source_checks` 而被拒絕。 / Round 9 passed sources, the 14-day audit, and manifest materialization, but invoked the final-manifest validator before image collection, so all 22 events were rejected because `images.source_checks` did not yet exist.
-- 回復來源 / Rollback source: `3941949`（第9輪 capsule）。 / `3941949` (the Round 9 capsule).
-- 實作方式 / Approach: 明確區分中間 stage ownership validation 與 final-manifest validation；verify/map/chart/image 各階段只驗欄位所有權，final-manifest validator 只能在 image collection completed 後首次執行。 / Explicitly separated intermediate stage ownership validation from final-manifest validation; verify/map/chart/image stages validate ownership only, and the final-manifest validator runs for the first time only after image collection is completed.
-- 變更入口 / Changed entry points: `daily-schedule-prompt.md`, `.agents/skills/daily-news-brief/SKILL.md`.
-- 驗證方式 / Validation: 1個 RED→GREEN pipeline contract 測試、完整 unittest、capsule rebuild/verify、修改後五分鐘第10輪排程。 / One red-green pipeline-contract test, full unittest, capsule rebuild/verification, and Round 10 scheduled five minutes after modification.
-- 目前結果 / Current result: pipeline contract 測試、111/111 完整回歸與 capsule verify 全部通過；runtime closure 為54檔，fingerprint `026d965dd0a094be82b6bfcb8a04a500ecb91bd846aafcabc4fe70787edd45ac`。 / The pipeline contract test, full 111/111 suite, and capsule verification pass; the runtime closure contains 54 files with fingerprint `026d965dd0a094be82b6bfcb8a04a500ecb91bd846aafcabc4fe70787edd45ac`.
-- 下一決定 / Next decision: 以全新 run 驗證中間 stages 不會提前呼叫 final-manifest validator，並完成圖片、讀者版與發布。 / Verify in a fresh run that intermediate stages do not invoke the final-manifest validator early, then complete images, the reader brief, and publication.
-
-## v0.1.10-child — 2026-08-16
-
-- 建立原因 / Reason: 第10輪通過15站與全量 preprocess，但 selection adapter 匯入舊 run 的 hard-coded event mapping，導致 `GLB-09` 沒有本輪 fresh pool URL。 / Round 10 passed all 15 sources and full preprocessing, but its selection adapter imported a hard-coded event mapping from an old run, leaving `GLB-09` without a current fresh-pool URL.
-- 回復來源 / Rollback source: `ee973bf`（第10輪 capsule）。 / `ee973bf` (the Round 10 capsule).
-- 實作方式 / Approach: 新增 canonical fresh-selection gate，禁止匯入舊 run driver，並檢查每個事件與候選 URL 皆屬本輪 pool、所有 C 級以上候選都有存在的 `selected_event_id`。 / Added a canonical fresh-selection gate, prohibited prior-run drivers, and verify that every event/candidate URL belongs to the current pool and every C-or-above candidate maps to an existing event.
-- 變更入口 / Changed entry points: `scripts/validate_selection_freshness.py`, `daily-schedule-prompt.md`, `.agents/skills/daily-news-brief/SKILL.md`.
-- 驗證方式 / Validation: 4個 RED→GREEN freshness/contract 測試、第9輪有效 selection 重放、完整 unittest、capsule rebuild/verify、修改後五分鐘第11輪排程。 / Four red-green freshness/contract tests, replay of the valid Round 9 selection, full unittest, capsule rebuild/verification, and Round 11 scheduled five minutes after modification.
-- 目前結果 / Current result: 定向測試5/5、第9輪重放22事件/316候選、115/115完整回歸與 capsule verify 全部通過；runtime closure 為55檔，fingerprint `798c3054b18ac72235844f494c775d706a6ac08e698996217654953337dc021f`。 / Targeted tests pass 5/5, the Round 9 replay passes with 22 events/316 candidates, and the full 115/115 suite plus capsule verification pass; the runtime closure contains 55 files with fingerprint `798c3054b18ac72235844f494c775d706a6ac08e698996217654953337dc021f`.
-- 下一決定 / Next decision: 全新 run 只從 current pool 建立 selection，通過 freshness gate 後繼續驗證 post-manifest 時序與發布。 / Build selection only from the current pool in a fresh run, then continue through post-manifest timing and publication after the freshness gate passes.
+- 目前結果 / Current result: live 15/15 source scans、388 筆 ranked items、六項分數完整，evidence validator 0 erߎ6��$z{-���jם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

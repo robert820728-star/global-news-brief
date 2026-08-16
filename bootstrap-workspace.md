@@ -14,19 +14,21 @@ Connector responses can truncate long single lines, so capsule schema `1.1.0` us
 
 Before executing any `scripts/*.py`, do all of the following:
 
-1. Use the GitHub connector to resolve the latest `main` commit SHA and fetch its recursive Git tree. Do not assume connector visibility means the shell already has a repository.
-2. From that exact commit, fetch `bootstrap/capsule-manifest.json` and its Git blob SHA. Require:
+1. Generate a fresh UTC nonce for this run, such as `<YYYYMMDDTHHMMSSZ>-<run-id>`. Use the GitHub connector to request `https://api.github.com/repos/robert820728-star/global-news-brief/git/ref/heads/main?cache_bust=<nonce-a>` and read `object.sha`. With a different fresh UTC nonce, request `https://api.github.com/repos/robert820728-star/global-news-brief/commits/main?cache_bust=<nonce-b>` and read `sha`.
+2. The two endpoints must return the same SHA. If they differ, repeat both reads once with two new nonces. If the second pair still differs, fail Stage -1 closed. The task must not enumerate repository branches and must not reuse a commit SHA from a previous run, an existing workspace, task setup, or model memory to resolve `main`.
+3. After the two endpoints agree, pin all repository reads for this run to that SHA and fetch its recursive Git tree. A later change to `main` does not change the current run; resolve fresh `main` again on the next run. Do not assume connector visibility means the shell already has a repository.
+4. From that exact commit, fetch `bootstrap/capsule-manifest.json` and its Git blob SHA. Require:
    - `schema_version = 1.1.0`
    - `repository = robert820728-star/global-news-brief`
    - `materialization_method = github-connector-capsule`
    - `materialization_scope = verified-runtime-capsule`
    - positive `line_width` and `retrieval_block_lines`
    - non-empty `runtime_files` and `chunks` lists.
-3. Fail stale capsules closed. Compare every `runtime_files[].path` and `source_blob_sha` in the manifest with the same path in the latest `main` recursive tree. Also fetch latest commit metadata and require `manifest.source_commit` to be either the latest commit itself or its first parent. If any runtime path is missing/different, or the source-commit relation is stale, stop with `repository materialization / executable workspace acquisition`.
-4. Fetch `bootstrap/bootstrap_loader.py` from the same latest commit. Validate its connector-returned Git blob SHA against both the latest tree and `manifest.loader.source_blob_sha`. Write it to a temporary writable staging directory.
-5. **Do not fetch an entire chunk in one connector response.** For every chunk in `manifest.chunks[]`, iterate its `blocks[]` in order. Fetch `bootstrap/<chunk-name>` from the same latest commit with the exact `start_line` and `end_line` declared by that block. Each block is intentionally at most 8 lines / 2048 Base64 characters plus LF bytes. Write the returned block bytes to a temporary block file using canonical LF endings, then locally verify the block `size` and `sha256`. A truncated or altered block must be retried by the same line range; never accept partial text.
-6. After all blocks for one chunk validate, concatenate the verified block files in order into the canonical chunk file. Locally verify the complete chunk `size` and `sha256`, then verify the unwrapped Base64 `encoded_size` and `encoded_sha256`. Only after every chunk passes may Stage -1 continue. This makes connector truncation a small-block retry instead of a whole-run failure.
-7. Write the exact manifest JSON to the staging directory as `capsule-manifest.json` and run the loader locally. This initial `python3` needs only the standard library and is not yet the verified news runtime:
+5. Fail stale capsules closed. Compare every `runtime_files[].path` and `source_blob_sha` in the manifest with the same path in the resolved SHA's recursive tree. Also fetch that commit's metadata and require `manifest.source_commit` to be either the resolved commit itself or its first parent. If any runtime path is missing/different, or the source-commit relation is stale, stop with `repository materialization / executable workspace acquisition`.
+6. Fetch `bootstrap/bootstrap_loader.py` from the same resolved commit. Validate its connector-returned Git blob SHA against both the resolved tree and `manifest.loader.source_blob_sha`. Write it to a temporary writable staging directory.
+7. **Do not fetch an entire chunk in one connector response.** For every chunk in `manifest.chunks[]`, iterate its `blocks[]` in order. Fetch `bootstrap/<chunk-name>` from the same resolved commit with the exact `start_line` and `end_line` declared by that block. Each block is intentionally at most 8 lines / 2048 Base64 characters plus LF bytes. Write the returned block bytes to a temporary block file using canonical LF endings, then locally verify the block `size` and `sha256`. A truncated or altered block must be retried by the same line range; never accept partial text.
+8. After all blocks for one chunk validate, concatenate the verified block files in order into the canonical chunk file. Locally verify the complete chunk `size` and `sha256`, then verify the unwrapped Base64 `encoded_size` and `encoded_sha256`. Only after every chunk passes may Stage -1 continue. This makes connector truncation a small-block retry instead of a whole-run failure.
+9. Write the exact manifest JSON to the staging directory as `capsule-manifest.json` and run the loader locally. This initial `python3` needs only the standard library and is not yet the verified news runtime:
 
 ```bash
 python3 <staging>/bootstrap_loader.py \
@@ -39,7 +41,7 @@ python3 <staging>/bootstrap_loader.py \
 
 The loader independently revalidates canonical line framing, every retrieval block, every complete chunk, the reconstructed Base64 stream, payload SHA-256, tar safety, and every runtime file by path, size, SHA-256 and Git blob SHA before writing `<workspace>/bootstrap-workspace.json`.
 
-8. Only after the loader returns success, change the shell working directory to `<workspace>`. Resolve the pipeline runtime before initializing a checkpoint. Prefer a host-provided bundled-runtime Python absolute path when the host dependency locator exposes one:
+10. Only after the loader returns success, change the shell working directory to `<workspace>`. Resolve the pipeline runtime before initializing a checkpoint. Prefer a host-provided bundled-runtime Python absolute path when the host dependency locator exposes one:
 
 ```bash
 python3 scripts/resolve_bundled_python.py --preferred-python <host-bundled-python>
@@ -47,7 +49,7 @@ python3 scripts/resolve_bundled_python.py --preferred-python <host-bundled-pytho
 
 If the host does not provide a path, run `python3 scripts/resolve_bundled_python.py`; it searches declared environment variables and cross-platform Codex runtime cache locations. The resolver must return `status=ready` after actually importing Pillow with the selected executable. The `python3` that launched the resolver is not accepted as the pipeline runtime merely because it is on PATH.
 
-9. Initialize the checkpoint and run every subsequent canonical script with the exact `<bundled-python>` returned by the resolver:
+11. Initialize the checkpoint and run every subsequent canonical script with the exact `<bundled-python>` returned by the resolver:
 
 ```bash
 <bundled-python> scripts/news_run_checkpoint.py init \
@@ -74,7 +76,7 @@ The capsule is intentionally runtime-only. It includes settings, schemas, skills
 
 ## Reuse rule
 
-A pre-existing workspace may be reused only if its `bootstrap-workspace.json` validates against the exact latest `main` commit and all current local bytes. If `main` changed, the receipt is stale, or any required runtime file changed, rerun Stage -1.
+A pre-existing workspace may be reused only after this run independently resolves fresh `main` through both nonce-bearing endpoints and its `bootstrap-workspace.json` validates against that exact resolved SHA and all current local bytes. Never use the workspace receipt to decide what the latest SHA is. If `main` changed, the receipt is stale, or any required runtime file changed, rerun materialization.
 
 ## Failure semantics
 

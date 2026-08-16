@@ -6,6 +6,24 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PipelineContractTests(unittest.TestCase):
+    def test_each_run_resolves_fresh_main_and_pins_only_that_run(self):
+        prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        bootstrap = (ROOT / "bootstrap-workspace.md").read_text(encoding="utf-8")
+
+        for document in (prompt, bootstrap):
+            for requirement in (
+                "/git/ref/heads/main?cache_bust=",
+                "/commits/main?cache_bust=",
+                "fresh UTC nonce",
+                "must not enumerate repository branches",
+                "must not reuse a commit SHA",
+                "same SHA",
+            ):
+                self.assertIn(requirement, document)
+
+        self.assertIn("pin all repository reads for this run", bootstrap)
+        self.assertIn("resolve fresh `main` again on the next run", bootstrap)
+
     def test_schedule_uses_cross_platform_python_runtime_tools(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
 
