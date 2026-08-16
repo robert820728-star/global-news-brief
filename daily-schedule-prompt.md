@@ -90,6 +90,25 @@ python3 scripts/news_run_checkpoint.py init \
 12. canonical publisher release
 13. canonical receipt delivery
 
+### Checkpoint 防跳關標準
+
+每個 pipeline stage 開始前，必須先以 `news_run_checkpoint.py mark --status running` 記錄；只有前一階段已是 `completed` 才能開始下一階段。完成時必須再次執行 `mark --status completed`，並綁定下列階段產物。不得直接把 `pending` 改成 `completed`，不得使用空 evidence，也不得以無關檔案名稱代替必要產物。
+
+| Stage | completed 必要 artifact 名稱 |
+|---|---|
+| `source-scan` | `source_candidates` |
+| `preprocess-news-candidates` | `preprocessed_candidates` |
+| `select-news-events` | `selection_results` |
+| `audit-news-candidates` | `candidate_audit` |
+| `materialize-manifest` | `manifest` |
+| `verify-news-events` | `manifest` |
+| `build-news-maps` | `manifest` |
+| `build-news-charts` | `manifest` |
+| `collect-news-images` | `manifest` |
+| `render` | `brief` |
+
+`news_run_checkpoint.py validate` 與 canonical publisher 都必須拒絕順序不合法、未經 `running`、缺少必要 artifact、artifact binding 格式無效或 evidence 狀態不一致的 checkpoint。
+
 來源掃描必須保存站點、快照／證據、SHA-256、時間邊界、翻頁與停止理由。403、登入牆、timeout、解析失敗或單一來源異常不得假裝成功，也不得因此直接整輪放棄；按 skills/settings 做局部恢復與替代來源處理。
 
 Manifest 建立以前，候選與選稿必須有 candidate audit；manifest 建立後，事件內容只能由 manifest 驅動，不得直接從搜尋結果或模型記憶補事件。
@@ -153,3 +172,4 @@ python3 scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-re
 - pipeline 未跑但模型直接寫出看似完整的新聞簡報。
 
 若停止，必須回報**最早不可恢復 blocker**及已完成到哪個 stage，不得把後續未執行階段誤報成故障來源。
+
