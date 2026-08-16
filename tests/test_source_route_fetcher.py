@@ -1,7 +1,7 @@
 import hashlib
 import json
-import shutil
 import subprocess
+import sys
 import tempfile
 import threading
 import unittest
@@ -10,7 +10,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-FETCHER = ROOT / "scripts" / "fetch_source_routes.ps1"
+PYTHON_FETCHER = ROOT / "scripts" / "fetch_source_routes.py"
 ROUTES = ROOT / "source-route-config.json"
 
 
@@ -38,15 +38,11 @@ class SourceRouteFetcherTests(unittest.TestCase):
         )
         self.assertEqual(15, len(config["routes"]))
 
-    def test_fetcher_uses_dotnet_httpclient_not_legacy_web_cmdlets(self):
-        script = FETCHER.read_text(encoding="utf-8-sig")
-        self.assertIn("System.Net.Http.HttpClient", script)
-        self.assertNotIn("Invoke-WebRequest", script)
-        self.assertNotIn("Invoke-RestMethod", script)
+    def test_python_fetcher_persists_exact_snapshot_and_coverage(self):
+        self.assertTrue(PYTHON_FETCHER.is_file())
+        self._assert_fetcher_contract([sys.executable, str(PYTHON_FETCHER)])
 
-    def test_fetcher_persists_exact_snapshot_and_coverage(self):
-        powershell = shutil.which("powershell.exe") or shutil.which("powershell")
-        self.assertIsNotNone(powershell)
+    def _assert_fetcher_contract(self, command):
         server = ThreadingHTTPServer(("127.0.0.1", 0), _Handler)
         worker = threading.Thread(target=server.serve_forever, daemon=True)
         worker.start()
@@ -64,11 +60,19 @@ class SourceRouteFetcherTests(unittest.TestCase):
                         "snapshot_name": "local.route-probe.bin",
                     }],
                 }), encoding="utf-8")
-                completed = subprocess.run([
-                    powershell, "-NoProfile", "-ExecutionPolicy", "Bypass",
-                    "-File", str(FETCHER), "-RouteConfig", str(route_config),
-                    "-OutputDir", str(output_dir), "-TimeoutSeconds", "5",
-                ], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=20)
+                arguments = [
+                    "--route-config", str(route_config),
+                    "--output-dir", str(output_dir),
+                    "--timeout-seconds", "5",
+                ]
+                completed = subprocess.run(
+                    command + arguments,
+                    capture_output=True,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    timeout=20,
+                )
                 self.assertEqual(0, completed.returncode, completed.stderr + completed.stdout)
                 coverage = json.loads((output_dir / "source-route-coverage.json").read_text(encoding="utf-8-sig"))
                 self.assertEqual(1, coverage["route_ready_count"])

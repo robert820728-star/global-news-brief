@@ -48,7 +48,8 @@ RUNTIME_DIRS = (
     "state",
 )
 EXCLUDE_NAMES = {"__pycache__", ".DS_Store"}
-EXCLUDE_SUFFIXES = {".pyc", ".pyo"}
+EXCLUDE_SUFFIXES = {".pyc", ".pyo", ".ps1"}
+EXCLUDE_GENERATED_SUFFIXES = {".png", ".svg"}
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -87,6 +88,8 @@ def collect_runtime_paths(root: Path = ROOT) -> list[Path]:
             if any(part in EXCLUDE_NAMES for part in path.parts):
                 continue
             if path.suffix in EXCLUDE_SUFFIXES:
+                continue
+            if rel == "maps/generated/sections" and path.suffix.lower() in EXCLUDE_GENERATED_SUFFIXES:
                 continue
             if path.parent == root / "bootstrap" and path.name.startswith(CHUNK_PREFIX):
                 continue

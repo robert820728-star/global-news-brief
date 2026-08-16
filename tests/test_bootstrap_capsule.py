@@ -29,6 +29,22 @@ class BootstrapCapsuleTests(unittest.TestCase):
             for path in BUILDER.collect_runtime_paths(ROOT)
         }
         self.assertIn("source-route-config.json", runtime_paths)
+        self.assertIn("scripts/resolve_bundled_python.py", runtime_paths)
+        self.assertIn("scripts/fetch_source_routes.py", runtime_paths)
+        self.assertNotIn("scripts/resolve_bundled_python.ps1", runtime_paths)
+        self.assertNotIn("scripts/fetch_source_routes.ps1", runtime_paths)
+
+    def test_runtime_closure_excludes_generated_section_images(self):
+        runtime_paths = {
+            path.resolve().relative_to(ROOT.resolve()).as_posix()
+            for path in BUILDER.collect_runtime_paths(ROOT)
+        }
+        generated_images = {
+            path for path in runtime_paths
+            if path.startswith("maps/generated/sections/")
+            and Path(path).suffix.lower() in {".png", ".svg"}
+        }
+        self.assertEqual(set(), generated_images)
 
     def test_generated_capsule_verifies_against_checkout(self):
         self.assertEqual(VERIFY.verify(ROOT), [])

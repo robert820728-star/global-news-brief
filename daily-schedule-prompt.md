@@ -24,7 +24,7 @@ GitHub connector 可見 repository 不代表 shell 已有 repository。必須使
 5. 由 loader 在 shell 本地解碼、驗 SHA、解壓並建立 executable workspace；
 6. loader 成功產生 `bootstrap-workspace.json` 後，才可建立 news checkpoint。
 
-Stage -1 完成後必須先直接執行 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/resolve_bundled_python.ps1`。此 canonical resolver 以目前宿主的 Codex bundled runtime 固定位置解析 Python 絕對路徑，並在回傳 `status=ready` 前實際匯入 Pillow；以它回傳的同一個 executable 執行本輪所有 canonical Python scripts。不得先呼叫 workspace dependency locator，不得直接假設 PATH 上的 `python`／`python3` 具有 Pillow 或其他 runtime dependencies；resolver 首次失敗即回報 Stage -1 blocker，不能在同輪改走 locator 掩蓋失敗。Materialized runtime 的 receipt 綁定檔視為唯讀；generated PNG/SVG 可以重建，但 renderer 不得改寫 capsule 內既有的 section metadata 或其他 receipt 綁定檔。
+Stage -1 loader 可用宿主的 `python3` 執行，因 loader 與 resolver 只依賴標準庫；它不得直接成為新聞 pipeline runtime。Workspace 建立後，若宿主提供的 bundled-runtime Python 絕對路徑可取得，必須優先傳入 `python3 scripts/resolve_bundled_python.py --preferred-python <host-bundled-python>`；否則執行 `python3 scripts/resolve_bundled_python.py`，由 resolver 依環境變數及跨平台 Codex runtime 位置尋找。Resolver 回傳 `status=ready` 前必須實際以候選 executable 匯入 Pillow；以它回傳的同一個 `<bundled-python>` 執行 checkpoint、route fetcher 與本輪所有 canonical Python scripts。不得直接假設 PATH 上的 `python`／`python3` 具有 Pillow，不得把啟動 resolver 的 Python 當成已驗證 runtime；所有候選皆失敗才回報 Stage -1 blocker。Materialized runtime 的 receipt 綁定檔視為唯讀；generated PNG/SVG 可以重建，但 renderer 不得改寫 capsule 內既有的 section metadata 或其他 receipt 綁定檔。
 
 禁止 Stage -1 使用 shell `git clone`、`curl`、`wget`、raw GitHub HTTP，禁止逐 blob 搬完整 repository，也禁止 workspace 失敗後人工直接寫新聞。
 
@@ -63,7 +63,7 @@ Stage -1 完成後，至少讀取並遵守：
 以實際執行時間計算精確 24 小時窗後，建立唯一 `<run-id>`，並初始化唯一 checkpoint：
 
 ```bash
-python3 scripts/news_run_checkpoint.py init \
+<bundled-python> scripts/news_run_checkpoint.py init \
   --output <checkpoint> \
   --run-id <run-id> \
   --window-start <window-start> \
@@ -79,7 +79,7 @@ python3 scripts/news_run_checkpoint.py init \
 
 1. `source-scan`
    - 必須先調用 `acquire-news-candidates`，依 `news-source-pool.json` 掃描每板塊5站、合計15個主要來源並產生 `work/source-candidates.json`。
-   - Windows shell 來源擷取必須直接執行 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/fetch_source_routes.ps1 -RouteConfig source-route-config.json -OutputDir <run-work-dir>`；此腳本使用 `.NET HttpClient` 保存逐站原始 bytes、SHA-256 與 `source-route-coverage.json`。不得先用會被本機 ExecutionPolicy 阻擋的直接 `.ps1` 呼叫，也不得改用 `Invoke-WebRequest`、`Invoke-RestMethod` 或 Node `fetch` 重試同一批路由。
+   - 來源擷取必須以 Stage -1 回傳的 `<bundled-python> scripts/fetch_source_routes.py --route-config source-route-config.json --output-dir <run-work-dir>` 執行；此跨平台 canonical fetcher 保存逐站原始 bytes、SHA-256 與 `source-route-coverage.json`。不得改用 PowerShell web cmdlet、Node `fetch` 或臨時 helper 重試同一批路由。
    - `source-route-config.json` 是15站 primary acquisition route 的唯一設定來源；時間邊界仍須按同站入口翻頁或取得同站 boundary witness，不得把 route probe 直接冒充完成的 source scan。
    - route fetch 完成後必須執行 `scripts/materialize_source_scans.py --checkpoint <checkpoint> --source-pool news-source-pool.json --route-coverage <route-coverage> --output-dir <source-scans-dir> --coverage-output <source-coverage.json>`；只有此 canonical materializer 產生的逐站 scans、terminal proof、完整 ranked_items 與六項分數可進入 candidate audit。不得改用 run 目錄內的臨時 helper。
    - materializer 完成後只執行一次 `scripts/validate_source_scan_evidence.py --scan-dir <source-scans-dir> --coverage <source-coverage.json> --source news-source-pool.json`；canonical validator 會以 UTF-8 自行讀取 aggregate coverage/source pool 並驗證其中全部15站。不得用 PowerShell `Get-Content`／`ConvertFrom-Json` 編排來源清單，不得另寫拆分 helper。
@@ -135,7 +135,7 @@ Manifest 建立以前，候選與選稿必須有 candidate audit；manifest 建�
 Manifest 前發生中斷或 stage failure：
 
 ```bash
-python3 scripts/news_run_checkpoint.py plan --input <checkpoint>
+<bundled-python> scripts/news_run_checkpoint.py plan --input <checkpoint>
 ```
 
 只從最早未完成 pre-manifest stage 繼續，不清除已完成且 artifact binding 仍有效的 stage。
@@ -143,7 +143,7 @@ python3 scripts/news_run_checkpoint.py plan --input <checkpoint>
 Manifest 後發生事件級失敗：
 
 ```bash
-python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
+<bundled-python> scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 ```
 
 只重跑失敗事件／stage 與必要後續依賴。不得對 `recover_news_run.py` 虛構不存在的 `--checkpoint` 參數。
@@ -169,7 +169,7 @@ Repository 內只有 canonical publisher 可以建立 reader-facing release。�
 最後正式輸出只能由以下命令的 stdout 直接交付，不得在 stdout 前後自行添加文字，也不得重新讀取 release 後轉貼：
 
 ```bash
-python3 scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-receipt.json --checkpoint <checkpoint>
+<bundled-python> scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-receipt.json --checkpoint <checkpoint>
 ```
 
 若此命令失敗或 stdout 為空，回到對應 recovery stage；不得改用手工摘要或舊 release 冒充成功。

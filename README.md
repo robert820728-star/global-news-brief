@@ -8,6 +8,8 @@
 
 完整本機工作流仍使用下方的安裝方式與 `daily-schedule-prompt.md`；兩種模式互不覆蓋。
 
+完整 capsule 工作流的 canonical runtime 與來源擷取已使用跨平台 Python；手機／Linux 排程不需要 PowerShell。宿主提供的 bundled-runtime Python 會先經 Pillow 實際匯入驗證，通過後才執行 checkpoint 與後續 pipeline。
+
 ## 快速安裝
 
 在新的 ChatGPT 對話貼上本 repo 網址，並輸入：

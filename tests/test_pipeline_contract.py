@@ -6,6 +6,26 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PipelineContractTests(unittest.TestCase):
+    def test_schedule_uses_cross_platform_python_runtime_tools(self):
+        prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "宿主提供的 bundled-runtime",
+            "python3 scripts/resolve_bundled_python.py",
+            "fetch_source_routes.py",
+        ):
+            self.assertIn(requirement, prompt)
+        self.assertNotIn("powershell.exe", prompt)
+
+    def test_linux_ci_exercises_cross_platform_runtime_paths(self):
+        workflow = (ROOT / ".github/workflows/build-bootstrap-capsule.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("tests/test_workspace_python_resolver.py", workflow)
+        self.assertIn("tests/test_source_route_fetcher.py", workflow)
+        self.assertIn("scripts/resolve_bundled_python.py", workflow)
+        self.assertIn("scripts/fetch_source_routes.py", workflow)
+
     def test_mobile_chatgpt_profile_is_low_cost_and_preserves_minimum_contract(self):
         start = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")

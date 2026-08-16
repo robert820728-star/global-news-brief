@@ -19,6 +19,14 @@ jobs:
         with:
           fetch-depth: 2
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install runtime probe dependency
+        run: python3 -m pip install --disable-pip-version-check pillow
+
       - name: Apply checkpoint capsule migration
         run: python3 scripts/apply_bootstrap_capsule_migration.py
 
@@ -29,7 +37,9 @@ jobs:
             scripts/build_bootstrap_capsule.py \
             scripts/verify_bootstrap_capsule.py \
             scripts/apply_bootstrap_capsule_migration.py \
-            scripts/news_run_checkpoint.py
+            scripts/news_run_checkpoint.py \
+            scripts/resolve_bundled_python.py \
+            scripts/fetch_source_routes.py
 
       - name: Build deterministic capsule
         run: python3 scripts/build_bootstrap_capsule.py --source-commit "$GITHUB_SHA"
@@ -38,7 +48,14 @@ jobs:
         run: python3 scripts/verify_bootstrap_capsule.py
 
       - name: Focused bootstrap tests
-        run: python3 -m unittest tests/test_bootstrap_capsule.py tests/test_news_run_checkpoint.py -v
+        run: |
+          python3 -m unittest \
+            tests/test_workspace_python_resolver.py \
+            tests/test_source_route_fetcher.py \
+            tests/test_bootstrap_capsule.py \
+            tests/test_news_run_checkpoint.py \
+            tests/test_pipeline_contract.py \
+            -v
 
       - name: Remove transient Python caches
         run: find . -type d -name __pycache__ -prune -exec rm -rf {} +

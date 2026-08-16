@@ -26,7 +26,7 @@ Before executing any `scripts/*.py`, do all of the following:
 4. Fetch `bootstrap/bootstrap_loader.py` from the same latest commit. Validate its connector-returned Git blob SHA against both the latest tree and `manifest.loader.source_blob_sha`. Write it to a temporary writable staging directory.
 5. **Do not fetch an entire chunk in one connector response.** For every chunk in `manifest.chunks[]`, iterate its `blocks[]` in order. Fetch `bootstrap/<chunk-name>` from the same latest commit with the exact `start_line` and `end_line` declared by that block. Each block is intentionally at most 8 lines / 2048 Base64 characters plus LF bytes. Write the returned block bytes to a temporary block file using canonical LF endings, then locally verify the block `size` and `sha256`. A truncated or altered block must be retried by the same line range; never accept partial text.
 6. After all blocks for one chunk validate, concatenate the verified block files in order into the canonical chunk file. Locally verify the complete chunk `size` and `sha256`, then verify the unwrapped Base64 `encoded_size` and `encoded_sha256`. Only after every chunk passes may Stage -1 continue. This makes connector truncation a small-block retry instead of a whole-run failure.
-7. Write the exact manifest JSON to the staging directory as `capsule-manifest.json` and run the loader locally:
+7. Write the exact manifest JSON to the staging directory as `capsule-manifest.json` and run the loader locally. This initial `python3` needs only the standard library and is not yet the verified news runtime:
 
 ```bash
 python3 <staging>/bootstrap_loader.py \
@@ -39,10 +39,18 @@ python3 <staging>/bootstrap_loader.py \
 
 The loader independently revalidates canonical line framing, every retrieval block, every complete chunk, the reconstructed Base64 stream, payload SHA-256, tar safety, and every runtime file by path, size, SHA-256 and Git blob SHA before writing `<workspace>/bootstrap-workspace.json`.
 
-8. Only after the loader returns success, change the shell working directory to `<workspace>` and initialize the news checkpoint:
+8. Only after the loader returns success, change the shell working directory to `<workspace>`. Resolve the pipeline runtime before initializing a checkpoint. Prefer a host-provided bundled-runtime Python absolute path when the host dependency locator exposes one:
 
 ```bash
-python3 scripts/news_run_checkpoint.py init \
+python3 scripts/resolve_bundled_python.py --preferred-python <host-bundled-python>
+```
+
+If the host does not provide a path, run `python3 scripts/resolve_bundled_python.py`; it searches declared environment variables and cross-platform Codex runtime cache locations. The resolver must return `status=ready` after actually importing Pillow with the selected executable. The `python3` that launched the resolver is not accepted as the pipeline runtime merely because it is on PATH.
+
+9. Initialize the checkpoint and run every subsequent canonical script with the exact `<bundled-python>` returned by the resolver:
+
+```bash
+<bundled-python> scripts/news_run_checkpoint.py init \
   --output <checkpoint> \
   --run-id <run-id> \
   --window-start <window-start> \
@@ -62,7 +70,7 @@ Never use shell `git clone`, `curl`, `wget`, raw GitHub HTTP, or another shell-n
 
 Repository changes are followed by `.github/workflows/build-bootstrap-capsule.yml`. The workflow builds the capsule, verifies it against the checked-out runtime closure, runs focused bootstrap/checkpoint tests, and commits only the generated manifest/chunks back to `main`. Python bytecode and cache directories must never be committed.
 
-The capsule is intentionally runtime-only. It includes settings, schemas, skills, executable scripts, map source/style/reference inputs, state seed, and bootstrap loader. It excludes tests from the payload, documentation not needed at runtime, old releases, and derived map PNG/SVG outputs.
+The capsule is intentionally runtime-only. It includes settings, schemas, skills, cross-platform Python scripts, map source/style/reference inputs, state seed, and bootstrap loader. It excludes tests, PowerShell legacy scripts, documentation not needed at runtime, old releases, and derived map PNG/SVG outputs.
 
 ## Reuse rule
 

@@ -1,5 +1,16 @@
 # 版本紀錄 / Version Record
 
+## v0.2.2-cross-platform-runtime — 2026-08-17
+
+- 建立原因 / Reason: 手機排程已成功建立 capsule workspace，但 canonical runtime 強制執行 Windows `powershell.exe`，在非 Windows 宿主於新聞搜尋前停止。 / The mobile task materialized the capsule workspace but the canonical runtime required Windows `powershell.exe`, so a non-Windows host stopped before news search.
+- 確認原因 / Confirmed cause: `daily-schedule-prompt.md` 將 PowerShell resolver 與 route fetcher 寫成唯一必經路徑；capsule 也只提供這兩個入口。 / `daily-schedule-prompt.md` made the PowerShell resolver and route fetcher mandatory, and the capsule exposed only those entry points.
+- 實作方式 / Approach: 新增標準庫 `resolve_bundled_python.py` 與 `fetch_source_routes.py`；所有宿主都以 Python canonical path 執行，PowerShell 只保留在 repository 歷史且不進 capsule。 / Added standard-library `resolve_bundled_python.py` and `fetch_source_routes.py`; every host uses the canonical Python path while PowerShell remains only as repository history and is excluded from the capsule.
+- 變更入口 / Changed entry points: `scripts/resolve_bundled_python.py`, `scripts/fetch_source_routes.py`, `daily-schedule-prompt.md`, `bootstrap-workspace.md`, `.github/workflows/build-bootstrap-capsule.yml`.
+- 重要設定 / Important configuration: 宿主提供的 bundled-runtime 路徑優先；每個候選必須實際匯入 Pillow；PATH `python3` 只可啟動 loader／resolver，不可自動成為 pipeline runtime。 / The host-provided bundled-runtime path has priority; every candidate must actually import Pillow; PATH `python3` may only launch the loader/resolver and cannot automatically become the pipeline runtime.
+- 驗證方式 / Validation: Resolver 與 route fetcher RED→GREEN、本機 HTTP bytes／SHA-256、capsule closure／verify、完整 unittest、Ubuntu CI contract。 / Resolver and route-fetcher red-green tests, local HTTP bytes/SHA-256, capsule closure/verification, full unittest, and Ubuntu CI contract.
+- 結果 / Result: Resolver／fetcher focused tests 4/4、完整回歸 120/120 通過；capsule verify 通過，runtime 55 檔、44 chunks、無 PowerShell 或 generated images，fingerprint `296c5883832de21e6b8ef95655b1da813a6dc63d1ea9fbb3abab32001324af34`。 / Resolver/fetcher focused tests pass 4/4 and the full regression passes 120/120; capsule verification passes with 55 runtime files, 44 chunks, no PowerShell or generated images, and fingerprint `296c5883832de21e6b8ef95655b1da813a6dc63d1ea9fbb3abab32001324af34`.
+- 下一決定 / Next decision: 發布 GitHub `main` 後讓 capsule workflow 產生最新 verified commit，再立即重跑手機排程。 / After publishing to GitHub `main`, let the capsule workflow produce the latest verified commit, then rerun the mobile task immediately.
+
 ## v0.2.1-mobile-image-stability — 2026-08-17
 
 - 建立原因 / Reason: 手機排程內嵌原始新聞圖片時常因解析度與檔案過大而載入失敗。 / Original news images embedded by the mobile task were often too large to load reliably.
