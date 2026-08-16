@@ -1,4 +1,5 @@
 import importlib.util
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -12,27 +13,43 @@ SPEC.loader.exec_module(MODULE)
 
 class PreManifestRecoveryTests(unittest.TestCase):
     def test_plan_targets_earliest_incomplete_stage(self):
-        cp = MODULE.create_checkpoint("run", "a", "b")
-        MODULE.mark_stage(cp, "source-scan", "completed")
-        plan = MODULE.recovery_plan(cp)
-        self.assertEqual(plan[0]["target_stage"], "preprocess-news-candidates")
-        self.assertTrue(plan[0]["continue_required"])
+        with tempfile.TemporaryDirectory() as directory:
+            artifact = Path(directory) / "source-candidates.json"
+            artifact.write_text("{}", encoding="utf-8")
+            cp = MODULE.create_checkpoint("run", "a", "b")
+            MODULE.mark_stage(cp, "source-scan", "running")
+            MODULE.mark_stage(
+                cp, "source-scan", "completed",
+                [f"source_candidates={artifact}"],
+            )
+            plan = MODULE.recovery_plan(cp)
+            self.assertEqual(plan[0]["target_stage"], "preprocess-news-candidates")
+            self.assertTrue(plan[0]["continue_required"])
 
     def test_failed_source_scan_is_recoverable_without_manifest(self):
         cp = MODULE.create_checkpoint("run", "a", "b")
+        MODULE.mark_stage(cp, "source-scan", "running")
         MODULE.mark_stage(cp, "source-scan", "failed", message="timeout")
         plan = MODULE.recovery_plan(cp)
         self.assertEqual(plan[0]["target_stage"], "source-scan")
         self.assertEqual(plan[0]["state"], "failed")
 
     def test_running_stage_after_interruption_is_recoverable(self):
-        cp = MODULE.create_checkpoint("run", "a", "b")
-        MODULE.mark_stage(cp, "source-scan", "completed")
-        MODULE.mark_stage(cp, "preprocess-news-candidates", "running")
-        plan = MODULE.recovery_plan(cp)
-        self.assertEqual(plan[0]["target_stage"], "preprocess-news-candidates")
-        self.assertEqual(plan[0]["state"], "running")
+        with tempfile.TemporaryDirectory() as directory:
+            artifact = Path(directory) / "source-candidates.json"
+            artifact.write_text("{}", encoding="utf-8")
+            cp = MODULE.create_checkpoint("run", "a", "b")
+            MODULE.mark_stage(cp, "source-scan", "running")
+            MODULE.mark_stage(
+                cp, "source-scan", "completed",
+                [f"source_candidates={artifact}"],
+            )
+            MODULE.mark_stage(cp, "preprocess-news-candidates", "running")
+            plan = MODULE.recovery_plan(cp)
+            self.assertEqual(plan[0]["target_stage"], "preprocess-news-candidates")
+            self.assertEqual(plan[0]["state"], "running")
 
 
 if __name__ == "__main__":
     unittest.main()
+
