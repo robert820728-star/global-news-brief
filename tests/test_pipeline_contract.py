@@ -6,6 +6,19 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PipelineContractTests(unittest.TestCase):
+    def test_mobile_chatgpt_profile_is_low_cost_and_preserves_minimum_contract(self):
+        start = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        self.assertIn("Instant", start)
+        self.assertIn("不要使用 Thinking 或 Pro", start)
+        self.assertIn("每天 06:00", start)
+        self.assertIn("建立後立即執行一次", start)
+        for requirement in ("十四天", "六項", "C 級以上", "圖片說明"):
+            self.assertIn(requirement, daily)
+        for forbidden in ("Codex", "powershell", "bootstrap capsule", "git clone"):
+            self.assertNotIn(forbidden, daily)
+
     def test_selection_contract_forbids_prior_run_drivers(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         self.assertIn("validate_selection_freshness.py", prompt)

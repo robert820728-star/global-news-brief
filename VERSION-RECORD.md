@@ -1,5 +1,15 @@
 # 版本紀錄 / Version Record
 
+## v0.2.0-mobile-basic — 2026-08-17
+
+- 建立原因 / Reason: 支援使用者直接在手機一般 ChatGPT 對話建立每日排程，並降低日常模型消耗。 / Support creating the daily schedule from a normal mobile ChatGPT conversation while reducing routine model usage.
+- 實作方式 / Approach: 新增獨立的手機起始指令與基礎每日規則，使用 Instant 並移除本機執行、地圖、圖表與發布器依賴。 / Added separate mobile setup and basic daily prompts using Instant without local execution, maps, charts, or publisher dependencies.
+- 變更入口 / Changed entry points: `mobile-chatgpt-start-prompt.md`, `mobile-chatgpt-daily-prompt.md`, `README.md`.
+- 重要設定 / Important configuration: 每天 `Asia/Taipei` 06:00；保留十四天海選、六項大評分、所有 C 級以上讀者版及無圖說明。 / Daily at 06:00 Asia/Taipei; preserves the fourteen-day candidate list, six scores, all C-or-higher reader items, and no-image explanations.
+- 驗證方式 / Validation: RED→GREEN mobile contract test, full pipeline contract test, and remote Git tree verification. / Red-green mobile contract test, full pipeline contract test, and remote Git tree verification.
+- 結果 / Result: 手機 contract 與既有 pipeline contract 共 3/3 通過，直接發布目標為 GitHub `main`。 / The mobile and existing pipeline contracts pass 3/3; the direct publication target is GitHub `main`.
+- 下一決定 / Next decision: 從手機 ChatGPT 貼上起始指令，建立排程後立即執行一次。 / Paste the setup prompt in mobile ChatGPT, create the schedule, and run it once immediately.
+
 ## v0.1.0-child — 2026-08-16
 
 - 建立原因 / Reason: 強制十四天清單包含完整海選與六項大分數，並保證本輪 C 級以上事件全部進入讀者版；無圖事件提供讀者說明。 / Enforce complete shortlist scoring, current-run C-or-above reader coverage, and reader explanations for omitted images.

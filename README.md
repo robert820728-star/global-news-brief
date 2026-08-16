@@ -2,6 +2,12 @@
 
 可版本化、可分享、可個人化，而且能逐階段驗收的每日新聞簡報工作流。
 
+## 手機 ChatGPT 基礎排程
+
+若要在一般手機 ChatGPT 對話執行，不使用手機 Codex，請先選擇 `Instant` 並貼上 [mobile-chatgpt-start-prompt.md](mobile-chatgpt-start-prompt.md)。此低消耗版本不執行本機程式、地圖或圖表，但仍保留十四天海選清單、每筆六項大評分、所有 C 級以上新聞的讀者版，以及無圖片新聞的圖片說明。
+
+完整本機工作流仍使用下方的安裝方式與 `daily-schedule-prompt.md`；兩種模式互不覆蓋。
+
 ## 快速安裝
 
 在新的 ChatGPT 對話貼上本 repo 網址，並輸入：
@@ -59,6 +65,8 @@
 - `news-brief-examples.md`：正確與錯誤範例
 - `user-preferences.example.yaml`：使用者可覆寫的地區與主題偏好
 - `daily-schedule-prompt.md`：每日獨立排程的固定執行提示詞
+- `mobile-chatgpt-start-prompt.md`：手機一般 ChatGPT 建立低消耗排程的貼上指令
+- `mobile-chatgpt-daily-prompt.md`：手機排程每輪重新讀取的基礎新聞規則
 
 ## 本地驗證
 
