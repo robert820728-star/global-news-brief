@@ -54,11 +54,14 @@ def parse_time(value: str) -> datetime:
 def preprocess(data: dict, threshold: float) -> dict:
     window_start = parse_time(data["window_start"])
     window_end = parse_time(data["window_end"])
+    raw_candidates = data["items"] if "items" in data else data.get("candidates", [])
+    if not isinstance(raw_candidates, list):
+        raise ValueError("source candidate list items/candidates 必須是陣列")
     prepared = []
     outside = []
     seen_urls: dict[str, str] = {}
 
-    for index, raw in enumerate(data.get("candidates", []), start=1):
+    for index, raw in enumerate(raw_candidates, start=1):
         item = dict(raw)
         item.setdefault("candidate_id", f"candidate-{index:04d}")
         item["canonical_url"] = canonical_url(item.get("url", ""))
@@ -115,7 +118,7 @@ def preprocess(data: dict, threshold: float) -> dict:
     return {
         "window_start": data["window_start"],
         "window_end": data["window_end"],
-        "candidate_count": len(data.get("candidates", [])),
+        "candidate_count": len(raw_candidates),
         "within_window_count": len(prepared),
         "outside_window": outside,
         "normalized_candidates": prepared,

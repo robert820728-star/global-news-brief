@@ -144,12 +144,27 @@ class NewsRunCheckpointTests(unittest.TestCase):
             path.write_text("first", encoding="utf-8")
             checkpoint = MODULE.create_checkpoint("run", "a", "b")
             checkpoint["stage_status"]["render"] = "running"
-            MODULE.mark_stage(checkpoint, "render", "completed", [f"brief={path}"])
+            manifest = Path(directory) / "manifest.json"
+            manifest.write_text("{}", encoding="utf-8")
+            MODULE.mark_stage(
+                checkpoint, "render", "completed",
+                [f"brief={path}", f"manifest={manifest}"],
+            )
             path.write_text("changed", encoding="utf-8")
             errors = MODULE.verify_bound_artifact(checkpoint, "render", "brief", path)
             self.assertTrue(any("雜湊不符" in item for item in errors))
 
+    def test_render_requires_final_manifest_binding(self):
+        with tempfile.TemporaryDirectory() as directory:
+            brief = Path(directory) / "brief.md"
+            brief.write_text("brief", encoding="utf-8")
+            checkpoint = MODULE.create_checkpoint("run", "a", "b")
+            checkpoint["stage_status"]["render"] = "running"
+            with self.assertRaisesRegex(ValueError, "manifest"):
+                MODULE.mark_stage(
+                    checkpoint, "render", "completed", [f"brief={brief}"]
+                )
+
 
 if __name__ == "__main__":
     unittest.main()
-

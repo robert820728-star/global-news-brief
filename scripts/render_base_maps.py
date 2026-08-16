@@ -6,8 +6,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import matplotlib.pyplot as plt
-from matplotlib.collections import PolyCollection
+from PIL import Image, ImageDraw
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -240,43 +239,75 @@ def add_padding(bounds, pad_ratio=0.035):
 
 def render(name: str, spec: dict):
     polygons = [project_ring(ring, spec) for ring in collect_polygons(spec["file"], spec)]
-    fig, ax = plt.subplots(figsize=spec["figsize"], dpi=180)
     style = {**CANONICAL_STYLE, **spec.get("style", {})}
     if spec.get("style_id", STYLE_CONFIG["style_id"]) != STYLE_CONFIG["style_id"]:
         raise ValueError("地圖 style_id 不符合 maps/style.json")
+    if not polygons:
+        raise ValueError(f"{name} 沒有可繪製的 GeoJSON polygons")
     base_country_iso = spec.get("base_country_iso")
+    base_polygons = []
     if base_country_iso:
         base_spec = {**spec, "filter_iso3": base_country_iso}
         base_rings = collect_polygons(SOURCE / "world-countries.geojson", base_spec)
         base_polygons = [project_ring(ring, spec) for ring in base_rings]
-        ax.add_collection(
-            PolyCollection(
-                base_polygons,
-                facecolors=style.get("land_fill", "#f3e6b8"),
-                edgecolors="none",
-                antialiaseds=True,
-            )
-        )
-    collection = PolyCollection(
-        polygons,
-        facecolors=style.get("land_fill", "#f3e6b8"),
-        edgecolors=style.get("boundary_color", "#53606f"),
-        linewidths=float(style.get("boundary_width", 0.42)),
-        antialiaseds=True,
-    )
-    ax.add_collection(collection)
     bounds = data_bounds(polygons) if spec.get("use_data_bounds") else project_bounds(spec["bounds"], spec)
     minx, maxx, miny, maxy = add_padding(bounds)
-    ax.set_xlim(minx, maxx)
-    ax.set_ylim(miny, maxy)
-    ax.set_aspect("equal", adjustable="box")
-    ax.set_facecolor(style.get("background", "#ffffff"))
-    ax.axis("off")
-    fig.tight_layout(pad=0.12)
-    OUT.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUT / f"{name}.png", bbox_inches="tight", pad_inches=0.04)
-    fig.savefig(OUT / f"{name}.svg", bbox_inches="tight", pad_inches=0.04)
-    plt.close(fig)
+    width = max(320, round(float(spec["figsize"][0]) * 180))
+    height = max(240, round(float(spec["figsize"][1]) * 180))
+    margin = max(8, round(min(width, height) * 0.02))
+    span_x = max(maxx - minx, 1e-9)
+    span_y = max(maxy - miny, 1e-9)
+
+    def pixels(ring):
+        return [
+            (
+                margin + (x - minx) / span_x * (width - 2 * margin),
+                height - margin - (y - miny) / span_y * (height - 2 * margin),
+            )
+            for x, y in ring
+        ]
+
+    land_fill = style.get("land_fill", "#f3e6b8")
+    boundary_color = style.get("boundary_color", "#53606f")
+    background = style.get("background", "#ffffff")
+    line_width = max(1, round(float(style.get("boundary_width", 0.42)) * 2))
+    image = Image.new("RGB", (width, height), background)
+    drawing = ImageDraw.Draw(image)
+    for ring in base_polygons:
+        points = pixels(ring)
+        if len(points) >= 3:
+            drawing.polygon(points, fill=land_fill)
+    for ring in polygons:
+        points = pixels(ring)
+        if len(points) >= 3:
+            drawing.polygon(points, fill=land_fill, outline=boundary_color, width=line_width)
+
+    destination = OUT / name
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    png_path = destination.with_suffix(".png")
+    svg_path = destination.with_suffix(".svg")
+    image.save(png_path, format="PNG", optimize=True)
+
+    svg_polygons = []
+    for ring in base_polygons:
+        points = pixels(ring)
+        if len(points) >= 3:
+            coords = " ".join(f"{x:.2f},{y:.2f}" for x, y in points)
+            svg_polygons.append(f'<polygon points="{coords}" fill="{land_fill}" stroke="none"/>')
+    for ring in polygons:
+        points = pixels(ring)
+        if len(points) >= 3:
+            coords = " ".join(f"{x:.2f},{y:.2f}" for x, y in points)
+            svg_polygons.append(
+                f'<polygon points="{coords}" fill="{land_fill}" '
+                f'stroke="{boundary_color}" stroke-width="{line_width}"/>'
+            )
+    svg_path.write_text(
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
+        f'viewBox="0 0 {width} {height}"><rect width="100%" height="100%" '
+        f'fill="{background}"/>{"".join(svg_polygons)}</svg>\n',
+        encoding="utf-8",
+    )
 
 
 def section_specs():
@@ -308,25 +339,8 @@ def section_specs():
 def main():
     for name, spec in MAPS.items():
         render(name, spec)
-    for name, spec, metadata_path, metadata in section_specs() or ():
+    for name, spec, _, _ in section_specs() or ():
         render(name, spec)
-        metadata["style_id"] = STYLE_CONFIG["style_id"]
-        metadata["style_reference"] = "maps/style.json"
-        metadata["generator"] = "scripts/render_base_maps.py"
-        metadata["style"] = {
-            "land_fill": CANONICAL_STYLE["land_fill"],
-            "boundary_color": CANONICAL_STYLE["boundary_color"],
-            "background": CANONICAL_STYLE["background"],
-            "boundary_level": metadata.get("style", {}).get(
-                "boundary_level", "country_or_best_available_internal_administration"
-            ),
-        }
-        metadata["status"] = "rendered_pending_visual_check"
-        metadata["visual_checked"] = False
-        metadata_path.write_text(
-            json.dumps(metadata, ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
-        )
 
 
 if __name__ == "__main__":

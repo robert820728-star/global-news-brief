@@ -92,7 +92,7 @@ def _validate_asset_path(path: Any, label: str, errors: list[str]) -> None:
         return
     if path.startswith(("http://", "https://")):
         errors.append(f"{label} 使用網路直連，必須改成本地附件：{path}")
-    elif not path.startswith(("/", "sandbox:/")):
+    elif not (path.startswith("sandbox:/") or Path(path).is_absolute()):
         errors.append(f"{label} 路徑必須是絕對路徑或 sandbox 絕對路徑：{path}")
 
 
@@ -411,6 +411,8 @@ def _validate_image_gate(
         errors.append(
             f"{event_id}.images 未找到可用來源圖片時，必須以 omitted 保存後台原因"
         )
+    elif not isinstance(images.get("reader_omission_note"), str) or not images["reader_omission_note"].strip():
+        errors.append(f"{event_id}.images 無合格圖片時必須提供讀者可見的 reader_omission_note")
 
     professional_required = images.get("professional_visual_required")
     expected_professional = _professional_visual_expected(event)
@@ -897,7 +899,7 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
     if len(nonempty) < 2 or nonempty[1] != expected_summary:
         errors.append(f"日期行後必須簡短列出本期新聞總數與各板塊數量：{expected_summary}")
 
-    h2 = re.findall(r"(?m)^## (.+)$", text)
+    h2 = re.findall(r"(?m)^## ([^\r\n]+)\r?$", text)
     if h2 != REQUIRED_H2:
         errors.append("讀者版只能有今日總覽、逐條詳報、後續觀察三個二級標題，且順序固定")
 
@@ -923,7 +925,7 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
             if isinstance(section, dict) and section.get("code") in event_sections
         ]
         expected_section_names = [section.get("name") for section in expected_sections]
-        actual_section_names = re.findall(r"(?m)^### (.+)$", overview)
+        actual_section_names = re.findall(r"(?m)^### ([^\r\n]+)\r?$", overview)
         if actual_section_names != expected_section_names:
             errors.append("今日總覽必須依設定順序為每個有事件的板塊建立獨立標題與表格")
         section_blocks = list(re.finditer(
@@ -965,7 +967,7 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
         errors.append("逐條詳報的事件順序、數量或編號與事件資料不一致")
 
     blocks = _event_blocks(text)
-    separators = len(re.findall(r"(?m)^---$", text))
+    separators = len(re.findall(r"(?m)^---\r?$", text))
     expected_separators = max(0, len(expected_ids) - 1)
     if separators != expected_separators:
         errors.append(f"事件分隔線數量錯誤：應為 {expected_separators}，實際為 {separators}")
@@ -1011,7 +1013,7 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
         ordered_markers = [
             marker for marker in (
                 "**時間：**", "**來源：**", "**地圖：**", "**資料圖表：**",
-                "**圖片：**", "**事件細節：**", "**各方說法：**", "**分析：**",
+                "**圖片：**", "**圖片說明：**", "**事件細節：**", "**各方說法：**", "**分析：**",
             )
             if marker in block
         ]
@@ -1027,6 +1029,11 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
         map_result = event.get("map", {})
         chart_result = event.get("charts", {})
         image_result = event.get("images", {})
+        if isinstance(image_result, dict) and image_result.get("status") == "omitted":
+            note = image_result.get("reader_omission_note")
+            expected_note = f"**圖片說明：**{note}"
+            if not isinstance(note, str) or not note.strip() or expected_note not in block:
+                errors.append(f"{event_id} 無合格圖片時，讀者版必須完整顯示圖片說明")
         for field_key, field, result, marker in (
             ("map", "地圖", map_result, "**地圖：**"),
             ("charts", "資料圖表", chart_result, "**資料圖表：**"),

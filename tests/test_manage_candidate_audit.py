@@ -1,6 +1,8 @@
 import importlib.util
 import hashlib
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from datetime import datetime, timezone
@@ -16,6 +18,15 @@ SPEC.loader.exec_module(MODULE)
 
 def source_pool():
     return MODULE.load(ROOT / "news-source-pool.json")
+
+
+def importance_breakdown(score=100):
+    weights = source_pool()["ranking"]["dimensions"]
+    ratio = score / 100
+    values = {key: round(weight * ratio, 2) for key, weight in weights.items()}
+    difference = round(score - sum(values.values()), 2)
+    values[next(iter(values))] = round(values[next(iter(values))] + difference, 2)
+    return values
 
 
 def candidate(grade="C", decision="selected", reason_code="selected_threshold_met"):
@@ -67,6 +78,7 @@ def valid_audit(candidates=None, per_source_count=1):
         ranked_items = [
             {"url": f"https://example.com/{source_id}/{index}", "title": f"{source_id}-{index}",
              "published_at": "2026-08-13T05:00:00+00:00", "importance_score": 100 - index / 10,
+             "importance_breakdown": importance_breakdown(100 - index / 10),
              "importance_reason": "依公共影響、範圍與結構意義排序"}
             for index in range(per_source_count)
         ]
@@ -120,6 +132,47 @@ def valid_audit(candidates=None, per_source_count=1):
 
 
 class CandidateAuditTests(unittest.TestCase):
+    def test_append_creates_missing_output_parent_directory(self):
+        audit = valid_audit()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            run_path = root / "current-run.json"
+            run_path.write_text(
+                json.dumps(audit["runs"][0], ensure_ascii=False), encoding="utf-8"
+            )
+            output_path = root / "new-state" / "candidate-audit.json"
+            result = subprocess.run(
+                [
+                    sys.executable, str(ROOT / "scripts" / "manage_candidate_audit.py"),
+                    "append", "--history", str(root / "missing-history.json"),
+                    "--run", str(run_path), "--output", str(output_path),
+                    "--source-pool", str(ROOT / "news-source-pool.json"),
+                ],
+                capture_output=True, text=True, check=False,
+            )
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            self.assertTrue(output_path.is_file())
+
+    def test_every_shortlist_item_requires_all_major_scores(self):
+        audit = valid_audit()
+        ranked = audit["runs"][0]["source_coverage"][0]["ranked_items"][0]
+        ranked.pop("importance_breakdown")
+        errors = MODULE.validate(audit, source_pool())
+        self.assertTrue(any("importance_breakdown" in error for error in errors))
+
+    def test_major_scores_must_match_weights_and_total(self):
+        audit = valid_audit()
+        ranked = audit["runs"][0]["source_coverage"][0]["ranked_items"][0]
+        ranked["importance_breakdown"]["public_impact"] = 31
+        errors = MODULE.validate(audit, source_pool())
+        self.assertTrue(any("大項分數" in error for error in errors))
+        self.assertTrue(any("importance_score" in error for error in errors))
+
+    def test_c_or_above_merged_candidate_requires_reader_event_mapping(self):
+        item = candidate("C", "merged", "duplicate_merged")
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("selected_event_id" in error for error in errors))
+
     def test_cultural_suspension_novelty_rule_is_locked(self):
         pool = source_pool()
         pool["cultural_industry_event_rule"]["first_large_award_suspension_min_grade"] = "C-"

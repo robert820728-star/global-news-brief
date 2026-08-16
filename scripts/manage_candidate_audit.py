@@ -54,6 +54,7 @@ def validate(data, source_pool=None):
     allowed_overflow_triggers = set()
     source_scan_evidence_required = False
     source_by_id = {}
+    ranking_dimensions = {}
     if source_pool:
         expected_sources = [item["source_id"] for item in source_pool.get("sources", [])]
         expected_source_count = len(expected_sources)
@@ -88,6 +89,7 @@ def validate(data, source_pool=None):
         if not source_scan_evidence_required:
             errors.append("news-source-pool.json 必須鎖定 source_scan_evidence_required=true")
         ranking = source_pool.get("ranking", {})
+        ranking_dimensions = ranking.get("dimensions", {})
         cultural_rule = source_pool.get("cultural_industry_event_rule", {})
         if cultural_rule.get("first_large_award_suspension_min_grade") != "C":
             errors.append("news-source-pool.json 必須固定大型評選活動首次停辦最低為 C")
@@ -178,6 +180,32 @@ def validate(data, source_pool=None):
                 scores.append(score)
                 if not isinstance(score, (int, float)) or not 0 <= score <= 100:
                     errors.append(ranked_label + " importance_score 必須介於 0–100")
+                breakdown = ranked_item.get("importance_breakdown")
+                if not isinstance(breakdown, dict) or set(breakdown) != set(ranking_dimensions):
+                    errors.append(
+                        ranked_label + " importance_breakdown 必須包含 public_value_v1 全部大項分數"
+                    )
+                else:
+                    invalid_dimensions = [
+                        key for key, weight in ranking_dimensions.items()
+                        if not isinstance(breakdown.get(key), (int, float))
+                        or not 0 <= breakdown[key] <= weight
+                    ]
+                    if invalid_dimensions:
+                        errors.append(
+                            ranked_label + " 大項分數超出設定權重：" + ", ".join(invalid_dimensions)
+                        )
+                    numeric_breakdown = all(
+                        isinstance(value, (int, float)) for value in breakdown.values()
+                    )
+                    if (
+                        numeric_breakdown
+                        and isinstance(score, (int, float))
+                        and abs(sum(breakdown.values()) - score) > 0.01
+                    ):
+                        errors.append(
+                            ranked_label + " importance_breakdown 總和必須等於 importance_score"
+                        )
                 if not isinstance(ranked_item.get("importance_reason"), str) or not ranked_item["importance_reason"].strip():
                     errors.append(ranked_label + " 缺少重要度理由")
             if len(set(ranked_urls)) != len(ranked_urls):
@@ -338,6 +366,11 @@ def validate(data, source_pool=None):
 
             if grade in AUTO_SELECT and decision not in {"selected", "merged"}:
                 errors.append(label + " C 以上必須入選；禁止篇數上限、相對淘汰或延後")
+            if grade in AUTO_SELECT and (
+                not isinstance(candidate.get("selected_event_id"), str)
+                or not candidate["selected_event_id"].strip()
+            ):
+                errors.append(label + " C 以上候選必須以 selected_event_id 映射至讀者版事件")
             if grade == "C-":
                 if decision == "selected":
                     if reason_code != "c_minus_selected_need" or not candidate.get("c_minus_use_reason"):
@@ -400,7 +433,9 @@ def main():
         errors = validate(output, source_pool)
         if errors:
             raise ValueError("；".join(errors))
-        Path(args.output).write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        output_path = Path(args.output)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print("OK")
         return 0
     except Exception as error:

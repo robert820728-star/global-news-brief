@@ -34,6 +34,7 @@ RUNTIME_FILES = (
     "news-brief-examples.md",
     "user-preferences.example.yaml",
     "news-source-pool.json",
+    "source-route-config.json",
     "maps/README.md",
     "maps/style.json",
     "bootstrap/bootstrap_loader.py",

@@ -326,7 +326,8 @@
           "type": "array",
           "items": { "$ref": "#/$defs/mapAsset" }
         },
-        "omission_reason": { "type": ["string", "null"] }
+        "omission_reason": { "type": ["string", "null"] },
+        "reader_omission_note": { "type": ["string", "null"] }
       },
       "additionalProperties": false
     },

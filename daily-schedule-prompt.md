@@ -24,6 +24,8 @@ GitHub connector 可見 repository 不代表 shell 已有 repository。必須使
 5. 由 loader 在 shell 本地解碼、驗 SHA、解壓並建立 executable workspace；
 6. loader 成功產生 `bootstrap-workspace.json` 後，才可建立 news checkpoint。
 
+Stage -1 完成後必須先直接執行 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/resolve_bundled_python.ps1`。此 canonical resolver 以目前宿主的 Codex bundled runtime 固定位置解析 Python 絕對路徑，並在回傳 `status=ready` 前實際匯入 Pillow；以它回傳的同一個 executable 執行本輪所有 canonical Python scripts。不得先呼叫 workspace dependency locator，不得直接假設 PATH 上的 `python`／`python3` 具有 Pillow 或其他 runtime dependencies；resolver 首次失敗即回報 Stage -1 blocker，不能在同輪改走 locator 掩蓋失敗。Materialized runtime 的 receipt 綁定檔視為唯讀；generated PNG/SVG 可以重建，但 renderer 不得改寫 capsule 內既有的 section metadata 或其他 receipt 綁定檔。
+
 禁止 Stage -1 使用 shell `git clone`、`curl`、`wget`、raw GitHub HTTP，禁止逐 blob 搬完整 repository，也禁止 workspace 失敗後人工直接寫新聞。
 
 若 Stage -1 無法完成，最早 blocker 固定回報為：
@@ -45,6 +47,7 @@ Stage -1 完成後，至少讀取並遵守：
 - `schemas/news-candidate-audit.schema.json`
 - `scripts/news_run_checkpoint.py`
 - `scripts/preprocess_news_candidates.py`
+- `scripts/validate_selection_freshness.py`
 - `scripts/manage_candidate_audit.py`
 - `scripts/recover_news_run.py`
 - `scripts/validate_map_decisions.py`
@@ -76,16 +79,28 @@ python3 scripts/news_run_checkpoint.py init \
 
 1. `source-scan`
    - 必須先調用 `acquire-news-candidates`，依 `news-source-pool.json` 掃描每板塊5站、合計15個主要來源並產生 `work/source-candidates.json`。
+   - Windows shell 來源擷取必須直接執行 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/fetch_source_routes.ps1 -RouteConfig source-route-config.json -OutputDir <run-work-dir>`；此腳本使用 `.NET HttpClient` 保存逐站原始 bytes、SHA-256 與 `source-route-coverage.json`。不得先用會被本機 ExecutionPolicy 阻擋的直接 `.ps1` 呼叫，也不得改用 `Invoke-WebRequest`、`Invoke-RestMethod` 或 Node `fetch` 重試同一批路由。
+   - `source-route-config.json` 是15站 primary acquisition route 的唯一設定來源；時間邊界仍須按同站入口翻頁或取得同站 boundary witness，不得把 route probe 直接冒充完成的 source scan。
+   - route fetch 完成後必須執行 `scripts/materialize_source_scans.py --checkpoint <checkpoint> --source-pool news-source-pool.json --route-coverage <route-coverage> --output-dir <source-scans-dir> --coverage-output <source-coverage.json>`；只有此 canonical materializer 產生的逐站 scans、terminal proof、完整 ranked_items 與六項分數可進入 candidate audit。不得改用 run 目錄內的臨時 helper。
+   - materializer 完成後只執行一次 `scripts/validate_source_scan_evidence.py --scan-dir <source-scans-dir> --coverage <source-coverage.json> --source news-source-pool.json`；canonical validator 會以 UTF-8 自行讀取 aggregate coverage/source pool 並驗證其中全部15站。不得用 PowerShell `Get-Content`／`ConvertFrom-Json` 編排來源清單，不得另寫拆分 helper。
+   - 每個站內海選條目必須保存 `public_value_v1` 六項 `importance_breakdown`、總分與理由；六項總和必須等於 `importance_score`，並隨十四天候選稽核保存。
    - 直接 API／RSS／HTML 失敗時先切同站替代入口；只有目前工具契約明確允許時才可用完整瀏覽器渲染並保存 DOM。瀏覽器不得是完成排程的必要依賴，不得用別站冒充該站本輪掃描完成。
 2. `preprocess-news-candidates`
 3. `select-news-events`
+   - 事件與候選映射只能由本輪 `source-candidates.json`／`preprocessed-candidates.json` 建立；不得匯入或執行舊 `work/validation-run-*` 的 selection driver、事件常數或 URL 映射，也不得要求本輪保留已無 fresh URL 的歷史事件編號。
+   - 產生 `selection-results.json` 後，必須先執行 `scripts/validate_selection_freshness.py --selection <selection-results> --source-candidates <source-candidates>`。此 gate 必須確認每個事件 URL 都在本輪 fresh pool、所有 C 級以上候選都有有效 `selected_event_id`，且映射事件實際存在；首次失敗即停止，不能刪單筆後重跑掩蓋。
 4. `audit-news-candidates`
+   - 十四天稽核必須保留完整海選清單及每筆六項大分數；本輪所有 C 級以上候選（含合併項）都必須以 `selected_event_id` 對應到 manifest 與讀者版，不得無聲消失。
 5. `materialize-manifest`
 6. `verify-news-events`
+   - 此階段只能用 `scripts/validate_news_brief.py stage --stage verify-news-events --before <before-manifest> --after <after-manifest>` 檢查欄位所有權；不得在此時執行 final-manifest validator，因地圖、圖表與圖片欄位尚未完成。
 7. `build-news-maps`
+   - 必須以 Stage -1 已解析、確認含 Pillow 的 bundled Python 執行 `scripts/render_base_maps.py`；不得回退到 PATH Python、不得安裝 matplotlib。執行前後都必須重驗 bootstrap integrity，若任何 receipt 綁定檔改變，該 stage 不得完成。
 8. `build-news-charts`
 9. `collect-news-images`
+   - 只有 checkpoint 的 `collect-news-images` completed 後，才可第一次執行 `scripts/validate_news_brief.py manifest --input <final-manifest>`；final-manifest validator 不得提前到 verify、map 或 chart 階段。
 10. `render`
+   - `images.status=omitted` 的事件必須在讀者版顯示非技術性的「圖片說明」，內容精確等於 manifest 的 `images.reader_omission_note`。
 11. validators / unique delivery gate
 12. canonical publisher release
 13. canonical receipt delivery
@@ -105,7 +120,7 @@ python3 scripts/news_run_checkpoint.py init \
 | `build-news-maps` | `manifest` |
 | `build-news-charts` | `manifest` |
 | `collect-news-images` | `manifest` |
-| `render` | `brief` |
+| `render` | `brief`, `manifest`（最終 bytes） |
 
 `news_run_checkpoint.py validate` 與 canonical publisher 都必須拒絕順序不合法、未經 `running`、缺少必要 artifact、artifact binding 格式無效或 evidence 狀態不一致的 checkpoint。
 
@@ -172,4 +187,3 @@ python3 scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-re
 - pipeline 未跑但模型直接寫出看似完整的新聞簡報。
 
 若停止，必須回報**最早不可恢復 blocker**及已完成到哪個 stage，不得把後續未執行階段誤報成故障來源。
-

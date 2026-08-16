@@ -38,7 +38,9 @@ def map_pixel_errors(path: Path, label: str) -> list[str]:
         return []
     try:
         with Image.open(path) as image:
-            image = image.convert("RGB"); image.thumbnail((320, 320)); pixels = list(image.getdata())
+            image = image.convert("RGB")
+            image.thumbnail((320, 320))
+            pixels = list(image.get_flattened_data())
     except (OSError, ValueError) as error:
         return [f"{label} 無法讀取地圖像素：{error}"]
     if not pixels:
@@ -81,17 +83,23 @@ def candidate_errors(audit: dict, manifest: dict, source_pool: dict) -> list[str
     errors = manage_candidate_audit.validate(audit, source_pool)
     runs = audit.get("runs", [])
     if not runs: return errors + ["候選稽核沒有本輪紀錄"]
-    selected = {c.get("selected_event_id") for c in runs[-1].get("candidates", []) if c.get("decision") == "selected"}
+    selected = {
+        c.get("selected_event_id")
+        for c in runs[-1].get("candidates", [])
+        if c.get("provisional_grade") in manage_candidate_audit.AUTO_SELECT
+        and c.get("decision") in {"selected", "merged"}
+    }
     selected.discard(None)
     ids = {e.get("event_id") for e in manifest.get("events", []) if isinstance(e, dict)}
-    if selected != ids: errors.append("候選稽核的入選事件與 manifest 不一致；禁止漏放達標事件或額外補新聞")
+    if selected != ids:
+        errors.append("十四天候選稽核本輪 C 級以上入選事件與 manifest 不一致；禁止漏放達標事件或額外補新聞")
     return errors
 
 
 def checkpoint_errors(cp: dict, manifest: dict, audit: dict, paths: dict[str, Path]) -> list[str]:
     errors = checkpoint_lib.validate_checkpoint(cp)
     errors += checkpoint_lib.verify_bound_artifact(cp, "audit-news-candidates", "candidate_audit", paths["audit"])
-    errors += checkpoint_lib.verify_bound_artifact(cp, "materialize-manifest", "manifest", paths["manifest"])
+    errors += checkpoint_lib.verify_bound_artifact(cp, "render", "manifest", paths["manifest"])
     errors += checkpoint_lib.verify_bound_artifact(cp, "render", "brief", paths["brief"])
     runs = audit.get("runs", []); latest = runs[-1] if runs else {}
     run = manifest.get("run", {}) if isinstance(manifest.get("run"), dict) else {}

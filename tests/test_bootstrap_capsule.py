@@ -19,9 +19,17 @@ def load_module(path: Path, name: str):
 
 VERIFY = load_module(ROOT / "scripts/verify_bootstrap_capsule.py", "verify_bootstrap_capsule_test")
 LOADER = load_module(ROOT / "bootstrap/bootstrap_loader.py", "bootstrap_loader_test")
+BUILDER = load_module(ROOT / "scripts/build_bootstrap_capsule.py", "build_bootstrap_capsule_test")
 
 
 class BootstrapCapsuleTests(unittest.TestCase):
+    def test_runtime_closure_includes_source_route_config(self):
+        runtime_paths = {
+            path.resolve().relative_to(ROOT.resolve()).as_posix()
+            for path in BUILDER.collect_runtime_paths(ROOT)
+        }
+        self.assertIn("source-route-config.json", runtime_paths)
+
     def test_generated_capsule_verifies_against_checkout(self):
         self.assertEqual(VERIFY.verify(ROOT), [])
 

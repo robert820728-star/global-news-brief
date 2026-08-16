@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PUBLISHER = ROOT / "scripts" / "publish_news_brief.py"
 sys.path.insert(0, str(ROOT / "scripts"))
 import news_run_checkpoint
+import publish_news_brief
 
 
 def write_valid_audit(root: Path):
@@ -57,6 +58,14 @@ def write_valid_audit(root: Path):
         ranked_items = [{
             "url": article_url, "title": source_id, "published_at": article_time,
             "importance_score": 80, "importance_reason": "具有公共影響",
+            "importance_breakdown": {
+                "public_impact": 24,
+                "geographic_or_population_scope": 16,
+                "urgency_and_safety": 12,
+                "structural_or_policy_significance": 12,
+                "material_new_development": 8,
+                "core_section_relevance": 8,
+            },
         }]
         coverage.append({
             "source_id": source_id, "status": "completed",
@@ -182,6 +191,19 @@ def publish_command(checkpoint, manifest, audit, brief, release_dir):
 
 
 class PublisherTests(unittest.TestCase):
+    def test_publish_uses_final_render_manifest_binding(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint, manifest, audit, brief = prepare_inputs(root)
+            checkpoint_data = news_run_checkpoint.load(checkpoint)
+            checkpoint_data["stage_evidence"]["materialize-manifest"]["artifacts"]["manifest"]["sha256"] = "0" * 64
+            news_run_checkpoint.save(checkpoint, checkpoint_data)
+            result = subprocess.run(
+                publish_command(checkpoint, manifest, audit, brief, root / "release"),
+                capture_output=True, text=True, check=False,
+            )
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+
     def test_publish_writes_receipt_and_deliver_emits_exact_authorized_bytes(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -283,7 +305,31 @@ class PublisherTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("入選事件與 manifest 不一致", result.stderr)
 
+    def test_publish_blocks_c_grade_merged_candidate_missing_from_reader_manifest(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, manifest, audit, _ = prepare_inputs(root)
+            audit_data = json.loads(Path(audit).read_text(encoding="utf-8"))
+            original = audit_data["runs"][0]["candidates"][0]
+            moved_url = original["candidate_urls"].pop()
+            original["source_ids"] = sorted({url.split("/")[3] for url in original["candidate_urls"]})
+            extra = json.loads(json.dumps(original))
+            extra.update({
+                "candidate_id": "cand-merged", "dedup_key": "merged-event",
+                "title": "被合併但未映射的 C 級事件", "provisional_grade": "C",
+                "decision": "merged", "reason_code": "duplicate_merged",
+                "selected_event_id": "GLB-01", "candidate_urls": [moved_url],
+                "source_ids": [moved_url.split("/")[3]],
+            })
+            audit_data["runs"][0]["candidates"].append(extra)
+            audit_data["runs"][0]["deduplicated_candidate_count"] = 2
+            manifest_data = json.loads(Path(manifest).read_text(encoding="utf-8"))
+            pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
+            errors = publish_news_brief.candidate_errors(
+                audit_data, manifest_data, pool,
+            )
+            self.assertTrue(any("C 級以上" in error for error in errors))
+
 
 if __name__ == "__main__":
     unittest.main()
-

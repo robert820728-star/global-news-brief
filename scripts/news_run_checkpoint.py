@@ -71,7 +71,7 @@ REQUIRED_STAGE_ARTIFACTS = {
     "build-news-maps": ("manifest",),
     "build-news-charts": ("manifest",),
     "collect-news-images": ("manifest",),
-    "render": ("brief",),
+    "render": ("brief", "manifest"),
 }
 VALID_STATUSES = {"pending", "running", "completed", "failed"}
 HEX_RE = re.compile(r"^[0-9a-fA-F]+$")
@@ -499,4 +499,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

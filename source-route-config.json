@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Primary same-source acquisition routes for the 15 required news sources.",
+  "routes": [
+    {"source_id": "cna", "route": "html_direct", "request_url_template": "https://www.cna.com.tw/list/aall.aspx", "snapshot_name": "cna.route-probe.bin"},
+    {"source_id": "pts", "route": "structured_direct", "request_url_template": "https://news.pts.org.tw/xml/newsfeed.xml", "snapshot_name": "pts.route-probe.bin"},
+    {"source_id": "udn", "route": "html_direct", "request_url_template": "https://udn.com/news/breaknews/1", "snapshot_name": "udn.route-probe.bin"},
+    {"source_id": "tvbs", "route": "html_direct", "request_url_template": "https://news.tvbs.com.tw/", "snapshot_name": "tvbs.route-probe.bin"},
+    {"source_id": "ebc", "route": "html_direct", "request_url_template": "https://news.ebc.net.tw/", "snapshot_name": "ebc.route-probe.bin"},
+    {"source_id": "xinhua", "route": "html_direct", "request_url_template": "https://www.news.cn/world/", "snapshot_name": "xinhua.route-probe.bin"},
+    {"source_id": "caixin", "route": "html_direct", "request_url_template": "https://www.caixin.com/", "snapshot_name": "caixin.route-probe.bin"},
+    {"source_id": "chinanews", "route": "html_direct", "request_url_template": "https://www.chinanews.com.cn/scroll-news/{yyyy}/{MMdd}/news.shtml", "date_offset_days": -1, "snapshot_name": "chinanews.route-probe.bin"},
+    {"source_id": "jiemian", "route": "html_direct", "request_url_template": "https://www.jiemian.com/", "snapshot_name": "jiemian.route-probe.bin"},
+    {"source_id": "yicai", "route": "html_direct", "request_url_template": "https://www.yicai.com/", "snapshot_name": "yicai.route-probe.bin"},
+    {"source_id": "reuters", "route": "structured_direct", "request_url_template": "https://www.reuters.com/arc/outboundfeeds/sitemap/?outputType=xml&from=100", "snapshot_name": "reuters.route-probe.bin"},
+    {"source_id": "ap", "route": "html_direct", "request_url_template": "https://apnews.com/world-news", "snapshot_name": "ap.route-probe.bin"},
+    {"source_id": "guardian", "route": "structured_direct", "request_url_template": "https://www.theguardian.com/world/rss", "snapshot_name": "guardian.route-probe.bin"},
+    {"source_id": "aljazeera", "route": "structured_direct", "request_url_template": "https://www.aljazeera.com/sitemap.xml?yyyy={yyyy}&mm={MM}&dd={dd}", "snapshot_name": "aljazeera.route-probe.bin"},
+    {"source_id": "cbs_news", "route": "structured_direct", "request_url_template": "https://www.cbsnews.com/latest/rss/world", "snapshot_name": "cbs-news.route-probe.bin"}
+  ]
+}

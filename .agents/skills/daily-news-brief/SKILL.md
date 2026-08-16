@@ -29,12 +29,12 @@ python3 scripts/news_run_checkpoint.py init --output <checkpoint> --run-id <run-
 
 2. `source-scan`：調用 `acquire-news-candidates` 掃描每板塊5站、合計15個主要來源，逐站保存原始快照、SHA-256、翻頁／停止、邊界與時間證據，並產生 `work/source-candidates.json`。直接讀取失敗立即改用完整瀏覽器；瀏覽器仍失敗才切同站替代入口。恢復時用 `news_run_checkpoint.py plan --input <checkpoint>` 找最早未完成 stage。
 3. `preprocess-news-candidates`：只做時間窗、URL 正規化、完全重複與初步聚類，不做選稿或評級。
-4. `select-news-events`：依設定評級與門檻挑選事件；每筆保存 `grading_evidence`。C 以上不得無故消失；邊境衝突與長期戰爭例行更新依既定 continuity 規則處理。
-5. `audit-news-candidates`：所有候選都留下 selected/excluded/merged/deferred 與明確理由，完成15站 source-scan 證據驗證及十四天候選歷史。本輪 candidate audit 綁定 checkpoint。
+4. `select-news-events`：依設定評級與門檻挑選事件；每筆保存 `grading_evidence`。事件與 URL 映射只能由本輪 fresh pool 建立，禁止匯入舊 `work/validation-run-*` 的 driver、事件常數或 URL 映射。輸出後執行 `scripts/validate_selection_freshness.py --selection <selection-results> --source-candidates <source-candidates>`；C 以上不得無故消失，且每個 `selected_event_id` 都必須存在於本輪事件。邊境衝突與長期戰爭例行更新依既定 continuity 規則處理。
+5. `audit-news-candidates`：所有候選都留下 selected/excluded/merged/deferred 與明確理由，十四天稽核保存逐站完整海選清單、每筆 `public_value_v1` 六項大分數與總分，完成15站 source-scan 證據驗證。本輪所有 C 級以上候選（含合併項）都以 `selected_event_id` 對應 manifest／讀者版事件，再把 candidate audit 綁定 checkpoint。
 6. `materialize-manifest`：只能把 audit 中 selected event ids 物化為 manifest，兩者必須一一對應；完成後綁定 manifest。從這一步起，事件內容只由 manifest 驅動。
-7. `verify-news-events` → `build-news-maps` → `build-news-charts` → `collect-news-images`：各技能只改自己的欄位。地圖、圖表、圖片互相獨立，不得互相替代。來源圖有合格圖片時必須取得並視覺驗收；需要專業官方資訊圖的事件不能用一般照片取代。地圖使用完整 canonical basemap、繁體中文地名、既定 yellow-admin-v2 規格。capsule 不搬運可重建的 generated PNG/SVG；需要時由 capsule 內的 canonical map source/style 與 renderer 在本地重建。
+7. `verify-news-events` → `build-news-maps` → `build-news-charts` → `collect-news-images`：各技能只改自己的欄位。`verify-news-events` 完成時只執行 `scripts/validate_news_brief.py stage --stage verify-news-events --before <before-manifest> --after <after-manifest>`；map、chart、image 階段同樣只執行自己的 stage ownership 檢查。地圖、圖表、圖片互相獨立，不得互相替代。來源圖有合格圖片時必須取得並視覺驗收；需要專業官方資訊圖的事件不能用一般照片取代。地圖使用完整 canonical basemap、繁體中文地名、既定 yellow-admin-v2 規格。capsule 不搬運可重建的 generated PNG/SVG；需要時由 capsule 內的 canonical map source/style 與 renderer 在本地重建。
 8. 每個 post-manifest stage 結束後使用 `recover_news_run.py plan --input <manifest> --brief <brief>` 檢查事件級失敗；同時更新同一 checkpoint。不得對 `recover_news_run.py` 虛構 `--checkpoint` 參數。
-9. 從 manifest 渲染讀者版，綁定 `render` 的 `brief` artifact，再跑 `validate_map_decisions.py`、`validate_news_brief.py brief` 與 unique-delivery-gate 檢查。失敗只局部恢復，不直接輸出草稿。
+9. 只有 checkpoint 的 `collect-news-images` completed 後，才第一次執行 `scripts/validate_news_brief.py manifest --input <final-manifest>`。它是 final-manifest validator，不得提前到 verify、map 或 chart 階段。通過後從 manifest 渲染讀者版，綁定 `render` 的 `brief` artifact，再跑 `validate_map_decisions.py`、`validate_news_brief.py brief` 與 unique-delivery-gate 檢查。失敗只局部恢復，不直接輸出草稿。
 10. 發布只能由 `scripts/publish_news_brief.py` 建立 release 與 receipt。最終交付只能執行 `--deliver-receipt ... --checkpoint <checkpoint>`；receipt 不是通行證本身，canonical publisher 在真正輸出 bytes 前會再次驗證目前 bootstrap binding、checkpoint、candidate audit/source scan、manifest、讀者版、附件與 map decisions。任何一項失敗 stdout 必須為空並返回恢復流程。
 
 每個 stage 都必須依序經過 `pending → running → completed`；只有 `running` 可轉為 `failed`。下一 stage 只能在前一 stage 已完成後開始。`completed` 必須綁定 `scripts/news_run_checkpoint.py` 內 `REQUIRED_STAGE_ARTIFACTS` 宣告的具名產物；空 evidence、缺少具名產物或直接填寫 completed 均視為跳關並由 checkpoint／publisher 阻擋。
@@ -60,4 +60,3 @@ python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 ## 交付不變式
 
 Repository 內只能有一個 canonical publisher：`scripts/publish_news_brief.py`。其他腳本不得建立保留 release 檔名。`daily-schedule-prompt.md` 必須且只能宣告一次 canonical gate 與一次 receipt delivery 命令。最終 reader bytes 只可來自 canonical publisher 的 `--deliver-receipt` stdout；不得重新讀取 release 後自行轉貼、加前後文、重寫摘要、回退到草稿或舊 release。
-

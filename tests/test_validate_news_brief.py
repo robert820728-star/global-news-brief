@@ -228,6 +228,37 @@ def valid_brief():
 
 
 class ValidatorTests(unittest.TestCase):
+    def test_crlf_event_separators_are_accepted(self):
+        manifest = valid_manifest()
+        second = copy.deepcopy(manifest["events"][0])
+        second["event_id"] = "TWN-02"
+        second["title"] = "第二則測試事件"
+        second["selection"]["dedup_key"] = "test-event-2"
+        manifest["events"].append(second)
+        brief = valid_brief()
+        brief = brief.replace(
+            "本期共 1 則新聞：台灣 1 則。",
+            "本期共 2 則新聞：台灣 2 則。",
+        ).replace(
+            "| TWN-01 | 8/14 05:30 | 測試地震事件 | B |",
+            "| TWN-01 | 8/14 05:30 | 測試地震事件 | B |\n"
+            "| TWN-02 | 8/14 05:30 | 第二則測試事件 | B |",
+        )
+        first_detail, follow_up = brief.split("## 後續觀察", 1)
+        second_detail = first_detail[first_detail.index("### TWN-01."):]
+        second_detail = second_detail.replace("TWN-01", "TWN-02").replace(
+            "測試地震事件", "第二則測試事件"
+        )
+        brief = first_detail.rstrip() + "\n\n---\n\n" + second_detail.rstrip() + (
+            "\n\n## 後續觀察" + follow_up.replace(
+                "- TWN-01：追蹤是否出現其他獨立來源。",
+                "- TWN-01：追蹤是否出現其他獨立來源。\n"
+                "- TWN-02：追蹤是否出現其他獨立來源。",
+            )
+        )
+        crlf_brief = brief.replace("\n", "\r\n")
+        self.assertEqual([], VALIDATOR.validate_brief_text(manifest, crlf_brief))
+
     def test_valid_manifest_and_brief(self):
         manifest = valid_manifest()
         self.assertEqual([], VALIDATOR.validate_manifest_data(manifest))
@@ -501,6 +532,28 @@ class ValidatorTests(unittest.TestCase):
         errors = VALIDATOR.validate_manifest_data(manifest)
         self.assertTrue(any("缺少附件路徑" in error for error in errors))
         self.assertTrue(any("必須保存具體判定理由" in error for error in errors))
+
+    def test_reader_brief_requires_explanation_when_event_has_no_image(self):
+        manifest = valid_manifest()
+        images = manifest["events"][0]["images"]
+        for check in images["source_checks"] + images["professional_source_checks"]:
+            check["usable_image_found"] = False
+            check["outcome"] = "no_usable_image"
+            check["detected_image_urls"] = []
+            check["failure_detail"] = "來源頁已完整檢查，未提供與本事件相符的可用圖片。"
+        images["status"] = "omitted"
+        images["assets"] = []
+        images["omission_reason"] = "所有已驗證來源頁均無可用圖片。"
+        images["professional_visual_status"] = "not_available"
+        images["professional_omission_reason"] = "官方與專業來源均未提供同期圖資。"
+        images["reader_omission_note"] = "已檢查本則新聞的可靠來源，未找到可確認為本事件且適合刊載的圖片。"
+        brief = valid_brief().replace(
+            "**圖片：**\n\n![圖一](sandbox:/tmp/image.png)\n\n圖一：官方資訊圖（來源：官方來源）。\n\n",
+            "",
+        )
+        errors = VALIDATOR.validate_brief_text(manifest, brief)
+        self.assertTrue(any("圖片說明" in error for error in errors))
+
 
     def test_chart_attachment_cannot_replace_or_duplicate_image(self):
         manifest = valid_manifest()

@@ -19,7 +19,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 偵測到官方或媒體圖片時，必須下載原圖或截取來源頁中的實際圖片，並以相同 `source_url` 寫入 `images.assets`；找到圖片卻沒有對應附件時維持 `pending` 並恢復。
 - 任一來源找到可信且相關圖片後，`images.status` 只能在至少一張附件通過驗收後改為 `ready`。
 - 已找到可用圖片但下載或截圖失敗時，`images.status` 維持 `pending`，並把圖片階段標成失敗後回到本技能重試；不得改成 `omitted` 後交付。
-- 只有全部引用來源都已檢查且均無可用圖片，才可使用 `omitted`，並保存具體後台原因。
+- 只有全部引用來源都已檢查且均無可用圖片，才可使用 `omitted`，並保存具體後台原因；同時填寫繁體中文、非技術性的 `reader_omission_note`，供讀者版說明為何本則沒有圖片。
 - 圖片取得失敗不改變事件等級。
 - 自製定位地圖由 `build-news-maps` 處理，不得放進 `images`。
 - 自製資料圖表由 `build-news-charts` 處理，不得放進 `images`。
@@ -162,5 +162,6 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - `images.assets[].width`
 - `images.assets[].height`
 - `images.omission_reason`
+- `images.reader_omission_note`
 
-所有來源確實沒有圖片時，保存後台原因但讀者版省略圖片欄。來源有圖但取得失敗時不得進入讀者版輸出。
+所有來源確實沒有圖片時，保存後台原因，讀者版不顯示空圖片欄，改顯示 `**圖片說明：**` 與 `reader_omission_note`。來源有圖但取得失敗時不得進入讀者版輸出。

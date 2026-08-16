@@ -23,12 +23,25 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["url", "title", "published_at", "importance_score", "importance_reason"],
+            "required": ["url", "title", "published_at", "importance_score", "importance_breakdown", "importance_reason"],
             "properties": {
               "url": {"type": "string", "format": "uri"},
               "title": {"type": "string", "minLength": 1},
               "published_at": {"type": "string", "format": "date-time"},
               "importance_score": {"type": "number", "minimum": 0, "maximum": 100},
+              "importance_breakdown": {
+                "type": "object",
+                "required": ["public_impact", "geographic_or_population_scope", "urgency_and_safety", "structural_or_policy_significance", "material_new_development", "core_section_relevance"],
+                "properties": {
+                  "public_impact": {"type": "number", "minimum": 0, "maximum": 30},
+                  "geographic_or_population_scope": {"type": "number", "minimum": 0, "maximum": 20},
+                  "urgency_and_safety": {"type": "number", "minimum": 0, "maximum": 15},
+                  "structural_or_policy_significance": {"type": "number", "minimum": 0, "maximum": 15},
+                  "material_new_development": {"type": "number", "minimum": 0, "maximum": 10},
+                  "core_section_relevance": {"type": "number", "minimum": 0, "maximum": 10}
+                },
+                "additionalProperties": false
+              },
               "importance_reason": {"type": "string", "minLength": 1}
             },
             "additionalProperties": true
