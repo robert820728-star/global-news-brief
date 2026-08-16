@@ -51,6 +51,24 @@ def make_bootstrap(root: Path):
 
 
 class NewsRunCheckpointTests(unittest.TestCase):
+    def test_stage_cannot_start_before_predecessor_completes(self):
+        checkpoint = MODULE.create_checkpoint("run-1", "a", "b")
+        with self.assertRaisesRegex(ValueError, "前一階段未完成"):
+            MODULE.mark_stage(
+                checkpoint, "preprocess-news-candidates", "running"
+            )
+
+    def test_stage_cannot_complete_without_running_first(self):
+        checkpoint = MODULE.create_checkpoint("run-1", "a", "b")
+        with self.assertRaisesRegex(ValueError, "必須先標記為 running"):
+            MODULE.mark_stage(checkpoint, "source-scan", "completed")
+
+    def test_completed_stage_requires_its_named_artifact(self):
+        checkpoint = MODULE.create_checkpoint("run-1", "a", "b")
+        MODULE.mark_stage(checkpoint, "source-scan", "running")
+        with self.assertRaisesRegex(ValueError, "source_candidates"):
+            MODULE.mark_stage(checkpoint, "source-scan", "completed")
+
     def test_incomplete_checkpoint_is_fail_closed(self):
         checkpoint = MODULE.create_checkpoint(
             "run-1", "2026-08-14T00:00:00+08:00", "2026-08-15T00:00:00+08:00",
@@ -81,13 +99,19 @@ class NewsRunCheckpointTests(unittest.TestCase):
                     bootstrap_required=True,
                 )
                 for stage in MODULE.RELEASE_REQUIRED_STAGES:
+                    MODULE.mark_stage(checkpoint, stage, "running")
                     artifacts = []
-                    if stage == "audit-news-candidates":
-                        artifacts = [f"candidate_audit={audit}"]
-                    elif stage == "materialize-manifest":
-                        artifacts = [f"manifest={manifest}"]
-                    elif stage == "render":
-                        artifacts = [f"brief={brief}"]
+                    for name in MODULE.REQUIRED_STAGE_ARTIFACTS[stage]:
+                        if name == "candidate_audit":
+                            path = audit
+                        elif name == "manifest":
+                            path = manifest
+                        elif name == "brief":
+                            path = brief
+                        else:
+                            path = root / f"{stage}-{name}.json"
+                            path.write_text("{}", encoding="utf-8")
+                        artifacts.append(f"{name}={path}")
                     MODULE.mark_stage(checkpoint, stage, "completed", artifacts)
                 self.assertEqual(MODULE.validate_checkpoint(checkpoint), [])
                 self.assertEqual(
@@ -119,6 +143,7 @@ class NewsRunCheckpointTests(unittest.TestCase):
             path = Path(directory) / "brief.md"
             path.write_text("first", encoding="utf-8")
             checkpoint = MODULE.create_checkpoint("run", "a", "b")
+            checkpoint["stage_status"]["render"] = "running"
             MODULE.mark_stage(checkpoint, "render", "completed", [f"brief={path}"])
             path.write_text("changed", encoding="utf-8")
             errors = MODULE.verify_bound_artifact(checkpoint, "render", "brief", path)
@@ -127,3 +152,4 @@ class NewsRunCheckpointTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

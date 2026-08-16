@@ -153,13 +153,19 @@ def prepare_inputs(root: Path):
         "run-1", "2026-08-13T06:00:00+08:00", "2026-08-14T06:00:00+08:00"
     )
     for stage in news_run_checkpoint.RELEASE_REQUIRED_STAGES:
+        news_run_checkpoint.mark_stage(checkpoint, stage, "running")
         artifacts = []
-        if stage == "audit-news-candidates":
-            artifacts = [f"candidate_audit={audit_path}"]
-        elif stage == "materialize-manifest":
-            artifacts = [f"manifest={manifest_path}"]
-        elif stage == "render":
-            artifacts = [f"brief={brief_path}"]
+        for name in news_run_checkpoint.REQUIRED_STAGE_ARTIFACTS[stage]:
+            if name == "candidate_audit":
+                path = audit_path
+            elif name == "manifest":
+                path = manifest_path
+            elif name == "brief":
+                path = brief_path
+            else:
+                path = root / f"{stage}-{name}.json"
+                path.write_text("{}", encoding="utf-8")
+            artifacts.append(f"{name}={path}")
         news_run_checkpoint.mark_stage(checkpoint, stage, "completed", artifacts)
     checkpoint_path = root / "checkpoint.json"
     news_run_checkpoint.save(checkpoint_path, checkpoint)
@@ -263,6 +269,9 @@ class PublisherTests(unittest.TestCase):
             Path(audit).write_text(json.dumps(audit_data, ensure_ascii=False), encoding="utf-8")
             checkpoint_data = news_run_checkpoint.load(checkpoint)
             news_run_checkpoint.mark_stage(
+                checkpoint_data, "audit-news-candidates", "running"
+            )
+            news_run_checkpoint.mark_stage(
                 checkpoint_data, "audit-news-candidates", "completed",
                 [f"candidate_audit={audit}"],
             )
@@ -277,3 +286,4 @@ class PublisherTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

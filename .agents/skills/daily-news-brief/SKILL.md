@@ -37,6 +37,8 @@ python3 scripts/news_run_checkpoint.py init --output <checkpoint> --run-id <run-
 9. 從 manifest 渲染讀者版，綁定 `render` 的 `brief` artifact，再跑 `validate_map_decisions.py`、`validate_news_brief.py brief` 與 unique-delivery-gate 檢查。失敗只局部恢復，不直接輸出草稿。
 10. 發布只能由 `scripts/publish_news_brief.py` 建立 release 與 receipt。最終交付只能執行 `--deliver-receipt ... --checkpoint <checkpoint>`；receipt 不是通行證本身，canonical publisher 在真正輸出 bytes 前會再次驗證目前 bootstrap binding、checkpoint、candidate audit/source scan、manifest、讀者版、附件與 map decisions。任何一項失敗 stdout 必須為空並返回恢復流程。
 
+每個 stage 都必須依序經過 `pending → running → completed`；只有 `running` 可轉為 `failed`。下一 stage 只能在前一 stage 已完成後開始。`completed` 必須綁定 `scripts/news_run_checkpoint.py` 內 `REQUIRED_STAGE_ARTIFACTS` 宣告的具名產物；空 evidence、缺少具名產物或直接填寫 completed 均視為跳關並由 checkpoint／publisher 阻擋。
+
 ## 恢復邏輯
 
 Checkpoint 前的 Stage -1 失敗：重新執行 `bootstrap-workspace.md` 的 verified runtime capsule bootstrap，只重抓缺失／驗證失敗 chunk；不得改用手工新聞、逐 blob full-tree 搬運或 shell 網路 clone。
@@ -58,3 +60,4 @@ python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 ## 交付不變式
 
 Repository 內只能有一個 canonical publisher：`scripts/publish_news_brief.py`。其他腳本不得建立保留 release 檔名。`daily-schedule-prompt.md` 必須且只能宣告一次 canonical gate 與一次 receipt delivery 命令。最終 reader bytes 只可來自 canonical publisher 的 `--deliver-receipt` stdout；不得重新讀取 release 後自行轉貼、加前後文、重寫摘要、回退到草稿或舊 release。
+

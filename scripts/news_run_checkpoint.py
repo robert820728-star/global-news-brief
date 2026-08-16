@@ -61,6 +61,18 @@ POST_MANIFEST_STAGES = (
     "render",
 )
 RELEASE_REQUIRED_STAGES = PRE_MANIFEST_STAGES + POST_MANIFEST_STAGES
+REQUIRED_STAGE_ARTIFACTS = {
+    "source-scan": ("source_candidates",),
+    "preprocess-news-candidates": ("preprocessed_candidates",),
+    "select-news-events": ("selection_results",),
+    "audit-news-candidates": ("candidate_audit",),
+    "materialize-manifest": ("manifest",),
+    "verify-news-events": ("manifest",),
+    "build-news-maps": ("manifest",),
+    "build-news-charts": ("manifest",),
+    "collect-news-images": ("manifest",),
+    "render": ("brief",),
+}
 VALID_STATUSES = {"pending", "running", "completed", "failed"}
 HEX_RE = re.compile(r"^[0-9a-fA-F]+$")
 
@@ -252,8 +264,20 @@ def mark_stage(
         raise ValueError(f"未知 checkpoint stage：{stage}")
     if status not in VALID_STATUSES:
         raise ValueError(f"無效 stage status：{status}")
+    stage_status = data.setdefault("stage_status", {})
+    current_status = stage_status.get(stage, "pending")
+    stage_index = RELEASE_REQUIRED_STAGES.index(stage)
+    if status == "running" and stage_index:
+        predecessor = RELEASE_REQUIRED_STAGES[stage_index - 1]
+        if stage_status.get(predecessor) != "completed":
+            raise ValueError(f"前一階段未完成：{predecessor}")
+    if status == "completed" and current_status != "running":
+        raise ValueError(f"{stage} 必須先標記為 running 才能 completed")
+    if status == "failed" and current_status != "running":
+        raise ValueError(f"{stage} 必須先標記為 running 才能 failed")
     evidence: dict[str, Any] = {
         "recorded_at": now_iso(),
+        "status": status,
         "message": message,
         "artifacts": {},
     }
@@ -264,7 +288,16 @@ def mark_stage(
             "sha256": sha256_file(path),
             "size": path.stat().st_size,
         }
-    data.setdefault("stage_status", {})[stage] = status
+    if status == "completed":
+        missing = [
+            name for name in REQUIRED_STAGE_ARTIFACTS[stage]
+            if name not in evidence["artifacts"]
+        ]
+        if missing:
+            raise ValueError(
+                f"{stage} completed 缺少必要 artifact：{', '.join(missing)}"
+            )
+    stage_status[stage] = status
     data.setdefault("stage_evidence", {})[stage] = evidence
     data["updated_at"] = now_iso()
     return data
@@ -326,6 +359,26 @@ def validate_checkpoint(
         stage_evidence = evidence.get(stage)
         if not isinstance(stage_evidence, dict):
             errors.append(f"checkpoint stage 缺少 evidence：{stage}")
+            continue
+        if state == "completed":
+            if stage_evidence.get("status") != "completed":
+                errors.append(f"checkpoint stage evidence 狀態不符：{stage}")
+            artifacts = stage_evidence.get("artifacts")
+            if not isinstance(artifacts, dict):
+                errors.append(f"checkpoint stage artifacts 無效：{stage}")
+                continue
+            for name in REQUIRED_STAGE_ARTIFACTS[stage]:
+                binding = artifacts.get(name)
+                if not isinstance(binding, dict):
+                    errors.append(f"checkpoint stage 缺少必要 artifact：{stage}.{name}")
+                    continue
+                if not str(binding.get("path", "")).strip():
+                    errors.append(f"checkpoint artifact 缺少路徑：{stage}.{name}")
+                digest = str(binding.get("sha256", ""))
+                if len(digest) != 64 or not HEX_RE.fullmatch(digest):
+                    errors.append(f"checkpoint artifact SHA-256 無效：{stage}.{name}")
+                if not isinstance(binding.get("size"), int) or binding["size"] < 0:
+                    errors.append(f"checkpoint artifact size 無效：{stage}.{name}")
     recovery = data.get("recovery", {})
     if isinstance(recovery, dict):
         unresolved = recovery.get("unresolved_targets", [])
@@ -446,3 +499,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
