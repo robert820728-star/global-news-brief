@@ -6,6 +6,20 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PipelineContractTests(unittest.TestCase):
+    def test_external_ledger_is_debounced_and_never_blocks_news(self):
+        prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        protocol = (ROOT / "bootstrap" / "RUN_LEDGER_PROTOCOL.md").read_text(
+            encoding="utf-8"
+        )
+
+        for document in (prompt, protocol):
+            self.assertIn("one comment per run_id", document)
+            self.assertIn("every 8 completed chunks", document)
+            self.assertIn("at most once every 3 minutes", document)
+            self.assertIn("best-effort", document)
+            self.assertIn("must never block the news pipeline", document)
+            self.assertIn("external_ledger: unavailable", document)
+
     def test_mobile_bootstrap_has_bounded_diagnostic_transport(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         bootstrap = (ROOT / "bootstrap-workspace.md").read_text(encoding="utf-8")

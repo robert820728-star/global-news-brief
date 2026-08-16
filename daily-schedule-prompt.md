@@ -41,6 +41,8 @@ Stage -1 loader 可用宿主的 `python3` 執行，因 loader 與 resolver 只�
 
 所有可控制的成功或失敗結束都必須由 `bootstrap/bootstrap_progress.py` 輸出固定 `RUN_RECEIPT`，至少包含 run id、main SHA、最後完成 stage、chunk／block、last error、retry count、external ledger 與 canonical delivery。GitHub 外部台帳沒有寫入權限或更新失敗時，必須顯示 `external_ledger: unavailable`，但不得因此中止新聞流程。失敗時保留完整本地進度；只有正式讀者版 canonical delivery 成功、最終 receipt 已輸出後才清除本地進度。
 
+若具 GitHub 留言權限，依 `bootstrap/RUN_LEDGER_PROTOCOL.md` 將 issue #3 作為 **best-effort** 外部台帳：每輪使用 **one comment per run_id**，manifest/helper 驗證後更新、之後 **every 8 completed chunks**、全部 chunks、workspace、新聞 stages、失敗與成功時更新同一則 comment。一般新聞階段 **at most once every 3 minutes**，失敗與最終成功立即更新。任何台帳錯誤都改記 `external_ledger: unavailable`，且 **must never block the news pipeline**。
+
 ## 必讀 runtime 契約
 
 Stage -1 完成後，至少讀取並遵守：

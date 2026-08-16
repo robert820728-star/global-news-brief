@@ -154,6 +154,7 @@
 - 個人偏好：保存在使用者自己的排程設定，不回寫公共 repo。
 - 執行流程：固定由 `daily-news-brief` 依序調用海選、候選稽核、複查、地圖、圖片與自主恢復技能，再套用模板；不得把整個流程改寫成單一臨時提示詞。
 - 候選歷史：優先保存於使用者可持久工作區；工作區不可用且使用者有 repository 寫入權限時才回寫。兩者皆無時照常執行，僅不保證跨日十四天回查。
+- 執行診斷 / Run diagnostics：若 GitHub connector 有留言權限，依 `bootstrap/RUN_LEDGER_PROTOCOL.md` 在固定 issue 以每輪一則 comment 保存節流進度；沒有權限時顯示 `external_ledger: unavailable` 並照常完成新聞，不把診斷台帳變成執行前提。
 
 ## 五、首次測試
 
