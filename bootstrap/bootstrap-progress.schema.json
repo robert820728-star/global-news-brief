@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/bootstrap-progress.schema.json",
+  "title": "Daily news bootstrap progress",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "resolved_commit",
+    "stage",
+    "status",
+    "chunks_total",
+    "chunks_completed",
+    "current_chunk",
+    "blocks_total",
+    "blocks_completed",
+    "current_block",
+    "last_success_at",
+    "last_error",
+    "retry_count",
+    "current_block_attempts",
+    "last_completed_stage",
+    "external_ledger",
+    "canonical_delivery",
+    "updated_at"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "run_id": {"type": "string", "minLength": 1},
+    "resolved_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "stage": {"type": "string", "minLength": 1},
+    "status": {"enum": ["running", "failed", "completed"]},
+    "chunks_total": {"type": "integer", "minimum": 1},
+    "chunks_completed": {"type": "integer", "minimum": 0},
+    "current_chunk": {"type": ["string", "null"]},
+    "blocks_total": {"type": "integer", "minimum": 0},
+    "blocks_completed": {"type": "integer", "minimum": 0},
+    "current_block": {"type": ["integer", "null"], "minimum": 1},
+    "last_success_at": {"type": "string", "minLength": 1},
+    "last_error": {"type": ["string", "null"]},
+    "retry_count": {"type": "integer", "minimum": 0, "maximum": 3},
+    "current_block_attempts": {
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["attempt", "byte_size", "sha256", "outcome", "error", "at"],
+        "properties": {
+          "attempt": {"type": "integer", "minimum": 1, "maximum": 4},
+          "byte_size": {"type": "integer", "minimum": 0},
+          "sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+          "outcome": {"enum": ["failed", "succeeded"]},
+          "error": {"type": ["string", "null"]},
+          "at": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "last_completed_stage": {"type": "string", "minLength": 1},
+    "external_ledger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "issue_url", "comment_id", "last_update_at", "error"],
+      "properties": {
+        "status": {"enum": ["pending", "available", "unavailable"]},
+        "issue_url": {"type": ["string", "null"]},
+        "comment_id": {"type": ["integer", "null"], "minimum": 1},
+        "last_update_at": {"type": ["string", "null"]},
+        "error": {"type": ["string", "null"]}
+      }
+    },
+    "canonical_delivery": {"type": "boolean"},
+    "updated_at": {"type": "string", "minLength": 1}
+  }
+}
