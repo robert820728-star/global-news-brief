@@ -19,6 +19,26 @@ class PipelineContractTests(unittest.TestCase):
         for forbidden in ("Codex", "powershell", "bootstrap capsule", "git clone"):
             self.assertNotIn(forbidden, daily)
 
+    def test_mobile_image_delivery_uses_small_stable_thumbnail_with_fallback(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "最多一張",
+            "同一張圖",
+            "srcset",
+            "640px",
+            "200KB",
+            "75–82",
+            "改放同一張原圖",
+            "替代文字",
+            "短效簽名",
+            "登入",
+            "`data:`",
+            "`blob:`",
+        ):
+            self.assertIn(requirement, daily)
+        self.assertNotIn("**圖片來源頁：**", daily)
+
     def test_selection_contract_forbids_prior_run_drivers(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         self.assertIn("validate_selection_freshness.py", prompt)

@@ -1,5 +1,15 @@
 # 版本紀錄 / Version Record
 
+## v0.2.1-mobile-image-stability — 2026-08-17
+
+- 建立原因 / Reason: 手機排程內嵌原始新聞圖片時常因解析度與檔案過大而載入失敗。 / Original news images embedded by the mobile task were often too large to load reliably.
+- 實作方式 / Approach: 保留每則新聞原本選圖，優先使用發布者提供的同圖小尺寸版本；可實際轉檔時才縮小，否則允許同一張原圖；原圖不適合公開內嵌時只顯示圖片說明，不以圖片網址或原網站連結代替。 / Preserve the selected image, prefer its publisher-provided small variant, resize when conversion is genuinely available, otherwise allow the same original image; when it cannot be embedded, show only an image explanation rather than an image URL or source-page substitute.
+- 變更入口 / Changed entry points: `mobile-chatgpt-daily-prompt.md`, `mobile-chatgpt-start-prompt.md`, `README.md`.
+- 重要設定 / Important configuration: 每則最多一張；優先最長邊 `640px`、JPEG/WebP 品質 `75–82`、目標 `200KB` 以下；做不到時允許同一張原圖；不得換圖。 / At most one image per item; prefer a `640px` longest edge, JPEG/WebP quality `75–82`, and a target below `200KB`; allow the same original when unavailable; never substitute another image.
+- 驗證方式 / Validation: RED→GREEN 手機圖片契約、完整 pipeline contract、GitHub 遠端 blob 一致性。 / Red-green mobile image contract, full pipeline contract, and GitHub remote blob verification.
+- 結果 / Result: 手機圖片契約與完整 pipeline contract 共 4/4 通過；規則未改動十四天、六項評分或 C 級以上讀者版門檻。 / The mobile image and complete pipeline contracts pass 4/4; the fourteen-day, six-score, and C-or-higher reader thresholds remain unchanged.
+- 下一決定 / Next decision: 使用者若特別需要某張高解析圖片，再於對話中個別提供該張原尺寸圖片。 / If the user wants a particular image in high resolution, provide that original-size image individually in the conversation.
+
 ## v0.2.0-mobile-basic — 2026-08-17
 
 - 建立原因 / Reason: 支援使用者直接在手機一般 ChatGPT 對話建立每日排程，並降低日常模型消耗。 / Support creating the daily schedule from a normal mobile ChatGPT conversation while reducing routine model usage.
