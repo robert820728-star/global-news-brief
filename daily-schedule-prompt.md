@@ -21,11 +21,13 @@ GitHub connector 可見 repository 不代表 shell 已有 repository。每輪都
 2. connector 直接讀取 `https://api.github.com/repos/robert820728-star/global-news-brief/git/ref/heads/main?cache_bust=<nonce-a>`，取得 `object.sha`；同輪再用另一個新 nonce 讀取 `https://api.github.com/repos/robert820728-star/global-news-brief/commits/main?cache_bust=<nonce-b>`，取得 `sha`。
 3. 兩個端點必須回傳 same SHA。若不一致，以兩個全新 nonce 各重讀一次；第二次仍不一致就停止 Stage -1，不得猜測何者較新。
 4. The task must not enumerate repository branches, must not reuse a commit SHA、前次 workspace、排程建立時的固定 SHA 或模型記憶來決定本輪版本。只有本輪雙端點一致的 SHA 是本輪 repository authority。
-5. 從該 SHA 取得 recursive tree、`bootstrap/capsule-manifest.json`、`bootstrap/bootstrap_loader.py` 與 manifest 指定 chunks；本輪後續所有 repository 讀取都固定使用該 SHA，不得在執行途中改跟新的 `main`。
-6. 依 `bootstrap-workspace.md` 驗證 capsule freshness、runtime Git blob SHA、loader SHA 與 chunks；
-7. 將 manifest／loader／chunks 精確寫入 writable staging directory；
-8. 由 loader 在 shell 本地解碼、驗 SHA、解壓並建立 executable workspace；
-9. loader 成功產生 `bootstrap-workspace.json` 後，才可建立 news checkpoint。下一輪必須重新執行上述解析，不得直接重用本輪 SHA。
+5. 從該 SHA 取得 recursive tree、`bootstrap/capsule-manifest.json`、`bootstrap/bootstrap_loader.py`、`bootstrap/bootstrap_progress.py`、`bootstrap/bootstrap-progress.schema.json` 與 manifest 指定 chunks；本輪後續所有 repository 讀取都固定使用該 SHA，不得在執行途中改跟新的 `main`。
+6. 依 `bootstrap-workspace.md` 驗證 capsule freshness、runtime Git blob SHA、loader／progress helper SHA 與 chunks；manifest 驗證後立即建立獨立的 `bootstrap-progress.json`，它是 Stage -1 診斷紀錄，不是 news checkpoint。
+7. 手機低壓力正常路徑一次讀取相鄰兩個既有 block 的 **16-line** 範圍，再由 progress helper 切開並分別核對兩個原始 block 的 size/SHA-256。任一半失敗才退回原本 8-line 逐 block 讀取，不得放寬驗證，也不得重新下載先前已驗證 chunks。
+8. 每個固定 SHA、固定 line range 使用 **one initial attempt plus at most three retries**；允許時依序退避 **2, 5, and 10 seconds**。每次記錄 byte size、SHA-256 與錯誤；第 4 次仍失敗才停止。
+9. 將 manifest／loader／progress helper／chunks 精確寫入 writable staging directory；每個 chunk 完整通過後才原子更新一次進度。
+10. 由 loader 在 shell 本地解碼、驗 SHA、解壓並建立 executable workspace；
+11. loader 成功產生 `bootstrap-workspace.json` 後，才可建立 news checkpoint。下一輪必須重新執行上述解析，不得直接重用本輪 SHA。
 
 Stage -1 loader 可用宿主的 `python3` 執行，因 loader 與 resolver 只依賴標準庫；它不得直接成為新聞 pipeline runtime。Workspace 建立後，若宿主提供的 bundled-runtime Python 絕對路徑可取得，必須優先傳入 `python3 scripts/resolve_bundled_python.py --preferred-python <host-bundled-python>`；否則執行 `python3 scripts/resolve_bundled_python.py`，由 resolver 依環境變數及跨平台 Codex runtime 位置尋找。Resolver 回傳 `status=ready` 前必須實際以候選 executable 匯入 Pillow；以它回傳的同一個 `<bundled-python>` 執行 checkpoint、route fetcher 與本輪所有 canonical Python scripts。不得直接假設 PATH 上的 `python`／`python3` 具有 Pillow，不得把啟動 resolver 的 Python 當成已驗證 runtime；所有候選皆失敗才回報 Stage -1 blocker。Materialized runtime 的 receipt 綁定檔視為唯讀；generated PNG/SVG 可以重建，但 renderer 不得改寫 capsule 內既有的 section metadata 或其他 receipt 綁定檔。
 
@@ -36,6 +38,8 @@ Stage -1 loader 可用宿主的 `python3` 執行，因 loader 與 resolver 只�
 `repository materialization / executable workspace acquisition`
 
 此時不得產生 checkpoint、manifest、release receipt 或假讀者版。
+
+所有可控制的成功或失敗結束都必須由 `bootstrap/bootstrap_progress.py` 輸出固定 `RUN_RECEIPT`，至少包含 run id、main SHA、最後完成 stage、chunk／block、last error、retry count、external ledger 與 canonical delivery。GitHub 外部台帳沒有寫入權限或更新失敗時，必須顯示 `external_ledger: unavailable`，但不得因此中止新聞流程。失敗時保留完整本地進度；只有正式讀者版 canonical delivery 成功、最終 receipt 已輸出後才清除本地進度。
 
 ## 必讀 runtime 契約
 

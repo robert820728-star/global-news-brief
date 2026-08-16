@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import hashlib
 import json
 import os
 import re
@@ -134,6 +135,86 @@ def load_progress(path: Path) -> dict[str, Any]:
     progress = json.loads(Path(path).read_text(encoding="utf-8"))
     validate_progress(progress)
     return progress
+
+
+def _validate_block_spec(block: dict[str, Any]) -> None:
+    required = ("start_line", "end_line", "size", "sha256")
+    if not isinstance(block, dict) or any(field not in block for field in required):
+        raise ValueError("grouped fetch block specification is incomplete")
+    if not isinstance(block["start_line"], int) or not isinstance(block["end_line"], int):
+        raise ValueError("grouped fetch line range is invalid")
+    if block["start_line"] <= 0 or block["end_line"] < block["start_line"]:
+        raise ValueError("grouped fetch line range is invalid")
+    if not isinstance(block["size"], int) or block["size"] <= 0:
+        raise ValueError("grouped fetch block size is invalid")
+    if not SHA256_RE.fullmatch(str(block["sha256"])):
+        raise ValueError("grouped fetch block sha256 is invalid")
+
+
+def validate_grouped_fetch(
+    raw: bytes,
+    first: dict[str, Any],
+    second: dict[str, Any],
+) -> list[bytes]:
+    """Split one 16-line response into two declared 8-line blocks and verify both."""
+    _validate_block_spec(first)
+    _validate_block_spec(second)
+    if first["end_line"] + 1 != second["start_line"]:
+        raise ValueError("grouped fetch blocks must be adjacent")
+    first_line_count = first["end_line"] - first["start_line"] + 1
+    second_line_count = second["end_line"] - second["start_line"] + 1
+    lines = raw.splitlines(keepends=True)
+    if len(lines) != first_line_count + second_line_count or not raw.endswith(b"\n"):
+        raise ValueError("grouped fetch response is truncated or has non-canonical framing")
+    parts = [
+        b"".join(lines[:first_line_count]),
+        b"".join(lines[first_line_count:]),
+    ]
+    for label, part, spec in (("first", parts[0], first), ("second", parts[1], second)):
+        if len(part) != spec["size"]:
+            raise ValueError(f"grouped fetch {label} block size mismatch")
+        if hashlib.sha256(part).hexdigest() != spec["sha256"]:
+            raise ValueError(f"grouped fetch {label} block sha256 mismatch")
+    return parts
+
+
+def _atomic_write_bytes(path: Path, raw: bytes) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary = tempfile.mkstemp(
+        prefix=path.name + ".",
+        suffix=".tmp",
+        dir=path.parent,
+    )
+    try:
+        with os.fdopen(descriptor, "wb") as stream:
+            stream.write(raw)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, path)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
+
+
+def verify_grouped_file(
+    input_path: Path,
+    blocks_path: Path,
+    output_dir: Path,
+    prefix: str,
+) -> list[Path]:
+    blocks = json.loads(blocks_path.read_text(encoding="utf-8"))
+    if not isinstance(blocks, list) or len(blocks) != 2:
+        raise ValueError("grouped fetch block specification must contain exactly two blocks")
+    parts = validate_grouped_fetch(input_path.read_bytes(), blocks[0], blocks[1])
+    indexes = [blocks[0].get("index", 1), blocks[1].get("index", 2)]
+    paths = []
+    for index, part in zip(indexes, parts):
+        if not isinstance(index, int) or index <= 0:
+            raise ValueError("grouped fetch block index is invalid")
+        target = output_dir / f"{prefix}.block{index:04d}.txt"
+        _atomic_write_bytes(target, part)
+        paths.append(target)
+    return paths
 
 
 def record_chunk(
@@ -392,7 +473,25 @@ def main() -> int:
     final.add_argument("--canonical-delivery", required=True, choices=("true", "false"))
     final.add_argument("--clear", action="store_true")
 
+    grouped = subparsers.add_parser("verify-grouped")
+    grouped.add_argument("--input", required=True)
+    grouped.add_argument("--blocks", required=True)
+    grouped.add_argument("--output-dir", required=True)
+    grouped.add_argument("--prefix", required=True)
+
     args = parser.parse_args()
+    if args.command == "verify-grouped":
+        paths = verify_grouped_file(
+            Path(args.input),
+            Path(args.blocks),
+            Path(args.output_dir),
+            args.prefix,
+        )
+        print(json.dumps({
+            "status": "verified",
+            "blocks": [str(path) for path in paths],
+        }, ensure_ascii=False, sort_keys=True))
+        return 0
     if args.command == "init":
         path = Path(args.output)
         return _write_updated(

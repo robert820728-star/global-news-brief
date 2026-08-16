@@ -6,6 +6,18 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PipelineContractTests(unittest.TestCase):
+    def test_mobile_bootstrap_has_bounded_diagnostic_transport(self):
+        prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        bootstrap = (ROOT / "bootstrap-workspace.md").read_text(encoding="utf-8")
+
+        for document in (prompt, bootstrap):
+            self.assertIn("bootstrap/bootstrap_progress.py", document)
+            self.assertIn("16-line", document)
+            self.assertIn("one initial attempt plus at most three retries", document)
+            self.assertIn("2, 5, and 10", document)
+            self.assertIn("RUN_RECEIPT", document)
+            self.assertIn("external_ledger: unavailable", document)
+
     def test_each_run_resolves_fresh_main_and_pins_only_that_run(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         bootstrap = (ROOT / "bootstrap-workspace.md").read_text(encoding="utf-8")

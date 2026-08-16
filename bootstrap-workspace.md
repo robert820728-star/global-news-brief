@@ -25,10 +25,12 @@ Before executing any `scripts/*.py`, do all of the following:
    - positive `line_width` and `retrieval_block_lines`
    - non-empty `runtime_files` and `chunks` lists.
 5. Fail stale capsules closed. Compare every `runtime_files[].path` and `source_blob_sha` in the manifest with the same path in the resolved SHA's recursive tree. Also fetch that commit's metadata and require `manifest.source_commit` to be either the resolved commit itself or its first parent. If any runtime path is missing/different, or the source-commit relation is stale, stop with `repository materialization / executable workspace acquisition`.
-6. Fetch `bootstrap/bootstrap_loader.py` from the same resolved commit. Validate its connector-returned Git blob SHA against both the resolved tree and `manifest.loader.source_blob_sha`. Write it to a temporary writable staging directory.
-7. **Do not fetch an entire chunk in one connector response.** For every chunk in `manifest.chunks[]`, iterate its `blocks[]` in order. Fetch `bootstrap/<chunk-name>` from the same resolved commit with the exact `start_line` and `end_line` declared by that block. Each block is intentionally at most 8 lines / 2048 Base64 characters plus LF bytes. Write the returned block bytes to a temporary block file using canonical LF endings, then locally verify the block `size` and `sha256`. A truncated or altered block must be retried by the same line range; never accept partial text.
-8. After all blocks for one chunk validate, concatenate the verified block files in order into the canonical chunk file. Locally verify the complete chunk `size` and `sha256`, then verify the unwrapped Base64 `encoded_size` and `encoded_sha256`. Only after every chunk passes may Stage -1 continue. This makes connector truncation a small-block retry instead of a whole-run failure.
-9. Write the exact manifest JSON to the staging directory as `capsule-manifest.json` and run the loader locally. This initial `python3` needs only the standard library and is not yet the verified news runtime:
+6. Fetch `bootstrap/bootstrap_loader.py`, `bootstrap/bootstrap_progress.py`, and `bootstrap/bootstrap-progress.schema.json` from the same resolved commit. Validate each connector-returned Git blob SHA against the resolved tree; also validate the loader against `manifest.loader.source_blob_sha`. Write them to a temporary writable staging directory. The progress helper uses only the Python standard library and is allowed before the news runtime exists.
+7. After the manifest is accepted, initialize the separate pre-checkpoint record with `python3 <staging>/bootstrap_progress.py init --output <staging>/bootstrap-progress.json --run-id <run-id> --resolved-commit <latest-main-commit-sha> --chunks-total <count>`. This file is diagnostic evidence, not the news checkpoint.
+8. **Do not fetch an entire chunk in one connector response.** For every chunk in `manifest.chunks[]`, iterate its `blocks[]` in order. The normal low-pressure path requests a **16-line** range spanning two adjacent declared blocks. Save the exact canonical-LF response and run `bootstrap/bootstrap_progress.py verify-grouped` with the two original block specifications. The helper splits the response and independently verifies both original block sizes and SHA-256 values. If either half is missing or altered, discard the grouped response and fall back to the exact 8-line request for each affected block.
+9. Every exact block request uses the same pinned commit and same declared `start_line` / `end_line` for **one initial attempt plus at most three retries**. Use backoff delays of **2, 5, and 10 seconds**, or the host's smallest safe equivalents, and record every attempt's byte size, SHA-256, and error with the progress helper. After the fourth failure, stop. Never restart or re-download earlier verified chunks.
+10. After all blocks for one chunk validate, concatenate the verified block files in order into the canonical chunk file. Locally verify the complete chunk `size` and `sha256`, then verify the unwrapped Base64 `encoded_size` and `encoded_sha256`. Only then atomically advance `chunks_completed` by one with the progress helper. Only after every chunk passes may Stage -1 continue.
+11. Write the exact manifest JSON to the staging directory as `capsule-manifest.json` and run the loader locally. This initial `python3` needs only the standard library and is not yet the verified news runtime:
 
 ```bash
 python3 <staging>/bootstrap_loader.py \
@@ -41,7 +43,7 @@ python3 <staging>/bootstrap_loader.py \
 
 The loader independently revalidates canonical line framing, every retrieval block, every complete chunk, the reconstructed Base64 stream, payload SHA-256, tar safety, and every runtime file by path, size, SHA-256 and Git blob SHA before writing `<workspace>/bootstrap-workspace.json`.
 
-10. Only after the loader returns success, change the shell working directory to `<workspace>`. Resolve the pipeline runtime before initializing a checkpoint. Prefer a host-provided bundled-runtime Python absolute path when the host dependency locator exposes one:
+12. Only after the loader returns success, change the shell working directory to `<workspace>`. Resolve the pipeline runtime before initializing a checkpoint. Prefer a host-provided bundled-runtime Python absolute path when the host dependency locator exposes one:
 
 ```bash
 python3 scripts/resolve_bundled_python.py --preferred-python <host-bundled-python>
@@ -49,7 +51,7 @@ python3 scripts/resolve_bundled_python.py --preferred-python <host-bundled-pytho
 
 If the host does not provide a path, run `python3 scripts/resolve_bundled_python.py`; it searches declared environment variables and cross-platform Codex runtime cache locations. The resolver must return `status=ready` after actually importing Pillow with the selected executable. The `python3` that launched the resolver is not accepted as the pipeline runtime merely because it is on PATH.
 
-11. Initialize the checkpoint and run every subsequent canonical script with the exact `<bundled-python>` returned by the resolver:
+13. Initialize the checkpoint and run every subsequent canonical script with the exact `<bundled-python>` returned by the resolver:
 
 ```bash
 <bundled-python> scripts/news_run_checkpoint.py init \
@@ -83,5 +85,9 @@ A pre-existing workspace may be reused only after this run independently resolve
 Any failure before `news_run_checkpoint.py init` is reported as:
 
 `repository materialization / executable workspace acquisition`
+
+Every controlled exit, successful or failed, must print one stable `RUN_RECEIPT` generated by `bootstrap/bootstrap_progress.py`. It includes the run id, resolved main SHA, last completed stage, chunk and block position, last error, retry count, external-ledger status, and canonical-delivery status. If GitHub write access is absent or the best-effort ledger update fails, record and print `external_ledger: unavailable`; ledger failure must never block the news pipeline.
+
+Retain `bootstrap-progress.json` on failure so the final report can diagnose the earliest boundary. After successful canonical reader delivery, print the final receipt first and then clear the local progress file. The compact final external ledger record may remain.
 
 Do not mislabel it as source-scan, preprocessing, validation, image, map, or publisher failure. Do not bypass the repository pipeline by manually producing a news brief.

@@ -1,4 +1,5 @@
 import importlib.util
+import hashlib
 import json
 import tempfile
 import unittest
@@ -189,6 +190,58 @@ class BootstrapProgressTests(unittest.TestCase):
                 clear=True,
             )
         self.assertTrue(self.path.exists())
+
+    def test_chunk_41_grouped_truncation_does_not_change_verified_first_40(self):
+        progress = PROGRESS.new_progress("run-1", "a" * 40, 44)
+        for completed in range(1, 41):
+            progress = PROGRESS.record_chunk(
+                progress,
+                f"capsule.part{completed:04d}.txt",
+                completed,
+                4,
+            )
+        first_raw = ("A" * 256 + "\n") * 8
+        second_raw = ("B" * 256 + "\n") * 8
+        first = {
+            "start_line": 1,
+            "end_line": 8,
+            "size": len(first_raw.encode("ascii")),
+            "sha256": hashlib.sha256(first_raw.encode("ascii")).hexdigest(),
+        }
+        second = {
+            "start_line": 9,
+            "end_line": 16,
+            "size": len(second_raw.encode("ascii")),
+            "sha256": hashlib.sha256(second_raw.encode("ascii")).hexdigest(),
+        }
+
+        with self.assertRaisesRegex(ValueError, "grouped fetch"):
+            PROGRESS.validate_grouped_fetch(first_raw.encode("ascii"), first, second)
+        self.assertEqual(progress["chunks_completed"], 40)
+        self.assertEqual(progress["current_chunk"], "capsule.part0040.txt")
+
+    def test_grouped_fetch_splits_and_validates_two_declared_blocks(self):
+        first_raw = ("A" * 256 + "\n") * 8
+        second_raw = ("B" * 256 + "\n") * 8
+        first = {
+            "start_line": 1,
+            "end_line": 8,
+            "size": len(first_raw.encode("ascii")),
+            "sha256": hashlib.sha256(first_raw.encode("ascii")).hexdigest(),
+        }
+        second = {
+            "start_line": 9,
+            "end_line": 16,
+            "size": len(second_raw.encode("ascii")),
+            "sha256": hashlib.sha256(second_raw.encode("ascii")).hexdigest(),
+        }
+
+        blocks = PROGRESS.validate_grouped_fetch(
+            (first_raw + second_raw).encode("ascii"),
+            first,
+            second,
+        )
+        self.assertEqual(blocks, [first_raw.encode("ascii"), second_raw.encode("ascii")])
 
 
 if __name__ == "__main__":
