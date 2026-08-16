@@ -31,6 +31,9 @@ class BootstrapCapsuleTests(unittest.TestCase):
         self.assertIn("source-route-config.json", runtime_paths)
         self.assertIn("scripts/resolve_bundled_python.py", runtime_paths)
         self.assertIn("scripts/fetch_source_routes.py", runtime_paths)
+        self.assertIn("bootstrap/bootstrap_progress.py", runtime_paths)
+        self.assertIn("bootstrap/bootstrap-progress.schema.json", runtime_paths)
+        self.assertIn("bootstrap/RUN_LEDGER_PROTOCOL.md", runtime_paths)
         self.assertNotIn("scripts/resolve_bundled_python.ps1", runtime_paths)
         self.assertNotIn("scripts/fetch_source_routes.ps1", runtime_paths)
 

@@ -72,6 +72,8 @@
 
 ## 本地驗證
 
+手機排程在 news checkpoint 之前使用原子 `bootstrap-progress.json`，並在具備留言權限時將節流後的進度寫到 [Daily News Run Ledger](https://github.com/robert820728-star/global-news-brief/issues/3)。台帳失敗只降低診斷能力，不會阻擋每日新聞。 / Before the news checkpoint, mobile runs keep atomic bootstrap progress and optionally publish debounced milestones to the persistent run ledger; ledger failure never blocks delivery.
+
 ```bash
 python3 -m unittest discover -s tests -v
 python3 scripts/validate_news_brief.py manifest --input /path/to/news-event-manifest.json

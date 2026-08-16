@@ -38,6 +38,9 @@ RUNTIME_FILES = (
     "maps/README.md",
     "maps/style.json",
     "bootstrap/bootstrap_loader.py",
+    "bootstrap/bootstrap_progress.py",
+    "bootstrap/bootstrap-progress.schema.json",
+    "bootstrap/RUN_LEDGER_PROTOCOL.md",
 )
 RUNTIME_DIRS = (
     ".agents/skills",

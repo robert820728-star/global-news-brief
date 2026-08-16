@@ -1,5 +1,14 @@
 # 版本紀錄 / Version Record
 
+## v0.2.4-mobile-bootstrap-observability — 2026-08-17
+
+- 建立原因 / Reason: 手機排程可能在 capsule 40/44 時被回收，而正式 checkpoint 尚未建立，無法知道最後成功位置。 / A mobile run could be reclaimed at capsule 40/44 before the news checkpoint existed, leaving no durable last-success boundary.
+- 實作方式 / Approach: 新增原子 bootstrap progress、16-line 雙 block 驗證與 8-line fallback、有限重試、統一 RUN_RECEIPT，以及 GitHub issue 單一 comment 的 best-effort 外部台帳。 / Added atomic bootstrap progress, verified 16-line paired-block transport with 8-line fallback, bounded retries, a stable RUN_RECEIPT, and a best-effort one-comment GitHub ledger.
+- 變更入口 / Changed entry points: `bootstrap/bootstrap_progress.py`, `bootstrap/bootstrap-progress.schema.json`, `bootstrap/RUN_LEDGER_PROTOCOL.md`, `bootstrap-workspace.md`, `daily-schedule-prompt.md`, capsule builder and Linux CI.
+- 重要設定 / Important configuration: 正常搬運請求約減半；每個 block 最多初次加三次重試，退避 2/5/10 秒；台帳每 8 chunks 與關鍵 stage 更新，新聞 stage 最多每 3 分鐘一次，台帳錯誤永不阻擋新聞。 / Normal transport calls are roughly halved; each block gets an initial attempt plus three retries with 2/5/10-second backoff; the ledger updates every 8 chunks and key stages, with news-stage updates limited to once per 3 minutes, and ledger errors never block news.
+- 驗證方式 / Validation: chunk 41 截斷、第三次重試失敗、原子更新、成功清除、grouped split/SHA、ledger 權限 create/update、capsule closure、完整 unittest 與 Ubuntu CI。 / Chunk-41 truncation, third-retry failure, atomic updates, successful cleanup, grouped split/SHA, ledger create/update permission, capsule closure, full unittest, and Ubuntu CI.
+- 下一決定 / Next decision: GitHub CI 產生 verified capsule 後，以手機 Scheduled Task 對最新 `main` 執行驗收。 / After GitHub CI produces the verified capsule, run acceptance from the mobile Scheduled Task against fresh `main`.
+
 ## v0.2.3-fresh-main-resolution — 2026-08-17
 
 - 建立原因 / Reason: 排程在 GitHub `main` 已更新後仍解析到舊的 `e08d99c`，並執行該舊版的 PowerShell-only 路徑。 / The scheduled run resolved old commit `e08d99c` after GitHub `main` had advanced, then executed that old version's PowerShell-only path.

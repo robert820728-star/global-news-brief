@@ -34,6 +34,7 @@ jobs:
         run: |
           python3 -m py_compile \
             bootstrap/bootstrap_loader.py \
+            bootstrap/bootstrap_progress.py \
             scripts/build_bootstrap_capsule.py \
             scripts/verify_bootstrap_capsule.py \
             scripts/apply_bootstrap_capsule_migration.py \
@@ -52,6 +53,7 @@ jobs:
           python3 -m unittest \
             tests/test_workspace_python_resolver.py \
             tests/test_source_route_fetcher.py \
+            tests/test_bootstrap_progress.py \
             tests/test_bootstrap_capsule.py \
             tests/test_news_run_checkpoint.py \
             tests/test_pipeline_contract.py \
