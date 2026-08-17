@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/robert820728-star/global-news-brief/schemas/mobile-run-log.schema.json",
+  "title": "Mobile scheduled-run log",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "scheduled_for",
+    "status",
+    "current_stage",
+    "stage_index",
+    "last_completed_stage",
+    "main_sha",
+    "updated_at",
+    "last_error",
+    "delivery_status",
+    "client_confirmation_supported",
+    "reader_artifact"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "run_id": { "type": "string", "minLength": 1 },
+    "scheduled_for": { "type": "string", "format": "date-time" },
+    "status": {
+      "enum": [
+        "awaiting_executor",
+        "running",
+        "completed",
+        "failed",
+        "interrupted_by_next_run"
+      ]
+    },
+    "current_stage": {
+      "enum": [
+        "schedule-prepared",
+        "executor-started",
+        "main-pinned",
+        "workspace-ready",
+        "source-scan",
+        "candidate-audit",
+        "selection-verified",
+        "visuals-completed",
+        "reader-rendered",
+        "github-result-saved",
+        "delivery-handoff"
+      ]
+    },
+    "stage_index": { "type": "integer", "minimum": 0, "maximum": 10 },
+    "last_completed_stage": {
+      "type": ["string", "null"]
+    },
+    "main_sha": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "last_error": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["code", "message"],
+          "properties": {
+            "code": { "type": "string", "minLength": 1 },
+            "message": { "type": "string", "minLength": 1 }
+          }
+        }
+      ]
+    },
+    "delivery_status": {
+      "enum": ["not_ready", "reader_saved", "handoff_started", "client_confirmed"]
+    },
+    "client_confirmation_supported": { "type": "boolean" },
+    "reader_artifact": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["branch", "path", "blob_sha"],
+          "properties": {
+            "branch": { "const": "run-logs" },
+            "path": { "const": "logs/latest-reader.md" },
+            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+          }
+        }
+      ]
+    }
+  }
+}
