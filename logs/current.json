@@ -1,15 +1,15 @@
 {
   "client_confirmation_supported": false,
-  "current_stage": "select-news-events",
+  "current_stage": "reader-rendered",
   "delivery_status": "not_ready",
-  "last_completed_stage": "preprocess-news-candidates",
+  "last_completed_stage": "visuals-completed",
   "last_error": null,
   "main_sha": "eb3c0db5fc634dd8cb7a3d7edb3cd31283eb0bd6",
   "reader_artifact": null,
   "run_id": "gnb-20260817T084718Z-full01",
   "scheduled_for": "2026-08-17T16:47:18+08:00",
   "schema_version": "1.0.0",
-  "stage_index": 7,
+  "stage_index": 8,
   "status": "running",
-  "updated_at": "2026-08-17T09:08:00.000Z"
+  "updated_at": "2026-08-17T09:12:38.734Z"
 }
