@@ -1,8 +1,8 @@
 {
     "schema_version":  "1.0.0",
     "run_id":  "gnb-20260817T094800Z-full03",
-    "window_start":  null,
-    "window_end":  null,
+    "window_start":  "2026-08-16T16:49:20.098065+08:00",
+    "window_end":  "2026-08-17T16:49:20.098065+08:00",
     "events":  19,
     "grades":  [
                    {
@@ -55,3 +55,4 @@
     "validators":  "passed",
     "release_sha256":  "a2b6e2c6084cab88c3bab272da071b42b2e9096005ac538aa1ac135d407fe7ce"
 }
+
