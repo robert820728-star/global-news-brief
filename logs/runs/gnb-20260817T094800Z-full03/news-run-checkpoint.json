@@ -1,0 +1,165 @@
+{
+  "schema_version": "1.1.0",
+  "run_id": "gnb-20260817T094800Z-full03",
+  "window_start": "2026-08-16T16:49:20.098065+08:00",
+  "window_end": "2026-08-17T16:49:20.098065+08:00",
+  "created_at": "2026-08-17T18:22:31+08:00",
+  "updated_at": "2026-08-17T18:22:33+08:00",
+  "bootstrap": {
+    "repository": "robert820728-star/global-news-brief",
+    "commit_sha": "5d4b3c6ca97b76b5dfe3bd21a6cc24694595e032",
+    "materialization_method": "github-connector-capsule",
+    "receipt": {
+      "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\workspace\\bootstrap-workspace.json",
+      "sha256": "8cbaec186de0fecaefb33157702e3b634f18dda2846b63563ed53ecf89d10076",
+      "size": 75248
+    }
+  },
+  "bootstrap_required": true,
+  "stage_status": {
+    "source-scan": "completed",
+    "preprocess-news-candidates": "completed",
+    "select-news-events": "completed",
+    "audit-news-candidates": "completed",
+    "materialize-manifest": "completed",
+    "verify-news-events": "completed",
+    "build-news-maps": "completed",
+    "build-news-charts": "completed",
+    "collect-news-images": "completed",
+    "render": "completed"
+  },
+  "stage_evidence": {
+    "source-scan": {
+      "recorded_at": "2026-08-17T18:22:31+08:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "source_candidates": {
+          "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\run\\source-candidates.json",
+          "sha256": "f86e1f2907c6eca3fdbd028464cda19510325cc9392dfa7272697ad09c77052d",
+          "size": 852397
+        }
+      }
+    },
+    "preprocess-news-candidates": {
+      "recorded_at": "2026-08-17T18:22:31+08:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "preprocessed_candidates": {
+          "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\run\\preprocessed-candidates.json",
+          "sha256": "bd5372c46fa9ad8af87b577eefbdcdd69aa1696f950eb427f3227bf9c1acdbfb",
+          "size": 1430802
+        }
+      }
+    },
+    "select-news-events": {
+      "recorded_at": "2026-08-17T18:22:31+08:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "selection_results": {
+          "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\run\\selection-results.json",
+          "sha256": "428aae000d6eb095e1e877b8299c54b2fe09be6e06d19a7e179d3ea3cb0e1083",
+          "size": 855744
+        }
+      }
+    },
+    "audit-news-candidates": {
+      "recorded_at": "2026-08-17T18:22:31+08:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "candidate_audit": {
+          "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\run\\candidate-audit.json",
+          "sha256": "7b5509d918e1d6f5a860131f5e4e5ff72c63e30f8dd83a9a2d8c1ad8d9d2d736",
+          "size": 1425574
+        }
+      }
+    },
+    "materialize-manifest": {
+      "recorded_at": "2026-08-17T18:22:32+08:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "manifest": {
+          "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\run\\manifest-materialized.json",
+          "sha256": "5a958b34f7b0dd87242662862a8619e2dfabdd790933773916e6bdf403fc0a6e",
+          "size": 57641
+        }
+      }
+    },
+    "verify-news-events": {
+      "recorded_at": "2026-08-17T18:22:32+08:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "manifest": {
+          "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\run\\manifest-verified.json",
+          "sha256": "80922a61c1b0447f7babf01a05af1253441b90d14840217145d4dae882c93a19",
+          "size": 97427
+        }
+      }
+    },
+    "build-news-maps": {
+      "recorded_at": "2026-08-17T18:22:32+08:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "manifest": {
+          "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\run\\manifest-maps.json",
+          "sha256": "23d3e4eb14c0a2cbc46758c2324adacd4268f4d1c84dbff0fc5f64b29da9cd72",
+          "size": 105556
+        }
+      }
+    },
+    "build-news-charts": {
+      "recorded_at": "2026-08-17T18:22:32+08:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "manifest": {
+          "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\run\\manifest-charts.json",
+          "sha256": "2aa6c62d244910bd2436f52dadd2e2753c15e3f9f85687797ea7bd9fc70f0cf0",
+          "size": 105651
+        }
+      }
+    },
+    "collect-news-images": {
+      "recorded_at": "2026-08-17T18:22:32+08:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "manifest": {
+          "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\run\\manifest-images-final.json",
+          "sha256": "efb26da704f18140df9e5d232b41d67866091c7183371235898a6fbe1f7dc1e8",
+          "size": 169542
+        }
+      }
+    },
+    "render": {
+      "recorded_at": "2026-08-17T18:22:33+08:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "brief": {
+          "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\run\\news-brief.md",
+          "sha256": "a2b6e2c6084cab88c3bab272da071b42b2e9096005ac538aa1ac135d407fe7ce",
+          "size": 21736
+        },
+        "manifest": {
+          "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\run\\news-event-manifest.json",
+          "sha256": "4b00d37ec8b2e05dc3081bfd7200f8d3cca2543b336dcf5433948f641466a1d1",
+          "size": 164599
+        }
+      }
+    }
+  },
+  "recovery": {
+    "status": "pending",
+    "max_attempts_per_target": 3,
+    "attempts": [],
+    "unresolved_targets": []
+  }
+}
+

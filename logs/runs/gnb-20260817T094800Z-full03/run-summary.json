@@ -1,0 +1,57 @@
+{
+    "schema_version":  "1.0.0",
+    "run_id":  "gnb-20260817T094800Z-full03",
+    "window_start":  null,
+    "window_end":  null,
+    "events":  19,
+    "grades":  [
+                   {
+                       "grade":  "C",
+                       "count":  6
+                   },
+                   {
+                       "grade":  "C+",
+                       "count":  5
+                   },
+                   {
+                       "grade":  "B-",
+                       "count":  2
+                   },
+                   {
+                       "grade":  "B",
+                       "count":  3
+                   },
+                   {
+                       "grade":  "A-",
+                       "count":  1
+                   },
+                   {
+                       "grade":  "A",
+                       "count":  1
+                   },
+                   {
+                       "grade":  "B+",
+                       "count":  1
+                   }
+               ],
+    "source_pool_candidates":  310,
+    "selected_events":  19,
+    "maps_ready":  7,
+    "images_ready":  17,
+    "images_omitted":  [
+                           {
+                               "event_id":  "CHN-01",
+                               "title":  "中國推動企業實繳社保，企業與勞工成本面臨重整",
+                               "status":  "omitted",
+                               "note":  "圖片說明：來源只提供媒體通用識別圖，與事件無直接關聯，因此不附圖。"
+                           },
+                           {
+                               "event_id":  "CHN-02",
+                               "title":  "中國收緊私募基金槓桿監管",
+                               "status":  "omitted",
+                               "note":  "圖片說明：唯一來源頁拒絕程式化讀取，本輪無法取得可安全內嵌圖片。"
+                           }
+                       ],
+    "validators":  "passed",
+    "release_sha256":  "a2b6e2c6084cab88c3bab272da071b42b2e9096005ac538aa1ac135d407fe7ce"
+}

@@ -1,15 +1,16 @@
 {
   "client_confirmation_supported": false,
-  "current_stage": "selection-verified",
-  "delivery_status": "not_ready",
-  "last_completed_stage": "candidate-audit",
+  "current_stage": "github-result-saved",
+  "delivery_status": "reader_saved",
+  "last_completed_stage": "reader-rendered",
   "last_error": null,
   "main_sha": "5d4b3c6ca97b76b5dfe3bd21a6cc24694595e032",
-  "reader_artifact": null,
+  "reader_artifact": "logs/latest-reader.md",
   "run_id": "gnb-20260817T094800Z-full03",
   "scheduled_for": "2026-08-17T17:48:00+08:00",
   "schema_version": "1.0.0",
-  "stage_index": 6,
+  "stage_index": 9,
   "status": "running",
-  "updated_at": "2026-08-17T09:52:02.000Z"
+  "updated_at": "2026-08-17T10:25:00Z"
 }
+

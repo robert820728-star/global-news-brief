@@ -1,0 +1,52 @@
+{
+  "schema_version": "2.0.0",
+  "status": "ready",
+  "gate": "scripts/publish_news_brief.py",
+  "gate_version": "2.0.0",
+  "run_id": "gnb-20260817T094800Z-full03",
+  "published_at": "2026-08-17T18:23:35+08:00",
+  "artifacts": {
+    "gate": {
+      "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\workspace\\scripts\\publish_news_brief.py",
+      "sha256": "bb31ed4ae2442a65dea3df8a21c5cde0943e4d196209416ce0e3b7da64f7eafe"
+    },
+    "delivery_contract": {
+      "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\workspace\\daily-schedule-prompt.md",
+      "sha256": "0f49d7841615ced27b6d1377b79dbe22bd83bc13cd49ed9c5ece3ba7a7c153c9"
+    },
+    "checkpoint": {
+      "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\run\\news-run-checkpoint.json",
+      "sha256": "37ed14e1c0f3ffea0f9039e4b41b2c572a2a0e42745285129b6b2a0017b7cf69"
+    },
+    "manifest": {
+      "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\run\\news-event-manifest.json",
+      "sha256": "4b00d37ec8b2e05dc3081bfd7200f8d3cca2543b336dcf5433948f641466a1d1"
+    },
+    "audit": {
+      "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\run\\candidate-audit.json",
+      "sha256": "7b5509d918e1d6f5a860131f5e4e5ff72c63e30f8dd83a9a2d8c1ad8d9d2d736"
+    },
+    "source_pool": {
+      "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\workspace\\news-source-pool.json",
+      "sha256": "e106add82633786a68df6581d4ac856ebbcb7108ccd708285d87d2f2bf08074d"
+    },
+    "brief": {
+      "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\run\\news-brief.md",
+      "sha256": "a2b6e2c6084cab88c3bab272da071b42b2e9096005ac538aa1ac135d407fe7ce"
+    },
+    "release": {
+      "path": "C:\\Users\\Administrator\\Documents\\GPT每日新聞\\work\\full-validation-20260817-round3\\run\\release\\news-brief.md",
+      "sha256": "a2b6e2c6084cab88c3bab272da071b42b2e9096005ac538aa1ac135d407fe7ce"
+    }
+  },
+  "authorized_release_sha256": "a2b6e2c6084cab88c3bab272da071b42b2e9096005ac538aa1ac135d407fe7ce",
+  "validators": {
+    "unique_delivery_gate": "passed",
+    "pre_manifest_checkpoint": "passed",
+    "source_scan_and_candidate_audit": "passed",
+    "attachment_and_visual_evidence": "passed",
+    "map_decisions": "passed",
+    "manifest_and_brief": "passed"
+  }
+}
+
