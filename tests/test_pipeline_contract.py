@@ -6,6 +6,26 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PipelineContractTests(unittest.TestCase):
+    def test_run_started_ledger_precedes_high_pressure_bootstrap_reads(self):
+        prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        bootstrap = (ROOT / "bootstrap-workspace.md").read_text(encoding="utf-8")
+
+        for document in (prompt, bootstrap):
+            ordered_markers = (
+                "EARLY_DIAGNOSTIC_RUN_ID",
+                "EARLY_DIAGNOSTIC_MAIN_PINNED",
+                "EARLY_DIAGNOSTIC_RUN_STARTED",
+                "EARLY_DIAGNOSTIC_TREE_VERIFIED",
+                "EARLY_DIAGNOSTIC_MANIFEST_VERIFIED",
+                "EARLY_DIAGNOSTIC_HELPERS_VERIFIED",
+            )
+            for marker in ordered_markers:
+                self.assertIn(marker, document)
+            positions = [document.index(marker) for marker in ordered_markers]
+            self.assertEqual(positions, sorted(positions))
+            self.assertIn("before any recursive tree read", document)
+            self.assertIn("update the same comment", document)
+
     def test_external_ledger_is_debounced_and_never_blocks_news(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         protocol = (ROOT / "bootstrap" / "RUN_LEDGER_PROTOCOL.md").read_text(

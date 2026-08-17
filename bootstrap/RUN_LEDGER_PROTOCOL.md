@@ -4,9 +4,9 @@ The persistent ledger is GitHub issue [#3](https://github.com/robert820728-star/
 
 ## Write policy
 
-- Use **one comment per run_id**. Create it after resolving and pinning the fresh `main` SHA, store its comment id in local progress, and update that same comment for the rest of the run.
+- Generate `run_id` before the first tool call. Use **one comment per run_id** and create it immediately after resolving and pinning the fresh `main` SHA, before any recursive tree, manifest, or helper read. Store its comment id in task context first, then in local progress when the helper becomes available, and update that same comment for the rest of the run.
 - Treat every ledger operation as **best-effort**. Missing GitHub write permission, connector errors, and rate limits must set `external_ledger: unavailable` locally and **must never block the news pipeline**.
-- Do not create one comment per block or chunk. Update after manifest/loader/helper verification, **every 8 completed chunks**, at 44/44 (or the declared total), after workspace creation, after each news pipeline stage, and immediately on failure or final success.
+- Do not create one comment per block or chunk. Update the same comment after the recursive tree, manifest, and loader/helper verification boundaries, **every 8 completed chunks**, at the declared total, after workspace creation, after each news pipeline stage, and immediately on failure or final success.
 - News-stage updates are debounced to **at most once every 3 minutes**. A newer milestone replaces the pending older one; failure and final success bypass the debounce.
 - Keep the same resolved commit, run id, and comment id across retries. Do not expose credentials, connector internals, full article text, or binary content.
 

@@ -1,5 +1,14 @@
 # 版本紀錄 / Version Record
 
+## v0.2.5-earliest-run-ledger — 2026-08-17
+
+- 建立原因 / Reason: 手機排程已鎖定 main 並讀取部分 bootstrap 物件，但在本輪 run id、Issue 台帳與本地 progress 建立前遭平台終止。 / The mobile task pinned main and read some bootstrap objects but was terminated before creating this run's id, issue ledger, or local progress.
+- 確認原因 / Confirmed cause: 診斷契約把 run-started 台帳排在 recursive tree、manifest 與 helpers 之後，因此無法觀察這段早期死亡區間；平台終止的底層原因仍無錯誤碼可判定。 / The diagnostic contract placed the run-started ledger after the recursive tree, manifest, and helpers, leaving that early termination window unobservable; the platform's underlying termination cause still has no error code.
+- 實作方式 / Approach: 在任何 tool call 前產生 run id；雙端點鎖定 SHA 後、recursive tree 前立即建立 Issue #3 comment，接著在 tree、manifest、helpers 各邊界更新同一則 comment。 / Generate the run id before any tool call; immediately create the Issue #3 comment after dual-endpoint SHA pinning and before the recursive tree, then update the same comment at the tree, manifest, and helper boundaries.
+- 重要設定 / Important configuration: 早期台帳仍為單次 best-effort 寫入；失敗不重試、不阻擋新聞。只保留驗證需要的 tree path/blob SHA，避免在回答重印完整 tree。 / The early ledger remains a single best-effort write; failure is not retried and never blocks news. Retain only required tree path/blob SHAs and never reprint the full tree in the response.
+- 驗證方式 / Validation: 新增順序契約 RED→GREEN，要求 `run_id < SHA < run-started < tree < manifest < helpers`，並回歸 fresh-main 與外部台帳契約。 / Added a red-green ordering contract requiring `run_id < SHA < run-started < tree < manifest < helpers`, plus regressions for fresh-main and external-ledger behavior.
+- 下一決定 / Next decision: GitHub CI 重建 verified capsule 後由手機重跑；依 Issue #3 最後 milestone 判定下一個真實失敗邊界。 / Rerun on mobile after GitHub CI rebuilds the verified capsule; use the final Issue #3 milestone to identify the next real failure boundary.
+
 ## v0.2.4-mobile-bootstrap-observability — 2026-08-17
 
 - 建立原因 / Reason: 手機排程可能在 capsule 40/44 時被回收，而正式 checkpoint 尚未建立，無法知道最後成功位置。 / A mobile run could be reclaimed at capsule 40/44 before the news checkpoint existed, leaving no durable last-success boundary.
