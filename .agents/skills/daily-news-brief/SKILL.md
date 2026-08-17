@@ -9,9 +9,9 @@ description: Orchestrate the complete daily news brief with verified runtime-cap
 
 ## Stage -1：可執行工作區
 
-在本技能任何 Python 流程開始前，必須先依 repo 根目錄 `bootstrap-workspace.md` 完成 verified runtime capsule bootstrap。GitHub connector「看得到 repo」不等於 shell 已有 repo；不得再逐 blob 物化完整 tracked tree，也不得用 shell `git clone`／`curl`／`wget` 當 fallback。
+在本技能任何 Python 流程開始前，必須先依 repo 根目錄 `bootstrap-workspace.md` 完成 verified runtime capsule bootstrap。GitHub connector「看得到 repo」不等於 shell 已有 repo；不得再逐 blob 物化完整 tracked tree，也不得用 shell `git clone`／`curl`／`wget` 當 fallback。唯一允許的 shell 網路入口，是已驗證 loader 對本輪固定 SHA 的 `capsule-payload.tar.xz` 單次請求。
 
-Stage -1 必須從同一個最新 `main` commit 取得 `bootstrap/capsule-manifest.json`、`bootstrap/bootstrap_loader.py` 與 manifest 指定的所有文字 chunks；先用最新 recursive tree 驗證 manifest 的 runtime blob SHA 與 capsule freshness，再把 chunks 精確寫到 shell staging directory，由 loader 在本地驗 chunk SHA-256、payload SHA-256、tar 安全性與每個 runtime file 的 path/size/SHA-256/Git blob SHA。只有 loader 成功產生 `bootstrap-workspace.json` 後，才可進入 checkpoint。
+Stage -1 必須從同一個最新 `main` commit 取得並驗證 `bootstrap/capsule-manifest.json` 與 `bootstrap/bootstrap_loader.py`。正常路徑由 loader 一次取得該固定 SHA 的 `bootstrap/capsule-payload.tar.xz`，驗證 size、SHA-256 與 Git blob SHA 後建立 workspace；只有此請求失敗才搬運 manifest 指定的文字 chunks。兩條路徑都由同一 loader 驗證 payload、tar 安全性與每個 runtime file 的 path/size/SHA-256/Git blob SHA。只有 loader 成功產生 `bootstrap-workspace.json` 後，才可進入 checkpoint。
 
 `news_run_checkpoint.py init` 必須收到 `--bootstrap-receipt` 並重新驗證 repository、commit SHA、workspace root、capsule metadata、必要 runtime 檔案、SHA-256 與 Git blob SHA。驗證不通過時不得建立 checkpoint，也不得人工繞過 scripts 直接出新聞。
 
@@ -41,7 +41,7 @@ python3 scripts/news_run_checkpoint.py init --output <checkpoint> --run-id <run-
 
 ## 恢復邏輯
 
-Checkpoint 前的 Stage -1 失敗：重新執行 `bootstrap-workspace.md` 的 verified runtime capsule bootstrap，只重抓缺失／驗證失敗 chunk；不得改用手工新聞、逐 blob full-tree 搬運或 shell 網路 clone。
+Checkpoint 前的 Stage -1 失敗：重新執行 `bootstrap-workspace.md` 的 verified runtime capsule bootstrap；先嘗試一次固定 SHA payload，失敗才只重抓缺失／驗證失敗 chunk。不得改用手工新聞、逐 blob full-tree 搬運或 shell 網路 clone。
 
 Manifest 前：
 

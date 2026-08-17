@@ -10,6 +10,7 @@ import json
 import shutil
 import tarfile
 import tempfile
+import urllib.request
 from datetime import datetime
 from pathlib import Path, PurePosixPath
 
@@ -145,6 +146,27 @@ def verify_chunks(manifest: dict, chunks_dir: Path) -> bytes:
     return payload
 
 
+def verify_direct_payload(manifest: dict, payload: bytes) -> bytes:
+    item = manifest.get("payload")
+    if not isinstance(item, dict):
+        raise ValueError("capsule direct payload metadata missing")
+    if item.get("name") != "capsule-payload.tar.xz":
+        raise ValueError("capsule direct payload name mismatch")
+    if len(payload) != item.get("size") or len(payload) != manifest.get("payload_size"):
+        raise ValueError("capsule direct payload size mismatch")
+    digest = sha256_bytes(payload)
+    if digest != item.get("sha256") or digest != manifest.get("payload_sha256"):
+        raise ValueError("capsule direct payload sha256 mismatch")
+    if git_blob_sha1_bytes(payload) != item.get("source_blob_sha"):
+        raise ValueError("capsule direct payload git blob mismatch")
+    return payload
+
+
+def payload_from_url(manifest: dict, url: str) -> bytes:
+    with urllib.request.urlopen(url, timeout=30) as response:
+        return verify_direct_payload(manifest, response.read())
+
+
 def expected_file_map(manifest: dict) -> dict[str, dict]:
     items = manifest.get("runtime_files")
     if not isinstance(items, list) or not items:
@@ -193,10 +215,18 @@ def extract_verified(payload: bytes, manifest: dict, destination: Path) -> list[
     return [expected[path] for path in sorted(expected)]
 
 
-def materialize(manifest_path: Path, chunks_dir: Path, workspace: Path,
-                commit_sha: str, manifest_blob_sha: str) -> dict:
+def materialize(manifest_path: Path, chunks_dir: Path | None, workspace: Path,
+                commit_sha: str, manifest_blob_sha: str,
+                payload_url: str | None = None) -> dict:
     manifest = load_manifest(manifest_path)
-    payload = verify_chunks(manifest, chunks_dir)
+    if payload_url:
+        payload = payload_from_url(manifest, payload_url)
+        transport = "direct-payload"
+    elif chunks_dir is not None:
+        payload = verify_chunks(manifest, chunks_dir)
+        transport = "segmented-chunks"
+    else:
+        raise ValueError("capsule transport missing")
     workspace = workspace.resolve()
     workspace.parent.mkdir(parents=True, exist_ok=True)
     stage = Path(tempfile.mkdtemp(prefix=workspace.name + ".stage-", dir=workspace.parent))
@@ -226,6 +256,7 @@ def materialize(manifest_path: Path, chunks_dir: Path, workspace: Path,
             "manifest_sha256": sha256_bytes(manifest_raw),
             "payload_sha256": manifest["payload_sha256"],
             "runtime_fingerprint": manifest["runtime_fingerprint"],
+            "transport": transport,
             "chunk_count": manifest["chunk_count"],
             "chunks": manifest["chunks"],
         },
@@ -242,15 +273,18 @@ def materialize(manifest_path: Path, chunks_dir: Path, workspace: Path,
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", required=True)
-    parser.add_argument("--chunks-dir", required=True)
+    transport = parser.add_mutually_exclusive_group(required=True)
+    transport.add_argument("--chunks-dir")
+    transport.add_argument("--payload-url")
     parser.add_argument("--workspace", required=True)
     parser.add_argument("--commit-sha", required=True)
     parser.add_argument("--manifest-blob-sha", required=True)
     args = parser.parse_args()
     try:
         receipt = materialize(
-            Path(args.manifest), Path(args.chunks_dir), Path(args.workspace),
-            args.commit_sha, args.manifest_blob_sha,
+            Path(args.manifest), Path(args.chunks_dir) if args.chunks_dir else None,
+            Path(args.workspace), args.commit_sha, args.manifest_blob_sha,
+            payload_url=args.payload_url,
         )
     except Exception as error:
         print(f"BOOTSTRAP FAIL: {error}")

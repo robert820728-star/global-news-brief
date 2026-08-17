@@ -37,15 +37,15 @@ GitHub connector 可見 repository 不代表 shell 已有 repository。每輪都
 6. `EARLY_DIAGNOSTIC_MANIFEST_VERIFIED`：從固定 SHA 取得並驗證 `bootstrap/capsule-manifest.json`；成功後 update the same comment 為 `stage=bootstrap-manifest-verified` 與 `progress=0/<chunks_total>`。
 7. `EARLY_DIAGNOSTIC_HELPERS_VERIFIED`：從固定 SHA 取得並驗證 `bootstrap/bootstrap_loader.py`、`bootstrap/bootstrap_progress.py`、`bootstrap/bootstrap-progress.schema.json`；成功後 update the same comment 為 `stage=bootstrap-helpers-verified`。
 8. 立即建立獨立的 `bootstrap-progress.json`，它是 Stage -1 診斷紀錄，不是 news checkpoint；將早期 external-ledger available／unavailable 狀態與 comment id 匯入本地紀錄。
-9. 手機低壓力正常路徑一次讀取相鄰兩個既有 block 的 **16-line** 範圍，再由 progress helper 切開並分別核對兩個原始 block 的 size/SHA-256。任一半失敗才退回原本 8-line 逐 block 讀取，不得放寬驗證，也不得重新下載先前已驗證 chunks。
-10. 每個固定 SHA、固定 line range 使用 **one initial attempt plus at most three retries**；允許時依序退避 **2, 5, and 10 seconds**。每次記錄 byte size、SHA-256 與錯誤；第 4 次仍失敗才停止。
-11. 將 manifest／loader／progress helper／chunks 精確寫入 writable staging directory；每個 chunk 完整通過後才原子更新一次進度。
-12. 由 loader 在 shell 本地解碼、驗 SHA、解壓並建立 executable workspace；
-13. loader 成功產生 `bootstrap-workspace.json` 後，才可建立 news checkpoint。下一輪必須重新執行上述解析，不得直接重用本輪 SHA。
+9. 手機低壓力正常路徑只執行一次 pinned payload：由已驗證的 loader 讀取 `https://raw.githubusercontent.com/robert820728-star/global-news-brief/<本輪-main-SHA>/bootstrap/capsule-payload.tar.xz`，並在解壓前核對 manifest 內的 size、SHA-256 與 Git blob SHA。成功後直接建立 workspace，不再搬運 chunks。
+10. 只有 pinned payload 無法連線或驗證失敗時，才使用既有 chunks 備援：一次讀取相鄰兩個 block 的 **16-line** 範圍，再由 progress helper 切開並分別核對兩個原始 block。任一半失敗才退回 8-line 逐 block 讀取；不得放寬驗證，也不得重新下載先前已驗證 chunks。
+11. 備援的每個固定 SHA、固定 line range 使用 **one initial attempt plus at most three retries**；允許時依序退避 **2, 5, and 10 seconds**。每次記錄 byte size、SHA-256 與錯誤；第 4 次仍失敗才停止。Pinned payload 本身只嘗試一次，不形成第二套重試流程。
+12. 兩種傳輸都由同一個 loader 驗證、解壓並建立 executable workspace；receipt 必須記錄 `transport=direct-payload` 或 `transport=segmented-chunks`。
+13. loader 成功產生 `bootstrap-workspace.json` 後，才可建立 news checkpoint。下一輪必須重新解析最新 main，不得直接重用本輪 SHA。
 
 Stage -1 loader 可用宿主的 `python3` 執行，因 loader 與 resolver 只依賴標準庫；它不得直接成為新聞 pipeline runtime。Workspace 建立後，若宿主提供的 bundled-runtime Python 絕對路徑可取得，必須優先傳入 `python3 scripts/resolve_bundled_python.py --preferred-python <host-bundled-python>`；否則執行 `python3 scripts/resolve_bundled_python.py`，由 resolver 依環境變數及跨平台 Codex runtime 位置尋找。Resolver 回傳 `status=ready` 前必須實際以候選 executable 匯入 Pillow；以它回傳的同一個 `<bundled-python>` 執行 checkpoint、route fetcher 與本輪所有 canonical Python scripts。不得直接假設 PATH 上的 `python`／`python3` 具有 Pillow，不得把啟動 resolver 的 Python 當成已驗證 runtime；所有候選皆失敗才回報 Stage -1 blocker。Materialized runtime 的 receipt 綁定檔視為唯讀；generated PNG/SVG 可以重建，但 renderer 不得改寫 capsule 內既有的 section metadata 或其他 receipt 綁定檔。
 
-禁止 Stage -1 使用 shell `git clone`、`curl`、`wget`、raw GitHub HTTP，禁止逐 blob 搬完整 repository，也禁止 workspace 失敗後人工直接寫新聞。
+禁止 Stage -1 使用 shell `git clone`、`curl`、`wget`、未固定 SHA 的 URL 或任意 raw GitHub HTTP。唯一例外是已驗證 loader 對上述精確 pinned payload URL 的單次請求；內容仍須完整通過 manifest 驗證。禁止逐 blob 搬完整 repository，也禁止 workspace 失敗後人工直接寫新聞。
 
 若 Stage -1 無法完成，最早 blocker 固定回報為：
 

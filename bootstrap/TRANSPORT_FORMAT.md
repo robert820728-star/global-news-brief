@@ -2,7 +2,9 @@
 
 The runtime capsule is transported through the GitHub connector as UTF-8 text. The connector may truncate a very long single line even when the file itself is small, so capsule chunks are deliberately **line framed**.
 
-Current format (`capsule-manifest.json` schema `1.1.0`):
+Primary transport is one pinned `bootstrap/capsule-payload.tar.xz` request through `bootstrap_loader.py`. The loader verifies its manifest size, SHA-256, and Git blob SHA before extraction. The line-framed format below is retained only as the connector fallback.
+
+Fallback format (`capsule-manifest.json` schema `1.1.0`):
 
 - logical chunk payload: up to 8192 Base64 characters;
 - canonical line width: 256 ASCII characters;

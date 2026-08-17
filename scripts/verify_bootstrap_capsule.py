@@ -50,7 +50,12 @@ def verify(root: Path = ROOT, manifest_path: Path | None = None) -> list[str]:
         errors.append("runtime_fingerprint mismatch")
 
     try:
+        payload_item = manifest.get("payload", {})
+        payload_path = manifest_path.parent / str(payload_item.get("name", ""))
+        LOADER.verify_direct_payload(manifest, payload_path.read_bytes())
         payload = LOADER.verify_chunks(manifest, manifest_path.parent)
+        if payload != payload_path.read_bytes():
+            errors.append("direct payload differs from segmented payload")
         with tempfile.TemporaryDirectory() as directory:
             LOADER.extract_verified(payload, manifest, Path(directory))
     except Exception as error:

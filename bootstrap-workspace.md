@@ -6,7 +6,7 @@ This file is the **pre-checkpoint entrypoint** for scheduled runs. Stage -1 must
 
 The scheduled environment may let the GitHub connector read repository objects while the shell has no GitHub network path and no checked-out worktree. Therefore Stage -1 uses a **verified runtime capsule** instead of trying to materialize the full repository blob-by-blob through the model channel.
 
-The capsule is generated in GitHub Actions from the repository runtime closure, compressed as deterministic `tar.xz`, base64-encoded, split into small UTF-8 text chunks, and checked into `bootstrap/`. Large generated PNG/SVG files and tests are not transported. Canonical map source data and render scripts are included so derived basemaps can be rebuilt locally.
+The capsule is generated in GitHub Actions from the repository runtime closure and compressed as deterministic `tar.xz`. The verified binary is checked in as `bootstrap/capsule-payload.tar.xz` for one-request materialization. The same bytes are also Base64-encoded and split into small UTF-8 text chunks as a connector-only fallback. Large generated PNG/SVG files and tests are not transported. Canonical map source data and render scripts are included so derived basemaps can be rebuilt locally.
 
 Connector responses can truncate long single lines, so capsule schema `1.1.0` uses explicit transport framing: each logical chunk remains at most 8192 Base64 characters, but chunk files are wrapped at 256 ASCII characters per LF-terminated line and grouped into verified retrieval blocks of at most 8 lines. See `bootstrap/TRANSPORT_FORMAT.md` for the framing contract.
 
@@ -25,14 +25,27 @@ Before executing any `scripts/*.py`, do all of the following:
    - `materialization_method = github-connector-capsule`
    - `materialization_scope = verified-runtime-capsule`
    - positive `line_width` and `retrieval_block_lines`
+   - a `payload` record for `capsule-payload.tar.xz` with size, SHA-256, and Git blob SHA;
    - non-empty `runtime_files` and `chunks` lists.
-7. Fail stale capsules closed. Compare every `runtime_files[].path` and `source_blob_sha` in the manifest with the same path in the resolved SHA's recursive tree. Also fetch that commit's metadata and require `manifest.source_commit` to be either the resolved commit itself or its first parent. If any runtime path is missing/different, or the source-commit relation is stale, stop with `repository materialization / executable workspace acquisition`. After validation, update the same comment to `stage=bootstrap-manifest-verified` and `progress=0/<chunks_total>`.
+7. Fail stale capsules closed. Compare every `runtime_files[].path` and `source_blob_sha` in the manifest with the same path in the resolved SHA's recursive tree. Require the tree blob for `bootstrap/capsule-payload.tar.xz` to equal `manifest.payload.source_blob_sha`. Also fetch that commit's metadata and require `manifest.source_commit` to be either the resolved commit itself or its first parent. If any runtime path or payload blob is missing/different, or the source-commit relation is stale, stop with `repository materialization / executable workspace acquisition`. After validation, update the same comment to `stage=bootstrap-manifest-verified` and `progress=0/<chunks_total>`.
 8. `EARLY_DIAGNOSTIC_HELPERS_VERIFIED`: fetch `bootstrap/bootstrap_loader.py`, `bootstrap/bootstrap_progress.py`, and `bootstrap/bootstrap-progress.schema.json` from the same resolved commit. Validate each connector-returned Git blob SHA against the resolved tree; also validate the loader against `manifest.loader.source_blob_sha`. Write them to a temporary writable staging directory, then update the same comment to `stage=bootstrap-helpers-verified`. The progress helper uses only the Python standard library and is allowed before the news runtime exists.
 9. Initialize the separate pre-checkpoint record with `python3 <staging>/bootstrap_progress.py init --output <staging>/bootstrap-progress.json --run-id <run-id> --resolved-commit <latest-main-commit-sha> --chunks-total <count>`, then use its `ledger` command to import the early ledger status and comment id. This file is diagnostic evidence, not the news checkpoint.
-10. **Do not fetch an entire chunk in one connector response.** For every chunk in `manifest.chunks[]`, iterate its `blocks[]` in order. The normal low-pressure path requests a **16-line** range spanning two adjacent declared blocks. Save the exact canonical-LF response and run `bootstrap/bootstrap_progress.py verify-grouped` with the two original block specifications. The helper splits the response and independently verifies both original block sizes and SHA-256 values. If either half is missing or altered, discard the grouped response and fall back to the exact 8-line request for each affected block.
-11. Every exact block request uses the same pinned commit and same declared `start_line` / `end_line` for **one initial attempt plus at most three retries**. Use backoff delays of **2, 5, and 10 seconds**, or the host's smallest safe equivalents, and record every attempt's byte size, SHA-256, and error with the progress helper. After the fourth failure, stop. Never restart or re-download earlier verified chunks.
-12. After all blocks for one chunk validate, concatenate the verified block files in order into the canonical chunk file. Locally verify the complete chunk `size` and `sha256`, then verify the unwrapped Base64 `encoded_size` and `encoded_sha256`. Only then atomically advance `chunks_completed` by one with the progress helper. Only after every chunk passes may Stage -1 continue.
-13. Write the exact manifest JSON to the staging directory as `capsule-manifest.json` and run the loader locally. This initial `python3` needs only the standard library and is not yet the verified news runtime:
+10. Attempt the low-pressure primary transport once. Run the verified loader against the exact pinned URL `https://raw.githubusercontent.com/robert820728-star/global-news-brief/<latest-main-commit-sha>/bootstrap/capsule-payload.tar.xz`. The loader downloads the bytes with the Python standard library, then requires the manifest size, SHA-256, and Git blob SHA before extracting anything:
+
+```bash
+python3 <staging>/bootstrap_loader.py \
+  --manifest <staging>/capsule-manifest.json \
+  --payload-url https://raw.githubusercontent.com/robert820728-star/global-news-brief/<latest-main-commit-sha>/bootstrap/capsule-payload.tar.xz \
+  --workspace <workspace> \
+  --commit-sha <latest-main-commit-sha> \
+  --manifest-blob-sha <manifest-git-blob-sha>
+```
+
+11. If and only if the direct request is unavailable or fails payload verification, record that single failure and use the existing segmented connector transport below. Do not retry the direct URL and do not ask the user to intervene.
+12. **Do not fetch an entire fallback chunk in one connector response.** For every chunk in `manifest.chunks[]`, iterate its `blocks[]` in order. The normal fallback requests a **16-line** range spanning two adjacent declared blocks. Save the exact canonical-LF response and run `bootstrap/bootstrap_progress.py verify-grouped` with the two original block specifications. The helper splits the response and independently verifies both original block sizes and SHA-256 values. If either half is missing or altered, discard the grouped response and fall back to the exact 8-line request for each affected block.
+13. Every exact block request uses the same pinned commit and same declared `start_line` / `end_line` for **one initial attempt plus at most three retries**. Use backoff delays of **2, 5, and 10 seconds**, or the host's smallest safe equivalents, and record every attempt's byte size, SHA-256, and error with the progress helper. After the fourth failure, stop. Never restart or re-download earlier verified chunks.
+14. After all blocks for one chunk validate, concatenate the verified block files in order into the canonical chunk file. Locally verify the complete chunk `size` and `sha256`, then verify the unwrapped Base64 `encoded_size` and `encoded_sha256`. Only then atomically advance `chunks_completed` by one with the progress helper. Only after every chunk passes may Stage -1 continue.
+15. For the fallback only, write the exact manifest JSON to the staging directory as `capsule-manifest.json` and run the loader locally. This initial `python3` needs only the standard library and is not yet the verified news runtime:
 
 ```bash
 python3 <staging>/bootstrap_loader.py \
@@ -43,9 +56,9 @@ python3 <staging>/bootstrap_loader.py \
   --manifest-blob-sha <manifest-git-blob-sha>
 ```
 
-The loader independently revalidates canonical line framing, every retrieval block, every complete chunk, the reconstructed Base64 stream, payload SHA-256, tar safety, and every runtime file by path, size, SHA-256 and Git blob SHA before writing `<workspace>/bootstrap-workspace.json`.
+Both transports converge in the same loader. It verifies the payload before tar safety and every runtime file by path, size, SHA-256 and Git blob SHA, then writes `<workspace>/bootstrap-workspace.json` with `transport=direct-payload` or `transport=segmented-chunks`.
 
-14. Only after the loader returns success, change the shell working directory to `<workspace>`. Resolve the pipeline runtime before initializing a checkpoint. Prefer a host-provided bundled-runtime Python absolute path when the host dependency locator exposes one:
+16. Only after the loader returns success, change the shell working directory to `<workspace>`. Resolve the pipeline runtime before initializing a checkpoint. Prefer a host-provided bundled-runtime Python absolute path when the host dependency locator exposes one:
 
 ```bash
 python3 scripts/resolve_bundled_python.py --preferred-python <host-bundled-python>
@@ -53,7 +66,7 @@ python3 scripts/resolve_bundled_python.py --preferred-python <host-bundled-pytho
 
 If the host does not provide a path, run `python3 scripts/resolve_bundled_python.py`; it searches declared environment variables and cross-platform Codex runtime cache locations. The resolver must return `status=ready` after actually importing Pillow with the selected executable. The `python3` that launched the resolver is not accepted as the pipeline runtime merely because it is on PATH.
 
-15. Initialize the checkpoint and run every subsequent canonical script with the exact `<bundled-python>` returned by the resolver:
+17. Initialize the checkpoint and run every subsequent canonical script with the exact `<bundled-python>` returned by the resolver:
 
 ```bash
 <bundled-python> scripts/news_run_checkpoint.py init \
@@ -68,13 +81,13 @@ If the host does not provide a path, run `python3 scripts/resolve_bundled_python
 
 ## Transport policy
 
-Preferred future transport, when the host exposes it, is a direct connector file/artifact -> mounted filesystem path. Until then, the supported fallback is the checked-in compressed text capsule with segmented line-range retrieval.
+The primary transport is the one-request pinned raw payload executed only by the verified loader. The segmented connector chunks remain the final fallback when the host blocks that request.
 
-Never use shell `git clone`, `curl`, `wget`, raw GitHub HTTP, or another shell-network fallback for Stage -1. The connector is the only GitHub transport authority in the scheduled sandbox.
+Never use shell `git clone`, `curl`, `wget`, an unpinned URL, or arbitrary raw GitHub HTTP for Stage -1. The sole shell-network exception is the loader's exact pinned `capsule-payload.tar.xz` URL above; its bytes are accepted only after manifest size, SHA-256, and Git blob verification.
 
 ## Capsule maintenance
 
-Repository changes are followed by `.github/workflows/build-bootstrap-capsule.yml`. The workflow builds the capsule, verifies it against the checked-out runtime closure, runs focused bootstrap/checkpoint tests, and commits only the generated manifest/chunks back to `main`. Python bytecode and cache directories must never be committed.
+Repository changes are followed by `.github/workflows/build-bootstrap-capsule.yml`. The workflow builds the capsule, verifies it against the checked-out runtime closure, runs focused bootstrap/checkpoint tests, and commits only the generated payload, manifest, and chunks back to `main`. Python bytecode and cache directories must never be committed.
 
 The capsule is intentionally runtime-only. It includes settings, schemas, skills, cross-platform Python scripts, map source/style/reference inputs, state seed, and bootstrap loader. It excludes tests, PowerShell legacy scripts, documentation not needed at runtime, old releases, and derived map PNG/SVG outputs.
 

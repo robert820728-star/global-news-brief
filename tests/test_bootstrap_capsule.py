@@ -78,6 +78,55 @@ class BootstrapCapsuleTests(unittest.TestCase):
             files = LOADER.extract_verified(payload, manifest, Path(directory))
             self.assertEqual(len(files), manifest["runtime_file_count"])
 
+    def test_builder_emits_direct_payload_matching_manifest(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output_dir = Path(directory)
+            manifest = BUILDER.build_capsule(
+                ROOT, output_dir, source_commit="test-source"
+            )
+            payload_path = output_dir / "capsule-payload.tar.xz"
+            self.assertTrue(payload_path.is_file(), "direct payload file missing")
+            payload = payload_path.read_bytes()
+            self.assertEqual(len(payload), manifest["payload_size"])
+            self.assertEqual(
+                hashlib.sha256(payload).hexdigest(), manifest["payload_sha256"]
+            )
+            self.assertNotIn(
+                b"\r", (output_dir / "capsule-manifest.json").read_bytes()
+            )
+
+    def test_loader_materializes_from_payload_url_without_chunks(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            capsule_dir = root / "capsule"
+            BUILDER.build_capsule(ROOT, capsule_dir, source_commit="test-source")
+            for chunk in capsule_dir.glob("capsule.part*.txt"):
+                chunk.unlink()
+            workspace = root / "workspace"
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "bootstrap/bootstrap_loader.py"),
+                    "--manifest",
+                    str(capsule_dir / "capsule-manifest.json"),
+                    "--payload-url",
+                    (capsule_dir / "capsule-payload.tar.xz").as_uri(),
+                    "--workspace",
+                    str(workspace),
+                    "--commit-sha",
+                    "test-commit",
+                    "--manifest-blob-sha",
+                    "test-manifest-blob",
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            receipt = json.loads(
+                (workspace / "bootstrap-workspace.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual("direct-payload", receipt["capsule"]["transport"])
+
     def test_extracted_runtime_renders_and_validates_canonical_event_map(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

@@ -16,6 +16,7 @@ from typing import Iterable
 ROOT = Path(__file__).resolve().parents[1]
 CAPSULE_DIR = ROOT / "bootstrap"
 MANIFEST_PATH = CAPSULE_DIR / "capsule-manifest.json"
+PAYLOAD_NAME = "capsule-payload.tar.xz"
 CHUNK_PREFIX = "capsule.part"
 CHUNK_SUFFIX = ".txt"
 CHUNK_SIZE = 8192
@@ -172,6 +173,7 @@ def build_capsule(root: Path = ROOT, output_dir: Path | None = None,
     tar_bytes = deterministic_tar_bytes(root, records)
     payload = lzma.compress(tar_bytes, format=lzma.FORMAT_XZ, preset=9)
     encoded = base64.b64encode(payload).decode("ascii")
+    (output_dir / PAYLOAD_NAME).write_bytes(payload)
 
     for old in output_dir.glob(f"{CHUNK_PREFIX}*{CHUNK_SUFFIX}"):
         old.unlink()
@@ -211,6 +213,12 @@ def build_capsule(root: Path = ROOT, output_dir: Path | None = None,
         "encoded_size": len(encoded),
         "payload_sha256": sha256_bytes(payload),
         "payload_size": len(payload),
+        "payload": {
+            "name": PAYLOAD_NAME,
+            "source_blob_sha": git_blob_sha1_bytes(payload),
+            "sha256": sha256_bytes(payload),
+            "size": len(payload),
+        },
         "runtime_file_count": len(records),
         "runtime_fingerprint": runtime_fingerprint(records),
         "runtime_files": records,
@@ -223,10 +231,8 @@ def build_capsule(root: Path = ROOT, output_dir: Path | None = None,
         "chunks": chunks,
     }
     manifest_path = output_dir / "capsule-manifest.json"
-    manifest_path.write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
+    with manifest_path.open("w", encoding="utf-8", newline="\n") as stream:
+        stream.write(json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
     return manifest
 
 
