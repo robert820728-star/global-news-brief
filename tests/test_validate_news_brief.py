@@ -2,6 +2,7 @@ import copy
 import importlib.util
 import io
 import json
+import sys
 import tempfile
 import unittest
 from contextlib import redirect_stdout
@@ -9,6 +10,11 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPTS = ROOT / "scripts"
+if str(SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS))
+RUN_ID = "gnb-20260817T102800Z-6a82b2e0"
+MAIN_SHA = "0123456789abcdef0123456789abcdef01234567"
 SPEC = importlib.util.spec_from_file_location(
     "validate_news_brief", ROOT / "scripts" / "validate_news_brief.py"
 )
@@ -22,6 +28,8 @@ def valid_manifest():
     return {
         "schema_version": "1.1.0",
         "run": {
+            "run_id": RUN_ID,
+            "main_sha": MAIN_SHA,
             "generated_at": "2026-08-14T06:00:00+08:00",
             "timezone": "Asia/Taipei",
             "window_start": "2026-08-13T06:00:00+08:00",
@@ -191,6 +199,10 @@ def valid_brief():
     note = VALIDATOR.SINGLE_SOURCE_NOTE
     return f"""2026/08/14 每日新聞
 
+執行編號：{RUN_ID}
+程式版本：{MAIN_SHA}
+正式發布：是
+
 本期共 1 則新聞：台灣 1 則。
 
 ## 今日總覽
@@ -232,6 +244,24 @@ def valid_brief():
 
 
 class ValidatorTests(unittest.TestCase):
+    def test_manifest_requires_canonical_run_identity(self):
+        manifest = valid_manifest()
+        manifest["run"].pop("run_id")
+        manifest["run"]["main_sha"] = "not-a-sha"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("run.run_id" in error for error in errors))
+        self.assertTrue(any("run.main_sha" in error for error in errors))
+
+    def test_reader_rejects_mismatched_run_id(self):
+        text = valid_brief().replace(RUN_ID, "gnb-20260817T102800Z-deadbeef", 1)
+        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        self.assertTrue(any("執行編號" in error for error in errors))
+
+    def test_reader_rejects_nonfinal_delivery_marker(self):
+        text = valid_brief().replace("正式發布：是", "正式發布：否", 1)
+        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        self.assertTrue(any("正式發布" in error for error in errors))
+
     def test_premature_final_manifest_command_is_deferred_without_failing_run(self):
         manifest = valid_manifest()
         manifest["stage_status"]["collect-news-images"] = "pending"

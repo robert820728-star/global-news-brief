@@ -21,7 +21,10 @@
   ],
   "properties": {
     "schema_version": { "const": "1.0.0" },
-    "run_id": { "type": "string", "minLength": 1 },
+    "run_id": {
+      "type": "string",
+      "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$"
+    },
     "scheduled_for": { "type": "string", "format": "date-time" },
     "status": {
       "enum": [

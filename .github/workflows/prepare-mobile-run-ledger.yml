@@ -40,7 +40,7 @@ jobs:
       - name: Rotate prior run and prepare the next executor receipt
         shell: bash
         run: |
-          run_id="mobile-$(date -u +%Y%m%dT%H%M%SZ)"
+          run_id="$(python3 scripts/run_identity.py generate)"
           updated_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           scheduled_for="$(python3 -c 'from datetime import datetime, timedelta; from zoneinfo import ZoneInfo; now=datetime.now(ZoneInfo("Asia/Taipei")); target=(now+timedelta(days=1) if now.hour>=6 else now).replace(hour=6, minute=0, second=0, microsecond=0); print(target.isoformat())')"
           python3 scripts/manage_mobile_run_log.py prepare \

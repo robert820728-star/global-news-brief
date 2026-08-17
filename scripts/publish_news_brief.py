@@ -15,7 +15,7 @@ import validate_news_brief
 
 ROOT = Path(__file__).resolve().parents[1]
 GATE_ID = "scripts/publish_news_brief.py"
-GATE_VERSION = "2.0.0"
+GATE_VERSION = "2.1.0"
 RELEASE_NAME = "news-brief.md"
 RECEIPT_NAME = "release-receipt.json"
 CONTRACT = ROOT / "daily-schedule-prompt.md"
@@ -104,6 +104,7 @@ def checkpoint_errors(cp: dict, manifest: dict, audit: dict, paths: dict[str, Pa
     runs = audit.get("runs", []); latest = runs[-1] if runs else {}
     run = manifest.get("run", {}) if isinstance(manifest.get("run"), dict) else {}
     if latest.get("run_id") != cp.get("run_id"): errors.append("checkpoint.run_id 與 candidate audit 本輪 run_id 不一致")
+    if run.get("run_id") != cp.get("run_id"): errors.append("checkpoint.run_id 與 manifest.run_id 不一致")
     for key in ("window_start", "window_end"):
         if latest.get(key) != cp.get(key): errors.append(f"checkpoint.{key} 與 candidate audit 不一致")
         if run.get(key) != cp.get(key): errors.append(f"checkpoint.{key} 與 manifest 不一致")
@@ -155,7 +156,8 @@ def publish(args) -> int:
     artifacts = {k:{"path":str(p), "sha256":sha_file(p)} for k,p in artifact_paths.items()}
     receipt = {
         "schema_version":"2.0.0", "status":"ready", "gate":GATE_ID, "gate_version":GATE_VERSION,
-        "run_id":cp.get("run_id"), "published_at":datetime.now().astimezone().isoformat(timespec="seconds"),
+        "run_id":cp.get("run_id"), "main_sha":manifest.get("run", {}).get("main_sha"),
+        "published_at":datetime.now().astimezone().isoformat(timespec="seconds"),
         "artifacts":artifacts, "authorized_release_sha256":artifacts["release"]["sha256"],
         "validators": {k:"passed" for k in ("unique_delivery_gate","pre_manifest_checkpoint","source_scan_and_candidate_audit","attachment_and_visual_evidence","map_decisions","manifest_and_brief")},
     }
@@ -192,6 +194,16 @@ def validate_receipt(path: Path, expected_cp: Path | None) -> tuple[list[str], d
             except (OSError, ValueError, json.JSONDecodeError) as error: errors.append(f"目前 checkpoint 無法驗證：{error}")
     release = artifacts.get("release", {}) if isinstance(artifacts, dict) else {}
     if release.get("sha256") != receipt.get("authorized_release_sha256"): errors.append("authorized_release_sha256 不一致")
+    manifest_item = artifacts.get("manifest", {}) if isinstance(artifacts, dict) else {}
+    manifest_path = Path(str(manifest_item.get("path", "")))
+    if manifest_path.is_file():
+        try:
+            manifest = validate_news_brief.load_json(manifest_path)
+            run = manifest.get("run", {}) if isinstance(manifest.get("run"), dict) else {}
+            if run.get("run_id") != receipt.get("run_id"): errors.append("receipt.run_id 與 manifest 不一致")
+            if run.get("main_sha") != receipt.get("main_sha"): errors.append("receipt.main_sha 與 manifest 不一致")
+        except (OSError, ValueError, json.JSONDecodeError) as error:
+            errors.append(f"receipt manifest 無法驗證：{error}")
     errors += gate_check.validate_repository(ROOT)
     return errors, receipt, release_bytes
 

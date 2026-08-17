@@ -12,6 +12,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+import run_identity
+
 
 EVENT_ID_RE = re.compile(r"^[A-Z]{3}-\d{2,3}$")
 DATE_LINE_RE = re.compile(r"^\d{4}/\d{2}/\d{2} 每日新聞$")
@@ -517,10 +519,14 @@ def validate_manifest_data(data: dict[str, Any]) -> list[str]:
     else:
         _need(
             run,
-            ["generated_at", "timezone", "window_start", "window_end", "language"],
+            ["run_id", "main_sha", "generated_at", "timezone", "window_start", "window_end", "language"],
             "run",
             errors,
         )
+        if not run_identity.is_valid_run_id(str(run.get("run_id", ""))):
+            errors.append("run.run_id 必須使用 gnb-UTC秒-8碼隨機值格式")
+        if not re.fullmatch(r"[0-9a-f]{40}", str(run.get("main_sha", ""))):
+            errors.append("run.main_sha 必須是 40 碼小寫 Git commit SHA")
         try:
             window_start = datetime.fromisoformat(str(run.get("window_start")))
             window_end = datetime.fromisoformat(str(run.get("window_end")))
@@ -885,6 +891,15 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
     if not nonempty or not DATE_LINE_RE.fullmatch(nonempty[0]):
         errors.append("讀者版第一個非空白行必須是 YYYY/MM/DD 每日新聞")
 
+    run = data.get("run") if isinstance(data.get("run"), dict) else {}
+    expected_identity = [
+        f"執行編號：{run.get('run_id')}",
+        f"程式版本：{run.get('main_sha')}",
+        "正式發布：是",
+    ]
+    if nonempty[1:4] != expected_identity:
+        errors.append("讀者版必須在日期後顯示與 manifest 一致的執行編號、程式版本與正式發布狀態")
+
     section_counts = []
     events = data.get("events", [])
     for section in data.get("sections", []):
@@ -896,7 +911,7 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
         )
         section_counts.append(f"{section.get('name')} {count} 則")
     expected_summary = f"本期共 {len(events)} 則新聞：{'、'.join(section_counts)}。"
-    if len(nonempty) < 2 or nonempty[1] != expected_summary:
+    if len(nonempty) < 5 or nonempty[4] != expected_summary:
         errors.append(f"日期行後必須簡短列出本期新聞總數與各板塊數量：{expected_summary}")
 
     h2 = re.findall(r"(?m)^## ([^\r\n]+)\r?$", text)

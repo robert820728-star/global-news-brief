@@ -8,7 +8,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from test_validate_news_brief import valid_brief, valid_manifest
+from tests.test_validate_news_brief import MAIN_SHA, RUN_ID, valid_brief, valid_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLISHER = ROOT / "scripts" / "publish_news_brief.py"
@@ -123,7 +123,7 @@ def write_valid_audit(root: Path):
         "schema_version": "1.1.0", "retention_days": 14,
         "updated_at": "2026-08-14T06:00:00+08:00",
         "runs": [{
-            "run_id": "run-1", "generated_at": "2026-08-14T06:00:00+08:00",
+            "run_id": RUN_ID, "generated_at": "2026-08-14T06:00:00+08:00",
             "window_start": "2026-08-13T06:00:00+08:00",
             "window_end": "2026-08-14T06:00:00+08:00",
             "source_coverage": coverage, "raw_item_count": len(coverage),
@@ -160,7 +160,7 @@ def prepare_inputs(root: Path):
     audit_path = write_valid_audit(root)
 
     checkpoint = news_run_checkpoint.create_checkpoint(
-        "run-1", "2026-08-13T06:00:00+08:00", "2026-08-14T06:00:00+08:00"
+        RUN_ID, "2026-08-13T06:00:00+08:00", "2026-08-14T06:00:00+08:00"
     )
     for stage in news_run_checkpoint.RELEASE_REQUIRED_STAGES:
         news_run_checkpoint.mark_stage(checkpoint, stage, "running")
@@ -192,6 +192,34 @@ def publish_command(checkpoint, manifest, audit, brief, release_dir):
 
 
 class PublisherTests(unittest.TestCase):
+    def test_checkpoint_rejects_manifest_from_another_run(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint, manifest_path, audit_path, brief = prepare_inputs(root)
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            manifest["run"]["run_id"] = "gnb-20260817T102801Z-deadbeef"
+            manifest_path.write_text(json.dumps(manifest, ensure_ascii=False), encoding="utf-8")
+            cp = news_run_checkpoint.load(checkpoint)
+            audit = json.loads(audit_path.read_text(encoding="utf-8"))
+            errors = publish_news_brief.checkpoint_errors(
+                cp, manifest, audit,
+                {"audit": audit_path, "manifest": manifest_path, "brief": brief},
+            )
+            self.assertTrue(any("manifest" in error and "run_id" in error for error in errors))
+
+    def test_publish_receipt_binds_main_sha(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint, manifest, audit, brief = prepare_inputs(root)
+            release_dir = root / "release"
+            result = subprocess.run(
+                publish_command(checkpoint, manifest, audit, brief, release_dir),
+                capture_output=True, text=True, check=False,
+            )
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            receipt = json.loads((release_dir / "release-receipt.json").read_text(encoding="utf-8"))
+            self.assertEqual(MAIN_SHA, receipt["main_sha"])
+
     def test_publish_uses_final_render_manifest_binding(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

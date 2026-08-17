@@ -7,11 +7,13 @@
 使用已連接的 GitHub app，將紀錄寫在同一 repository 的 `run-logs` 分支。正常只維護 `logs/current.json`、`logs/previous.json` 與 `logs/latest-reader.md`，不得寫入 `main`，也不得逐新聞或逐工具呼叫建立紀錄。
 
 1. 第一個 GitHub 動作先讀取 `run-logs/logs/current.json`。05:58 守望工作已建立當天 `status=awaiting_executor` 時，沿用其中的 `run_id`，立即把目前階段更新成 `executor-started`、`status=running`。
+   - `run_id` 固定為 `gnb-YYYYMMDDThhmmssZ-xxxxxxxx`：UTC 精確到秒，加 8 碼小寫十六進位隨機值。格式不符、與 manifest／讀者版不一致或沿用前輪編號時立即失敗。
 2. 若當天紀錄不存在，才由本任務執行相同輪替：舊 `current.json` 若仍是 `awaiting_executor` 或 `running`，先標為 `interrupted_by_next_run` 並覆寫 `previous.json`；接著建立本輪 `current.json`。更舊的 `previous.json` 直接覆寫，不增加第三份歷史紀錄。
 3. 每次用 GitHub contents API 更新同一個 `current.json`，必須先取得目前 blob SHA；檔案更新失敗時只重試一次，仍失敗就改在 Issue #3 建立或更新本輪單一留言，不得因紀錄失敗重跑已完成的新聞搜尋。
 4. 每到下一個高階階段時更新一次，因此同一筆紀錄會保留「最後完成階段」和「目前執行階段」。固定順序不得倒退：`schedule-prepared`、`executor-started`、`main-pinned`、`workspace-ready`、`source-scan`、`candidate-audit`、`selection-verified`、`visuals-completed`、`reader-rendered`、`github-result-saved`、`delivery-handoff`。
 5. 任一步驟失敗時，立即將 `status=failed`，並在 `last_error.code` 與 `last_error.message` 寫入精簡、可排查且不含憑證的原因。突然中斷時，GitHub 保留最後一次成功更新；下一輪會把它標成 `interrupted_by_next_run`。
 6. 完整讀者版產生後，先以 UTF-8 Markdown 覆寫 `run-logs/logs/latest-reader.md`，再把其 blob SHA 記入 `current.json.reader_artifact`，階段才可進入 `github-result-saved`。完成這一步後才嘗試把同一份內容輸出至排程對話。
+   - 讀者版日期後必須依序顯示 `執行編號：<run_id>`、`程式版本：<main_sha>`、`正式發布：是`。任何十四天清單與新聞內容都屬於這三行所識別的同一輪；不得混用舊清單。
 7. 輸出對話前最後一次持久更新為 `delivery-handoff`、`status=completed`、`delivery_status=handoff_started`。這只證明新聞流程完成、讀者版已存 GitHub並開始交給 ChatGPT；目前排程沒有手機客戶端顯示回執，因此沒有外部明確回執時不得宣稱 `client_confirmed` 或手機畫面已收到。
 
 紀錄格式必須符合 `schemas/mobile-run-log.schema.json`；詳細輪替規則見 `docs/mobile-run-ledger.md`。紀錄只包含階段、時間、commit、錯誤摘要及讀者版位置，不保存憑證、完整來源頁或圖片二進位內容。
@@ -39,7 +41,12 @@
    - 使用者關聯：0–10
    六項總和必須等於 0–100 的總分。
 4. 依總分分級：`SS` 90–100、`S` 85–89、`A` 75–84、`B` 65–74、`C` 55–64、`C-` 50–54、`D` 35–49、`E` 0–34。`+`／`-` 只用於同一級距內排序，不得改變 C 級門檻。
-   - 災害／事故另有絕對基準，優先於總分換算：普通地方事件未滿 50 人且無特殊意義時低於 C；50–99 人為 C；100–249 人為 B；250 人以上為 A-。基準正常適用，不因只是外國或地方新聞而降級。
+   - 災害／事故另有絕對基準，優先於總分換算：普通地方事件未滿 50 人且無特殊意義時低於 C；50–99 人為 C；100–249 人為 B；250–2,499 人為 A-；2,500 人以上可因死亡數到 A，但僅憑死亡數不得高於 A。`DISASTER_2500_DEATHS_A_CEILING`
+   - A+ 必須另有快速傳播、跨國系統衝擊、國家級失能或其他重大場外因素。`A_PLUS_REQUIRES_SEPARATE_ESCALATION_EVIDENCE`
+   - Risk Group 4／四級病毒不能自動升 A+，須同時評估傳播途徑、實際擴散與系統後果。`RISK_GROUP_4_NOT_AUTOMATIC_A_PLUS`
+   - 數萬至數十萬人死傷時，必須進入 S 級評估並列出伴隨的醫療崩潰、治理失能、巨量流離失所、跨境衝擊或長期結構改變。`MASS_CASUALTY_S_SYSTEMIC_IMPACT_PRESUMPTION`
+   - 疫情進入 S- 或以上須為全球大流行，且具改變世界、全球轉捩點、全球制度劇變或文明／存續風險。`PANDEMIC_S_MINUS_WORLD_CHANGE_GATE`
+   - COVID-19 的全球封控、旅行與供應鏈中斷及長期制度改變，是 S- 最低校正案例。`COVID_GLOBAL_LOCKDOWN_S_MINUS_REFERENCE`
    - 特殊意義包含但不限於：極大量異常失蹤、重傷或撤離；醫療、電力、交通等大規模公共系統中斷；災情仍迅速擴大且有官方時間序列證據；跨國影響或罕見災害機制；明顯監管／救援失靈或制度性風險；可能引發監控／指定區域內的軍事或其他衝突。上調必須說明具體觸發與證據。
    - 軍事／衝突事件不套用上述 50 人門檻：非監控板塊且未加權的邊境小衝突預設 D；長期戰爭的同戰線、同型態、例行傷亡更新預設 D。只有戰局反轉或實質升級、停火／和平進程改變、新國家／新戰線，或可驗證的外部系統影響，才重新評級。
 5. 維護此排程對話內的十四天滾動海選清單。新增本輪候選、合併同事件更新，並移除超過十四天的項目；每筆仍須保留六項大評分、總分、等級、決定與理由。

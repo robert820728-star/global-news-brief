@@ -20,6 +20,8 @@
     "run": {
       "type": "object",
       "required": [
+        "run_id",
+        "main_sha",
         "generated_at",
         "timezone",
         "window_start",
@@ -27,6 +29,8 @@
         "language"
       ],
       "properties": {
+        "run_id": { "type": "string", "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$" },
+        "main_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
         "generated_at": { "type": "string", "format": "date-time" },
         "timezone": { "type": "string", "minLength": 1 },
         "window_start": { "type": "string", "format": "date-time" },

@@ -10,6 +10,8 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
+import run_identity
+
 
 SCHEMA_VERSION = "1.0.0"
 STAGES = (
@@ -83,8 +85,8 @@ def validate_record(record: dict[str, Any]) -> None:
         raise ValueError(f"missing run-log fields: {', '.join(sorted(missing))}")
     if record["schema_version"] != SCHEMA_VERSION:
         raise ValueError("unsupported run-log schema version")
-    if not isinstance(record["run_id"], str) or not record["run_id"].strip():
-        raise ValueError("run_id must be a non-empty string")
+    if not run_identity.is_valid_run_id(record["run_id"]):
+        raise ValueError("run_id must use canonical format gnb-YYYYMMDDTHHMMSSZ-xxxxxxxx")
     if record["status"] not in STATUSES:
         raise ValueError(f"invalid status: {record['status']}")
     stage = record["current_stage"]
