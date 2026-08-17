@@ -2,6 +2,7 @@ import json
 import tempfile
 import threading
 import unittest
+from datetime import datetime, timedelta
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -18,6 +19,80 @@ SPEC.loader.exec_module(MODULE)
 
 
 class FetchSourceRoutesTests(unittest.TestCase):
+    def test_dated_route_keeps_two_successful_days_when_local_today_is_missing(self):
+        requested_days = []
+        today = datetime.now().astimezone().date()
+
+        class Handler(BaseHTTPRequestHandler):
+            def do_GET(self):
+                day = self.path.rsplit("/", 1)[-1]
+                requested_days.append(day)
+                if day == today.strftime("%Y%m%d"):
+                    body = b"not published"
+                    self.send_response(404)
+                    self.send_header("Content-Type", "text/plain")
+                else:
+                    body = (
+                        "<?xml version='1.0'?><urlset>"
+                        f"<url><loc>http://example.test/news/{day}</loc>"
+                        f"<lastmod>{day[:4]}-{day[4:6]}-{day[6:]}T12:00:00+00:00</lastmod>"
+                        "</url></urlset>"
+                    ).encode("utf-8")
+                    self.send_response(200)
+                    self.send_header("Content-Type", "application/xml")
+                self.end_headers()
+                self.wfile.write(body)
+
+            def log_message(self, format, *args):
+                return
+
+        server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                port = server.server_address[1]
+                config = root / "routes.json"
+                config.write_text(json.dumps({"routes": [{
+                    "source_id": "dated",
+                    "route": "structured_direct",
+                    "request_url_template": f"http://127.0.0.1:{port}/sitemap/{{yyyyMMdd}}",
+                    "snapshot_name": "dated.xml",
+                    "date_offsets_days": [0, -1, -2],
+                    "minimum_ready_variants": 2,
+                }]}), encoding="utf-8")
+
+                coverage = MODULE.fetch_routes(config, root / "out", 5)
+
+                result = coverage["results"][0]
+                self.assertTrue(result["route_ready"])
+                self.assertEqual(2, result["date_variant_ready_count"])
+                self.assertEqual(1, len(result["page_snapshots"]))
+                self.assertEqual(3, len(result["date_variant_attempts"]))
+                self.assertEqual(
+                    [
+                        today.strftime("%Y%m%d"),
+                        today.strftime("%Y%m%d"),
+                        (today + timedelta(days=-1)).strftime("%Y%m%d"),
+                        (today + timedelta(days=-2)).strftime("%Y%m%d"),
+                    ],
+                    requested_days,
+                )
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=2)
+
+    def test_tvbs_uses_official_news_sitemap_not_short_homepage(self):
+        config = json.loads((ROOT / "source-route-config.json").read_text(encoding="utf-8"))
+        tvbs = next(item for item in config["routes"] if item["source_id"] == "tvbs")
+        self.assertEqual("structured_direct", tvbs["route"])
+        self.assertEqual(
+            "https://news.tvbs.com.tw/sitemap/news-sitemap",
+            tvbs["request_url_template"],
+        )
+
     def test_configured_json_pagination_stops_after_crossing_window_start(self):
         requested_pages = []
 

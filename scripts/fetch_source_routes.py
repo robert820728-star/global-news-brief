@@ -140,6 +140,59 @@ def fetch_one(route: Mapping, snapshot_dir: Path, timeout_seconds: int) -> dict:
     }
 
 
+def fetch_date_variants(route: Mapping, snapshot_dir: Path, timeout_seconds: int) -> dict:
+    offsets = route.get("date_offsets_days")
+    if not isinstance(offsets, list) or not offsets:
+        return fetch_one(route, snapshot_dir, timeout_seconds)
+    minimum_ready = int(route.get("minimum_ready_variants", len(offsets)))
+    base = Path(str(route["snapshot_name"]))
+    attempts = []
+    ready = []
+    for offset_value in offsets:
+        offset = int(offset_value)
+        variant = dict(route)
+        variant.pop("date_offsets_days", None)
+        variant.pop("minimum_ready_variants", None)
+        variant["date_offset_days"] = offset
+        suffix = base.suffix or ".bin"
+        variant["snapshot_name"] = (
+            f"{base.stem}.date-offset-{offset:+d}{suffix}"
+        )
+        result = fetch_one(variant, snapshot_dir, timeout_seconds)
+        result["date_offset_days"] = offset
+        attempts.append(result)
+        if result.get("route_ready"):
+            ready.append(result)
+    if not ready:
+        failed = dict(attempts[0])
+        failed.update(
+            date_variant_attempts=attempts,
+            date_variant_ready_count=0,
+            error="no dated route variant was available",
+        )
+        return failed
+    primary = dict(ready[0])
+    primary["page_snapshots"] = [
+        {
+            **{key: value for key, value in item.items()
+               if key not in {"source_id", "route", "route_ready"}},
+            "page_index": index,
+        }
+        for index, item in enumerate(ready[1:], start=2)
+    ]
+    primary["date_variant_attempts"] = attempts
+    primary["date_variant_ready_count"] = len(ready)
+    if len(ready) < minimum_ready:
+        primary.update(
+            route_ready=False,
+            error=(
+                f"dated route produced {len(ready)} successful variants; "
+                f"requires {minimum_ready}"
+            ),
+        )
+    return primary
+
+
 def fetch_page(route: Mapping, request_url: str, snapshot_path: Path,
                timeout_seconds: int, page_index: int) -> tuple[dict, bytes | None]:
     headers = {"User-Agent": USER_AGENT, "Accept-Encoding": "gzip, deflate"}
@@ -257,7 +310,7 @@ def fetch_routes(route_config: Path, output_dir: Path, timeout_seconds: int,
     snapshot_dir.mkdir(parents=True, exist_ok=True)
     results = []
     for route in config.get("routes", []):
-        result = fetch_one(route, snapshot_dir, timeout_seconds)
+        result = fetch_date_variants(route, snapshot_dir, timeout_seconds)
         if result.get("route_ready"):
             result = fetch_pagination(
                 route, result, snapshot_dir, timeout_seconds, window_start
