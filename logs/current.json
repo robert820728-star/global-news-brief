@@ -1,15 +1,19 @@
 {
   "client_confirmation_supported": false,
-  "current_stage": "reader-rendered",
-  "delivery_status": "not_ready",
-  "last_completed_stage": "visuals-completed",
+  "current_stage": "github-result-saved",
+  "delivery_status": "reader_saved",
+  "last_completed_stage": "reader-rendered",
   "last_error": null,
   "main_sha": "eb3c0db5fc634dd8cb7a3d7edb3cd31283eb0bd6",
-  "reader_artifact": null,
+  "reader_artifact": {
+    "branch": "run-logs",
+    "path": "logs/latest-reader.md",
+    "blob_sha": "b528be270f77bcbaff581282565f89ab00bab9d5"
+  },
   "run_id": "gnb-20260817T084718Z-full01",
   "scheduled_for": "2026-08-17T16:47:18+08:00",
   "schema_version": "1.0.0",
-  "stage_index": 8,
+  "stage_index": 9,
   "status": "running",
-  "updated_at": "2026-08-17T09:12:38.734Z"
+  "updated_at": "2026-08-17T09:12:47.407Z"
 }
