@@ -50,6 +50,11 @@ The required order for every configured source is: `canonical route -> same-site
 - 暫定 B 以上，以及政治、選舉、軍事、外交、金融市場、重大企業、重大科技、災害、疫情、公共安全、跨境或跨產業事件，必須由高階模型複核；小模型不得單獨排除。
 - 使用高召回、晚淘汰原則。成本最佳化不得成為排除理由，也不得變更既有評級與收納標準。
 - 每個事件獨立處理；失敗只重跑該事件與原欄位技能。避免整份候選、十四天歷史與所有來源在每次請求重複載入。
+- 所有 C 級以上新聞仍完整納入，不以節省圖片成本縮減新聞或來源覆蓋。
+- `IMAGE_DEFAULT_ONE_ASSET`：每則事件預設一張來源圖片；`IMAGE_SECOND_ASSET_REQUIRES_INCREMENTAL_INFORMATION`：第二張必須提供第一張沒有的範圍、數字、現場或時間資訊，最多兩張。
+- `IMAGE_ONE_ASSET_MAY_SATISFY_BOTH_SOURCE_AND_PROFESSIONAL`：同一張合格官方／專業圖可同時滿足引用來源圖片與專業圖資要求，但兩組來源檢查紀錄都要保留。
+- `IMAGE_SHA256_REUSE`：同一輪以圖片內容 SHA-256 去重，相同內容沿用一次下載、一次 `640px` 縮圖與一次驗收結果。
+- `IMAGE_VISUAL_CHECK_ONCE_PER_HASH`：先做 MIME、解碼、尺寸與 SHA-256 程式檢查；每個唯一 hash 只開啟驗收一次，只有內容、日期或相關性不確定時才加深判讀。
 
 ## 動態板塊與編號
 

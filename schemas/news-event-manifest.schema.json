@@ -403,7 +403,7 @@
         "professional_omission_reason": { "type": ["string", "null"] },
         "assets": {
           "type": "array",
-          "maxItems": 5,
+          "maxItems": 2,
           "items": { "$ref": "#/$defs/imageAsset" }
         },
         "omission_reason": { "type": ["string", "null"] }
@@ -497,6 +497,7 @@
         "source_url",
         "kind",
         "published_at",
+        "content_sha256",
         "visual_checked",
         "time_checked",
         "width",
@@ -511,6 +512,8 @@
           "enum": ["official_information", "professional_information", "news_photo"]
         },
         "published_at": { "type": ["string", "null"] },
+        "content_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "incremental_information": { "type": ["string", "null"] },
         "visual_checked": { "const": true },
         "time_checked": { "const": true },
         "width": { "type": "integer", "minimum": 1 },

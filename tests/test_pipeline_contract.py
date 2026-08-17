@@ -182,7 +182,7 @@ class PipelineContractTests(unittest.TestCase):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
-            "最多一張",
+            "最多兩張",
             "同一張圖",
             "srcset",
             "640px",
@@ -197,6 +197,29 @@ class PipelineContractTests(unittest.TestCase):
         ):
             self.assertIn(requirement, daily)
         self.assertNotIn("**圖片來源頁：**", daily)
+
+    def test_image_workload_is_bounded_without_reducing_news_coverage(self):
+        documents = [
+            ROOT / "news-brief-settings.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/collect-news-images/SKILL.md",
+        ]
+        requirements = (
+            "IMAGE_DEFAULT_ONE_ASSET",
+            "IMAGE_SECOND_ASSET_REQUIRES_INCREMENTAL_INFORMATION",
+            "IMAGE_SHA256_REUSE",
+            "IMAGE_VISUAL_CHECK_ONCE_PER_HASH",
+            "IMAGE_ONE_ASSET_MAY_SATISFY_BOTH_SOURCE_AND_PROFESSIONAL",
+            "640px",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            for requirement in requirements:
+                self.assertIn(requirement, text, f"{path} missing {requirement}")
+
+        settings = documents[0].read_text(encoding="utf-8")
+        self.assertIn("browser is the final fallback only", settings)
+        self.assertIn("所有 C 級以上", settings)
 
     def test_selection_contract_forbids_prior_run_drivers(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
