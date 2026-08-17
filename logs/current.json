@@ -1,19 +1,15 @@
 {
   "client_confirmation_supported": false,
-  "current_stage": "delivery-handoff",
-  "delivery_status": "handoff_started",
-  "last_completed_stage": "github-result-saved",
-  "last_error": null,
+  "current_stage": "materialize-manifest",
+  "delivery_status": "not_ready",
+  "last_completed_stage": "candidate-audit",
+  "last_error": "BACKGROUND_DELIVERY_REJECTED: ephemeral attachment paths were not persistently viewable and grading review failed",
   "main_sha": "eb3c0db5fc634dd8cb7a3d7edb3cd31283eb0bd6",
-  "reader_artifact": {
-    "branch": "run-logs",
-    "path": "logs/latest-reader.md",
-    "blob_sha": "b528be270f77bcbaff581282565f89ab00bab9d5"
-  },
+  "reader_artifact": null,
   "run_id": "gnb-20260817T084718Z-full01",
   "scheduled_for": "2026-08-17T16:47:18+08:00",
   "schema_version": "1.0.0",
-  "stage_index": 10,
-  "status": "completed",
-  "updated_at": "2026-08-17T09:12:58.858Z"
+  "stage_index": 8,
+  "status": "running",
+  "updated_at": "2026-08-17T09:16:00.000Z"
 }
