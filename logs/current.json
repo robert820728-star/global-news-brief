@@ -1,15 +1,15 @@
 {
   "client_confirmation_supported": false,
-  "current_stage": "schedule-prepared",
+  "current_stage": "candidate-audit",
   "delivery_status": "not_ready",
-  "last_completed_stage": null,
+  "last_completed_stage": "source-scan",
   "last_error": null,
-  "main_sha": null,
+  "main_sha": "76ea407a1ca0c00f4202a9919b705184304c3bba",
   "reader_artifact": null,
-  "run_id": "mobile-setup-20260817T065640Z",
-  "scheduled_for": "2026-08-18T06:00:00+08:00",
+  "run_id": "gnb-20260817T072651Z-6a82b2e0",
+  "scheduled_for": "2026-08-17T15:26:51+08:00",
   "schema_version": "1.0.0",
-  "stage_index": 0,
-  "status": "awaiting_executor",
-  "updated_at": "2026-08-17T06:56:40Z"
+  "stage_index": 5,
+  "status": "running",
+  "updated_at": "2026-08-17T15:39:30+08:00"
 }
