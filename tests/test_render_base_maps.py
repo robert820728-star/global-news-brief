@@ -17,6 +17,14 @@ SPEC.loader.exec_module(MODULE)
 
 
 class RenderBaseMapsTests(unittest.TestCase):
+    def test_label_font_has_distinct_traditional_chinese_glyphs(self):
+        font = MODULE.load_label_font(36)
+        glyphs = [bytes(font.getmask(character)) for character in "臺灣"]
+        self.assertNotEqual(glyphs[0], glyphs[1])
+
+    def test_world_map_label_size_is_mobile_readable(self):
+        self.assertGreaterEqual(MODULE.label_font_size(1800, 1044), 36)
+
     def test_renderer_has_no_matplotlib_dependency(self):
         source = SCRIPT.read_text(encoding="utf-8-sig")
         self.assertNotIn("matplotlib", source)

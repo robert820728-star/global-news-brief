@@ -25,7 +25,10 @@ jobs:
           python-version: '3.12'
 
       - name: Install runtime probe dependency
-        run: python3 -m pip install --disable-pip-version-check pillow
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
+          python3 -m pip install --disable-pip-version-check pillow
 
       - name: Apply checkpoint capsule migration
         run: python3 scripts/apply_bootstrap_capsule_migration.py
@@ -57,6 +60,7 @@ jobs:
             tests/test_bootstrap_capsule.py \
             tests/test_news_run_checkpoint.py \
             tests/test_pipeline_contract.py \
+            tests/test_render_base_maps.py \
             -v
 
       - name: Remove transient Python caches
