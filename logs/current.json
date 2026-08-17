@@ -1,15 +1,15 @@
 {
-  "schema_version": "1.0.0",
-  "run_id": "gnb-20260817T081519Z-78e20714",
-  "scheduled_for": "2026-08-17T16:11:33+08:00",
-  "status": "running",
-  "current_stage": "candidate-audit",
-  "stage_index": 5,
-  "last_completed_stage": "source-scan",
-  "main_sha": "f5c9bfc9a698fc9cd33abf845762afb03ca95c74",
-  "updated_at": "2026-08-17T08:31:21.179Z",
-  "last_error": null,
-  "delivery_status": "not_ready",
   "client_confirmation_supported": false,
-  "reader_artifact": null
+  "current_stage": "schedule-prepared",
+  "delivery_status": "not_ready",
+  "last_completed_stage": null,
+  "last_error": null,
+  "main_sha": null,
+  "reader_artifact": null,
+  "run_id": "gnb-20260817T084718Z-full01",
+  "scheduled_for": "2026-08-17T16:47:18+08:00",
+  "schema_version": "1.0.0",
+  "stage_index": 0,
+  "status": "awaiting_executor",
+  "updated_at": "2026-08-17T08:47:18.416Z"
 }
