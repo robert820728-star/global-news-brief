@@ -1,15 +1,15 @@
 {
   "client_confirmation_supported": false,
-  "current_stage": "main-pinned",
+  "current_stage": "workspace-ready",
   "delivery_status": "not_ready",
-  "last_completed_stage": "executor-started",
+  "last_completed_stage": "main-pinned",
   "last_error": null,
   "main_sha": "5d4b3c6ca97b76b5dfe3bd21a6cc24694595e032",
   "reader_artifact": null,
   "run_id": "gnb-20260817T094800Z-full03",
   "scheduled_for": "2026-08-17T17:48:00+08:00",
   "schema_version": "1.0.0",
-  "stage_index": 2,
+  "stage_index": 3,
   "status": "running",
-  "updated_at": "2026-08-17T09:48:02.000Z"
+  "updated_at": "2026-08-17T09:50:00.000Z"
 }
