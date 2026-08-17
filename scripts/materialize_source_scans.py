@@ -136,7 +136,19 @@ def add_item(items: dict, *, request_url: str, homepage: str, route: str, url_ev
         "importance_hint": title[:160], "acquisition_route": route,
     }
     old = items.get(canonical)
-    if old is None or candidate["published_at"] > old["published_at"]:
+    new_title_is_descriptive = not re.fullmatch(r"[\W_]*\d+[\W_]*", candidate["title"])
+    old_title_is_descriptive = old is not None and not re.fullmatch(
+        r"[\W_]*\d+[\W_]*", old["title"]
+    )
+    if (
+        old is None
+        or candidate["published_at"] > old["published_at"]
+        or (
+            candidate["published_at"] == old["published_at"]
+            and new_title_is_descriptive
+            and not old_title_is_descriptive
+        )
+    ):
         items[canonical] = candidate
 
 
@@ -207,8 +219,16 @@ def parse_html(text: str, request_url: str, homepage: str, route: str, year: int
             published=datetime.fromtimestamp(int(epoch), timezone.utc),
         )
     dated = date_candidates(text, year)
-    for match in re.finditer(r"<a\b[^>]*href=['\"]([^'\"]+)['\"][^>]*>(.*?)</a>", text, re.I | re.S):
-        url_ev, title = match.group(1), clean_text(match.group(2))
+    for match in re.finditer(r"<a\b([^>]*)>(.*?)</a>", text, re.I | re.S):
+        attributes, body = match.groups()
+        href_match = re.search(r"\bhref=['\"]([^'\"]+)['\"]", attributes, re.I)
+        if not href_match:
+            continue
+        url_ev = href_match.group(1)
+        label_match = re.search(
+            r"\b(?:title|aria-label)=(['\"])(.*?)\1", attributes, re.I | re.S
+        )
+        title = clean_text(label_match.group(2) if label_match else body)
         nearby = min(dated, key=lambda item: abs(item[0] - match.start()), default=None)
         if nearby and abs(nearby[0] - match.start()) <= 4000:
             _, date_ev, published = nearby

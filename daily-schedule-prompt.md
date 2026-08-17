@@ -96,6 +96,7 @@ Stage -1 完成後，至少讀取並遵守：
    - materializer 完成後只執行一次 `scripts/validate_source_scan_evidence.py --scan-dir <source-scans-dir> --coverage <source-coverage.json> --source news-source-pool.json`；canonical validator 會以 UTF-8 自行讀取 aggregate coverage/source pool 並驗證其中全部15站。不得用 PowerShell `Get-Content`／`ConvertFrom-Json` 編排來源清單，不得另寫拆分 helper。
    - 每個站內海選條目必須保存 `public_value_v1` 六項 `importance_breakdown`、總分與理由；六項總和必須等於 `importance_score`，並隨十四天候選稽核保存。
    - 直接 API／RSS／HTML 失敗時先切同站替代入口；只有目前工具契約明確允許時才可用完整瀏覽器渲染並保存 DOM。瀏覽器不得是完成排程的必要依賴，不得用別站冒充該站本輪掃描完成。
+   - `TAIWAN_DOMESTIC_COVERAGE_GUARD`：台灣五站 materialize 後，依 `news-source-pool.json.taiwan_coverage_sweeps` 對經濟產業、食藥消費安全、中央政策制度各做一次最多 `5 results` 的 24 小時補漏搜尋。只接受五站本身網域；命中時必須 `same-source recovery` 回填所屬 source scan、重新 materialize 與驗證，再進 `canonical candidate audit`。不得把搜尋結果直接塞入 selection、不得新增圖片工作，除非該事件完成評級後真正入選。
 2. `preprocess-news-candidates`
 3. `select-news-events`
    - 事件與候選映射只能由本輪 `source-candidates.json`／`preprocessed-candidates.json` 建立；不得匯入或執行舊 `work/validation-run-*` 的 selection driver、事件常數或 URL 映射，也不得要求本輪保留已無 fresh URL 的歷史事件編號。

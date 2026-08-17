@@ -1,5 +1,13 @@
 # 版本紀錄 / Version Record
 
+## v0.2.7-taiwan-domestic-coverage-guard — 2026-08-17
+
+- 建立原因 / Reason: 台灣經濟、食安與中央制度新聞可能未進入海選，國內覆蓋明顯弱於國際結構化來源；聯合新聞路由另有大量純數字標題。 / Taiwan economy, consumer-safety, and central-institution stories could disappear before grading, while the UDN route emitted many numeric titles.
+- 確認原因 / Confirmed cause: 一次實際日報的 300 筆海選中，兩類事件完全不存在，預算事件只以混合週報出現；UDN 37 筆中 20 筆為數字標題。 / In one audited run, two event types were absent, the budget event appeared only inside a weekly roundup, and 20 of 37 UDN titles were numeric.
+- 實作方式 / Approach: 保留每板塊五站；修復 HTML anchor 標題優先序，並新增三個台灣領域、各最多五筆、限定既有來源的 same-source coverage sweep。 / Kept five primary sources per section, repaired HTML anchor title precedence, and added three Taiwan same-source coverage sweeps capped at five leads each.
+- 評級校準 / Calibration: 全國企業實際營運衝擊、跨通路民生產品回收、中央預算／憲政實際後果必須重新評估 C 至 B；只有口水或沒有新後果的延續爭議維持 C-／D。 / Verified broad business impact, nationwide consumer recalls, and concrete central-budget or constitutional consequences require C-to-B reassessment; rhetoric without new consequences remains C-/D.
+- 驗證方式 / Validation: HTML title 與契約測試先 RED 後 GREEN，完成完整 unittest、deterministic capsule 與 GitHub Actions 後發布。 / HTML-title and contract tests run RED then GREEN before the full unittest suite, deterministic capsule, and GitHub Actions release.
+
 ## v0.2.6-local-disaster-floor — 2026-08-17
 
 - 建立原因 / Reason: 普通地方災害只要少量死亡就可能被評為 B／B+，造成所有 C 級以上必刊登時資訊過量；既有世越號、梨泰院與斯波坎案例也互相矛盾。 / Ordinary local disasters with small death tolls could be graded B/B+, overwhelming the reader edition under the mandatory C-or-higher rule; the Sewol, Itaewon, and Spokane examples also contradicted one another.

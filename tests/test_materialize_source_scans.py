@@ -23,6 +23,37 @@ VALIDATOR_SPEC.loader.exec_module(VALIDATOR)
 
 
 class MaterializeSourceScansTests(unittest.TestCase):
+    def test_anchor_title_attribute_beats_numeric_slug(self):
+        html = """<html><body>
+<time class="story-list__time">2026-08-17 06:11</time>
+<a href="/news/story/1/9695476" title="全國食安回收擴大"><img alt=""></a>
+</body></html>"""
+        items = MODULE.parse_html(
+            html,
+            "https://udn.com/news/breaknews/1",
+            "https://udn.com/news/index",
+            "html_direct",
+            2026,
+        )
+        article = items["https://udn.com/news/story/1/9695476"]
+        self.assertEqual("全國食安回收擴大", article["title"])
+
+    def test_descriptive_duplicate_replaces_numeric_equal_time_title(self):
+        html = """<html><body>
+<time class="story-list__time">2026-08-17 06:11</time>
+<a href="/news/story/1/9695476"><img alt=""></a>
+<a href="/news/story/1/9695476" title="中央預算解凍案進入實質審查">中央預算解凍案進入實質審查</a>
+</body></html>"""
+        items = MODULE.parse_html(
+            html,
+            "https://udn.com/news/breaknews/1",
+            "https://udn.com/news/index",
+            "html_direct",
+            2026,
+        )
+        article = items["https://udn.com/news/story/1/9695476"]
+        self.assertEqual("中央預算解凍案進入實質審查", article["title"])
+
     def test_compact_month_day_time_and_url_date_are_supported(self):
         self.assertEqual("2026-08-15T23:54:00+08:00", MODULE.parse_time("8-15 23:54", 2026).isoformat())
         html = "<html><body><a href='https://www.news.cn/world/20260816/abc/c.html'>World report</a></body></html>"

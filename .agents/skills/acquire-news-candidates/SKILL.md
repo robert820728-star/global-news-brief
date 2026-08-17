@@ -32,6 +32,7 @@ description: Acquire complete rolling-window article lists from prevalidated dai
 - 連續翻頁直到跨過精確24小時起點或來源明確耗盡。
 - 每站先保存時間窗內完整文章，再按公共價值取前30；強制例外可突破30。
 - specialist supplements 只在相應主題出現時補漏，不計入15站完成數，也不能代替失敗的主要來源。
+- `TAIWAN_DOMESTIC_COVERAGE_GUARD` 在台灣五站完成後執行三個限定領域搜尋，每個領域最多 `5 results`，且只能命中既有台灣五站。每個線索必須以 `same-source recovery` 取得所屬站的標題、時間、摘要與快照證據，回填該站 ranked items 並重跑 validator，之後才可進入 `canonical candidate audit`；不得另建無證據候選，也不得在評級前啟動圖片。
 
 ## 每篇最少欄位
 

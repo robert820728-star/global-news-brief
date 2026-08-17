@@ -6,6 +6,50 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PipelineContractTests(unittest.TestCase):
+    def test_taiwan_domestic_coverage_guard_is_bounded_and_audited(self):
+        import json
+
+        pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
+        self.assertIn("taiwan_coverage_sweeps", pool)
+        sweeps = pool["taiwan_coverage_sweeps"]
+        self.assertEqual(
+            {
+                "economy_trade_industry",
+                "health_food_consumer",
+                "central_policy_institutions",
+            },
+            {item["sweep_id"] for item in sweeps},
+        )
+        self.assertTrue(all(item["result_limit"] == 5 for item in sweeps))
+        self.assertTrue(all(item["same_source_only"] is True for item in sweeps))
+        self.assertTrue(all(item["window_hours"] == 24 for item in sweeps))
+        self.assertEqual(5, pool["primary_sources_per_section"])
+
+        documents = [
+            ROOT / "news-brief-settings.md",
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/acquire-news-candidates/SKILL.md",
+        ]
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("TAIWAN_DOMESTIC_COVERAGE_GUARD", text)
+            self.assertIn("same-source recovery", text)
+            self.assertIn("5 results", text)
+            self.assertIn("canonical candidate audit", text)
+
+    def test_taiwan_domestic_grading_requires_consequences_not_topic(self):
+        severity = (ROOT / ".agents/skills/select-news-events/references/severity-rubric.md").read_text(encoding="utf-8")
+        examples = (ROOT / "news-brief-examples.md").read_text(encoding="utf-8")
+        for marker in (
+            "broad_business_operating_impact",
+            "nationwide_consumer_recall",
+            "central_budget_constitutional_consequence",
+            "rhetoric_without_new_consequence",
+        ):
+            self.assertIn(marker, severity)
+            self.assertIn(marker, examples)
+
     def test_run_started_ledger_precedes_high_pressure_bootstrap_reads(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         bootstrap = (ROOT / "bootstrap-workspace.md").read_text(encoding="utf-8")
