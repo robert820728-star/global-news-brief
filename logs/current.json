@@ -1,0 +1,15 @@
+{
+  "client_confirmation_supported": false,
+  "current_stage": "schedule-prepared",
+  "delivery_status": "not_ready",
+  "last_completed_stage": null,
+  "last_error": null,
+  "main_sha": null,
+  "reader_artifact": null,
+  "run_id": "mobile-setup-20260817T065640Z",
+  "scheduled_for": "2026-08-18T06:00:00+08:00",
+  "schema_version": "1.0.0",
+  "stage_index": 0,
+  "status": "awaiting_executor",
+  "updated_at": "2026-08-17T06:56:40Z"
+}
