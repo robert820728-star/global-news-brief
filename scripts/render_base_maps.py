@@ -68,7 +68,7 @@ LABEL_FONT_CANDIDATES = (
 
 def label_font_size(width: int, height: int) -> int:
     """Return a phone-readable label size for a rendered map."""
-    return max(36, round(min(width, height) * 0.034))
+    return max(64, round(min(width, height) * 0.061))
 
 
 def _font_has_traditional_chinese(font) -> bool:
@@ -93,6 +93,74 @@ def load_label_font(size: int):
         "No Traditional Chinese map font found; install Noto Sans CJK/TC, "
         "Microsoft JhengHei, or set NEWS_MAP_FONT"
     )
+
+
+def label_box(label: str, position, font):
+    """Return the rendered label bounds for a centre-positioned label."""
+    left, top, right, bottom = font.getbbox(label, anchor="mm")
+    x, y = position
+    return (x + left, y + top, x + right, y + bottom)
+
+
+def boxes_overlap(left, right, padding: float = 0) -> bool:
+    """Return True when two label rectangles overlap, including padding."""
+    return not (
+        left[2] + padding <= right[0]
+        or right[2] + padding <= left[0]
+        or left[3] + padding <= right[1]
+        or right[3] + padding <= left[1]
+    )
+
+
+def layout_label_positions(labels, anchors, font, width: int, height: int, margin: int):
+    """Lay out labels near their map anchors without obscuring each other."""
+    if len(labels) != len(anchors):
+        raise ValueError("labels and anchors must have the same length")
+
+    font_height = max(1, font.getbbox("國", anchor="mm")[3] - font.getbbox("國", anchor="mm")[1])
+    vertical_step = font_height + 14
+    horizontal_step = max(font_height * 2, 72)
+    offsets = [(0, 0)]
+    for ring in range(1, 9):
+        dx = horizontal_step * ring
+        dy = vertical_step * ring
+        offsets.extend(
+            [
+                (0, -dy),
+                (0, dy),
+                (-dx, 0),
+                (dx, 0),
+                (-dx, -dy),
+                (dx, -dy),
+                (-dx, dy),
+                (dx, dy),
+            ]
+        )
+
+    placed_boxes = []
+    positions = []
+    for label, anchor in zip(labels, anchors):
+        relative = font.getbbox(label, anchor="mm")
+        best = None
+        best_overlap = None
+        for offset_x, offset_y in offsets:
+            x = anchor[0] + offset_x
+            y = anchor[1] + offset_y
+            x = min(max(x, margin - relative[0]), width - margin - relative[2])
+            y = min(max(y, margin - relative[1]), height - margin - relative[3])
+            candidate = label_box(label, (x, y), font)
+            conflicts = sum(boxes_overlap(candidate, box, padding=4) for box in placed_boxes)
+            if conflicts == 0:
+                best = (x, y)
+                break
+            if best_overlap is None or conflicts < best_overlap:
+                best = (x, y)
+                best_overlap = conflicts
+        positions.append(best)
+        placed_boxes.append(label_box(label, best, font))
+    return positions
+
+
 SECTION_BASE_MAPS = {
     "TWN": "taiwan-counties-yellow-v2",
     "CHN": "china-provinces-yellow-v2",
@@ -387,12 +455,25 @@ def render(name: str, spec: dict):
 
     font_size = label_font_size(width, height)
     label_font = load_label_font(font_size)
-    label_positions = []
+    labels = []
+    label_anchors = []
     for group in highlight_groups:
         label_ring = max(group["rings"], key=len)
         points = pixels(label_ring)
         x = sum(point[0] for point in points) / len(points)
         y = sum(point[1] for point in points) / len(points)
+        labels.append(group["label"])
+        label_anchors.append((x, y))
+
+    laid_out_positions = layout_label_positions(
+        labels, label_anchors, label_font, width, height, margin
+    )
+    label_positions = []
+    leader_lines = []
+    for group, anchor, (x, y) in zip(highlight_groups, label_anchors, laid_out_positions):
+        if abs(x - anchor[0]) > 4 or abs(y - anchor[1]) > 4:
+            drawing.line((anchor[0], anchor[1], x, y), fill="#333333", width=2)
+            leader_lines.append((anchor[0], anchor[1], x, y))
         drawing.text(
             (x, y),
             group["label"],
@@ -433,6 +514,11 @@ def render(name: str, spec: dict):
                     f'<polygon points="{coords}" fill="{highlight_colors[group["role"]]}" '
                     f'stroke="{boundary_color}" stroke-width="{line_width}"/>'
                 )
+    svg_leader_lines = "".join(
+        f'<line x1="{x1:.2f}" y1="{y1:.2f}" x2="{x2:.2f}" y2="{y2:.2f}" '
+        f'stroke="#333333" stroke-width="2"/>'
+        for x1, y1, x2, y2 in leader_lines
+    )
     svg_labels = "".join(
         f'<text x="{x:.2f}" y="{y:.2f}" text-anchor="middle" dominant-baseline="middle" '
         f'font-size="{font_size}" font-family="Noto Sans TC, Microsoft JhengHei, PingFang TC, sans-serif" '
@@ -443,7 +529,7 @@ def render(name: str, spec: dict):
     svg_path.write_text(
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
         f'viewBox="0 0 {width} {height}"><rect width="100%" height="100%" '
-        f'fill="{background}"/>{"".join(svg_polygons)}{svg_labels}</svg>\n',
+        f'fill="{background}"/>{"".join(svg_polygons)}{svg_leader_lines}{svg_labels}</svg>\n',
         encoding="utf-8",
     )
     base_name = spec.get("canonical_base_name", name)

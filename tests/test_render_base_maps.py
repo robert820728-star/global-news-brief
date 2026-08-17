@@ -23,7 +23,17 @@ class RenderBaseMapsTests(unittest.TestCase):
         self.assertNotEqual(glyphs[0], glyphs[1])
 
     def test_world_map_label_size_is_mobile_readable(self):
-        self.assertGreaterEqual(MODULE.label_font_size(1800, 1044), 36)
+        self.assertGreaterEqual(MODULE.label_font_size(1800, 1044), 64)
+
+    def test_crowded_labels_are_laid_out_without_overlap(self):
+        font = MODULE.load_label_font(36)
+        anchors = [(300.0, 300.0)] * 4
+        labels = ["剛果民主共和國", "烏干達", "盧安達", "蒲隆地"]
+        positions = MODULE.layout_label_positions(labels, anchors, font, 900, 600, 20)
+        boxes = [MODULE.label_box(label, position, font) for label, position in zip(labels, positions)]
+        for index, left in enumerate(boxes):
+            for right in boxes[index + 1:]:
+                self.assertFalse(MODULE.boxes_overlap(left, right, padding=4))
 
     def test_renderer_has_no_matplotlib_dependency(self):
         source = SCRIPT.read_text(encoding="utf-8-sig")
