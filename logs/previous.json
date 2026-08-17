@@ -1,18 +1,18 @@
 {
   "client_confirmation_supported": false,
-  "current_stage": "candidate-audit",
+  "current_stage": "visuals-completed",
   "delivery_status": "not_ready",
-  "last_completed_stage": "source-scan",
+  "last_completed_stage": "selection-verified",
   "last_error": {
-    "code": "executor_interrupted",
-    "message": "The next scheduled run started before this run reached a terminal state."
+    "code": "MAP_TRADITIONAL_CHINESE_GLYPHS_MISSING",
+    "message": "Map locations and colors were correct, but Traditional Chinese labels rendered as missing-glyph boxes. Replacement commit a05fb87b3e49de15ee77b1607ad2651d31255d8c was pushed; this pinned run is closed and will be restarted from latest main."
   },
-  "main_sha": "f5c9bfc9a698fc9cd33abf845762afb03ca95c74",
+  "main_sha": "eb3c0db5fc634dd8cb7a3d7edb3cd31283eb0bd6",
   "reader_artifact": null,
-  "run_id": "gnb-20260817T081519Z-78e20714",
-  "scheduled_for": "2026-08-17T16:11:33+08:00",
+  "run_id": "gnb-20260817T084718Z-full01",
+  "scheduled_for": "2026-08-17T16:47:18+08:00",
   "schema_version": "1.0.0",
-  "stage_index": 5,
-  "status": "interrupted_by_next_run",
-  "updated_at": "2026-08-17T08:47:18.416Z"
+  "stage_index": 7,
+  "status": "failed",
+  "updated_at": "2026-08-17T09:36:00.000Z"
 }
