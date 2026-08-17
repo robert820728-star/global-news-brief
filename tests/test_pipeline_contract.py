@@ -203,6 +203,8 @@ class PipelineContractTests(unittest.TestCase):
                 "validate_news_brief.py manifest",
                 document,
             )
+            self.assertIn("DEFERRED", document)
+            self.assertIn("不得標記整輪失敗", document)
 
 
 if __name__ == "__main__":

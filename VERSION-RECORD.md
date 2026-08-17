@@ -213,3 +213,13 @@
 - 驗證方式 / Validation: 三區 canonical 檔名、事件著色、繁中標籤與 manifest validator 整合測試；另由當前原始碼重建 capsule，在乾淨解壓 workspace 內實際執行 renderer 與 extracted validator。 / Integration tests cover canonical filenames, event coloring, Traditional Chinese labels, and the manifest validator for all three regions; a second test rebuilds the capsule from current sources and executes the renderer plus extracted validator in a clean workspace.
 - 目前結果 / Current result: 本地 49/49 項相關回歸已通過，包含乾淨 capsule 重建、解壓、renderer 與 extracted validator；GitHub Linux capsule CI 尚待本輪最終驗證。 / All 49/49 local focused regressions pass, including clean-capsule rebuild, extraction, renderer execution, and the extracted validator; GitHub Linux capsule CI remains pending for this round.
 - 下一步 / Next decision: 通過本地相關測試後推送 main，等待 Linux CI 重建並驗證 capsule；成功後再寄 Gmail 驗收通知。 / After local focused tests pass, push main and wait for Linux CI to rebuild and verify the capsule; send the Gmail acceptance notice only after success.
+
+## v0.1.13-child — 2026-08-17
+
+- 建立原因 / Reason: 完整執行在 `materialize-manifest` 後誤呼叫 final-manifest validator，雖然該命令只讀且沒有損壞產物，執行者仍將它判定為不可恢復 integrity blocker，導致圖片階段開始前整輪報廢。 / A full run invoked the final-manifest validator after `materialize-manifest`; although this was a read-only call that damaged no artifact, the executor classified it as an unrecoverable integrity blocker and discarded the run before image collection.
+- 回復來源 / Rollback source: `f5c9bfc9a698fc9cd33abf845762afb03ca95c74`（地圖契約修復後的 verified capsule）。 / `f5c9bfc9a698fc9cd33abf845762afb03ca95c74` (the verified capsule after the map-contract fix).
+- 實作方式 / Approach: final-manifest CLI 在 `collect-news-images` 尚未 completed 時回傳 `DEFERRED` 而非 `OK`，且不造成 run failure；排程契約明確要求繼續圖片階段，完成後再重跑到真正的 `OK`。 / The final-manifest CLI now returns `DEFERRED`, not `OK`, while `collect-news-images` is incomplete and does not fail the run; the schedule contract explicitly continues image collection and reruns the validator afterward until it returns a real `OK`.
+- 變更入口 / Changed entry points: `scripts/validate_news_brief.py`, `daily-schedule-prompt.md`, `.agents/skills/daily-news-brief/SKILL.md`.
+- 驗證方式 / Validation: 真實呼叫 CLI 的提前驗證 RED→GREEN 測試，以及排程契約不得將 `DEFERRED` 標記為整輪失敗的回歸測試。 / A real CLI early-validation RED→GREEN test plus a schedule-contract regression that forbids treating `DEFERRED` as a whole-run failure.
+- 目前結果 / Current result: 兩項定向測試 2/2 通過；相關全套、capsule CI 與下一輪完整客戶版尚待驗證。 / Both focused tests pass 2/2; the related suite, capsule CI, and the next full customer-edition run remain pending.
+- 下一步 / Next decision: 推送 main 並通過 Linux capsule CI 後立即啟動完整新聞輪次；未達 canonical delivery 不寄 Gmail。 / Push main, pass Linux capsule CI, then immediately start a complete news run; do not send Gmail before canonical delivery succeeds.

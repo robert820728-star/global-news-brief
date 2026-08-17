@@ -1,6 +1,10 @@
 import copy
 import importlib.util
+import io
+import json
+import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 
 
@@ -228,6 +232,24 @@ def valid_brief():
 
 
 class ValidatorTests(unittest.TestCase):
+    def test_premature_final_manifest_command_is_deferred_without_failing_run(self):
+        manifest = valid_manifest()
+        manifest["stage_status"]["collect-news-images"] = "pending"
+        manifest["final_status"] = "draft"
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "manifest.json"
+            path.write_text(
+                json.dumps(manifest, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            output = io.StringIO()
+            with redirect_stdout(output):
+                exit_code = VALIDATOR.main(["manifest", "--input", str(path)])
+
+        self.assertEqual(0, exit_code)
+        self.assertIn("DEFERRED", output.getvalue())
+        self.assertNotIn("OK", output.getvalue())
+
     def test_crlf_event_separators_are_accepted(self):
         manifest = valid_manifest()
         second = copy.deepcopy(manifest["events"][0])

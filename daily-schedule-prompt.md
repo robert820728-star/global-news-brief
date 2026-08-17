@@ -105,6 +105,7 @@ Stage -1 完成後，至少讀取並遵守：
    - 十四天稽核必須保留完整海選清單及每筆六項大分數；本輪所有 C 級以上候選（含合併項）都必須以 `selected_event_id` 對應到 manifest 與讀者版，不得無聲消失。
    - 最新一輪每個候選必須完成 `local_disaster_review`。普通地方災害以未滿 50 人低於 C、50–99 人 C、100–249 人 B、250 人以上 A- 為基準；上調必須保存特殊意義與理由。軍事／衝突事件必須沿用既有邊境及長期戰爭規則，不得改套地方事故門檻。
 5. `materialize-manifest`
+   - 完成條件是將本輪 audit 選中事件一對一物化並綁定 checkpoint 的 `manifest` artifact；此處不需要執行 final-manifest validator。
 6. `verify-news-events`
    - 此階段只能用 `scripts/validate_news_brief.py stage --stage verify-news-events --before <before-manifest> --after <after-manifest>` 檢查欄位所有權；不得在此時執行 final-manifest validator，因地圖、圖表與圖片欄位尚未完成。
 7. `build-news-maps`
@@ -113,6 +114,7 @@ Stage -1 完成後，至少讀取並遵守：
 8. `build-news-charts`
 9. `collect-news-images`
    - 只有 checkpoint 的 `collect-news-images` completed 後，才可第一次執行 `scripts/validate_news_brief.py manifest --input <final-manifest>`；final-manifest validator 不得提前到 verify、map 或 chart 階段。
+   - 若執行者誤在圖片階段完成前呼叫該命令，script 會輸出 `DEFERRED` 並以成功狀態返回；這不是 validator 通過，也不得標記整輪失敗。立即繼續原定 pipeline，並在 `collect-news-images` completed 後重新執行到真正輸出 `OK`。
 10. `render`
    - `images.status=omitted` 的事件必須在讀者版顯示非技術性的「圖片說明」，內容精確等於 manifest 的 `images.reader_omission_note`。
 11. validators / unique delivery gate
