@@ -347,7 +347,30 @@ class ValidatorTests(unittest.TestCase):
         self.assertTrue(any("不得以標記1" in error for error in errors))
 
     def test_blue_or_noncanonical_map_style_is_rejected(self):
-        manifest = valid_manifest�]-�G����ƭy�anifest_data(manifest)
+        manifest = valid_manifest()
+        manifest["events"][0]["map"]["assets"][0]["style_id"] = "blue-default"
+        manifest["events"][0]["map"]["assets"][0]["generator"] = "platform-map"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("yellow-admin-v2" in error for error in errors))
+        self.assertTrue(any("canonical renderer" in error for error in errors))
+
+    def test_twn_map_rejects_local_zoom(self):
+        manifest = valid_manifest()
+        asset = manifest["events"][0]["map"]["assets"][0]
+        asset["canvas_scope"] = "regional_detail"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("禁止裁切或局部放大" in error for error in errors))
+
+    def test_glb_map_requires_complete_world_basemap(self):
+        manifest = valid_manifest()
+        manifest["sections"][0] = {"code": "GLB", "name": "世界", "order": 1}
+        event = manifest["events"][0]
+        event["event_id"] = "GLB-01"
+        event["primary_section"] = "GLB"
+        asset = event["map"]["assets"][0]
+        asset["canvas_scope"] = "full_section"
+        asset["base_map"] = "maps/generated/sections/JPN-base.png"
+        errors = VALIDATOR.validate_manifest_data(manifest)
         self.assertTrue(any("禁止裁切或局部放大" in error for error in errors))
         self.assertTrue(any("canonical 完整板塊底圖" in error for error in errors))
 
