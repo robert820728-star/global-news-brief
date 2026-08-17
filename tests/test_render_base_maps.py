@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 from PIL import Image
+from tests import test_validate_news_brief as validator_fixture
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -86,6 +87,81 @@ class RenderBaseMapsTests(unittest.TestCase):
             self.assertEqual(before, metadata_path.read_bytes())
             self.assertTrue((sections / "FIX-base.png").is_file())
             self.assertTrue((sections / "FIX-base.svg").is_file())
+
+    def test_clean_runtime_outputs_canonical_basemaps_and_colored_event_overlay(self):
+        with tempfile.TemporaryDirectory() as directory:
+            generated = Path(directory) / "generated"
+            old_out = MODULE.OUT
+            MODULE.OUT = generated
+            try:
+                MODULE.main()
+                expected = {
+                    "taiwan-counties-yellow-v2.png",
+                    "china-provinces-yellow-v2.png",
+                    "world-countries-pacific-robinson-yellow-v2.png",
+                }
+                self.assertEqual(expected, {path.name for path in generated.glob("*-yellow-v2.png")})
+
+                cases = (
+                    ("TWN", {"county": "臺北市"}, "臺北市", "taiwan-counties-yellow-v2"),
+                    ("CHN", {"id": "44"}, "廣東省", "china-provinces-yellow-v2"),
+                    ("GLB", {"ISO_A3": "USA"}, "美國", "world-countries-pacific-robinson-yellow-v2"),
+                )
+                results = {}
+                for section, match, label, base_name in cases:
+                    overlay_spec = Path(directory) / f"{section}-event-map.json"
+                    overlay_spec.write_text(
+                        json.dumps(
+                            {
+                                "schema_version": "1.0.0",
+                                "section": section,
+                                "output": f"events/{section}-test",
+                                "highlights": [
+                                    {"match": match, "label": label, "role": "primary"}
+                                ],
+                            },
+                            ensure_ascii=False,
+                        ),
+                        encoding="utf-8",
+                    )
+                    results[section] = MODULE.render_event_spec(overlay_spec)
+                    event_png = generated / "events" / f"{section}-test.png"
+                    event_svg = generated / "events" / f"{section}-test.svg"
+                    self.assertTrue(event_png.is_file())
+                    self.assertTrue(event_svg.is_file())
+                    svg = event_svg.read_text(encoding="utf-8")
+                    self.assertIn(label, svg)
+                    self.assertIn(MODULE.STYLE_CONFIG["colors"]["primary_highlight"], svg)
+                    with Image.open(event_png) as image:
+                        colors = image.getcolors(maxcolors=image.width * image.height)
+                        self.assertIn(
+                            MODULE.STYLE_CONFIG["colors"]["primary_highlight"].lower(),
+                            {"#%02x%02x%02x" % pixel for _, pixel in colors},
+                        )
+                    self.assertEqual(f"maps/generated/{base_name}.png", results[section]["base_map"])
+                    self.assertEqual([label], results[section]["place_labels"])
+            finally:
+                MODULE.OUT = old_out
+
+            event_png = generated / "events" / "TWN-test.png"
+            manifest = validator_fixture.valid_manifest()
+            asset = manifest["events"][0]["map"]["assets"][0]
+            result = results["TWN"]
+            asset.update(
+                {
+                    "path": event_png.as_posix(),
+                    "base_map": result["base_map"],
+                    "place_labels": result["place_labels"],
+                    "style_id": result["style_id"],
+                    "width": result["width"],
+                    "height": result["height"],
+                }
+            )
+            self.assertEqual([], validator_fixture.VALIDATOR.validate_manifest_data(manifest))
+
+        readme = (ROOT / "maps" / "README.md").read_text(encoding="utf-8")
+        for name in expected:
+            self.assertIn(name, readme)
 
 
 if __name__ == "__main__":

@@ -4,9 +4,11 @@
 from __future__ import annotations
 
 import json
+from argparse import ArgumentParser
 from pathlib import Path
+from xml.sax.saxutils import escape
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,7 +24,7 @@ CANONICAL_STYLE = {
 
 
 MAPS = {
-    "taiwan-counties": {
+    "taiwan-counties-yellow-v2": {
         "file": SOURCE / "taiwan-counties-alt.geojson",
         "title": "Taiwan counties",
         "figsize": (7.0, 9.0),
@@ -30,7 +32,7 @@ MAPS = {
         "projection": "regional",
         "standard_lat": 23.7,
     },
-    "china-provinces": {
+    "china-provinces-yellow-v2": {
         "file": SOURCE / "china-provinces.geojson",
         "title": "China provinces",
         "figsize": (10.0, 8.4),
@@ -38,7 +40,7 @@ MAPS = {
         "projection": "regional",
         "standard_lat": 35.0,
     },
-    "world-countries": {
+    "world-countries-pacific-robinson-yellow-v2": {
         "file": SOURCE / "world-countries.geojson",
         "title": "World countries",
         "figsize": (10.0, 5.8),
@@ -49,6 +51,11 @@ MAPS = {
         "central_lon": 150.0,
         "use_data_bounds": True,
     },
+}
+SECTION_BASE_MAPS = {
+    "TWN": "taiwan-counties-yellow-v2",
+    "CHN": "china-provinces-yellow-v2",
+    "GLB": "world-countries-pacific-robinson-yellow-v2",
 }
 
 
@@ -124,6 +131,40 @@ def collect_polygons(path: Path, spec: dict):
             else:
                 polygons.extend(split_antimeridian(ring))
     return polygons
+
+
+def collect_highlights(path: Path, spec: dict):
+    highlights = spec.get("highlights", [])
+    if not highlights:
+        return []
+    with path.open("r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    groups = []
+    for item in highlights:
+        match = item.get("match")
+        label = item.get("label")
+        role = item.get("role", "primary")
+        if not isinstance(match, dict) or not match:
+            raise ValueError("highlight.match 必須指定至少一個行政區欄位")
+        if not isinstance(label, str) or not label.strip():
+            raise ValueError("highlight.label 必須是非空白地名")
+        if role not in {"primary", "secondary"}:
+            raise ValueError("highlight.role 必須是 primary 或 secondary")
+        rings = []
+        for feature in data.get("features", []):
+            properties = feature.get("properties", {})
+            if not all(str(properties.get(key)) == str(value) for key, value in match.items()):
+                continue
+            for ring in iter_rings(feature.get("geometry")):
+                if spec.get("projection") in {"pacific_centered", "robinson_pacific"}:
+                    rings.extend(split_cutline_for_pacific(ring, spec.get("cut_lon", -30.0)))
+                else:
+                    rings.extend(split_antimeridian(ring))
+        if not rings:
+            criteria = ", ".join(f"{key}={value}" for key, value in match.items())
+            raise ValueError(f"找不到指定行政區：{criteria}")
+        groups.append({"label": label.strip(), "role": role, "rings": rings})
+    return groups
 
 
 ROBINSON_TABLE = [
@@ -239,6 +280,13 @@ def add_padding(bounds, pad_ratio=0.035):
 
 def render(name: str, spec: dict):
     polygons = [project_ring(ring, spec) for ring in collect_polygons(spec["file"], spec)]
+    highlight_groups = [
+        {
+            **group,
+            "rings": [project_ring(ring, spec) for ring in group["rings"]],
+        }
+        for group in collect_highlights(spec["file"], spec)
+    ]
     style = {**CANONICAL_STYLE, **spec.get("style", {})}
     if spec.get("style_id", STYLE_CONFIG["style_id"]) != STYLE_CONFIG["style_id"]:
         raise ValueError("地圖 style_id 不符合 maps/style.json")
@@ -281,6 +329,42 @@ def render(name: str, spec: dict):
         points = pixels(ring)
         if len(points) >= 3:
             drawing.polygon(points, fill=land_fill, outline=boundary_color, width=line_width)
+    highlight_colors = {
+        "primary": style.get("primary_highlight", "#c7362f"),
+        "secondary": style.get("secondary_highlight", "#f28e2b"),
+    }
+    for group in highlight_groups:
+        for ring in group["rings"]:
+            points = pixels(ring)
+            if len(points) >= 3:
+                drawing.polygon(
+                    points,
+                    fill=highlight_colors[group["role"]],
+                    outline=boundary_color,
+                    width=line_width,
+                )
+
+    font_size = max(14, round(min(width, height) * 0.026))
+    try:
+        label_font = ImageFont.load_default(size=font_size)
+    except TypeError:  # Pillow < 10.1 compatibility
+        label_font = ImageFont.load_default()
+    label_positions = []
+    for group in highlight_groups:
+        label_ring = max(group["rings"], key=len)
+        points = pixels(label_ring)
+        x = sum(point[0] for point in points) / len(points)
+        y = sum(point[1] for point in points) / len(points)
+        drawing.text(
+            (x, y),
+            group["label"],
+            fill="#111111",
+            font=label_font,
+            anchor="mm",
+            stroke_width=2,
+            stroke_fill="#ffffff",
+        )
+        label_positions.append((group["label"], x, y))
 
     destination = OUT / name
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -302,12 +386,56 @@ def render(name: str, spec: dict):
                 f'<polygon points="{coords}" fill="{land_fill}" '
                 f'stroke="{boundary_color}" stroke-width="{line_width}"/>'
             )
+    for group in highlight_groups:
+        for ring in group["rings"]:
+            points = pixels(ring)
+            if len(points) >= 3:
+                coords = " ".join(f"{x:.2f},{y:.2f}" for x, y in points)
+                svg_polygons.append(
+                    f'<polygon points="{coords}" fill="{highlight_colors[group["role"]]}" '
+                    f'stroke="{boundary_color}" stroke-width="{line_width}"/>'
+                )
+    svg_labels = "".join(
+        f'<text x="{x:.2f}" y="{y:.2f}" text-anchor="middle" dominant-baseline="middle" '
+        f'font-size="{font_size}" fill="#111111" stroke="#ffffff" stroke-width="3" '
+        f'paint-order="stroke">{escape(label)}</text>'
+        for label, x, y in label_positions
+    )
     svg_path.write_text(
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
         f'viewBox="0 0 {width} {height}"><rect width="100%" height="100%" '
-        f'fill="{background}"/>{"".join(svg_polygons)}</svg>\n',
+        f'fill="{background}"/>{"".join(svg_polygons)}{svg_labels}</svg>\n',
         encoding="utf-8",
     )
+    base_name = spec.get("canonical_base_name", name)
+    return {
+        "path": png_path.as_posix(),
+        "base_map": f"maps/generated/{base_name}.png",
+        "place_labels": [group["label"] for group in highlight_groups],
+        "style_id": STYLE_CONFIG["style_id"],
+        "width": width,
+        "height": height,
+    }
+
+
+def render_event_spec(spec_path: Path):
+    with Path(spec_path).open("r", encoding="utf-8") as handle:
+        event_spec = json.load(handle)
+    section = event_spec.get("section")
+    if section not in SECTION_BASE_MAPS:
+        raise ValueError("event map section 必須是 TWN、CHN 或 GLB")
+    output = Path(event_spec.get("output", ""))
+    if not output.parts or output.is_absolute() or ".." in output.parts:
+        raise ValueError("event map output 必須是 maps/generated 之下的相對路徑")
+    base_name = SECTION_BASE_MAPS[section]
+    spec = {
+        **MAPS[base_name],
+        "canonical_base_name": base_name,
+        "highlights": event_spec.get("highlights", []),
+    }
+    if not spec["highlights"]:
+        raise ValueError("event map 至少需要一個行政區 highlight")
+    return render(output.as_posix(), spec)
 
 
 def section_specs():
@@ -336,7 +464,13 @@ def section_specs():
         yield f"sections/{metadata['code']}-base", spec, metadata_path, metadata
 
 
-def main():
+def main(argv=()):
+    parser = ArgumentParser(description=__doc__)
+    parser.add_argument("--overlay-spec", type=Path)
+    args = parser.parse_args(argv)
+    if args.overlay_spec:
+        print(json.dumps(render_event_spec(args.overlay_spec), ensure_ascii=False))
+        return
     for name, spec in MAPS.items():
         render(name, spec)
     for name, spec, _, _ in section_specs() or ():
@@ -344,4 +478,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(None)

@@ -58,6 +58,7 @@ description: Decide whether a selected news event needs geographic context and c
 
 ## 製圖
 
+- 先把每則需要地圖的事件寫成一份小型 overlay JSON：`section` 使用 `TWN`、`CHN` 或 `GLB`，`output` 是 `maps/generated` 下的相對輸出名；`highlights[].match` 使用來源 GeoJSON 的精確行政區鍵值（台灣縣市用 `county`、中國省區用 `id` 或 `name`、全球國家用 `ISO_A3`），`label` 寫繁體中文，`role` 使用 `primary` 或 `secondary`。以 bundled Python 執行 `scripts/render_base_maps.py --overlay-spec <file>`，不得另寫臨時繪圖程式。
 - 固定使用 `maps/style.json` 的 `yellow-admin-v2`：淡黃色陸地 `#f3e6b8`、灰色行政界線 `#53606f`、白色背景 `#ffffff`、紅色主要事件區、橙色次要影響區及深紅點位。禁止藍底、深色底、衛星底圖或任何未核准配色。
 - 依來源資料標點、高亮行政區、繪製範圍或簡化路線。
 - 每個點位直接在圖面標示具體地名，並把相同名稱保存到 `map.assets[].place_labels`。禁止只畫 `1`、`2`、`3` 等純數字再由圖說解碼。

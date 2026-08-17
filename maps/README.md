@@ -18,9 +18,11 @@ Reusable base maps for news brief location highlighting.
 
 | Map | Source data | Boundary level | Generated preview |
 |---|---|---|---|
-| Taiwan | `maps/source/taiwan-counties-alt.geojson` | County/city boundaries | `maps/generated/taiwan-counties.png` |
-| China | `maps/source/china-provinces.geojson` | Province-level boundaries | `maps/generated/china-provinces.png` |
-| World | `maps/source/world-countries.geojson` | Country boundaries | `maps/generated/world-countries.png` |
+| Taiwan | `maps/source/taiwan-counties-alt.geojson` | County/city boundaries | `maps/generated/taiwan-counties-yellow-v2.png` |
+| China | `maps/source/china-provinces.geojson` | Province-level boundaries | `maps/generated/china-provinces-yellow-v2.png` |
+| World | `maps/source/world-countries.geojson` | Country boundaries | `maps/generated/world-countries-pacific-robinson-yellow-v2.png` |
+
+For an event map, write a compact JSON overlay specification and run `python scripts/render_base_maps.py --overlay-spec <file>`. Use `section` (`TWN`, `CHN`, or `GLB`), a relative `output`, and one or more `highlights`. Each highlight has an exact GeoJSON property `match`, a Traditional Chinese `label`, and `role` (`primary` or `secondary`). The renderer colors the matched administrative polygon and writes the label directly on both PNG and SVG output.
 
 ## Rendering
 

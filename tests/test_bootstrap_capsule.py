@@ -2,9 +2,13 @@ import hashlib
 import importlib.util
 import json
 import shutil
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
+
+from tests import test_validate_news_brief as validator_fixture
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -73,6 +77,83 @@ class BootstrapCapsuleTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             files = LOADER.extract_verified(payload, manifest, Path(directory))
             self.assertEqual(len(files), manifest["runtime_file_count"])
+
+    def test_extracted_runtime_renders_and_validates_canonical_event_map(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            capsule_dir = root / "capsule"
+            BUILDER.build_capsule(ROOT, capsule_dir, source_commit="test-source")
+            manifest_path = capsule_dir / "capsule-manifest.json"
+            capsule_manifest = LOADER.load_manifest(manifest_path)
+            payload = LOADER.verify_chunks(capsule_manifest, capsule_dir)
+            workspace = root / "workspace"
+            LOADER.extract_verified(payload, capsule_manifest, workspace)
+
+            renderer = workspace / "scripts" / "render_base_maps.py"
+            subprocess.run(
+                [sys.executable, str(renderer)],
+                cwd=workspace,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            expected = {
+                "taiwan-counties-yellow-v2.png",
+                "china-provinces-yellow-v2.png",
+                "world-countries-pacific-robinson-yellow-v2.png",
+            }
+            generated = workspace / "maps" / "generated"
+            self.assertEqual(expected, {path.name for path in generated.glob("*-yellow-v2.png")})
+
+            overlay = workspace / "event-map.json"
+            overlay.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "1.0.0",
+                        "section": "TWN",
+                        "output": "events/TWN-capsule",
+                        "highlights": [
+                            {"match": {"county": "臺北市"}, "label": "臺北市", "role": "primary"}
+                        ],
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+            rendered = subprocess.run(
+                [sys.executable, str(renderer), "--overlay-spec", str(overlay)],
+                cwd=workspace,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            result = json.loads(rendered.stdout)
+            event_png = generated / "events" / "TWN-capsule.png"
+            event_svg = generated / "events" / "TWN-capsule.svg"
+            self.assertTrue(event_png.is_file())
+            self.assertIn("臺北市", event_svg.read_text(encoding="utf-8"))
+            self.assertEqual(
+                "maps/generated/taiwan-counties-yellow-v2.png",
+                result["base_map"],
+            )
+
+            extracted_validator = load_module(
+                workspace / "scripts" / "validate_news_brief.py",
+                "extracted_validate_news_brief_test",
+            )
+            news_manifest = validator_fixture.valid_manifest()
+            asset = news_manifest["events"][0]["map"]["assets"][0]
+            asset.update(
+                {
+                    "path": event_png.as_posix(),
+                    "base_map": result["base_map"],
+                    "place_labels": result["place_labels"],
+                    "style_id": result["style_id"],
+                    "width": result["width"],
+                    "height": result["height"],
+                }
+            )
+            self.assertEqual([], extracted_validator.validate_manifest_data(news_manifest))
 
     def test_chunks_are_line_framed_for_segmented_connector_reads(self):
         manifest_path = ROOT / "bootstrap/capsule-manifest.json"
