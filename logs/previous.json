@@ -1,0 +1,18 @@
+{
+  "client_confirmation_supported": false,
+  "current_stage": "schedule-prepared",
+  "delivery_status": "not_ready",
+  "last_completed_stage": null,
+  "last_error": {
+    "code": "executor_interrupted",
+    "message": "The next scheduled run started before this run reached a terminal state."
+  },
+  "main_sha": null,
+  "reader_artifact": null,
+  "run_id": "mobile-setup-20260817T065640Z",
+  "scheduled_for": "2026-08-18T06:00:00+08:00",
+  "schema_version": "1.0.0",
+  "stage_index": 0,
+  "status": "interrupted_by_next_run",
+  "updated_at": "2026-08-17T15:39:00+08:00"
+}
