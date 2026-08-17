@@ -33,6 +33,14 @@ def local_path(value):
     return Path(str(value).removeprefix("sandbox:"))
 
 
+def evidence_in_snapshot(value, content):
+    value = str(value or "")
+    if value in content:
+        return True
+    escaped = json.dumps(value, ensure_ascii=False)[1:-1].replace("/", r"\/")
+    return escaped in content
+
+
 def validate_scan(scan, coverage, source, label="source_scan"):
     errors = []
     if not isinstance(scan, dict):
@@ -92,9 +100,9 @@ def validate_scan(scan, coverage, source, label="source_scan"):
             for key in ("url", "title", "published_at", "url_evidence", "published_evidence"):
                 if not str(item.get(key, "")).strip():
                     errors.append(f"{item_label} 缺少 {key}")
-            if item.get("url_evidence") not in content:
+            if not evidence_in_snapshot(item.get("url_evidence"), content):
                 errors.append(f"{item_label}.url_evidence 不存在於原始快照")
-            if item.get("published_evidence") not in content:
+            if not evidence_in_snapshot(item.get("published_evidence"), content):
                 errors.append(f"{item_label}.published_evidence 不存在於原始快照")
             all_items.append(item)
 
@@ -136,9 +144,9 @@ def validate_scan(scan, coverage, source, label="source_scan"):
             for key in ("url", "title", "published_at", "url_evidence", "published_evidence"):
                 if not str(item.get(key, "")).strip():
                     errors.append(f"{item_label} missing {key}")
-            if item.get("url_evidence") not in content:
+            if not evidence_in_snapshot(item.get("url_evidence"), content):
                 errors.append(f"{item_label}.url_evidence is absent from snapshot")
-            if item.get("published_evidence") not in content:
+            if not evidence_in_snapshot(item.get("published_evidence"), content):
                 errors.append(f"{item_label}.published_evidence is absent from snapshot")
             if normalized_host(item.get("url", "")) != source_host:
                 errors.append(f"{item_label}.url violates same-source boundary")

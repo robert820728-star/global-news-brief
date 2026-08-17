@@ -194,11 +194,13 @@ def parse_json_items(text: str, request_url: str, homepage: str, route: str, yea
     except (json.JSONDecodeError, TypeError):
         return items
     for obj in walk_json(data):
-        url_ev = obj.get("PageUrl") or obj.get("url") or obj.get("link")
+        url_ev = obj.get("PageUrl") or obj.get("titleLink") or obj.get("url") or obj.get("link")
         title = obj.get("HeadLine") or obj.get("headline") or obj.get("title")
+        nested_time = obj.get("time") if isinstance(obj.get("time"), dict) else {}
         date_ev = (
             obj.get("CreateTime") or obj.get("datePublished")
             or obj.get("published_at") or obj.get("published")
+            or nested_time.get("date") or nested_time.get("dateTime")
         )
         if isinstance(url_ev, str) and isinstance(title, str) and isinstance(date_ev, str):
             add_item(
@@ -208,6 +210,13 @@ def parse_json_items(text: str, request_url: str, homepage: str, route: str, yea
                 published_evidence=date_ev, published=parse_time(date_ev, year),
             )
     return items
+
+
+def evidence_in_snapshot(value: str, text: str) -> bool:
+    if value in text:
+        return True
+    escaped = json.dumps(value, ensure_ascii=False)[1:-1].replace("/", r"\/")
+    return escaped in text
 
 
 def json_exhaustion_marker(text: str, path):
@@ -315,7 +324,8 @@ def materialize_source(source: dict, route: dict, window_start: str, window_end:
     utf8_view = raw.decode("utf-8", errors="ignore")
     parsed = {
         url: item for url, item in parsed.items()
-        if item["url_evidence"] in utf8_view and item["published_evidence"] in utf8_view
+        if evidence_in_snapshot(item["url_evidence"], utf8_view)
+        and evidence_in_snapshot(item["published_evidence"], utf8_view)
     }
     items = sorted(parsed.values(), key=lambda item: item["published_at"], reverse=True)
     page = {
