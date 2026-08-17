@@ -270,7 +270,24 @@ def validate(data, source_pool=None):
             errors.append(run_label + ".raw_item_count 必須等於全部核心來源入池數量總和")
 
         candidates = run.get("candidates", [])
-        if run.get("deduplicated_candidate_count") !=߿-�G����ƭy֝�理由，必須寫出事件特有的影響與本期增量")
+        if run.get("deduplicated_candidate_count") != len(candidates):
+            errors.append(run_label + ".deduplicated_candidate_count 必須等於去重候選筆數")
+        if isinstance(run.get("raw_item_count"), int) and len(candidates) > run["raw_item_count"]:
+            errors.append(run_label + " 去重後候選不得多於原始入池條目")
+
+        valid_source_ids = set(expected_sources or coverage_ids)
+        candidate_url_list = []
+        for candidate_index, candidate in enumerate(candidates, 1):
+            label = f"{run_label}.candidates[{candidate_index}]"
+            grade = candidate.get("provisional_grade")
+            decision = candidate.get("decision")
+            reason_code = candidate.get("reason_code")
+            if reason_code not in REASON_CODES:
+                errors.append(label + " reason_code 無效")
+            if not isinstance(candidate.get("grade_reason"), str) or not candidate["grade_reason"].strip():
+                errors.append(label + " 缺少 SS–E 評級理由")
+            elif candidate["grade_reason"].strip() in TEMPLATE_GRADE_REASONS:
+                errors.append(label + " grade_reason 使用禁止的模板理由，必須寫出事件特有的影響與本期增量")
             grading = candidate.get("grading_evidence")
             if not isinstance(grading, dict):
                 errors.append(label + " 缺少結構化 grading_evidence；不得只填 grade_reason")
