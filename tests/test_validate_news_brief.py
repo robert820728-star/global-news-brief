@@ -347,10 +347,379 @@ class ValidatorTests(unittest.TestCase):
         self.assertTrue(any("ä¸å¾—é‡è¤‡èªªæ˜" in error for error in errors))
         self.assertTrue(any("ä¸å¾—ä»¥æ¨™è¨˜1" in error for error in errors))
 
-    def test_blue_or_noncanonical_map_style×_|¶‰ËkºwµçA•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹¦2¿¢ª“švÿ–†(ˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(4(€€€‘•˜Ñ•ÍÑ}‰É¥•™}É•ÅÕ¥É•Í}¹Õµ‰•É•‘}µ…É­‘½İ¹}…ÑÑ…¡µ•¹Ğ¡Í•±˜¤è4(€€€€€€€Ñ•áĞ€ôÙ…±¥‘}‰É¥•˜ ¤¹É•Á±…” 4(€€€€€€€€€€€€ˆ…o–r[’ât¡Í…¹‘‰½àè½ÑµÀ½¥µ…”¹Á¹œ¤ˆ°4(€€€€€€€€€€€€ˆ…o–ºcšZç–r[&t¡Í…¹‘‰½àè½ÑµÀ½¥µ…”¹Á¹œ¤ˆ°4(€€€€€€€€¤4(€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}‰É¥•™}Ñ•áĞ¡Ù…±¥‘}µ…¹¥™•ÍĞ ¤°Ñ•áĞ¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹¦C–ò×’öÿR 5…É­‘½İ¸ƒ’â›’úw–ê?š¢g’ë–r[’â ˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(4(€€€‘•˜Ñ•ÍÑ}‰É¥•™}…Ñ¡•Í}µ¥ÍÍ¥¹}¥µ…”¡Í•±˜¤è4(€€€€€€€Ñ•áĞ€ôÙ…±¥‘}‰É¥•˜ ¤¹É•Á±…” ‰Í…¹‘‰½àè½ÑµÀ½¥µ…”¹Á¹œˆ°€‰Í…¹‘‰½àè½ÑµÀ½½Ñ¡•È¹Á¹œˆ¤4(€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}‰É¥•™}Ñ•áĞ¡Ù…±¥‘}µ…¹¥™•ÍĞ ¤°Ñ•áĞ¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹šò?šRû–r[&¦f’îØˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(4(€€€‘•˜Ñ•ÍÑ}É•…‘å}µ…¹¥™•ÍÑ}‰±½­Í}½µ¥ÑÑ•‘}¥µ…•}İ¡•¹}Í½ÕÉ•}¡…Í}½¹”¡Í•±˜¤è(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤4(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰ul‰ÍÑ…ÑÕÌ‰t€ô€‰½µ¥ÑÑ•ˆ4(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰ul‰…ÍÍ•ÑÌ‰t€ômt4(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰ul‰½µ¥ÍÍ¥½¹}É•…Í½¸‰t€ô€‹–>[–ú_–’ÇšV\ˆ4(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰ul‰Í½ÕÉ•}¡•­Ì‰ulÁul‰½ÕÑ½µ”‰t€ô€‰…ÅÕ¥Í¥Ñ¥½¹}™…¥±•ˆ4(€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}µ…¹¥™•ÍÑ}‘…Ñ„¡µ…¹¥™•ÍĞ¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹šr«¦f’â+–B#š‚ó¦f’îÛ–&7’â7–ú_–º3š"CÂ‡–‚Äˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤((€€€‘•˜Ñ•ÍÑ}¥µ…•Í}É•©•Ñ}µ½É•}Ñ¡…¹}Ñİ½}…ÍÍ•ÑÌ¡Í•±˜¤è(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤(€€€€€€€™¥ÉÍĞ€ôµ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰ul‰…ÍÍ•ÑÌ‰ulÁt(€€€€€€€Í•½¹€ô½Áä¹‘••Á½Áä¡™¥ÉÍĞ¤(€€€€€€€Í•½¹¹ÕÁ‘…Ñ”¡ì(€€€€€€€€€€€€‰Á…Ñ ˆè€‰Í…¹‘‰½àè½ÑµÀ½¥µ…”´È¹Á¹œˆ°(€€€€€€€€€€€€‰…ÁÑ¥½¸ˆè€‹–r[’ê3¾òk>û–‚Ó–>_šB7ššÎ¾ò#’úšêC¾òk–ºcšZç’úšêC¾ò'ˆ°(€€€€€€€€€€€€‰­¥¹ˆè€‰¹•İÍ}Á¡½Ñ¼ˆ°(€€€€€€€€€€€€‰½¹Ñ•¹Ñ}Í¡„ÈÔØˆè€‰ˆˆ€¨€ØĞ°(€€€€€€€€€€€€‰¥¹É•µ•¹Ñ…±}¥¹™½Éµ…Ñ¥½¸ˆè€‹¢s––ºcšZç¢Î¢¢+–r[šr«–F#>ûj>û–‚Ó–>_šB7ššÎˆ°(€€€€€€€ô¤(€€€€€€€Ñ¡¥É€ô½Áä¹‘••Á½Áä¡Í•½¹¤(€€€€€€€Ñ¡¥É¹ÕÁ‘…Ñ”¡ì(€€€€€€€€€€€€‰Á…Ñ ˆè€‰Í…¹‘‰½àè½ÑµÀ½¥µ…”´Ì¹Á¹œˆ°(€€€€€€€€€€€€‰…ÁÑ¥½¸ˆè€‹–r[’â'¾òk–>›’â¢fW>û–‚Ó–>_šB7ššÎ¾ò#’úšêC¾òk–ºcšZç’úšêC¾ò'ˆ°(€€€€€€€€€€€€‰½¹Ñ•¹Ñ}Í¡„ÈÔØˆè€‰Œˆ€¨€ØĞ°(€€€€€€€ô¤(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰ul‰…ÍÍ•ÑÌ‰t¹•áÑ•¹¡mÍ•½¹°Ñ¡¥É‘t¤((€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}µ…¹¥™•ÍÑ}‘…Ñ„¡µ…¹¥™•ÍĞ¤((€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹¢Ú¦;š¾?–&€Èƒ–ò×–r[&’â+¦f@ˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤°•ÉÉ½ÉÌ¤((€€€‘•˜Ñ•ÍÑ}¥µ…•Í}É•©•Ñ}‘ÕÁ±¥…Ñ•}½¹Ñ•¹Ñ}¡…Í ¡Í•±˜¤è(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤(€€€€€€€Í•½¹€ô½Áä¹‘••Á½Áä¡µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰ul‰…ÍÍ•ÑÌ‰ulÁt¤(€€€€€€€Í•½¹¹ÕÁ‘…Ñ”¡ì(€€€€€€€€€€€€‰Á…Ñ ˆè€‰Í…¹‘‰½àè½ÑµÀ½¥µ…”µ½Áä¹Á¹œˆ°(€€€€€€€€€€€€‰…ÁÑ¥½¸ˆè€‹–r[’ê3¾òk¦7¢’–Ÿ–ºç¾ò#’úšêC¾òk–ºcšZç’úšêC¾ò'ˆ°(€€€€€€€€€€€€‰¥¹É•µ•¹Ñ…±}¥¹™½Éµ…Ñ¥½¸ˆè€‹¢Ë¢Çš>C’úo–>›’â–/¢K–ê›ˆ°(€€€€€€€ô¤(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰ul‰…ÍÍ•ÑÌ‰t¹…ÁÁ•¹¡Í•½¹¤((€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}µ…¹¥™•ÍÑ}‘…Ñ„¡µ…¹¥™•ÍĞ¤((€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹¦7¢’–r[&–Ÿ–ºäM!´ÈÔØˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤°•ÉÉ½ÉÌ¤((€€€‘•˜Ñ•ÍÑ}Í•½¹‘}¥µ…•}É•ÅÕ¥É•Í}¥¹É•µ•¹Ñ…±}¥¹™½Éµ…Ñ¥½¹}É•…Í½¸¡Í•±˜¤è(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤(€€€€€€€Í•½¹€ô½Áä¹‘••Á½Áä¡µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰ul‰…ÍÍ•ÑÌ‰ulÁt¤(€€€€€€€Í•½¹¹ÕÁ‘…Ñ”¡ì(€€€€€€€€€€€€‰Á…Ñ ˆè€‰Í…¹‘‰½àè½ÑµÀ½¥µ…”´È¹Á¹œˆ°(€€€€€€€€€€€€‰…ÁÑ¥½¸ˆè€‹–r[’ê3¾òk>û–‚Ó–>_šB7ššÎ¾ò#’úšêC¾òk–ºcšZç’úšêC¾ò'ˆ°(€€€€€€€€€€€€‰­¥¹ˆè€‰¹•İÍ}Á¡½Ñ¼ˆ°(€€€€€€€€€€€€‰½¹Ñ•¹Ñ}Í¡„ÈÔØˆè€‰ˆˆ€¨€ØĞ°(€€€€€€€ô¤(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰ul‰…ÍÍ•ÑÌ‰t¹…ÁÁ•¹¡Í•½¹¤((€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}µ…¹¥™•ÍÑ}‘…Ñ„¡µ…¹¥™•ÍĞ¤((€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹²³’ê3–ò×–r[&–ş¦‚#¢ª«šb;šZÃ–Š{¢Î¢¢(ˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤°•ÉÉ½ÉÌ¤(4(€€€‘•˜Ñ•ÍÑ}É•…‘å}¡…ÉÑ}‘½•Í}¹½Ñ}É•Á±…•}É•ÅÕ¥É•‘}Í½ÕÉ•}¥µ…”¡Í•±˜¤è4(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤4(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¡…ÉÑÌ‰t€ôì4(€€€€€€€€€€€€‰É•ÅÕ¥É•ˆèQÉÕ”°4(€€€€€€€€€€€€‰ÍÑ…ÑÕÌˆè€‰É•…‘äˆ°4(€€€€€€€€€€€€‰É…Ñ¥½¹…±”ˆè€‹š¾S¢ò–§–/ÖÇ¢¢#–ğˆ°4(€€€€€€€€€€€€‰…ÍÍ•ÑÌˆèmì4(€€€€€€€€€€€€€€€€‰Á…Ñ ˆè€‰Í…¹‘‰½àè½ÑµÀ½¡…ÉĞ¹Á¹œˆ°4(€€€€€€€€€€€€€€€€‰…ÁÑ¥½¸ˆè€‹¢ÎšZg–r[¢†£’â¾òkšr³Â‡–‚Ç’úw–ºcšZç¢ÎšZg¢÷’ösˆ°4(€€€€€€€€€€€€€€€€‰Í½ÕÉ•}¹…µ•Ìˆèl‹–ºcšZç’úšê@‰t°4(€€€€€€€€€€€€€€€€‰Í½ÕÉ•}ÕÉ±Ìˆèl‰¡ÑÑÁÌè¼½•á…µÁ±”¹½´½Í½ÕÉ”‰t°4(€€€€€€€€€€€€€€€€‰¡…ÉÑ}ÑåÁ”ˆè€‰‰…Èˆ°4(€€€€€€€€€€€€€€€€‰‘…Ñ…}Á½¥¹ÑÌˆè€È°4(€€€€€€€€€€€€€€€€‰±…‰•±Ìˆèl‹–:¦‚Cšâ°ˆ°€‹šršZÃ¦‚Cšâ°‰t°4(€€€€€€€€€€€€€€€€‰¹Õµ•É¥}Ù…±Õ•Ìˆèlä¸ØĞ°€ÄÄ¸ÀÕt°4(€€€€€€€€€€€€€€€€‰Õ¹¥Ğˆè€ˆ”ˆ°4(€€€€€€€€€€€€€€€€‰¡…ÉÑ}ÁÕÉÁ½Í”ˆè€‰½µÁ…É¥Í½¸ˆ°4(€€€€€€€€€€€€€€€€‰¡¥¡±¥¡Ñ}É•…Í½¸ˆè9½¹”°4(€€€€€€€€€€€€€€€€‰á}…á¥Í}±…‰•°ˆè€‹¦‚Cšâ³&#šr°ˆ°4(€€€€€€€€€€€€€€€€‰å}…á¥Í}±…‰•°ˆè€‹ÚOšşš"C¦Vß:¾ò —¾ò$ˆ°4(€€€€€€€€€€€€€€€€‰Ù¥ÍÕ…±}¡•­•ˆèQÉÕ”°4(€€€€€€€€€€€€€€€€‰‘…Ñ…}¡•­•ˆèQÉÕ”°4(€€€€€€€€€€€€€€€€‰İ¥‘Ñ ˆè€ÄÈÀÀ°4(€€€€€€€€€€€€€€€€‰¡•¥¡Ğˆè€àÀÀ°4(€€€€€€€€€€€õt°4(€€€€€€€€€€€€‰½µ¥ÍÍ¥½¹}É•…Í½¸ˆè9½¹”°4(€€€€€€€ô4(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰ul‰ÍÑ…ÑÕÌ‰t€ô€‰½µ¥ÑÑ•ˆ4(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰ul‰…ÍÍ•ÑÌ‰t€ômt4(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰ul‰½µ¥ÍÍ¥½¹}É•…Í½¸‰t€ô€‹–>[–ú_–’ÇšV\ˆ4(€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}µ…¹¥™•ÍÑ}‘…Ñ„¡µ…¹¥™•ÍĞ¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹šr«¦f’â+–B#š‚ó¦f’îÛ–&7’â7–ú_–º3š"CÂ‡–‚Äˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(4(€€€‘•˜Ñ•ÍÑ}Ñ•áÑ}…É‘}…¹¹½Ñ}Á…ÍÍ}…Í}¡…ÉĞ¡Í•±˜¤è4(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤4(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¡…ÉÑÌ‰t€ôì4(€€€€€€€€€€€€‰É•ÅÕ¥É•ˆèQÉÕ”°4(€€€€€€€€€€€€‰ÍÑ…ÑÕÌˆè€‰É•…‘äˆ°4(€€€€€€€€€€€€‰É…Ñ¥½¹…±”ˆè€‹š¾S¢ò¦ngšZç®/–‚Ğˆ°4(€€€€€€€€€€€€‰…ÍÍ•ÑÌˆèmì4(€€€€€€€€€€€€€€€€‰Á…Ñ ˆè€‰Í…¹‘‰½àè½ÑµÀ½Ñ•áĞµ…É¹Á¹œˆ°4(€€€€€€€€€€€€€€€€‰…ÁÑ¥½¸ˆè€‹¦ngšZç®/–‚ÓšFc¢šˆ°4(€€€€€€€€€€€€€€€€‰Í½ÕÉ•}¹…µ•Ìˆèl‹–>¿¦vƒ’úšê@‰t°4(€€€€€€€€€€€€€€€€‰Í½ÕÉ•}ÕÉ±Ìˆèl‰¡ÑÑÁÌè¼½•á…µÁ±”¹½´½Í½ÕÉ”‰t°4(€€€€€€€€€€€€€€€€‰¡…ÉÑ}ÑåÁ”ˆè€‰‰…Èˆ°4(€€€€€€€€€€€€€€€€‰‘…Ñ…}Á½¥¹ÑÌˆè€È°4(€€€€€€€€€€€€€€€€‰±…‰•±Ìˆèl‹’şúšZ¼ˆ°€‹?–/¢b·–>+n–>,‰t°4(€€€€€€€€€€€€€€€€‰¹Õµ•É¥}Ù…±Õ•Ìˆèmt°4(€€€€€€€€€€€€€€€€‰Õ¹¥Ğˆè€ˆˆ°4(€€€€€€€€€€€€€€€€‰¡…ÉÑ}ÁÕÉÁ½Í”ˆè€‰½µÁ…É¥Í½¸ˆ°4(€€€€€€€€€€€€€€€€‰¡¥¡±¥¡Ñ}É•…Í½¸ˆè9½¹”°4(€€€€€€€€€€€€€€€€‰á}…á¥Í}±…‰•°ˆè€‹®/–‚Ğˆ°4(€€€€€€€€€€€€€€€€‰å}…á¥Í}±…‰•°ˆè€ˆˆ°4(€€€€€€€€€€€€€€€€‰Ù¥ÍÕ…±}¡•­•ˆèQÉÕ”°4(€€€€€€€€€€€€€€€€‰‘…Ñ…}¡•­•ˆèQÉÕ”°4(€€€€€€€€€€€€€€€€‰İ¥‘Ñ ˆè€ÄÈÀÀ°4(€€€€€€€€€€€€€€€€‰¡•¥¡Ğˆè€àÀÀ°4(€€€€€€€€€€€õt°4(€€€€€€€€€€€€‰½µ¥ÍÍ¥½¹}É•…Í½¸ˆè9½¹”°4(€€€€€€€ô4(€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}µ…¹¥™•ÍÑ}‘…Ñ„¡µ…¹¥™•ÍĞ¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹¢Ï–ÂG’â–/–¾›¦joæ«¢÷j–ß¦®SšVã–ğˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(4(€€€‘•˜Ñ•ÍÑ}Ñİ½}Á½¥¹Ñ}±¥¹•}¡…ÉÑ}¥Í}É•©•Ñ•¡Í•±˜¤è4(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤4(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¡…ÉÑÌ‰t€ôì4(€€€€€€€€€€€€‰É•ÅÕ¥É•ˆèQÉÕ”°4(€€€€€€€€€€€€‰ÍÑ…ÑÕÌˆè€‰É•…‘äˆ°4(€€€€€€€€€€€€‰É…Ñ¥½¹…±”ˆè€‹š¾S¢ò–&7–ú3¦‚Cšâ°ˆ°4(€€€€€€€€€€€€‰…ÍÍ•ÑÌˆèmì4(€€€€€€€€€€€€€€€€‰Á…Ñ ˆè€‰Í…¹‘‰½àè½ÑµÀ½Ñİ¼µÁ½¥¹Ğµ±¥¹”¹Á¹œˆ°4(€€€€€€€€€€€€€€€€‰…ÁÑ¥½¸ˆè€‹–&7–ú3¦‚Cšâ³š¾S¢òˆ°4(€€€€€€€€€€€€€€€€‰Í½ÕÉ•}¹…µ•Ìˆèl‹–ºcšZç’úšê@‰t°4(€€€€€€€€€€€€€€€€‰Í½ÕÉ•}ÕÉ±Ìˆèl‰¡ÑÑÁÌè¼½•á…µÁ±”¹½´½Í½ÕÉ”‰t°4(€€€€€€€€€€€€€€€€‰¡…ÉÑ}ÑåÁ”ˆè€‰±¥¹”ˆ°4(€€€€€€€€€€€€€€€€‰‘…Ñ…}Á½¥¹ÑÌˆè€È°4(€€€€€€€€€€€€€€€€‰±…‰•±Ìˆèl‹–:¦‚Cšâ°ˆ°€‹šršZÃ¦‚Cšâ°‰t°4(€€€€€€€€€€€€€€€€‰¹Õµ•É¥}Ù…±Õ•Ìˆèlä¸ØĞ°€ÄÄ¸ÀÕt°4(€€€€€€€€€€€€€€€€‰Õ¹¥Ğˆè€ˆ”ˆ°4(€€€€€€€€€€€€€€€€‰¡…ÉÑ}ÁÕÉÁ½Í”ˆè€‰ÑÉ•¹ˆ°4(€€€€€€€€€€€€€€€€‰¡¥¡±¥¡Ñ}É•…Í½¸ˆè9½¹”°4(€€€€€€€€€€€€€€€€‰á}…á¥Í}±…‰•°ˆè€‹¦‚Cšâ³&#šr°ˆ°4(€€€€€€€€€€€€€€€€‰å}…á¥Í}±…‰•°ˆè€‹ÚOšşš"C¦Vß:¾ò —¾ò$ˆ°4(€€€€€€€€€€€€€€€€‰Ù¥ÍÕ…±}¡•­•ˆèQÉÕ”°4(€€€€€€€€€€€€€€€€‰‘…Ñ…}¡•­•ˆèQÉÕ”°4(€€€€€€€€€€€€€€€€‰İ¥‘Ñ ˆè€ÄÈÀÀ°4(€€€€€€€€€€€€€€€€‰¡•¥¡Ğˆè€àÀÀ°4(€€€€€€€€€€€õt°4(€€€€€€€€€€€€‰½µ¥ÍÍ¥½¹}É•…Í½¸ˆè9½¹”°4(€€€€€€€ô4(€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}µ…¹¥™•ÍÑ}‘…Ñ„¡µ…¹¥™•ÍĞ¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹š*cŞk–r[¢Ï–ÂG¦r¢š’â'–/šf¦ZO¦îxˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(4(€€€‘•˜Ñ•ÍÑ}Í¥¹±•}Ù•É¥™¥•‘}µ•ÑÉ¥}…É‘}¥Í}…±±½İ•¡Í•±˜¤è4(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤4(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¡…ÉÑÌ‰t€ôì4(€€€€€€€€€€€€‰É•ÅÕ¥É•ˆèQÉÕ”°4(€€€€€€€€€€€€‰ÍÑ…ÑÕÌˆè€‰É•…‘äˆ°4(€€€€€€€€€€€€‰É…Ñ¥½¹…±”ˆè€‹–ã¦†¿š‚ã–ş–
-ß’ê‡šVã–¶\ˆ°4(€€€€€€€€€€€€‰…ÍÍ•ÑÌˆèmì4(€€€€€€€€€€€€€€€€‰Á…Ñ ˆè€‰Í…¹‘‰½àè½ÑµÀ½µ•ÑÉ¥Œµ…É¹Á¹œˆ°4(€€€€€€€€€€€€€€€€‰…ÁÑ¥½¸ˆè€‹¢ÎšZg–6‡’â¾òkšr³Â‡–‚Ç’úw–ºcšZç¢ÎšZg¢÷’ösˆ°4(€€€€€€€€€€€€€€€€‰Í½ÕÉ•}¹…µ•Ìˆèl‹–ºcšZç’úšê@‰t°4(€€€€€€€€€€€€€€€€‰Í½ÕÉ•}ÕÉ±Ìˆèl‰¡ÑÑÁÌè¼½•á…µÁ±”¹½´½Í½ÕÉ”‰t°4(€€€€€€€€€€€€€€€€‰¡…ÉÑ}ÑåÁ”ˆè€‰µ•ÑÉ¥}…Éˆ°4(€€€€€€€€€€€€€€€€‰¡…ÉÑ}ÁÕÉÁ½Í”ˆè€‰Í¥¹±•}µ•ÑÉ¥Œˆ°4(€€€€€€€€€€€€€€€€‰‘…Ñ…}Á½¥¹ÑÌˆè€Ä°4(€€€€€€€€€€€€€€€€‰±…‰•±Ìˆèl‹–>_–
-ß’êëšVà‰t°4(€€€€€€€€€€€€€€€€‰¹Õµ•É¥}Ù…±Õ•ÌˆèlÌÙt°4(€€€€€€€€€€€€€€€€‰Õ¹¥Ğˆè€‹’êèˆ°4(€€€€€€€€€€€€€€€€‰¡¥¡±¥¡Ñ}É•…Í½¸ˆè€‹š¶“
-ë’ê/’îÛšr¦7¢šj–³–Ç–º'–£¢š?š¢‡š2š¢dˆ°4(€€€€€€€€€€€€€€€€‰á}…á¥Í}±…‰•°ˆè9½¹”°4(€€€€€€€€€€€€€€€€‰å}…á¥Í}±…‰•°ˆè9½¹”°4(€€€€€€€€€€€€€€€€‰Ù¥ÍÕ…±}¡•­•ˆèQÉÕ”°4(€€€€€€€€€€€€€€€€‰‘…Ñ…}¡•­•ˆèQÉÕ”°4(€€€€€€€€€€€€€€€€‰İ¥‘Ñ ˆè€ÄÈÀÀ°4(€€€€€€€€€€€€€€€€‰¡•¥¡Ğˆè€àÀÀ°4(€€€€€€€€€€€õt°4(€€€€€€€€€€€€‰½µ¥ÍÍ¥½¹}É•…Í½¸ˆè9½¹”°4(€€€€€€€ô4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑÅÕ…°¡mt°Y1%Q=H¹Ù…±¥‘…Ñ•}µ…¹¥™•ÍÑ}‘…Ñ„¡µ…¹¥™•ÍĞ¤¤4(4(€€€‘•˜Ñ•ÍÑ}‰}É…‘•}É•ÅÕ¥É•Í}…±±}Í½ÕÉ•}Á…•Í}¡•­•¡Í•±˜¤è4(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤4(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰ul‰Í½ÕÉ•}¡•­Ì‰t€ômt4(€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}µ…¹¥™•ÍÑ}‘…Ñ„¡µ…¹¥™•ÍĞ¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹òë–ÂG’úšêC¦‚–r[&šª‹š~—Ò¦2ˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(4(€€€‘•˜Ñ•ÍÑ}}Á±ÕÍ}ÍÑ¥±±}É•ÅÕ¥É•Í}…±±}Í½ÕÉ•}Á…•Í}¡•­•¡Í•±˜¤è4(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤4(€€€€€€€•Ù•¹Ğ€ôµ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁt4(€€€€€€€•Ù•¹Ñl‰É…‘”‰t€ô€‰¬ˆ4(€€€€€€€•Ù•¹Ñl‰¥µ…•Ì‰ul‰É•ÅÕ¥É•‰t€ô…±Í”4(€€€€€€€•Ù•¹Ñl‰¥µ…•Ì‰ul‰ÍÑ…ÑÕÌ‰t€ô€‰¹½Ñ}É•ÅÕ¥É•ˆ4(€€€€€€€•Ù•¹Ñl‰¥µ…•Ì‰ul‰Í½ÕÉ•}¡•­Ì‰t€ômt4(€€€€€€€•Ù•¹Ñl‰¥µ…•Ì‰ul‰…ÍÍ•ÑÌ‰t€ômt4(€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}µ…¹¥™•ÍÑ}‘…Ñ„¡µ…¹¥™•ÍĞ¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹š&šr'–—¦ã’ê/’îÛ¦÷–ş¦‚#–VR£’úšêC–r[&šª‹š~”ˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹òë–ÂG’úšêC¦‚–r[&šª‹š~—Ò¦2ˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(4(€€€‘•˜Ñ•ÍÑ}½¥±}ÍÁ¥±±}É•ÅÕ¥É•Í}ÁÉ½™•ÍÍ¥½¹…±}Ù¥ÍÕ…±}‰å}•Ù•¹Ñ}ÑåÁ”¡Í•±˜¤è4(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤4(€€€€€€€•Ù•¹Ğ€ôµ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁt4(€€€€€€€•Ù•¹Ñl‰Ñ¥Ñ±”‰t€ô€‹¦bÿšnó–’[šÖß–’Ÿ–z/šò?šÊäˆ4(€€€€€€€•Ù•¹Ñl‰Í•±•Ñ¥½¸‰ul‰…Ñ•½Éä‰t€ô€‹šÖßšÒ/šÆ‡š~Lˆ4(€€€€€€€•Ù•¹Ñl‰‘•Ñ…¥°‰ul‰•Ù•¹Ñ}‘•Ñ…¥±Ì‰t€ô€‹šÊçšÆ‡šNÓšV¢Ï’şw¢¶ß–6ˆ4(€€€€€€€•Ù•¹Ñl‰¥µ…•Ì‰ul‰ÁÉ½™•ÍÍ¥½¹…±}Ù¥ÍÕ…±}É•ÅÕ¥É•‰t€ô…±Í”4(€€€€€€€•Ù•¹Ñl‰¥µ…•Ì‰ul‰ÁÉ½™•ÍÍ¥½¹…±}Ù¥ÍÕ…±}ÍÑ…ÑÕÌ‰t€ô€‰¹½Ñ}É•ÅÕ¥É•ˆ4(€€€€€€€•Ù•¹Ñl‰¥µ…•Ì‰ul‰ÁÉ½™•ÍÍ¥½¹…±}Í½ÕÉ•}¡•­Ì‰t€ômt4(€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}µ…¹¥™•ÍÑ}‘…Ñ„¡µ…¹¥™•ÍĞ¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹–ş¦‚#’úw’ê/’îÛ¦†{–z/–"“–ºk
-èÑÉÕ”ˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(4(€€€‘•˜Ñ•ÍÑ}¹½}ÕÍ…‰±•}¥µ…•}É•ÅÕ¥É•Í}¥¹ÍÁ•Ñ¥½¹}•Ù¥‘•¹•}…¹‘}É•…Í½¸¡Í•±˜¤è4(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤4(€€€€€€€¡•¬€ôµ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰ul‰Í½ÕÉ•}¡•­Ì‰ulÁt4(€€€€€€€¡•­l‰ÕÍ…‰±•}¥µ…•}™½Õ¹‰t€ô…±Í”4(€€€€€€€¡•­l‰½ÕÑ½µ”‰t€ô€‰¹½}ÕÍ…‰±•}¥µ…”ˆ4(€€€€€€€¡•­l‰‘•Ñ•Ñ•‘}¥µ…•}ÕÉ±Ì‰t€ômt4(€€€€€€€¡•­l‰•Ù¥‘•¹•}Á…Ñ ‰t€ô9½¹”4(€€€€€€€¡•­l‰™…¥±ÕÉ•}‘•Ñ…¥°‰t€ô9½¹”4(€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}µ…¹¥™•ÍÑ}‘…Ñ„¡µ…¹¥™•ÍĞ¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹òë–ÂG¦f’îÛ¢Ş¿–úDˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹–ş¦‚#’şw–¶c–ß¦®S–"“–ºkBRÄˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(4(€€€‘•˜Ñ•ÍÑ}É•…‘•É}‰É¥•™}É•ÅÕ¥É•Í}•áÁ±…¹…Ñ¥½¹}İ¡•¹}•Ù•¹Ñ}¡…Í}¹½}¥µ…”¡Í•±˜¤è4(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤4(€€€€€€€¥µ…•Ì€ôµ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰t4(€€€€€€€™½È¡•¬¥¸¥µ…•Íl‰Í½ÕÉ•}¡•­Ì‰t€¬¥µ…•Íl‰ÁÉ½™•ÍÍ¥½¹…±}Í½ÕÉ•}¡•­Ì‰tè4(€€€€€€€€€€€¡•­l‰ÕÍ…‰±•}¥µ…•}™½Õ¹‰t€ô…±Í”4(€€€€€€€€€€€¡•­l‰½ÕÑ½µ”‰t€ô€‰¹½}ÕÍ…‰±•}¥µ…”ˆ4(€€€€€€€€€€€¡•­l‰‘•Ñ•Ñ•‘}¥µ…•}ÕÉ±Ì‰t€ômt4(€€€€€€€€€€€¡•­l‰™…¥±ÕÉ•}‘•Ñ…¥°‰t€ô€‹’úšêC¦‚–ŞË–º3šVÓšª‹š~—¾ò3šr«š>C’úo¢"šr³’ê/’îÛnã²›j–>¿R£–r[&ˆ4(€€€€€€€¥µ…•Íl‰ÍÑ…ÑÕÌ‰t€ô€‰½µ¥ÑÑ•ˆ4(€€€€€€€¥µ…•Íl‰…ÍÍ•ÑÌ‰t€ômt4(€€€€€€€¥µ…•Íl‰½µ¥ÍÍ¥½¹}É•…Í½¸‰t€ô€‹š&šr'–ŞË¦¦_¢¶'’úšêC¦‚–v‡–>¿R£–r[&ˆ4(€€€€€€€¥µ…•Íl‰ÁÉ½™•ÍÍ¥½¹…±}Ù¥ÍÕ…±}ÍÑ…ÑÕÌ‰t€ô€‰¹½Ñ}…Ù…¥±…‰±”ˆ4(€€€€€€€¥µ…•Íl‰ÁÉ½™•ÍÍ¥½¹…±}½µ¥ÍÍ¥½¹}É•…Í½¸‰t€ô€‹–ºcšZç¢"–Â#š–·’úšêC–všr«š>C’úo–B3šr–r[¢Îˆ4(€€€€€€€¥µ…•Íl‰É•…‘•É}½µ¥ÍÍ¥½¹}¹½Ñ”‰t€ô€‹–ŞËšª‹š~—šr³–&šZÃ¢{j–>¿¦vƒ’úšêC¾ò3šr«š&û–"Ã–>¿Šë¢ª7
-ëšr³’ê/’îÛ’âS¦§–B#–"+¢ò'j–r[&ˆ4(€€€€€€€‰É¥•˜€ôÙ…±¥‘}‰É¥•˜ ¤¹É•Á±…” 4(€€€€€€€€€€€€ˆ¨«–r[&¾òh¨©q¹q¸…o–r[’ât¡Í…¹‘‰½àè½ÑµÀ½¥µ…”¹Á¹œ¥q¹q»–r[’â¾òk–ºcšZç¢Î¢¢+–r[¾ò#’úšêC¾òk–ºcšZç’úšêC¾ò'	q¹q¸ˆ°4(€€€€€€€€€€€€ˆˆ°4(€€€€€€€€¤4(€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}‰É¥•™}Ñ•áĞ¡µ…¹¥™•ÍĞ°‰É¥•˜¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹–r[&¢ª«šb8ˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(4(4(€€€‘•˜Ñ•ÍÑ}¡…ÉÑ}…ÑÑ…¡µ•¹Ñ}…¹¹½Ñ}É•Á±…•}½É}‘ÕÁ±¥…Ñ•}¥µ…”¡Í•±˜¤è4(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤4(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¡…ÉÑÌ‰t€ôì4(€€€€€€€€€€€€‰É•ÅÕ¥É•ˆèQÉÕ”°€‰ÍÑ…ÑÕÌˆè€‰É•…‘äˆ°€‰É…Ñ¥½¹…±”ˆè€‹šVã–óš¾S¢òˆ°4(€€€€€€€€€€€€‰…ÍÍ•ÑÌˆèmì4(€€€€€€€€€€€€€€€€‰Á…Ñ ˆè€‰Í…¹‘‰½àè½ÑµÀ½¥µ…”¹Á¹œˆ°€‰…ÁÑ¥½¸ˆè€‹¢ÎšZg–r[¢†£’â¾òkš¾S¢òˆ°4(€€€€€€€€€€€€€€€€‰Í½ÕÉ•}¹…µ•Ìˆèl‹–ºcšZç’úšê@‰t°€‰Í½ÕÉ•}ÕÉ±Ìˆèl‰¡ÑÑÁÌè¼½•á…µÁ±”¹½´½Í½ÕÉ”‰t°4(€€€€€€€€€€€€€€€€‰¡…ÉÑ}ÑåÁ”ˆè€‰‰…Èˆ°€‰¡…ÉÑ}ÁÕÉÁ½Í”ˆè€‰½µÁ…É¥Í½¸ˆ°€‰‘…Ñ…}Á½¥¹ÑÌˆè€È°4(€€€€€€€€€€€€€€€€‰±…‰•±Ìˆèl‹RÈˆ°€‹’æd‰t°€‰¹Õµ•É¥}Ù…±Õ•ÌˆèlÄ°€Ét°€‰Õ¹¥Ğˆè€‹’êèˆ°4(€€€€€€€€€€€€€€€€‰¡¥¡±¥¡Ñ}É•…Í½¸ˆè9½¹”°€‰á}…á¥Í}±…‰•°ˆè€‹¦†{–"”ˆ°€‰å}…á¥Í}±…‰•°ˆè€‹’êëšVàˆ°4(€€€€€€€€€€€€€€€€‰Ù¥ÍÕ…±}¡•­•ˆèQÉÕ”°€‰‘…Ñ…}¡•­•ˆèQÉÕ”°€‰İ¥‘Ñ ˆè€àÀÀ°€‰¡•¥¡Ğˆè€ØÀÀ°4(€€€€€€€€€€€õt°€‰½µ¥ÍÍ¥½¹}É•…Í½¸ˆè9½¹”°4(€€€€€€€ô4(€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}µ…¹¥™•ÍÑ}‘…Ñ„¡µ…¹¥™•ÍĞ¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹–B3’â¦f’îÛ–B3šf–ë>û–r£¢ÎšZg–r[¢†£¢"–r[&ˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(4(€€€‘•˜Ñ•ÍÑ}ÁÉ½™•ÍÍ¥½¹…±}Ù¥ÍÕ…±}…¹¹½Ñ}‰•}É•Á±…•‘}‰å}¹•İÍ}Á¡½Ñ¼¡Í•±˜¤è4(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤4(€€€€€€€µ…¹¥™•ÍÑl‰•Ù•¹ÑÌ‰ulÁul‰¥µ…•Ì‰ul‰…ÍÍ•ÑÌ‰ulÁul‰­¥¹‰t€ô€‰¹•İÍ}Á¡½Ñ¼ˆ4(€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}µ…¹¥™•ÍÑ}‘…Ñ„¡µ…¹¥™•ÍĞ¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‹–B#š‚ó–Â#š–·¢Î¢¢+–rXˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(4(€€€‘•˜Ñ•ÍÑ}É•…‘å}µ…¹¥™•ÍÑ}É•ÅÕ¥É•Í}½µÁ±•Ñ•‘}É•½Ù•Éä¡Í•±˜¤è4(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤4(€€€€€€€µ…¹¥™•ÍÑl‰É•½Ù•Éä‰ul‰ÍÑ…ÑÕÌ‰t€ô€‰É•½Ù•É¥¹œˆ4(€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}µ…¹¥™•ÍÑ}‘…Ñ„¡µ…¹¥™•ÍĞ¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‰É•½Ù•Éä¹ÍÑ…ÑÕÌƒ–ş¦‚ ½µÁ±•Ñ•ˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(4(€€€‘•˜Ñ•ÍÑ}É•½Ù•Éå}…ÑÑ•µÁÑÍ}…É•}Í•ÅÕ•¹Ñ¥…±}…¹‘}‰½Õ¹‘•¡Í•±˜¤è4(€€€€€€€µ…¹¥™•ÍĞ€ôÙ…±¥‘}µ…¹¥™•ÍĞ ¤4(€€€€€€€µ…¹¥™•ÍÑl‰É•½Ù•Éä‰ul‰…ÑÑ•µÁÑÌ‰t€ôl4(€€€€€€€€€€€ì4(€€€€€€€€€€€€€€€€‰Ñ…É•Ñ}ÍÑ…”ˆè€‰½±±•Ğµ¹•İÌµ¥µ…•Ìˆ°4(€€€€€€€€€€€€€€€€‰•Ù•¹Ñ}¥ˆè€‰Q]8´ÀÄˆ°4(€€€€€€€€€€€€€€€€‰…ÑÑ•µÁĞˆè€È°4(€€€€€€€€€€€€€€€€‰ÍÑ…ÉÑ•‘}…Ğˆè€ˆÈÀÈØ´Àà´ÄÑPÀØèÀÀèÀÀ¬ÀàèÀÀˆ°4(€€€€€€€€€€€€€€€€‰•¹‘•‘}…Ğˆè€ˆÈÀÈØ´Àà´ÄÑPÀØèÀÄèÀÀ¬ÀàèÀÀˆ°4(€€€€€€€€€€€€€€€€‰½ÕÑ½µ”ˆè€‰™…¥±•ˆ°4(€€€€€€€€€€€€€€€€‰•ÉÉ½É}½‘”ˆè€‰Ñ¥µ•½ÕĞˆ°4(€€€€€€€€€€€€€€€€‰µ•ÍÍ…”ˆè€‹¦ûšfˆ°4(€€€€€€€€€€€ô4(€€€€€€€t4(€€€€€€€•ÉÉ½ÉÌ€ôY1%Q=H¹Ù…±¥‘…Ñ•}µ…¹¥™•ÍÑ}‘…Ñ„¡µ…¹¥™•ÍĞ¤4(€€€€€€€Í•±˜¹…ÍÍ•ÉÑQÉÕ”¡…¹ä ‰…ÑÑ•µÁĞƒš'
-è€Äˆ¥¸•ÉÉ½È™½È•ÉÉ½È¥¸•ÉÉ½ÉÌ¤¤4(4(4)¥˜}}¹…µ•}|€ôô€‰}}µ…¥¹}|ˆè4(€€€Õ¹¥ÑÑ•ÍĞ¹µ…¥¸ ¤4(
+    def test_blue_or_noncanonical_map_style_is_rejected(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["map"]["assets"][0]["style_id"] = "blue-default"
+        manifest["events"][0]["map"]["assets"][0]["generator"] = "platform-map"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("yellow-admin-v2" in error for error in errors))
+        self.assertTrue(any("canonical renderer" in error for error in errors))
+
+    def test_twn_map_rejects_local_zoom(self):
+        manifest = valid_manifest()
+        asset = manifest["events"][0]["map"]["assets"][0]
+        asset["canvas_scope"] = "regional_detail"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("ç¦æ­¢è£åˆ‡æˆ–å±€éƒ¨æ”¾å¤§" in error for error in errors))
+
+    def test_glb_map_requires_complete_world_basemap(self):
+        manifest = valid_manifest()
+        manifest["sections"][0] = {"code": "GLB", "name": "ä¸–ç•Œ", "order": 1}
+        event = manifest["events"][0]
+        event["event_id"] = "GLB-01"
+        event["primary_section"] = "GLB"
+        asset = event["map"]["assets"][0]
+        asset["canvas_scope"] = "full_section"
+        asset["base_map"] = "maps/generated/sections/JPN-base.png"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("ç¦æ­¢è£åˆ‡æˆ–å±€éƒ¨æ”¾å¤§" in error for error in errors))
+        self.assertTrue(any("canonical å®Œæ•´æ¿å¡Šåº•åœ–" in error for error in errors))
+
+    def test_stage_guard_catches_map_stage_deleting_images(self):
+        before = valid_manifest()
+        after = copy.deepcopy(before)
+        after["events"][0]["map"]["rationale"] = "æ›´æ–°å®šä½ç†ç”±"
+        after["events"][0]["images"]["assets"] = []
+        errors = VALIDATOR.validate_stage_data(before, after, "build-news-maps")
+        self.assertTrue(any("è¶Šæ¬Šä¿®æ”¹ TWN-01.images" in error for error in errors))
+
+    def test_brief_rejects_gallery_or_dynamic_image_group(self):
+        text = valid_brief().replace(
+            "![åœ–ä¸€](sandbox:/tmp/image.png)",
+            'îˆ€genuiîˆ‚{"async_image_group":{"query":"test"}}îˆ',
+        )
+        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        self.assertTrue(any("ç¦æ­¢çš„åœ–å»Šã€ç–Šåœ–æˆ–å‹•æ…‹å…ƒä»¶" in error for error in errors))
+
+    def test_reader_times_reject_timezone_suffixes_after_user_timezone_conversion(self):
+        for suffix in ("UTC", "GMT", "+08:00", "Asia/Taipei"):
+            with self.subTest(suffix=suffix):
+                manifest = valid_manifest()
+                manifest["events"][0]["detail"]["overview_time"] = f"8/14 05:30 {suffix}"
+                manifest["events"][0]["detail"]["time"] = (
+                    f"æ–°èæ™‚é–“ï¼š8/14 05:30 {suffix}ï¼›äº‹ä»¶æ™‚é–“ï¼š8/14 05:00ã€‚"
+                )
+                text = valid_brief().replace("8/14 05:30", f"8/14 05:30 {suffix}")
+                errors = VALIDATOR.validate_brief_text(manifest, text)
+                self.assertTrue(
+                    any("ä½¿ç”¨è€…æ™‚å€" in error and "æ™‚å€æ¨™è¨˜" in error for error in errors),
+                    errors,
+                )
+
+    def test_overview_rejects_cross_section_mixed_table(self):
+        text = valid_brief().replace(
+            "## é€æ¢è©³å ±",
+            "### ä¸­åœ‹\n\n| ç·¨è™Ÿ | æ™‚é–“ | äº‹ä»¶ | ç­‰ç´š |\n|---|---|---|---|\n| TWN-01 | 8/14 05:30 | æ¸¬è©¦äº‹ä»¶ | B |\n\n## é€æ¢è©³å ±",
+        )
+        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        self.assertTrue(any("ç¨ç«‹æ¨™é¡Œèˆ‡è¡¨æ ¼" in error for error in errors))
+        self.assertTrue(any("éŒ¯èª¤æ¿å¡Š" in error for error in errors))
+
+    def test_brief_requires_numbered_markdown_attachment(self):
+        text = valid_brief().replace(
+            "![åœ–ä¸€](sandbox:/tmp/image.png)",
+            "![å®˜æ–¹åœ–ç‰‡](sandbox:/tmp/image.png)",
+        )
+        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        self.assertTrue(any("é€å¼µä½¿ç”¨ Markdown ä¸¦ä¾åºæ¨™ç¤ºåœ–ä¸€" in error for error in errors))
+
+    def test_brief_catches_missing_image(self):
+        text = valid_brief().replace("sandbox:/tmp/image.png", "sandbox:/tmp/other.png")
+        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        self.assertTrue(any("æ¼æ”¾åœ–ç‰‡é™„ä»¶" in error for error in errors))
+
+    def test_ready_manifest_blocks_omitted_image_when_source_has_one(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["images"]["status"] = "omitted"
+        manifest["events"][0]["images"]["assets"] = []
+        manifest["events"][0]["images"]["omission_reason"] = "å–å¾—å¤±æ•—"
+        manifest["events"][0]["images"]["source_checks"][0]["outcome"] = "acquisition_failed"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("æœªé™„ä¸Šåˆæ ¼é™„ä»¶å‰ä¸å¾—å®Œæˆç°¡å ±" in error for error in errors))
+
+    def test_images_reject_more_than_two_assets(self):
+        manifest = valid_manifest()
+        first = manifest["events"][0]["images"]["assets"][0]
+        second = copy.deepcopy(first)
+        second.update({
+            "path": "sandbox:/tmp/image-2.png",
+            "caption": "åœ–äºŒï¼šç¾å ´å—ææƒ…æ³ï¼ˆä¾†æºï¼šå®˜æ–¹ä¾†æºï¼‰ã€‚",
+            "kind": "news_photo",
+            "content_sha256": "b" * 64,
+            "incremental_information": "è£œå……å®˜æ–¹è³‡è¨Šåœ–æœªå‘ˆç¾çš„ç¾å ´å—ææƒ…æ³ã€‚",
+        })
+        third = copy.deepcopy(second)
+        third.update({
+            "path": "sandbox:/tmp/image-3.png",
+            "caption": "åœ–ä¸‰ï¼šå¦ä¸€è™•ç¾å ´å—ææƒ…æ³ï¼ˆä¾†æºï¼šå®˜æ–¹ä¾†æºï¼‰ã€‚",
+            "content_sha256": "c" * 64,
+        })
+        manifest["events"][0]["images"]["assets"].extend([second, third])
+
+        errors = VALIDATOR.validate_manifest_data(manifest)
+
+        self.assertTrue(any("è¶…éæ¯å‰‡ 2 å¼µåœ–ç‰‡ä¸Šé™" in error for error in errors), errors)
+
+    def test_images_reject_duplicate_content_hash(self):
+        manifest = valid_manifest()
+        second = copy.deepcopy(manifest["events"][0]["images"]["assets"][0])
+        second.update({
+            "path": "sandbox:/tmp/image-copy.png",
+            "caption": "åœ–äºŒï¼šé‡è¤‡å…§å®¹ï¼ˆä¾†æºï¼šå®˜æ–¹ä¾†æºï¼‰ã€‚",
+            "incremental_information": "è²ç¨±æä¾›å¦ä¸€å€‹è§’åº¦ã€‚",
+        })
+        manifest["events"][0]["images"]["assets"].append(second)
+
+        errors = VALIDATOR.validate_manifest_data(manifest)
+
+        self.assertTrue(any("é‡è¤‡åœ–ç‰‡å…§å®¹ SHA-256" in error for error in errors), errors)
+
+    def test_second_image_requires_incremental_information_reason(self):
+        manifest = valid_manifest()
+        second = copy.deepcopy(manifest["events"][0]["images"]["assets"][0])
+        second.update({
+            "path": "sandbox:/tmp/image-2.png",
+            "caption": "åœ–äºŒï¼šç¾å ´å—ææƒ…æ³ï¼ˆä¾†æºï¼šå®˜æ–¹ä¾†æºï¼‰ã€‚",
+            "kind": "news_photo",
+            "content_sha256": "b" * 64,
+        })
+        manifest["events"][0]["images"]["assets"].append(second)
+
+        errors = VALIDATOR.validate_manifest_data(manifest)
+
+        self.assertTrue(any("ç¬¬äºŒå¼µåœ–ç‰‡å¿…é ˆèªªæ˜æ–°å¢è³‡è¨Š" in error for error in errors), errors)
+
+    def test_ready_chart_does_not_replace_required_source_image(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["charts"] = {
+            "required": True,
+            "status": "ready",
+            "rationale": "æ¯”è¼ƒå…©å€‹çµ±è¨ˆå€¼",
+            "assets": [{
+                "path": "sandbox:/tmp/chart.png",
+                "caption": "è³‡æ–™åœ–è¡¨ä¸€ï¼šæœ¬ç°¡å ±ä¾å®˜æ–¹è³‡æ–™è£½ä½œã€‚",
+                "source_names": ["å®˜æ–¹ä¾†æº"],
+                "source_urls": ["https://example.com/source"],
+                "chart_type": "bar",
+                "data_points": 2,
+                "labels": ["åŸé æ¸¬", "æœ€æ–°é æ¸¬"],
+                "numeric_values": [9.64, 11.05],
+                "unit": "%",
+                "chart_purpose": "comparison",
+                "highlight_reason": None,
+                "x_axis_label": "é æ¸¬ç‰ˆæœ¬",
+                "y_axis_label": "ç¶“æ¿Ÿæˆé•·ç‡ï¼ˆ%ï¼‰",
+                "visual_checked": True,
+                "data_checked": True,
+                "width": 1200,
+                "height": 800,
+            }],
+            "omission_reason": None,
+        }
+        manifest["events"][0]["images"]["status"] = "omitted"
+        manifest["events"][0]["images"]["assets"] = []
+        manifest["events"][0]["images"]["omission_reason"] = "å–å¾—å¤±æ•—"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("æœªé™„ä¸Šåˆæ ¼é™„ä»¶å‰ä¸å¾—å®Œæˆç°¡å ±" in error for error in errors))
+
+    def test_text_card_cannot_pass_as_chart(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["charts"] = {
+            "required": True,
+            "status": "ready",
+            "rationale": "æ¯”è¼ƒé›™æ–¹ç«‹å ´",
+            "assets": [{
+                "path": "sandbox:/tmp/text-card.png",
+                "caption": "é›™æ–¹ç«‹å ´æ‘˜è¦ã€‚",
+                "source_names": ["å¯é ä¾†æº"],
+                "source_urls": ["https://example.com/source"],
+                "chart_type": "bar",
+                "data_points": 2,
+                "labels": ["ä¿„ç¾…æ–¯", "çƒå…‹è˜­åŠç›Ÿå‹"],
+                "numeric_values": [],
+                "unit": "",
+                "chart_purpose": "comparison",
+                "highlight_reason": None,
+                "x_axis_label": "ç«‹å ´",
+                "y_axis_label": "",
+                "visual_checked": True,
+                "data_checked": True,
+                "width": 1200,
+                "height": 800,
+            }],
+            "omission_reason": None,
+        }
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("è‡³å°‘ä¸€å€‹å¯¦éš›ç¹ªè£½çš„å…·é«”æ•¸å€¼" in error for error in errors))
+
+    def test_two_point_line_chart_is_rejected(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["charts"] = {
+            "required": True,
+            "status": "ready",
+            "rationale": "æ¯”è¼ƒå‰å¾Œé æ¸¬",
+            "assets": [{
+                "path": "sandbox:/tmp/two-point-line.png",
+                "caption": "å‰å¾Œé æ¸¬æ¯”è¼ƒã€‚",
+                "source_names": ["å®˜æ–¹ä¾†æº"],
+                "source_urls": ["https://example.com/source"],
+                "chart_type": "line",
+                "data_points": 2,
+                "labels": ["åŸé æ¸¬", "æœ€æ–°é æ¸¬"],
+                "numeric_values": [9.64, 11.05],
+                "unit": "%",
+                "chart_purpose": "trend",
+                "highlight_reason": None,
+                "x_axis_label": "é æ¸¬ç‰ˆæœ¬",
+                "y_axis_label": "ç¶“æ¿Ÿæˆé•·ç‡ï¼ˆ%ï¼‰",
+                "visual_checked": True,
+                "data_checked": True,
+                "width": 1200,
+                "height": 800,
+            }],
+            "omission_reason": None,
+        }
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("æŠ˜ç·šåœ–è‡³å°‘éœ€è¦ä¸‰å€‹æ™‚é–“é»" in error for error in errors))
+
+    def test_single_verified_metric_card_is_allowed(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["charts"] = {
+            "required": True,
+            "status": "ready",
+            "rationale": "å‡¸é¡¯æ ¸å¿ƒå‚·äº¡æ•¸å­—",
+            "assets": [{
+                "path": "sandbox:/tmp/metric-card.png",
+                "caption": "è³‡æ–™å¡ä¸€ï¼šæœ¬ç°¡å ±ä¾å®˜æ–¹è³‡æ–™è£½ä½œã€‚",
+                "source_names": ["å®˜æ–¹ä¾†æº"],
+                "source_urls": ["https://example.com/source"],
+                "chart_type": "metric_card",
+                "chart_purpose": "single_metric",
+                "data_points": 1,
+                "labels": ["å—å‚·äººæ•¸"],
+                "numeric_values": [36],
+                "unit": "äºº",
+                "highlight_reason": "æ­¤ç‚ºäº‹ä»¶æœ€é‡è¦çš„å…¬å…±å®‰å…¨è¦æ¨¡æŒ‡æ¨™",
+                "x_axis_label": None,
+                "y_axis_label": None,
+                "visual_checked": True,
+                "data_checked": True,
+                "width": 1200,
+                "height": 800,
+            }],
+            "omission_reason": None,
+        }
+        self.assertEqual([], VALIDATOR.validate_manifest_data(manifest))
+
+    def test_b_grade_requires_all_source_pages_checked(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["images"]["source_checks"] = []
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("ç¼ºå°‘ä¾†æºé åœ–ç‰‡æª¢æŸ¥ç´€éŒ„" in error for error in errors))
+
+    def test_c_plus_still_requires_all_source_pages_checked(self):
+        manifest = valid_manifest()
+        event = manifest["events"][0]
+        event["grade"] = "C+"
+        event["images"]["required"] = False
+        event["images"]["status"] = "not_required"
+        event["images"]["source_checks"] = []
+        event["images"]["assets"] = []
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("æ‰€æœ‰å…¥é¸äº‹ä»¶éƒ½å¿…é ˆå•Ÿç”¨ä¾†æºåœ–ç‰‡æª¢æŸ¥" in error for error in errors))
+        self.assertTrue(any("ç¼ºå°‘ä¾†æºé åœ–ç‰‡æª¢æŸ¥ç´€éŒ„" in error for error in errors))
+
+    def test_oil_spill_requires_professional_visual_by_event_type(self):
+        manifest = valid_manifest()
+        event = manifest["events"][0]
+        event["title"] = "é˜¿æ›¼å¤–æµ·å¤§å‹æ¼æ²¹"
+        event["selection"]["category"] = "æµ·æ´‹æ±¡æŸ“"
+        event["detail"]["event_details"] = "æ²¹æ±¡æ“´æ•£è‡³ä¿è­·å€ã€‚"
+        event["images"]["professional_visual_required"] = False
+        event["images"]["professional_visual_status"] = "not_required"
+        event["images"]["professional_source_checks"] = []
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("å¿…é ˆä¾äº‹ä»¶é¡å‹åˆ¤å®šç‚º true" in error for error in errors))
+
+    def test_no_usable_image_requires_inspection_evidence_and_reason(self):
+        manifest = valid_manifest()
+        check = manifest["events"][0]["images"]["source_checks"][0]
+        check["usable_image_found"] = False
+        check["outcome"] = "no_usable_image"
+        check["detected_image_urls"] = []
+        check["evidence_path"] = None
+        check["failure_detail"] = None
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("ç¼ºå°‘é™„ä»¶è·¯å¾‘" in error for error in errors))
+        self.assertTrue(any("å¿…é ˆä¿å­˜å…·é«”åˆ¤å®šç†ç”±" in error for error in errors))
+
+    def test_reader_brief_requires_explanation_when_event_has_no_image(self):
+        manifest = valid_manifest()
+        images = manifest["events"][0]["images"]
+        for check in images["source_checks"] + images["professional_source_checks"]:
+            check["usable_image_found"] = False
+            check["outcome"] = "no_usable_image"
+            check["detected_image_urls"] = []
+            check["failure_detail"] = "ä¾†æºé å·²å®Œæ•´æª¢æŸ¥ï¼Œæœªæä¾›èˆ‡æœ¬äº‹ä»¶ç›¸ç¬¦çš„å¯ç”¨åœ–ç‰‡ã€‚"
+        images["status"] = "omitted"
+        images["assets"] = []
+        images["omission_reason"] = "æ‰€æœ‰å·²é©—è­‰ä¾†æºé å‡ç„¡å¯ç”¨åœ–ç‰‡ã€‚"
+        images["professional_visual_status"] = "not_available"
+        images["professional_omission_reason"] = "å®˜æ–¹èˆ‡å°ˆæ¥­ä¾†æºå‡æœªæä¾›åŒæœŸåœ–è³‡ã€‚"
+        images["reader_omission_note"] = "å·²æª¢æŸ¥æœ¬å‰‡æ–°èçš„å¯é ä¾†æºï¼Œæœªæ‰¾åˆ°å¯ç¢ºèªç‚ºæœ¬äº‹ä»¶ä¸”é©åˆåˆŠè¼‰çš„åœ–ç‰‡ã€‚"
+        brief = valid_brief().replace(
+            "**åœ–ç‰‡ï¼š**\n\n![åœ–ä¸€](sandbox:/tmp/image.png)\n\nåœ–ä¸€ï¼šå®˜æ–¹è³‡è¨Šåœ–ï¼ˆä¾†æºï¼šå®˜æ–¹ä¾†æºï¼‰ã€‚\n\n",
+            "",
+        )
+        errors = VALIDATOR.validate_brief_text(manifest, brief)
+        self.assertTrue(any("åœ–ç‰‡èªªæ˜" in error for error in errors))
+
+
+    def test_chart_attachment_cannot_replace_or_duplicate_image(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["charts"] = {
+            "required": True, "status": "ready", "rationale": "æ•¸å€¼æ¯”è¼ƒ",
+            "assets": [{
+                "path": "sandbox:/tmp/image.png", "caption": "è³‡æ–™åœ–è¡¨ä¸€ï¼šæ¯”è¼ƒã€‚",
+                "source_names": ["å®˜æ–¹ä¾†æº"], "source_urls": ["https://example.com/source"],
+                "chart_type": "bar", "chart_purpose": "comparison", "data_points": 2,
+                "labels": ["ç”²", "ä¹™"], "numeric_values": [1, 2], "unit": "äºº",
+                "highlight_reason": None, "x_axis_label": "é¡åˆ¥", "y_axis_label": "äººæ•¸",
+                "visual_checked": True, "data_checked": True, "width": 800, "height": 600,
+            }], "omission_reason": None,
+        }
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("åŒä¸€é™„ä»¶åŒæ™‚å‡ºç¾åœ¨è³‡æ–™åœ–è¡¨èˆ‡åœ–ç‰‡" in error for error in errors))
+
+    def test_professional_visual_cannot_be_replaced_by_news_photo(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["images"]["assets"][0]["kind"] = "news_photo"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("åˆæ ¼å°ˆæ¥­è³‡è¨Šåœ–" in error for error in errors))
+
+    def test_ready_manifest_requires_completed_recovery(self):
+        manifest = valid_manifest()
+        manifest["recovery"]["status"] = "recovering"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("recovery.status å¿…é ˆ completed" in error for error in errors))
+
+    def test_recovery_attempts_are_sequential_and_bounded(self):
+        manifest = valid_manifest()
+        manifest["recovery"]["attempts"] = [
+            {
+                "target_stage": "collect-news-images",
+                "event_id": "TWN-01",
+                "attempt": 2,
+                "started_at": "2026-08-14T06:00:00+08:00",
+                "ended_at": "2026-08-14T06:01:00+08:00",
+                "outcome": "failed",
+                "error_code": "timeout",
+                "message": "é€¾æ™‚",
+            }
+        ]
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("attempt æ‡‰ç‚º 1" in error for error in errors))
+
+
+if __name__ == "__main__":
+    unittest.main()
