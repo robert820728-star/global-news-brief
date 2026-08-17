@@ -52,7 +52,8 @@ def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
         if scan.get("source_id") != source_id:
             raise ValueError(f"來源掃描 ID 不符：{source_id}")
         completed.append(source_id)
-        for page_index, page in enumerate(scan.get("pages", []), 1):
+        pages = list(scan.get("pages", [])) + list(scan.get("supplemental_pages", []))
+        for page_index, page in enumerate(pages, 1):
             for raw in page.get("extracted_items", []):
                 published = parse_time(str(raw.get("published_at", "")))
                 if published < start or published > end:

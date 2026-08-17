@@ -6,6 +6,23 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PipelineContractTests(unittest.TestCase):
+    def test_same_source_recovery_uses_browser_only_as_final_fallback(self):
+        documents = [
+            ROOT / "news-brief-settings.md",
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/acquire-news-candidates/SKILL.md",
+        ]
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("SAME_SOURCE_RECOVERY_ORDER", text)
+            self.assertIn(
+                "canonical route -> same-site direct fetch -> same-site alternate non-browser route -> browser-rendered snapshot",
+                text,
+            )
+            self.assertIn("browser is the final fallback only", text)
+            self.assertIn("recover_same_source_leads.py", text)
+
     def test_taiwan_domestic_coverage_guard_is_bounded_and_audited(self):
         import json
 
@@ -24,6 +41,7 @@ class PipelineContractTests(unittest.TestCase):
         self.assertTrue(all(item["same_source_only"] is True for item in sweeps))
         self.assertTrue(all(item["window_hours"] == 24 for item in sweeps))
         self.assertEqual(5, pool["primary_sources_per_section"])
+        self.assertIn("coverage_guard_recovery", pool["mandatory_overflow_triggers"])
 
         documents = [
             ROOT / "news-brief-settings.md",

@@ -25,6 +25,10 @@ def normalize_url(value):
     return urlunsplit((parts.scheme.lower(), parts.netloc.lower(), parts.path.rstrip("/"), parts.query, ""))
 
 
+def normalized_host(value):
+    return urlsplit(str(value)).netloc.lower().removeprefix("www.")
+
+
 def local_path(value):
     return Path(str(value).removeprefix("sandbox:"))
 
@@ -92,6 +96,52 @@ def validate_scan(scan, coverage, source, label="source_scan"):
                 errors.append(f"{item_label}.url_evidence 不存在於原始快照")
             if item.get("published_evidence") not in content:
                 errors.append(f"{item_label}.published_evidence 不存在於原始快照")
+            all_items.append(item)
+
+    supplemental_pages = scan.get("supplemental_pages", [])
+    if not isinstance(supplemental_pages, list):
+        errors.append(f"{label}.supplemental_pages must be an array")
+        supplemental_pages = []
+    source_host = normalized_host(source.get("homepage", ""))
+    for index, page in enumerate(supplemental_pages, 1):
+        page_label = f"{label}.supplemental_pages[{index}]"
+        if not isinstance(page, dict):
+            errors.append(f"{page_label} must be an object")
+            continue
+        for key in ("request_url", "fetched_at", "http_status", "snapshot_path", "sha256", "next_url", "extracted_items", "recovery_route"):
+            if key not in page:
+                errors.append(f"{page_label} missing {key}")
+        if normalized_host(page.get("request_url", "")) != source_host:
+            errors.append(f"{page_label}.request_url violates same-source boundary")
+        if page.get("http_status") != 200:
+            errors.append(f"{page_label} HTTP status must be 200")
+        snapshot = local_path(page.get("snapshot_path", ""))
+        if not snapshot.is_file():
+            errors.append(f"{page_label} snapshot is missing: {snapshot}")
+            content = ""
+        else:
+            raw = snapshot.read_bytes()
+            if hashlib.sha256(raw).hexdigest() != page.get("sha256"):
+                errors.append(f"{page_label} snapshot SHA-256 mismatch")
+            content = raw.decode("utf-8", errors="ignore")
+        items = page.get("extracted_items")
+        if not isinstance(items, list):
+            errors.append(f"{page_label}.extracted_items must be an array")
+            continue
+        for item_index, item in enumerate(items, 1):
+            item_label = f"{page_label}.extracted_items[{item_index}]"
+            if not isinstance(item, dict):
+                errors.append(f"{item_label} must be an object")
+                continue
+            for key in ("url", "title", "published_at", "url_evidence", "published_evidence"):
+                if not str(item.get(key, "")).strip():
+                    errors.append(f"{item_label} missing {key}")
+            if item.get("url_evidence") not in content:
+                errors.append(f"{item_label}.url_evidence is absent from snapshot")
+            if item.get("published_evidence") not in content:
+                errors.append(f"{item_label}.published_evidence is absent from snapshot")
+            if normalized_host(item.get("url", "")) != source_host:
+                errors.append(f"{item_label}.url violates same-source boundary")
             all_items.append(item)
 
     urls = [item.get("url") for item in all_items]

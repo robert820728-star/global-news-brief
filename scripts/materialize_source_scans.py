@@ -287,11 +287,17 @@ def materialize_source(source: dict, route: dict, window_start: str, window_end:
     if witness:
         terminal = {"type": "crossed_window_start", "page_index": 1, "witness_url": witness["url"]}
     else:
-        marker = next((value for value in ("</html>", "</rss>", "</urlset>", "</feed>") if value in utf8_view.lower()), None)
+        explicit_marker = route.get("source_exhaustion_marker")
+        marker = explicit_marker if isinstance(explicit_marker, str) and explicit_marker in utf8_view else None
         if marker is None:
-            marker = next((line.strip() for line in utf8_view.splitlines() if line.strip()), "")[:80]
-        if not marker:
-            raise ValueError(f"{source['source_id']}: no literal exhaustion marker")
+            marker = next(
+                (value for value in ("</rss>", "</urlset>", "</feed>") if value in utf8_view.lower()),
+                None,
+            )
+        if marker is None:
+            raise ValueError(
+                f"{source['source_id']}: HTML route did not reach window boundary"
+            )
         terminal = {"type": "source_exhausted", "page_index": 1, "terminal_marker": marker}
     scan = {
         "schema_version": "1.0.0", "source_id": source["source_id"], "collector": route["route"],

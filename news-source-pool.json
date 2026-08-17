@@ -16,7 +16,8 @@
     "major_disaster", "epidemic", "war_or_military", "diplomacy_escalation",
     "election", "central_bank_or_financial_shock", "major_cybersecurity",
     "critical_infrastructure", "major_scientific_breakthrough",
-    "cultural_industry_or_creator_ecosystem", "official_emergency_alert"
+    "cultural_industry_or_creator_ecosystem", "official_emergency_alert",
+    "coverage_guard_recovery"
   ],
   "cultural_industry_event_rule": {
     "first_large_award_suspension_min_grade": "C",

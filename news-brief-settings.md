@@ -1,5 +1,17 @@
 # 新聞簡報設定
 
++## Same-source recovery order
+
+`SAME_SOURCE_RECOVERY_ORDER`
+
+The required order for every configured source is: `canonical route -> same-site direct fetch -> same-site alternate non-browser route -> browser-rendered snapshot`.
+
+- Run `scripts/recover_same_source_leads.py` for a verified coverage lead; never inject a search result directly into selection.
+- `browser is the final fallback only`. It is permitted only after the direct article fetch and all configured same-site non-browser alternatives have failed and those failures were logged.
+- A browser DOM snapshot must pass the same same-source host, SHA-256, publication-window, evidence, coverage, and candidate validators as direct evidence.
+- Recovery applies to all configured sources. It updates only the affected source scan and coverage record; it must not restart already verified sources.
+
+
 ## 目的
 
 保存每日新聞簡報的編輯偏好、板塊、分級與收納標準。執行流程、候選稽核、來源複查、地圖、資料圖表、圖片、自主恢復及欄位所有權由 repo 內八個技能負責，避免單一提示詞同時搜尋、判斷、製圖與排版。

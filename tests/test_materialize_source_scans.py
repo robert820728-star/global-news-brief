@@ -90,7 +90,7 @@ class MaterializeSourceScansTests(unittest.TestCase):
             self.assertAlmostEqual(ranked["importance_score"], sum(ranked["importance_breakdown"].values()))
             self.assertEqual([], VALIDATOR.validate_scan(scan, coverage, source))
 
-    def test_single_page_without_old_item_records_literal_exhaustion_marker(self):
+    def test_dynamic_html_page_cannot_use_closing_tag_as_exhaustion_proof(self):
         html = """<!doctype html><html><body>
 <a href="/news/current">Current report</a><time>2026-08-16T09:00:00+08:00</time>
 </body></html>"""
@@ -106,13 +106,10 @@ class MaterializeSourceScansTests(unittest.TestCase):
                 "sha256": hashlib.sha256(html.encode()).hexdigest(), "route_ready": True,
             }
             source = {"source_id": "wire", "homepage": "https://example.com/", "section": "GLB"}
-            scan, coverage = MODULE.materialize_source(
-                source, route, "2026-08-15T12:00:00+08:00", "2026-08-16T12:00:00+08:00", root
-            )
-            terminal = scan["terminal_proof"]
-            self.assertEqual("source_exhausted", terminal["type"])
-            self.assertIn(terminal["terminal_marker"], snapshot.read_text(encoding="utf-8"))
-            self.assertEqual([], VALIDATOR.validate_scan(scan, coverage, source))
+            with self.assertRaisesRegex(ValueError, "HTML route did not reach window boundary"):
+                MODULE.materialize_source(
+                    source, route, "2026-08-15T12:00:00+08:00", "2026-08-16T12:00:00+08:00", root
+                )
 
     def test_tvbs_serialized_article_props_are_materialized(self):
         html = """<html><body><astro-island props="{&quot;article&quot;:[0,{&quot;articleId&quot;:[0,4008088],&quot;title&quot;:[0,&quot;重大政策更新&quot;],&quot;articleUrl&quot;:[0,&quot;https://news.tvbs.com.tw/politics/4008088&quot;],&quot;firstParagraph&quot;:[0,&quot;全國政策今日生效。&quot;],&quot;publishedAt&quot;:[0,1786878175]}]}"></astro-island></body></html>"""
@@ -122,6 +119,7 @@ class MaterializeSourceScansTests(unittest.TestCase):
             snapshot.write_bytes(html.encode("utf-8"))
             route = {
                 "source_id": "tvbs", "route": "html_direct",
+                "source_exhaustion_marker": "</html>",
                 "request_url": "https://news.tvbs.com.tw/", "http_status": 200,
                 "content_type": "text/html; charset=utf-8", "bytes": len(html.encode()),
                 "snapshot_path": str(snapshot),

@@ -5,6 +5,18 @@ description: Acquire complete rolling-window article lists from prevalidated dai
 
 # 取得新聞候選清單
 
++## Same-source recovery order
+
+`SAME_SOURCE_RECOVERY_ORDER`
+
+The required order for every configured source is: `canonical route -> same-site direct fetch -> same-site alternate non-browser route -> browser-rendered snapshot`.
+
+- Run `scripts/recover_same_source_leads.py` for a verified coverage lead; never inject a search result directly into selection.
+- `browser is the final fallback only`. It is permitted only after the direct article fetch and all configured same-site non-browser alternatives have failed and those failures were logged.
+- A browser DOM snapshot must pass the same same-source host, SHA-256, publication-window, evidence, coverage, and candidate validators as direct evidence.
+- Recovery applies to all configured sources. It updates only the affected source scan and coverage record; it must not restart already verified sources.
+
+
 只負責逐站取得文章清單與原始證據，不評級、不排除、不撰寫簡報。
 
 ## 固定輸入

@@ -30,11 +30,23 @@ class CandidateListTests(unittest.TestCase):
                             "url": f"https://example.com/{source_id}?utm_source=test",
                             "acquisition_route": "browser_rendered"
                         }]
-                    }]
+                    }],
+                    "supplemental_pages": ([{
+                        "snapshot_path": "snapshots/cna-supplement.html",
+                        "extracted_items": [{
+                            "title": "cna recovered policy event",
+                            "summary": "Recovered through verified same-source evidence.",
+                            "importance_hint": "Central policy changed public services.",
+                            "published_at": "2026-08-16T01:30:00+00:00",
+                            "url": "https://example.com/cna-recovered",
+                            "acquisition_route": "same_source_direct",
+                        }],
+                    }] if source_id == "cna" else []),
                 }), encoding="utf-8")
             result = builder.build(pool, scan_dir, builder.parse_time("2026-08-15T02:00:00+00:00"), builder.parse_time("2026-08-16T02:00:00+00:00"))
         self.assertEqual(result["source_count"], 15)
-        self.assertEqual(len(result["items"]), 15)
+        self.assertEqual(len(result["items"]), 16)
+        self.assertTrue(any(item["url"] == "https://example.com/cna-recovered" for item in result["items"]))
         self.assertTrue(all(item["summary"] and item["importance_hint"] for item in result["items"]))
         self.assertTrue(all("utm_source" not in item["canonical_url"] for item in result["items"]))
 

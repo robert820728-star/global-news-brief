@@ -1,5 +1,17 @@
 # 手機 ChatGPT 基礎每日新聞規則
 
++## Same-source recovery order
+
+`SAME_SOURCE_RECOVERY_ORDER`
+
+The required order for every configured source is: `canonical route -> same-site direct fetch -> same-site alternate non-browser route -> browser-rendered snapshot`.
+
+- Run `scripts/recover_same_source_leads.py` for a verified coverage lead; never inject a search result directly into selection.
+- `browser is the final fallback only`. It is permitted only after the direct article fetch and all configured same-site non-browser alternatives have failed and those failures were logged.
+- A browser DOM snapshot must pass the same same-source host, SHA-256, publication-window, evidence, coverage, and candidate validators as direct evidence.
+- Recovery applies to all configured sources. It updates only the affected source scan and coverage record; it must not restart already verified sources.
+
+
 本規則供一般 ChatGPT Scheduled Task 使用。目標是以較低消耗完成每日基礎更新，不要求本機程式、命令列、檔案下載、地圖或資料圖表；唯一必要的 repository 寫入是下列小型執行紀錄與最新讀者版。
 
 ## 遠端執行紀錄（搜尋前先做）
