@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "description": "Primary same-source acquisition routes for the 15 required news sources.",
   "routes": [
-    {"source_id": "cna", "route": "html_direct", "request_url_template": "https://www.cna.com.tw/list/aall.aspx", "snapshot_name": "cna.route-probe.bin"},
+    {"source_id": "cna", "route": "structured_direct", "request_url_template": "https://www.cna.com.tw/cna2018api/api/WNewsList", "request_method": "POST", "request_json": {"action": "0", "category": "aall", "pagesize": 500, "pageidx": 1}, "request_headers": {"Referer": "https://www.cna.com.tw/list/aall.aspx"}, "json_exhaustion_path": ["ResultData", "NextPageIdx"], "snapshot_name": "cna.route-probe.json"},
     {"source_id": "pts", "route": "structured_direct", "request_url_template": "https://news.pts.org.tw/xml/newsfeed.xml", "snapshot_name": "pts.route-probe.bin"},
     {"source_id": "udn", "route": "html_direct", "request_url_template": "https://udn.com/news/breaknews/1", "snapshot_name": "udn.route-probe.bin"},
     {"source_id": "tvbs", "route": "html_direct", "request_url_template": "https://news.tvbs.com.tw/", "snapshot_name": "tvbs.route-probe.bin"},

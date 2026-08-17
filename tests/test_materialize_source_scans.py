@@ -111,6 +111,48 @@ class MaterializeSourceScansTests(unittest.TestCase):
                     source, route, "2026-08-15T12:00:00+08:00", "2026-08-16T12:00:00+08:00", root
                 )
 
+    def test_cna_json_api_materializes_items_and_proves_source_exhaustion(self):
+        payload = json.dumps({
+            "Result": "Y",
+            "ResultData": {
+                "Items": [
+                    {
+                        "PageUrl": "https://www.cna.com.tw/news/aipl/202608170117.aspx",
+                        "HeadLine": "中央政策最新進展",
+                        "CreateTime": "2026/08/17 13:54",
+                    },
+                    {
+                        "PageUrl": "https://www.cna.com.tw/news/aipl/202608160321.aspx",
+                        "HeadLine": "前一日政策報導",
+                        "CreateTime": "2026/08/16 22:06",
+                    },
+                ],
+                "NextPageIdx": "",
+            },
+        }, ensure_ascii=False, separators=(",", ":"))
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            snapshot = root / "cna.json"
+            snapshot.write_bytes(payload.encode("utf-8"))
+            route = {
+                "source_id": "cna", "route": "structured_direct",
+                "request_url": "https://www.cna.com.tw/cna2018api/api/WNewsList",
+                "request_method": "POST",
+                "json_exhaustion_path": ["ResultData", "NextPageIdx"],
+                "http_status": 200, "content_type": "application/json; charset=utf-8",
+                "bytes": len(payload.encode("utf-8")), "snapshot_path": str(snapshot),
+                "sha256": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
+                "route_ready": True,
+            }
+            source = {"source_id": "cna", "homepage": "https://www.cna.com.tw/", "section": "TWN"}
+            scan, coverage = MODULE.materialize_source(
+                source, route, "2026-08-16T21:17:00+08:00", "2026-08-17T21:17:00+08:00", root
+            )
+            self.assertEqual(2, coverage["within_window_count"])
+            self.assertEqual("source_exhausted", scan["terminal_proof"]["type"])
+            self.assertIn("NextPageIdx", scan["terminal_proof"]["terminal_marker"])
+            self.assertEqual([], VALIDATOR.validate_scan(scan, coverage, source))
+
     def test_tvbs_serialized_article_props_are_materialized(self):
         html = """<html><body><astro-island props="{&quot;article&quot;:[0,{&quot;articleId&quot;:[0,4008088],&quot;title&quot;:[0,&quot;重大政策更新&quot;],&quot;articleUrl&quot;:[0,&quot;https://news.tvbs.com.tw/politics/4008088&quot;],&quot;firstParagraph&quot;:[0,&quot;全國政策今日生效。&quot;],&quot;publishedAt&quot;:[0,1786878175]}]}"></astro-island></body></html>"""
         with tempfile.TemporaryDirectory() as directory:

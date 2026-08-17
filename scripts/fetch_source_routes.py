@@ -7,6 +7,7 @@ import gzip
 import hashlib
 import json
 import sys
+import time
 import urllib.error
 import urllib.request
 import zlib
@@ -61,49 +62,65 @@ def safe_snapshot_path(snapshot_dir: Path, name: str) -> Path:
 def fetch_one(route: Mapping, snapshot_dir: Path, timeout_seconds: int) -> dict:
     request_url = resolve_route_url(route)
     snapshot_path = safe_snapshot_path(snapshot_dir, str(route["snapshot_name"]))
+    method = str(route.get("request_method", "GET")).upper()
+    headers = {"User-Agent": USER_AGENT, "Accept-Encoding": "gzip, deflate"}
+    headers.update({str(key): str(value) for key, value in route.get("request_headers", {}).items()})
+    body = None
+    if "request_json" in route:
+        body = json.dumps(
+            route["request_json"], ensure_ascii=False, separators=(",", ":")
+        ).encode("utf-8")
+        headers.setdefault("Content-Type", "application/json")
     request = urllib.request.Request(
-        request_url,
-        headers={"User-Agent": USER_AGENT, "Accept-Encoding": "gzip, deflate"},
+        request_url, data=body, headers=headers, method=method,
     )
-    response = None
-    try:
+    last_status = None
+    last_content_type = None
+    last_error = None
+    for attempt in range(2):
+        response = None
         try:
-            response = urllib.request.urlopen(request, timeout=timeout_seconds)
-        except urllib.error.HTTPError as error:
-            response = error
-        status = int(getattr(response, "status", response.getcode()))
-        headers = response.headers
-        body = decode_body(response.read(), headers.get("Content-Encoding", ""))
-        snapshot_path.write_bytes(body)
-        ready = 200 <= status < 300 and bool(body)
-        return {
-            "source_id": str(route["source_id"]),
-            "route": str(route["route"]),
-            "request_url": request_url,
-            "http_status": status,
-            "content_type": headers.get("Content-Type"),
-            "bytes": len(body),
-            "snapshot_path": str(snapshot_path),
-            "sha256": hashlib.sha256(body).hexdigest(),
-            "route_ready": ready,
-            "error": None if ready else "HTTP response was not successful or body was empty",
-        }
-    except Exception as error:  # noqa: BLE001 - coverage must record each route failure.
-        return {
-            "source_id": str(route.get("source_id", "")),
-            "route": str(route.get("route", "")),
-            "request_url": request_url,
-            "http_status": None,
-            "content_type": None,
-            "bytes": 0,
-            "snapshot_path": None,
-            "sha256": None,
-            "route_ready": False,
-            "error": str(error),
-        }
-    finally:
-        if response is not None:
-            response.close()
+            try:
+                response = urllib.request.urlopen(request, timeout=timeout_seconds)
+            except urllib.error.HTTPError as error:
+                response = error
+            status = int(getattr(response, "status", response.getcode()))
+            response_headers = response.headers
+            response_body = decode_body(
+                response.read(), response_headers.get("Content-Encoding", "")
+            )
+            last_status = status
+            last_content_type = response_headers.get("Content-Type")
+            ready = 200 <= status < 300 and bool(response_body)
+            if ready:
+                snapshot_path.write_bytes(response_body)
+                return {
+                    "source_id": str(route["source_id"]), "route": str(route["route"]),
+                    "request_method": method, "request_url": request_url,
+                    "http_status": status, "content_type": last_content_type,
+                    "bytes": len(response_body), "snapshot_path": str(snapshot_path),
+                    "sha256": hashlib.sha256(response_body).hexdigest(), "route_ready": True,
+                    "json_exhaustion_path": route.get("json_exhaustion_path"),
+                    "source_exhaustion_marker": route.get("source_exhaustion_marker"),
+                    "retry_count": attempt, "error": None,
+                }
+            last_error = "HTTP response was not successful or body was empty"
+        except Exception as error:  # noqa: BLE001 - record each route failure.
+            last_error = str(error)
+        finally:
+            if response is not None:
+                response.close()
+        if attempt == 0:
+            time.sleep(1)
+    return {
+        "source_id": str(route.get("source_id", "")), "route": str(route.get("route", "")),
+        "request_method": method, "request_url": request_url,
+        "http_status": last_status, "content_type": last_content_type,
+        "bytes": 0, "snapshot_path": None, "sha256": None, "route_ready": False,
+        "json_exhaustion_path": route.get("json_exhaustion_path"),
+        "source_exhaustion_marker": route.get("source_exhaustion_marker"),
+        "retry_count": 1, "error": last_error,
+    }
 
 
 def fetch_routes(route_config: Path, output_dir: Path, timeout_seconds: int) -> dict:

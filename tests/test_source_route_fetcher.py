@@ -28,6 +28,47 @@ class _Handler(BaseHTTPRequestHandler):
         return
 
 
+class _PostHandler(BaseHTTPRequestHandler):
+    payload = json.dumps({
+        "Result": "Y",
+        "ResultData": {"Items": [], "NextPageIdx": ""},
+    }, separators=(",", ":")).encode("utf-8")
+    received_method = None
+    received_json = None
+
+    def do_POST(self):
+        type(self).received_method = "POST"
+        length = int(self.headers.get("Content-Length", "0"))
+        type(self).received_json = json.loads(self.rfile.read(length))
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(self.payload)))
+        self.end_headers()
+        self.wfile.write(self.payload)
+
+    def log_message(self, _format, *_args):
+        return
+
+
+class _FlakyHandler(BaseHTTPRequestHandler):
+    attempts = 0
+    payload = b"recovered"
+
+    def do_GET(self):
+        type(self).attempts += 1
+        if type(self).attempts == 1:
+            self.send_response(503)
+            self.end_headers()
+            return
+        self.send_response(200)
+        self.send_header("Content-Length", str(len(self.payload)))
+        self.end_headers()
+        self.wfile.write(self.payload)
+
+    def log_message(self, _format, *_args):
+        return
+
+
 class SourceRouteFetcherTests(unittest.TestCase):
     def test_route_config_covers_every_primary_source(self):
         pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8-sig"))
@@ -37,10 +78,92 @@ class SourceRouteFetcherTests(unittest.TestCase):
             {route["source_id"] for route in config["routes"]},
         )
         self.assertEqual(15, len(config["routes"]))
+        cna = next(route for route in config["routes"] if route["source_id"] == "cna")
+        self.assertEqual("structured_direct", cna["route"])
+        self.assertEqual("POST", cna["request_method"])
+        self.assertEqual(500, cna["request_json"]["pagesize"])
+        self.assertEqual(["ResultData", "NextPageIdx"], cna["json_exhaustion_path"])
 
     def test_python_fetcher_persists_exact_snapshot_and_coverage(self):
         self.assertTrue(PYTHON_FETCHER.is_file())
         self._assert_fetcher_contract([sys.executable, str(PYTHON_FETCHER)])
+
+    def test_python_fetcher_supports_canonical_json_post(self):
+        server = ThreadingHTTPServer(("127.0.0.1", 0), _PostHandler)
+        worker = threading.Thread(target=server.serve_forever, daemon=True)
+        worker.start()
+        try:
+            with tempfile.TemporaryDirectory() as temp:
+                temp_path = Path(temp)
+                route_config = temp_path / "routes.json"
+                output_dir = temp_path / "out"
+                request_json = {
+                    "action": "0", "category": "aall", "pagesize": 500, "pageidx": 1,
+                }
+                route_config.write_text(json.dumps({
+                    "schema_version": "1.0.0",
+                    "routes": [{
+                        "source_id": "cna",
+                        "route": "structured_direct",
+                        "request_url_template": f"http://127.0.0.1:{server.server_port}/api/WNewsList",
+                        "request_method": "POST",
+                        "request_json": request_json,
+                        "json_exhaustion_path": ["ResultData", "NextPageIdx"],
+                        "snapshot_name": "cna.json",
+                    }],
+                }), encoding="utf-8")
+                completed = subprocess.run(
+                    [sys.executable, str(PYTHON_FETCHER),
+                     "--route-config", str(route_config),
+                     "--output-dir", str(output_dir), "--timeout-seconds", "5"],
+                    capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=20,
+                )
+                self.assertEqual(0, completed.returncode, completed.stderr + completed.stdout)
+                self.assertEqual("POST", _PostHandler.received_method)
+                self.assertEqual(request_json, _PostHandler.received_json)
+                result = json.loads(
+                    (output_dir / "source-route-coverage.json").read_text(encoding="utf-8-sig")
+                )["results"][0]
+                self.assertEqual("POST", result["request_method"])
+                self.assertEqual(["ResultData", "NextPageIdx"], result["json_exhaustion_path"])
+                self.assertEqual(_PostHandler.payload, Path(result["snapshot_path"]).read_bytes())
+        finally:
+            server.shutdown()
+            server.server_close()
+
+    def test_python_fetcher_retries_only_the_failed_route_once(self):
+        _FlakyHandler.attempts = 0
+        server = ThreadingHTTPServer(("127.0.0.1", 0), _FlakyHandler)
+        worker = threading.Thread(target=server.serve_forever, daemon=True)
+        worker.start()
+        try:
+            with tempfile.TemporaryDirectory() as temp:
+                root = Path(temp)
+                route_config = root / "routes.json"
+                output_dir = root / "out"
+                route_config.write_text(json.dumps({
+                    "schema_version": "1.0.0",
+                    "routes": [{
+                        "source_id": "flaky", "route": "html_direct",
+                        "request_url_template": f"http://127.0.0.1:{server.server_port}/news",
+                        "snapshot_name": "flaky.bin",
+                    }],
+                }), encoding="utf-8")
+                completed = subprocess.run(
+                    [sys.executable, str(PYTHON_FETCHER),
+                     "--route-config", str(route_config),
+                     "--output-dir", str(output_dir), "--timeout-seconds", "5"],
+                    capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=20,
+                )
+                self.assertEqual(0, completed.returncode, completed.stderr + completed.stdout)
+                self.assertEqual(2, _FlakyHandler.attempts)
+                result = json.loads(
+                    (output_dir / "source-route-coverage.json").read_text(encoding="utf-8-sig")
+                )["results"][0]
+                self.assertEqual(1, result["retry_count"])
+        finally:
+            server.shutdown()
+            server.server_close()
 
     def _assert_fetcher_contract(self, command):
         server = ThreadingHTTPServer(("127.0.0.1", 0), _Handler)

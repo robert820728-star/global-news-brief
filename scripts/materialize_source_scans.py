@@ -187,6 +187,45 @@ def parse_xml(text: str, request_url: str, homepage: str, route: str, year: int)
     return items
 
 
+def parse_json_items(text: str, request_url: str, homepage: str, route: str, year: int):
+    items = {}
+    try:
+        data = json.loads(text)
+    except (json.JSONDecodeError, TypeError):
+        return items
+    for obj in walk_json(data):
+        url_ev = obj.get("PageUrl") or obj.get("url") or obj.get("link")
+        title = obj.get("HeadLine") or obj.get("headline") or obj.get("title")
+        date_ev = (
+            obj.get("CreateTime") or obj.get("datePublished")
+            or obj.get("published_at") or obj.get("published")
+        )
+        if isinstance(url_ev, str) and isinstance(title, str) and isinstance(date_ev, str):
+            add_item(
+                items, request_url=request_url, homepage=homepage, route=route,
+                url_evidence=url_ev, title=title,
+                summary=str(obj.get("InBrief") or obj.get("description") or title),
+                published_evidence=date_ev, published=parse_time(date_ev, year),
+            )
+    return items
+
+
+def json_exhaustion_marker(text: str, path):
+    if not isinstance(path, list) or not path:
+        return None
+    try:
+        value = json.loads(text)
+        for key in path:
+            value = value[key]
+    except (json.JSONDecodeError, KeyError, TypeError):
+        return None
+    if value != "":
+        return None
+    key = re.escape(str(path[-1]))
+    match = re.search(rf'"{key}"\s*:\s*""', text)
+    return match.group(0) if match else None
+
+
 def parse_html(text: str, request_url: str, homepage: str, route: str, year: int):
     items = {}
     for script in re.finditer(r"<script[^>]*type=['\"]application/ld\+json['\"][^>]*>(.*?)</script>", text, re.I | re.S):
@@ -271,6 +310,7 @@ def materialize_source(source: dict, route: dict, window_start: str, window_end:
         raise ValueError(f"{source['source_id']}: route snapshot SHA-256 mismatch")
     text = decode_snapshot(raw, route.get("content_type") or "")
     parsed = parse_xml(text, route["request_url"], source["homepage"], route["route"], end.year)
+    parsed.update(parse_json_items(text, route["request_url"], source["homepage"], route["route"], end.year))
     parsed.update(parse_html(text, route["request_url"], source["homepage"], route["route"], end.year))
     utf8_view = raw.decode("utf-8", errors="ignore")
     parsed = {
@@ -287,8 +327,10 @@ def materialize_source(source: dict, route: dict, window_start: str, window_end:
     if witness:
         terminal = {"type": "crossed_window_start", "page_index": 1, "witness_url": witness["url"]}
     else:
+        marker = json_exhaustion_marker(text, route.get("json_exhaustion_path"))
         explicit_marker = route.get("source_exhaustion_marker")
-        marker = explicit_marker if isinstance(explicit_marker, str) and explicit_marker in utf8_view else None
+        if marker is None:
+            marker = explicit_marker if isinstance(explicit_marker, str) and explicit_marker in utf8_view else None
         if marker is None:
             marker = next(
                 (value for value in ("</rss>", "</urlset>", "</feed>") if value in utf8_view.lower()),
