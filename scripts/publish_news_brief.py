@@ -2,7 +2,7 @@
 """Canonical fail-closed release and delivery gate for the daily news brief."""
 from __future__ import annotations
 
-import argparse, hashlib, json, os, sys, tempfile
+import argparse, hashlib, json, os, re, sys, tempfile
 from datetime import datetime
 from pathlib import Path
 from PIL import Image
@@ -15,7 +15,7 @@ import validate_news_brief
 
 ROOT = Path(__file__).resolve().parents[1]
 GATE_ID = "scripts/publish_news_brief.py"
-GATE_VERSION = "2.1.0"
+GATE_VERSION = "2.2.0"
 RELEASE_NAME = "news-brief.md"
 RECEIPT_NAME = "release-receipt.json"
 CONTRACT = ROOT / "daily-schedule-prompt.md"
@@ -31,6 +31,26 @@ def sha_file(path: Path) -> str:
 
 def local_path(value: str) -> Path:
     return Path(value.removeprefix("sandbox:"))
+
+
+IMAGE_LINK_RE = re.compile(r"(!\[[^\]\r\n]*\]\()([^\)\r\n]+)(\))")
+
+
+def conversation_transport(data: bytes) -> bytes:
+    """Rewrite local Markdown image targets for ChatGPT without touching canonical bytes."""
+    text = data.decode("utf-8")
+
+    def rewrite(match: re.Match[str]) -> str:
+        target = match.group(2)
+        if target.startswith(("sandbox:", "http://", "https://", "data:", "blob:")):
+            return match.group(0)
+        if target.startswith("/"):
+            target = "sandbox:" + target
+        elif re.match(r"^[A-Za-z]:[\\/]", target):
+            target = "sandbox:/" + target.replace("\\", "/")
+        return match.group(1) + target + match.group(3)
+
+    return IMAGE_LINK_RE.sub(rewrite, text).encode("utf-8")
 
 
 def map_pixel_errors(path: Path, label: str) -> list[str]:
@@ -217,22 +237,23 @@ def verify(path: Path, cp: Path | None) -> int:
     print("DELIVERY AUTHORIZED", receipt["authorized_release_sha256"]); return 0
 
 
-def deliver(path: Path, cp: Path) -> int:
+def deliver(path: Path, cp: Path, conversation: bool = False) -> int:
     errors, _, data = validate_receipt(path, cp)
     if errors or data is None:
         print("DELIVERY BLOCKED", file=sys.stderr)
         for e in errors or ["release bytes 不可用"]: print("-", e, file=sys.stderr)
         return 1
-    sys.stdout.buffer.write(data); return 0
+    sys.stdout.buffer.write(conversation_transport(data) if conversation else data); return 0
 
 
 def main() -> int:
     p=argparse.ArgumentParser(); p.add_argument("--verify-receipt"); p.add_argument("--deliver-receipt"); p.add_argument("--checkpoint")
+    p.add_argument("--conversation-transport", action="store_true")
     p.add_argument("--manifest"); p.add_argument("--audit"); p.add_argument("--source-pool", default=str(ROOT/"news-source-pool.json")); p.add_argument("--brief"); p.add_argument("--output-dir")
     a=p.parse_args()
     if a.deliver_receipt:
         if not a.checkpoint: p.error("--deliver-receipt 必須同時提供 --checkpoint")
-        return deliver(Path(a.deliver_receipt), Path(a.checkpoint))
+        return deliver(Path(a.deliver_receipt), Path(a.checkpoint), a.conversation_transport)
     if a.verify_receipt: return verify(Path(a.verify_receipt), Path(a.checkpoint) if a.checkpoint else None)
     missing=[n for n in ("checkpoint","manifest","audit","brief","output_dir") if not getattr(a,n)]
     if missing: p.error("publish 缺少必要參數："+", ".join("--"+n.replace("_","-") for n in missing))

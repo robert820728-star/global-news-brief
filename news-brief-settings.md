@@ -68,6 +68,8 @@ The required order for every configured source is: `canonical route -> same-site
 - 今日總覽時間只放一個短新聞時間或統計截止時間，優先格式為 `M/D HH:MM`、`M/D 上午／下午／晚間`、`M/D`、`截至 M/D`。
 - 跨日事件的發生時間、期間與階段進展放在逐條詳報，不得塞入總覽時間欄。
 - 詳報時間依序使用新聞時間、事件時間、期間、更新節點；不適用者省略。
+- 所有讀者可見時間先換算為本輪 `run.timezone` 指定的使用者時區；未另行設定時使用排程的 `Asia/Taipei`。
+- 讀者版只顯示換算後的日期與時間，不附加 `UTC`、`GMT`、`+08:00`、`Asia/Taipei` 等時區標記；manifest 與稽核資料的 ISO 時間仍保留時區偏移供驗證。
 
 ## 候選海選
 

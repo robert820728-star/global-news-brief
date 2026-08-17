@@ -194,10 +194,10 @@ Repository 內只有 canonical publisher 可以建立 reader-facing release。�
 - publisher 建立 `release-receipt.json`；
 - 交付當下 publisher 再次 revalidate bootstrap binding、checkpoint、manifest、audit、source pool、brief、attachments 與 map decisions。
 
-最後正式輸出只能由以下命令的 stdout 直接交付，不得在 stdout 前後自行添加文字，也不得重新讀取 release 後轉貼：
+最後正式輸出只能由以下命令的 stdout 直接交付，不得在 stdout 前後自行添加文字，也不得重新讀取 release 後轉貼。`--conversation-transport` 只把 canonical Markdown 的本機圖片路徑轉成 ChatGPT 可顯示的 `sandbox:` URI；不得改寫 canonical release、receipt、文字、圖說或 SHA-256：
 
 ```bash
-<bundled-python> scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-receipt.json --checkpoint <checkpoint>
+<bundled-python> scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-receipt.json --checkpoint <checkpoint> --conversation-transport
 ```
 
 若此命令失敗或 stdout 為空，回到對應 recovery stage；不得改用手工摘要或舊 release 冒充成功。

@@ -155,7 +155,7 @@ def validate_repository(root: Path) -> list[str]:
     else:
         text = prompt.read_text(encoding="utf-8")
         marker = "DELIVERY_GATE_CANONICAL=scripts/publish_news_brief.py"
-        deliver = "--deliver-receipt <release-dir>/release-receipt.json --checkpoint <checkpoint>"
+        deliver = "--deliver-receipt <release-dir>/release-receipt.json --checkpoint <checkpoint> --conversation-transport"
         if text.count(marker) != 1:
             errors.append("daily-schedule-prompt.md 必須且只能宣告一次 DELIVERY_GATE_CANONICAL")
         if text.count(deliver) != 1:

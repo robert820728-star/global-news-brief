@@ -253,6 +253,39 @@ class PublisherTests(unittest.TestCase):
             self.assertEqual(delivered.returncode, 0, delivered.stderr.decode())
             self.assertEqual(delivered.stdout, (release_dir / "news-brief.md").read_bytes())
 
+    def test_conversation_delivery_rewrites_only_local_image_paths(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint, manifest, audit, brief = prepare_inputs(root)
+            release_dir = root / "release"
+            result = subprocess.run(
+                publish_command(checkpoint, manifest, audit, brief, release_dir),
+                capture_output=True, text=True, check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            release = release_dir / "news-brief.md"
+            canonical_bytes = release.read_bytes()
+            receipt = json.loads((release_dir / "release-receipt.json").read_text(encoding="utf-8"))
+
+            delivered = subprocess.run(
+                [sys.executable, str(PUBLISHER), "--deliver-receipt",
+                 str(release_dir / "release-receipt.json"), "--checkpoint", str(checkpoint),
+                 "--conversation-transport"],
+                capture_output=True, check=False,
+            )
+
+            self.assertEqual(delivered.returncode, 0, delivered.stderr.decode())
+            conversation = delivered.stdout.decode("utf-8")
+            map_uri = "sandbox:/" + str(root / "map.png").replace("\\", "/")
+            image_uri = "sandbox:/" + str(root / "image.png").replace("\\", "/")
+            self.assertIn(f"]({map_uri})", conversation)
+            self.assertIn(f"]({image_uri})", conversation)
+            self.assertNotEqual(delivered.stdout, canonical_bytes)
+            self.assertEqual(release.read_bytes(), canonical_bytes)
+            self.assertEqual(
+                receipt["authorized_release_sha256"], hashlib.sha256(canonical_bytes).hexdigest()
+            )
+
     def test_delivery_rejects_receipt_from_different_checkpoint(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

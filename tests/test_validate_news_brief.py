@@ -347,30 +347,7 @@ class ValidatorTests(unittest.TestCase):
         self.assertTrue(any("不得以標記1" in error for error in errors))
 
     def test_blue_or_noncanonical_map_style_is_rejected(self):
-        manifest = valid_manifest()
-        manifest["events"][0]["map"]["assets"][0]["style_id"] = "blue-default"
-        manifest["events"][0]["map"]["assets"][0]["generator"] = "platform-map"
-        errors = VALIDATOR.validate_manifest_data(manifest)
-        self.assertTrue(any("yellow-admin-v2" in error for error in errors))
-        self.assertTrue(any("canonical renderer" in error for error in errors))
-
-    def test_twn_map_rejects_local_zoom(self):
-        manifest = valid_manifest()
-        asset = manifest["events"][0]["map"]["assets"][0]
-        asset["canvas_scope"] = "regional_detail"
-        errors = VALIDATOR.validate_manifest_data(manifest)
-        self.assertTrue(any("禁止裁切或局部放大" in error for error in errors))
-
-    def test_glb_map_requires_complete_world_basemap(self):
-        manifest = valid_manifest()
-        manifest["sections"][0] = {"code": "GLB", "name": "世界", "order": 1}
-        event = manifest["events"][0]
-        event["event_id"] = "GLB-01"
-        event["primary_section"] = "GLB"
-        asset = event["map"]["assets"][0]
-        asset["canvas_scope"] = "full_section"
-        asset["base_map"] = "maps/generated/sections/JPN-base.png"
-        errors = VALIDATOR.validate_manifest_data(manifest)
+        manifest = valid_manifest�]-�G����ƭy�anifest_data(manifest)
         self.assertTrue(any("禁止裁切或局部放大" in error for error in errors))
         self.assertTrue(any("canonical 完整板塊底圖" in error for error in errors))
 
@@ -389,6 +366,21 @@ class ValidatorTests(unittest.TestCase):
         )
         errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
         self.assertTrue(any("禁止的圖廊、疊圖或動態元件" in error for error in errors))
+
+    def test_reader_times_reject_timezone_suffixes_after_user_timezone_conversion(self):
+        for suffix in ("UTC", "GMT", "+08:00", "Asia/Taipei"):
+            with self.subTest(suffix=suffix):
+                manifest = valid_manifest()
+                manifest["events"][0]["detail"]["overview_time"] = f"8/14 05:30 {suffix}"
+                manifest["events"][0]["detail"]["time"] = (
+                    f"新聞時間：8/14 05:30 {suffix}；事件時間：8/14 05:00。"
+                )
+                text = valid_brief().replace("8/14 05:30", f"8/14 05:30 {suffix}")
+                errors = VALIDATOR.validate_brief_text(manifest, text)
+                self.assertTrue(
+                    any("使用者時區" in error and "時區標記" in error for error in errors),
+                    errors,
+                )
 
     def test_overview_rejects_cross_section_mixed_table(self):
         text = valid_brief().replace(

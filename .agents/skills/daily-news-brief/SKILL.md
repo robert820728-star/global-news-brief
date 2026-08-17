@@ -35,7 +35,7 @@ python3 scripts/news_run_checkpoint.py init --output <checkpoint> --run-id <run-
 7. `verify-news-events` → `build-news-maps` → `build-news-charts` → `collect-news-images`：各技能只改自己的欄位。`verify-news-events` 完成時只執行 `scripts/validate_news_brief.py stage --stage verify-news-events --before <before-manifest> --after <after-manifest>`；map、chart、image 階段同樣只執行自己的 stage ownership 檢查。地圖、圖表、圖片互相獨立，不得互相替代。來源圖有合格圖片時必須取得並視覺驗收；需要專業官方資訊圖的事件不能用一般照片取代。地圖使用完整 canonical basemap、繁體中文地名、既定 yellow-admin-v2 規格。capsule 不搬運可重建的 generated PNG/SVG；需要時由 capsule 內的 canonical map source/style 與 renderer 在本地重建。
 8. 每個 post-manifest stage 結束後使用 `recover_news_run.py plan --input <manifest> --brief <brief>` 檢查事件級失敗；同時更新同一 checkpoint。不得對 `recover_news_run.py` 虛構 `--checkpoint` 參數。
 9. 只有 checkpoint 的 `collect-news-images` completed 後，才第一次執行 `scripts/validate_news_brief.py manifest --input <final-manifest>`。它是 final-manifest validator，不得提前到 verify、map 或 chart 階段。若意外提前執行，script 只會輸出 `DEFERRED`；這是可恢復的無副作用誤呼叫，不代表驗證通過，也不得標記整輪失敗。繼續圖片階段並在其 completed 後重跑到輸出 `OK`。通過後從 manifest 渲染讀者版，綁定 `render` 的 `brief` artifact，再跑 `validate_map_decisions.py`、`validate_news_brief.py brief` 與 unique-delivery-gate 檢查。失敗只局部恢復，不直接輸出草稿。
-10. 發布只能由 `scripts/publish_news_brief.py` 建立 release 與 receipt。最終交付只能執行 `--deliver-receipt ... --checkpoint <checkpoint>`；receipt 不是通行證本身，canonical publisher 在真正輸出 bytes 前會再次驗證目前 bootstrap binding、checkpoint、candidate audit/source scan、manifest、讀者版、附件與 map decisions。任何一項失敗 stdout 必須為空並返回恢復流程。
+10. 發布只能由 `scripts/publish_news_brief.py` 建立 release 與 receipt。最終交付只能執行 `--deliver-receipt ... --checkpoint <checkpoint> --conversation-transport`；receipt 不是通行證本身，canonical publisher 在真正輸出前會再次驗證目前 bootstrap binding、checkpoint、candidate audit/source scan、manifest、讀者版、附件與 map decisions。conversation transport 只能把 Markdown 本機圖片路徑轉成 `sandbox:` URI，不得修改 canonical release 或文字。任何一項失敗 stdout 必須為空並返回恢復流程。
 
 每個 stage 都必須依序經過 `pending → running → completed`；只有 `running` 可轉為 `failed`。下一 stage 只能在前一 stage 已完成後開始。`completed` 必須綁定 `scripts/news_run_checkpoint.py` 內 `REQUIRED_STAGE_ARTIFACTS` 宣告的具名產物；空 evidence、缺少具名產物或直接填寫 completed 均視為跳關並由 checkpoint／publisher 阻擋。
 
@@ -59,4 +59,4 @@ python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 
 ## 交付不變式
 
-Repository 內只能有一個 canonical publisher：`scripts/publish_news_brief.py`。其他腳本不得建立保留 release 檔名。`daily-schedule-prompt.md` 必須且只能宣告一次 canonical gate 與一次 receipt delivery 命令。最終 reader bytes 只可來自 canonical publisher 的 `--deliver-receipt` stdout；不得重新讀取 release 後自行轉貼、加前後文、重寫摘要、回退到草稿或舊 release。
+Repository 內只能有一個 canonical publisher：`scripts/publish_news_brief.py`。其他腳本不得建立保留 release 檔名。`daily-schedule-prompt.md` 必須且只能宣告一次 canonical gate 與一次 receipt delivery 命令。最終對話內容只可來自 canonical publisher 的 `--deliver-receipt ... --conversation-transport` stdout；canonical release 與其 SHA-256 保持不變，不得重新讀取 release 後自行轉貼、加前後文、重寫摘要、回退到草稿或舊 release。

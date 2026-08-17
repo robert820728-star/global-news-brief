@@ -12,7 +12,7 @@ SPEC.loader.exec_module(MODULE)
 
 PROMPT = """DELIVERY_GATE_CANONICAL=scripts/publish_news_brief.py
 python3 scripts/publish_news_brief.py --checkpoint <checkpoint> --manifest <manifest>
-python3 scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-receipt.json --checkpoint <checkpoint>
+python3 scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-receipt.json --checkpoint <checkpoint> --conversation-transport
 """
 
 
