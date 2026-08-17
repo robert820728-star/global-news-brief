@@ -1,15 +1,18 @@
 {
   "client_confirmation_supported": false,
-  "current_stage": "materialize-manifest",
+  "current_stage": "visuals-completed",
   "delivery_status": "not_ready",
-  "last_completed_stage": "candidate-audit",
-  "last_error": "BACKGROUND_DELIVERY_REJECTED: ephemeral attachment paths were not persistently viewable and grading review failed",
+  "last_completed_stage": "selection-verified",
+  "last_error": {
+    "code": "MAP_TRADITIONAL_CHINESE_GLYPHS_MISSING",
+    "message": "Map locations and colors were correct, but Traditional Chinese labels rendered as missing-glyph boxes. Replacement commit a05fb87b3e49de15ee77b1607ad2651d31255d8c was pushed; this pinned run is closed and will be restarted from latest main."
+  },
   "main_sha": "eb3c0db5fc634dd8cb7a3d7edb3cd31283eb0bd6",
   "reader_artifact": null,
   "run_id": "gnb-20260817T084718Z-full01",
   "scheduled_for": "2026-08-17T16:47:18+08:00",
   "schema_version": "1.0.0",
-  "stage_index": 8,
-  "status": "running",
-  "updated_at": "2026-08-17T09:16:00.000Z"
+  "stage_index": 7,
+  "status": "failed",
+  "updated_at": "2026-08-17T09:36:00.000Z"
 }
