@@ -22,6 +22,7 @@ description: Maintain a rolling fourteen-day audit of all news candidates, inclu
 4. 記錄可靠來源數、獨立群組、官方／原始來源及來源限制。
 5. 記錄持續事件的新增、未變、狀態轉折與本輪決定。
    - 同步驗證 `grading_evidence`：影響範圍、直接後果、本期實質增量、上下級比較、邊境衝突預設 D 與長期戰爭常態事件折扣不得缺漏。
+   - 最新一輪每個候選都要有 `local_disaster_review`；普通地方災害記錄保守確認死亡數、特殊意義觸發與調整理由，軍事／衝突事件則標記 `applies: false` 並沿用既有衝突判定。
 6. 附加本輪並刪除十四天前紀錄。
 7. 暫定 B 以上未入選卻沒有理由時，回到海選補查。
 

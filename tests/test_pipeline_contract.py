@@ -103,6 +103,19 @@ class PipelineContractTests(unittest.TestCase):
         for forbidden in ("Codex", "powershell", "bootstrap capsule", "git clone"):
             self.assertNotIn(forbidden, daily)
 
+    def test_disaster_publication_floor_and_conflict_precedence_are_explicit(self):
+        settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
+        severity = (ROOT / ".agents/skills/select-news-events/references/severity-rubric.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for document in (settings, severity, mobile):
+            self.assertIn("未滿 50 人", document)
+            self.assertIn("50–99 人", document)
+            self.assertIn("監控／指定區域", document)
+            self.assertIn("軍事／衝突", document)
+        self.assertIn("local_disaster_review", severity)
+        self.assertNotIn("死亡 100 人以上可列 A-", (ROOT / "news-brief-examples.md").read_text(encoding="utf-8"))
+
     def test_mobile_image_delivery_uses_small_stable_thumbnail_with_fallback(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 

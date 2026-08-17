@@ -102,6 +102,7 @@ Stage -1 完成後，至少讀取並遵守：
    - 產生 `selection-results.json` 後，必須先執行 `scripts/validate_selection_freshness.py --selection <selection-results> --source-candidates <source-candidates>`。此 gate 必須確認每個事件 URL 都在本輪 fresh pool、所有 C 級以上候選都有有效 `selected_event_id`，且映射事件實際存在；首次失敗即停止，不能刪單筆後重跑掩蓋。
 4. `audit-news-candidates`
    - 十四天稽核必須保留完整海選清單及每筆六項大分數；本輪所有 C 級以上候選（含合併項）都必須以 `selected_event_id` 對應到 manifest 與讀者版，不得無聲消失。
+   - 最新一輪每個候選必須完成 `local_disaster_review`。普通地方災害以未滿 50 人低於 C、50–99 人 C、100–249 人 B、250 人以上 A- 為基準；上調必須保存特殊意義與理由。軍事／衝突事件必須沿用既有邊境及長期戰爭規則，不得改套地方事故門檻。
 5. `materialize-manifest`
 6. `verify-news-events`
    - 此階段只能用 `scripts/validate_news_brief.py stage --stage verify-news-events --before <before-manifest> --after <after-manifest>` 檢查欄位所有權；不得在此時執行 final-manifest validator，因地圖、圖表與圖片欄位尚未完成。

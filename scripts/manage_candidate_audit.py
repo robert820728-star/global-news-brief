@@ -16,6 +16,20 @@ GRADE_ORDER = {
     "B-": 5, "B": 6, "B+": 7, "A-": 8, "A": 9, "A+": 10,
     "S-": 11, "S": 12, "S+": 13, "SS": 14,
 }
+LOCAL_DISASTER_SPECIAL_TRIGGERS = {
+    "monitored_region_conflict_escalation_risk",
+    "extreme_missing_serious_injury_or_evacuation",
+    "major_public_system_disruption",
+    "rapidly_expanding_disaster",
+    "cross_regional_direct_impact",
+    "multinational_direct_impact",
+    "rare_disaster_mechanism",
+    "regulatory_failure_or_systemic_risk",
+    "mass_housing_or_critical_infrastructure_loss",
+    "historic_extreme_scale",
+    "special_security_or_public_health",
+    "other_verified_special_significance",
+}
 TEMPLATE_GRADE_REASONS = {
     "依公共影響評級",
     "具有公共影響",
@@ -40,6 +54,16 @@ def load(path):
 def parse_datetime(value):
     parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
     return parsed if parsed.tzinfo else parsed.replace(tzinfo=timezone.utc)
+
+
+def local_disaster_baseline(confirmed_deaths):
+    if confirmed_deaths < 50:
+        return "D", "未滿 50 人"
+    if confirmed_deaths < 100:
+        return "C", "50–99 人"
+    if confirmed_deaths < 250:
+        return "B", "100–249 人"
+    return "A-", "250 人以上"
 
 
 def validate(data, source_pool=None):
@@ -109,7 +133,8 @@ def validate(data, source_pool=None):
         if ranking.get("method") != "public_value_v1" or sum(ranking.get("dimensions", {}).values()) != 100:
             errors.append("news-source-pool.json 的 public_value_v1 權重必須合計 100")
 
-    for run_index, run in enumerate(data.get("runs", []), 1):
+    runs = data.get("runs", [])
+    for run_index, run in enumerate(runs, 1):
         run_label = f"runs[{run_index}]"
         coverage = run.get("source_coverage", [])
         if not isinstance(coverage, list):
@@ -245,24 +270,7 @@ def validate(data, source_pool=None):
             errors.append(run_label + ".raw_item_count 必須等於全部核心來源入池數量總和")
 
         candidates = run.get("candidates", [])
-        if run.get("deduplicated_candidate_count") != len(candidates):
-            errors.append(run_label + ".deduplicated_candidate_count 必須等於去重候選筆數")
-        if isinstance(run.get("raw_item_count"), int) and len(candidates) > run["raw_item_count"]:
-            errors.append(run_label + " 去重後候選不得多於原始入池條目")
-
-        valid_source_ids = set(expected_sources or coverage_ids)
-        candidate_url_list = []
-        for candidate_index, candidate in enumerate(candidates, 1):
-            label = f"{run_label}.candidates[{candidate_index}]"
-            grade = candidate.get("provisional_grade")
-            decision = candidate.get("decision")
-            reason_code = candidate.get("reason_code")
-            if reason_code not in REASON_CODES:
-                errors.append(label + " reason_code 無效")
-            if not isinstance(candidate.get("grade_reason"), str) or not candidate["grade_reason"].strip():
-                errors.append(label + " 缺少 SS–E 評級理由")
-            elif candidate["grade_reason"].strip() in TEMPLATE_GRADE_REASONS:
-                errors.append(label + " grade_reason 使用禁止的模板理由，必須寫出事件特有的影響與本期增量")
+        if run.get("deduplicated_candidate_count") !=߿-�G����ƭy֝�理由，必須寫出事件特有的影響與本期增量")
             grading = candidate.get("grading_evidence")
             if not isinstance(grading, dict):
                 errors.append(label + " 缺少結構化 grading_evidence；不得只填 grade_reason")
@@ -272,6 +280,8 @@ def validate(data, source_pool=None):
                 "window_material_changes", "why_current_grade", "why_not_higher",
                 "why_not_lower", "border_conflict_review", "ongoing_conflict_review",
             }
+            if run_index == len(runs):
+                required_grading.add("local_disaster_review")
             missing_grading = sorted(required_grading - set(grading))
             if missing_grading:
                 errors.append(label + " grading_evidence 缺少：" + ", ".join(missing_grading))
@@ -351,6 +361,74 @@ def validate(data, source_pool=None):
                     errors.append(label + " 長期戰爭解除 D 級折扣時必須列出 change_types")
                 if not isinstance(ongoing.get("exception_reason"), str) or not ongoing["exception_reason"].strip():
                     errors.append(label + " 長期戰爭解除 D 級折扣時必須保存具體新進展")
+
+            local_disaster = grading.get("local_disaster_review")
+            if run_index == len(runs):
+                if not isinstance(local_disaster, dict):
+                    errors.append(label + " 最新一輪缺少 local_disaster_review")
+                    local_disaster = {}
+                applies = local_disaster.get("applies")
+                if not isinstance(applies, bool):
+                    errors.append(label + " local_disaster_review.applies 必須是布林值")
+                elif applies:
+                    required_local = {
+                        "confirmed_deaths", "special_significance_triggers",
+                        "grade_adjustment_reason",
+                    }
+                    missing_local = sorted(required_local - set(local_disaster))
+                    if missing_local:
+                        errors.append(
+                            label + " local_disaster_review 缺少：" + ", ".join(missing_local)
+                        )
+                    deaths = local_disaster.get("confirmed_deaths")
+                    triggers = local_disaster.get("special_significance_triggers")
+                    reason = local_disaster.get("grade_adjustment_reason")
+                    if not isinstance(deaths, int) or isinstance(deaths, bool) or deaths < 0:
+                        errors.append(label + " confirmed_deaths 必須是零以上的保守確認值")
+                    if not isinstance(triggers, list):
+                        errors.append(label + " special_significance_triggers 必須是陣列")
+                        triggers = []
+                    else:
+                        invalid_triggers = [
+                            trigger for trigger in triggers
+                            if not isinstance(trigger, str)
+                            or trigger not in LOCAL_DISASTER_SPECIAL_TRIGGERS
+                        ]
+                        if invalid_triggers:
+                            errors.append(
+                                label + " special_significance_triggers 無效："
+                                + ", ".join(map(str, invalid_triggers))
+                            )
+                        if (
+                            all(isinstance(trigger, str) for trigger in triggers)
+                            and len(triggers) != len(set(triggers))
+                        ):
+                            errors.append(label + " special_significance_triggers 不得重複")
+                    if (
+                        border.get("is_border_conflict") is True
+                        or ongoing.get("is_ongoing_conflict") is True
+                    ):
+                        errors.append(label + " 已屬軍事／衝突規則的事件不得同時套用地方災害門檻")
+                    if isinstance(deaths, int) and not isinstance(deaths, bool) and deaths >= 0:
+                        baseline, band = local_disaster_baseline(deaths)
+                        actual_order = GRADE_ORDER.get(grade)
+                        baseline_order = GRADE_ORDER[baseline]
+                        if actual_order is not None and actual_order != baseline_order:
+                            if not isinstance(reason, str) or not reason.strip():
+                                errors.append(
+                                    label + f" {band}的基準為 {baseline}；上調或下調都必須填寫具體調整理由"
+                                )
+                            if actual_order > baseline_order and not triggers:
+                                if deaths < 50 and actual_order >= GRADE_ORDER["C"]:
+                                    errors.append(
+                                        label + " 普通地方災害未滿 50 人且無特殊意義時不得評為 C 以上"
+                                    )
+                                else:
+                                    errors.append(
+                                        label + f" {band}高於 {baseline} 時必須列出可驗證的特殊意義觸發"
+                                    )
+                        elif triggers and (not isinstance(reason, str) or not reason.strip()):
+                            errors.append(label + " 宣告特殊意義時必須填寫具體調整理由")
             if GRADE_ORDER.get(grade, -1) >= GRADE_ORDER["B-"] and not grading.get("direct_consequences"):
                 errors.append(label + " B- 以上必須列出至少一項已發生的直接公共後果")
             source_ids = candidate.get("source_ids")

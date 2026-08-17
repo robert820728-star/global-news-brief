@@ -86,6 +86,42 @@
       },
       "additionalProperties": true
     },
+    "localDisasterReview": {
+      "type": "object",
+      "required": ["applies"],
+      "properties": {
+        "applies": {"type": "boolean"},
+        "confirmed_deaths": {"type": "integer", "minimum": 0},
+        "special_significance_triggers": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "monitored_region_conflict_escalation_risk",
+              "extreme_missing_serious_injury_or_evacuation",
+              "major_public_system_disruption",
+              "rapidly_expanding_disaster",
+              "cross_regional_direct_impact",
+              "multinational_direct_impact",
+              "rare_disaster_mechanism",
+              "regulatory_failure_or_systemic_risk",
+              "mass_housing_or_critical_infrastructure_loss",
+              "historic_extreme_scale",
+              "special_security_or_public_health",
+              "other_verified_special_significance"
+            ]
+          }
+        },
+        "grade_adjustment_reason": {"type": ["string", "null"]}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"applies": {"const": true}}},
+          "then": {"required": ["confirmed_deaths", "special_significance_triggers", "grade_adjustment_reason"]}
+        }
+      ],
+      "additionalProperties": false
+    },
     "candidate": {
       "type": "object",
       "required": ["candidate_id", "dedup_key", "title", "section", "provisional_grade", "grade_reason", "grading_evidence", "decision", "reason_code", "reason", "source_ids", "source_audit", "continuity"],
@@ -108,6 +144,7 @@
             "why_current_grade": {"type": "string", "minLength": 1},
             "why_not_higher": {"type": "string", "minLength": 1},
             "why_not_lower": {"type": "string", "minLength": 1},
+            "local_disaster_review": {"$ref": "#/$defs/localDisasterReview"},
             "border_conflict_review": {
               "type": "object",
               "required": ["is_border_conflict", "formal_war", "de_facto_war_scale", "related_to_monitored_section", "user_weight_elevated", "default_d_applied", "exception_reason"],

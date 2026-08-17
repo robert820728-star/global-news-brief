@@ -52,6 +52,7 @@ def grading_evidence(grade="C"):
         "why_current_grade": "影響範圍與本期增量符合目前級距",
         "why_not_higher": "尚未造成更廣泛的跨國或系統性影響",
         "why_not_lower": "存在具體且可驗證的新進展",
+        "local_disaster_review": {"applies": False},
         "border_conflict_review": {
             "is_border_conflict": False, "formal_war": False,
             "de_facto_war_scale": False, "related_to_monitored_section": False,
@@ -132,6 +133,138 @@ def valid_audit(candidates=None, per_source_count=1):
 
 
 class CandidateAuditTests(unittest.TestCase):
+    def test_ordinary_local_disaster_under_50_cannot_reach_c(self):
+        item = candidate("C", "selected")
+        item["grading_evidence"]["impact_scope_level"] = "local"
+        item["grading_evidence"]["local_disaster_review"] = {
+            "applies": True,
+            "confirmed_deaths": 49,
+            "special_significance_triggers": [],
+            "grade_adjustment_reason": None,
+        }
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("未滿 50 人" in error for error in errors))
+
+    def test_ordinary_local_disaster_at_50_is_c(self):
+        item = candidate("C", "selected")
+        item["grading_evidence"]["impact_scope_level"] = "local"
+        item["grading_evidence"]["local_disaster_review"] = {
+            "applies": True,
+            "confirmed_deaths": 50,
+            "special_significance_triggers": [],
+            "grade_adjustment_reason": None,
+        }
+        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
+
+    def test_ordinary_local_disaster_50_to_99_without_special_meaning_is_only_c(self):
+        item = candidate("B", "selected")
+        item["grading_evidence"]["impact_scope_level"] = "local"
+        item["grading_evidence"]["local_disaster_review"] = {
+            "applies": True,
+            "confirmed_deaths": 99,
+            "special_significance_triggers": [],
+            "grade_adjustment_reason": None,
+        }
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("50–99 人" in error for error in errors))
+
+    def test_ordinary_local_disaster_at_100_requires_b_baseline(self):
+        item = candidate("B+", "selected")
+        item["grading_evidence"]["impact_scope_level"] = "local"
+        item["grading_evidence"]["local_disaster_review"] = {
+            "applies": True,
+            "confirmed_deaths": 100,
+            "special_significance_triggers": [],
+            "grade_adjustment_reason": None,
+        }
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("100–249 人" in error for error in errors))
+        item["provisional_grade"] = "B"
+        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
+
+    def test_ordinary_local_disaster_at_250_requires_a_minus_baseline(self):
+        item = candidate("B", "selected")
+        item["grading_evidence"]["impact_scope_level"] = "local"
+        item["grading_evidence"]["local_disaster_review"] = {
+            "applies": True,
+            "confirmed_deaths": 250,
+            "special_significance_triggers": [],
+            "grade_adjustment_reason": None,
+        }
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("250 人以上" in error for error in errors))
+        item["provisional_grade"] = "A-"
+        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
+
+    def test_verified_special_meaning_can_raise_grade_with_reason(self):
+        item = candidate("B+", "selected")
+        item["grading_evidence"]["impact_scope_level"] = "national"
+        item["grading_evidence"]["local_disaster_review"] = {
+            "applies": True,
+            "confirmed_deaths": 100,
+            "special_significance_triggers": ["regulatory_failure_or_systemic_risk"],
+            "grade_adjustment_reason": None,
+        }
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("調整理由" in error for error in errors))
+        item["grading_evidence"]["local_disaster_review"]["grade_adjustment_reason"] = "官方調查確認監管失靈並形成全國性制度風險。"
+        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
+
+    def test_grade_can_be_lowered_with_concrete_reason(self):
+        item = candidate("B", "selected")
+        item["grading_evidence"]["impact_scope_level"] = "local"
+        item["grading_evidence"]["local_disaster_review"] = {
+            "applies": True,
+            "confirmed_deaths": 260,
+            "special_significance_triggers": [],
+            "grade_adjustment_reason": None,
+        }
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("調整理由" in error for error in errors))
+        item["grading_evidence"]["local_disaster_review"]["grade_adjustment_reason"] = "事件侷限單一設施，未造成跨區域、關鍵系統或跨國直接影響。"
+        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
+
+    def test_extreme_scope_can_override_sub_50_floor(self):
+        item = candidate("A-", "selected")
+        item["grading_evidence"]["impact_scope_level"] = "subregional"
+        item["grading_evidence"]["local_disaster_review"] = {
+            "applies": True,
+            "confirmed_deaths": 0,
+            "special_significance_triggers": [
+                "extreme_missing_serious_injury_or_evacuation",
+                "mass_housing_or_critical_infrastructure_loss",
+            ],
+            "grade_adjustment_reason": "數萬人直接撤離且大量住宅毀損，達到城市級極端規模。",
+        }
+        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
+
+    def test_monitored_region_conflict_risk_can_override_sub_50_floor(self):
+        item = candidate("C", "selected")
+        item["grading_evidence"]["impact_scope_level"] = "local"
+        item["grading_evidence"]["local_disaster_review"] = {
+            "applies": True,
+            "confirmed_deaths": 3,
+            "special_significance_triggers": ["monitored_region_conflict_escalation_risk"],
+            "grade_adjustment_reason": "事件可能直接引發指定監控區域內的軍事或其他衝突。",
+        }
+        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
+
+    def test_conflict_event_cannot_also_use_local_disaster_gate(self):
+        item = candidate("C", "selected")
+        item["grading_evidence"]["border_conflict_review"].update({
+            "is_border_conflict": True,
+            "related_to_monitored_section": True,
+            "exception_reason": "事件直接涉及監控板塊，依既有軍事衝突規則評級。",
+        })
+        item["grading_evidence"]["local_disaster_review"] = {
+            "applies": True,
+            "confirmed_deaths": 50,
+            "special_significance_triggers": [],
+            "grade_adjustment_reason": None,
+        }
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("軍事／衝突規則" in error for error in errors))
+
     def test_append_creates_missing_output_parent_directory(self):
         audit = valid_audit()
         with tempfile.TemporaryDirectory() as directory:
