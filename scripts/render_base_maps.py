@@ -348,4 +348,173 @@ def render(name: str, spec: dict):
     span_y = max(maxy - miny, 1e-9)
 
     def pixels(ring):
-    Ûkh‘éì¶»§q«^tÍÁ…¹}à€¨€¡İ¥‘Ñ €´€È€¨µ…É¥¸¤°4(€€€€€€€€€€€€€€€¡•¥¡Ğ€´µ…É¥¸€´€¡ä€´µ¥¹ä¤€¼ÍÁ…¹}ä€¨€¡¡•¥¡Ğ€´€È€¨µ…É¥¸¤°4(€€€€€€€€€€€€¤4(€€€€€€€€€€€™½Èà°ä¥¸É¥¹œ4(€€€€€€€t4(4(€€€±…¹‘}™¥±°€ôÍÑå±”¹•Ğ ‰±…¹‘}™¥±°ˆ°€ˆ˜Í”Ùˆàˆ¤4(€€€‰½Õ¹‘…Éå}½±½È€ôÍÑå±”¹•Ğ ‰‰½Õ¹‘…Éå}½±½Èˆ°€ˆŒÔÌØÀÙ˜ˆ¤4(€€€‰…­É½Õ¹€ôÍÑå±”¹•Ğ ‰‰…­É½Õ¹ˆ°€ˆ™™™™™˜ˆ¤4(€€€±¥¹•}İ¥‘Ñ €ôµ…à Ä°É½Õ¹¡™±½…Ğ¡ÍÑå±”¹•Ğ ‰‰½Õ¹‘…Éå}İ¥‘Ñ ˆ°€À¸ĞÈ¤¤€¨€È¤¤4(€€€¥µ…”€ô%µ…”¹¹•Ü ‰Iˆ°€¡İ¥‘Ñ °¡•¥¡Ğ¤°‰…­É½Õ¹¤4(€€€‘É…İ¥¹œ€ô%µ…•É…Ü¹É…Ü¡¥µ…”¤4(€€€™½ÈÉ¥¹œ¥¸‰…Í•}Á½±å½¹Ìè4(€€€€€€€Á½¥¹ÑÌ€ôÁ¥á•±Ì¡É¥¹œ¤4(€€€€€€€¥˜±•¸¡Á½¥¹ÑÌ¤€øô€Ìè4(€€€€€€€€€€€‘É…İ¥¹œ¹Á½±å½¸¡Á½¥¹ÑÌ°™¥±°õ±…¹‘}™¥±°¤4(€€€™½ÈÉ¥¹œ¥¸Á½±å½¹Ìè(€€€€€€€Á½¥¹ÑÌ€ôÁ¥á•±Ì¡É¥¹œ¤(€€€€€€€¥˜±•¸¡Á½¥¹ÑÌ¤€øô€Ìè(€€€€€€€€€€€‘É…İ¥¹œ¹Á½±å½¸¡Á½¥¹ÑÌ°™¥±°õ±…¹‘}™¥±°°½ÕÑ±¥¹”õ‰½Õ¹‘…Éå}½±½È°İ¥‘Ñ õ±¥¹•}İ¥‘Ñ ¤(€€€¡¥¡±¥¡Ñ}½±½ÉÌ€ôì(€€€€€€€€‰ÁÉ¥µ…ÉäˆèÍÑå±”¹•Ğ ‰ÁÉ¥µ…Éå}¡¥¡±¥¡Ğˆ°€ˆŒÜÌØÉ˜ˆ¤°(€€€€€€€€‰Í•½¹‘…ÉäˆèÍÑå±”¹•Ğ ‰Í•½¹‘…Éå}¡¥¡±¥¡Ğˆ°€ˆ˜Èá”Éˆˆ¤°(€€€ô(€€€™½ÈÉ½ÕÀ¥¸¡¥¡±¥¡Ñ}É½ÕÁÌè(€€€€€€€™½ÈÉ¥¹œ¥¸É½ÕÁl‰É¥¹Ì‰tè(€€€€€€€€€€€Á½¥¹ÑÌ€ôÁ¥á•±Ì¡É¥¹œ¤(€€€€€€€€€€€¥˜±•¸¡Á½¥¹ÑÌ¤€øô€Ìè(€€€€€€€€€€€€€€€‘É…İ¥¹œ¹Á½±å½¸ (€€€€€€€€€€€€€€€€€€€Á½¥¹ÑÌ°(€€€€€€€€€€€€€€€€€€€™¥±°õ¡¥¡±¥¡Ñ}½±½ÉÍmÉ½ÕÁl‰É½±”‰ut°(€€€€€€€€€€€€€€€€€€€½ÕÑ±¥¹”õ‰½Õ¹‘…Éå}½±½È°(€€€€€€€€€€€€€€€€€€€İ¥‘Ñ õ±¥¹•}İ¥‘Ñ °(€€€€€€€€€€€€€€€€¤((€€€™½¹Ñ}Í¥é”€ô±…‰•±}™½¹Ñ}Í¥é”¡İ¥‘Ñ °¡•¥¡Ğ¤(€€€±…‰•±}™½¹Ğ€ô±½…‘}±…‰•±}™½¹Ğ¡™½¹Ñ}Í¥é”¤(€€€±…‰•±}Á½Í¥Ñ¥½¹Ì€ômt(€€€™½ÈÉ½ÕÀ¥¸¡¥¡±¥¡Ñ}É½ÕÁÌè(€€€€€€€±…‰•±}É¥¹œ€ôµ…à¡É½ÕÁl‰É¥¹Ì‰t°­•äõ±•¸¤(€€€€€€€Á½¥¹ÑÌ€ôÁ¥á•±Ì¡±…‰•±}É¥¹œ¤(€€€€€€€à€ôÍÕ´¡Á½¥¹ÑlÁt™½ÈÁ½¥¹Ğ¥¸Á½¥¹ÑÌ¤€¼±•¸¡Á½¥¹ÑÌ¤(€€€€€€€ä€ôÍÕ´¡Á½¥¹ÑlÅt™½ÈÁ½¥¹Ğ¥¸Á½¥¹ÑÌ¤€¼±•¸¡Á½¥¹ÑÌ¤(€€€€€€€‘É…İ¥¹œ¹Ñ•áĞ (€€€€€€€€€€€€¡à°ä¤°(€€€€€€€€€€€É½ÕÁl‰±…‰•°‰t°(€€€€€€€€€€€™¥±°ôˆŒÄÄÄÄÄÄˆ°(€€€€€€€€€€€™½¹Ğõ±…‰•±}™½¹Ğ°(€€€€€€€€€€€…¹¡½Èô‰µ´ˆ°(€€€€€€€€€€€ÍÑÉ½­•}İ¥‘Ñ ôÈ°(€€€€€€€€€€€ÍÑÉ½­•}™¥±°ôˆ™™™™™˜ˆ°(€€€€€€€€¤(€€€€€€€±…‰•±}Á½Í¥Ñ¥½¹Ì¹…ÁÁ•¹ ¡É½ÕÁl‰±…‰•°‰t°à°ä¤¤(4(€€€‘•ÍÑ¥¹…Ñ¥½¸€ô=UP€¼¹…µ”4(€€€‘•ÍÑ¥¹…Ñ¥½¸¹Á…É•¹Ğ¹µ­‘¥È¡Á…É•¹ÑÌõQÉÕ”°•á¥ÍÑ}½¬õQÉÕ”¤4(€€€Á¹}Á…Ñ €ô‘•ÍÑ¥¹…Ñ¥½¸¹İ¥Ñ¡}ÍÕ™™¥à ˆ¹Á¹œˆ¤4(€€€ÍÙ}Á…Ñ €ô‘•ÍÑ¥¹…Ñ¥½¸¹İ¥Ñ¡}ÍÕ™™¥à ˆ¹ÍÙœˆ¤4(€€€¥µ…”¹Í…Ù”¡Á¹}Á…Ñ °™½Éµ…Ğô‰A9ˆ°½ÁÑ¥µ¥é”õQÉÕ”¤4(4(€€€ÍÙ}Á½±å½¹Ì€ômt4(€€€™½ÈÉ¥¹œ¥¸‰…Í•}Á½±å½¹Ìè4(€€€€€€€Á½¥¹ÑÌ€ôÁ¥á•±Ì¡É¥¹œ¤4(€€€€€€€¥˜±•¸¡Á½¥¹ÑÌ¤€øô€Ìè4(€€€€€€€€€€€½½É‘Ì€ô€ˆ€ˆ¹©½¥¸¡˜‰íàè¸É™ô±íäè¸É™ôˆ™½Èà°ä¥¸Á½¥¹ÑÌ¤4(€€€€€€€€€€€ÍÙ}Á½±å½¹Ì¹…ÁÁ•¹¡˜œñÁ½±å½¸Á½¥¹ÑÌô‰í½½É‘Íôˆ™¥±°ô‰í±…¹‘}™¥±±ôˆÍÑÉ½­”ô‰¹½¹”ˆ¼øœ¤4(€€€™½ÈÉ¥¹œ¥¸Á½±å½¹Ìè(€€€€€€€Á½¥¹ÑÌ€ôÁ¥á•±Ì¡É¥¹œ¤4(€€€€€€€¥˜±•¸¡Á½¥¹ÑÌ¤€øô€Ìè4(€€€€€€€€€€€½½É‘Ì€ô€ˆ€ˆ¹©½¥¸¡˜‰íàè¸É™ô±íäè¸É™ôˆ™½Èà°ä¥¸Á½¥¹ÑÌ¤4(€€€€€€€€€€€ÍÙ}Á½±å½¹Ì¹…ÁÁ•¹ (€€€€€€€€€€€€€€€˜œñÁ½±å½¸Á½¥¹ÑÌô‰í½½É‘Íôˆ™¥±°ô‰í±…¹‘}™¥±±ôˆ€œ(€€€€€€€€€€€€€€€˜ÍÑÉ½­”ô‰í‰½Õ¹‘…Éå}½±½ÉôˆÍÑÉ½­”µİ¥‘Ñ ô‰í±¥¹•}İ¥‘Ñ¡ôˆ¼øœ(€€€€€€€€€€€€¤(€€€™½ÈÉ½ÕÀ¥¸¡¥¡±¥¡Ñ}É½ÕÁÌè(€€€€€€€™½ÈÉ¥¹œ¥¸É½ÕÁl‰É¥¹Ì‰tè(€€€€€€€€€€€Á½¥¹ÑÌ€ôÁ¥á•±Ì¡É¥¹œ¤(€€€€€€€€€€€¥˜±•¸¡Á½¥¹ÑÌ¤€øô€Ìè(€€€€€€€€€€€€€€€½½É‘Ì€ô€ˆ€ˆ¹©½¥¸¡˜‰íàè¸É™ô±íäè¸É™ôˆ™½Èà°ä¥¸Á½¥¹ÑÌ¤(€€€€€€€€€€€€€€€ÍÙ}Á½±å½¹Ì¹…ÁÁ•¹ (€€€€€€€€€€€€€€€€€€€˜œñÁ½±å½¸Á½¥¹ÑÌô‰í½½É‘Íôˆ™¥±°ô‰í¡¥¡±¥¡Ñ}½±½ÉÍmÉ½ÕÁl‰É½±”‰uuôˆ€œ(€€€€€€€€€€€€€€€€€€€˜ÍÑÉ½­”ô‰í‰½Õ¹‘…Éå}½±½ÉôˆÍÑÉ½­”µİ¥‘Ñ ô‰í±¥¹•}İ¥‘Ñ¡ôˆ¼øœ(€€€€€€€€€€€€€€€€¤(€€€ÍÙ}±…‰•±Ì€ô€ˆˆ¹©½¥¸ (€€€€€€€˜œñÑ•áĞàô‰íàè¸É™ôˆäô‰íäè¸É™ôˆÑ•áĞµ…¹¡½Èô‰µ¥‘‘±”ˆ‘½µ¥¹…¹Ğµ‰…Í•±¥¹”ô‰µ¥‘‘±”ˆ€œ(€€€€€€€˜™½¹ĞµÍ¥é”ô‰í™½¹Ñ}Í¥é•ôˆ™½¹Ğµ™…µ¥±äô‰9½Ñ¼M…¹ÌQ°5¥É½Í½™Ğ)¡•¹!•¤°A¥¹…¹œQ°Í…¹ÌµÍ•É¥˜ˆ€œ(€€€€€€€˜™¥±°ôˆŒÄÄÄÄÄÄˆÍÑÉ½­”ôˆ™™™™™˜ˆÍÑÉ½­”µİ¥‘Ñ ôˆÌˆ€œ(€€€€€€€˜Á…¥¹Ğµ½É‘•Èô‰ÍÑÉ½­”ˆùí•Í…Á”¡±…‰•°¥ôğ½Ñ•áĞøœ(€€€€€€€™½È±…‰•°°à°ä¥¸±…‰•±}Á½Í¥Ñ¥½¹Ì(€€€€¤(€€€ÍÙ}Á…Ñ ¹İÉ¥Ñ•}Ñ•áĞ (€€€€€€€˜œñÍÙœáµ±¹Ìô‰¡ÑÑÀè¼½İİÜ¹ÜÌ¹½Éœ¼ÈÀÀÀ½ÍÙœˆİ¥‘Ñ ô‰íİ¥‘Ñ¡ôˆ¡•¥¡Ğô‰í¡•¥¡Ñôˆ€œ(€€€€€€€˜Ù¥•İ	½àôˆÀ€Àíİ¥‘Ñ¡ôí¡•¥¡ÑôˆøñÉ•Ğİ¥‘Ñ ôˆÄÀÀ”ˆ¡•¥¡ĞôˆÄÀÀ”ˆ€œ(€€€€€€€˜™¥±°ô‰í‰…­É½Õ¹‘ôˆ¼ùìˆˆ¹©½¥¸¡ÍÙ}Á½±å½¹Ì¥õíÍÙ}±…‰•±Íôğ½ÍÙœùq¸œ°(€€€€€€€•¹½‘¥¹œô‰ÕÑ˜´àˆ°(€€€€¤(€€€‰…Í•}¹…µ”€ôÍÁ•Œ¹•Ğ ‰…¹½¹¥…±}‰…Í•}¹…µ”ˆ°¹…µ”¤(€€€É•ÑÕÉ¸ì(€€€€€€€€‰Á…Ñ ˆèÁ¹}Á…Ñ ¹…Í}Á½Í¥à ¤°(€€€€€€€€‰‰…Í•}µ…Àˆè˜‰µ…ÁÌ½•¹•É…Ñ•½í‰…Í•}¹…µ•ô¹Á¹œˆ°(€€€€€€€€‰Á±…•}±…‰•±ÌˆèmÉ½ÕÁl‰±…‰•°‰t™½ÈÉ½ÕÀ¥¸¡¥¡±¥¡Ñ}É½ÕÁÍt°(€€€€€€€€‰ÍÑå±•}¥ˆèMQe1}=9%l‰ÍÑå±•}¥‰t°(€€€€€€€€‰İ¥‘Ñ ˆèİ¥‘Ñ °(€€€€€€€€‰¡•¥¡Ğˆè¡•¥¡Ğ°(€€€ô(()‘•˜É•¹‘•É}•Ù•¹Ñ}ÍÁ•Œ¡ÍÁ•}Á…Ñ èA…Ñ ¤è(€€€İ¥Ñ A…Ñ ¡ÍÁ•}Á…Ñ ¤¹½Á•¸ ‰Èˆ°•¹½‘¥¹œô‰ÕÑ˜´àˆ¤…Ì¡…¹‘±”è(€€€€€€€•Ù•¹Ñ}ÍÁ•Œ€ô©Í½¸¹±½…¡¡…¹‘±”¤(€€€Í•Ñ¥½¸€ô•Ù•¹Ñ}ÍÁ•Œ¹•Ğ ‰Í•Ñ¥½¸ˆ¤(€€€¥˜Í•Ñ¥½¸¹½Ğ¥¸MQ%=9}	M}5ALè(€€€€€€€É…¥Í”Y…±Õ•ÉÉ½È ‰•Ù•¹Ğµ…ÀÍ•Ñ¥½¸ƒ–ş¦‚#šb¼Q];!8ƒš"X1ˆ¤(€€€½ÕÑÁÕĞ€ôA…Ñ ¡•Ù•¹Ñ}ÍÁ•Œ¹•Ğ ‰½ÕÑÁÕĞˆ°€ˆˆ¤¤(€€€¥˜¹½Ğ½ÕÑÁÕĞ¹Á…ÉÑÌ½È½ÕÑÁÕĞ¹¥Í}…‰Í½±ÕÑ” ¤½È€ˆ¸¸ˆ¥¸½ÕÑÁÕĞ¹Á…ÉÑÌè(€€€€€€€É…¥Í”Y…±Õ•ÉÉ½È ‰•Ù•¹Ğµ…À½ÕÑÁÕĞƒ–ş¦‚#šb¼µ…ÁÌ½•¹•É…Ñ•ƒ’æ/’â/jnã–Â7¢Ş¿–úDˆ¤(€€€‰…Í•}¹…µ”€ôMQ%=9}	M}5AMmÍ•Ñ¥½¹t(€€€ÍÁ•Œ€ôì(€€€€€€€€¨©5AMm‰…Í•}¹…µ•t°(€€€€€€€€‰…¹½¹¥…±}‰…Í•}¹…µ”ˆè‰…Í•}¹…µ”°(€€€€€€€€‰¡¥¡±¥¡ÑÌˆè•Ù•¹Ñ}ÍÁ•Œ¹•Ğ ‰¡¥¡±¥¡ÑÌˆ°mt¤°(€€€ô(€€€¥˜¹½ĞÍÁ•l‰¡¥¡±¥¡ÑÌ‰tè(€€€€€€€É…¥Í”Y…±Õ•ÉÉ½È ‰•Ù•¹Ğµ…Àƒ¢Ï–ÂG¦r¢š’â–/¢†3šRÿ–6 ¡¥¡±¥¡Ğˆ¤(€€€É•ÑÕÉ¸É•¹‘•È¡½ÕÑÁÕĞ¹…Í}Á½Í¥à ¤°ÍÁ•Œ¤(4(4)‘•˜Í•Ñ¥½¹}ÍÁ•Ì ¤è4(€€€€ˆˆ‰1½…¥¹¥Ñ¥…±¥é•ÕÍÑ½´µÍ•Ñ¥½¸µ…ÀÍÁ•¥™¥…Ñ¥½¹Ì¸ˆˆˆ4(€€€‘¥É•Ñ½Éä€ô=UP€¼€‰Í•Ñ¥½¹Ìˆ4(€€€¥˜¹½Ğ‘¥É•Ñ½Éä¹¥Í}‘¥È ¤è4(€€€€€€€É•ÑÕÉ¸4(€€€™½Èµ•Ñ…‘…Ñ…}Á…Ñ ¥¸Í½ÉÑ•¡‘¥É•Ñ½Éä¹±½ˆ ˆ¨µ‰…Í”¹©Í½¸ˆ¤¤è4(€€€€€€€İ¥Ñ µ•Ñ…‘…Ñ…}Á…Ñ ¹½Á•¸ ‰Èˆ°•¹½‘¥¹œô‰ÕÑ˜´àˆ¤…Ì¡…¹‘±”è4(€€€€€€€€€€€µ•Ñ…‘…Ñ„€ô©Í½¸¹±½…¡¡…¹‘±”¤4(€€€€€€€Í½ÕÉ•}Á…Ñ €ôI==P€¼µ•Ñ…‘…Ñ…l‰Í½ÕÉ•}•½©Í½¸‰t4(€€€€€€€ÍÁ•Œ€ôì4(€€€€€€€€€€€€‰™¥±”ˆèÍ½ÕÉ•}Á…Ñ °4(€€€€€€€€€€€€‰Ñ¥Ñ±”ˆèµ•Ñ…‘…Ñ„¹•Ğ ‰¹…µ”ˆ°µ•Ñ…‘…Ñ…l‰½‘”‰t¤°4(€€€€€€€€€€€€‰™¥Í¥é”ˆè€ à¸Ô°€Ü¸À¤°4(€€€€€€€€€€€€‰‰½Õ¹‘ÌˆèÑÕÁ±”¡µ•Ñ…‘…Ñ…l‰‰½Õ¹‘Ì‰t¤°4(€€€€€€€€€€€€‰ÁÉ½©•Ñ¥½¸ˆèµ•Ñ…‘…Ñ„¹•Ğ ‰ÁÉ½©•Ñ¥½¸ˆ°€‰É•¥½¹…°ˆ¤°4(€€€€€€€€€€€€‰ÍÑ…¹‘…É‘}±…Ğˆèµ•Ñ…‘…Ñ„¹•Ğ ‰ÍÑ…¹‘…É‘}±…Ğˆ¤½È€À¸À°4(€€€€€€€€€€€€‰•¹ÑÉ…±}±½¸ˆèµ•Ñ…‘…Ñ„¹•Ğ ‰•¹ÑÉ…±}±½¸ˆ¤°4(€€€€€€€€€€€€‰‰…Í•}½Õ¹ÑÉå}¥Í¼ˆèµ•Ñ…‘…Ñ„¹•Ğ ‰‰…Í•}½Õ¹ÑÉå}¥Í¼ˆ¤°4(€€€€€€€€€€€€‰ÍÑå±•}¥ˆèµ•Ñ…‘…Ñ„¹•Ğ ‰ÍÑå±•}¥ˆ°MQe1}=9%l‰ÍÑå±•}¥‰t¤°4(€€€€€€€€€€€€‰ÍÑå±”ˆèµ•Ñ…‘…Ñ„¹•Ğ ‰ÍÑå±”ˆ°íô¤°4(€€€€€€€ô4(€€€€€€€¥˜ÍÁ•l‰ÁÉ½©•Ñ¥½¸‰t¥¸ì‰Á…¥™¥}•¹Ñ•É•ˆ°€‰É½‰¥¹Í½¹}Á…¥™¥Œ‰ôè4(€€€€€€€€€€€ÍÁ•l‰ÕÑ}±½¸‰t€ôµ•Ñ…‘…Ñ„¹•Ğ ‰ÕÑ}±½¸ˆ°€´ÌÀ¸À¤4(€€€€€€€å¥•±˜‰Í•Ñ¥½¹Ì½íµ•Ñ…‘…Ñ…l½‘”uôµ‰…Í”ˆ°ÍÁ•Œ°µ•Ñ…‘…Ñ…}Á…Ñ °µ•Ñ…‘…Ñ„4(4(4)‘•˜µ…¥¸¡…ÉØô ¤¤è(€€€Á…ÉÍ•È€ôÉÕµ•¹ÑA…ÉÍ•È¡‘•ÍÉ¥ÁÑ¥½¸õ}}‘½}|¤(€€€Á…ÉÍ•È¹…‘‘}…ÉÕµ•¹Ğ ˆ´µ½Ù•É±…äµÍÁ•Œˆ°ÑåÁ”õA…Ñ ¤(€€€…ÉÌ€ôÁ…ÉÍ•È¹Á…ÉÍ•}…ÉÌ¡…ÉØ¤(€€€¥˜…ÉÌ¹½Ù•É±…å}ÍÁ•Œè(€€€€€€€ÁÉ¥¹Ğ¡©Í½¸¹‘ÕµÁÌ¡É•¹‘•É}•Ù•¹Ñ}ÍÁ•Œ¡…ÉÌ¹½Ù•É±…å}ÍÁ•Œ¤°•¹ÍÕÉ•}…Í¥¤õ…±Í”¤¤(€€€€€€€É•ÑÕÉ¸(€€€™½È¹…µ”°ÍÁ•Œ¥¸5AL¹¥Ñ•µÌ ¤è(€€€€€€€É•¹‘•È¡¹…µ”°ÍÁ•Œ¤(€€€™½È¹…µ”°ÍÁ•Œ°|°|¥¸Í•Ñ¥½¹}ÍÁ•Ì ¤½È€ ¤è(€€€€€€€É•¹‘•È¡¹…µ”°ÍÁ•Œ¤(4(4)¥˜}}¹…µ•}|€ôô€‰}}µ…¥¹}|ˆè(€€€µ…¥¸¡9½¹”¤(
+        return [
+            (
+                margin + (x - minx) / span_x * (width - 2 * margin),
+                height - margin - (y - miny) / span_y * (height - 2 * margin),
+            )
+            for x, y in ring
+        ]
+
+    land_fill = style.get("land_fill", "#f3e6b8")
+    boundary_color = style.get("boundary_color", "#53606f")
+    background = style.get("background", "#ffffff")
+    line_width = max(1, round(float(style.get("boundary_width", 0.42)) * 2))
+    image = Image.new("RGB", (width, height), background)
+    drawing = ImageDraw.Draw(image)
+    for ring in base_polygons:
+        points = pixels(ring)
+        if len(points) >= 3:
+            drawing.polygon(points, fill=land_fill)
+    for ring in polygons:
+        points = pixels(ring)
+        if len(points) >= 3:
+            drawing.polygon(points, fill=land_fill, outline=boundary_color, width=line_width)
+    highlight_colors = {
+        "primary": style.get("primary_highlight", "#c7362f"),
+        "secondary": style.get("secondary_highlight", "#f28e2b"),
+    }
+    for group in highlight_groups:
+        for ring in group["rings"]:
+            points = pixels(ring)
+            if len(points) >= 3:
+                drawing.polygon(
+                    points,
+                    fill=highlight_colors[group["role"]],
+                    outline=boundary_color,
+                    width=line_width,
+                )
+
+    font_size = label_font_size(width, height)
+    label_font = load_label_font(font_size)
+    label_positions = []
+    for group in highlight_groups:
+        label_ring = max(group["rings"], key=len)
+        points = pixels(label_ring)
+        x = sum(point[0] for point in points) / len(points)
+        y = sum(point[1] for point in points) / len(points)
+        drawing.text(
+            (x, y),
+            group["label"],
+            fill="#111111",
+            font=label_font,
+            anchor="mm",
+            stroke_width=2,
+            stroke_fill="#ffffff",
+        )
+        label_positions.append((group["label"], x, y))
+
+    destination = OUT / name
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    png_path = destination.with_suffix(".png")
+    svg_path = destination.with_suffix(".svg")
+    image.save(png_path, format="PNG", optimize=True)
+
+    svg_polygons = []
+    for ring in base_polygons:
+        points = pixels(ring)
+        if len(points) >= 3:
+            coords = " ".join(f"{x:.2f},{y:.2f}" for x, y in points)
+            svg_polygons.append(f'<polygon points="{coords}" fill="{land_fill}" stroke="none"/>')
+    for ring in polygons:
+        points = pixels(ring)
+        if len(points) >= 3:
+            coords = " ".join(f"{x:.2f},{y:.2f}" for x, y in points)
+            svg_polygons.append(
+                f'<polygon points="{coords}" fill="{land_fill}" '
+                f'stroke="{boundary_color}" stroke-width="{line_width}"/>'
+            )
+    for group in highlight_groups:
+        for ring in group["rings"]:
+            points = pixels(ring)
+            if len(points) >= 3:
+                coords = " ".join(f"{x:.2f},{y:.2f}" for x, y in points)
+                svg_polygons.append(
+                    f'<polygon points="{coords}" fill="{highlight_colors[group["role"]]}" '
+                    f'stroke="{boundary_color}" stroke-width="{line_width}"/>'
+                )
+    svg_labels = "".join(
+        f'<text x="{x:.2f}" y="{y:.2f}" text-anchor="middle" dominant-baseline="middle" '
+        f'font-size="{font_size}" font-family="Noto Sans TC, Microsoft JhengHei, PingFang TC, sans-serif" '
+        f'fill="#111111" stroke="#ffffff" stroke-width="3" '
+        f'paint-order="stroke">{escape(label)}</text>'
+        for label, x, y in label_positions
+    )
+    svg_path.write_text(
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
+        f'viewBox="0 0 {width} {height}"><rect width="100%" height="100%" '
+        f'fill="{background}"/>{"".join(svg_polygons)}{svg_labels}</svg>\n',
+        encoding="utf-8",
+    )
+    base_name = spec.get("canonical_base_name", name)
+    return {
+        "path": png_path.as_posix(),
+        "base_map": f"maps/generated/{base_name}.png",
+        "place_labels": [group["label"] for group in highlight_groups],
+        "style_id": STYLE_CONFIG["style_id"],
+        "width": width,
+        "height": height,
+    }
+
+
+def render_event_spec(spec_path: Path):
+    with Path(spec_path).open("r", encoding="utf-8") as handle:
+        event_spec = json.load(handle)
+    section = event_spec.get("section")
+    if section not in SECTION_BASE_MAPS:
+        raise ValueError("event map section å¿…é ˆæ˜¯ TWNã€CHN æˆ– GLB")
+    output = Path(event_spec.get("output", ""))
+    if not output.parts or output.is_absolute() or ".." in output.parts:
+        raise ValueError("event map output å¿…é ˆæ˜¯ maps/generated ä¹‹ä¸‹çš„ç›¸å°è·¯å¾‘")
+    base_name = SECTION_BASE_MAPS[section]
+    spec = {
+        **MAPS[base_name],
+        "canonical_base_name": base_name,
+        "highlights": event_spec.get("highlights", []),
+    }
+    if not spec["highlights"]:
+        raise ValueError("event map è‡³å°‘éœ€è¦ä¸€å€‹è¡Œæ”¿å€ highlight")
+    return render(output.as_posix(), spec)
+
+
+def section_specs():
+    """Load initialized custom-section map specifications."""
+    directory = OUT / "sections"
+    if not directory.is_dir():
+        return
+    for metadata_path in sorted(directory.glob("*-base.json")):
+        with metadata_path.open("r", encoding="utf-8") as handle:
+            metadata = json.load(handle)
+        source_path = ROOT / metadata["source_geojson"]
+        spec = {
+            "file": source_path,
+            "title": metadata.get("name", metadata["code"]),
+            "figsize": (8.5, 7.0),
+            "bounds": tuple(metadata["bounds"]),
+            "projection": metadata.get("projection", "regional"),
+            "standard_lat": metadata.get("standard_lat") or 0.0,
+            "central_lon": metadata.get("central_lon"),
+            "base_country_iso": metadata.get("base_country_iso"),
+            "style_id": metadata.get("style_id", STYLE_CONFIG["style_id"]),
+            "style": metadata.get("style", {}),
+        }
+        if spec["projection"] in {"pacific_centered", "robinson_pacific"}:
+            spec["cut_lon"] = metadata.get("cut_lon", -30.0)
+        yield f"sections/{metadata['code']}-base", spec, metadata_path, metadata
+
+
+def main(argv=()):
+    parser = ArgumentParser(description=__doc__)
+    parser.add_argument("--overlay-spec", type=Path)
+    args = parser.parse_args(argv)
+    if args.overlay_spec:
+        print(json.dumps(render_event_spec(args.overlay_spec), ensure_ascii=False))
+        return
+    for name, spec in MAPS.items():
+        render(name, spec)
+    for name, spec, _, _ in section_specs() or ():
+        render(name, spec)
+
+
+if __name__ == "__main__":
+    main(None)
