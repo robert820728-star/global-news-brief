@@ -313,48 +313,82 @@ def score_breakdown(title: str, summary: str, section: str):
 def materialize_source(source: dict, route: dict, window_start: str, window_end: str, output_dir: Path):
     start = datetime.fromisoformat(window_start)
     end = datetime.fromisoformat(window_end)
-    snapshot = Path(route["snapshot_path"])
-    raw = snapshot.read_bytes()
-    if hashlib.sha256(raw).hexdigest() != route.get("sha256"):
-        raise ValueError(f"{source['source_id']}: route snapshot SHA-256 mismatch")
-    text = decode_snapshot(raw, route.get("content_type") or "")
-    parsed = parse_xml(text, route["request_url"], source["homepage"], route["route"], end.year)
-    parsed.update(parse_json_items(text, route["request_url"], source["homepage"], route["route"], end.year))
-    parsed.update(parse_html(text, route["request_url"], source["homepage"], route["route"], end.year))
-    utf8_view = raw.decode("utf-8", errors="ignore")
-    parsed = {
-        url: item for url, item in parsed.items()
-        if evidence_in_snapshot(item["url_evidence"], utf8_view)
-        and evidence_in_snapshot(item["published_evidence"], utf8_view)
-    }
+    snapshots = [{
+        "page_index": 1, "request_url": route["request_url"],
+        "http_status": route["http_status"], "content_type": route.get("content_type"),
+        "snapshot_path": route["snapshot_path"], "sha256": route["sha256"],
+        "fetched_at": route.get("fetched_at") or route.get("generated_at"),
+    }] + list(route.get("page_snapshots") or [])
+    pages = []
+    parsed = {}
+    page_texts = []
+    for position, entry in enumerate(snapshots):
+        snapshot = Path(entry["snapshot_path"])
+        raw = snapshot.read_bytes()
+        if hashlib.sha256(raw).hexdigest() != entry.get("sha256"):
+            raise ValueError(f"{source['source_id']}: route snapshot SHA-256 mismatch")
+        text = decode_snapshot(raw, entry.get("content_type") or "")
+        page_texts.append(text)
+        request_url = entry["request_url"]
+        page_items = parse_xml(text, request_url, source["homepage"], route["route"], end.year)
+        page_items.update(parse_json_items(text, request_url, source["homepage"], route["route"], end.year))
+        page_items.update(parse_html(text, request_url, source["homepage"], route["route"], end.year))
+        utf8_view = raw.decode("utf-8", errors="ignore")
+        page_items = {
+            url: item for url, item in page_items.items()
+            if evidence_in_snapshot(item["url_evidence"], utf8_view)
+            and evidence_in_snapshot(item["published_evidence"], utf8_view)
+        }
+        parsed.update(page_items)
+        ordered = sorted(
+            page_items.values(), key=lambda item: item["published_at"], reverse=True
+        )
+        pages.append({
+            "request_url": request_url,
+            "fetched_at": entry.get("fetched_at") or route.get("generated_at") or datetime.now().astimezone().isoformat(),
+            "http_status": entry["http_status"], "snapshot_path": str(snapshot.resolve()),
+            "sha256": entry["sha256"],
+            "next_url": snapshots[position + 1]["request_url"] if position + 1 < len(snapshots) else None,
+            "extracted_items": ordered,
+        })
     items = sorted(parsed.values(), key=lambda item: item["published_at"], reverse=True)
-    page = {
-        "request_url": route["request_url"], "fetched_at": route.get("fetched_at") or route.get("generated_at") or datetime.now().astimezone().isoformat(),
-        "http_status": route["http_status"], "snapshot_path": str(snapshot.resolve()), "sha256": route["sha256"],
-        "next_url": None, "extracted_items": items,
-    }
-    witness = next((item for item in reversed(items) if datetime.fromisoformat(item["published_at"]) <= start), None)
+    witness = None
+    witness_page = None
+    for position, page in enumerate(pages):
+        witness = next((
+            item for item in reversed(page["extracted_items"])
+            if datetime.fromisoformat(item["published_at"]) <= start
+        ), None)
+        if witness:
+            witness_page = snapshots[position].get("page_index", position + 1)
+            break
     if witness:
-        terminal = {"type": "crossed_window_start", "page_index": 1, "witness_url": witness["url"]}
+        terminal = {"type": "crossed_window_start", "page_index": witness_page, "witness_url": witness["url"]}
     else:
-        marker = json_exhaustion_marker(text, route.get("json_exhaustion_path"))
+        marker = next((
+            json_exhaustion_marker(text, route.get("json_exhaustion_path"))
+            for text in page_texts
+            if json_exhaustion_marker(text, route.get("json_exhaustion_path")) is not None
+        ), None)
         explicit_marker = route.get("source_exhaustion_marker")
         if marker is None:
-            marker = explicit_marker if isinstance(explicit_marker, str) and explicit_marker in utf8_view else None
+            marker = explicit_marker if isinstance(explicit_marker, str) and any(explicit_marker in text for text in page_texts) else None
+        if marker is None and route.get("pagination_exhausted"):
+            marker = "pagination source exhausted"
         if marker is None:
             marker = next(
-                (value for value in ("</rss>", "</urlset>", "</feed>") if value in utf8_view.lower()),
+                (value for value in ("</rss>", "</urlset>", "</feed>") if any(value in text.lower() for text in page_texts)),
                 None,
             )
         if marker is None:
             raise ValueError(
                 f"{source['source_id']}: HTML route did not reach window boundary"
             )
-        terminal = {"type": "source_exhausted", "page_index": 1, "terminal_marker": marker}
+        terminal = {"type": "source_exhausted", "page_index": len(pages), "terminal_marker": marker}
     scan = {
         "schema_version": "1.0.0", "source_id": source["source_id"], "collector": route["route"],
         "generated_at": page["fetched_at"], "window_start": window_start, "window_end": window_end,
-        "pages": [page], "terminal_proof": terminal,
+        "pages": pages, "terminal_proof": terminal,
     }
     within = [item for item in items if start < datetime.fromisoformat(item["published_at"]) <= end]
     ranked = []

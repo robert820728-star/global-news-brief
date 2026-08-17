@@ -49,6 +49,23 @@ def decode_body(body: bytes, content_encoding: str) -> bytes:
     return body
 
 
+def value_at_path(value, path):
+    for key in path:
+        if isinstance(value, dict):
+            value = value.get(key)
+        else:
+            return None
+    return value
+
+
+def parse_page_time(value: str, boundary: datetime) -> datetime | None:
+    try:
+        parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return None
+    return parsed if parsed.tzinfo else parsed.replace(tzinfo=boundary.tzinfo)
+
+
 def safe_snapshot_path(snapshot_dir: Path, name: str) -> Path:
     relative = Path(name)
     if relative.is_absolute() or ".." in relative.parts:
@@ -123,15 +140,129 @@ def fetch_one(route: Mapping, snapshot_dir: Path, timeout_seconds: int) -> dict:
     }
 
 
-def fetch_routes(route_config: Path, output_dir: Path, timeout_seconds: int) -> dict:
+def fetch_page(route: Mapping, request_url: str, snapshot_path: Path,
+               timeout_seconds: int, page_index: int) -> tuple[dict, bytes | None]:
+    headers = {"User-Agent": USER_AGENT, "Accept-Encoding": "gzip, deflate"}
+    headers.update({str(key): str(value) for key, value in route.get("request_headers", {}).items()})
+    headers.update({
+        str(key): str(value)
+        for key, value in route.get("pagination", {}).get("request_headers", {}).items()
+    })
+    last_error = None
+    last_status = None
+    last_content_type = None
+    for attempt in range(2):
+        response = None
+        try:
+            request = urllib.request.Request(request_url, headers=headers, method="GET")
+            try:
+                response = urllib.request.urlopen(request, timeout=timeout_seconds)
+            except urllib.error.HTTPError as error:
+                response = error
+            status = int(getattr(response, "status", response.getcode()))
+            response_headers = response.headers
+            response_body = decode_body(
+                response.read(), response_headers.get("Content-Encoding", "")
+            )
+            last_status = status
+            last_content_type = response_headers.get("Content-Type")
+            if 200 <= status < 300 and response_body:
+                snapshot_path.write_bytes(response_body)
+                return ({
+                    "page_index": page_index, "request_url": request_url,
+                    "http_status": status, "content_type": last_content_type,
+                    "bytes": len(response_body), "snapshot_path": str(snapshot_path),
+                    "sha256": hashlib.sha256(response_body).hexdigest(),
+                    "retry_count": attempt, "error": None,
+                }, response_body)
+            last_error = "HTTP response was not successful or body was empty"
+        except Exception as error:  # noqa: BLE001 - record canonical page failure.
+            last_error = str(error)
+        finally:
+            if response is not None:
+                response.close()
+        if attempt == 0:
+            time.sleep(1)
+    return ({
+        "page_index": page_index, "request_url": request_url,
+        "http_status": last_status, "content_type": last_content_type,
+        "bytes": 0, "snapshot_path": None, "sha256": None,
+        "retry_count": 1, "error": last_error,
+    }, None)
+
+
+def fetch_pagination(route: Mapping, result: dict, snapshot_dir: Path,
+                     timeout_seconds: int, window_start: str | None) -> dict:
+    pagination = route.get("pagination")
+    if not isinstance(pagination, dict):
+        return result
+    if not window_start:
+        result.update(route_ready=False, error="pagination requires window_start")
+        return result
+    boundary = datetime.fromisoformat(window_start.replace("Z", "+00:00"))
+    items_path = pagination.get("items_path", [])
+    published_path = pagination.get("published_path", [])
+    start_page = int(pagination.get("start_page", 2))
+    max_pages = int(pagination.get("max_pages", 60))
+    template = resolve_route_url({"request_url_template": pagination["request_url_template"]})
+    base = Path(str(route["snapshot_name"]))
+    page_snapshots = []
+    complete = False
+    for page_index in range(start_page, start_page + max_pages):
+        request_url = template.replace("{page}", str(page_index))
+        snapshot_name = f"{base.stem}.page-{page_index:04d}.json"
+        snapshot_path = safe_snapshot_path(snapshot_dir, snapshot_name)
+        page, raw = fetch_page(route, request_url, snapshot_path, timeout_seconds, page_index)
+        page_snapshots.append(page)
+        if raw is None:
+            result.update(route_ready=False, page_snapshots=page_snapshots, error=page["error"])
+            return result
+        try:
+            payload = json.loads(raw.decode("utf-8-sig"))
+        except (UnicodeDecodeError, json.JSONDecodeError) as error:
+            result.update(route_ready=False, page_snapshots=page_snapshots, error=str(error))
+            return result
+        items = value_at_path(payload, items_path)
+        if not isinstance(items, list):
+            result.update(
+                route_ready=False, page_snapshots=page_snapshots,
+                error="pagination items_path did not resolve to an array",
+            )
+            return result
+        if not items:
+            result["pagination_exhausted"] = True
+            complete = True
+            break
+        published = [
+            parse_page_time(value_at_path(item, published_path), boundary)
+            for item in items if isinstance(item, dict)
+        ]
+        if any(value is not None and value <= boundary for value in published):
+            complete = True
+            break
+    result["page_snapshots"] = page_snapshots
+    if not complete:
+        result.update(
+            route_ready=False,
+            error=f"pagination did not reach window_start within {max_pages} pages",
+        )
+    return result
+
+
+def fetch_routes(route_config: Path, output_dir: Path, timeout_seconds: int,
+                 window_start: str | None = None) -> dict:
     config = json.loads(route_config.read_text(encoding="utf-8-sig"))
     output_dir = output_dir.resolve()
     snapshot_dir = output_dir / "route-snapshots"
     snapshot_dir.mkdir(parents=True, exist_ok=True)
-    results = [
-        fetch_one(route, snapshot_dir, timeout_seconds)
-        for route in config.get("routes", [])
-    ]
+    results = []
+    for route in config.get("routes", []):
+        result = fetch_one(route, snapshot_dir, timeout_seconds)
+        if result.get("route_ready"):
+            result = fetch_pagination(
+                route, result, snapshot_dir, timeout_seconds, window_start
+            )
+        results.append(result)
     coverage = {
         "schema_version": "1.0.0",
         "generated_at": datetime.now().astimezone().isoformat(),
@@ -151,6 +282,7 @@ def main() -> int:
     parser.add_argument("--route-config", required=True)
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--timeout-seconds", type=int, default=25)
+    parser.add_argument("--window-start")
     args = parser.parse_args()
     if not 1 <= args.timeout_seconds <= 120:
         parser.error("--timeout-seconds must be between 1 and 120")
@@ -158,6 +290,7 @@ def main() -> int:
         Path(args.route_config),
         Path(args.output_dir),
         args.timeout_seconds,
+        args.window_start,
     )
     print(json.dumps(coverage, ensure_ascii=False, separators=(",", ":")))
     return 0 if coverage["route_ready_count"] == coverage["route_total_count"] else 1

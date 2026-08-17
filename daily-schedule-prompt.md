@@ -102,7 +102,7 @@ Stage -1 完成後，至少讀取並遵守：
 
 1. `source-scan`
    - 必須先調用 `acquire-news-candidates`，依 `news-source-pool.json` 掃描每板塊5站、合計15個主要來源並產生 `work/source-candidates.json`。
-   - 來源擷取必須以 Stage -1 回傳的 `<bundled-python> scripts/fetch_source_routes.py --route-config source-route-config.json --output-dir <run-work-dir>` 執行；此跨平台 canonical fetcher 保存逐站原始 bytes、SHA-256 與 `source-route-coverage.json`。不得改用 PowerShell web cmdlet、Node `fetch` 或臨時 helper 重試同一批路由。
+   - 來源擷取必須以 Stage -1 回傳的 `<bundled-python> scripts/fetch_source_routes.py --route-config source-route-config.json --output-dir <run-work-dir> --window-start <window-start>` 執行；此跨平台 canonical fetcher 保存逐站及已設定分頁的原始 bytes、SHA-256、page chain 與 `source-route-coverage.json`。不得改用 PowerShell web cmdlet、Node `fetch` 或臨時 helper 重試同一批路由。
    - `source-route-config.json` 是15站 primary acquisition route 的唯一設定來源；時間邊界仍須按同站入口翻頁或取得同站 boundary witness，不得把 route probe 直接冒充完成的 source scan。
    - route fetch 完成後必須執行 `scripts/materialize_source_scans.py --checkpoint <checkpoint> --source-pool news-source-pool.json --route-coverage <route-coverage> --output-dir <source-scans-dir> --coverage-output <source-coverage.json>`；只有此 canonical materializer 產生的逐站 scans、terminal proof、完整 ranked_items 與六項分數可進入 candidate audit。不得改用 run 目錄內的臨時 helper。
    - materializer 完成後只執行一次 `scripts/validate_source_scan_evidence.py --scan-dir <source-scans-dir> --coverage <source-coverage.json> --source news-source-pool.json`；canonical validator 會以 UTF-8 自行讀取 aggregate coverage/source pool 並驗證其中全部15站。不得用 PowerShell `Get-Content`／`ConvertFrom-Json` 編排來源清單，不得另寫拆分 helper。

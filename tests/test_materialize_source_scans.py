@@ -187,6 +187,70 @@ class MaterializeSourceScansTests(unittest.TestCase):
             )
             self.assertEqual([], VALIDATOR.validate_scan(scan, coverage, source))
 
+    def test_route_page_snapshots_form_one_scan_and_cross_boundary_on_later_page(self):
+        primary = """<html><body>
+<time>2026-08-17 21:40</time>
+<a href="/news/story/1/1001" title="首頁最新報導">首頁最新報導</a>
+</body></html>"""
+        page_two = json.dumps({"lists": [{
+            "titleLink": "/news/story/1/1002", "title": "第二頁報導",
+            "time": {"date": "2026-08-17 20:30"},
+        }]}, ensure_ascii=False)
+        page_three = json.dumps({"lists": [
+            {
+                "titleLink": "/news/story/1/1003", "title": "第三頁仍在窗內",
+                "time": {"date": "2026-08-16 22:30"},
+            },
+            {
+                "titleLink": "/news/story/1/1004", "title": "跨過時間邊界",
+                "time": {"date": "2026-08-16 21:30"},
+            },
+        ]}, ensure_ascii=False)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+
+            def snapshot(name, body, page_index, request_url, content_type):
+                path = root / name
+                raw = body.encode("utf-8")
+                path.write_bytes(raw)
+                return {
+                    "page_index": page_index, "request_url": request_url,
+                    "http_status": 200, "content_type": content_type,
+                    "bytes": len(raw), "snapshot_path": str(path),
+                    "sha256": hashlib.sha256(raw).hexdigest(),
+                }
+
+            first = snapshot(
+                "primary.html", primary, 1, "https://udn.com/news/breaknews/1",
+                "text/html; charset=utf-8",
+            )
+            route = {
+                "source_id": "udn", "route": "html_direct", "route_ready": True,
+                **{key: value for key, value in first.items() if key != "page_index"},
+                "page_snapshots": [
+                    snapshot("page-2.json", page_two, 2, "https://udn.com/api/more?page=2", "application/json; charset=utf-8"),
+                    snapshot("page-3.json", page_three, 3, "https://udn.com/api/more?page=3", "application/json; charset=utf-8"),
+                ],
+            }
+            source = {"source_id": "udn", "homepage": "https://udn.com/", "section": "TWN"}
+
+            scan, coverage = MODULE.materialize_source(
+                source, route, "2026-08-16T22:00:00+08:00",
+                "2026-08-17T22:00:00+08:00", root,
+            )
+
+            self.assertEqual(3, len(scan["pages"]))
+            self.assertEqual("https://udn.com/api/more?page=2", scan["pages"][0]["next_url"])
+            self.assertEqual("https://udn.com/api/more?page=3", scan["pages"][1]["next_url"])
+            self.assertIsNone(scan["pages"][2]["next_url"])
+            self.assertEqual(
+                {"type": "crossed_window_start", "page_index": 3,
+                 "witness_url": "https://udn.com/news/story/1/1004"},
+                scan["terminal_proof"],
+            )
+            self.assertEqual(3, coverage["within_window_count"])
+            self.assertEqual([], VALIDATOR.validate_scan(scan, coverage, source))
+
     def test_tvbs_serialized_article_props_are_materialized(self):
         html = """<html><body><astro-island props="{&quot;article&quot;:[0,{&quot;articleId&quot;:[0,4008088],&quot;title&quot;:[0,&quot;重大政策更新&quot;],&quot;articleUrl&quot;:[0,&quot;https://news.tvbs.com.tw/politics/4008088&quot;],&quot;firstParagraph&quot;:[0,&quot;全國政策今日生效。&quot;],&quot;publishedAt&quot;:[0,1786878175]}]}"></astro-island></body></html>"""
         with tempfile.TemporaryDirectory() as directory:
