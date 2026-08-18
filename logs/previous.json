@@ -1,20 +1,25 @@
 {
   "schema_version": "1.1.0",
   "execution_mode": "mobile-native",
-  "run_id": "gnb-20260818T050804Z-3d9f2a71",
-  "scheduled_for": "2026-08-18T13:05:09+08:00",
-  "status": "failed",
-  "current_stage": "candidate-audit",
-  "stage_index": 5,
-  "last_completed_stage": "source-scan",
-  "main_sha": "ae35c772beafdcbe60c50deb2b0d22645c54af2d",
-  "updated_at": "2026-08-18T05:34:00Z",
-  "last_error": {
-    "code": "FULL_14_DAY_CANDIDATE_AUDIT_NOT_RECONSTRUCTIBLE",
-    "message": "The v0.3 mobile audit contract requires a durable complete 14-day candidate list before reader rendering. At run start, run-logs/logs/latest-candidate-audit.json did not exist (404). The preceding durable reader preserves selected events only, while the earlier full-runtime run reported 310 candidates without persisting the rejected-candidate audit. Fresh mobile web search can rebuild the current window and recover known selected continuity events, but it cannot reconstruct every rejected candidate from the prior 14 days without fabrication. The run therefore failed closed at candidate-audit; this is a historical audit bootstrap/persistence gap, not a repository materialization or host-workspace defect."
-  },
-  "delivery_status": "not_ready",
+  "run_id": "gnb-20260818T053207Z-7f4a2c91",
+  "scheduled_for": "2026-08-18T13:29:57+08:00",
+  "status": "completed",
+  "current_stage": "delivery-handoff",
+  "stage_index": 10,
+  "last_completed_stage": "github-result-saved",
+  "main_sha": "31da6296b6974af303964faabeb9e05ba9bfe665",
+  "updated_at": "2026-08-18T06:16:00Z",
+  "last_error": null,
+  "delivery_status": "handoff_started",
   "client_confirmation_supported": false,
-  "reader_artifact": null,
-  "candidate_audit_artifact": null
+  "reader_artifact": {
+    "branch": "run-logs",
+    "path": "logs/latest-reader.md",
+    "blob_sha": "7fe2492077467ab6aa1cbedca6df24ba03391b2e"
+  },
+  "candidate_audit_artifact": {
+    "branch": "run-logs",
+    "path": "logs/latest-candidate-audit.json",
+    "blob_sha": "fb40f969623dae3546ba2733717c62a139790df5"
+  }
 }
