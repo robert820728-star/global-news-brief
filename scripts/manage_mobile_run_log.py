@@ -13,7 +13,8 @@ from typing import Any
 import run_identity
 
 
-SCHEMA_VERSION = "1.0.0"
+SCHEMA_VERSION = "1.1.0"
+EXECUTION_MODES = {"full-runtime", "mobile-native"}
 STAGES = (
     "schedule-prepared",
     "executor-started",
@@ -44,7 +45,12 @@ DELIVERY_STATUSES = {
 
 
 def _read_json(path: Path) -> dict[str, Any]:
-    return json.loads(path.read_text(encoding="utf-8"))
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if value.get("schema_version") == "1.0.0":
+        value["schema_version"] = SCHEMA_VERSION
+        value.setdefault("execution_mode", "full-runtime")
+        value.setdefault("candidate_audit_artifact", None)
+    return value
 
 
 def _atomic_write(path: Path, value: dict[str, Any]) -> None:
@@ -67,6 +73,7 @@ def _atomic_write(path: Path, value: dict[str, Any]) -> None:
 def validate_record(record: dict[str, Any]) -> None:
     required = {
         "schema_version",
+        "execution_mode",
         "run_id",
         "scheduled_for",
         "status",
@@ -79,12 +86,15 @@ def validate_record(record: dict[str, Any]) -> None:
         "delivery_status",
         "client_confirmation_supported",
         "reader_artifact",
+        "candidate_audit_artifact",
     }
     missing = required.difference(record)
     if missing:
         raise ValueError(f"missing run-log fields: {', '.join(sorted(missing))}")
     if record["schema_version"] != SCHEMA_VERSION:
         raise ValueError("unsupported run-log schema version")
+    if record["execution_mode"] not in EXECUTION_MODES:
+        raise ValueError("invalid execution_mode")
     if not run_identity.is_valid_run_id(record["run_id"]):
         raise ValueError("run_id must use canonical format gnb-YYYYMMDDTHHMMSSZ-xxxxxxxx")
     if record["status"] not in STATUSES:
@@ -108,6 +118,7 @@ def prepare_run(
     run_id: str,
     scheduled_for: str,
     updated_at: str,
+    execution_mode: str = "full-runtime",
 ) -> dict[str, Any]:
     ledger_dir = Path(ledger_dir)
     current_path = ledger_dir / "current.json"
@@ -127,6 +138,7 @@ def prepare_run(
 
     current: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
+        "execution_mode": execution_mode,
         "run_id": run_id,
         "scheduled_for": scheduled_for,
         "status": "awaiting_executor",
@@ -139,6 +151,7 @@ def prepare_run(
         "delivery_status": "not_ready",
         "client_confirmation_supported": False,
         "reader_artifact": None,
+        "candidate_audit_artifact": None,
     }
     validate_record(current)
     _atomic_write(current_path, current)
@@ -157,6 +170,8 @@ def advance_run(
     main_sha: str | None = None,
     last_error: dict[str, str] | None = None,
     reader_artifact: dict[str, str] | None = None,
+    execution_mode: str | None = None,
+    candidate_audit_artifact: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     ledger_dir = Path(ledger_dir)
     current_path = ledger_dir / "current.json"
@@ -194,6 +209,10 @@ def advance_run(
         current["main_sha"] = main_sha
     if reader_artifact is not None:
         current["reader_artifact"] = reader_artifact
+    if execution_mode is not None:
+        current["execution_mode"] = execution_mode
+    if candidate_audit_artifact is not None:
+        current["candidate_audit_artifact"] = candidate_audit_artifact
     current["last_error"] = last_error
     validate_record(current)
     _atomic_write(current_path, current)
@@ -209,6 +228,7 @@ def build_parser() -> argparse.ArgumentParser:
     prepare.add_argument("--run-id", required=True)
     prepare.add_argument("--scheduled-for", required=True)
     prepare.add_argument("--updated-at", required=True)
+    prepare.add_argument("--execution-mode", choices=sorted(EXECUTION_MODES), default="full-runtime")
 
     advance = subparsers.add_parser("advance")
     advance.add_argument("--ledger-dir", type=Path, required=True)
@@ -219,6 +239,8 @@ def build_parser() -> argparse.ArgumentParser:
     advance.add_argument("--delivery-status", choices=sorted(DELIVERY_STATUSES))
     advance.add_argument("--client-ack", action="store_true")
     advance.add_argument("--main-sha")
+    advance.add_argument("--execution-mode", choices=sorted(EXECUTION_MODES))
+    advance.add_argument("--candidate-audit-artifact", type=Path)
 
     validate = subparsers.add_parser("validate")
     validate.add_argument("--input", type=Path, required=True)
@@ -233,6 +255,7 @@ def main() -> int:
             run_id=args.run_id,
             scheduled_for=args.scheduled_for,
             updated_at=args.updated_at,
+            execution_mode=args.execution_mode,
         )
     elif args.command == "advance":
         result = advance_run(
@@ -244,6 +267,11 @@ def main() -> int:
             delivery_status=args.delivery_status,
             client_ack=args.client_ack,
             main_sha=args.main_sha,
+            execution_mode=args.execution_mode,
+            candidate_audit_artifact=(
+                _read_json(args.candidate_audit_artifact)
+                if args.candidate_audit_artifact else None
+            ),
         )
     else:
         result = _read_json(args.input)
@@ -254,3 +282,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

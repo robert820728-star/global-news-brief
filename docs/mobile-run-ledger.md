@@ -6,6 +6,7 @@ The mobile ChatGPT task remains the news executor. GitHub stores a compact, dura
 
 - `logs/current.json` is the active or most recently completed run.
 - `logs/previous.json` is the immediately preceding run.
+- `logs/latest-candidate-audit.json` is replaced after the full fourteen-day audit has been scored and verified.
 - `logs/latest-reader.md` is replaced only after a new reader edition has been rendered successfully.
 - Starting a new scheduled run replaces the older `previous.json`. If the former `current.json` was still awaiting or running, it is preserved as `interrupted_by_next_run` before rotation.
 
@@ -15,7 +16,7 @@ The branch tip exposes only two run records. Git commit history is not rewritten
 
 The task performs one compact update at each high-level boundary: schedule preparation, executor start, main pinning, workspace readiness, source scan, candidate audit, selection verification, visuals, reader rendering, GitHub reader storage, and delivery handoff. A transition records the newly active stage and thereby identifies the last completed stage without doubling the write count.
 
-Before handing the response to ChatGPT, the task replaces `logs/latest-reader.md`, records its blob SHA, and moves to `delivery-handoff`. The ChatGPT scheduled-task interface does not provide a client-render acknowledgement. Therefore `client_confirmed` is forbidden unless a future external acknowledgement mechanism supplies explicit evidence.
+Before handing the response to ChatGPT, the task first replaces `logs/latest-candidate-audit.json` and records its blob SHA, then replaces `logs/latest-reader.md`, records its blob SHA, and moves to `delivery-handoff`. Every run record declares `execution_mode` as `full-runtime` or `mobile-native`. The ChatGPT scheduled-task interface does not provide a client-render acknowledgement. Therefore `client_confirmed` is forbidden unless a future external acknowledgement mechanism supplies explicit evidence.
 
 ## Watchdog
 

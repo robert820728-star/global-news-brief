@@ -1,5 +1,14 @@
 # 版本紀錄 / Version Record
 
+## v0.3.0-mobile-reader-visible-delivery — 2026-08-18
+
+- 建立原因 / Reason: 手機 ChatGPT 可能發布空白圖片框、未持久保存完整十四天海選，並輸出通用後續觀察。 / Mobile ChatGPT could publish blank image placeholders, omit the durable fourteen-day audit, and emit generic follow-up text.
+- 確認原因 / Confirmed cause: 前輪選圖或內部路徑即使讀者看不到仍被算成圖片；驗證器未把後續觀察綁定 manifest；手機執行紀錄未宣告模式與海選產物。 / A prior-run image choice or internal path was counted as delivered even when the reader could not see it; the validator did not bind follow-up text to the manifest; the mobile run-log schema did not declare execution mode or the audit artifact.
+- 作法 / Approach: 要求圖片在讀者端實際可見，否則提供非技術性無圖說明；後續觀察必須逐字對應事件條件；持久保存執行模式與完整海選清單位置。 / Require reader-visible image delivery or a nontechnical no-image explanation, exact event-specific follow-up conditions, and persisted execution-mode plus full candidate-audit pointers.
+- 過度設計檢查 / Overdesign check: 未新增圖片服務、資料庫、重試框架或發布管道。 / No new image service, database, retry framework, or publishing channel was added.
+- 驗證 / Validation: 先確認 5 項測試失敗，再通過 90 項相關契約、台帳、驗證器與海選測試。 / Five tests failed first; then 90 relevant contract, ledger, validator, and audit tests passed.
+
+
 ## v0.2.9-scheduled-host-capability-routing — 2026-08-18
 
 - 建立原因 / Reason: 手機 ChatGPT 排程被導向完整 capsule 契約；宿主沒有可寫 workspace 或 Python 時，在新聞搜尋前直接失敗。 / The mobile ChatGPT schedule was routed into the full capsule contract and failed before news collection whenever the host lacked a writable workspace or Python runtime.

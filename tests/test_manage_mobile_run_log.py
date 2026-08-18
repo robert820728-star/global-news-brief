@@ -49,12 +49,39 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertEqual(current["run_id"], RUN_1)
         self.assertEqual(current["status"], "awaiting_executor")
         self.assertEqual(current["current_stage"], "schedule-prepared")
+        self.assertEqual(current["execution_mode"], "full-runtime")
+        self.assertIsNone(current["candidate_audit_artifact"])
         self.assertEqual(current["delivery_status"], "not_ready")
         workflow = (ROOT / ".github" / "workflows" / "prepare-mobile-run-ledger.yml").read_text(
             encoding="utf-8"
         )
         self.assertIn("58 21 * * *", workflow)
         self.assertIn("run-logs", workflow)
+
+    def test_mobile_native_mode_and_candidate_audit_artifact_are_persisted(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+        )
+        artifact = {
+            "branch": "run-logs",
+            "path": "logs/latest-candidate-audit.json",
+            "blob_sha": "a" * 40,
+        }
+        self.module.advance_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            stage="candidate-audit",
+            updated_at="2026-08-17T22:10:00Z",
+            execution_mode="mobile-native",
+            candidate_audit_artifact=artifact,
+        )
+        current = self.read("current.json")
+        self.assertEqual(current["execution_mode"], "mobile-native")
+        self.assertEqual(current["candidate_audit_artifact"], artifact)
 
     def test_prepare_rejects_noncanonical_run_id(self):
         with self.assertRaisesRegex(ValueError, "canonical format"):
@@ -142,3 +169,4 @@ class MobileRunLogTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

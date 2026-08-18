@@ -188,7 +188,7 @@ def valid_manifest():
                     "event_details": "據官方來源指出，地震事件已發生。",
                     "positions": [],
                     "analysis": "事件具有公共影響，但仍缺少獨立來源。",
-                    "follow_up": "追蹤是否出現其他獨立來源。",
+                    "follow_up": "若中央氣象署將震度上修至 6 強或新增 10 人以上傷亡，更新影響範圍與評級。",
                 },
             }
         ],
@@ -240,11 +240,28 @@ def valid_brief():
 
 ## 後續觀察
 
-- TWN-01：追蹤是否出現其他獨立來源。
+- TWN-01：若中央氣象署將震度上修至 6 強或新增 10 人以上傷亡，更新影響範圍與評級。
 """
 
 
 class ValidatorTests(unittest.TestCase):
+    def test_reader_rejects_generic_follow_up_placeholder(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["detail"]["follow_up"] = "追蹤官方後續更新與實際影響。"
+        text = valid_brief().replace(
+            "若中央氣象署將震度上修至 6 強或新增 10 人以上傷亡，更新影響範圍與評級。",
+            "追蹤官方後續更新與實際影響。",
+        )
+        errors = VALIDATOR.validate_brief_text(manifest, text)
+        self.assertTrue(any("後續觀察" in error and "具體" in error for error in errors))
+
+    def test_reader_follow_up_must_match_manifest_event_condition(self):
+        text = valid_brief().replace(
+            "若中央氣象署將震度上修至 6 強或新增 10 人以上傷亡，更新影響範圍與評級。",
+            "若官方更新數字就再觀察。",
+        )
+        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        self.assertTrue(any("後續觀察" in error and "manifest" in error for error in errors))
     def test_manifest_requires_canonical_run_identity(self):
         manifest = valid_manifest()
         manifest["run"].pop("run_id")
@@ -304,9 +321,9 @@ class ValidatorTests(unittest.TestCase):
         )
         brief = first_detail.rstrip() + "\n\n---\n\n" + second_detail.rstrip() + (
             "\n\n## 後續觀察" + follow_up.replace(
-                "- TWN-01：追蹤是否出現其他獨立來源。",
-                "- TWN-01：追蹤是否出現其他獨立來源。\n"
-                "- TWN-02：追蹤是否出現其他獨立來源。",
+                "- TWN-01：若中央氣象署將震度上修至 6 強或新增 10 人以上傷亡，更新影響範圍與評級。",
+                "- TWN-01：若中央氣象署將震度上修至 6 強或新增 10 人以上傷亡，更新影響範圍與評級。\n"
+                "- TWN-02：若中央氣象署將震度上修至 6 強或新增 10 人以上傷亡，更新影響範圍與評級。",
             )
         )
         crlf_brief = brief.replace("\n", "\r\n")

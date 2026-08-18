@@ -217,6 +217,19 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn(requirement, daily)
         self.assertNotIn("**圖片來源頁：**", daily)
 
+    def test_mobile_image_delivery_requires_reader_visible_result(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "IMAGE_READER_VISIBLE_DELIVERY_GATE",
+            "實際顯示",
+            "破圖",
+            "沿用前輪選圖",
+            "圖片說明",
+        ):
+            self.assertIn(requirement, daily)
+        self.assertIn("不算可見圖片", daily)
+
     def test_image_workload_is_bounded_without_reducing_news_coverage(self):
         documents = [
             ROOT / "news-brief-settings.md",

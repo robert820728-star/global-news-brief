@@ -6,6 +6,7 @@
   "additionalProperties": false,
   "required": [
     "schema_version",
+    "execution_mode",
     "run_id",
     "scheduled_for",
     "status",
@@ -17,10 +18,12 @@
     "last_error",
     "delivery_status",
     "client_confirmation_supported",
-    "reader_artifact"
+    "reader_artifact",
+    "candidate_audit_artifact"
   ],
   "properties": {
-    "schema_version": { "const": "1.0.0" },
+    "schema_version": { "const": "1.1.0" },
+    "execution_mode": { "enum": ["full-runtime", "mobile-native"] },
     "run_id": {
       "type": "string",
       "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$"
@@ -77,6 +80,21 @@
       "enum": ["not_ready", "reader_saved", "handoff_started", "client_confirmed"]
     },
     "client_confirmation_supported": { "type": "boolean" },
+    "candidate_audit_artifact": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["branch", "path", "blob_sha"],
+          "properties": {
+            "branch": { "const": "run-logs" },
+            "path": { "const": "logs/latest-candidate-audit.json" },
+            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+          }
+        }
+      ]
+    },
     "reader_artifact": {
       "oneOf": [
         { "type": "null" },
@@ -94,3 +112,4 @@
     }
   }
 }
+

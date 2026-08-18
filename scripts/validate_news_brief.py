@@ -55,6 +55,12 @@ FORBIDDEN_RENDER_TOKENS = (
     "<gallery",
     "<carousel",
 )
+GENERIC_FOLLOW_UP_PHRASES = {
+    "追蹤官方後續更新與實際影響。",
+    "追蹤官方後續更新。",
+    "追蹤官方是否更新影響範圍、數字或處置進度。",
+    "追蹤是否出現其他獨立來源。",
+}
 FIGURE_PREFIXES = {
     "map": "地圖",
     "charts": "資料圖表",
@@ -1121,6 +1127,28 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
                         errors.append(f"{event_id} {expected_prefix}圖說必須緊接在附件之後")
             if asset_positions != sorted(asset_positions):
                 errors.append(f"{event_id} {field}附件順序與 manifest 不一致")
+
+    follow_match = re.search(r"(?m)^## 後續觀察[ \t]*\r?\n([\s\S]*)\Z", text)
+    actual_follow_ups: list[tuple[str, str]] = []
+    if follow_match:
+        for line in follow_match.group(1).splitlines():
+            match = re.fullmatch(r"- ([A-Z]{3}-\d{2,3})：(.+)", line.strip())
+            if match:
+                actual_follow_ups.append((match.group(1), match.group(2).strip()))
+    expected_follow_ups = []
+    for event in events:
+        if not isinstance(event, dict):
+            continue
+        detail = event.get("detail") if isinstance(event.get("detail"), dict) else {}
+        follow_up = detail.get("follow_up")
+        if isinstance(follow_up, str) and follow_up.strip():
+            expected_follow_ups.append((event.get("event_id"), follow_up.strip()))
+            if follow_up.strip() in GENERIC_FOLLOW_UP_PHRASES:
+                errors.append(
+                    f"{event.get('event_id')} 後續觀察必須使用事件特有的具體條件，不得使用通用模板"
+                )
+    if actual_follow_ups != expected_follow_ups:
+        errors.append("後續觀察必須逐項逐字對應 manifest 的 detail.follow_up")
     return errors
 
 
