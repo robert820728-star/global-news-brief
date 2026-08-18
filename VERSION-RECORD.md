@@ -1,5 +1,14 @@
 # 版本紀錄 / Version Record
 
+## v0.3.5-material-update-selection — 2026-08-18
+
+- 建立原因 / Reason: 十四天舊聞每天重播，小型政策措施繼承宏觀母事件高評級，喪禮、普通單一公司上市、純象徵性文化爭議與例行外交行程也被誤判為 C 級以上。 / Fourteen-day old stories were republished daily, minor policy measures inherited a macro parent grade, and funerals, routine single-company listings, symbolic cultural disputes, and routine diplomatic itineraries were promoted to C or above.
+- 確認原因 / Confirmed cause: 規則沒有要求本日更新獨立達到門檻，人物、公司或官員層級與媒體聲量也替代了可驗證公共影響。 / The rules did not require the day's update to independently meet the threshold, while prominence and media attention substituted for verifiable public impact.
+- 作法 / Approach: 舊事件只有獨立達 C 的實質更新才能重刊；合併更新獨立評分；禮儀、單一公司例行事件、無實質後果的文化稱謂爭議與單純外交行程預設 D。 / Republish old events only when a material update independently reaches C; score merged updates independently; default ceremonial, routine single-company, consequence-free cultural naming disputes, and itinerary-only diplomatic items to D.
+- 案例 / Calibration: 朱鎔基喪禮 D；縣域消費不能繼承 B+；宇樹上市 D；光州台灣館名稱加口頭抗議 D；僅宣布王毅訪韓 D。 / Zhu Rongji's funeral D; county consumption cannot inherit B+; Unitree listing D; Gwangju Taiwan-pavilion naming plus verbal protest D; announcement-only Wang Yi Korea visit D.
+- 過度設計檢查 / Overdesign check: 僅新增五條選稿規則與案例測試，未增加數量上限、分類器、服務或發布流程。 / Added only five selection rules and case tests—no count cap, classifier, service, or publishing layer.
+- 驗證 / Validation: 五項案例測試先失敗，實作後連同四項既有關鍵契約共 9/9 通過。 / Five case tests failed first; after implementation, all five plus four existing critical contract tests passed, 9/9.
+
 ## v0.3.4-recoverable-audit-without-reader-block — 2026-08-18
 
 - 建立原因 / Reason: 嚴格要求手機排程在單輪重建並證明十五站完整十四天歷史，導致來源可核對的本日讀者版也被阻擋。 / Requiring a mobile run to rebuild and prove complete fourteen-day history for all fifteen sources blocked even a source-backed current reader edition.

@@ -313,6 +313,59 @@ class PipelineContractTests(unittest.TestCase):
         ):
             self.assertIn(requirement, daily)
 
+    def test_old_event_requires_independently_material_update_to_reenter_reader(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "MATERIAL_UPDATE_REENTRY_GATE",
+            "不得只因仍在十四天內每天重刊",
+            "本日新增部分必須獨立達到 C 級門檻",
+        ):
+            self.assertIn(requirement, daily)
+
+    def test_child_update_cannot_inherit_parent_event_grade(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "NO_PARENT_GRADE_INHERITANCE",
+            "縣域消費措施",
+            "不得繼承母事件的 B 或 B+",
+        ):
+            self.assertIn(requirement, daily)
+
+    def test_ceremonial_and_single_company_routine_events_default_below_reader(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "CEREMONIAL_AND_SINGLE_COMPANY_ROUTINE_LOW",
+            "喪禮、降半旗、紀念活動、例行訪問",
+            "單一公司上市",
+            "預設 D",
+        ):
+            self.assertIn(requirement, daily)
+
+    def test_symbolic_cultural_name_dispute_defaults_below_reader(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "SYMBOLIC_CULTURAL_DISPUTE_LOW",
+            "展覽名稱、館名、標示或稱謂爭議",
+            "主管機關口頭抗議",
+            "預設 D",
+        ):
+            self.assertIn(requirement, daily)
+
+    def test_announced_diplomatic_visit_without_outcome_defaults_below_reader(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "ROUTINE_DIPLOMATIC_VISIT_LOW",
+            "只有宣布訪問行程",
+            "王毅訪韓",
+            "預設 D",
+        ):
+            self.assertIn(requirement, daily)
+
     def test_selection_contract_forbids_prior_run_drivers(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         self.assertIn("validate_selection_freshness.py", prompt)
