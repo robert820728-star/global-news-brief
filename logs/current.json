@@ -4,15 +4,18 @@
   "run_id": "gnb-20260818T205043Z-a61f3c9e",
   "scheduled_for": "2026-08-19T04:52:09+08:00",
   "status": "running",
-  "current_stage": "visuals-completed",
-  "stage_index": 7,
-  "last_completed_stage": "selection-verified",
+  "current_stage": "reader-rendered",
+  "stage_index": 8,
+  "last_completed_stage": "visuals-completed",
   "main_sha": "1465e0696dbaff7ed3503a947592a3f868da9e09",
-  "updated_at": "2026-08-18T21:07:00Z",
+  "updated_at": "2026-08-18T21:08:00Z",
   "last_error": null,
   "delivery_status": "not_ready",
   "client_confirmation_supported": false,
-  "reader_artifact": null,
+  "reader_artifact": {
+    "path": "logs/latest-reader.md",
+    "sha": "6492bdb241fe3c6d28e6594cc1b330035e4caf20"
+  },
   "candidate_audit_artifact": {
     "path": "logs/latest-candidate-audit.json",
     "sha": "d5dcffd0475619c882bc4d877b1d63598e71b48b"
