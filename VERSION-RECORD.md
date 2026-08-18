@@ -1,5 +1,13 @@
 # 版本紀錄 / Version Record
 
+## v0.2.9-scheduled-host-capability-routing — 2026-08-18
+
+- 建立原因 / Reason: 手機 ChatGPT 排程被導向完整 capsule 契約；宿主沒有可寫 workspace 或 Python 時，在新聞搜尋前直接失敗。 / The mobile ChatGPT schedule was routed into the full capsule contract and failed before news collection whenever the host lacked a writable workspace or Python runtime.
+- 確認原因 / Confirmed cause: 圖片縮圖規則只降低圖片負擔，沒有造成 Stage -1 錯誤；真正缺陷是把本地 executable runtime 當成手機排程唯一入口。 / The thumbnail rules only reduce image workload and did not cause the Stage -1 error; the actual defect was treating a local executable runtime as the mobile scheduler's only entry path.
+- 實作方式 / Approach: 在高壓 bootstrap 前增加一次無網路能力探測；有 runtime 走完整模式，沒有 runtime 就讀取同一 SHA 的手機原生規則並完成可用讀者版，不抓 capsule、不停用每日排程。 / Add one no-network capability probe before bootstrap; use the full path when runtime exists, otherwise use the same-SHA mobile-native rules to deliver a usable reader edition without fetching the capsule or disabling the daily schedule.
+- 過度設計檢查 / Overdesign check: 沒有新增服務、capsule、重試框架或發布 gate；只增加兩條既有入口間的能力路由。 / No service, capsule, retry framework, or publication gate was added; this only routes between two existing entry paths.
+- 驗證方式 / Validation: 新增契約測試，確認 fallback 標記位於 recursive tree 與 helpers 前，且禁止因 runtime 缺失停用排程。 / Added a contract test proving the fallback appears before recursive-tree/helper work and forbids disabling the schedule for missing runtime.
+
 ## v0.2.8-connector-compatible-main-pin — 2026-08-18
 
 - 建立原因 / Reason: 手機 ChatGPT 的 GitHub connector 拒絕 `/git/ref/heads/main`，使 Stage -1 在建立 workspace 前停止。 / The mobile ChatGPT GitHub connector rejects `/git/ref/heads/main`, stopping Stage -1 before workspace creation.

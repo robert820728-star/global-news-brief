@@ -25,6 +25,20 @@ The required order for every configured source is: `canonical route -> same-site
 
 ## Stage -1：先取得可執行 workspace
 
+### Scheduled-host capability routing
+
+`SCHEDULED_HOST_CAPABILITY_ROUTING`
+
+Before reading the recursive tree, capsule manifest, helpers, payload, or chunks, perform exactly one no-network capability probe using the host's native execution tool. The probe only checks whether this run has both a writable temporary workspace and a Python runtime able to execute a standard-library statement. A shell or container command is not required when the host exposes Python through a native data-analysis tool.
+
+- If the probe succeeds, continue the full verified-runtime path below.
+- If the local execution backend is absent or returns a host execution error, classify it as `host_execution_unavailable`, not as a repository materialization defect. Do not fetch the capsule, do not fetch chunks, do not disable the daily schedule, and do not modify `main`.
+- In that case, fetch `mobile-chatgpt-daily-prompt.md` from the same pinned `main` SHA and immediately run its `mobile-native` path in the same scheduled task. This fallback must still deliver the source-backed reader edition, full fourteen-day candidate audit, six scores and totals, every C-or-higher event, and the mobile image decision or non-technical no-image explanation.
+- A `mobile-native` result is a usable degraded reader edition, not a canonical full-asset release. If the host cannot create stable map/chart attachments, omit them and state that the scheduled host did not provide executable visual rendering; never claim full visual validation.
+- Record `execution_mode=full-runtime` or `execution_mode=mobile-native` in the run ledger. The next scheduled run probes capabilities again and resolves fresh `main`; it must not create a second task merely to retry the missing runtime.
+
+This routing is deliberately limited to host capability selection. It adds no new gate, framework, capsule, or retry system.
+
 任何 `scripts/*.py` 執行前，先完整遵守 `bootstrap-workspace.md`。
 
 GitHub connector 可見 repository 不代表 shell 已有 repository。每輪都必須重新解析當下最新版 `main`，再使用該輪 SHA 的 verified runtime capsule：

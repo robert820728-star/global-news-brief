@@ -6,6 +6,23 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PipelineContractTests(unittest.TestCase):
+    def test_scheduled_host_without_python_uses_mobile_native_fallback(self):
+        prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "SCHEDULED_HOST_CAPABILITY_ROUTING",
+            "host_execution_unavailable",
+            "mobile-chatgpt-daily-prompt.md",
+            "execution_mode=full-runtime",
+            "execution_mode=mobile-native",
+            "do not disable the daily schedule",
+        ):
+            self.assertIn(requirement, prompt)
+        self.assertLess(
+            prompt.index("SCHEDULED_HOST_CAPABILITY_ROUTING"),
+            prompt.index("EARLY_DIAGNOSTIC_TREE_VERIFIED"),
+        )
+
     def test_same_source_recovery_uses_browser_only_as_final_fallback(self):
         documents = [
             ROOT / "news-brief-settings.md",
