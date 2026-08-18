@@ -1,18 +1,17 @@
 {
-  "schema_version": "1.0.0",
-  "run_id": "gnb-20260818T031743Z-7c41a9e2",
-  "scheduled_for": "2026-08-18T11:17:43+08:00",
-  "status": "failed",
-  "current_stage": "visuals-completed",
-  "stage_index": 7,
-  "last_completed_stage": "selection-verified",
-  "main_sha": "822052e01df2efda8386e06fa4015adf259f7c87",
-  "updated_at": "2026-08-18T03:37:00Z",
-  "last_error": {
-    "code": "HISTORICAL_CANDIDATE_AUDIT_NOT_PERSISTED",
-    "message": "Mobile-native routing succeeded, but the prior full-runtime run persisted only its selected reader and run summary; its 310-candidate audit was referenced by local-path SHA in the release receipt and is not available on run-logs, so a complete 14-day rolling candidate audit cannot be reconstructed without inventing historical rejected candidates."
-  },
+  "schema_version": "1.1.0",
+  "execution_mode": "mobile-native",
+  "run_id": "gnb-20260818T050804Z-3d9f2a71",
+  "scheduled_for": "2026-08-18T13:05:09+08:00",
+  "status": "running",
+  "current_stage": "executor-started",
+  "stage_index": 1,
+  "last_completed_stage": "schedule-prepared",
+  "main_sha": null,
+  "updated_at": "2026-08-18T05:08:04Z",
+  "last_error": null,
   "delivery_status": "not_ready",
   "client_confirmation_supported": false,
-  "reader_artifact": null
+  "reader_artifact": null,
+  "candidate_audit_artifact": null
 }
