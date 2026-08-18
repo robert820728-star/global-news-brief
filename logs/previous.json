@@ -1,17 +1,17 @@
 {
   "schema_version":"1.1.0",
   "execution_mode":"mobile-native",
-  "run_id":"gnb-20260818T093416Z-a93f6d2c",
-  "scheduled_for":"2026-08-18T17:34:41+08:00",
+  "run_id":"gnb-20260818T101031Z-bc17e4a9",
+  "scheduled_for":"2026-08-18T18:10:31+08:00",
   "status":"failed",
   "current_stage":"source-scan",
   "stage_index":4,
   "last_completed_stage":"workspace-ready",
   "main_sha":"7a2bd016f14514b824554d4060abc50fb1493312",
-  "updated_at":"2026-08-18T09:39:00Z",
+  "updated_at":"2026-08-18T10:18:25Z",
   "last_error":{
-    "code":"MOBILE_SOURCE_WINDOW_COVERAGE_UNVERIFIABLE",
-    "message":"The mobile-native web acquisition path could not establish fresh 24-hour coverage for all 15 configured primary sources. Multiple configured Taiwan/China source entry pages resolved to stale cached snapshots rather than the 2026-08-17T17:34:16+08:00 to 2026-08-18T17:34:16+08:00 window, and no permitted fresher same-site/browser-rendered route was available to prove missing items. Existing prior-run audit/reader artifacts were preserved and not reused as this run's fresh source scan."
+    "code":"EARLY_DIAGNOSTIC_RUN_ID_ORDER_VIOLATION",
+    "message":"Formal acceptance stopped because the run_id was not established before the first GitHub main-resolution call, as required by the pinned daily-schedule-prompt.md. This ordering requirement cannot be repaired retroactively. The host capability probe correctly routed this run to mobile-native; no candidate-audit or reader artifact from this failed run was published."
   },
   "delivery_status":"not_ready",
   "client_confirmation_supported":false,
