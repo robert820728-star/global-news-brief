@@ -1,20 +1,28 @@
 {
   "schema_version":"1.1.0",
   "execution_mode":"mobile-native",
-  "run_id":"gnb-20260818T114027Z-6d91c2f4",
-  "scheduled_for":"2026-08-18T19:37:55+08:00",
+  "run_id":"gnb-20260818T121300Z-5b7a2e1c",
+  "scheduled_for":"2026-08-18T20:12:17+08:00",
   "status":"failed",
-  "current_stage":"main-pinned",
-  "stage_index":2,
-  "last_completed_stage":"schedule-prepared",
-  "main_sha":"78d6601578708ea4a86fe131946a92c86df753ca",
-  "updated_at":"2026-08-18T11:40:27Z",
+  "current_stage":"candidate-audit",
+  "stage_index":5,
+  "last_completed_stage":"source-scan",
+  "main_sha":"040b6622b8213938c4468aea96625a7a25a3c045",
+  "updated_at":"2026-08-18T12:21:00Z",
   "last_error":{
-    "code":"EARLY_DIAGNOSTIC_RUN_ID_ORDER_VIOLATION",
-    "message":"Formal acceptance stopped because this run resolved GitHub main before establishing the run_id and before the mobile run-ledger current.json read required by the pinned daily-schedule-prompt.md/mobile-chatgpt-daily-prompt.md. The host capability probe returned a host execution error and correctly selected execution_mode=mobile-native, but the ordering violation cannot be repaired retroactively. No candidate audit or reader artifact from this failed run was published."
+    "code":"FULL_14_DAY_CANDIDATE_AUDIT_PERSISTENCE_UNAVAILABLE",
+    "message":"Pinned mobile contract requires a complete current fourteen-day candidate audit to overwrite run-logs/logs/latest-candidate-audit.json before selection can advance. The existing durable audit contains 69 historical candidates produced under the prior scoring contract. Native execution is unavailable, while the pinned audit-news-candidates skill requires historical append, fourteen-day trimming, deduplication, reason validation, and source-count checks to be script-driven and explicitly says not to recalculate the whole audit with a large model. GitHub contents writes are whole-file replacements. To avoid fabricating, truncating, or silently rescoring historical records, this run stopped after source-scan and preserved the prior audit and reader artifacts."
   },
   "delivery_status":"not_ready",
   "client_confirmation_supported":false,
   "reader_artifact":null,
-  "candidate_audit_artifact":null
+  "candidate_audit_artifact":null,
+  "source_scan_summary":{
+    "window_start":"2026-08-17T20:12:17+08:00",
+    "window_end":"2026-08-18T20:12:17+08:00",
+    "gdelt":"degraded_tooling_unavailable",
+    "cna":"completed_current_feed",
+    "chinanews":"degraded_current_route_unavailable",
+    "web_search_fallback":"active_verifiable_candidates_found"
+  }
 }
