@@ -43,7 +43,7 @@ The required order for every configured source is: `canonical route -> same-site
 
 使用已連接的 GitHub app，將紀錄寫在同一 repository 的 `run-logs` 分支。正常只維護 `logs/current.json`、`logs/previous.json`、`logs/latest-candidate-audit.json` 與 `logs/latest-reader.md`，不得寫入 `main`，也不得逐新聞或逐工具呼叫建立紀錄。
 
-1. 第一個 GitHub 動作先讀取 `run-logs/logs/current.json`。05:58 守望工作已建立當天 `status=awaiting_executor` 時，沿用其中的 `run_id`，立即把目前階段更新成 `executor-started`、`status=running`。
+1. 排程外層為取得最新版規則而進行的 `external latest-main resolution` 與 pinned prompt read 不計入本段順序；它們不得讀取新聞或舊成果。載入本 prompt 後，`first runtime GitHub action` 才是讀取 `run-logs/logs/current.json`。05:58 守望工作已建立當天 `status=awaiting_executor` 時，沿用其中的 `run_id`，立即把目前階段更新成 `executor-started`、`status=running`。
    - `run_id` 固定為 `gnb-YYYYMMDDThhmmssZ-xxxxxxxx`：UTC 精確到秒，加 8 碼小寫十六進位隨機值。格式不符、與 manifest／讀者版不一致或沿用前輪編號時立即失敗。
 2. 若當天紀錄不存在，才由本任務執行相同輪替：舊 `current.json` 若仍是 `awaiting_executor` 或 `running`，先標為 `interrupted_by_next_run` 並覆寫 `previous.json`；接著建立本輪 `current.json`。更舊的 `previous.json` 直接覆寫，不增加第三份歷史紀錄。
 3. 每次用 GitHub contents API 更新同一個 `current.json`，必須先取得目前 blob SHA；檔案更新失敗時只重試一次，仍失敗就改在 Issue #3 建立或更新本輪單一留言，不得因紀錄失敗重跑已完成的新聞搜尋。

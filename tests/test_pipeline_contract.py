@@ -88,8 +88,9 @@ class PipelineContractTests(unittest.TestCase):
 
         for document in (prompt, bootstrap):
             ordered_markers = (
-                "EARLY_DIAGNOSTIC_RUN_ID",
+                "PRE_CONTRACT_MAIN_RESOLUTION",
                 "EARLY_DIAGNOSTIC_MAIN_PINNED",
+                "EARLY_DIAGNOSTIC_RUN_ID",
                 "EARLY_DIAGNOSTIC_RUN_STARTED",
                 "EARLY_DIAGNOSTIC_TREE_VERIFIED",
                 "EARLY_DIAGNOSTIC_MANIFEST_VERIFIED",
@@ -101,6 +102,22 @@ class PipelineContractTests(unittest.TestCase):
             self.assertEqual(positions, sorted(positions))
             self.assertIn("before any recursive tree read", document)
             self.assertIn("update the same comment", document)
+
+    def test_fresh_main_wrapper_does_not_create_an_impossible_run_id_order(self):
+        daily = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        bootstrap = (ROOT / "bootstrap-workspace.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for document in (daily, bootstrap):
+            self.assertIn("PRE_CONTRACT_MAIN_RESOLUTION", document)
+            self.assertIn("only permitted pre-contract GitHub reads", document)
+            self.assertIn("without a tool call", document)
+            self.assertLess(
+                document.index("EARLY_DIAGNOSTIC_MAIN_PINNED"),
+                document.index("EARLY_DIAGNOSTIC_RUN_ID"),
+            )
+        self.assertIn("external latest-main resolution", mobile)
+        self.assertIn("first runtime GitHub action", mobile)
 
     def test_external_ledger_is_debounced_and_never_blocks_news(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")

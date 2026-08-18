@@ -335,3 +335,11 @@
 - 目前結果 / Current result: 83/83 目標測試通過；完整 210 項測試中 206 項通過，剩餘四項均為 tracked capsule 尚待重建。 / All 83 targeted tests pass; 206 of the full 210 tests pass, with the remaining four solely due to the tracked capsule awaiting rebuild.
 - 下一步 / Next decision: 提交功能版本後重建 capsule，完整回歸通過再推送 main，之後只建立一個同對話五分鐘驗收。 / Commit the functional version, rebuild the capsule, pass the full regression, push main, and then create only one five-minute acceptance run in the same conversation.
 
+## v0.1.18-child — 2026-08-18
+
+- 建立原因 / Reason: 排程必須先解析最新 main 才能讀取契約，但契約又要求在任何 GitHub 讀取前建立 run id，形成無法遵守的啟動悖論。 / The schedule had to resolve latest main before reading the contract, while the contract required a run id before any GitHub read, creating an impossible bootstrap paradox.
+- 實作方式 / Approach: 將 latest-main pin 與 pinned prompt read 明確定義為唯一 pre-contract envelope；契約載入後立即在工作記憶建立 run id，接著才允許 tree、ledger、來源與新聞工作。Mobile runtime 的第一個 GitHub 動作仍是讀取 current ledger。 / Define latest-main pin and pinned-prompt retrieval as the sole pre-contract envelope; immediately generate the run id in task memory after contract load, before tree, ledger, sources, or news work. The first mobile runtime GitHub action remains the current-ledger read.
+- 過度設計檢查 / Overdesign check: 只修正三份既有契約與一項順序測試；沒有新增 schema、服務、stage、權限或重試。 / Only three existing contracts and one ordering test changed; no schema, service, stage, permission, or retry was added.
+- 驗證方式 / Validation: 兩項 RED→GREEN pipeline-contract 測試確認 pre-contract 例外範圍、main pin、run id 與 ledger 順序，並執行相關 identity／ledger 回歸。 / Two red-to-green pipeline-contract tests verify the pre-contract exception boundary and the main-pin, run-id, and ledger order, followed by the related identity and ledger regression suites.
+- 目前結果 / Current result: 相關測試 40/40 通過；等待 capsule workflow 與下一輪同對話驗收。 / Relevant tests pass 40/40; capsule workflow and the next same-conversation acceptance run remain pending.
+
