@@ -1,28 +1,17 @@
 {
   "schema_version":"1.1.0",
   "execution_mode":"mobile-native",
-  "run_id":"gnb-20260818T121300Z-5b7a2e1c",
-  "scheduled_for":"2026-08-18T20:12:17+08:00",
+  "run_id":"gnb-20260818T134706Z-4f7b2c91",
+  "scheduled_for":"2026-08-18T21:46:51+08:00",
   "status":"failed",
-  "current_stage":"candidate-audit",
-  "stage_index":5,
-  "last_completed_stage":"source-scan",
-  "main_sha":"040b6622b8213938c4468aea96625a7a25a3c045",
-  "updated_at":"2026-08-18T12:21:00Z",
-  "last_error":{
-    "code":"FULL_14_DAY_CANDIDATE_AUDIT_PERSISTENCE_UNAVAILABLE",
-    "message":"Pinned mobile contract requires a complete current fourteen-day candidate audit to overwrite run-logs/logs/latest-candidate-audit.json before selection can advance. The existing durable audit contains 69 historical candidates produced under the prior scoring contract. Native execution is unavailable, while the pinned audit-news-candidates skill requires historical append, fourteen-day trimming, deduplication, reason validation, and source-count checks to be script-driven and explicitly says not to recalculate the whole audit with a large model. GitHub contents writes are whole-file replacements. To avoid fabricating, truncating, or silently rescoring historical records, this run stopped after source-scan and preserved the prior audit and reader artifacts."
-  },
+  "current_stage":"reader-rendered",
+  "stage_index":8,
+  "last_completed_stage":"image-validation",
+  "main_sha":"2cae0d413f5d07645a80abae7c3d6953c75454d8",
+  "updated_at":"2026-08-18T14:20:31Z",
+  "last_error":{"code":"CURRENT_RUN_CANDIDATE_AUDIT_NOT_MERGED_INTO_DURABLE_ARTIFACT","message":"The current mobile-native candidate delta was persisted only in logs/current.json while logs/latest-candidate-audit.json still points to the prior run; the pinned contract requires the complete rolling fourteen-day audit to be written to the durable audit artifact before reader delivery."},
   "delivery_status":"not_ready",
   "client_confirmation_supported":false,
-  "reader_artifact":null,
-  "candidate_audit_artifact":null,
-  "source_scan_summary":{
-    "window_start":"2026-08-17T20:12:17+08:00",
-    "window_end":"2026-08-18T20:12:17+08:00",
-    "gdelt":"degraded_tooling_unavailable",
-    "cna":"completed_current_feed",
-    "chinanews":"degraded_current_route_unavailable",
-    "web_search_fallback":"active_verifiable_candidates_found"
-  }
+  "reader_artifact":{"branch":"run-logs","path":"logs/latest-reader.md","blob_sha":"4b25ecbc3a7ec0c7b2d39d4dc2ed3c8516600933"},
+  "candidate_audit_artifact":{"branch":"run-logs","path":"logs/latest-candidate-audit.json","blob_sha":"2435ea400a6dd48f0b35bc58ea2578d3295cb41d"}
 }
