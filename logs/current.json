@@ -1,23 +1,17 @@
 {
   "schema_version": "1.1.0",
   "execution_mode": "mobile-native",
-  "run_id": "gnb-20260818T205043Z-a61f3c9e",
-  "scheduled_for": "2026-08-19T04:52:09+08:00",
-  "status": "completed",
-  "current_stage": "delivery-handoff",
-  "stage_index": 10,
-  "last_completed_stage": "github-result-saved",
-  "main_sha": "1465e0696dbaff7ed3503a947592a3f868da9e09",
-  "updated_at": "2026-08-18T21:10:00Z",
+  "run_id": "gnb-20260818T212530Z-d4e7c2a1",
+  "scheduled_for": "2026-08-19T05:27:50+08:00",
+  "status": "running",
+  "current_stage": "executor-started",
+  "stage_index": 1,
+  "last_completed_stage": "schedule-prepared",
+  "main_sha": "f41d22855833953708787df65bfbf968ef0adb78",
+  "updated_at": "2026-08-18T21:26:00Z",
   "last_error": null,
-  "delivery_status": "handoff_started",
+  "delivery_status": "not_ready",
   "client_confirmation_supported": false,
-  "reader_artifact": {
-    "path": "logs/latest-reader.md",
-    "sha": "6492bdb241fe3c6d28e6594cc1b330035e4caf20"
-  },
-  "candidate_audit_artifact": {
-    "path": "logs/latest-candidate-audit.json",
-    "sha": "d5dcffd0475619c882bc4d877b1d63598e71b48b"
-  }
+  "reader_artifact": null,
+  "candidate_audit_artifact": null
 }
