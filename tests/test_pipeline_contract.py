@@ -378,6 +378,30 @@ class PipelineContractTests(unittest.TestCase):
         ):
             self.assertIn(requirement, daily)
 
+    def test_continuing_events_are_scored_by_verified_impact_delta(self):
+        documents = (
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / "news-brief-settings.md",
+            ROOT / ".agents/skills/select-news-events/references/severity-rubric.md",
+            ROOT / ".agents/skills/audit-news-candidates/SKILL.md",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            for requirement in (
+                "IMPACT_DELTA_CONTINUITY_SCORING",
+                "本日可驗證的影響力變化",
+                "無新增公共影響的名人死亡",
+                "死傷增加、影響範圍擴大",
+                "不得因事件較舊而自動降級",
+                "PASSIVE_ONE_OFF_FIVE_DAY_DECAY",
+                "次日最高 B",
+                "第三日最高 C",
+                "第四日 D",
+                "第五日 E",
+                "五個日曆日後",
+            ):
+                self.assertIn(requirement, text, f"{path} missing {requirement}")
+
     def test_child_update_cannot_inherit_parent_event_grade(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
