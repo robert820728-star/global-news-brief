@@ -26,6 +26,7 @@ The required order for every configured source is: `canonical route -> same-site
 5. 任一步驟失敗時，立即將 `status=failed`，並在 `last_error.code` 與 `last_error.message` 寫入精簡、可排查且不含憑證的原因。突然中斷時，GitHub 保留最後一次成功更新；下一輪會把它標成 `interrupted_by_next_run`。
 6. 完成評分後，先以 UTF-8 JSON 覆寫 `run-logs/logs/latest-candidate-audit.json`，內容必須是本輪完整十四天海選清單、每筆六項分數、總分、等級、決定、理由、來源與 `selected_event_id`；將其 blob SHA 記入 `current.json.candidate_audit_artifact`。完整讀者版產生後，再以 UTF-8 Markdown 覆寫 `run-logs/logs/latest-reader.md`，並把其 blob SHA 記入 `current.json.reader_artifact`，階段才可進入 `github-result-saved`。完成這一步後才嘗試把同一份內容輸出至排程對話。
    - 讀者版日期後必須依序顯示 `執行編號：<run_id>`、`程式版本：<main_sha>`、`正式發布：是`。任何十四天清單與新聞內容都屬於這三行所識別的同一輪；不得混用舊清單。
+   - `READER_TEMPLATE_STRUCTURE_GATE`：產生讀者版前必須讀取同一 pinned main 的 `news-brief-template.md`，並依該檔固定骨架輸出。非空白行順序須為日期、執行編號、程式版本、正式發布、數量摘要；讀者版只能有 `## 今日總覽`、`## 逐條詳報`、`## 後續觀察` 三個二級標題且順序一致，不得加入 `今日重點表`、板塊二級標題、`十四天海選清單`、`驗收註記`、執行模式或其他測試／後台內容。結構不符時不得寫入 `latest-reader.md`，也不得進入 `github-result-saved`。
 7. 輸出對話前最後一次持久更新為 `delivery-handoff`、`status=completed`、`delivery_status=handoff_started`。這只證明新聞流程完成、讀者版已存 GitHub並開始交給 ChatGPT；目前排程沒有手機客戶端顯示回執，因此沒有外部明確回執時不得宣稱 `client_confirmed` 或手機畫面已收到。
    - `CONVERSATION_READER_BYTE_IDENTITY_GATE`：排程最終訊息必須直接交付 `logs/latest-reader.md` 的完整內容，順序與文字不得改成摘要、驗收報告、節錄或僅告知 GitHub 已保存。可以在完整 reader 之後附極短的 run receipt，但不得以 receipt 取代讀者版。若最終訊息未包含完整 reader，`delivery-handoff` 不得視為驗收通過。
 
@@ -67,6 +68,8 @@ The required order for every configured source is: `canonical route -> same-site
    - 首次回填若有必要來源確實無法覆蓋，才以具體來源與日期範圍失敗；完成第一份 audit 後，後續每日只合併新 24 小時候選並移除超過十四天項目，不得每天重跑十四天。
    - `FIRST_RUN_SOURCE_COVERAGE_COMPLETENESS_GATE`：首次回填必須為設定中的每一個來源各保留一筆獨立 coverage record（目前 15/15），不可只用 TWN／CHN／GLB 三筆彙總代替。任何來源 `within_window_count>0` 時，`ranked_items` 或可核對的候選網址／文章識別不得同時為空；候選必須能回指逐站來源紀錄。
    - 若已有前輪 durable summary，十四天回填候選數不得低於前輪單一 24 小時候選數；低於時必須判定為來源覆蓋不足並補掃缺站，不得把稀疏搜尋結果宣稱為完整十四天 audit。
+   - `AUDIT_BASELINE_VALIDITY_GATE`：進入每日 24 小時增量前，既有 audit 必須保留一筆可驗證的首次基線 run；該 run 的每個設定來源都要有獨立 coverage record，且 `scan_window_start` 至 `scan_window_end` 必須覆蓋完整十四天回填窗，不得拿本日 24 小時 coverage 冒充十四天基線。若既有 audit 缺少這筆十四天逐站基線、只有板塊彙總、或基線候選數低於已保存的單一 24 小時候選基準，視為舊基線無效：同輪執行一次 `FIRST_RUN_14_DAY_AUDIT_BOOTSTRAP` 重建基線，再進入正常增量；不得把稀疏舊基線直接續接後宣稱完整。
+   - `AUDIT_BASELINE_PROVENANCE_RETENTION`：建立有效基線後，十四天保留期內的後續 audit 必須保留該 baseline run 與其逐站十四天 coverage provenance；本日 24 小時 source coverage 另存為新 run，不得覆寫或取代基線證據。
 6. 本輪及十四天清單內所有 C 級以上新聞都必須出現在更新後的讀者版；同事件可合併成一則，但不得漏掉其重要更新與來源。
 7. 圖片內容沿用原先為該則新聞選定的圖片，不得為了縮小檔案改換另一張圖。`IMAGE_DEFAULT_ONE_ASSET`：每則預設一張內嵌圖片；`IMAGE_SECOND_ASSET_REQUIRES_INCREMENTAL_INFORMATION`：只有第二張能補充第一張未呈現的範圍、數字、現場或時間變化時才追加，並記錄新增資訊理由，每則最多兩張：
    - `IMAGE_ONE_ASSET_MAY_SATISFY_BOTH_SOURCE_AND_PROFESSIONAL`：同一張官方或專業圖若同時來自已引用來源、內容合格且能滿足專業圖資要求，可同時通過兩組檢查，不必為了形式再附一張重複新聞照；兩組檢查紀錄仍須保留。

@@ -287,6 +287,32 @@ class PipelineContractTests(unittest.TestCase):
         ):
             self.assertIn(requirement, daily)
 
+    def test_mobile_reader_must_follow_canonical_template_structure(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "READER_TEMPLATE_STRUCTURE_GATE",
+            "news-brief-template.md",
+            "## 今日總覽",
+            "## 逐條詳報",
+            "## 後續觀察",
+            "不得加入 `今日重點表`",
+        ):
+            self.assertIn(requirement, daily)
+
+    def test_mobile_increment_rejects_invalid_fourteen_day_baseline(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "AUDIT_BASELINE_VALIDITY_GATE",
+            "完整十四天回填窗",
+            "不得拿本日 24 小時 coverage 冒充十四天基線",
+            "FIRST_RUN_14_DAY_AUDIT_BOOTSTRAP",
+            "AUDIT_BASELINE_PROVENANCE_RETENTION",
+            "不得覆寫或取代基線證據",
+        ):
+            self.assertIn(requirement, daily)
+
     def test_selection_contract_forbids_prior_run_drivers(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         self.assertIn("validate_selection_freshness.py", prompt)

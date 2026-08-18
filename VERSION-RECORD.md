@@ -1,5 +1,13 @@
 # 版本紀錄 / Version Record
 
+## v0.3.3-reader-template-and-baseline-validity — 2026-08-18
+
+- 建立原因 / Reason: 行動驗收把不完整的 40 筆舊 audit 當成有效基線續接，且 GitHub reader 與 GPT 對話輸出都偏離既有讀者模板。 / Mobile acceptance extended an incomplete 40-item audit as a valid baseline, while both the GitHub reader and GPT delivery diverged from the existing reader template.
+- 確認原因 / Confirmed cause: 逐站 coverage 僅覆蓋本日 24 小時，沒有可驗證的十四天 baseline provenance；mobile prompt 也未在寫入前核對 `news-brief-template.md` 的固定三段骨架。 / Per-source coverage covered only the current 24 hours with no verifiable fourteen-day baseline provenance, and the mobile prompt did not validate the fixed three-section `news-brief-template.md` structure before writing.
+- 作法 / Approach: 無效或缺失的十四天基線只重建一次並在保留期內保存 provenance；reader 寫入與對話交付前必須符合既有模板的身分行與三個二級標題。 / Rebuild an invalid or missing fourteen-day baseline once and retain its provenance during the retention window; require the reader identity lines and three template headings before repository write and conversation delivery.
+- 過度設計檢查 / Overdesign check: 只增加兩個既有流程條件與兩個契約測試；不新增 schema、服務、renderer 或發布管道。 / Only two existing-flow conditions and two contract tests were added; no schema, service, renderer, or delivery channel was introduced.
+- 驗證 / Validation: 目標測試涵蓋模板骨架、完整對話交付、十四天基線有效性與逐站 coverage。 / Targeted tests cover template structure, complete conversation delivery, fourteen-day baseline validity, and per-source coverage.
+
 ## v0.3.2-source-coverage-and-conversation-delivery — 2026-08-18
 
 - 建立原因 / Reason: 首次回填只留下三個區域彙總與40筆候選，且GPT只交付驗收摘要而非完整讀者版。 / The first backfill stored only three regional aggregates and 40 candidates, while GPT delivered an acceptance summary instead of the complete reader edition.
