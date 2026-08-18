@@ -1,17 +1,17 @@
 {
   "schema_version": "1.1.0",
   "execution_mode": "mobile-native",
-  "run_id": "gnb-20260818T031743Z-7c41a9e2",
-  "scheduled_for": "2026-08-18T11:17:43+08:00",
+  "run_id": "gnb-20260818T050804Z-3d9f2a71",
+  "scheduled_for": "2026-08-18T13:05:09+08:00",
   "status": "failed",
-  "current_stage": "visuals-completed",
-  "stage_index": 7,
-  "last_completed_stage": "selection-verified",
-  "main_sha": "822052e01df2efda8386e06fa4015adf259f7c87",
-  "updated_at": "2026-08-18T03:37:00Z",
+  "current_stage": "candidate-audit",
+  "stage_index": 5,
+  "last_completed_stage": "source-scan",
+  "main_sha": "ae35c772beafdcbe60c50deb2b0d22645c54af2d",
+  "updated_at": "2026-08-18T05:34:00Z",
   "last_error": {
-    "code": "HISTORICAL_CANDIDATE_AUDIT_NOT_PERSISTED",
-    "message": "Mobile-native routing succeeded, but the prior full-runtime run persisted only its selected reader and run summary; its 310-candidate audit was referenced by local-path SHA in the release receipt and is not available on run-logs, so a complete 14-day rolling candidate audit cannot be reconstructed without inventing historical rejected candidates."
+    "code": "FULL_14_DAY_CANDIDATE_AUDIT_NOT_RECONSTRUCTIBLE",
+    "message": "The v0.3 mobile audit contract requires a durable complete 14-day candidate list before reader rendering. At run start, run-logs/logs/latest-candidate-audit.json did not exist (404). The preceding durable reader preserves selected events only, while the earlier full-runtime run reported 310 candidates without persisting the rejected-candidate audit. Fresh mobile web search can rebuild the current window and recover known selected continuity events, but it cannot reconstruct every rejected candidate from the prior 14 days without fabrication. The run therefore failed closed at candidate-audit; this is a historical audit bootstrap/persistence gap, not a repository materialization or host-workspace defect."
   },
   "delivery_status": "not_ready",
   "client_confirmation_supported": false,
