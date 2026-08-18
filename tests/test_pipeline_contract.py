@@ -368,6 +368,36 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("full-runtime", skill)
         self.assertIn("mobile-native", skill)
 
+    def test_mobile_native_durable_audit_uses_compact_profile_without_verbose_evidence(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        skill = (ROOT / ".agents/skills/audit-news-candidates/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+
+        required_fields = (
+            "candidate_id",
+            "dedup_key",
+            "event_date",
+            "section",
+            "title",
+            "importance_breakdown",
+            "importance_score",
+            "provisional_grade",
+            "decision",
+            "reason",
+            "source_ids",
+            "selected_event_id",
+            "continuity",
+        )
+        for document in (daily, skill):
+            self.assertIn("MOBILE_NATIVE_COMPACT_DURABLE_AUDIT", document)
+            for field in required_fields:
+                self.assertIn(f"`{field}`", document)
+            self.assertIn("MUST_OMIT_VERBOSE_GRADING_EVIDENCE", document)
+            self.assertIn("`grading_evidence`", document)
+            self.assertIn("`source_audit`", document)
+            self.assertIn("full-runtime", document)
+
     def test_old_event_requires_independently_material_update_to_reenter_reader(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 

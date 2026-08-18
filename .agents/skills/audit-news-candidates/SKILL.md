@@ -32,6 +32,10 @@ description: Maintain a rolling fourteen-day audit of all news candidates, inclu
 
 下方 `manage_candidate_audit.py` 命令是 full-runtime 的首選路徑；它不是 mobile-native 的必要前提。當排程宿主沒有可執行 runtime、但 GitHub 已存在 durable audit 時，可直接讀取該 JSON 做受限的結構化合併：若六項欄位、各欄範圍與總分算法未變，保留仍在十四天內的既有候選，不得重算未發生實質更新的歷史候選；只評分本輪新增或有實質更新的候選，移除逾期項目並依既有 key 去重。可用 GitHub contents API 整檔 replacement 保存合併結果，同時如實記錄 `execution_mode=mobile-native`，不得宣稱已執行 script validation。C 級以上仍依當輪規則另做來源驗證；缺少本機 runtime 不得因此阻止本日讀者版。
 
+`MOBILE_NATIVE_COMPACT_DURABLE_AUDIT`
+
+mobile-native durable audit 僅保存滾動合併與讀者驗收必要欄位：`candidate_id`、`dedup_key`、可用時的 `continuity_key`、`event_date`、`section`、`title`、`importance_breakdown`、`importance_score`、`provisional_grade`、`decision`、`reason`、`source_ids`、`selected_event_id`，以及精簡的 `continuity` 狀態與影響變化。`MUST_OMIT_VERBOSE_GRADING_EVIDENCE`：mobile artifact 不得重複保存 verbose `grading_evidence`、逐頁 `source_audit`、文章全文或重複驗證敘述；本輪 C 級以上仍須完成類別相稱的獨立驗證，full-runtime 的詳細證據驗證與稽核規則不變。壓縮既有檔案不得改變候選 ID、六項分數、總分或 C 級以上 `selected_event_id` 映射。
+
 任何 `SS` 至 `C` 候選只能是 `selected` 或同事件的 `merged`，且兩者都必須保存指向本輪 manifest／讀者版事件的 `selected_event_id`。`C-` 預設為 `deferred`／`c_minus_reserve`，取用時必須使用 `c_minus_selected_need` 並保存具體理由。若核心內容查證失敗或未達公共價值，評為 `D`／`E`；不得保留達標評級再以相對重要性、篇數、版面或來源數排除／延後。
 
 ## 內部等級
