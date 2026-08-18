@@ -343,3 +343,11 @@
 - 驗證方式 / Validation: 兩項 RED→GREEN pipeline-contract 測試確認 pre-contract 例外範圍、main pin、run id 與 ledger 順序，並執行相關 identity／ledger 回歸。 / Two red-to-green pipeline-contract tests verify the pre-contract exception boundary and the main-pin, run-id, and ledger order, followed by the related identity and ledger regression suites.
 - 目前結果 / Current result: 相關測試 40/40 通過；等待 capsule workflow 與下一輪同對話驗收。 / Relevant tests pass 40/40; capsule workflow and the next same-conversation acceptance run remain pending.
 
+## v0.1.19-child — 2026-08-18
+
+- 建立原因 / Reason: mobile-native 已完成來源發現，卻把未變更的六項評分格式誤判為新版 rubric，並因無法執行本機 audit script 而拒絕合併既有 69 筆十四天候選。 / Mobile-native completed discovery but misclassified the unchanged six-score format as a new rubric and refused to merge the existing 69-candidate audit because the local audit script was unavailable.
+- 實作方式 / Approach: 明確允許 mobile-native 保留未實質更新的有效歷史候選，只重評本輪新增／更新候選，裁切、去重後以 GitHub contents API 整檔覆寫；C 級以上仍按新版證據政策驗證。 / Explicitly allow mobile-native to retain valid unchanged history, rescore only new or materially updated candidates, prune and deduplicate, then replace the JSON through the GitHub contents API; C-or-higher events still follow the new evidence policy.
+- 過度設計檢查 / Overdesign check: 只補充既有 prompt、既有 audit skill 與一項契約測試；未新增 schema、script、服務、stage 或第二份 audit。 / Only the existing prompt, audit skill, and one contract test changed; no schema, script, service, stage, or second audit was added.
+- 驗證方式 / Validation: RED→GREEN 契約測試確認 full-runtime 與 mobile-native 的責任邊界，以及歷史候選不需無謂重算。 / A red-to-green contract test verifies the full-runtime/mobile-native boundary and prevents needless historical rescoring.
+- 目前結果 / Current result: 相關測試 69/69 通過；等待 capsule workflow 與下一輪同對話驗收。 / Relevant tests pass 69/69; capsule workflow and the next same-conversation acceptance run remain pending.
+

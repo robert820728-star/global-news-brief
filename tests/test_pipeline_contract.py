@@ -349,6 +349,25 @@ class PipelineContractTests(unittest.TestCase):
         ):
             self.assertIn(requirement, daily)
 
+    def test_mobile_native_can_roll_forward_a_valid_existing_audit_without_rescoring_history(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        skill = (ROOT / ".agents/skills/audit-news-candidates/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+
+        for document in (daily, skill):
+            for requirement in (
+                "MOBILE_NATIVE_AUDIT_ROLLING_MERGE",
+                "不得重算未發生實質更新的歷史候選",
+                "六項欄位、各欄範圍與總分算法未變",
+                "GitHub contents API 整檔 replacement",
+                "不得因此阻止本日讀者版",
+            ):
+                self.assertIn(requirement, document)
+        self.assertIn("只重評本輪新增或發生實質更新的候選", daily)
+        self.assertIn("full-runtime", skill)
+        self.assertIn("mobile-native", skill)
+
     def test_old_event_requires_independently_material_update_to_reenter_reader(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 

@@ -99,6 +99,7 @@ The required order for every configured source is: `canonical route -> same-site
    - `DISCOVERY_COVERAGE_RECORD`：首次回填與每日增量只需如實記錄 GDELT、中央社與中新社三個 discovery route 的成功或失敗；不再要求所有驗證來源逐站完成才開始評分。候選仍必須保留實際文章網址與發現來源。
    - `TYPE_CONSISTENT_COVERAGE_SANITY`：不得拿前輪來源掃描的 `raw_item_count` 與本輪去重評分後的 `deduplicated_candidate_count` 互相比較；只有同欄位、同口徑、同時間窗的數量才可作完整性警示，數量本身不得取代逐站證據。
    - `RECOVERABLE_14_DAY_BASELINE_WITHOUT_READER_BLOCK`：若舊資料沒有完整十四天 provenance，不得宣稱來源絕對窮盡，但也不得因此阻止本日讀者版。保留仍在十四天內、可核對來源且已有六項評分的候選，合併本輪 24 小時 discovery 候選、去重與評分，並移除逾期項目；所有可恢復的 C 級以上仍須進讀者版。
+   - `MOBILE_NATIVE_AUDIT_ROLLING_MERGE`：`latest-candidate-audit.json` 已存在時，mobile-native 直接以該檔為滾動基底。若六項欄位、各欄範圍與總分算法未變，舊候選不得只因 main SHA、來源發現方式或驗證政策更新就被視為評分格式失效，也不得重算未發生實質更新的歷史候選。只重評本輪新增或發生實質更新的候選；移除超過十四天項目、按 `dedup_key`／`continuity_key` 合併本輪增量，並保留其餘歷史物件的既有分數、理由與來源。需要更新 durable audit 時，允許使用 GitHub contents API 整檔 replacement 寫回語意等同的合併結果，不要求本機程式；C 級以上事件仍須依本輪證據政策獨立驗證。這項 mobile-native 合併不得冒充 script validation，但也不得因此阻止本日讀者版。
    - `DAILY_COVERAGE_IS_NOT_HISTORICAL_PROOF`：本日 24 小時 source coverage 只能證明本日掃描，不得冒充過去十四天逐站掃描；內部 audit 必須如實保留 `bootstrap_mode` 與各 run 的時間窗。這項限制只禁止誇大證據，不得把可用、來源可核對且符合模板的每日讀者版改判失敗。
 6. 本輪及十四天清單內所有 C 級以上新聞都必須出現在更新後的讀者版；同事件可合併成一則，但不得漏掉其重要更新與來源。
 7. 圖片內容沿用原先為該則新聞選定的圖片，不得為了縮小檔案改換另一張圖。`IMAGE_DEFAULT_ONE_ASSET`：每則預設一張內嵌圖片；`IMAGE_SECOND_ASSET_REQUIRES_INCREMENTAL_INFORMATION`：只有第二張能補充第一張未呈現的範圍、數字、現場或時間變化時才追加，並記錄新增資訊理由，每則最多兩張：
