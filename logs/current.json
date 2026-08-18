@@ -4,42 +4,28 @@
   "run_id":"gnb-20260818T134706Z-4f7b2c91",
   "scheduled_for":"2026-08-18T21:46:51+08:00",
   "status":"running",
-  "current_stage":"candidate-audit",
-  "stage_index":5,
-  "last_completed_stage":"source-scan",
+  "current_stage":"selection-verified",
+  "stage_index":6,
+  "last_completed_stage":"candidate-audit",
   "main_sha":"2cae0d413f5d07645a80abae7c3d6953c75454d8",
-  "updated_at":"2026-08-18T13:56:00Z",
+  "updated_at":"2026-08-18T13:58:00Z",
   "last_error":null,
   "delivery_status":"not_ready",
   "client_confirmation_supported":false,
   "reader_artifact":null,
-  "candidate_audit_artifact":{
-    "path":"logs/latest-candidate-audit.json",
-    "blob_sha":"2435ea400a6dd48f0b35bc58ea2578d3295cb41d",
-    "status":"history_loaded_and_preserved",
-    "history_candidate_count":69,
-    "merge_mode":"mobile-native-rolling-history-plus-current-ledger-delta",
-    "script_validation_claimed":false
-  },
+  "candidate_audit_artifact":{"path":"logs/latest-candidate-audit.json","blob_sha":"2435ea400a6dd48f0b35bc58ea2578d3295cb41d","status":"history_loaded_and_preserved","history_candidate_count":69,"merge_mode":"mobile-native-rolling-history-plus-current-ledger-delta","script_validation_claimed":false},
   "host_capability":"host_execution_unavailable",
-  "source_scan_summary":{
-    "window_start":"2026-08-17T21:47:06+08:00",
-    "window_end":"2026-08-18T21:47:06+08:00",
-    "gdelt":"degraded_tooling_route_unavailable",
-    "cna":"completed_current_feed",
-    "chinanews":"degraded_current_route_unreliable",
-    "web_search_fallback":"active_verifiable_candidates_found"
-  },
+  "source_scan_summary":{"window_start":"2026-08-17T21:47:06+08:00","window_end":"2026-08-18T21:47:06+08:00","gdelt":"degraded_tooling_route_unavailable","cna":"completed_current_feed","chinanews":"degraded_current_route_unreliable","web_search_fallback":"active_verifiable_candidates_found"},
+  "selection_summary":{"selected_count":5,"twn":3,"chn":0,"glb":2,"selected_event_ids":["TWN-01","TWN-02","TWN-03","GLB-01","GLB-02"],"historical_reentry_gate_applied":true,"no_parent_grade_inheritance_applied":true,"all_current_c_or_higher_mapped":true},
   "current_candidate_delta":[
     {"candidate_id":"TWN-BS-032","dedup_key":"twn-pratas-ccg-incursion-20260818","title":"中國海警再侵東沙限制水域","section":"TWN","event_date":"2026-08-18","importance_breakdown":{"public_impact":20,"geographic_or_population_scope":11,"urgency_and_safety":8,"structural_or_policy_significance":12,"material_new_development":9,"core_section_relevance":8},"importance_score":68,"provisional_grade":"B","decision":"selected","reason_code":"selected_threshold_met","reason":"中國海警兩艦同日進入東沙限制水域並由海巡驅離，屬台灣主權與海上執法的實質新事件。","selected_event_id":"TWN-01","source_ids":["cna"],"source_limit_note":"精確即時事實主要來自中央社轉述海巡署。"},
-    {"candidate_id":"TWN-BS-033","dedup_key":"twn-f16v-block70-delivery-20260818","title":"首批F-16V Block 70將返台","section":"TWN","event_date":"2026-08-18","importance_breakdown":{"public_impact":21,"geographic_or_population_scope":12,"urgency_and_safety":7,"structural_or_policy_significance":13,"material_new_development":10,"core_section_relevance":9},"importance_score":72,"provisional_grade":"B","decision":"selected","reason_code":"selected_threshold_met","reason":"66架新購F-16V進入首批返台節點，為延宕軍購的可驗證交付進展。","selected_event_id":"TWN-02","source_ids":["cna","mnd"],"source_limit_note":null},
-    {"candidate_id":"TWN-BS-034","dedup_key":"twn-digital-health-interop-lab-20260818","title":"衛福部成立數位健康互通驗證實驗室","section":"TWN","event_date":"2026-08-18","importance_breakdown":{"public_impact":19,"geographic_or_population_scope":13,"urgency_and_safety":3,"structural_or_policy_significance":12,"material_new_development":9,"core_section_relevance":6},"importance_score":62,"provisional_grade":"C","decision":"selected","reason_code":"selected_threshold_met","reason":"國家級醫療資料互通與認證機制正式啟動，並設定年底醫學中心FHIR Box部署節點。","selected_event_id":"TWN-03","source_ids":["cna","mohw"],"source_limit_note":null},
-    {"candidate_id":"CHN-BS-016-U","dedup_key":"chn-el-nino-outlook-202608","title":"中國媒體再報強至超強厄爾尼諾風險","section":"CHN","event_date":"2026-08-18","importance_breakdown":{"public_impact":18,"geographic_or_population_scope":12,"urgency_and_safety":8,"structural_or_policy_significance":8,"material_new_development":3,"core_section_relevance":5},"importance_score":54,"provisional_grade":"C-","decision":"deferred","reason_code":"continuation_no_material_change","reason":"本輪未找到相較既有官方展望的實質新判定，保留於稽核不進讀者版。"},
-    {"candidate_id":"GLB-BS-003-U","dedup_key":"glb-drc-ebola-2026","title":"WHO更新剛果伊波拉控制與資源缺口","section":"GLB","event_date":"2026-08-18","importance_breakdown":{"public_impact":22,"geographic_or_population_scope":15,"urgency_and_safety":12,"structural_or_policy_significance":12,"material_new_development":9,"core_section_relevance":2},"importance_score":72,"provisional_grade":"B+","decision":"selected","reason_code":"selected_threshold_met","reason":"WHO新增三個月控制評估、募資僅約60%及緊急委員會重評節點；本日新增部分本身達B級。","selected_event_id":"GLB-01","source_ids":["reuters","who"],"source_limit_note":null},
+    {"candidate_id":"TWN-BS-033","dedup_key":"twn-f16v-block70-delivery-20260818","title":"首批F-16V Block 70將返台","section":"TWN","event_date":"2026-08-18","importance_breakdown":{"public_impact":21,"geographic_or_population_scope":12,"urgency_and_safety":7,"structural_or_policy_significance":13,"material_new_development":10,"core_section_relevance":9},"importance_score":72,"provisional_grade":"B","decision":"selected","reason_code":"selected_threshold_met","reason":"66架新購F-16V進入首批返台節點，為延宕軍購的可驗證交付進展。","selected_event_id":"TWN-02","source_ids":["cna","mnd"]},
+    {"candidate_id":"TWN-BS-034","dedup_key":"twn-digital-health-interop-lab-20260818","title":"衛福部成立數位健康互通驗證實驗室","section":"TWN","event_date":"2026-08-18","importance_breakdown":{"public_impact":19,"geographic_or_population_scope":13,"urgency_and_safety":3,"structural_or_policy_significance":12,"material_new_development":9,"core_section_relevance":6},"importance_score":62,"provisional_grade":"C","decision":"selected","reason_code":"selected_threshold_met","reason":"國家級醫療資料互通與認證機制正式啟動，並設定年底醫學中心FHIR Box部署節點。","selected_event_id":"TWN-03","source_ids":["cna","mohw"]},
+    {"candidate_id":"CHN-BS-016-U","dedup_key":"chn-el-nino-outlook-202608","title":"中國媒體再報強至超強厄爾尼諾風險","section":"CHN","event_date":"2026-08-18","importance_score":54,"provisional_grade":"C-","decision":"deferred","reason_code":"continuation_no_material_change","reason":"本輪未找到相較既有官方展望的實質新判定。"},
+    {"candidate_id":"GLB-BS-003-U","dedup_key":"glb-drc-ebola-2026","title":"WHO更新剛果伊波拉控制與資源缺口","section":"GLB","event_date":"2026-08-18","importance_breakdown":{"public_impact":22,"geographic_or_population_scope":15,"urgency_and_safety":12,"structural_or_policy_significance":12,"material_new_development":9,"core_section_relevance":2},"importance_score":72,"provisional_grade":"B+","decision":"selected","reason_code":"selected_threshold_met","reason":"WHO新增三個月控制評估、募資僅約60%及緊急委員會重評節點；本日新增部分本身達B級。","selected_event_id":"GLB-01","source_ids":["reuters","who"]},
     {"candidate_id":"GLB-BS-023","dedup_key":"glb-singapore-platform-antiscam-rules-20260818","title":"新加坡強制通訊與平台新增反詐措施","section":"GLB","event_date":"2026-08-18","importance_breakdown":{"public_impact":20,"geographic_or_population_scope":14,"urgency_and_safety":5,"structural_or_policy_significance":13,"material_new_development":10,"core_section_relevance":3},"importance_score":65,"provisional_grade":"B","decision":"selected","reason_code":"selected_threshold_met","reason":"多個大型通訊與社群平台被納入具期限、身分驗證與最高罰款的全國反詐規則。","selected_event_id":"GLB-02","source_ids":["cna","singapore_mddi"],"source_limit_note":"8月18日細部措施的同等即時獨立來源有限。"},
-    {"candidate_id":"GLB-BS-024","dedup_key":"glb-openai-teen-protection-report-20260818","title":"媒體再報AI青少年保護功能","section":"GLB","event_date":"2026-08-18","importance_breakdown":{"public_impact":16,"geographic_or_population_scope":12,"urgency_and_safety":4,"structural_or_policy_significance":8,"material_new_development":3,"core_section_relevance":4},"importance_score":47,"provisional_grade":"D","decision":"excluded","reason_code":"unreliable_or_unverified","reason":"本輪媒體所稱新版本差異未由可核對官方資料充分證實，且既有青少年保護功能早已存在。"},
-    {"candidate_id":"GLB-BS-025","dedup_key":"glb-houthi-saudi-refinery-rereport-20260818","title":"胡塞攻擊沙烏地煉油設施再報","section":"GLB","event_date":"2026-08-18","importance_breakdown":{"public_impact":16,"geographic_or_population_scope":11,"urgency_and_safety":7,"structural_or_policy_significance":7,"material_new_development":4,"core_section_relevance":3},"importance_score":48,"provisional_grade":"D","decision":"excluded","reason_code":"outside_time_window","reason":"核心攻擊發生早於本輪24小時時間窗，本輪主要為重報，沒有新的獨立升級。"},
-    {"candidate_id":"GLB-BS-026","dedup_key":"glb-spain-almaraz-rereport-20260818","title":"西班牙Almaraz核電決策再報","section":"GLB","event_date":"2026-08-18","importance_breakdown":{"public_impact":15,"geographic_or_population_scope":11,"urgency_and_safety":2,"structural_or_policy_significance":9,"material_new_development":4,"core_section_relevance":4},"importance_score":45,"provisional_grade":"D","decision":"excluded","reason_code":"outside_time_window","reason":"實質決策節點早於本輪時間窗，本日未出現新的C級進展。"}
-  ],
-  "audit_history_note":"已載入前一 durable 69候選十四天基線並依同一六項評分格式比較；因無本機 runtime，本輪不宣稱 script validation。為避免破壞既有完整歷史檔，本輪增量完整持久化於 current ledger，既有 latest-candidate-audit.json 保持原 blob。依 pinned mobile contract，歷史持久化限制不得阻止本日讀者版。"
+    {"candidate_id":"GLB-BS-024","dedup_key":"glb-openai-teen-protection-report-20260818","title":"媒體再報AI青少年保護功能","section":"GLB","event_date":"2026-08-18","importance_score":47,"provisional_grade":"D","decision":"excluded","reason_code":"unreliable_or_unverified","reason":"本輪媒體所稱新版本差異未由可核對官方資料充分證實。"},
+    {"candidate_id":"GLB-BS-025","dedup_key":"glb-houthi-saudi-refinery-rereport-20260818","title":"胡塞攻擊沙烏地煉油設施再報","section":"GLB","event_date":"2026-08-18","importance_score":48,"provisional_grade":"D","decision":"excluded","reason_code":"outside_time_window","reason":"核心攻擊發生早於本輪24小時時間窗，本輪主要為重報。"},
+    {"candidate_id":"GLB-BS-026","dedup_key":"glb-spain-almaraz-rereport-20260818","title":"西班牙Almaraz核電決策再報","section":"GLB","event_date":"2026-08-18","importance_score":45,"provisional_grade":"D","decision":"excluded","reason_code":"outside_time_window","reason":"實質決策節點早於本輪時間窗，本日未出現新的C級進展。"}
+  ]
 }
