@@ -5,6 +5,12 @@ description: Acquire complete rolling-window article lists from prevalidated dai
 
 # 取得新聞候選清單
 
+## Discovery first
+
+`DISCOVERY_THEN_VERIFY`
+
+Use `news-source-pool.json.discovery_sources` for the initial list: GDELT plus CNA and China News Service. A failed discovery feed is recorded as degraded and does not block the brief when another feed or the final web-search fallback yields current verifiable candidates. Deduplicate and score before any C-or-higher event is independently verified; collect images only after verification.
+
 +## Same-source recovery order
 
 `SAME_SOURCE_RECOVERY_ORDER`
@@ -40,11 +46,11 @@ The required order for every configured source is: `canonical route -> same-site
 
 ## 逐站完成條件
 
-- `section_sources` 每個板塊恰有5個主要來源；預設 TWN、CHN、GLB 合計15站，全部獨立掃描。
+- `discovery_sources` 固定為 GDELT、中央社與中新社；GDELT 覆蓋三個板塊，兩個區域來源補台灣與中國盲區。其餘 `sources` 是評分後驗證池，不是前期完成門檻。
 - 連續翻頁直到跨過精確24小時起點或來源明確耗盡。
 - 每站先保存時間窗內完整文章，再按公共價值取前30；強制例外可突破30。
-- specialist supplements 只在相應主題出現時補漏，不計入15站完成數，也不能代替失敗的主要來源。
-- `TAIWAN_DOMESTIC_COVERAGE_GUARD` 在台灣五站完成後執行三個限定領域搜尋，每個領域最多 `5 results`，且只能命中既有台灣五站。每個線索必須以 `same-source recovery` 取得所屬站的標題、時間、摘要與快照證據，回填該站 ranked items 並重跑 validator，之後才可進入 `canonical candidate audit`；不得另建無證據候選，也不得在評級前啟動圖片。
+- specialist supplements 只在相應主題完成評分後用於驗證，不計入 discovery readiness。
+- `TAIWAN_DOMESTIC_COVERAGE_GUARD` 以中央社補查三個限定領域，每個領域最多 `5 results`；中央社不可用或明顯過舊時才使用最後的網頁搜尋備援。所有線索都先查重與評分，不得在評級前啟動圖片。
 
 ## 每篇最少欄位
 
@@ -71,4 +77,4 @@ python3 scripts/build_source_candidate_list.py \
   --window-end <window-end>
 ```
 
-接著執行 `scripts/validate_source_scan_evidence.py` 驗證每站證據，並用 JSON Schema 驗證候選清單。只有15站全部通過才交給 `select-news-events`；中斷則定位到單一來源與路由後局部恢復。
+接著以 `scripts/validate_source_scan_evidence.py` 驗證實際成功的 discovery scans，並用 JSON Schema 驗證候選清單。至少一個 discovery source 或最後搜尋備援取得可核實候選即可交給 `select-news-events`；只有完全沒有可核實候選才停止。

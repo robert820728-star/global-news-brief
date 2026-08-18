@@ -1,16 +1,79 @@
 {
-  "schema_version": "1.2.0",
+  "schema_version": "1.3.0",
   "window_hours": 24,
   "per_source_rank_limit": 30,
   "primary_sources_per_section": 5,
   "source_scan_evidence_required": true,
+  "discovery_policy": {
+    "strategy": "aggregate_then_regional_supplements",
+    "minimum_ready_sources": 1,
+    "source_failure_policy": "degrade_not_block",
+    "stop_only_when_no_verifiable_candidates": true,
+    "deduplicate_before_scoring": true
+  },
+  "discovery_sources": [
+    {
+      "source_id": "gdelt",
+      "name": "GDELT DOC 2.0",
+      "homepage": "https://api.gdeltproject.org/",
+      "sections": ["TWN", "CHN", "GLB"],
+      "role": "primary_aggregator",
+      "allow_external_article_urls": true
+    },
+    {
+      "source_id": "cna",
+      "name": "Central News Agency",
+      "homepage": "https://www.cna.com.tw/",
+      "sections": ["TWN"],
+      "role": "regional_supplement",
+      "allow_external_article_urls": false
+    },
+    {
+      "source_id": "chinanews",
+      "name": "China News Service",
+      "homepage": "https://www.chinanews.com.cn/",
+      "sections": ["CHN"],
+      "role": "regional_supplement",
+      "allow_external_article_urls": false
+    }
+  ],
+  "verification_policy": {
+    "after_scoring": true,
+    "minimum_grade": "C",
+    "verify_against_original_or_independent_reliable_source": true,
+    "single_reliable_source_allowed_with_note": true,
+    "verification_must_not_expand_candidate_pool_without_scoring": true,
+    "images_after_verification": true,
+    "category_routes": {
+      "science_technology_medicine": ["paper_or_journal_record", "peer_review_status", "independent_expert_or_follow_up"],
+      "war_military": ["party_a_account", "party_b_account", "independent_or_third_party_when_available"],
+      "disaster_accident": ["timestamped_official_statistics", "emergency_or_medical_record", "discrepancy_note_when_counts_conflict"],
+      "economy_business": ["official_statistics", "regulatory_filing", "market_or_company_primary_data"],
+      "law_policy_election": ["judgment_statute_or_signed_text", "responsible_authority", "plural_independent_observation"],
+      "public_health": ["health_authority", "international_body", "research_evidence"]
+    },
+    "official_source_bias_guard": {
+      "official_claim_is_not_automatic_truth": true,
+      "china_requires_non_official_comparison_for_contested_claims": true,
+      "disclose_possible_omission_or_concealment": true
+    },
+    "media_evidence_guard": {
+      "syndicated_or_copied_reports_count_as_one_chain": true,
+      "trace_to_earliest_attributable_record": true,
+      "domain_expertise_and_method_required_for_expert_weight": true,
+      "general_media_cannot_replace_domain_evidence": true,
+      "timely_reporting_without_official_record_allowed": true,
+      "missing_primary_record_requires_reader_note": true,
+      "unverified_details_remain_provisional": true
+    }
+  },
   "acquisition_policy": {
-    "route_order": ["structured_direct", "html_direct", "same_source_alternate", "browser_rendered_if_permitted"],
+    "route_order": ["aggregate_api", "structured_direct", "html_direct", "browser_or_web_search_final_fallback"],
     "browser_fallback_triggers": ["dynamic_content_missing", "parse_failure"],
-    "cross_source_substitution_forbidden": true,
+    "cross_source_substitution_forbidden": false,
     "browser_snapshot_required_when_used": true,
     "browser_must_not_be_a_runtime_dependency": true,
-    "configured_primary_sources_must_pass_non_browser_health_check": true
+    "configured_primary_sources_must_pass_non_browser_health_check": false
   },
   "mandatory_overflow_triggers": [
     "major_disaster", "epidemic", "war_or_military", "diplomacy_escalation",
@@ -38,21 +101,21 @@
       "topics": ["economy", "trade", "industry", "business_costs", "supply_chain"],
       "window_hours": 24,
       "result_limit": 5,
-      "same_source_only": true
+      "same_source_only": false
     },
     {
       "sweep_id": "health_food_consumer",
       "topics": ["food_safety", "medicine", "consumer_safety", "recall", "public_health"],
       "window_hours": 24,
       "result_limit": 5,
-      "same_source_only": true
+      "same_source_only": false
     },
     {
       "sweep_id": "central_policy_institutions",
       "topics": ["central_budget", "legislation", "constitutional_action", "public_service_operation"],
       "window_hours": 24,
       "result_limit": 5,
-      "same_source_only": true
+      "same_source_only": false
     }
   ],
   "ranking": {

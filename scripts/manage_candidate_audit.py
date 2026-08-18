@@ -78,9 +78,21 @@ def validate(data, source_pool=None):
     allowed_overflow_triggers = set()
     source_scan_evidence_required = False
     source_by_id = {}
+    discovery_source_ids = []
+    minimum_ready_discovery_sources = 0
+    all_configured_source_ids = set()
     ranking_dimensions = {}
     if source_pool:
         expected_sources = [item["source_id"] for item in source_pool.get("sources", [])]
+        discovery_source_ids = [
+            item["source_id"] for item in source_pool.get("discovery_sources", [])
+        ]
+        minimum_ready_discovery_sources = int(
+            source_pool.get("discovery_policy", {}).get(
+                "minimum_ready_sources", len(discovery_source_ids)
+            )
+        )
+        all_configured_source_ids = set(expected_sources) | set(discovery_source_ids)
         expected_source_count = len(expected_sources)
         section_sources = source_pool.get("section_sources", {})
         configured_per_section = source_pool.get("primary_sources_per_section")
@@ -92,7 +104,13 @@ def validate(data, source_pool=None):
         per_source_limit = source_pool.get("per_source_rank_limit", 30)
         allowed_overflow_triggers = set(source_pool.get("mandatory_overflow_triggers", []))
         source_scan_evidence_required = source_pool.get("source_scan_evidence_required") is True
-        source_by_id = {item["source_id"]: item for item in source_pool.get("sources", [])}
+        source_by_id = {
+            item["source_id"]: item
+            for item in (
+                source_pool.get("sources", [])
+                + source_pool.get("discovery_sources", [])
+            )
+        }
         if not expected_sources or len(set(expected_sources)) != expected_source_count:
             errors.append("news-source-pool.json 必須定義至少一個且全部唯一的核心來源")
         if (
@@ -141,10 +159,17 @@ def validate(data, source_pool=None):
             errors.append(run_label + ".source_coverage 必須是陣列")
             coverage = []
         coverage_ids = [item.get("source_id") for item in coverage if isinstance(item, dict)]
-        if expected_sources is not None and coverage_ids != expected_sources:
+        legacy_full_coverage = expected_sources is not None and coverage_ids == expected_sources
+        discovery_coverage = (
+            bool(discovery_source_ids)
+            and len(coverage_ids) >= minimum_ready_discovery_sources
+            and len(coverage_ids) == len(set(coverage_ids))
+            and set(coverage_ids).issubset(set(discovery_source_ids))
+        )
+        if expected_sources is not None and not (legacy_full_coverage or discovery_coverage):
             errors.append(
                 run_label
-                + f" 必須依來源池固定順序完成全部 {len(expected_sources)} 個核心來源確認"
+                + " source coverage 必須是完整舊來源池，或達到最低可用數的 discovery sources"
             )
 
         raw_total = 0
@@ -275,7 +300,7 @@ def validate(data, source_pool=None):
         if isinstance(run.get("raw_item_count"), int) and len(candidates) > run["raw_item_count"]:
             errors.append(run_label + " 去重後候選不得多於原始入池條目")
 
-        valid_source_ids = set(expected_sources or coverage_ids)
+        valid_source_ids = all_configured_source_ids or set(coverage_ids)
         candidate_url_list = []
         for candidate_index, candidate in enumerate(candidates, 1):
             label = f"{run_label}.candidates[{candidate_index}]"

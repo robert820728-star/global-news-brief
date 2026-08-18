@@ -316,11 +316,19 @@ def fetch_routes(route_config: Path, output_dir: Path, timeout_seconds: int,
                 route, result, snapshot_dir, timeout_seconds, window_start
             )
         results.append(result)
+    ready_count = sum(bool(item["route_ready"]) for item in results)
+    minimum_ready = int(config.get("minimum_ready_routes", len(results)))
     coverage = {
         "schema_version": "1.0.0",
         "generated_at": datetime.now().astimezone().isoformat(),
-        "route_ready_count": sum(bool(item["route_ready"]) for item in results),
+        "route_ready_count": ready_count,
         "route_total_count": len(results),
+        "minimum_ready_routes": minimum_ready,
+        "status": (
+            "ready" if ready_count == len(results)
+            else "degraded" if ready_count >= minimum_ready
+            else "failed"
+        ),
         "results": results,
     }
     (output_dir / "source-route-coverage.json").write_text(
@@ -346,7 +354,7 @@ def main() -> int:
         args.window_start,
     )
     print(json.dumps(coverage, ensure_ascii=False, separators=(",", ":")))
-    return 0 if coverage["route_ready_count"] == coverage["route_total_count"] else 1
+    return 0 if coverage["route_ready_count"] >= coverage["minimum_ready_routes"] else 1
 
 
 if __name__ == "__main__":

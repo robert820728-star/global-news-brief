@@ -221,11 +221,15 @@ def resolve_source_inputs(scan, coverage, source):
             (item for item in coverage if isinstance(item, dict) and item.get("source_id") == source_id),
             None,
         )
-    if isinstance(source, dict) and isinstance(source.get("sources"), list):
-        source = next(
-            (item for item in source["sources"] if isinstance(item, dict) and item.get("source_id") == source_id),
-            None,
-        )
+    if isinstance(source, dict) and (
+        isinstance(source.get("sources"), list)
+        or isinstance(source.get("discovery_sources"), list)
+    ):
+        source = next((
+            item
+            for item in source.get("sources", []) + source.get("discovery_sources", [])
+            if isinstance(item, dict) and item.get("source_id") == source_id
+        ), None)
     if not isinstance(coverage, dict):
         raise ValueError(f"{source_id or 'unknown'}: aggregate coverage 找不到對應來源")
     if not isinstance(source, dict):
@@ -253,14 +257,27 @@ def main():
         errors = validate_scan(scan, coverage, source)
         source_count = 1
     else:
-        sources = source.get("sources") if isinstance(source, dict) else None
+        sources = (
+            source.get("discovery_sources") or source.get("sources")
+            if isinstance(source, dict) else None
+        )
         if not isinstance(sources, list) or not sources:
             print("FAIL: --scan-dir 模式需要含 sources 的 aggregate source pool")
             return 1
+        coverage_items = coverage if isinstance(coverage, list) else []
+        minimum_ready = int(source.get("discovery_policy", {}).get(
+            "minimum_ready_sources", len(sources)
+        ))
+        if len(coverage_items) < minimum_ready:
+            print(
+                "FAIL: discovery source coverage below minimum: "
+                f"{len(coverage_items)}/{minimum_ready}"
+            )
+            return 1
         errors = []
         scan_dir = Path(args.scan_dir)
-        for source_item in sources:
-            source_id = source_item.get("source_id") if isinstance(source_item, dict) else None
+        for coverage_item in coverage_items:
+            source_id = coverage_item.get("source_id") if isinstance(coverage_item, dict) else None
             scan_path = scan_dir / f"{source_id}.json"
             if not source_id or not scan_path.is_file():
                 errors.append(f"source_scan[{source_id or 'unknown'}] 缺少 scan：{scan_path}")
@@ -274,7 +291,7 @@ def main():
             errors.extend(validate_scan(
                 scan, coverage_item, resolved_source, f"source_scan[{source_id}]"
             ))
-        source_count = len(sources)
+        source_count = len(coverage_items)
     for error in errors:
         print("FAIL:", error)
     if not errors:

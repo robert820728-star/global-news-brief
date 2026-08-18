@@ -23,6 +23,28 @@ VALIDATOR_SPEC.loader.exec_module(VALIDATOR)
 
 
 class MaterializeSourceScansTests(unittest.TestCase):
+    def test_gdelt_json_discovers_external_articles_and_image_hints(self):
+        payload = json.dumps({"articles": [{
+            "url": "https://example.net/world/major-event",
+            "title": "Major international event",
+            "seendate": "20260818T101500Z",
+            "socialimage": "https://images.example.net/event.jpg",
+            "domain": "example.net",
+            "language": "English",
+            "sourcecountry": "United States",
+        }]})
+        items = MODULE.parse_json_items(
+            payload,
+            "https://api.gdeltproject.org/api/v2/doc/doc",
+            "https://api.gdeltproject.org/",
+            "aggregate_api",
+            2026,
+            allow_external_links=True,
+        )
+        article = items["https://example.net/world/major-event"]
+        self.assertEqual("2026-08-18T10:15:00+00:00", article["published_at"])
+        self.assertEqual("https://images.example.net/event.jpg", article["image_url_hint"])
+
     def test_anchor_title_attribute_beats_numeric_slug(self):
         html = """<html><body>
 <time class="story-list__time">2026-08-17 06:11</time>

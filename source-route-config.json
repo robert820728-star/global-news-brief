@@ -1,21 +1,32 @@
 {
-  "schema_version": "1.0.0",
-  "description": "Primary same-source acquisition routes for the 15 required news sources.",
+  "schema_version": "1.1.0",
+  "description": "Discovery routes only. Candidate verification uses the wider source pool after scoring.",
+  "minimum_ready_routes": 1,
   "routes": [
-    {"source_id": "cna", "route": "structured_direct", "request_url_template": "https://www.cna.com.tw/cna2018api/api/WNewsList", "request_method": "POST", "request_json": {"action": "0", "category": "aall", "pagesize": 500, "pageidx": 1}, "request_headers": {"Referer": "https://www.cna.com.tw/list/aall.aspx"}, "json_exhaustion_path": ["ResultData", "NextPageIdx"], "snapshot_name": "cna.route-probe.json"},
-    {"source_id": "pts", "route": "structured_direct", "request_url_template": "https://news.pts.org.tw/xml/newsfeed.xml", "snapshot_name": "pts.route-probe.bin"},
-    {"source_id": "udn", "route": "html_direct", "request_url_template": "https://udn.com/news/breaknews/1", "request_headers": {"Referer": "https://udn.com/news/breaknews/1"}, "snapshot_name": "udn.route-probe.bin", "pagination": {"request_url_template": "https://udn.com/api/more?page={page}&id=&channelId=1&cate_id=0&type=breaknews", "start_page": 2, "max_pages": 60, "items_path": ["lists"], "published_path": ["time", "date"]}},
-    {"source_id": "tvbs", "route": "structured_direct", "request_url_template": "https://news.tvbs.com.tw/sitemap/news-sitemap", "snapshot_name": "tvbs.route-probe.xml"},
-    {"source_id": "ebc", "route": "html_direct", "request_url_template": "https://news.ebc.net.tw/", "snapshot_name": "ebc.route-probe.bin"},
-    {"source_id": "xinhua", "route": "html_direct", "request_url_template": "https://www.news.cn/world/", "snapshot_name": "xinhua.route-probe.bin"},
-    {"source_id": "caixin", "route": "html_direct", "request_url_template": "https://www.caixin.com/", "snapshot_name": "caixin.route-probe.bin"},
-    {"source_id": "chinanews", "route": "html_direct", "request_url_template": "https://www.chinanews.com.cn/scroll-news/{yyyy}/{MMdd}/news.shtml", "date_offset_days": -1, "snapshot_name": "chinanews.route-probe.bin"},
-    {"source_id": "jiemian", "route": "html_direct", "request_url_template": "https://www.jiemian.com/", "snapshot_name": "jiemian.route-probe.bin"},
-    {"source_id": "yicai", "route": "html_direct", "request_url_template": "https://www.yicai.com/", "snapshot_name": "yicai.route-probe.bin"},
-    {"source_id": "reuters", "route": "structured_direct", "request_url_template": "https://www.reuters.com/arc/outboundfeeds/sitemap/?outputType=xml&from=100", "snapshot_name": "reuters.route-probe.bin"},
-    {"source_id": "ap", "route": "html_direct", "request_url_template": "https://apnews.com/world-news", "snapshot_name": "ap.route-probe.bin"},
-    {"source_id": "guardian", "route": "structured_direct", "request_url_template": "https://www.theguardian.com/world/rss", "snapshot_name": "guardian.route-probe.bin"},
-    {"source_id": "aljazeera", "route": "structured_direct", "request_url_template": "https://www.aljazeera.com/sitemap.xml?yyyy={yyyy}&mm={MM}&dd={dd}", "date_offsets_days": [0, -1, -2], "minimum_ready_variants": 2, "snapshot_name": "aljazeera.route-probe.xml"},
-    {"source_id": "cbs_news", "route": "structured_direct", "request_url_template": "https://www.cbsnews.com/latest/rss/world", "snapshot_name": "cbs-news.route-probe.bin"}
+    {
+      "source_id": "gdelt",
+      "route": "aggregate_api",
+      "request_url_template": "https://api.gdeltproject.org/api/v2/doc/doc?query=(sourcelang%3Aenglish%20OR%20sourcelang%3Achinese)&mode=artlist&maxrecords=250&timespan=24h&sort=datedesc&format=json",
+      "snapshot_name": "gdelt.discovery.json",
+      "source_exhaustion_marker": "\"articles\""
+    },
+    {
+      "source_id": "cna",
+      "route": "structured_direct",
+      "request_url_template": "https://www.cna.com.tw/cna2018api/api/WNewsList",
+      "request_method": "POST",
+      "request_json": {"action": "0", "category": "aall", "pagesize": 500, "pageidx": 1},
+      "request_headers": {"Referer": "https://www.cna.com.tw/list/aall.aspx"},
+      "json_exhaustion_path": ["ResultData", "NextPageIdx"],
+      "snapshot_name": "cna.discovery.json"
+    },
+    {
+      "source_id": "chinanews",
+      "route": "html_direct",
+      "request_url_template": "https://www.chinanews.com.cn/scroll-news/{yyyy}/{MMdd}/news.shtml",
+      "date_offset_days": 0,
+      "snapshot_name": "chinanews.discovery.html",
+      "source_exhaustion_marker": "</html>"
+    }
   ]
 }

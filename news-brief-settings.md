@@ -1,5 +1,11 @@
 # 新聞簡報設定
 
+## Discovery and verification split
+
+`DISCOVERY_THEN_VERIFY`
+
+The initial list comes from GDELT, CNA, and China News Service. A discovery source failure degrades coverage but does not block the whole brief when another discovery route or the final web-search fallback yields verifiable current candidates. Deduplicate and score first; then apply category-appropriate independent verification to C-or-higher events, and collect images only after verification.
+
 +## Same-source recovery order
 
 `SAME_SOURCE_RECOVERY_ORDER`
@@ -80,7 +86,7 @@ The required order for every configured source is: `canonical route -> same-site
 
 - 固定讀取 `news-source-pool.json` 的核心來源。每個來源分別掃描精確 24 小時窗口內全部可見條目，依本專案公共價值排序；該站有 30 則以上時取前 30 則，不足 30 則時全部取用，另追加合格強制例外。
 - 每站必須保存時間窗內數量、完成排序數量、實際入池數量及入池網址。任一來源未完成、排序未覆蓋全部時間窗條目、該取前 30 則卻少取，均視為海選失敗並重跑來源搜尋。
-- `TAIWAN_DOMESTIC_COVERAGE_GUARD`：台灣核心五站完成後，另對經濟／貿易／產業、食藥／消費安全、中央預算／立法／憲政三個領域各執行一次同一 24 小時窗搜尋，每個領域最多 `5 results`。結果只能來自台灣既有五個主要來源；命中漏項時必須走 `same-source recovery`，把網址、時間、標題與原始證據回填該站 scan，再進入 `canonical candidate audit`。搜尋線索不得繞過來源證據、去重或六項評分，也不得直接觸發圖片流程。
+- `TAIWAN_DOMESTIC_COVERAGE_GUARD`：中央社另對經濟／貿易／產業、食藥／消費安全、中央預算／立法／憲政三個領域各執行一次同一 24 小時窗搜尋，每個領域最多 `5 results`。中央社不可用或明顯過舊時才使用網頁搜尋補候選；線索不得繞過去重或六項評分，也不得直接觸發圖片流程。
 - 站內前 30 使用 `public_value_v1` 百分制：公共影響 30、地理／人口範圍 20、急迫與安全 15、結構／政策意義 15、實質新進展 10、核心板塊關聯 10。十四天稽核中的每筆海選條目都必須保存六項 `importance_breakdown`、總分與理由；每項不得超過設定權重，六項總和必須等於 `importance_score`。同分依發布時間、原始證據直接性及穩定網址排序。
 - 排名 30 名以後若涉及重大災害、疫情、戰爭、軍事外交、選舉、央行／金融異常、重大資安、關鍵基礎設施、重大科研突破、文化產業／創作者生態／平台制度轉折或官方緊急警報，仍以強制例外入池並保存觸發理由。走鐘獎等單一產業大型評選活動第一次停辦，本身就是異常與制度轉折，最低列 `C`，不以「只停一屆」降為候補；第二、三次延續停辦若沒有新增原因、制度變化或擴散影響，因已成常態且資訊增量低，降為 `C-` 或 `D`。若後續出現新原因或結構變化，仍按新增影響重新評級。
 - 十五站與完成回填的台灣哨兵結果合併後，先按底層事件跨站、跨語言去重；去重後每個候選都必須評為 `SS` 至 `E` 並保存獨立的 `grade_reason`。

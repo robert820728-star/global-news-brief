@@ -84,14 +84,16 @@ class FetchSourceRoutesTests(unittest.TestCase):
             server.server_close()
             thread.join(timeout=2)
 
-    def test_tvbs_uses_official_news_sitemap_not_short_homepage(self):
+    def test_config_uses_small_discovery_set_instead_of_fifteen_mandatory_routes(self):
         config = json.loads((ROOT / "source-route-config.json").read_text(encoding="utf-8"))
-        tvbs = next(item for item in config["routes"] if item["source_id"] == "tvbs")
-        self.assertEqual("structured_direct", tvbs["route"])
+        self.assertEqual(1, config["minimum_ready_routes"])
         self.assertEqual(
-            "https://news.tvbs.com.tw/sitemap/news-sitemap",
-            tvbs["request_url_template"],
+            ["gdelt", "cna", "chinanews"],
+            [item["source_id"] for item in config["routes"]],
         )
+        gdelt = config["routes"][0]
+        self.assertEqual("aggregate_api", gdelt["route"])
+        self.assertIn("api.gdeltproject.org/api/v2/doc/doc", gdelt["request_url_template"])
 
     def test_configured_json_pagination_stops_after_crossing_window_start(self):
         requested_pages = []

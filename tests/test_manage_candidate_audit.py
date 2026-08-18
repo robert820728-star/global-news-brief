@@ -133,6 +133,27 @@ def valid_audit(candidates=None, per_source_count=1):
 
 
 class CandidateAuditTests(unittest.TestCase):
+    def test_degraded_discovery_coverage_accepts_one_ready_source(self):
+        pool = source_pool()
+        pool["discovery_sources"] = [
+            next(item for item in pool["sources"] if item["source_id"] == source_id)
+            for source_id in ("cna", "chinanews", "reuters")
+        ]
+        pool["discovery_policy"] = {
+            "minimum_ready_sources": 1,
+            "source_failure_policy": "degrade_not_block",
+        }
+        audit = valid_audit()
+        run = audit["runs"][0]
+        run["source_coverage"] = [
+            item for item in run["source_coverage"] if item["source_id"] == "cna"
+        ]
+        only_url = run["source_coverage"][0]["selected_item_urls"][0]
+        run["raw_item_count"] = 1
+        run["candidates"][0]["candidate_urls"] = [only_url]
+        run["candidates"][0]["source_ids"] = ["cna"]
+        self.assertEqual([], MODULE.validate(audit, pool))
+
     def test_ordinary_local_disaster_under_50_cannot_reach_c(self):
         item = candidate("C", "selected")
         item["grading_evidence"]["impact_scope_level"] = "local"
@@ -324,7 +345,7 @@ class CandidateAuditTests(unittest.TestCase):
         missing["runs"][0]["source_coverage"].pop()
         missing["runs"][0]["raw_item_count"] -= 1
         errors = MODULE.validate(missing, pool)
-        self.assertTrue(any("全部 15 個核心來源" in error for error in errors))
+        self.assertTrue(any("source coverage" in error for error in errors))
 
         extra = valid_audit()
         duplicate = dict(extra["runs"][0]["source_coverage"][-1])
@@ -332,7 +353,7 @@ class CandidateAuditTests(unittest.TestCase):
         extra["runs"][0]["source_coverage"].append(duplicate)
         extra["runs"][0]["raw_item_count"] += duplicate["selected_for_pool_count"]
         errors = MODULE.validate(extra, pool)
-        self.assertTrue(any("全部 15 個核心來源" in error for error in errors))
+        self.assertTrue(any("source coverage" in error for error in errors))
 
     def test_section_source_contract_matches_flat_source_order(self):
         pool = source_pool()

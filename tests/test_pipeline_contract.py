@@ -40,7 +40,7 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("browser is the final fallback only", text)
             self.assertIn("recover_same_source_leads.py", text)
 
-    def test_taiwan_domestic_coverage_guard_is_bounded_and_audited(self):
+    def test_taiwan_domestic_discovery_supplement_is_bounded_and_scored(self):
         import json
 
         pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
@@ -55,9 +55,7 @@ class PipelineContractTests(unittest.TestCase):
             {item["sweep_id"] for item in sweeps},
         )
         self.assertTrue(all(item["result_limit"] == 5 for item in sweeps))
-        self.assertTrue(all(item["same_source_only"] is True for item in sweeps))
         self.assertTrue(all(item["window_hours"] == 24 for item in sweeps))
-        self.assertEqual(5, pool["primary_sources_per_section"])
         self.assertIn("coverage_guard_recovery", pool["mandatory_overflow_triggers"])
 
         documents = [
@@ -69,9 +67,8 @@ class PipelineContractTests(unittest.TestCase):
         for path in documents:
             text = path.read_text(encoding="utf-8")
             self.assertIn("TAIWAN_DOMESTIC_COVERAGE_GUARD", text)
-            self.assertIn("same-source recovery", text)
             self.assertIn("5 results", text)
-            self.assertIn("canonical candidate audit", text)
+            self.assertIn("評分", text)
 
     def test_taiwan_domestic_grading_requires_consequences_not_topic(self):
         severity = (ROOT / ".agents/skills/select-news-events/references/severity-rubric.md").read_text(encoding="utf-8")
@@ -264,17 +261,39 @@ class PipelineContractTests(unittest.TestCase):
         ):
             self.assertIn(requirement, daily)
 
-    def test_first_audit_requires_per_source_evidence_and_coverage_sanity(self):
-        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+    def test_discovery_then_verify_replaces_all_source_gate(self):
+        import json
 
-        for requirement in (
-            "FIRST_RUN_SOURCE_COVERAGE_COMPLETENESS_GATE",
-            "15/15",
-            "不可只用 TWN／CHN／GLB 三筆彙總",
-            "TYPE_CONSISTENT_COVERAGE_SANITY",
-            "只有同欄位、同口徑、同時間窗的數量",
-        ):
-            self.assertIn(requirement, daily)
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        scheduled = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
+
+        for document in (daily, scheduled):
+            for requirement in (
+                "DISCOVERY_THEN_VERIFY",
+                "GDELT",
+                "discovery source failure must not block the whole brief",
+                "score and deduplicate before independent verification",
+                "collect images only after verification",
+                "TECH_SCIENCE_EVIDENCE_ROUTE",
+                "CONFLICT_MULTI_SIDE_EVIDENCE_ROUTE",
+                "DISASTER_OFFICIAL_STATISTICS_ROUTE",
+                "OFFICIAL_SOURCE_BIAS_GUARD",
+                "CATEGORY_APPROPRIATE_EVIDENCE_ROUTE",
+                "MEDIA_TRANSCRIPTION_IS_NOT_VERIFICATION",
+                "DOMAIN_EXPERTISE_MATCH",
+                "TIMELINESS_WITH_SOURCE_LIMIT_NOTE",
+            ):
+                self.assertIn(requirement, document)
+            self.assertNotIn("FIRST_RUN_SOURCE_COVERAGE_COMPLETENESS_GATE", document)
+            self.assertNotIn("15/15", document)
+
+        discovery = pool["discovery_sources"]
+        self.assertEqual(["gdelt", "cna", "chinanews"], [item["source_id"] for item in discovery])
+        self.assertEqual(1, pool["discovery_policy"]["minimum_ready_sources"])
+        self.assertEqual("degrade_not_block", pool["discovery_policy"]["source_failure_policy"])
+        self.assertTrue(pool["verification_policy"]["after_scoring"])
+        self.assertTrue(pool["verification_policy"]["images_after_verification"])
 
     def test_conversation_delivery_requires_complete_reader_not_summary(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")

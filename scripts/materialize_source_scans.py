@@ -50,6 +50,9 @@ def clean_text(value: str) -> str:
 def parse_time(value: str, year: int) -> datetime | None:
     raw = html.unescape(str(value)).strip()
     try:
+        compact = re.fullmatch(r"(20\d{2})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z", raw)
+        if compact:
+            return datetime(*map(int, compact.groups()), tzinfo=timezone.utc)
         match = re.fullmatch(r"(\d{1,2})月(\d{1,2})日\s*(\d{1,2}):(\d{2})", raw)
         if match:
             return datetime(year, *map(int, match.groups()), tzinfo=timezone(timedelta(hours=8)))
@@ -100,11 +103,15 @@ def decode_snapshot(raw: bytes, content_type: str) -> str:
     return raw.decode("utf-8", errors="ignore")
 
 
-def likely_article(url: str, homepage: str) -> bool:
+def likely_article(url: str, homepage: str, allow_external_links: bool = False) -> bool:
     parts, home = urlsplit(url), urlsplit(homepage)
     if parts.scheme not in {"http", "https"} or not parts.netloc:
         return False
-    if parts.netloc.lower().removeprefix("www.") != home.netloc.lower().removeprefix("www."):
+    if (
+        not allow_external_links
+        and parts.netloc.lower().removeprefix("www.")
+        != home.netloc.lower().removeprefix("www.")
+    ):
         return False
     if url.rstrip("/") == homepage.rstrip("/"):
         return False
@@ -121,9 +128,10 @@ def likely_article(url: str, homepage: str) -> bool:
 
 
 def add_item(items: dict, *, request_url: str, homepage: str, route: str, url_evidence: str,
-             title: str, summary: str, published_evidence: str, published: datetime | None):
+             title: str, summary: str, published_evidence: str, published: datetime | None,
+             allow_external_links: bool = False, image_url_hint: str | None = None):
     url = urljoin(request_url, html.unescape(url_evidence))
-    if not published or not likely_article(url, homepage):
+    if not published or not likely_article(url, homepage, allow_external_links):
         return
     title = clean_text(title) or clean_text(unquote(urlsplit(url).path.rsplit("/", 1)[-1]).replace("-", " "))
     if not title:
@@ -135,6 +143,8 @@ def add_item(items: dict, *, request_url: str, homepage: str, route: str, url_ev
         "published_evidence": published_evidence, "categories": [],
         "importance_hint": title[:160], "acquisition_route": route,
     }
+    if isinstance(image_url_hint, str) and image_url_hint.startswith(("http://", "https://")):
+        candidate["image_url_hint"] = image_url_hint
     old = items.get(canonical)
     new_title_is_descriptive = not re.fullmatch(r"[\W_]*\d+[\W_]*", candidate["title"])
     old_title_is_descriptive = old is not None and not re.fullmatch(
@@ -187,7 +197,8 @@ def parse_xml(text: str, request_url: str, homepage: str, route: str, year: int)
     return items
 
 
-def parse_json_items(text: str, request_url: str, homepage: str, route: str, year: int):
+def parse_json_items(text: str, request_url: str, homepage: str, route: str, year: int,
+                     allow_external_links: bool = False):
     items = {}
     try:
         data = json.loads(text)
@@ -199,7 +210,7 @@ def parse_json_items(text: str, request_url: str, homepage: str, route: str, yea
         nested_time = obj.get("time") if isinstance(obj.get("time"), dict) else {}
         date_ev = (
             obj.get("CreateTime") or obj.get("datePublished")
-            or obj.get("published_at") or obj.get("published")
+            or obj.get("published_at") or obj.get("published") or obj.get("seendate")
             or nested_time.get("date") or nested_time.get("dateTime")
         )
         if isinstance(url_ev, str) and isinstance(title, str) and isinstance(date_ev, str):
@@ -208,6 +219,8 @@ def parse_json_items(text: str, request_url: str, homepage: str, route: str, yea
                 url_evidence=url_ev, title=title,
                 summary=str(obj.get("InBrief") or obj.get("description") or title),
                 published_evidence=date_ev, published=parse_time(date_ev, year),
+                allow_external_links=allow_external_links,
+                image_url_hint=obj.get("socialimage"),
             )
     return items
 
@@ -331,7 +344,10 @@ def materialize_source(source: dict, route: dict, window_start: str, window_end:
         page_texts.append(text)
         request_url = entry["request_url"]
         page_items = parse_xml(text, request_url, source["homepage"], route["route"], end.year)
-        page_items.update(parse_json_items(text, request_url, source["homepage"], route["route"], end.year))
+        page_items.update(parse_json_items(
+            text, request_url, source["homepage"], route["route"], end.year,
+            allow_external_links=source.get("allow_external_article_urls") is True,
+        ))
         page_items.update(parse_html(text, request_url, source["homepage"], route["route"], end.year))
         utf8_view = raw.decode("utf-8", errors="ignore")
         page_items = {
@@ -426,15 +442,23 @@ def main() -> int:
     output_dir.mkdir(parents=True, exist_ok=True)
     route_by_id = {item["source_id"]: item for item in routes["results"]}
     coverage = []
-    for source in pool["sources"]:
+    discovery_sources = pool.get("discovery_sources", pool.get("sources", []))
+    minimum_ready = int(pool.get("discovery_policy", {}).get(
+        "minimum_ready_sources", len(discovery_sources)
+    ))
+    for source in discovery_sources:
         route = route_by_id.get(source["source_id"])
         if not route or route.get("route_ready") is not True:
-            raise ValueError(f"{source['source_id']}: canonical route is not ready")
+            continue
         route = dict(route)
         route["generated_at"] = routes.get("generated_at")
         scan, item = materialize_source(source, route, checkpoint["window_start"], checkpoint["window_end"], output_dir)
         Path(item["scan_evidence_path"]).write_text(json.dumps(scan, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         coverage.append(item)
+    if len(coverage) < minimum_ready:
+        raise ValueError(
+            f"discovery routes ready={len(coverage)}; minimum={minimum_ready}"
+        )
     destination = Path(args.coverage_output)
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(json.dumps(coverage, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

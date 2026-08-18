@@ -74,15 +74,61 @@ class SourceRouteFetcherTests(unittest.TestCase):
         pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8-sig"))
         config = json.loads(ROUTES.read_text(encoding="utf-8-sig"))
         self.assertEqual(
-            {source["source_id"] for source in pool["sources"]},
+            {source["source_id"] for source in pool["discovery_sources"]},
             {route["source_id"] for route in config["routes"]},
         )
-        self.assertEqual(15, len(config["routes"]))
+        self.assertEqual(3, len(config["routes"]))
+        self.assertEqual(1, config["minimum_ready_routes"])
+        gdelt = next(route for route in config["routes"] if route["source_id"] == "gdelt")
+        self.assertEqual("aggregate_api", gdelt["route"])
+        self.assertIn("api.gdeltproject.org/api/v2/doc/doc", gdelt["request_url_template"])
+        self.assertIn("format=json", gdelt["request_url_template"])
         cna = next(route for route in config["routes"] if route["source_id"] == "cna")
         self.assertEqual("structured_direct", cna["route"])
         self.assertEqual("POST", cna["request_method"])
         self.assertEqual(500, cna["request_json"]["pagesize"])
         self.assertEqual(["ResultData", "NextPageIdx"], cna["json_exhaustion_path"])
+
+    def test_partial_discovery_success_does_not_fail_entire_fetch(self):
+        server = ThreadingHTTPServer(("127.0.0.1", 0), _Handler)
+        worker = threading.Thread(target=server.serve_forever, daemon=True)
+        worker.start()
+        try:
+            with tempfile.TemporaryDirectory() as temp:
+                root = Path(temp)
+                route_config = root / "routes.json"
+                output_dir = root / "out"
+                route_config.write_text(json.dumps({
+                    "schema_version": "1.1.0",
+                    "minimum_ready_routes": 1,
+                    "routes": [
+                        {
+                            "source_id": "ready", "route": "structured_direct",
+                            "request_url_template": f"http://127.0.0.1:{server.server_port}/news",
+                            "snapshot_name": "ready.bin",
+                        },
+                        {
+                            "source_id": "failed", "route": "structured_direct",
+                            "request_url_template": "http://127.0.0.1:1/unavailable",
+                            "snapshot_name": "failed.bin",
+                        },
+                    ],
+                }), encoding="utf-8")
+                completed = subprocess.run(
+                    [sys.executable, str(PYTHON_FETCHER),
+                     "--route-config", str(route_config),
+                     "--output-dir", str(output_dir), "--timeout-seconds", "1"],
+                    capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=20,
+                )
+                self.assertEqual(0, completed.returncode, completed.stderr + completed.stdout)
+                coverage = json.loads(
+                    (output_dir / "source-route-coverage.json").read_text(encoding="utf-8")
+                )
+                self.assertEqual(1, coverage["route_ready_count"])
+                self.assertEqual("degraded", coverage["status"])
+        finally:
+            server.shutdown()
+            server.server_close()
 
     def test_python_fetcher_persists_exact_snapshot_and_coverage(self):
         self.assertTrue(PYTHON_FETCHER.is_file())
