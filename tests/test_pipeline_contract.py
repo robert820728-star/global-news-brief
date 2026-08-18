@@ -264,6 +264,29 @@ class PipelineContractTests(unittest.TestCase):
         ):
             self.assertIn(requirement, daily)
 
+    def test_first_audit_requires_per_source_evidence_and_coverage_sanity(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "FIRST_RUN_SOURCE_COVERAGE_COMPLETENESS_GATE",
+            "15/15",
+            "不可只用 TWN／CHN／GLB 三筆彙總",
+            "不得低於前輪單一 24 小時候選數",
+            "來源覆蓋不足",
+        ):
+            self.assertIn(requirement, daily)
+
+    def test_conversation_delivery_requires_complete_reader_not_summary(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "CONVERSATION_READER_BYTE_IDENTITY_GATE",
+            "完整內容",
+            "不得改成摘要",
+            "不得以 receipt 取代讀者版",
+        ):
+            self.assertIn(requirement, daily)
+
     def test_selection_contract_forbids_prior_run_drivers(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         self.assertIn("validate_selection_freshness.py", prompt)

@@ -1,5 +1,13 @@
 # 版本紀錄 / Version Record
 
+## v0.3.2-source-coverage-and-conversation-delivery — 2026-08-18
+
+- 建立原因 / Reason: 首次回填只留下三個區域彙總與40筆候選，且GPT只交付驗收摘要而非完整讀者版。 / The first backfill stored only three regional aggregates and 40 candidates, while GPT delivered an acceptance summary instead of the complete reader edition.
+- 作法 / Approach: 要求15/15逐來源證據、以前輪24小時候選量做完整性下限，並要求對話直接交付完整reader內容。 / Require per-source evidence for all 15 sources, use the prior 24-hour candidate count as a completeness floor, and deliver the complete reader content in the conversation.
+- 過度設計檢查 / Overdesign check: 僅強化既有coverage與handoff契約，未新增服務或發布管道。 / Only the existing coverage and handoff contracts were strengthened; no service or publishing channel was added.
+- 驗證 / Validation: 新增逐來源完整性與完整reader交付兩項契約測試。 / Added two contract tests for per-source completeness and full reader delivery.
+
+
 ## v0.3.1-first-audit-bootstrap — 2026-08-18
 
 - 建立原因 / Reason: 第一次啟用完整十四天 audit 時沒有前輪持久檔，mobile-native 因無法復原從未保存的淘汰候選而停止。 / The first complete mobile audit had no predecessor artifact and stopped because never-persisted rejected candidates could not be reconstructed.
