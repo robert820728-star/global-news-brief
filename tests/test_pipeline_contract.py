@@ -271,8 +271,8 @@ class PipelineContractTests(unittest.TestCase):
             "FIRST_RUN_SOURCE_COVERAGE_COMPLETENESS_GATE",
             "15/15",
             "不可只用 TWN／CHN／GLB 三筆彙總",
-            "不得低於前輪單一 24 小時候選數",
-            "來源覆蓋不足",
+            "TYPE_CONSISTENT_COVERAGE_SANITY",
+            "只有同欄位、同口徑、同時間窗的數量",
         ):
             self.assertIn(requirement, daily)
 
@@ -300,16 +300,16 @@ class PipelineContractTests(unittest.TestCase):
         ):
             self.assertIn(requirement, daily)
 
-    def test_mobile_increment_rejects_invalid_fourteen_day_baseline(self):
+    def test_mobile_increment_recovers_without_blocking_daily_reader(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
-            "AUDIT_BASELINE_VALIDITY_GATE",
-            "完整十四天回填窗",
-            "不得拿本日 24 小時 coverage 冒充十四天基線",
-            "FIRST_RUN_14_DAY_AUDIT_BOOTSTRAP",
-            "AUDIT_BASELINE_PROVENANCE_RETENTION",
-            "不得覆寫或取代基線證據",
+            "TYPE_CONSISTENT_COVERAGE_SANITY",
+            "不得拿前輪來源掃描的 `raw_item_count`",
+            "RECOVERABLE_14_DAY_BASELINE_WITHOUT_READER_BLOCK",
+            "不得因此阻止本日讀者版",
+            "DAILY_COVERAGE_IS_NOT_HISTORICAL_PROOF",
+            "不得把可用、來源可核對且符合模板的每日讀者版改判失敗",
         ):
             self.assertIn(requirement, daily)
 

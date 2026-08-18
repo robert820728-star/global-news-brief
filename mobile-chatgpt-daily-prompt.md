@@ -67,9 +67,9 @@ The required order for every configured source is: `canonical route -> same-site
    - `FIRST_RUN_14_DAY_AUDIT_BOOTSTRAP`：若 `run-logs/logs/latest-candidate-audit.json` 尚不存在，這是持久化格式第一次啟用，不得要求復原從未保存的前輪淘汰候選，也不得因此直接失敗。只在這一次，使用既有來源路由做一輪純文字十四天回填：按日期取得候選、同事件去重、完成六項評分，並把完整結果建立為第一份 `latest-candidate-audit.json`。圖片仍只在 C 級以上選稿完成後處理；瀏覽器仍是最後備援。
    - 首次回填若有必要來源確實無法覆蓋，才以具體來源與日期範圍失敗；完成第一份 audit 後，後續每日只合併新 24 小時候選並移除超過十四天項目，不得每天重跑十四天。
    - `FIRST_RUN_SOURCE_COVERAGE_COMPLETENESS_GATE`：首次回填必須為設定中的每一個來源各保留一筆獨立 coverage record（目前 15/15），不可只用 TWN／CHN／GLB 三筆彙總代替。任何來源 `within_window_count>0` 時，`ranked_items` 或可核對的候選網址／文章識別不得同時為空；候選必須能回指逐站來源紀錄。
-   - 若已有前輪 durable summary，十四天回填候選數不得低於前輪單一 24 小時候選數；低於時必須判定為來源覆蓋不足並補掃缺站，不得把稀疏搜尋結果宣稱為完整十四天 audit。
-   - `AUDIT_BASELINE_VALIDITY_GATE`：進入每日 24 小時增量前，既有 audit 必須保留一筆可驗證的首次基線 run；該 run 的每個設定來源都要有獨立 coverage record，且 `scan_window_start` 至 `scan_window_end` 必須覆蓋完整十四天回填窗，不得拿本日 24 小時 coverage 冒充十四天基線。若既有 audit 缺少這筆十四天逐站基線、只有板塊彙總、或基線候選數低於已保存的單一 24 小時候選基準，視為舊基線無效：同輪執行一次 `FIRST_RUN_14_DAY_AUDIT_BOOTSTRAP` 重建基線，再進入正常增量；不得把稀疏舊基線直接續接後宣稱完整。
-   - `AUDIT_BASELINE_PROVENANCE_RETENTION`：建立有效基線後，十四天保留期內的後續 audit 必須保留該 baseline run 與其逐站十四天 coverage provenance；本日 24 小時 source coverage 另存為新 run，不得覆寫或取代基線證據。
+   - `TYPE_CONSISTENT_COVERAGE_SANITY`：不得拿前輪來源掃描的 `raw_item_count` 與本輪去重評分後的 `deduplicated_candidate_count` 互相比較；只有同欄位、同口徑、同時間窗的數量才可作完整性警示，數量本身不得取代逐站證據。
+   - `RECOVERABLE_14_DAY_BASELINE_WITHOUT_READER_BLOCK`：若舊資料沒有逐站十四天 provenance，不得把它宣稱為來源絕對窮盡，但也不得因此阻止本日讀者版。保留仍在十四天內、可核對來源且已有六項評分的候選，合併本輪完整 24 小時的 15/15 逐站掃描、去重與評分，並移除逾期項目；所有可恢復的 C 級以上仍須進讀者版。後續每日同樣滾動，十四天後舊的不可證明部分自然退出。
+   - `DAILY_COVERAGE_IS_NOT_HISTORICAL_PROOF`：本日 24 小時 source coverage 只能證明本日掃描，不得冒充過去十四天逐站掃描；內部 audit 必須如實保留 `bootstrap_mode` 與各 run 的時間窗。這項限制只禁止誇大證據，不得把可用、來源可核對且符合模板的每日讀者版改判失敗。
 6. 本輪及十四天清單內所有 C 級以上新聞都必須出現在更新後的讀者版；同事件可合併成一則，但不得漏掉其重要更新與來源。
 7. 圖片內容沿用原先為該則新聞選定的圖片，不得為了縮小檔案改換另一張圖。`IMAGE_DEFAULT_ONE_ASSET`：每則預設一張內嵌圖片；`IMAGE_SECOND_ASSET_REQUIRES_INCREMENTAL_INFORMATION`：只有第二張能補充第一張未呈現的範圍、數字、現場或時間變化時才追加，並記錄新增資訊理由，每則最多兩張：
    - `IMAGE_ONE_ASSET_MAY_SATISFY_BOTH_SOURCE_AND_PROFESSIONAL`：同一張官方或專業圖若同時來自已引用來源、內容合格且能滿足專業圖資要求，可同時通過兩組檢查，不必為了形式再附一張重複新聞照；兩組檢查紀錄仍須保留。

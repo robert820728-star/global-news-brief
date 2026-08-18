@@ -1,5 +1,13 @@
 # 版本紀錄 / Version Record
 
+## v0.3.4-recoverable-audit-without-reader-block — 2026-08-18
+
+- 建立原因 / Reason: 嚴格要求手機排程在單輪重建並證明十五站完整十四天歷史，導致來源可核對的本日讀者版也被阻擋。 / Requiring a mobile run to rebuild and prove complete fourteen-day history for all fifteen sources blocked even a source-backed current reader edition.
+- 確認原因 / Confirmed cause: 完整性檢查錯把前輪原始來源池數量與本輪去重評分候選數相比，且把缺失的歷史 provenance 當成每日發布的致命錯誤。 / The completeness check compared a prior raw source-pool count with a deduplicated scored-candidate count and treated missing historical provenance as fatal to daily publication.
+- 作法 / Approach: 只比較同口徑數量；保留可恢復的十四天候選並合併每日十五站 24 小時掃描，舊的不完整部分隨十四天保留期自然退出；不得誇大歷史 coverage，但不阻擋合規讀者版。 / Compare only like-for-like counts; retain recoverable fourteen-day candidates and merge each complete fifteen-source daily scan so unverifiable legacy data ages out naturally; do not overstate historical coverage or block a compliant reader edition.
+- 過度設計檢查 / Overdesign check: 移除阻擋式歷史重建要求，未新增 schema、服務、checkpoint 或工作流。 / Removed the blocking historical rebuild requirement without adding a schema, service, checkpoint, or workflow.
+- 驗證 / Validation: 四個目標契約測試涵蓋模板、對話交付、逐站 coverage 與非阻擋式滾動 audit。 / Four targeted contract tests cover the reader template, conversation delivery, per-source coverage, and nonblocking rolling audit.
+
 ## v0.3.3-reader-template-and-baseline-validity — 2026-08-18
 
 - 建立原因 / Reason: 行動驗收把不完整的 40 筆舊 audit 當成有效基線續接，且 GitHub reader 與 GPT 對話輸出都偏離既有讀者模板。 / Mobile acceptance extended an incomplete 40-item audit as a valid baseline, while both the GitHub reader and GPT delivery diverged from the existing reader template.
