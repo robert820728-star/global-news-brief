@@ -120,14 +120,16 @@ class PipelineContractTests(unittest.TestCase):
 
         for document in (prompt, bootstrap):
             for requirement in (
-                "/git/ref/heads/main?cache_bust=",
+                "/branches/main?cache_bust=",
                 "/commits/main?cache_bust=",
                 "fresh UTC nonce",
+                "single named `main` branch lookup",
                 "must not enumerate repository branches",
                 "must not reuse a commit SHA",
                 "same SHA",
             ):
                 self.assertIn(requirement, document)
+            self.assertNotIn("/git/ref/heads/main?cache_bust=", document)
 
         self.assertIn("pin all repository reads for this run", bootstrap)
         self.assertIn("resolve fresh `main` again on the next run", bootstrap)
