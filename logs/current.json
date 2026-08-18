@@ -8,18 +8,18 @@
   "stage_index": 10,
   "last_completed_stage": "github-result-saved",
   "main_sha": "f41d22855833953708787df65bfbf968ef0adb78",
-  "updated_at": "2026-08-18T21:46:00Z",
+  "updated_at": "2026-08-18T21:58:00Z",
   "last_error": null,
   "delivery_status": "handoff_started",
   "client_confirmation_supported": false,
   "reader_artifact": {
     "branch": "run-logs",
     "path": "logs/latest-reader.md",
-    "blob_sha": "d3e078143dd1f5703b072a80f070845fe27b2f55"
+    "blob_sha": "e23bce77408f9995add82b446cb4d7a172f3a95f"
   },
   "candidate_audit_artifact": {
     "branch": "run-logs",
     "path": "logs/latest-candidate-audit.json",
-    "blob_sha": "b7ecbef79660ce3110cd9a470e72a0062e191094"
+    "blob_sha": "c5fa7c9188b42ed13dec75ca5e0c7f1df57491ff"
   }
 }
