@@ -1,25 +1,17 @@
 {
-  "schema_version": "1.1.0",
-  "execution_mode": "mobile-native",
-  "run_id": "gnb-20260818T220250Z-7e4c91a2",
-  "scheduled_for": "2026-08-19T06:00:00+08:00",
-  "status": "completed",
-  "current_stage": "delivery-handoff",
-  "stage_index": 10,
-  "last_completed_stage": "github-result-saved",
-  "main_sha": "f41d22855833953708787df65bfbf968ef0adb78",
-  "updated_at": "2026-08-18T22:26:00Z",
-  "last_error": null,
-  "delivery_status": "handoff_started",
+  "candidate_audit_artifact": null,
   "client_confirmation_supported": false,
-  "reader_artifact": {
-    "branch": "run-logs",
-    "path": "logs/latest-reader.md",
-    "blob_sha": "982a752fa3f1103d76aa62f08617b493a895295b"
-  },
-  "candidate_audit_artifact": {
-    "branch": "run-logs",
-    "path": "logs/latest-candidate-audit.json",
-    "blob_sha": "ec01820d074fe541ee07d7f49788c0eae484bb08"
-  }
+  "current_stage": "schedule-prepared",
+  "delivery_status": "not_ready",
+  "execution_mode": "full-runtime",
+  "last_completed_stage": null,
+  "last_error": null,
+  "main_sha": null,
+  "reader_artifact": null,
+  "run_id": "gnb-20260818T221711Z-933cc4a6",
+  "scheduled_for": "2026-08-20T06:00:00+08:00",
+  "schema_version": "1.1.0",
+  "stage_index": 0,
+  "status": "awaiting_executor",
+  "updated_at": "2026-08-18T22:17:11Z"
 }
