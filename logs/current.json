@@ -1,17 +1,17 @@
 {
   "schema_version":"1.1.0",
   "execution_mode":"mobile-native",
-  "run_id":"gnb-20260818T062656Z-a4c19e7b",
-  "scheduled_for":"2026-08-18T14:25:33+08:00",
-  "status":"completed",
-  "current_stage":"delivery-handoff",
-  "stage_index":10,
-  "last_completed_stage":"github-result-saved",
-  "main_sha":"346e268f230b0f63372f03c70cefd2c0f9ff858d",
-  "updated_at":"2026-08-18T06:55:00Z",
+  "run_id":"gnb-20260818T070253Z-8f3c1a72",
+  "scheduled_for":"2026-08-18T15:03:33+08:00",
+  "status":"running",
+  "current_stage":"main-pinned",
+  "stage_index":2,
+  "last_completed_stage":"executor-started",
+  "main_sha":"242f45dce0141f4afcfd940b78babf9516c925ec",
+  "updated_at":"2026-08-18T07:03:10Z",
   "last_error":null,
-  "delivery_status":"handoff_started",
+  "delivery_status":"not_ready",
   "client_confirmation_supported":false,
-  "reader_artifact":{"branch":"run-logs","path":"logs/latest-reader.md","blob_sha":"f2b508eb9f202d5359916a509cc0151e8e0275b1"},
-  "candidate_audit_artifact":{"branch":"run-logs","path":"logs/latest-candidate-audit.json","blob_sha":"5d3a36502e2f77f6881b153728ad7e6986576455"}
+  "reader_artifact":null,
+  "candidate_audit_artifact":null
 }
