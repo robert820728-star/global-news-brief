@@ -1,16 +1,15 @@
 {
-  "client_confirmation_supported": false,
-  "current_stage": "delivery-handoff",
-  "delivery_status": "handoff_started",
-  "last_completed_stage": "github-result-saved",
-  "last_error": null,
-  "main_sha": "5d4b3c6ca97b76b5dfe3bd21a6cc24694595e032",
-  "reader_artifact": "logs/latest-reader.md",
-  "run_id": "gnb-20260817T094800Z-full03",
-  "scheduled_for": "2026-08-17T17:48:00+08:00",
   "schema_version": "1.0.0",
-  "stage_index": 10,
-  "status": "completed",
-  "updated_at": "2026-08-17T10:28:00Z"
+  "run_id": "gnb-20260818T031743Z-7c41a9e2",
+  "scheduled_for": "2026-08-18T11:17:43+08:00",
+  "status": "running",
+  "current_stage": "main-pinned",
+  "stage_index": 2,
+  "last_completed_stage": "executor-started",
+  "main_sha": "822052e01df2efda8386e06fa4015adf259f7c87",
+  "updated_at": "2026-08-18T03:18:30Z",
+  "last_error": null,
+  "delivery_status": "not_ready",
+  "client_confirmation_supported": false,
+  "reader_artifact": null
 }
-
