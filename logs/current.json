@@ -4,18 +4,18 @@
   "run_id": "gnb-20260818T053207Z-7f4a2c91",
   "scheduled_for": "2026-08-18T13:29:57+08:00",
   "status": "running",
-  "current_stage": "selection-verified",
-  "stage_index": 6,
-  "last_completed_stage": "candidate-audit",
+  "current_stage": "visuals-completed",
+  "stage_index": 7,
+  "last_completed_stage": "selection-verified",
   "main_sha": "31da6296b6974af303964faabeb9e05ba9bfe665",
-  "updated_at": "2026-08-18T06:00:00Z",
+  "updated_at": "2026-08-18T06:08:00Z",
   "last_error": null,
   "delivery_status": "not_ready",
   "client_confirmation_supported": false,
   "reader_artifact": null,
   "candidate_audit_artifact": {
+    "branch": "run-logs",
     "path": "logs/latest-candidate-audit.json",
-    "blob_sha": "fb40f969623dae3546ba2733717c62a139790df5",
-    "bootstrap_completed": true
+    "blob_sha": "fb40f969623dae3546ba2733717c62a139790df5"
   }
 }
