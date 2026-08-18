@@ -109,9 +109,9 @@
 
 **時間：**新聞時間：8/18 17:31；更新節點：疫情擴至第六省、資金與接觸追蹤缺口進一步量化。
 
-**來源：**[路透社](https://www.reuters.com/business/healthcare-pharmaceuticals/who-says-congo-ebola-outbreak-can-still-be-brought-under-control-within-three-2026-08-18/)、[世界衛生組織](https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON614)。citeturn519337view3turn674189search0
+**來源：**[路透社](https://www.reuters.com/business/healthcare-pharmaceuticals/who-says-congo-ebola-outbreak-can-still-be-brought-under-control-within-three-2026-08-18/)、[世界衛生組織](https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON614)、[美國疾病管制與預防中心](https://www.cdc.gov/ebola/situation-summary/index.html)。citeturn519337view3turn674189search0
 
-**圖片說明：**本輪已找到本次疫情期間的治療中心圖片線索，但未取得可同時滿足來源、時間與刊載條件的讀者版附件，因此文字版不嵌圖。
+**圖片說明：**美國疾病管制與預防中心的2026年剛果民主共和國伊波拉疫情分布圖已選為本輪可見來源圖片，並在本對話以圖片卡呈現；圖資日期早於8月18日最新死亡與第六省更新，因此最新數字仍以路透社與世界衛生組織文字證據為準。
 
 **事件細節：**路透社引述世界衛生組織與非洲疾管體系資料指出，本輪伊波拉疫情至少已造成2,325人死亡，並擴散至第六個省。世界衛生組織目前僅募集到應變所需1.15億美元的約60%；同時約70%至80%的新病例找不到與已知患者的接觸關係，表示仍有大量社區傳播鏈未被掌握。世界衛生組織此前的正式疫情公告已確認疫情快速演變。citeturn519337view3turn674189search0
 
