@@ -1,17 +1,17 @@
 {
   "schema_version":"1.1.0",
   "execution_mode":"mobile-native",
-  "run_id":"gnb-20260818T101031Z-bc17e4a9",
-  "scheduled_for":"2026-08-18T18:10:31+08:00",
+  "run_id":"gnb-20260818T114027Z-6d91c2f4",
+  "scheduled_for":"2026-08-18T19:37:55+08:00",
   "status":"failed",
-  "current_stage":"source-scan",
-  "stage_index":4,
-  "last_completed_stage":"workspace-ready",
-  "main_sha":"7a2bd016f14514b824554d4060abc50fb1493312",
-  "updated_at":"2026-08-18T10:18:25Z",
+  "current_stage":"main-pinned",
+  "stage_index":2,
+  "last_completed_stage":"schedule-prepared",
+  "main_sha":"78d6601578708ea4a86fe131946a92c86df753ca",
+  "updated_at":"2026-08-18T11:40:27Z",
   "last_error":{
     "code":"EARLY_DIAGNOSTIC_RUN_ID_ORDER_VIOLATION",
-    "message":"Formal acceptance stopped because the run_id was not established before the first GitHub main-resolution call, as required by the pinned daily-schedule-prompt.md. This ordering requirement cannot be repaired retroactively. The host capability probe correctly routed this run to mobile-native; no candidate-audit or reader artifact from this failed run was published."
+    "message":"Formal acceptance stopped because this run resolved GitHub main before establishing the run_id and before the mobile run-ledger current.json read required by the pinned daily-schedule-prompt.md/mobile-chatgpt-daily-prompt.md. The host capability probe returned a host execution error and correctly selected execution_mode=mobile-native, but the ordering violation cannot be repaired retroactively. No candidate audit or reader artifact from this failed run was published."
   },
   "delivery_status":"not_ready",
   "client_confirmation_supported":false,
