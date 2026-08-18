@@ -1,5 +1,13 @@
 # 版本紀錄 / Version Record
 
+## v0.3.1-first-audit-bootstrap — 2026-08-18
+
+- 建立原因 / Reason: 第一次啟用完整十四天 audit 時沒有前輪持久檔，mobile-native 因無法復原從未保存的淘汰候選而停止。 / The first complete mobile audit had no predecessor artifact and stopped because never-persisted rejected candidates could not be reconstructed.
+- 作法 / Approach: 僅首次做純文字十四天回填並建立基線；之後每日只做 24 小時增量與十四天淘汰。 / Perform one text-only fourteen-day backfill to create the baseline, then use daily 24-hour increments and retention expiry.
+- 過度設計檢查 / Overdesign check: 未新增資料庫、圖片工作或永久回填服務。 / No database, image workload, or permanent backfill service was added.
+- 驗證 / Validation: 首次回填契約與圖片可見性契約共 2 項目標測試通過。 / Two targeted bootstrap and reader-visible-image contract tests passed.
+
+
 ## v0.3.0-mobile-reader-visible-delivery — 2026-08-18
 
 - 建立原因 / Reason: 手機 ChatGPT 可能發布空白圖片框、未持久保存完整十四天海選，並輸出通用後續觀察。 / Mobile ChatGPT could publish blank image placeholders, omit the durable fourteen-day audit, and emit generic follow-up text.

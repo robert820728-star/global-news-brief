@@ -253,6 +253,17 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("browser is the final fallback only", settings)
         self.assertIn("所有 C 級以上", settings)
 
+    def test_mobile_candidate_audit_has_one_time_bootstrap_without_daily_rescan(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "FIRST_RUN_14_DAY_AUDIT_BOOTSTRAP",
+            "從未保存的前輪淘汰候選",
+            "純文字十四天回填",
+            "不得每天重跑十四天",
+        ):
+            self.assertIn(requirement, daily)
+
     def test_selection_contract_forbids_prior_run_drivers(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         self.assertIn("validate_selection_freshness.py", prompt)
