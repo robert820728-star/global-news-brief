@@ -343,6 +343,26 @@ class PipelineContractTests(unittest.TestCase):
         self.assertTrue(pool["verification_policy"]["after_scoring"])
         self.assertTrue(pool["verification_policy"]["images_after_verification"])
 
+    def test_candidate_discovery_has_no_fixed_source_completion_gate(self):
+        documents = {
+            "settings": (ROOT / "news-brief-settings.md").read_text(encoding="utf-8"),
+            "acquisition skill": (
+                ROOT / ".agents" / "skills" / "acquire-news-candidates" / "SKILL.md"
+            ).read_text(encoding="utf-8"),
+            "image skill": (
+                ROOT / ".agents" / "skills" / "collect-news-images" / "SKILL.md"
+            ).read_text(encoding="utf-8"),
+        }
+        forbidden = (
+            "任一來源未完成",
+            "十五站與完成回填",
+            "任一來源未完成、未按站內前 30 則",
+            "prevalidated daily-news sources",
+        )
+        for label, document in documents.items():
+            for phrase in forbidden:
+                self.assertNotIn(phrase, document, f"{label} retains fixed-source gate")
+
     def test_conversation_delivery_requires_complete_reader_not_summary(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 

@@ -37,17 +37,28 @@ def load_json(path: Path):
 
 
 def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
-    sources = pool.get("sources", [])
+    sources = pool.get("discovery_sources") or pool.get("sources", [])
     expected = {item["source_id"]: item for item in sources}
-    if len(expected) != 15 or any(len(pool.get("section_sources", {}).get(code, [])) != 5 for code in ("TWN", "CHN", "GLB")):
-        raise ValueError("主要來源必須是 TWN、CHN、GLB 各5站，共15站")
+    if not expected or len(expected) != len(sources):
+        raise ValueError("新聞發現來源必須至少有一個且 source_id 不得重複")
+
+    minimum_ready = int(
+        pool.get("discovery_policy", {}).get("minimum_ready_sources", len(expected))
+    )
+    available = {
+        source_id: source
+        for source_id, source in expected.items()
+        if (scan_dir / f"{source_id}.json").is_file()
+    }
+    if len(available) < minimum_ready:
+        raise ValueError(
+            f"可用新聞發現清單不足：{len(available)}，最低需要 {minimum_ready}"
+        )
 
     output = []
     completed = []
-    for source_id, source in expected.items():
+    for source_id, source in available.items():
         path = scan_dir / f"{source_id}.json"
-        if not path.is_file():
-            raise ValueError(f"缺少來源掃描：{source_id}")
         scan = load_json(path)
         if scan.get("source_id") != source_id:
             raise ValueError(f"來源掃描 ID 不符：{source_id}")
@@ -66,13 +77,21 @@ def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
                     raise ValueError(f"{source_id} 第{page_index}頁候選缺少標題、摘要、重要性提示或網址")
                 canon = canonical_url(url)
                 norm = normalized_title(title)
+                section = str(
+                    raw.get("section")
+                    or source.get("section")
+                    or source.get("default_section")
+                    or (source.get("sections") or [""])[0]
+                ).strip()
+                if section not in {"TWN", "CHN", "GLB"}:
+                    raise ValueError(f"{source_id} 候選缺少有效板塊：{title}")
                 seed = hashlib.sha256(f"{norm}|{published.date().isoformat()}".encode()).hexdigest()[:24]
                 cid = hashlib.sha256(f"{source_id}|{canon}|{published.isoformat()}".encode()).hexdigest()[:20]
                 output.append({
                     "candidate_id": cid,
                     "source_id": source_id,
                     "source_name": source["name"],
-                    "section": source["section"],
+                    "section": section,
                     "title": title,
                     "summary": summary,
                     "published_at": published.isoformat(),

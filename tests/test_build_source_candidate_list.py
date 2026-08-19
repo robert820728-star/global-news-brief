@@ -11,11 +11,44 @@ SPEC.loader.exec_module(builder)
 
 
 class CandidateListTests(unittest.TestCase):
-    def test_builds_fifteen_source_dedup_ready_list(self):
+    def test_builds_from_available_gdelt_scan_without_publisher_gate(self):
         pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
         with tempfile.TemporaryDirectory() as tmp:
             scan_dir = Path(tmp)
-            for source in pool["sources"]:
+            (scan_dir / "gdelt.json").write_text(json.dumps({
+                "source_id": "gdelt",
+                "collector": "aggregate_api",
+                "pages": [{
+                    "snapshot_path": "snapshots/gdelt.json",
+                    "extracted_items": [{
+                        "title": "Major international event",
+                        "summary": "Material policy change affecting the public.",
+                        "importance_hint": "May change policy across a broad population.",
+                        "published_at": "2026-08-16T01:00:00+00:00",
+                        "url": "https://example.com/world-event?utm_source=gdelt",
+                        "section": "GLB",
+                        "acquisition_route": "aggregate_api",
+                    }],
+                }],
+            }), encoding="utf-8")
+
+            result = builder.build(
+                pool,
+                scan_dir,
+                builder.parse_time("2026-08-15T02:00:00+00:00"),
+                builder.parse_time("2026-08-16T02:00:00+00:00"),
+            )
+
+        self.assertEqual(1, result["source_count"])
+        self.assertEqual(["gdelt"], result["sources"])
+        self.assertEqual("GLB", result["items"][0]["section"])
+        self.assertEqual("https://example.com/world-event", result["items"][0]["canonical_url"])
+
+    def test_builds_all_available_discovery_lists_and_supplemental_pages(self):
+        pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
+        with tempfile.TemporaryDirectory() as tmp:
+            scan_dir = Path(tmp)
+            for source in pool["discovery_sources"]:
                 source_id = source["source_id"]
                 (scan_dir / f"{source_id}.json").write_text(json.dumps({
                     "source_id": source_id,
@@ -28,6 +61,7 @@ class CandidateListTests(unittest.TestCase):
                             "importance_hint": "May change public policy and affect a broad population.",
                             "published_at": "2026-08-16T01:00:00+00:00",
                             "url": f"https://example.com/{source_id}?utm_source=test",
+                            "section": source.get("default_section") or source["sections"][0],
                             "acquisition_route": "browser_rendered"
                         }]
                     }],
@@ -44,16 +78,16 @@ class CandidateListTests(unittest.TestCase):
                     }] if source_id == "cna" else []),
                 }), encoding="utf-8")
             result = builder.build(pool, scan_dir, builder.parse_time("2026-08-15T02:00:00+00:00"), builder.parse_time("2026-08-16T02:00:00+00:00"))
-        self.assertEqual(result["source_count"], 15)
-        self.assertEqual(len(result["items"]), 16)
+        self.assertEqual(result["source_count"], 3)
+        self.assertEqual(len(result["items"]), 4)
         self.assertTrue(any(item["url"] == "https://example.com/cna-recovered" for item in result["items"]))
         self.assertTrue(all(item["summary"] and item["importance_hint"] for item in result["items"]))
         self.assertTrue(all("utm_source" not in item["canonical_url"] for item in result["items"]))
 
-    def test_missing_source_fails_closed(self):
+    def test_no_available_discovery_list_fails_closed(self):
         pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
         with tempfile.TemporaryDirectory() as tmp:
-            with self.assertRaisesRegex(ValueError, "缺少來源掃描"):
+            with self.assertRaisesRegex(ValueError, "可用新聞發現清單不足"):
                 builder.build(pool, Path(tmp), builder.parse_time("2026-08-15T02:00:00+00:00"), builder.parse_time("2026-08-16T02:00:00+00:00"))
 
 

@@ -1,5 +1,15 @@
 # 版本紀錄 / Version Record
 
+## v0.3.6-available-discovery-candidates — 2026-08-19
+
+- 建立原因 / Reason: 新版 discovery-first 已成功取得 GDELT、中央社與中新社候選，但舊候選建置器、設定與圖片發布契約仍要求十五個媒體站全部完成，造成可用候選被固定來源 gate 阻擋。 / Discovery-first successfully acquired GDELT, CNA, and China News Service candidates, but the legacy builder, settings, and image-publishing contract still required all fifteen publisher scans and blocked otherwise usable candidates.
+- 實作方式 / Approach: 候選建置器只讀取目前實際存在的 discovery scan；最低一個可用清單即可繼續。GDELT 保持主要彙整入口，中央社與中新社保持區域補充；單一路徑失敗只記 coverage 降級。候選去重與六項評分後，C 級以上仍逐則使用相稱的原始、官方、專業或獨立來源驗證。 / Build from the discovery scans that actually exist and continue with at least one usable list. GDELT remains the primary aggregator while CNA and China News Service remain regional supplements; a single route failure only degrades coverage. After deduplication and six-dimension scoring, every C-or-higher event still receives category-appropriate original, official, professional, or independent verification.
+- 變更入口 / Changed entry points: `scripts/build_source_candidate_list.py`, `news-source-pool.json`, `news-brief-settings.md`, `.agents/skills/acquire-news-candidates/SKILL.md`, `.agents/skills/collect-news-images/SKILL.md`, `tests/test_build_source_candidate_list.py`, `tests/test_pipeline_contract.py`.
+- 重要設定 / Important configuration: `minimum_ready_sources=1`, `source_failure_policy=degrade_not_block`; 沒有可核實候選才停止。 / Stop only when no verifiable candidate is available.
+- 驗證方式 / Validation: RED 重現舊十五站 gate；目標測試 4/4 通過。工作區 bundled Python 完整回歸 219 項中 215 項通過，其餘四項均為 tracked capsule 尚待以功能 commit SHA 重建。 / RED reproduced the legacy fifteen-site gate; all 4 focused tests pass. The bundled-Python regression passes 215 of 219 tests, with the remaining four solely awaiting tracked-capsule regeneration from the functional commit SHA.
+- 過度設計檢查 / Overdesign check: 未新增服務、分類器、schema、stage、固定篇數上限或發布管道；沿用既有 discovery、驗證、圖片與 capsule 流程。 / No service, classifier, schema, stage, count cap, or publication channel was added; the existing discovery, verification, image, and capsule paths are reused.
+- 下一決定 / Next decision: 提交功能版本，以該 SHA 重建並驗證 capsule，完整回歸通過後直接推送 `main`，再建立唯一單次真實驗收。 / Commit the functional version, rebuild and verify the capsule from that SHA, push `main` after the full regression passes, then create one real single-run acceptance task.
+
 ## v0.3.5-material-update-selection — 2026-08-18
 
 - 建立原因 / Reason: 十四天舊聞每天重播，小型政策措施繼承宏觀母事件高評級，喪禮、普通單一公司上市、純象徵性文化爭議與例行外交行程也被誤判為 C 級以上。 / Fourteen-day old stories were republished daily, minor policy measures inherited a macro parent grade, and funerals, routine single-company listings, symbolic cultural disputes, and routine diplomatic itineraries were promoted to C or above.

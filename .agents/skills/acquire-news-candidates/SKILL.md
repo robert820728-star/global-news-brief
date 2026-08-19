@@ -1,6 +1,6 @@
 ---
 name: acquire-news-candidates
-description: Acquire complete rolling-window article lists from prevalidated daily-news sources through stable non-browser routes, optionally use a rendered browser only when permitted, and materialize auditable source candidate lists before selection or grading.
+description: Use when a daily-news run needs a fresh, auditable rolling-window candidate pool before selection or grading, especially when one or more discovery routes may be unavailable.
 ---
 
 # 取得新聞候選清單

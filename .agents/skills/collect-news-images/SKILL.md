@@ -119,7 +119,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 
 ## 與候選來源確認共同發布
 
-圖片驗收與候選來源確認在 `publish_news_brief.py` 同一個 fail-closed 閘門執行。發布時必須同時提供候選稽核檔；任一來源未完成、未按站內前 30 則及強制例外入池、候選缺少 SS–E 評級理由、達標事件漏入 manifest，或圖片附件／來源頁確認失敗，均不得產生 release。圖片技能不修改候選稽核；候選問題仍回到 `select-news-events`／`audit-news-candidates` 修復。
+圖片驗收與候選稽核確認在 `publish_news_brief.py` 同一個 fail-closed 閘門執行。發布時必須同時提供候選稽核檔；只有完全沒有可核實候選、候選缺少 SS–E 評級理由、達標事件漏入 manifest，或圖片附件／來源頁確認失敗，才不得產生 release。單一 discovery route 缺失或不完整只記 coverage 降級，不得阻擋其他可用候選。圖片技能不修改候選稽核；候選問題仍回到 `select-news-events`／`audit-news-candidates` 修復。
 
 ## 時間與區域
 
