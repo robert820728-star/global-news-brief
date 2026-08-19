@@ -1,5 +1,13 @@
 # 版本紀錄 / Version Record
 
+## v0.3.7-variable-discovery-source-schema — 2026-08-19
+
+- 建立原因 / Reason: 真實排程已證明新版 builder 能由 GDELT、中央社與中新社三條 discovery 路線產生 897 筆候選，但候選清單 schema 仍把來源數固定為 15，導致 `source-scan` 在 schema 驗證失敗。 / A real scheduled run proved that the new builder produced 897 candidates from GDELT, CNA, and China News Service, but the candidate-list schema still fixed the source count at fifteen and failed `source-scan` validation.
+- 實作方式 / Approach: 將既有 schema 的 `source_count` 改為最少 1 的整數，`sources` 改為至少 1 個且保持唯一，不設定固定上限。 / Change the existing schema so `source_count` is an integer of at least one and `sources` contains at least one unique entry without a fixed maximum.
+- 變更入口 / Changed entry points: `schemas/news-source-candidate-list.schema.json`, `tests/test_pipeline_contract.py`.
+- 驗證方式 / Validation: 契約測試先以固定 15 來源 schema 失敗，再於最小修正後執行指定測試與完整回歸。 / The contract test first fails against the fixed fifteen-source schema, then the focused and full regressions run after the minimal repair.
+- 過度設計檢查 / Overdesign check: 未新增 schema、服務、stage、分類器或資料管道；只修正既有 schema 與測試。 / No schema, service, stage, classifier, or data pipeline was added; only the existing schema and contract test changed.
+
 ## v0.3.6-available-discovery-candidates — 2026-08-19
 
 - 建立原因 / Reason: 新版 discovery-first 已成功取得 GDELT、中央社與中新社候選，但舊候選建置器、設定與圖片發布契約仍要求十五個媒體站全部完成，造成可用候選被固定來源 gate 阻擋。 / Discovery-first successfully acquired GDELT, CNA, and China News Service candidates, but the legacy builder, settings, and image-publishing contract still required all fifteen publisher scans and blocked otherwise usable candidates.

@@ -1,3 +1,4 @@
+import json
 import unittest
 from pathlib import Path
 
@@ -362,6 +363,15 @@ class PipelineContractTests(unittest.TestCase):
         for label, document in documents.items():
             for phrase in forbidden:
                 self.assertNotIn(phrase, document, f"{label} retains fixed-source gate")
+
+        schema = json.loads(
+            (ROOT / "schemas" / "news-source-candidate-list.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual({"type": "integer", "minimum": 1}, schema["properties"]["source_count"])
+        self.assertEqual(1, schema["properties"]["sources"]["minItems"])
+        self.assertNotIn("maxItems", schema["properties"]["sources"])
 
     def test_conversation_delivery_requires_complete_reader_not_summary(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
