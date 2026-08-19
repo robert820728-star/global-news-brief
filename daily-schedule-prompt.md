@@ -165,6 +165,8 @@ Stage -1 完成後，至少讀取並遵守：
    - 先執行一次無參數 renderer，確認三個 canonical 底圖 `taiwan-counties-yellow-v2.png`、`china-provinces-yellow-v2.png`、`world-countries-pacific-robinson-yellow-v2.png` 都由本輪 workspace 產生。每個 `map.required=true` 事件再建立 overlay JSON，依行政區精確鍵值著色並提供繁中 `label`，以 `<bundled-python> scripts/render_base_maps.py --overlay-spec <file>` 產生事件圖；不得直接引用 workspace 外殘留的舊 PNG。
 8. `build-news-charts`
 9. `collect-news-images`
+   - 對已選取且有候選來源圖片的事件，先建立只含 `event_id`、`source_url`、`alt`、`credit` 的 JSON 陣列，再執行 `<bundled-python> scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>`。只有 manifest 中 `status=ready`、可解碼且有本機 `local_path`、MIME、尺寸與 SHA-256 的實體檔可以交給原生附件／媒體交付層；外部網址、Markdown 或工具內部預覽不得取代該實體檔。
+   - 單張下載、解碼或寫檔失敗只影響該事件圖片，不得重跑 discovery、評分、驗證或 reader 文字；保留既有 checkpoint，依圖片契約改用合規的無圖說明或只重做圖片交付。
    - 只有 checkpoint 的 `collect-news-images` completed 後，才可第一次執行 `scripts/validate_news_brief.py manifest --input <final-manifest>`；final-manifest validator 不得提前到 verify、map 或 chart 階段。
    - 若執行者誤在圖片階段完成前呼叫該命令，script 會輸出 `DEFERRED` 並以成功狀態返回；這不是 validator 通過，也不得標記整輪失敗。立即繼續原定 pipeline，並在 `collect-news-images` completed 後重新執行到真正輸出 `OK`。
 10. `render`

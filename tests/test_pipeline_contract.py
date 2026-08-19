@@ -259,6 +259,7 @@ class PipelineContractTests(unittest.TestCase):
 
     def test_mobile_delivery_requires_native_media_content_not_markdown_text(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        full = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "NATIVE_MEDIA_BLOCK_DELIVERY_GATE",
@@ -271,6 +272,9 @@ class PipelineContractTests(unittest.TestCase):
             "NATIVE_MEDIA_UNAVAILABLE",
         ):
             self.assertIn(requirement, daily)
+        for document in (daily, full):
+            self.assertIn("scripts/materialize_news_images.py", document)
+            self.assertIn("--manifest <materialized-images.json>", document)
 
     def test_mobile_b_or_higher_requires_a_visible_source_image(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")

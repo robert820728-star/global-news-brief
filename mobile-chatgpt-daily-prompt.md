@@ -120,7 +120,7 @@ The required order for every configured source is: `canonical route -> same-site
    - `NATIVE_MEDIA_BLOCK_DELIVERY_GATE`：最終交付必須是 ChatGPT 原生 `image/media content block` 或原生圖片卡，不得把外部 HTTPS 圖片寫進 `agentMessage text` 後期待 Markdown 自動渲染。圖片先保存為實體 JPEG／WebP 位元組，完成 MIME、解碼、尺寸與內容驗收後，再以上傳附件或原生媒體工具送入本對話；穩定網址、HTTP 200 與 Markdown 語法都不能取代上傳。
    - `NATIVE_IMAGE_SEARCH_CARD_ROUTE`：mobile-native 對每則既有選圖使用 ChatGPT 原生圖片搜尋／媒體工具，查詢必須同時包含事件、發布者與日期，交付原生圖片卡；不得在 reader 內產生 `![alt](https://...)`。`read_thread` 可把這類原生卡表示為 `async_image_group`，但該標記本身仍不是像素驗收。
    - 外部驗收器必須用結構化 `read_thread` 讀取本輪最終回覆，確認存在非文字的 `image/media content block` 或原生 `async_image_group`，再以唯讀畫面擷取確認實際 `rendered pixel` 圖片區域寬高非零。若只有一般 `agentMessage text`、圖片網址、Markdown、圖說，或畫面仍空白，立即判定圖片交付失敗，不得要求使用者目視補驗。
-   - mobile-native 若沒有可產生原生媒體區塊的工具，必須回報 `NATIVE_MEDIA_UNAVAILABLE`，保留本輪 discovery、評分、驗證與 reader checkpoint，只把圖片交付切換到既有 full-runtime：下載既有選圖、轉成最長邊 640px 的 JPEG／WebP，並以上傳附件方式交付；不得建立新 run、重跑新聞流程或只改成另一個外部圖片網址。
+   - mobile-native 若沒有可產生原生媒體區塊的工具，必須回報 `NATIVE_MEDIA_UNAVAILABLE`，保留本輪 discovery、評分、驗證與 reader checkpoint，只把圖片交付切換到既有 full-runtime：由 full-runtime 執行 `<bundled-python> scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>`，使用 manifest 中 `status=ready` 的本機 JPEG 實體檔以上傳附件方式交付；不得建立新 run、重跑新聞流程或只改成另一個外部圖片網址。
    - 若無法在送出前確認圖片可見，必須移除該圖片標記，改成一句非技術性的 `**圖片說明：**`；不得寫「沿用前輪選圖」、「前輪同圖」、「不重新驗收」或「圖片待補」。
 8. `## 後續觀察` 每一項必須是可驗證的具體條件，包含事件編號與數值門檻、日期、決策節點或明確官方動作；不得使用「追蹤官方後續更新與實際影響」等通用占位句。
 
