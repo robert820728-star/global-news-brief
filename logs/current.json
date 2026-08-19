@@ -2,7 +2,7 @@
   "candidate_audit_artifact": {
     "branch": "run-logs",
     "path": "logs/latest-candidate-audit.json",
-    "blob_sha": "667db09f497afcbcf4d4019c5182a551c8306877"
+    "blob_sha": "632479c954a5190f04eef7605f5a0c69a1b87f0c"
   },
   "client_confirmation_supported": false,
   "current_stage": "canonical-delivery",
@@ -14,7 +14,7 @@
   "reader_artifact": {
     "branch": "run-logs",
     "path": "logs/latest-reader.md",
-    "blob_sha": "82e494dfa7ad88c3e50733754360540e3ffb222d"
+    "blob_sha": "4a27776eb7dc4fff0d40f659a50f22760e6a93e8"
   },
   "run_id": "gnb-20260819T065100Z-b6e2c3a7",
   "scheduled_for": "2026-08-19T14:51:00+08:00",
