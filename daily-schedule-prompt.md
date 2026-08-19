@@ -61,6 +61,8 @@ Before reading the recursive tree, capsule manifest, helpers, payload, or chunks
 - A `mobile-native` result is a usable degraded reader edition, not a canonical full-asset release. If the host cannot create stable map/chart attachments, omit them and state that the scheduled host did not provide executable visual rendering; never claim full visual validation.
 - Record `execution_mode=full-runtime` or `execution_mode=mobile-native` in the run ledger. The next scheduled run probes capabilities again and resolves fresh `main`; it must not create a second task merely to retry the missing runtime.
 
+`PRE_PROBE_METADATA_READ_RECOVERY`: if the executor accidentally reads only repository tree, manifest, helper, payload, or chunk metadata before the capability probe, that ordering mistake must not fail the run. The recovery must occur before any news source or prior result is read: immediately perform the one probe, discard the pre-read metadata, and continue through the selected execution mode. The executor must not reuse any pre-read tree, manifest, helper, payload, or chunk; it must refetch the required metadata from the same pinned SHA after routing. This recovery does not permit pre-reading news, an old reader, candidate audit, or source results, and it does not relax any capsule hash or workspace verification.
+
 This routing is deliberately limited to host capability selection. It adds no new gate, framework, capsule, or retry system.
 
 任何 `scripts/*.py` 執行前，先完整遵守 `bootstrap-workspace.md`。

@@ -24,6 +24,18 @@ class PipelineContractTests(unittest.TestCase):
             prompt.index("EARLY_DIAGNOSTIC_TREE_VERIFIED"),
         )
 
+    def test_pre_probe_metadata_read_is_recoverable_before_news_access(self):
+        prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "PRE_PROBE_METADATA_READ_RECOVERY",
+            "must not fail the run",
+            "discard the pre-read metadata",
+            "must not reuse any pre-read tree, manifest, helper, payload, or chunk",
+            "before any news source or prior result is read",
+        ):
+            self.assertIn(requirement, prompt)
+
     def test_same_source_recovery_uses_browser_only_as_final_fallback(self):
         documents = [
             ROOT / "news-brief-settings.md",
