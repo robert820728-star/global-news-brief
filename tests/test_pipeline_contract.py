@@ -256,6 +256,25 @@ class PipelineContractTests(unittest.TestCase):
         ):
             self.assertIn(requirement, daily)
 
+    def test_mobile_images_are_gated_per_story(self):
+        documents = (
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / "news-brief-settings.md",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            for requirement in (
+                "MOBILE_PER_STORY_VISIBLE_IMAGE_GATE",
+                "每一則",
+                "不得替其他新聞通過",
+                "逐則",
+            ):
+                self.assertIn(requirement, text, f"{path} missing {requirement}")
+
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        self.assertIn("og:image", daily)
+        self.assertIn("srcset", daily)
+
     def test_image_workload_is_bounded_without_reducing_news_coverage(self):
         documents = [
             ROOT / "news-brief-settings.md",
@@ -419,6 +438,25 @@ class PipelineContractTests(unittest.TestCase):
             "本日新增部分必須獨立達到 C 級門檻",
         ):
             self.assertIn(requirement, daily)
+
+    def test_mobile_reentry_uses_48_hour_cooldown_and_current_impact(self):
+        documents = (
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / "news-brief-settings.md",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            for requirement in (
+                "MATERIAL_UPDATE_48_HOUR_REENTRY_GATE",
+                "48 小時內",
+                "滿 48 小時",
+                "不得自動重刊",
+                "獨立達到 C 級",
+            ):
+                self.assertIn(requirement, text, f"{path} missing {requirement}")
+
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        self.assertIn("實質惡化", daily)
 
     def test_continuing_events_are_scored_by_verified_impact_delta(self):
         documents = (
