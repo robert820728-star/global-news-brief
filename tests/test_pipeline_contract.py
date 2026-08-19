@@ -245,6 +245,21 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn(requirement, daily)
         self.assertIn("不算可見圖片", daily)
 
+    def test_mobile_delivery_requires_native_media_content_not_markdown_text(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "NATIVE_MEDIA_BLOCK_DELIVERY_GATE",
+            "NATIVE_IMAGE_SEARCH_CARD_ROUTE",
+            "image/media content block",
+            "async_image_group",
+            "rendered pixel",
+            "read_thread",
+            "agentMessage text",
+            "NATIVE_MEDIA_UNAVAILABLE",
+        ):
+            self.assertIn(requirement, daily)
+
     def test_mobile_b_or_higher_requires_a_visible_source_image(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
