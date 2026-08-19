@@ -159,6 +159,7 @@ Stage -1 完成後，至少讀取並遵守：
 5. `materialize-manifest`
    - 完成條件是將本輪 audit 選中事件一對一物化並綁定 checkpoint 的 `manifest` artifact；此處不需要執行 final-manifest validator。
 6. `verify-news-events`
+   - 將本階段每則事件的 `verification` 結果寫成獨立 patch JSON，並且只使用 `<bundled-python> scripts/apply_event_stage_patch.py --stage verify-news-events --manifest <before-manifest> --patch <verification-patch.json> --output <after-manifest>` 合併；禁止使用 jq 或 shell 字串插值改寫 manifest，避免 `$n`、`$d`、`$e` 等內容被當成 jq 變數而產生空檔。
    - 此階段只能用 `scripts/validate_news_brief.py stage --stage verify-news-events --before <before-manifest> --after <after-manifest>` 檢查欄位所有權；不得在此時執行 final-manifest validator，因地圖、圖表與圖片欄位尚未完成。
 7. `build-news-maps`
    - 必須以 Stage -1 已解析、確認含 Pillow 的 bundled Python 執行 `scripts/render_base_maps.py`；不得回退到 PATH Python、不得安裝 matplotlib。執行前後都必須重驗 bootstrap integrity，若任何 receipt 綁定檔改變，該 stage 不得完成。
