@@ -80,7 +80,22 @@
         "window_start": {"type": "string", "format": "date-time"},
         "window_end": {"type": "string", "format": "date-time"},
         "source_coverage": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/sourceCoverage"}},
-        "raw_item_count": {"type": "integer", "minimum": 0, "maximum": 500},
+        "raw_item_count": {"type": "integer", "minimum": 0},
+        "processing_counts": {
+          "type": "object",
+          "required": ["merged_article_row_count", "in_window_article_row_count", "canonical_url_count", "provisional_title_cluster_count", "semantic_event_count", "scored_event_count", "c_or_higher_scored_event_count", "selected_event_count"],
+          "properties": {
+            "merged_article_row_count": {"type": "integer", "minimum": 0},
+            "in_window_article_row_count": {"type": "integer", "minimum": 0},
+            "canonical_url_count": {"type": "integer", "minimum": 0},
+            "provisional_title_cluster_count": {"type": "integer", "minimum": 0},
+            "semantic_event_count": {"type": "integer", "minimum": 0},
+            "scored_event_count": {"type": "integer", "minimum": 0},
+            "c_or_higher_scored_event_count": {"type": "integer", "minimum": 0},
+            "selected_event_count": {"type": "integer", "minimum": 0}
+          },
+          "additionalProperties": false
+        },
         "deduplicated_candidate_count": {"type": "integer", "minimum": 0},
         "candidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}}
       },

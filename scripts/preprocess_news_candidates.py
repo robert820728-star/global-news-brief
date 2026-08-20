@@ -115,6 +115,18 @@ def preprocess(data: dict, threshold: float) -> dict:
                 }
             )
 
+    canonical_url_count = len(seen_urls)
+    provisional_title_cluster_count = len(clusters)
+    article_count_receipt = {
+        "input_article_row_count": len(raw_candidates),
+        "within_window_article_row_count": len(prepared),
+        "outside_window_article_row_count": len(outside),
+        "canonical_url_count": canonical_url_count,
+        "exact_url_duplicate_row_count": len(prepared) - canonical_url_count,
+        "provisional_title_cluster_count": provisional_title_cluster_count,
+        "title_cluster_merged_url_count": canonical_url_count - provisional_title_cluster_count,
+    }
+
     return {
         "window_start": data["window_start"],
         "window_end": data["window_end"],
@@ -123,6 +135,7 @@ def preprocess(data: dict, threshold: float) -> dict:
         "outside_window": outside,
         "normalized_candidates": prepared,
         "clusters": clusters,
+        "article_count_receipt": article_count_receipt,
         "selection_or_grading_performed": False,
     }
 

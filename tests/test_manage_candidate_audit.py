@@ -137,16 +137,48 @@ def valid_audit(candidates=None, per_source_count=1):
         items[0]["candidate_urls"].extend(all_urls[len(items):])
         items[0]["source_ids"] = sorted({url.split("/")[3] for url in items[0]["candidate_urls"]})
     now = window_end
+    raw_count = len(coverage) * per_source_count
+    c_or_higher = {
+        "C", "C+", "B-", "B", "B+", "A-", "A", "A+", "S-", "S", "S+", "SS"
+    }
     return {
         "schema_version": "1.1.0", "retention_days": 14, "updated_at": now,
         "runs": [{"run_id": "r", "generated_at": now, "window_start": window_start, "window_end": window_end,
                   "source_coverage": coverage,
-                  "raw_item_count": len(coverage) * per_source_count,
+                  "raw_item_count": raw_count,
+                  "processing_counts": {
+                      "merged_article_row_count": raw_count,
+                      "in_window_article_row_count": raw_count,
+                      "canonical_url_count": raw_count,
+                      "provisional_title_cluster_count": raw_count,
+                      "semantic_event_count": len(items),
+                      "scored_event_count": len(items),
+                      "c_or_higher_scored_event_count": sum(
+                          item["provisional_grade"] in c_or_higher for item in items
+                      ),
+                      "selected_event_count": sum(
+                          item["decision"] == "selected" for item in items
+                      ),
+                  },
                   "deduplicated_candidate_count": len(items), "candidates": items}],
     }
 
 
 class CandidateAuditTests(unittest.TestCase):
+    def test_latest_run_requires_conserved_processing_counts(self):
+        missing = valid_audit()
+        del missing["runs"][0]["processing_counts"]
+        self.assertTrue(any(
+            "processing_counts" in error for error in MODULE.validate(missing, source_pool())
+        ))
+
+        mismatched = valid_audit()
+        mismatched["runs"][0]["processing_counts"]["semantic_event_count"] += 1
+        self.assertTrue(any(
+            "semantic_event_count" in error
+            for error in MODULE.validate(mismatched, source_pool())
+        ))
+
     def test_chongqing_mayor_scores_d_from_all_six_dimensions(self):
         breakdown = {
             "public_impact": 4,
@@ -211,6 +243,10 @@ class CandidateAuditTests(unittest.TestCase):
         ]
         only_url = run["source_coverage"][0]["selected_item_urls"][0]
         run["raw_item_count"] = 1
+        run["processing_counts"]["merged_article_row_count"] = 1
+        run["processing_counts"]["in_window_article_row_count"] = 1
+        run["processing_counts"]["canonical_url_count"] = 1
+        run["processing_counts"]["provisional_title_cluster_count"] = 1
         run["candidates"][0]["candidate_urls"] = [only_url]
         run["candidates"][0]["source_ids"] = ["cna"]
         self.assertEqual([], MODULE.validate(audit, pool))

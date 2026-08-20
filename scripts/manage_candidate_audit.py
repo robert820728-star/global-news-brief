@@ -362,6 +362,57 @@ def validate(data, source_pool=None):
         if isinstance(run.get("raw_item_count"), int) and len(candidates) > run["raw_item_count"]:
             errors.append(run_label + " 去重後候選不得多於原始入池條目")
 
+        if run_index == len(runs):
+            processing_counts = run.get("processing_counts")
+            count_fields = {
+                "merged_article_row_count", "in_window_article_row_count",
+                "canonical_url_count", "provisional_title_cluster_count",
+                "semantic_event_count", "scored_event_count",
+                "c_or_higher_scored_event_count", "selected_event_count",
+            }
+            if not isinstance(processing_counts, dict) or set(processing_counts) != count_fields:
+                errors.append(
+                    run_label + ".processing_counts 必須包含完整文章、網址、分群、事件與評分階段計數"
+                )
+            elif any(
+                not isinstance(processing_counts[field], int)
+                or isinstance(processing_counts[field], bool)
+                or processing_counts[field] < 0
+                for field in count_fields
+            ):
+                errors.append(run_label + ".processing_counts 全部欄位必須是非負整數")
+            else:
+                expected_counts = {
+                    "merged_article_row_count": run.get("raw_item_count"),
+                    "in_window_article_row_count": run.get("raw_item_count"),
+                    "semantic_event_count": len(candidates),
+                    "scored_event_count": len(candidates),
+                    "c_or_higher_scored_event_count": sum(
+                        isinstance(item, dict) and item.get("provisional_grade") in AUTO_SELECT
+                        for item in candidates
+                    ),
+                    "selected_event_count": sum(
+                        isinstance(item, dict) and item.get("decision") == "selected"
+                        for item in candidates
+                    ),
+                }
+                for field, expected in expected_counts.items():
+                    if processing_counts[field] != expected:
+                        errors.append(
+                            run_label + f".processing_counts.{field} 必須等於可重算值 {expected}"
+                        )
+                ordered_fields = (
+                    "in_window_article_row_count", "canonical_url_count",
+                    "provisional_title_cluster_count", "semantic_event_count",
+                )
+                if any(
+                    processing_counts[left] < processing_counts[right]
+                    for left, right in zip(ordered_fields, ordered_fields[1:])
+                ):
+                    errors.append(
+                        run_label + ".processing_counts 不得在去重或分群後反而增加"
+                    )
+
         valid_source_ids = all_configured_source_ids or set(coverage_ids)
         candidate_url_list = []
         for candidate_index, candidate in enumerate(candidates, 1):

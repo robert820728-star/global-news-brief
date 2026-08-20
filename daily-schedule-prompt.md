@@ -8,6 +8,7 @@
 - `GDELT_RESILIENT_ACQUISITION` makes at most five total DOC API requests; after a 429, wait at least 120 秒, or longer when required by `Retry-After`. After a fifth failure, do not send a sixth request and switch to the official 15-minute export archives.
 - A discovery source failure must not block the whole brief. Continue in degraded mode when at least one configured discovery route or the final browser/web-search fallback yields verifiable current candidates. Stop only if no current candidate can be verified.
 - The fixed order is `discover -> deduplicate -> score -> independently verify selected C-or-higher events -> collect images -> render`.
+- `PIPELINE_COUNT_RECEIPT_V1`: candidate audit 的最新一輪必須保存 `merged_article_row_count`、`in_window_article_row_count`、`canonical_url_count`、`provisional_title_cluster_count`、`semantic_event_count`、`scored_event_count`、`c_or_higher_scored_event_count`、`selected_event_count`。各欄必須由實際 artifact 重算並依序守恆；文章列數不得稱為語意事件數，網址正規化或標題分群也不得冒充語意去重。數量小計不相等時，停止宣稱該數字已驗證，但不得因此停止以可核實候選發布讀者版。
 - The system must score and deduplicate before independent verification. Verification uses the original report, official evidence, or another reliable source from the wider verification pool and does not require all verification sites to be reachable.
 - The system must collect images only after verification. Discovery image URLs are hints only and cannot satisfy the reader-visible image gate.
 

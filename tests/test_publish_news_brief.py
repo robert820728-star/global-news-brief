@@ -144,6 +144,16 @@ def write_valid_audit(root: Path):
             "window_start": "2026-08-13T06:00:00+08:00",
             "window_end": "2026-08-14T06:00:00+08:00",
             "source_coverage": coverage, "raw_item_count": len(coverage),
+            "processing_counts": {
+                "merged_article_row_count": len(coverage),
+                "in_window_article_row_count": len(coverage),
+                "canonical_url_count": len(coverage),
+                "provisional_title_cluster_count": len(coverage),
+                "semantic_event_count": 1,
+                "scored_event_count": 1,
+                "c_or_higher_scored_event_count": 1,
+                "selected_event_count": 1,
+            },
             "deduplicated_candidate_count": 1, "candidates": [candidate],
         }],
     }

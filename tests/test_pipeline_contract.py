@@ -512,6 +512,35 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("full-runtime", skill)
         self.assertIn("mobile-native", skill)
 
+    def test_candidate_audit_schema_has_unbounded_raw_count_and_stage_receipt(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-candidate-audit.schema.json").read_text(encoding="utf-8")
+        )
+        run = schema["$defs"]["run"]
+        self.assertNotIn("maximum", run["properties"]["raw_item_count"])
+        self.assertNotIn("processing_counts", run["required"])
+        required = set(run["properties"]["processing_counts"]["required"])
+        self.assertEqual({
+            "merged_article_row_count",
+            "in_window_article_row_count",
+            "canonical_url_count",
+            "provisional_title_cluster_count",
+            "semantic_event_count",
+            "scored_event_count",
+            "c_or_higher_scored_event_count",
+            "selected_event_count",
+        }, required)
+        for document_path in (
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/audit-news-candidates/SKILL.md",
+        ):
+            document = document_path.read_text(encoding="utf-8")
+            self.assertIn("PIPELINE_COUNT_RECEIPT_V1", document)
+            self.assertIn("文章列數不得稱為語意事件數", document)
+            for field in required:
+                self.assertIn(f"`{field}`", document)
+
     def test_mobile_native_durable_audit_uses_compact_profile_without_verbose_evidence(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         skill = (ROOT / ".agents/skills/audit-news-candidates/SKILL.md").read_text(
