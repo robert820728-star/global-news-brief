@@ -3,7 +3,7 @@
 
 This pilot never scores importance, rejects news, or makes publication decisions.
 It only consolidates deterministic duplicate evidence and sends unusable titles to
-a recovery queue while preserving every input candidate ID exactly once.
+a recovery queue while preserving every input row exactly once.
 """
 
 from __future__ import annotations
@@ -242,7 +242,7 @@ def verify_report(report: dict[str, Any]) -> dict[str, int]:
     if collections.Counter(assigned) != collections.Counter(expected) or len(assigned) != len(expected):
         raise ValueError("article-row conservation failed")
     if len(expected) != len(set(expected)):
-        raise ValueError("article-row conservation failed: duplicate input candidate IDs")
+        raise ValueError("article-row conservation failed: duplicate input row IDs")
     counts = report.get("counts", {})
     if counts.get("input_article_rows") != len(expected) or counts.get("provisional_groups") != len(groups):
         raise ValueError("report counts do not match assignments")
