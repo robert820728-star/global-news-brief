@@ -12,6 +12,7 @@ from pilot_url_recovery_batched_triage import (  # noqa: E402
     build_model_batches,
     build_recovered_report,
     recover_title_from_url,
+    validate_model_batch_response,
     verify_recovered_report,
 )
 
@@ -116,6 +117,49 @@ class UrlRecoveryBatchedTriageTests(unittest.TestCase):
         report["model_batches"][0]["items"].append(copy.deepcopy(report["model_batches"][0]["items"][0]))
         with self.assertRaisesRegex(ValueError, "model batch coverage failed"):
             verify_recovered_report(report)
+
+    def test_model_response_validator_accepts_exact_batch_contract(self):
+        batch = build_model_batches(
+            [{"group_id": "g-001", "section": "GLB", "effective_title": "event", "evidence": []}],
+            batch_size=100,
+        )[0]
+        response = {
+            "batch_id": batch["batch_id"],
+            "sha256": batch["sha256"],
+            "results": [{"group_id": "g-001", "event_fingerprint": "event-1"}],
+        }
+        self.assertEqual(validate_model_batch_response(batch, response), {"validated_results": 1})
+
+    def test_model_response_validator_rejects_hash_and_id_mismatches(self):
+        batch = build_model_batches(
+            [
+                {"group_id": "g-001", "section": "GLB", "effective_title": "event one", "evidence": []},
+                {"group_id": "g-002", "section": "GLB", "effective_title": "event two", "evidence": []},
+            ],
+            batch_size=100,
+        )[0]
+        valid = {
+            "batch_id": batch["batch_id"],
+            "sha256": batch["sha256"],
+            "results": [{"group_id": "g-001"}, {"group_id": "g-002"}],
+        }
+        cases = []
+        wrong_hash = copy.deepcopy(valid)
+        wrong_hash["sha256"] = "0" * 64
+        cases.append(wrong_hash)
+        missing_id = copy.deepcopy(valid)
+        missing_id["results"] = [{"group_id": "g-001"}]
+        cases.append(missing_id)
+        duplicate_id = copy.deepcopy(valid)
+        duplicate_id["results"] = [{"group_id": "g-001"}, {"group_id": "g-001"}]
+        cases.append(duplicate_id)
+        extra_id = copy.deepcopy(valid)
+        extra_id["results"].append({"group_id": "g-003"})
+        cases.append(extra_id)
+        for response in cases:
+            with self.subTest(response=response):
+                with self.assertRaises(ValueError):
+                    validate_model_batch_response(batch, response)
 
 
 if __name__ == "__main__":

@@ -135,6 +135,28 @@ def build_model_batches(groups: list[dict[str, Any]], batch_size: int) -> list[d
     return batches
 
 
+def validate_model_batch_response(expected_batch: dict[str, Any], response: dict[str, Any]) -> dict[str, int]:
+    """Reject any model response that does not exactly match its immutable input batch."""
+    if not isinstance(response, dict):
+        raise ValueError("model batch response must be an object")
+    if response.get("batch_id") != expected_batch.get("batch_id"):
+        raise ValueError("model batch ID mismatch")
+    if response.get("sha256") != expected_batch.get("sha256"):
+        raise ValueError("model batch hash mismatch")
+    results = response.get("results")
+    if not isinstance(results, list):
+        raise ValueError("model batch results must be an array")
+    expected_ids = [item.get("group_id") for item in expected_batch.get("items", [])]
+    returned_ids = [item.get("group_id") if isinstance(item, dict) else None for item in results]
+    if (
+        any(not group_id for group_id in returned_ids)
+        or len(returned_ids) != len(set(returned_ids))
+        or collections.Counter(returned_ids) != collections.Counter(expected_ids)
+    ):
+        raise ValueError("model batch result coverage mismatch")
+    return {"validated_results": len(results)}
+
+
 def _build_group_near_pairs(groups: list[dict[str, Any]], sample_size: int) -> list[dict[str, Any]]:
     groups = [group for group in groups if group.get("group_kind") != "unresolved_title"]
     features = {group["group_id"]: title_features(group.get("effective_title", "")) for group in groups}
