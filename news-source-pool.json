@@ -1,7 +1,7 @@
 {
   "schema_version": "1.3.0",
   "window_hours": 24,
-  "per_source_rank_limit": 30,
+  "candidate_transfer_policy": "all_verified_in_window",
   "primary_sources_per_section": 5,
   "source_scan_evidence_required": true,
   "discovery_policy": {
@@ -76,13 +76,6 @@
     "browser_must_not_be_a_runtime_dependency": true,
     "configured_primary_sources_must_pass_non_browser_health_check": false
   },
-  "mandatory_overflow_triggers": [
-    "major_disaster", "epidemic", "war_or_military", "diplomacy_escalation",
-    "election", "central_bank_or_financial_shock", "major_cybersecurity",
-    "critical_infrastructure", "major_scientific_breakthrough",
-    "cultural_industry_or_creator_ecosystem", "official_emergency_alert",
-    "coverage_guard_recovery"
-  ],
   "cultural_industry_event_rule": {
     "first_large_award_suspension_min_grade": "C",
     "repeat_without_material_change_allowed_grades": ["C-", "D"],
@@ -129,6 +122,60 @@
       "structural_or_policy_significance": 15,
       "material_new_development": 10,
       "core_section_relevance": 10
+    },
+    "grade_minimum_scores": {
+      "E": 0,
+      "D": 20,
+      "C-": 40,
+      "C": 45,
+      "C+": 50,
+      "B-": 55,
+      "B": 60,
+      "B+": 65,
+      "A-": 70,
+      "A": 75,
+      "A+": 80,
+      "S-": 85,
+      "S": 90,
+      "S+": 94,
+      "SS": 97
+    },
+    "grading_principles": {
+      "combined_evidence_no_single_dimension_hard_cap": true,
+      "importance_severity_is_public_impact": true,
+      "scope_is_one_weighted_dimension": true
+    },
+    "casualty_public_impact_floors": {
+      "1-9": 8,
+      "10-49": 14,
+      "50-99": 18,
+      "100-249": 23,
+      "250-2499": 27,
+      "2500+": 30
+    },
+    "dimension_anchors": {
+      "public_impact": [
+        {"score_range": [0, 5], "meaning": "ceremonial, symbolic, or no demonstrated public consequence"},
+        {"score_range": [6, 11], "meaning": "limited and reversible consequence"},
+        {"score_range": [12, 17], "meaning": "material but bounded public consequence"},
+        {"score_range": [18, 23], "meaning": "major harm, rights, livelihood, or public-system consequence"},
+        {"score_range": [24, 27], "meaning": "severe casualties, nationwide dysfunction, or irreversible loss"},
+        {"score_range": [28, 30], "meaning": "catastrophic, existential, or state-survival consequence"}
+      ],
+      "geographic_or_population_scope": [
+        {"score_range": [0, 3], "meaning": "individual, facility, ceremony, or no demonstrated direct public reach"},
+        {"score_range": [4, 7], "meaning": "one locality or otherwise limited directly affected population"},
+        {"score_range": [8, 11], "meaning": "substantial first-level region, entire small sovereign state, or 2-3 first-level regions/countries"},
+        {"score_range": [12, 15], "meaning": "4+ first-level regions/countries or material national public-system reach"},
+        {"score_range": [16, 18], "meaning": "many first-level regions/countries across multiple regions"},
+        {"score_range": [19, 20], "meaning": "global or civilization-wide direct reach"}
+      ],
+      "urgency_and_safety": [
+        {"score_range": [0, 3], "meaning": "danger ended or no immediate public action required"},
+        {"score_range": [4, 7], "meaning": "active local response or bounded safety concern"},
+        {"score_range": [8, 11], "meaning": "continuing major danger, rescue window, or stressed essential services"},
+        {"score_range": [12, 15], "meaning": "expanding or uncontrolled threat requiring immediate broad action"}
+      ]
     },
     "tie_breakers": ["newer_published_at", "more_direct_primary_evidence", "stable_url"]
   },

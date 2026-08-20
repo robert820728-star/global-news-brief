@@ -69,7 +69,7 @@ class PipelineContractTests(unittest.TestCase):
         )
         self.assertTrue(all(item["result_limit"] == 5 for item in sweeps))
         self.assertTrue(all(item["window_hours"] == 24 for item in sweeps))
-        self.assertIn("coverage_guard_recovery", pool["mandatory_overflow_triggers"])
+        self.assertEqual("all_verified_in_window", pool["candidate_transfer_policy"])
 
         documents = [
             ROOT / "news-brief-settings.md",
@@ -211,16 +211,16 @@ class PipelineContractTests(unittest.TestCase):
         for forbidden in ("Codex", "powershell", "bootstrap capsule", "git clone"):
             self.assertNotIn(forbidden, daily)
 
-    def test_disaster_publication_floor_and_conflict_precedence_are_explicit(self):
+    def test_integrated_six_dimension_grading_and_conflict_context_are_explicit(self):
         settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
         severity = (ROOT / ".agents/skills/select-news-events/references/severity-rubric.md").read_text(encoding="utf-8")
         mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for document in (settings, severity, mobile):
-            self.assertIn("未滿 50 人", document)
-            self.assertIn("50–99 人", document)
-            self.assertIn("監控／指定區域", document)
+            self.assertIn("重要性／嚴重程度", document)
+            self.assertIn("六項", document)
             self.assertIn("軍事／衝突", document)
+            self.assertIn("INTEGRATED_SIX_DIMENSION_NO_HARD_CAP", document)
         self.assertIn("local_disaster_review", severity)
         self.assertNotIn("死亡 100 人以上可列 A-", (ROOT / "news-brief-examples.md").read_text(encoding="utf-8"))
 
@@ -372,8 +372,23 @@ class PipelineContractTests(unittest.TestCase):
         self.assertEqual(["gdelt", "cna", "chinanews"], [item["source_id"] for item in discovery])
         self.assertEqual(1, pool["discovery_policy"]["minimum_ready_sources"])
         self.assertEqual("degrade_not_block", pool["discovery_policy"]["source_failure_policy"])
+        self.assertEqual("all_verified_in_window", pool["candidate_transfer_policy"])
         self.assertTrue(pool["verification_policy"]["after_scoring"])
         self.assertTrue(pool["verification_policy"]["images_after_verification"])
+
+        route_config = json.loads(
+            (ROOT / "source-route-config.json").read_text(encoding="utf-8")
+        )
+        gdelt = next(
+            route for route in route_config["routes"] if route["source_id"] == "gdelt"
+        )
+        self.assertEqual(5, gdelt["max_attempts"])
+        self.assertEqual(120, gdelt["retry_interval_seconds"])
+        self.assertEqual("gdelt_export_24h", gdelt["fallback"]["type"])
+        for document in (daily, scheduled):
+            self.assertIn("GDELT_RESILIENT_ACQUISITION", document)
+            self.assertIn("FULL_DISCOVERY_POOL_NO_FIXED_LIMIT", document)
+            self.assertIn("120 秒", document)
 
     def test_candidate_discovery_has_no_fixed_source_completion_gate(self):
         documents = {
@@ -420,13 +435,50 @@ class PipelineContractTests(unittest.TestCase):
 
         for requirement in (
             "READER_TEMPLATE_STRUCTURE_GATE",
+            "LEGACY_TODAY_OVERVIEW_NO_OMISSION_GATE",
+            "LEGACY_SECTIONED_READER_LAYOUT_GATE",
             "news-brief-template.md",
-            "## 今日總覽",
-            "## 逐條詳報",
-            "## 後續觀察",
-            "不得加入 `今日重點表`",
+            "每日新聞讀者版",
+            "時間｜事件｜評級",
+            "不得省略、跨區集中或重新設計",
+            "--reader-layout legacy-sectioned",
         ):
             self.assertIn(requirement, daily)
+
+    def test_reader_excludes_internal_repair_log(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        template = (ROOT / "news-brief-template.md").read_text(encoding="utf-8")
+
+        for document in (daily, template):
+            self.assertIn("READER_INTERNAL_REPAIR_LOG_EXCLUSION_GATE", document)
+            self.assertIn("修復紀錄", document)
+            self.assertIn("不得出現在讀者版", document)
+
+    def test_reader_preserves_legacy_sectioned_story_layout(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        scheduled = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        template = (ROOT / "news-brief-template.md").read_text(encoding="utf-8")
+
+        for document in (daily, scheduled):
+            self.assertIn("LEGACY_SECTIONED_READER_LAYOUT_GATE", document)
+            self.assertIn("不得改成欄位式逐條詳報", document)
+        for requirement in (
+            "# 每日新聞讀者版",
+            "統計期間：",
+            "評級綜合考量：",
+            "## 🇹🇼 台灣新聞",
+            "| 時間 | 事件 | 評級 |",
+            "### 事件名稱｜A",
+            "評為A級",
+        ):
+            self.assertIn(requirement, template)
+        for forbidden_example in (
+            "### TWN-01. 事件名稱 - A",
+            "**時間：**新聞時間：",
+            "**事件細節：**說明發生什麼",
+            "**分析：**說明真正值得注意",
+        ):
+            self.assertNotIn(forbidden_example, template)
 
     def test_mobile_increment_recovers_without_blocking_daily_reader(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
@@ -474,6 +526,7 @@ class PipelineContractTests(unittest.TestCase):
             "title",
             "importance_breakdown",
             "importance_score",
+            "dimension_evidence",
             "provisional_grade",
             "decision",
             "reason",

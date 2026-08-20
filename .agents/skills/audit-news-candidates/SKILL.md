@@ -16,13 +16,15 @@ description: Maintain a rolling fourteen-day audit of all news candidates, inclu
 只有下列工作需要模型：判斷持續事件是否有實質轉折、檢查暫定 B 以上事件是否被錯誤排除、辨認不同標題是否其實是同一底層事件。可選小模型只能提出標籤或合併建議；最終排除、降為 D／E 或重大事件合併須由高階模型確認。
 
 
-1. 讀取本輪全部聚類候選、`news-source-pool.json`、每站來源掃描證據與最近十四天 `state/candidate-audit.json`。先由 `scripts/validate_source_scan_evidence.py` 驗證快照雜湊、翻頁鏈與停止證據並重算時間窗清單；不得採信自行填寫的來源筆數。確認核心來源逐站完成掃描後，每站有 30 則以上必須取前 30 則，不足 30 則取全部，並核對排名外強制例外。每筆 `ranked_items` 必須保存 `public_value_v1` 六項 `importance_breakdown`、總分與理由；每項不超過權重且六項總和等於 `importance_score`。
+1. 讀取本輪全部聚類候選、`news-source-pool.json`、每站來源掃描證據與最近十四天 `state/candidate-audit.json`。先由 `scripts/validate_source_scan_evidence.py` 驗證快照雜湊、翻頁鏈與停止證據並重算時間窗清單；不得採信自行填寫的來源筆數。`FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` 要求每個成功來源的 `selected_item_urls` 精確等於完整 `ranked_items`，不得截斷或使用溢位例外。每筆 `ranked_items` 必須保存 `public_value_v1` 六項 `importance_breakdown`、總分與理由；每項不超過權重且六項總和等於 `importance_score`。
 2. 以 `dedup_key` 去重，以 `continuity_key` 連接跨日事件。
 3. 每筆記錄 `selected`、`excluded`、`merged` 或 `deferred`，並附理由代碼與繁體中文說明。
 4. 記錄可靠來源數、獨立群組、官方／原始來源及來源限制。
 5. 記錄持續事件的新增、未變、狀態轉折與本輪決定。
-   - 同步驗證 `grading_evidence`：影響範圍、直接後果、本期實質增量、上下級比較、邊境衝突預設 D 與長期戰爭常態事件折扣不得缺漏。
-   - 最新一輪每個候選都要有 `local_disaster_review`；普通地方災害記錄保守確認死亡數、特殊意義觸發與調整理由，軍事／衝突事件則標記 `applies: false` 並沿用既有衝突判定。
+   - 最新一輪每個候選都必須保存最終 `importance_breakdown`、`importance_score` 與六項非空白 `dimension_evidence`；六項總分直接依 `SCORE_TO_GRADE_BANDS_V1` 換算等級，任何單項都不得成為地域硬上限或例外補丁。
+   - 來源清單的站內分數只用於 discovery 排序，不得複製成最終候選分數；最終六項必須在去重後按事件本身後果重新評估。
+   - 同步驗證 `grading_evidence`：影響範圍、直接後果、本期實質增量、上下級比較、邊境衝突與長期戰爭連續性判定不得缺漏。
+   - 最新一輪每個候選都要有 `local_disaster_review`；普通地方災害記錄保守確認死亡數、特殊意義觸發與調整理由作為六項證據索引，軍事／衝突事件則標記 `applies: false` 並沿用既有衝突判定。
 6. 附加本輪並刪除十四天前紀錄。
 7. 暫定 B 以上未入選卻沒有理由時，回到海選補查。
 
@@ -34,7 +36,7 @@ description: Maintain a rolling fourteen-day audit of all news candidates, inclu
 
 `MOBILE_NATIVE_COMPACT_DURABLE_AUDIT`
 
-mobile-native durable audit 僅保存滾動合併與讀者驗收必要欄位：`candidate_id`、`dedup_key`、可用時的 `continuity_key`、`event_date`、`section`、`title`、`importance_breakdown`、`importance_score`、`provisional_grade`、`decision`、`reason`、`source_ids`、`selected_event_id`，以及精簡的 `continuity` 狀態與影響變化。`MUST_OMIT_VERBOSE_GRADING_EVIDENCE`：mobile artifact 不得重複保存 verbose `grading_evidence`、逐頁 `source_audit`、文章全文或重複驗證敘述；本輪 C 級以上仍須完成類別相稱的獨立驗證，full-runtime 的詳細證據驗證與稽核規則不變。壓縮既有檔案不得改變候選 ID、六項分數、總分或 C 級以上 `selected_event_id` 映射。
+mobile-native durable audit 僅保存滾動合併與讀者驗收必要欄位：`candidate_id`、`dedup_key`、可用時的 `continuity_key`、`event_date`、`section`、`title`、`importance_breakdown`、`importance_score`、逐項 `dimension_evidence`、`provisional_grade`、`decision`、`reason`、`source_ids`、`selected_event_id`，以及精簡的 `continuity` 狀態與影響變化。`MUST_OMIT_VERBOSE_GRADING_EVIDENCE`：mobile artifact 不得重複保存 verbose `grading_evidence`、逐頁 `source_audit`、文章全文或重複驗證敘述；本輪 C 級以上仍須完成類別相稱的獨立驗證，full-runtime 的詳細證據驗證與稽核規則不變。壓縮既有檔案不得改變候選 ID、六項分數、總分或 C 級以上 `selected_event_id` 映射。
 
 任何 `SS` 至 `C` 候選只能是 `selected` 或同事件的 `merged`，且兩者都必須保存指向本輪 manifest／讀者版事件的 `selected_event_id`。`C-` 預設為 `deferred`／`c_minus_reserve`，取用時必須使用 `c_minus_selected_need` 並保存具體理由。若核心內容查證失敗或未達公共價值，評為 `D`／`E`；不得保留達標評級再以相對重要性、篇數、版面或來源數排除／延後。
 

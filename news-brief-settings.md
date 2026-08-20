@@ -4,7 +4,7 @@
 
 `DISCOVERY_THEN_VERIFY`
 
-The initial list comes from GDELT, CNA, and China News Service. A discovery source failure degrades coverage but does not block the whole brief when another discovery route or the final web-search fallback yields verifiable current candidates. Deduplicate and score first; then apply category-appropriate independent verification to C-or-higher events, and collect images only after verification.
+The initial list comes from GDELT, CNA, and China News Service. `GDELT_RESILIENT_ACQUISITION` retries the DOC API with `Retry-After`, then uses GDELT's official 15-minute export archives, then a labeled last-known-good cache. A discovery source failure degrades coverage but does not block the whole brief when another route yields verifiable current candidates. `FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` sends every verified in-window item from a successful route into deduplication and scoring; there is no per-source top-N cutoff.
 
 +## Same-source recovery order
 
@@ -86,9 +86,11 @@ The required order for every configured source is: `canonical route -> same-site
 ## 候選海選
 
 - 前期候選可由任何目前可用的新聞清單或網頁搜尋入口取得。`GDELT` 是主要彙整入口；中央社與中新社是台灣、中國的區域補充，但都不是完成門檻。任一入口失敗時記錄 coverage 降級並換用其他入口；只要仍有可核實的精確 24 小時候選就繼續，只有完全沒有可核實候選才停止。
-- 每個成功取得的 discovery route 保存時間窗內數量、完成排序數量、實際入池數量及入池網址。對該清單已取得的可見條目依本專案公共價值排序；清單有 30 則以上時取前 30 則，不足 30 則時全部取用，另追加合格強制例外。單一入口不完整不得阻擋其他可用候選進入去重與評分。
+- `GDELT_RESILIENT_ACQUISITION`：GDELT DOC API 遇到 429 或暫時錯誤時最多請求 5 次，每次至少間隔 120 秒；若 `Retry-After` 要求更久則依其指定。仍失敗就改讀 GDELT 官方 15 分鐘 export archives，兩個即時介面都不可用才採最近一次有效快取並明確標示 degraded。不得把中央社或中新社冒充為 GDELT，但 GDELT 單一介面故障不得停止發佈。
+- `FULL_DISCOVERY_POOL_NO_FIXED_LIMIT`：每個成功取得的 discovery route 保存時間窗內數量、完整排序數量、實際入池數量及全部入池網址；精確 24 小時窗內已驗證的清單條目全部進入去重與評分，不設前 30、前 100 或其他固定名額。
 - `TAIWAN_DOMESTIC_COVERAGE_GUARD`：中央社另對經濟／貿易／產業、食藥／消費安全、中央預算／立法／憲政三個領域各執行一次同一 24 小時窗搜尋，每個領域最多 `5 results`。中央社不可用或明顯過舊時才使用網頁搜尋補候選；線索不得繞過去重或六項評分，也不得直接觸發圖片流程。
-- 每個可用 discovery route 的前 30 使用 `public_value_v1` 百分制：公共影響 30、地理／人口範圍 20、急迫與安全 15、結構／政策意義 15、實質新進展 10、核心板塊關聯 10。十四天稽核中的每筆海選條目都必須保存六項 `importance_breakdown`、總分與理由；每項不得超過設定權重，六項總和必須等於 `importance_score`。同分依發布時間、原始證據直接性及穩定網址排序。
+- 每個可用 discovery route 的完整 24 小時清單使用 `public_value_v1` 百分制：重要性／嚴重程度（`public_impact`）30、地理／人口／公共系統直接範圍 20、急迫與安全 15、結構／政策意義 15、實質新進展 10、核心板塊關聯 10。十四天稽核中的每筆海選條目都必須保存六項 `importance_breakdown`、總分與逐項 `dimension_evidence`；每項不得超過設定權重，六項總和必須等於 `importance_score`。任何單一項都不是評級硬上限，也不使用地域例外補丁；最終等級直接依總分級距換算。同分依發布時間、原始證據直接性及穩定網址排序。
+- Discovery route 的站內排序分數只用來維持高召回候選順序，不是最終事件分數。跨來源去重後必須依事件本身的具體後果重新完成六項評分；禁止複製來源排名分數、以「政府／全國／重大」等關鍵字代替證據，或因媒體刊登量提高最終等級。
 - 排名 30 名以後若涉及重大災害、疫情、戰爭、軍事外交、選舉、央行／金融異常、重大資安、關鍵基礎設施、重大科研突破、文化產業／創作者生態／平台制度轉折或官方緊急警報，仍以強制例外入池並保存觸發理由。走鐘獎等單一產業大型評選活動第一次停辦，本身就是異常與制度轉折，最低列 `C`，不以「只停一屆」降為候補；第二、三次延續停辦若沒有新增原因、制度變化或擴散影響，因已成常態且資訊增量低，降為 `C-` 或 `D`。若後續出現新原因或結構變化，仍按新增影響重新評級。
 - 所有成功取得的候選清單與台灣 coverage guard 線索合併後，先按底層事件跨站、跨語言去重；去重後每個候選都必須評為 `SS` 至 `E` 並保存獨立的 `grade_reason`。
 - 廣泛搜尋時間窗內的公共政策、經濟、科技、資安、國際關係、災害、公衛、公共安全、科學、自然史、文化與產業事件。
@@ -165,19 +167,21 @@ The required order for every configured source is: `canonical route -> same-site
 - 長期戰爭中的日常同類小衝突與例行傷亡更新一律為 `D`。只有可能造成戰局反轉／實質升級、停火或和平進程變化、新國家／新戰線，或油價、航運、能源、糧食、金融、難民、供應鏈等外部系統出現可驗證實質影響時，才解除折扣重新評級。
 - 母事件的嚴重度不得直接繼承給本期更新；來源數量也不得升降事件等級。
 
-### 災害、疫情與公共安全量化門檻
+### 災害、疫情與公共安全量化證據
 
 - 相關事件必須套用 `.agents/skills/select-news-events/references/severity-rubric.md`，分別評估人命、重傷、直接受影響人口、地理範圍及關鍵系統。
-- 普通地方型災害／事故在沒有特殊意義時使用固定基準：未滿 50 人低於 `C`；50–99 人為 `C`；100–249 人為 `B`；250–2,499 人為 `A-`；2,500 人以上可因死亡數到 `A`，但僅憑死亡數不得高於 `A`。`DISASTER_2500_DEATHS_A_CEILING`
-- `A+` 必須另有快速傳播、跨國系統衝擊、國家級失能或其他重大場外因素；不得由死亡數單獨取得。`A_PLUS_REQUIRES_SEPARATE_ESCALATION_EVIDENCE`
+- 死亡、重傷、撤離、公共系統中斷與不可逆損失是 `public_impact`、急迫性及結構影響的證據，不是直接指定最終等級的獨立門檻。未滿 50 人也可因大規模撤離、國家機能喪失或其他已驗證後果達到 C 以上；大量死亡若缺乏其他影響，也只能取得與六項證據相稱的總分。`INTEGRATED_SIX_DIMENSION_NO_HARD_CAP`
+- 保守確認死亡數只設定 `public_impact` 的最低證據分：1–9 人至少 8、10–49 人至少 14、50–99 人至少 18、100–249 人至少 23、250–2,499 人至少 27、2,500 人以上為 30。這不是最終等級，也不會直接改寫其他五項。`CASUALTY_PUBLIC_IMPACT_FLOORS_V1`
+- `urgency_and_safety` 另按當前危險給分：0–3 為危險已結束或無立即行動需求；4–7 為地方應變仍進行但風險受限；8–11 為重大危險持續、仍在救援窗口或必要服務承壓；12–15 為威脅擴大／失控且需要廣泛立即行動。死亡數不自動決定急迫性，避免同一傷亡重複計分。`URGENCY_SAFETY_ANCHORS_V1`
+- 最終總分級距：E 0、D 20、C- 40、C 45、C+ 50、B- 55、B 60、B+ 65、A- 70、A 75、A+ 80、S- 85、S 90、S+ 94、SS 97。`SCORE_TO_GRADE_BANDS_V1`
 - Risk Group 4／四級病毒只證明高危與控制難度之一，不能自動升 `A+`；必須同時評估傳播方式、實際擴散速度與系統後果。`RISK_GROUP_4_NOT_AUTOMATIC_A_PLUS`
-- 數萬至數十萬人死傷通常已伴隨國家級或跨國系統性後果，必須進入 `S` 級評估並列出已驗證的系統影響。`MASS_CASUALTY_S_SYSTEMIC_IMPACT_PRESUMPTION`
-- 疫情要進入 `S-` 或以上，必須已成全球大流行，且具備改變世界、全球轉捩點、全球制度劇變或文明／存續風險。`PANDEMIC_S_MINUS_WORLD_CHANGE_GATE`
-- COVID-19 的全球封控、旅行與供應鏈中斷及長期制度改變，作為 `S-` 最低校正案例。`COVID_GLOBAL_LOCKDOWN_S_MINUS_REFERENCE`
-- 基準正常適用，不因事件位於外國、地方或非核心板塊而再任意降級。只有確認數字被更正、核心事實不可靠或分類錯誤等異常情況才可下調並說明。
+- 數萬至數十萬人死傷會使重要性／嚴重程度接近最高區間，但仍須把醫療崩潰、治理失能、流離失所、跨境衝擊或長期結構改變分別放入相應項目後依總分評級，不設自動 S 級。`MASS_CASUALTY_REQUIRES_INTEGRATED_SCORING`
+- 疫情若要由六項總分達 S-，通常需要全球大流行、全球制度／社會運作劇變或文明與人類存續風險等足以在多個項目取得高分的證據；病毒名稱或風險群本身不構成硬門檻。`PANDEMIC_S_MINUS_WORLD_CHANGE_EVIDENCE`
+- COVID-19 的全球封控、旅行與供應鏈中斷及長期制度改變是高分校正案例，但實際等級仍由六項總分決定。`COVID_GLOBAL_LOCKDOWN_INTEGRATED_REFERENCE`
+- 同一套六項算法不因事件位於外國、地方或非核心板塊而改變；只有證據更正、核心事實不可靠或事件分類錯誤時才改分並說明。
 - 特殊意義包含但不限於：極大量異常失蹤、重傷或撤離；醫療、電力、交通等大規模公共系統中斷；災情迅速擴大且具成長性；跨國影響或罕見災害機制；明顯監管／救援失靈或制度性風險；可能引發監控／指定區域內的軍事或其他衝突。
-- 任何上調都必須保存可驗證的特殊意義觸發與具體調整理由；媒體聲量、圖片震撼度或只因位於監控板塊不得上調。
-- 涉及戰爭、交戰、軍事打擊、區域安全升級或國際對抗時，軍事／衝突規則優先，沿用既有邊境與長期戰爭定義，不套用地方事故 50 人門檻。
+- 上述後果要分別寫入相應 `dimension_evidence` 並給相稱分數；`special_significance_triggers` 只作證據索引，不另加分。媒體聲量、圖片震撼度或只因位於監控板塊不得增加分數。
+- 涉及戰爭、交戰、軍事打擊、區域安全升級或國際對抗時，先做軍事／衝突分類與連續性判定，再以本輪實際新增後果完成相同六項評分。
 - 大範圍必須是跨第一級行政區、全國關鍵系統或多國的直接影響；警戒覆蓋、行政區總人口、圖片震撼度及媒體形容不得代替實際影響。
 - 最新一輪每個候選都必須填寫 `local_disaster_review`；不適用者只需 `{"applies": false}`。普通地方災害需記錄保守確認死亡數、特殊意義觸發與調整理由。
 

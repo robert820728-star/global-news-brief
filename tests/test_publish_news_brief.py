@@ -81,6 +81,23 @@ def write_valid_audit(root: Path):
     candidate = {
         "candidate_id": "cand-1", "dedup_key": "test-event", "title": "測試事件",
         "section": "TWN", "provisional_grade": "B",
+        "importance_score": 62,
+        "importance_breakdown": {
+            "public_impact": 18,
+            "geographic_or_population_scope": 12,
+            "urgency_and_safety": 8,
+            "structural_or_policy_significance": 10,
+            "material_new_development": 7,
+            "core_section_relevance": 7,
+        },
+        "dimension_evidence": {
+            "public_impact": "全國公共服務規則正式改變。",
+            "geographic_or_population_scope": "政策直接適用全國公共服務系統。",
+            "urgency_and_safety": "本期生效，需要即時調整服務。",
+            "structural_or_policy_significance": "法定程序完成並形成拘束規則。",
+            "material_new_development": "本期完成法定程序。",
+            "core_section_relevance": "直接涉及台灣中央公共制度。",
+        },
         "grade_reason": "本期政策正式生效並造成可驗證的全國公共服務影響，因此評為 B。",
         "grading_evidence": {
             "impact_scope_level": "national",

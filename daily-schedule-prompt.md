@@ -5,6 +5,7 @@
 `DISCOVERY_THEN_VERIFY`
 
 - The pre-selection list uses exactly three configured discovery sources: GDELT for broad global discovery, CNA as the Taiwan supplement, and China News Service as the China supplement.
+- `GDELT_RESILIENT_ACQUISITION` makes at most five total DOC API requests; after a 429, wait at least 120 秒, or longer when required by `Retry-After`. After a fifth failure, do not send a sixth request and switch to the official 15-minute export archives.
 - A discovery source failure must not block the whole brief. Continue in degraded mode when at least one configured discovery route or the final browser/web-search fallback yields verifiable current candidates. Stop only if no current candidate can be verified.
 - The fixed order is `discover -> deduplicate -> score -> independently verify selected C-or-higher events -> collect images -> render`.
 - The system must score and deduplicate before independent verification. Verification uses the original report, official evidence, or another reliable source from the wider verification pool and does not require all verification sites to be reachable.
@@ -143,7 +144,7 @@ Stage -1 完成後，至少讀取並遵守：
 1. `source-scan`
    - 必須先調用 `acquire-news-candidates`，依 `news-source-pool.json.discovery_sources` 取得 GDELT、中央社與中新社候選並產生 `work/source-candidates.json`；其餘來源只在評分後作事件驗證。
    - 來源擷取必須以 Stage -1 回傳的 `<bundled-python> scripts/fetch_source_routes.py --route-config source-route-config.json --output-dir <run-work-dir> --window-start <window-start>` 執行；此跨平台 canonical fetcher 保存逐站及已設定分頁的原始 bytes、SHA-256、page chain 與 `source-route-coverage.json`。不得改用 PowerShell web cmdlet、Node `fetch` 或臨時 helper 重試同一批路由。
-   - `source-route-config.json` 只定義 GDELT、中央社與中新社三個 discovery routes；`minimum_ready_routes=1`。單一路由失敗時記為 degraded 並繼續，不得重新下載已成功路由或阻止整份新聞。
+   - `source-route-config.json` 只定義 GDELT、中央社與中新社三個 discovery routes；`minimum_ready_routes=1`。`GDELT_RESILIENT_ACQUISITION` 必須先依 `Retry-After` 重試 DOC API，再改讀 GDELT 官方 15 分鐘 export archives，最後才使用有時效標記的有效快取；任何降級都要記錄 acquisition mode，但不得停止發佈。`FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` 要求每個成功 route 的精確 24 小時完整清單全部進入去重與評分，不得截斷為前 30 或其他固定數量。
    - route fetch 完成後必須執行 `scripts/materialize_source_scans.py --checkpoint <checkpoint> --source-pool news-source-pool.json --route-coverage <route-coverage> --output-dir <source-scans-dir> --coverage-output <source-coverage.json>`；只有此 canonical materializer 產生的逐站 scans、terminal proof、完整 ranked_items 與六項分數可進入 candidate audit。不得改用 run 目錄內的臨時 helper。
    - materializer 完成後只驗證實際成功的 discovery scans；失敗路由保留在 route coverage 中供診斷，不得把驗證來源清單誤當 discovery completeness gate。
    - 每個站內海選條目必須保存 `public_value_v1` 六項 `importance_breakdown`、總分與理由；六項總和必須等於 `importance_score`，並隨十四天候選稽核保存。
@@ -155,7 +156,7 @@ Stage -1 完成後，至少讀取並遵守：
    - 產生 `selection-results.json` 後，必須先執行 `scripts/validate_selection_freshness.py --selection <selection-results> --source-candidates <source-candidates>`。此 gate 必須確認每個事件 URL 都在本輪 fresh pool、所有 C 級以上候選都有有效 `selected_event_id`，且映射事件實際存在；首次失敗即停止，不能刪單筆後重跑掩蓋。
 4. `audit-news-candidates`
    - 十四天稽核必須保留完整海選清單及每筆六項大分數；本輪所有 C 級以上候選（含合併項）都必須以 `selected_event_id` 對應到 manifest 與讀者版，不得無聲消失。
-   - 最新一輪每個候選必須完成 `local_disaster_review`。普通地方災害以未滿 50 人低於 C、50–99 人 C、100–249 人 B、250 人以上 A- 為基準；上調必須保存特殊意義與理由。軍事／衝突事件必須沿用既有邊境及長期戰爭規則，不得改套地方事故門檻。
+   - 最新一輪每個候選必須保存最終 `importance_breakdown`、`importance_score`、逐項 `dimension_evidence` 與 `local_disaster_review`。死亡、地域或任何單項都不直接指定最終等級；六項總分必須依 `SCORE_TO_GRADE_BANDS_V1` 換算。軍事／衝突事件先做分類與連續性判定，再用本輪新增後果重算六項，不得繼承母事件等級。
 5. `materialize-manifest`
    - 完成條件是將本輪 audit 選中事件一對一物化並綁定 checkpoint 的 `manifest` artifact；此處不需要執行 final-manifest validator。
 6. `verify-news-events`
@@ -226,6 +227,10 @@ Manifest 後發生事件級失敗：
 DELIVERY_GATE_CANONICAL=scripts/publish_news_brief.py
 
 Repository 內只有 canonical publisher 可以建立 reader-facing release。其他 script、模型回答、草稿、舊 release、manifest 或中間 renderer stdout 都不是正式交付。
+
+`READER_INTERNAL_REPAIR_LOG_EXCLUSION_GATE`：任何「修復紀錄」、429／HTTP 狀態、重試等待、archive 備援、去重效能修正、圖片補救與 checkpoint 重建都只屬內部 run log／audit receipt，不得出現在 canonical reader 或 reader bytes 的對話副本。
+
+`LEGACY_SECTIONED_READER_LAYOUT_GATE`：canonical reader 必須沿用 `news-brief-template.md` 的既有分區版型：標題、統計期間、六項評級說明後，逐區輸出 `時間｜事件｜評級` 完整清單，緊接該區所有新聞；每則固定為「標題｜評級 → 可見圖片或圖片說明 → 新聞摘要 → 評為X級的評論與段末來源」。不得改成欄位式逐條詳報，不得將所有總清單與所有新聞拆成兩大區，也不得加入事件編號、驗收摘要或後台欄位。格式錯誤只重做 reader render。
 
 發布前必須：
 

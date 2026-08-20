@@ -244,7 +244,49 @@ def valid_brief():
 """
 
 
+def legacy_sectioned_brief():
+    note = VALIDATOR.SINGLE_SOURCE_NOTE
+    return f"""# 每日新聞讀者版
+
+統計期間：2026 年 8 月 13 日 06:00:00 至 8 月 14 日 06:00:00（台北時間）
+
+評級綜合考量：重要性／嚴重程度、影響範圍、急迫與安全、結構／政策意義、本期實質新進展、核心板塊關聯。
+
+## 🇹🇼 台灣新聞
+
+| 時間 | 事件 | 評級 |
+|---|---|---:|
+| 8/14 05:30 | 測試地震事件 | B |
+
+### 測試地震事件｜B
+
+![地圖一](sandbox:/tmp/map.png)
+
+地圖一：事件位置，依來源資料整理。
+
+![圖一](sandbox:/tmp/image.png)
+
+圖一：官方資訊圖（來源：官方來源）。
+
+據官方來源指出，地震事件已發生。
+
+評為B級，是因事件具有公共影響，但仍缺少獨立來源。{note}[官方來源](https://example.com/source)
+"""
+
+
 class ValidatorTests(unittest.TestCase):
+    def test_legacy_sectioned_reader_layout_passes(self):
+        self.assertEqual(
+            [],
+            VALIDATOR.validate_legacy_sectioned_layout(
+                valid_manifest(), legacy_sectioned_brief()
+            ),
+        )
+
+    def test_field_based_reader_fails_legacy_layout_gate(self):
+        errors = VALIDATOR.validate_legacy_sectioned_layout(valid_manifest(), valid_brief())
+        self.assertTrue(any("既有分區格式" in error for error in errors), errors)
+
     def test_reader_rejects_generic_follow_up_placeholder(self):
         manifest = valid_manifest()
         manifest["events"][0]["detail"]["follow_up"] = "追蹤官方後續更新與實際影響。"
@@ -279,6 +321,11 @@ class ValidatorTests(unittest.TestCase):
         text = valid_brief().replace("正式發布：是", "正式發布：否", 1)
         errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
         self.assertTrue(any("正式發布" in error for error in errors))
+
+    def test_reader_rejects_internal_repair_log(self):
+        text = valid_brief() + "\n\n修復紀錄：DOC API 重試後成功。\n"
+        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        self.assertTrue(any("修復紀錄" in error and "讀者版" in error for error in errors))
 
     def test_premature_final_manifest_command_is_deferred_without_failing_run(self):
         manifest = valid_manifest()

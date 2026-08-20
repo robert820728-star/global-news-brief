@@ -29,10 +29,24 @@ def importance_breakdown(score=100):
     return values
 
 
+REPRESENTATIVE_GRADE_SCORES = {
+    "E": 10, "D": 30, "C-": 42, "C": 47, "C+": 52,
+    "B-": 57, "B": 62, "B+": 67, "A-": 72, "A": 77,
+    "A+": 82, "S-": 87, "S": 91, "S+": 95, "SS": 99,
+}
+
+
 def candidate(grade="C", decision="selected", reason_code="selected_threshold_met"):
+    score = REPRESENTATIVE_GRADE_SCORES[grade]
+    breakdown = importance_breakdown(score)
     return {
         "candidate_id": "c", "dedup_key": "c", "title": "測試", "section": "GLB",
         "provisional_grade": grade,
+        "importance_score": score,
+        "importance_breakdown": breakdown,
+        "dimension_evidence": {
+            key: f"{key} 具有候選事件的可核實證據。" for key in breakdown
+        },
         "grade_reason": "本期出現可驗證的新制度變化，影響範圍與直接後果符合目前級距。",
         "grading_evidence": grading_evidence(grade),
         "decision": decision, "reason_code": reason_code, "reason": "決定理由",
@@ -107,8 +121,8 @@ def valid_audit(candidates=None, per_source_count=1):
             "source_id": source_id, "status": "completed",
             "within_window_count": per_source_count, "ranked_count": per_source_count,
             "ranked_items": ranked_items,
-            "selected_for_pool_count": min(per_source_count, 30),
-            "selected_item_urls": [item["url"] for item in ranked_items[:30]],
+            "selected_for_pool_count": per_source_count,
+            "selected_item_urls": [item["url"] for item in ranked_items],
             "mandatory_overflow_items": [],
             "ranking_completed": True, "ranking_method": "public_value_v1", "failure_reason": None,
             "scan_window_start": window_start, "scan_window_end": window_end,
@@ -127,12 +141,59 @@ def valid_audit(candidates=None, per_source_count=1):
         "schema_version": "1.1.0", "retention_days": 14, "updated_at": now,
         "runs": [{"run_id": "r", "generated_at": now, "window_start": window_start, "window_end": window_end,
                   "source_coverage": coverage,
-                  "raw_item_count": len(coverage) * min(per_source_count, 30),
+                  "raw_item_count": len(coverage) * per_source_count,
                   "deduplicated_candidate_count": len(items), "candidates": items}],
     }
 
 
 class CandidateAuditTests(unittest.TestCase):
+    def test_chongqing_mayor_scores_d_from_all_six_dimensions(self):
+        breakdown = {
+            "public_impact": 4,
+            "geographic_or_population_scope": 3,
+            "urgency_and_safety": 1,
+            "structural_or_policy_significance": 3,
+            "material_new_development": 8,
+            "core_section_relevance": 6,
+        }
+        self.assertEqual("D", MODULE.grade_from_importance_breakdown(breakdown))
+
+    def test_taiwan_three_county_event_can_score_c_without_a_hard_gate(self):
+        breakdown = {
+            "public_impact": 12,
+            "geographic_or_population_scope": 9,
+            "urgency_and_safety": 5,
+            "structural_or_policy_significance": 7,
+            "material_new_development": 8,
+            "core_section_relevance": 6,
+        }
+        self.assertEqual("C", MODULE.grade_from_importance_breakdown(breakdown))
+
+    def test_four_country_event_can_score_b_from_combined_evidence(self):
+        breakdown = {
+            "public_impact": 15,
+            "geographic_or_population_scope": 13,
+            "urgency_and_safety": 8,
+            "structural_or_policy_significance": 10,
+            "material_new_development": 9,
+            "core_section_relevance": 7,
+        }
+        self.assertEqual("B", MODULE.grade_from_importance_breakdown(breakdown))
+
+    def test_severe_single_area_events_rise_by_total_score_not_exceptions(self):
+        scenarios = (
+            ("C", {"public_impact": 19, "geographic_or_population_scope": 7, "urgency_and_safety": 9, "structural_or_policy_significance": 3, "material_new_development": 7, "core_section_relevance": 3}),
+            ("B", {"public_impact": 24, "geographic_or_population_scope": 9, "urgency_and_safety": 11, "structural_or_policy_significance": 10, "material_new_development": 6, "core_section_relevance": 2}),
+            ("A", {"public_impact": 27, "geographic_or_population_scope": 8, "urgency_and_safety": 10, "structural_or_policy_significance": 15, "material_new_development": 9, "core_section_relevance": 8}),
+            ("S-", {"public_impact": 30, "geographic_or_population_scope": 10, "urgency_and_safety": 15, "structural_or_policy_significance": 14, "material_new_development": 10, "core_section_relevance": 8}),
+        )
+        for expected_grade, breakdown in scenarios:
+            with self.subTest(expected_grade=expected_grade):
+                self.assertEqual(
+                    expected_grade,
+                    MODULE.grade_from_importance_breakdown(breakdown),
+                )
+
     def test_degraded_discovery_coverage_accepts_one_ready_source(self):
         pool = source_pool()
         pool["discovery_sources"] = [
@@ -154,7 +215,7 @@ class CandidateAuditTests(unittest.TestCase):
         run["candidates"][0]["source_ids"] = ["cna"]
         self.assertEqual([], MODULE.validate(audit, pool))
 
-    def test_ordinary_local_disaster_under_50_cannot_reach_c(self):
+    def test_local_disaster_death_count_is_evidence_not_a_grade_gate(self):
         item = candidate("C", "selected")
         item["grading_evidence"]["impact_scope_level"] = "local"
         item["grading_evidence"]["local_disaster_review"] = {
@@ -163,35 +224,28 @@ class CandidateAuditTests(unittest.TestCase):
             "special_significance_triggers": [],
             "grade_adjustment_reason": None,
         }
-        errors = MODULE.validate(valid_audit([item]), source_pool())
-        self.assertTrue(any("未滿 50 人" in error for error in errors))
-
-    def test_ordinary_local_disaster_at_50_is_c(self):
-        item = candidate("C", "selected")
-        item["grading_evidence"]["impact_scope_level"] = "local"
-        item["grading_evidence"]["local_disaster_review"] = {
-            "applies": True,
-            "confirmed_deaths": 50,
-            "special_significance_triggers": [],
-            "grade_adjustment_reason": None,
-        }
         self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
 
-    def test_ordinary_local_disaster_50_to_99_without_special_meaning_is_only_c(self):
-        item = candidate("B", "selected")
-        item["grading_evidence"]["impact_scope_level"] = "local"
-        item["grading_evidence"]["local_disaster_review"] = {
-            "applies": True,
-            "confirmed_deaths": 99,
-            "special_significance_triggers": [],
-            "grade_adjustment_reason": None,
-        }
-        errors = MODULE.validate(valid_audit([item]), source_pool())
-        self.assertTrue(any("50–99 人" in error for error in errors))
+    def test_casualty_bands_integrate_with_urgency_and_other_dimensions(self):
+        scenarios = (
+            (49, 14, "D", {"public_impact": 14, "geographic_or_population_scope": 5, "urgency_and_safety": 5, "structural_or_policy_significance": 2, "material_new_development": 8, "core_section_relevance": 4}),
+            (50, 18, "C", {"public_impact": 18, "geographic_or_population_scope": 6, "urgency_and_safety": 8, "structural_or_policy_significance": 3, "material_new_development": 8, "core_section_relevance": 4}),
+            (100, 23, "B", {"public_impact": 23, "geographic_or_population_scope": 7, "urgency_and_safety": 11, "structural_or_policy_significance": 5, "material_new_development": 9, "core_section_relevance": 5}),
+            (250, 27, "A-", {"public_impact": 27, "geographic_or_population_scope": 10, "urgency_and_safety": 13, "structural_or_policy_significance": 8, "material_new_development": 9, "core_section_relevance": 5}),
+            (2500, 30, "A", {"public_impact": 30, "geographic_or_population_scope": 11, "urgency_and_safety": 14, "structural_or_policy_significance": 8, "material_new_development": 9, "core_section_relevance": 5}),
+        )
+        for deaths, expected_floor, expected_grade, breakdown in scenarios:
+            with self.subTest(deaths=deaths):
+                self.assertEqual(
+                    expected_floor,
+                    MODULE.public_impact_floor_from_confirmed_deaths(deaths),
+                )
+                self.assertEqual(
+                    expected_grade,
+                    MODULE.grade_from_importance_breakdown(breakdown),
+                )
 
-    def test_ordinary_local_disaster_at_100_requires_b_baseline(self):
-        item = candidate("B+", "selected")
-        item["grading_evidence"]["impact_scope_level"] = "local"
+        item = candidate("B", "selected")
         item["grading_evidence"]["local_disaster_review"] = {
             "applies": True,
             "confirmed_deaths": 100,
@@ -199,26 +253,18 @@ class CandidateAuditTests(unittest.TestCase):
             "grade_adjustment_reason": None,
         }
         errors = MODULE.validate(valid_audit([item]), source_pool())
-        self.assertTrue(any("100–249 人" in error for error in errors))
-        item["provisional_grade"] = "B"
-        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
-
-    def test_ordinary_local_disaster_at_250_requires_a_minus_baseline(self):
-        item = candidate("B", "selected")
-        item["grading_evidence"]["impact_scope_level"] = "local"
-        item["grading_evidence"]["local_disaster_review"] = {
-            "applies": True,
-            "confirmed_deaths": 250,
-            "special_significance_triggers": [],
-            "grade_adjustment_reason": None,
-        }
-        errors = MODULE.validate(valid_audit([item]), source_pool())
-        self.assertTrue(any("250 人以上" in error for error in errors))
-        item["provisional_grade"] = "A-"
-        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
+        self.assertTrue(any("死亡證據最低" in error for error in errors))
 
     def test_verified_special_meaning_can_raise_grade_with_reason(self):
         item = candidate("B+", "selected")
+        item["importance_breakdown"] = {
+            "public_impact": 23,
+            "geographic_or_population_scope": 12,
+            "urgency_and_safety": 10,
+            "structural_or_policy_significance": 10,
+            "material_new_development": 7,
+            "core_section_relevance": 5,
+        }
         item["grading_evidence"]["impact_scope_level"] = "national"
         item["grading_evidence"]["local_disaster_review"] = {
             "applies": True,
@@ -229,45 +275,6 @@ class CandidateAuditTests(unittest.TestCase):
         errors = MODULE.validate(valid_audit([item]), source_pool())
         self.assertTrue(any("調整理由" in error for error in errors))
         item["grading_evidence"]["local_disaster_review"]["grade_adjustment_reason"] = "官方調查確認監管失靈並形成全國性制度風險。"
-        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
-
-    def test_grade_can_be_lowered_with_concrete_reason(self):
-        item = candidate("B", "selected")
-        item["grading_evidence"]["impact_scope_level"] = "local"
-        item["grading_evidence"]["local_disaster_review"] = {
-            "applies": True,
-            "confirmed_deaths": 260,
-            "special_significance_triggers": [],
-            "grade_adjustment_reason": None,
-        }
-        errors = MODULE.validate(valid_audit([item]), source_pool())
-        self.assertTrue(any("調整理由" in error for error in errors))
-        item["grading_evidence"]["local_disaster_review"]["grade_adjustment_reason"] = "事件侷限單一設施，未造成跨區域、關鍵系統或跨國直接影響。"
-        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
-
-    def test_extreme_scope_can_override_sub_50_floor(self):
-        item = candidate("A-", "selected")
-        item["grading_evidence"]["impact_scope_level"] = "subregional"
-        item["grading_evidence"]["local_disaster_review"] = {
-            "applies": True,
-            "confirmed_deaths": 0,
-            "special_significance_triggers": [
-                "extreme_missing_serious_injury_or_evacuation",
-                "mass_housing_or_critical_infrastructure_loss",
-            ],
-            "grade_adjustment_reason": "數萬人直接撤離且大量住宅毀損，達到城市級極端規模。",
-        }
-        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
-
-    def test_monitored_region_conflict_risk_can_override_sub_50_floor(self):
-        item = candidate("C", "selected")
-        item["grading_evidence"]["impact_scope_level"] = "local"
-        item["grading_evidence"]["local_disaster_review"] = {
-            "applies": True,
-            "confirmed_deaths": 3,
-            "special_significance_triggers": ["monitored_region_conflict_escalation_risk"],
-            "grade_adjustment_reason": "事件可能直接引發指定監控區域內的軍事或其他衝突。",
-        }
         self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
 
     def test_conflict_event_cannot_also_use_local_disaster_gate(self):
@@ -314,6 +321,11 @@ class CandidateAuditTests(unittest.TestCase):
         errors = MODULE.validate(audit, source_pool())
         self.assertTrue(any("importance_breakdown" in error for error in errors))
 
+        audit = valid_audit()
+        audit["runs"][0]["candidates"][0].pop("dimension_evidence")
+        errors = MODULE.validate(audit, source_pool())
+        self.assertTrue(any("dimension_evidence" in error for error in errors))
+
     def test_major_scores_must_match_weights_and_total(self):
         audit = valid_audit()
         ranked = audit["runs"][0]["source_coverage"][0]["ranked_items"][0]
@@ -321,6 +333,55 @@ class CandidateAuditTests(unittest.TestCase):
         errors = MODULE.validate(audit, source_pool())
         self.assertTrue(any("大項分數" in error for error in errors))
         self.assertTrue(any("importance_score" in error for error in errors))
+
+        item = candidate("D", "excluded", "below_public_value_threshold")
+        item["importance_score"] = 97
+        item["importance_breakdown"] = importance_breakdown(97)
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("六項總分" in error for error in errors))
+
+    def test_integrated_grade_bands_and_no_hard_cap_policy_are_locked(self):
+        pool = source_pool()
+        ranking = pool["ranking"]
+        self.assertEqual(
+            {
+                "E": 0, "D": 20, "C-": 40, "C": 45, "C+": 50,
+                "B-": 55, "B": 60, "B+": 65, "A-": 70, "A": 75,
+                "A+": 80, "S-": 85, "S": 90, "S+": 94, "SS": 97,
+            },
+            ranking.get("grade_minimum_scores"),
+        )
+        self.assertEqual(
+            {
+                "combined_evidence_no_single_dimension_hard_cap": True,
+                "importance_severity_is_public_impact": True,
+                "scope_is_one_weighted_dimension": True,
+            },
+            ranking.get("grading_principles"),
+        )
+        self.assertEqual(
+            {"1-9": 8, "10-49": 14, "50-99": 18, "100-249": 23, "250-2499": 27, "2500+": 30},
+            ranking.get("casualty_public_impact_floors"),
+        )
+        self.assertEqual(
+            [
+                {"score_range": [0, 3], "meaning": "danger ended or no immediate public action required"},
+                {"score_range": [4, 7], "meaning": "active local response or bounded safety concern"},
+                {"score_range": [8, 11], "meaning": "continuing major danger, rescue window, or stressed essential services"},
+                {"score_range": [12, 15], "meaning": "expanding or uncontrolled threat requiring immediate broad action"},
+            ],
+            ranking.get("dimension_anchors", {}).get("urgency_and_safety"),
+        )
+
+        ranking["grade_minimum_scores"]["C"] = 50
+        errors = MODULE.validate(valid_audit(), pool)
+        self.assertTrue(any("grade_minimum_scores" in error for error in errors))
+
+        schema = MODULE.load(ROOT / "schemas" / "news-candidate-audit.schema.json")
+        candidate_properties = schema["$defs"]["candidate"]["properties"]
+        self.assertIn("importance_score", candidate_properties)
+        self.assertIn("importance_breakdown", candidate_properties)
+        self.assertIn("dimension_evidence", candidate_properties)
 
     def test_c_or_above_merged_candidate_requires_reader_event_mapping(self):
         item = candidate("C", "merged", "duplicate_merged")
@@ -333,7 +394,7 @@ class CandidateAuditTests(unittest.TestCase):
         errors = MODULE.validate(valid_audit(), pool)
         self.assertTrue(any("首次停辦最低為 C" in error for error in errors))
 
-    def test_all_configured_sources_each_take_top_thirty(self):
+    def test_all_configured_sources_send_every_ranked_item_to_pool(self):
         self.assertEqual([], MODULE.validate(valid_audit(per_source_count=73), source_pool()))
 
     def test_source_coverage_count_is_driven_by_source_pool(self):
@@ -362,31 +423,24 @@ class CandidateAuditTests(unittest.TestCase):
         self.assertTrue(any("primary_sources_per_section" in error for error in errors))
         self.assertTrue(any("展開順序" in error for error in errors))
 
-    def test_source_with_more_than_thirty_cannot_submit_fewer(self):
+    def test_source_cannot_submit_fewer_than_its_complete_ranked_list(self):
         audit = valid_audit(per_source_count=73)
-        audit["runs"][0]["source_coverage"][0]["selected_for_pool_count"] = 29
+        audit["runs"][0]["source_coverage"][0]["selected_for_pool_count"] = 72
         audit["runs"][0]["source_coverage"][0]["selected_item_urls"].pop()
         audit["runs"][0]["raw_item_count"] -= 1
         errors = MODULE.validate(audit, source_pool())
-        self.assertTrue(any("前 30 則" in error for error in errors))
+        self.assertTrue(any("完整排序清單" in error for error in errors))
 
-    def test_ranked_item_after_thirty_requires_mandatory_trigger(self):
+    def test_fixed_limit_overflow_list_is_rejected_as_obsolete(self):
         audit = valid_audit(per_source_count=35)
         source = audit["runs"][0]["source_coverage"][0]
-        overflow_url = source["ranked_items"][32]["url"]
         source["mandatory_overflow_items"] = [{
-            "url": overflow_url,
-            "trigger": "cultural_industry_or_creator_ecosystem",
-            "reason": "獨立獎項停辦反映創作者生態與資金結構，不得因排名截斷",
+            "url": source["ranked_items"][32]["url"],
+            "trigger": "major_disaster",
+            "reason": "固定名額已取消，不應再需要溢位例外。",
         }]
-        source["selected_item_urls"].append(overflow_url)
-        source["selected_for_pool_count"] += 1
-        audit["runs"][0]["raw_item_count"] += 1
-        audit["runs"][0]["candidates"][0]["candidate_urls"].append(overflow_url)
-        self.assertEqual([], MODULE.validate(audit, source_pool()))
-        source["mandatory_overflow_items"][0]["trigger"] = "celebrity_gossip"
         errors = MODULE.validate(audit, source_pool())
-        self.assertTrue(any("觸發類型無效" in error for error in errors))
+        self.assertTrue(any("不得再使用強制溢位" in error for error in errors))
 
     def test_every_source_item_must_reach_a_deduplicated_candidate(self):
         audit = valid_audit()

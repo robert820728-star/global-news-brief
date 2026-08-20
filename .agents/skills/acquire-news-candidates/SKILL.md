@@ -48,7 +48,8 @@ The required order for every configured source is: `canonical route -> same-site
 
 - `discovery_sources` 固定為 GDELT、中央社與中新社；GDELT 覆蓋三個板塊，兩個區域來源補台灣與中國盲區。其餘 `sources` 是評分後驗證池，不是前期完成門檻。
 - 連續翻頁直到跨過精確24小時起點或來源明確耗盡。
-- 每站先保存時間窗內完整文章，再按公共價值取前30；強制例外可突破30。
+- `GDELT_RESILIENT_ACQUISITION`：DOC API 失敗時總請求數最多 5 次；429 後每次至少等待 120 秒，若 `Retry-After` 更久則依其指定。第 5 次仍失敗不得發第 6 次，立即改讀 GDELT 官方 15 分鐘 export archives，最後才使用明確標記時效的有效快取；不得因單一介面 429 停止發佈。
+- `FULL_DISCOVERY_POOL_NO_FIXED_LIMIT`：每個成功來源在精確 24 小時窗內的已驗證條目全部入池，不得設前 30 或其他固定名額。
 - specialist supplements 只在相應主題完成評分後用於驗證，不計入 discovery readiness。
 - `TAIWAN_DOMESTIC_COVERAGE_GUARD` 以中央社補查三個限定領域，每個領域最多 `5 results`；中央社不可用或明顯過舊時才使用最後的網頁搜尋備援。所有線索都先查重與評分，不得在評級前啟動圖片。
 

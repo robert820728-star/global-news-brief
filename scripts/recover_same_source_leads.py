@@ -93,22 +93,8 @@ def rank_scan(scan: dict, source: dict, coverage: dict) -> dict:
         key=lambda item: (item["importance_score"], item["published_at"], item["url"]),
         reverse=True,
     )
-    base_selected = [item["url"] for item in ranked[:30]]
-    supplemental_urls = {
-        normalized_url(item["url"])
-        for page in scan.get("supplemental_pages", [])
-        for item in page.get("extracted_items", [])
-    }
-    overflow_urls = [
-        item["url"] for item in ranked[30:]
-        if normalized_url(item["url"]) in supplemental_urls
-    ]
-    selected = base_selected + overflow_urls
-    overflow_items = [{
-        "url": url,
-        "trigger": "coverage_guard_recovery",
-        "reason": "Verified same-source coverage lead must reach canonical candidate audit.",
-    } for url in overflow_urls]
+    base_selected = [item["url"] for item in ranked]
+    selected = base_selected
     updated = copy.deepcopy(coverage)
     updated.update({
         "within_window_count": len(within),
@@ -116,7 +102,7 @@ def rank_scan(scan: dict, source: dict, coverage: dict) -> dict:
         "ranked_items": ranked,
         "selected_for_pool_count": len(selected),
         "selected_item_urls": selected,
-        "mandatory_overflow_items": overflow_items,
+        "mandatory_overflow_items": [],
         "ranking_completed": True,
         "failure_reason": None,
     })

@@ -416,7 +416,7 @@ def materialize_source(source: dict, route: dict, window_start: str, window_end:
             "importance_reason": "依公共影響、人口範圍、急迫安全、制度意義、本期增量與核心板塊關聯逐項計分。",
         })
     ranked.sort(key=lambda item: (item["importance_score"], item["published_at"], item["url"]), reverse=True)
-    selected_urls = [item["url"] for item in ranked[:30]]
+    selected_urls = [item["url"] for item in ranked]
     scan_path = (output_dir / f"{source['source_id']}.json").resolve()
     coverage = {
         "source_id": source["source_id"], "status": "completed", "within_window_count": len(within),

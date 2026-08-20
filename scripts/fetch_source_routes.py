@@ -5,18 +5,44 @@ from __future__ import annotations
 import argparse
 import gzip
 import hashlib
+import io
 import json
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
+import zipfile
 import zlib
-from datetime import datetime, timedelta
+from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Mapping
 
 
 USER_AGENT = "Mozilla/5.0 CodexNewsValidation/1.0"
+
+
+def retry_delay_seconds(headers, attempt: int, default_interval: float = 1.0,
+                        maximum: float = 300.0) -> float:
+    """Return a bounded delay, preferring the server's Retry-After value."""
+    raw = headers.get("Retry-After") if headers is not None else None
+    if raw:
+        try:
+            return min(maximum, max(0.0, float(raw)))
+        except (TypeError, ValueError):
+            try:
+                target = parsedate_to_datetime(str(raw))
+                if target.tzinfo is None:
+                    target = target.replace(tzinfo=timezone.utc)
+                return min(
+                    maximum,
+                    max(0.0, (target - datetime.now(timezone.utc)).total_seconds()),
+                )
+            except (TypeError, ValueError, OverflowError):
+                pass
+    return min(maximum, max(0.0, float(default_interval)))
 
 
 def resolve_route_url(route: Mapping, now: datetime | None = None) -> str:
@@ -94,7 +120,9 @@ def fetch_one(route: Mapping, snapshot_dir: Path, timeout_seconds: int) -> dict:
     last_status = None
     last_content_type = None
     last_error = None
-    for attempt in range(2):
+    max_attempts = max(1, min(6, int(route.get("max_attempts", 2))))
+    last_headers = None
+    for attempt in range(max_attempts):
         response = None
         try:
             try:
@@ -103,6 +131,7 @@ def fetch_one(route: Mapping, snapshot_dir: Path, timeout_seconds: int) -> dict:
                 response = error
             status = int(getattr(response, "status", response.getcode()))
             response_headers = response.headers
+            last_headers = response_headers
             response_body = decode_body(
                 response.read(), response_headers.get("Content-Encoding", "")
             )
@@ -120,6 +149,10 @@ def fetch_one(route: Mapping, snapshot_dir: Path, timeout_seconds: int) -> dict:
                     "json_exhaustion_path": route.get("json_exhaustion_path"),
                     "source_exhaustion_marker": route.get("source_exhaustion_marker"),
                     "retry_count": attempt, "error": None,
+                    "acquisition_mode": (
+                        "doc_api" if str(route.get("source_id")) == "gdelt"
+                        else "primary_route"
+                    ),
                 }
             last_error = "HTTP response was not successful or body was empty"
         except Exception as error:  # noqa: BLE001 - record each route failure.
@@ -127,8 +160,10 @@ def fetch_one(route: Mapping, snapshot_dir: Path, timeout_seconds: int) -> dict:
         finally:
             if response is not None:
                 response.close()
-        if attempt == 0:
-            time.sleep(1)
+        if attempt + 1 < max_attempts:
+            time.sleep(retry_delay_seconds(
+                last_headers, attempt, float(route.get("retry_interval_seconds", 1))
+            ))
     return {
         "source_id": str(route.get("source_id", "")), "route": str(route.get("route", "")),
         "request_method": method, "request_url": request_url,
@@ -136,8 +171,151 @@ def fetch_one(route: Mapping, snapshot_dir: Path, timeout_seconds: int) -> dict:
         "bytes": 0, "snapshot_path": None, "sha256": None, "route_ready": False,
         "json_exhaustion_path": route.get("json_exhaustion_path"),
         "source_exhaustion_marker": route.get("source_exhaustion_marker"),
-        "retry_count": 1, "error": last_error,
+        "retry_count": max_attempts - 1, "error": last_error,
+        "acquisition_mode": "unavailable",
     }
+
+
+def gdelt_archive_slots(window_start: str, window_end: str | None = None):
+    start = datetime.fromisoformat(window_start.replace("Z", "+00:00")).astimezone(timezone.utc)
+    end = (
+        datetime.fromisoformat(window_end.replace("Z", "+00:00")).astimezone(timezone.utc)
+        if window_end else datetime.now(timezone.utc)
+    )
+    cursor = start.replace(second=0, microsecond=0)
+    cursor -= timedelta(minutes=cursor.minute % 15)
+    end = end.replace(second=0, microsecond=0)
+    end -= timedelta(minutes=end.minute % 15)
+    while cursor <= end:
+        yield cursor
+        cursor += timedelta(minutes=15)
+
+
+def title_from_gdelt_url(url: str) -> str:
+    parsed = urllib.parse.urlparse(url)
+    slug = urllib.parse.unquote(parsed.path.rstrip("/").rsplit("/", 1)[-1])
+    slug = slug.rsplit(".", 1)[0].replace("-", " ").replace("_", " ").strip()
+    if len(slug) >= 8 and not slug.isdigit():
+        return " ".join(slug.split())
+    return f"{parsed.netloc or 'GDELT'} news report"
+
+
+def fetch_gdelt_export_part(url: str, timeout_seconds: int) -> dict:
+    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT}, method="GET")
+    try:
+        with urllib.request.urlopen(request, timeout=timeout_seconds) as response:
+            body = response.read()
+        rows = []
+        with zipfile.ZipFile(io.BytesIO(body)) as archive:
+            for name in archive.namelist():
+                for line in archive.read(name).decode("utf-8", errors="replace").splitlines():
+                    columns = line.split("\t")
+                    if len(columns) >= 61 and columns[59] and columns[60].startswith(("http://", "https://")):
+                        rows.append((columns[59], columns[60]))
+        return {
+            "url": url, "sha256": hashlib.sha256(body).hexdigest(),
+            "bytes": len(body), "rows": rows, "error": None,
+        }
+    except Exception as error:  # noqa: BLE001 - each archive part is independently auditable.
+        return {"url": url, "sha256": None, "bytes": 0, "rows": [], "error": str(error)}
+
+
+def fetch_gdelt_export_fallback(route: Mapping, snapshot_dir: Path,
+                                timeout_seconds: int, window_start: str | None,
+                                window_end: str | None = None) -> dict | None:
+    fallback = route.get("fallback")
+    if not window_start or not isinstance(fallback, Mapping):
+        return None
+    if fallback.get("type") != "gdelt_export_24h":
+        return None
+    template = str(fallback["request_url_template"])
+    slots = list(gdelt_archive_slots(window_start, window_end))
+    urls = [template.replace("{yyyyMMddHHmm}", slot.strftime("%Y%m%d%H%M")) for slot in slots]
+    workers = max(1, min(12, int(fallback.get("max_workers", 8))))
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        parts = list(executor.map(
+            lambda url: fetch_gdelt_export_part(url, timeout_seconds), urls
+        ))
+    successful = [part for part in parts if part["error"] is None]
+    if not successful:
+        return None
+    articles = {}
+    for part in successful:
+        for seen_date, url in part["rows"]:
+            candidate = {
+                "url": url,
+                "title": title_from_gdelt_url(url),
+                "seendate": f"{seen_date[:8]}T{seen_date[8:14]}Z",
+            }
+            current = articles.get(url)
+            if current is None or candidate["seendate"] > current["seendate"]:
+                articles[url] = candidate
+    if not articles:
+        return None
+    payload = json.dumps({
+        "articles": list(articles.values()),
+        "_gdelt_export_provenance": {
+            "requested_parts": len(parts),
+            "successful_parts": len(successful),
+            "parts": [
+                {key: part[key] for key in ("url", "sha256", "bytes", "error")}
+                for part in parts
+            ],
+        },
+    }, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    snapshot_path = safe_snapshot_path(snapshot_dir, str(route["snapshot_name"]))
+    snapshot_path.write_bytes(payload)
+    return {
+        "source_id": "gdelt", "route": str(route["route"]),
+        "request_method": "GET", "request_url": template,
+        "http_status": 200, "content_type": "application/json; charset=utf-8",
+        "bytes": len(payload), "snapshot_path": str(snapshot_path),
+        "sha256": hashlib.sha256(payload).hexdigest(), "route_ready": True,
+        "json_exhaustion_path": route.get("json_exhaustion_path"),
+        "source_exhaustion_marker": route.get("source_exhaustion_marker"),
+        "retry_count": 0, "error": None, "acquisition_mode": "gdelt_export_24h",
+        "gdelt_live_ready": True,
+        "archive_requested_count": len(parts),
+        "archive_ready_count": len(successful),
+        "archive_complete": len(successful) == len(parts),
+    }
+
+
+def reuse_recent_gdelt_snapshot(route: Mapping, snapshot_dir: Path,
+                                output_dir: Path) -> dict | None:
+    name = str(route["snapshot_name"])
+    candidates = sorted(
+        (
+            path for path in output_dir.parent.glob(f"*/route-snapshots/{name}")
+            if path.resolve() != (snapshot_dir / name).resolve()
+        ),
+        key=lambda path: path.stat().st_mtime,
+        reverse=True,
+    )
+    for cached in candidates:
+        try:
+            body = cached.read_bytes()
+            payload = json.loads(body.decode("utf-8-sig"))
+            if not isinstance(payload.get("articles"), list) or not payload["articles"]:
+                continue
+            snapshot_path = safe_snapshot_path(snapshot_dir, name)
+            snapshot_path.write_bytes(body)
+            age_seconds = max(0, int(time.time() - cached.stat().st_mtime))
+            return {
+                "source_id": "gdelt", "route": str(route["route"]),
+                "request_method": "CACHE", "request_url": str(cached.resolve()),
+                "http_status": 200, "content_type": "application/json; charset=utf-8",
+                "bytes": len(body), "snapshot_path": str(snapshot_path),
+                "sha256": hashlib.sha256(body).hexdigest(), "route_ready": True,
+                "json_exhaustion_path": route.get("json_exhaustion_path"),
+                "source_exhaustion_marker": route.get("source_exhaustion_marker"),
+                "retry_count": 0, "error": None,
+                "acquisition_mode": "last_known_good_cache",
+                "gdelt_live_ready": False, "cache_age_seconds": age_seconds,
+            }
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+            continue
+    return None
 
 
 def fetch_date_variants(route: Mapping, snapshot_dir: Path, timeout_seconds: int) -> dict:
@@ -204,7 +382,9 @@ def fetch_page(route: Mapping, request_url: str, snapshot_path: Path,
     last_error = None
     last_status = None
     last_content_type = None
-    for attempt in range(2):
+    max_attempts = max(1, min(6, int(route.get("max_attempts", 2))))
+    last_headers = None
+    for attempt in range(max_attempts):
         response = None
         try:
             request = urllib.request.Request(request_url, headers=headers, method="GET")
@@ -214,6 +394,7 @@ def fetch_page(route: Mapping, request_url: str, snapshot_path: Path,
                 response = error
             status = int(getattr(response, "status", response.getcode()))
             response_headers = response.headers
+            last_headers = response_headers
             response_body = decode_body(
                 response.read(), response_headers.get("Content-Encoding", "")
             )
@@ -234,13 +415,15 @@ def fetch_page(route: Mapping, request_url: str, snapshot_path: Path,
         finally:
             if response is not None:
                 response.close()
-        if attempt == 0:
-            time.sleep(1)
+        if attempt + 1 < max_attempts:
+            time.sleep(retry_delay_seconds(
+                last_headers, attempt, float(route.get("retry_interval_seconds", 1))
+            ))
     return ({
         "page_index": page_index, "request_url": request_url,
         "http_status": last_status, "content_type": last_content_type,
         "bytes": 0, "snapshot_path": None, "sha256": None,
-        "retry_count": 1, "error": last_error,
+        "retry_count": max_attempts - 1, "error": last_error,
     }, None)
 
 
@@ -303,7 +486,8 @@ def fetch_pagination(route: Mapping, result: dict, snapshot_dir: Path,
 
 
 def fetch_routes(route_config: Path, output_dir: Path, timeout_seconds: int,
-                 window_start: str | None = None) -> dict:
+                 window_start: str | None = None,
+                 window_end: str | None = None) -> dict:
     config = json.loads(route_config.read_text(encoding="utf-8-sig"))
     output_dir = output_dir.resolve()
     snapshot_dir = output_dir / "route-snapshots"
@@ -311,6 +495,20 @@ def fetch_routes(route_config: Path, output_dir: Path, timeout_seconds: int,
     results = []
     for route in config.get("routes", []):
         result = fetch_date_variants(route, snapshot_dir, timeout_seconds)
+        if str(route.get("source_id")) == "gdelt":
+            primary_result = result
+            if not result.get("route_ready"):
+                result = fetch_gdelt_export_fallback(
+                    route, snapshot_dir, timeout_seconds, window_start, window_end
+                ) or reuse_recent_gdelt_snapshot(route, snapshot_dir, output_dir) or primary_result
+                result["primary_attempt"] = {
+                    key: primary_result.get(key)
+                    for key in ("http_status", "retry_count", "error", "request_url")
+                }
+            result.setdefault("gdelt_live_ready", bool(
+                result.get("route_ready")
+                and result.get("acquisition_mode") != "last_known_good_cache"
+            ))
         if result.get("route_ready"):
             result = fetch_pagination(
                 route, result, snapshot_dir, timeout_seconds, window_start
@@ -318,15 +516,23 @@ def fetch_routes(route_config: Path, output_dir: Path, timeout_seconds: int,
         results.append(result)
     ready_count = sum(bool(item["route_ready"]) for item in results)
     minimum_ready = int(config.get("minimum_ready_routes", len(results)))
+    gdelt_result = next((item for item in results if item.get("source_id") == "gdelt"), None)
+    gdelt_live_ready = bool(gdelt_result and gdelt_result.get("gdelt_live_ready"))
+    publication_ready = ready_count >= minimum_ready
     coverage = {
         "schema_version": "1.0.0",
         "generated_at": datetime.now().astimezone().isoformat(),
         "route_ready_count": ready_count,
         "route_total_count": len(results),
         "minimum_ready_routes": minimum_ready,
+        "publication_ready": publication_ready,
+        "gdelt_live_ready": gdelt_live_ready,
+        "gdelt_acquisition_mode": (
+            gdelt_result.get("acquisition_mode") if gdelt_result else "not_configured"
+        ),
         "status": (
-            "ready" if ready_count == len(results)
-            else "degraded" if ready_count >= minimum_ready
+            "ready" if ready_count == len(results) and gdelt_live_ready
+            else "degraded" if publication_ready
             else "failed"
         ),
         "results": results,
@@ -344,6 +550,7 @@ def main() -> int:
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--timeout-seconds", type=int, default=25)
     parser.add_argument("--window-start")
+    parser.add_argument("--window-end")
     args = parser.parse_args()
     if not 1 <= args.timeout_seconds <= 120:
         parser.error("--timeout-seconds must be between 1 and 120")
@@ -352,9 +559,10 @@ def main() -> int:
         Path(args.output_dir),
         args.timeout_seconds,
         args.window_start,
+        args.window_end,
     )
     print(json.dumps(coverage, ensure_ascii=False, separators=(",", ":")))
-    return 0 if coverage["route_ready_count"] >= coverage["minimum_ready_routes"] else 1
+    return 0 if coverage["publication_ready"] else 1
 
 
 if __name__ == "__main__":

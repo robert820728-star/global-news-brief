@@ -4,7 +4,7 @@
 
 `DISCOVERY_THEN_VERIFY`
 
-- Build the 24-hour candidate list from GDELT, CNA, and China News Service. GDELT is the broad global discovery feed; CNA and China News Service are regional supplements for Taiwan and China.
+- Build the 24-hour candidate list from GDELT, CNA, and China News Service. GDELT is the broad global discovery feed; CNA and China News Service are regional supplements for Taiwan and China. `GDELT_RESILIENT_ACQUISITION` makes at most five total DOC API requests; after a 429, wait at least 120 秒, or longer when required by `Retry-After`. After a fifth failure, do not send a sixth request: fall back to official GDELT 15-minute export archives, and only then use a labeled valid cache. Publication continues in an explicit degraded state if a live GDELT interface remains unavailable. `FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` transfers every verified in-window item from each successful discovery route into deduplication and scoring, with no top-30 or other fixed cutoff.
 - A discovery source failure must not block the whole brief. Record the degraded source and continue when at least one discovery route or the final web-search fallback yields verifiable current candidates. Stop only when no current candidate can be verified at all.
 - Merge duplicates, retain source URLs, then score every candidate with the six-part rubric. The required order is: `discover -> deduplicate -> score -> independently verify selected C-or-higher events -> collect images -> render`.
 - The system must score and deduplicate before independent verification. Verification may use the original report, official material, or another reliable source from the wider source pool; it is not required to come from the discovery feed.
@@ -51,7 +51,10 @@ The required order for every configured source is: `canonical route -> same-site
 5. 任一步驟失敗時，立即將 `status=failed`，並在 `last_error.code` 與 `last_error.message` 寫入精簡、可排查且不含憑證的原因。突然中斷時，GitHub 保留最後一次成功更新；下一輪會把它標成 `interrupted_by_next_run`。
 6. 完成評分後，先以 UTF-8 JSON 覆寫 `run-logs/logs/latest-candidate-audit.json`，內容必須是本輪完整十四天海選清單、每筆六項分數、總分、等級、決定、理由、來源與 `selected_event_id`；將其 blob SHA 記入 `current.json.candidate_audit_artifact`。完整讀者版產生後，再以 UTF-8 Markdown 覆寫 `run-logs/logs/latest-reader.md`，並把其 blob SHA 記入 `current.json.reader_artifact`，階段才可進入 `github-result-saved`。完成這一步後才嘗試把同一份內容輸出至排程對話。
    - 讀者版日期後必須依序顯示 `執行編號：<run_id>`、`程式版本：<main_sha>`、`正式發布：是`。任何十四天清單與新聞內容都屬於這三行所識別的同一輪；不得混用舊清單。
-   - `READER_TEMPLATE_STRUCTURE_GATE`：產生讀者版前必須讀取同一 pinned main 的 `news-brief-template.md`，並依該檔固定骨架輸出。非空白行順序須為日期、執行編號、程式版本、正式發布、數量摘要；讀者版只能有 `## 今日總覽`、`## 逐條詳報`、`## 後續觀察` 三個二級標題且順序一致，不得加入 `今日重點表`、板塊二級標題、`十四天海選清單`、`驗收註記`、執行模式或其他測試／後台內容。結構不符時不得寫入 `latest-reader.md`，也不得進入 `github-result-saved`。
+   - `READER_TEMPLATE_STRUCTURE_GATE`：產生讀者版前必須讀取同一 pinned main 的 `news-brief-template.md`，並依該檔固定骨架輸出。讀者版必須以「每日新聞讀者版」、統計期間及六項評級說明開頭，再依設定順序逐區輸出；不得加入十四天海選清單、驗收摘要、執行模式或其他測試／後台內容。結構不符時不得寫入 `latest-reader.md`，也不得進入 `github-result-saved`。
+   - `LEGACY_TODAY_OVERVIEW_NO_OMISSION_GATE`：每個有新聞的板塊開頭都必須原樣保留既有 `時間｜事件｜評級` 三欄總清單並列出該區全部入選事件；這就是今日總清單，不是可選摘要。不得省略、跨區集中或重新設計。
+   - `LEGACY_SECTIONED_READER_LAYOUT_GATE`：總清單後必須在同一板塊內依序放該區新聞；每則固定為「標題｜評級 → 可見圖片或圖片說明 → 新聞摘要 → 評為X級的評論與段末來源」。不得改成欄位式逐條詳報，不得顯示事件編號，也不得產生 `時間／來源／事件細節／分析` 欄位組。送出前必須執行 `scripts/validate_news_brief.py brief --reader-layout legacy-sectioned`；格式錯誤時只重做 reader render，不重跑新聞階段。
+   - `READER_INTERNAL_REPAIR_LOG_EXCLUSION_GATE`：重試、429、archive 切換、去重效能、圖片補救、checkpoint 重建及其他「修復紀錄」只可寫入內部 run log／audit receipt，不得出現在讀者版、`latest-reader.md` 或其逐字對話副本。對話如需附 run receipt，只能在完整 reader 之後以一行列出 run_id 與驗收結果，不得附修復過程。
 7. 輸出對話前最後一次持久更新為 `delivery-handoff`、`status=completed`、`delivery_status=handoff_started`。這只證明新聞流程完成、讀者版已存 GitHub並開始交給 ChatGPT；目前排程沒有手機客戶端顯示回執，因此沒有外部明確回執時不得宣稱 `client_confirmed` 或手機畫面已收到。
    - `CONVERSATION_READER_BYTE_IDENTITY_GATE`：排程最終訊息必須直接交付 `logs/latest-reader.md` 的完整內容，順序與文字不得改成摘要、驗收報告、節錄或僅告知 GitHub 已保存。可以在完整 reader 之後附極短的 run receipt，但不得以 receipt 取代讀者版。若最終訊息未包含完整 reader，`delivery-handoff` 不得視為驗收通過。
 
@@ -72,22 +75,23 @@ The required order for every configured source is: `canonical route -> same-site
    - `TAIWAN_DOMESTIC_COVERAGE_GUARD`：中央社清單另補查經濟產業、食藥消費安全、中央政策制度三個領域，每個領域最多 `5 results`。只有中央社清單不可用或明顯過舊時，才使用網頁搜尋補候選；命中仍須先查重與評分，不得因搜尋命中就直接入選或抓圖片。
 2. 將找到的新聞按底層事件合併，保留本輪完整海選清單。不同來源報導同一事件可合併，但每個來源網址都要保留。
 3. 海選清單每一筆都要列出六項大評分、總分及一句具體理由：
-   - 公共影響：0–30
-   - 時效與變化：0–20
-   - 影響範圍：0–15
-   - 後續重要性：0–15
-   - 可靠與可查證：0–10
-   - 使用者關聯：0–10
-   六項總和必須等於 0–100 的總分。
-4. 依總分分級：`SS` 90–100、`S` 85–89、`A` 75–84、`B` 65–74、`C` 55–64、`C-` 50–54、`D` 35–49、`E` 0–34。`+`／`-` 只用於同一級距內排序，不得改變 C 級門檻。
-   - 災害／事故另有絕對基準，優先於總分換算：普通地方事件未滿 50 人且無特殊意義時低於 C；50–99 人為 C；100–249 人為 B；250–2,499 人為 A-；2,500 人以上可因死亡數到 A，但僅憑死亡數不得高於 A。`DISASTER_2500_DEATHS_A_CEILING`
-   - A+ 必須另有快速傳播、跨國系統衝擊、國家級失能或其他重大場外因素。`A_PLUS_REQUIRES_SEPARATE_ESCALATION_EVIDENCE`
+   - 重要性／嚴重程度（`public_impact`）：0–30
+   - 地理／人口／公共系統直接範圍：0–20
+   - 急迫與安全：0–15
+   - 結構／政策意義：0–15
+   - 本期實質新進展：0–10
+   - 核心板塊關聯：0–10
+   六項總和必須等於 0–100 的總分，且每項都要有 `dimension_evidence`。任何單一項都不是最終等級硬上限，也不得另建地域例外補丁。
+   - Discovery 清單原有分數只用於候選排序；跨來源去重後必須從零按事件具體後果重評六項，禁止複製清單分數或靠「政府／全國／重大」等關鍵字給分。
+4. 依總分分級：`SS` 97–100、`S+` 94–96、`S` 90–93、`S-` 85–89、`A+` 80–84、`A` 75–79、`A-` 70–74、`B+` 65–69、`B` 60–64、`B-` 55–59、`C+` 50–54、`C` 45–49、`C-` 40–44、`D` 20–39、`E` 0–19。`SCORE_TO_GRADE_BANDS_V1`
+   - 死亡、重傷、撤離、公共系統中斷、國家機能喪失、滅國／除名／失去可居住性等後果，要分別進入相應的六項分數，不得由死亡或地域直接指定等級。`INTEGRATED_SIX_DIMENSION_NO_HARD_CAP`
+   - 保守確認死亡數只設定 `public_impact` 的最低證據分：1–9 人至少 8、10–49 人至少 14、50–99 人至少 18、100–249 人至少 23、250–2,499 人至少 27、2,500 人以上為 30；這不是最終等級，也不直接設定其他五項。`CASUALTY_PUBLIC_IMPACT_FLOORS_V1`
+   - 急迫與安全另按當前危險評分：0–3 危險已結束／無立即行動需求；4–7 地方應變進行中但風險受限；8–11 重大危險持續、仍在救援窗口或必要服務承壓；12–15 威脅擴大／失控且需要廣泛立即行動。死亡數不自動決定急迫性。`URGENCY_SAFETY_ANCHORS_V1`
+   - 重慶市長例行更替會因重要性、範圍、急迫性與結構後果低而自然落到 D；重慶遭隕石摧毀即使只命中一個行政區，也會因大量傷亡、城市毀滅、系統崩潰與不可逆損失自然升到高等級，不需要特例。
+   - 小國嚴重災難可綜合達 C；國家機能喪失可達 C+／B；滅國、除名或失去可居住性可達 A。國家大小不作降分理由，以實際人口、公共系統與存續後果給分。
    - Risk Group 4／四級病毒不能自動升 A+，須同時評估傳播途徑、實際擴散與系統後果。`RISK_GROUP_4_NOT_AUTOMATIC_A_PLUS`
-   - 數萬至數十萬人死傷時，必須進入 S 級評估並列出伴隨的醫療崩潰、治理失能、巨量流離失所、跨境衝擊或長期結構改變。`MASS_CASUALTY_S_SYSTEMIC_IMPACT_PRESUMPTION`
-   - 疫情進入 S- 或以上須為全球大流行，且具改變世界、全球轉捩點、全球制度劇變或文明／存續風險。`PANDEMIC_S_MINUS_WORLD_CHANGE_GATE`
-   - COVID-19 的全球封控、旅行與供應鏈中斷及長期制度改變，是 S- 最低校正案例。`COVID_GLOBAL_LOCKDOWN_S_MINUS_REFERENCE`
-   - 特殊意義包含但不限於：極大量異常失蹤、重傷或撤離；醫療、電力、交通等大規模公共系統中斷；災情仍迅速擴大且有官方時間序列證據；跨國影響或罕見災害機制；明顯監管／救援失靈或制度性風險；可能引發監控／指定區域內的軍事或其他衝突。上調必須說明具體觸發與證據。
-   - 軍事／衝突事件不套用上述 50 人門檻：非監控板塊且未加權的邊境小衝突預設 D；長期戰爭的同戰線、同型態、例行傷亡更新預設 D。只有戰局反轉或實質升級、停火／和平進程改變、新國家／新戰線，或可驗證的外部系統影響，才重新評級。
+   - 大量傷亡會使重要性／嚴重程度接近高分，但醫療崩潰、治理失能、流離失所、跨境衝擊與長期結構改變仍須分別放入相應項目，再由總分得出等級。`MASS_CASUALTY_REQUIRES_INTEGRATED_SCORING`
+   - 軍事／衝突事件先判斷是否為長期戰爭的同戰線、同型態、例行傷亡更新；這類更新因本期新進展與新增後果低而通常落到 D。若有戰局反轉、停火變化、新國家／新戰線或外部系統衝擊，按新證據重算六項，不直接繼承或套用母事件等級。
    - `MATERIAL_UPDATE_48_HOUR_REENTRY_GATE`（延伸原 `MATERIAL_UPDATE_REENTRY_GATE`）：以同一事件上次進入讀者版的交付時間起算 48 小時冷卻期；不得只因仍在十四天內每天重刊。48 小時內，只有本輪新增的數字、正式決策、執行結果、制度改變、衝突升降級或其他實質進展，而且本日新增部分必須獨立達到 C 級門檻，才重新進入讀者版；但颱風、地震、疾病、戰爭、公共安全、政策或市場事件若發生死傷、範圍、傳播、戰線、關鍵系統或制度後果的實質惡化，必須立即依新增事實重新評級，不得等滿 48 小時。滿 48 小時後，必須按當下可驗證影響重新完成六項評分；仍獨立達到 C 級才可再次刊登，低於 C 則只留十四天稽核或依既有規則退場。時間經過本身不得自動重刊，也不得繼承上次或母事件等級；紀念日、重述背景或媒體回顧不算更新。
    - `IMPACT_DELTA_CONTINUITY_SCORING`：用十四天清單對照同一 `continuity_key`，本輪評級基準是本日可驗證的影響力變化，不是照抄事件最初或歷史最高等級。無新增公共影響的名人死亡、喪禮或重複報導隨時效衰退，當日本身應下調到 D／E 並只留稽核；原始事件的歷史評級仍保留。颱風、地震、疾病與戰爭若出現死傷增加、影響範圍擴大、傳播／戰線擴張、關鍵系統中斷或制度後果，依新增事實重新評級，可高於前輪；反之受控、停火、疫情消退或官方下修數字時可下降。不得因事件較舊而自動降級，亦不得因新聞重複刊登而維持高級，必須說明本輪影響力相對十四天基準上升、持平或下降。
    - `PASSIVE_ONE_OFF_FIVE_DAY_DECAY`：五日衰減只適用於事件本身已結束、沒有持續公共／制度／安全影響的一次性個人或禮儀事件，例如自然死亡、喪禮、追悼與回顧；它是評級上限，不是強迫升到該級。自首次可驗證事件日起：當日依事件本身獨立評級、次日最高 B、第三日最高 C、第四日 D、第五日 E，五個日曆日後移出活躍滾動稽核。颱風、地震、疾病、戰爭及任何仍在發展的事件不得套用機械式日數衰減；死傷、範圍、傳播、戰線、系統中斷、權力重組、暗殺證據或制度後果一有實質變化，就退出本規則，依 `IMPACT_DELTA_CONTINUITY_SCORING` 當成新實質更新重新評級，可升級。朱鎔基自然死亡若沒有權力或制度後果，依本規則退場；日後若另有實質影響，仍會以新原因重新入池。
@@ -102,7 +106,7 @@ The required order for every configured source is: `canonical route -> same-site
    - `TYPE_CONSISTENT_COVERAGE_SANITY`：不得拿前輪來源掃描的 `raw_item_count` 與本輪去重評分後的 `deduplicated_candidate_count` 互相比較；只有同欄位、同口徑、同時間窗的數量才可作完整性警示，數量本身不得取代逐站證據。
    - `RECOVERABLE_14_DAY_BASELINE_WITHOUT_READER_BLOCK`：若舊資料沒有完整十四天 provenance，不得宣稱來源絕對窮盡，但也不得因此阻止本日讀者版。保留仍在十四天內、可核對來源且已有六項評分的候選，合併本輪 24 小時 discovery 候選、去重與評分，並移除逾期項目；所有可恢復的 C 級以上仍須進讀者版。
    - `MOBILE_NATIVE_AUDIT_ROLLING_MERGE`：`latest-candidate-audit.json` 已存在時，mobile-native 直接以該檔為滾動基底。若六項欄位、各欄範圍與總分算法未變，舊候選不得只因 main SHA、來源發現方式或驗證政策更新就被視為評分格式失效，也不得重算未發生實質更新的歷史候選。只重評本輪新增或發生實質更新的候選；移除超過十四天項目、按 `dedup_key`／`continuity_key` 合併本輪增量，並保留其餘歷史物件的既有分數、理由與來源。需要更新 durable audit 時，允許使用 GitHub contents API 整檔 replacement 寫回語意等同的合併結果，不要求本機程式；C 級以上事件仍須依本輪證據政策獨立驗證。這項 mobile-native 合併不得冒充 script validation，但也不得因此阻止本日讀者版。
-   - `MOBILE_NATIVE_COMPACT_DURABLE_AUDIT`：mobile-native 的 durable 十四天清單只保存每日合併必需欄位：`candidate_id`、`dedup_key`、可用時的 `continuity_key`、`event_date`、`section`、`title`、`importance_breakdown`、`importance_score`、`provisional_grade`、`decision`、`reason`、`source_ids`、`selected_event_id`，以及精簡的 `continuity` 狀態與本輪影響變化。`MUST_OMIT_VERBOSE_GRADING_EVIDENCE`：此 mobile artifact 不得重複保存 verbose `grading_evidence`、逐頁 `source_audit`、文章全文或重複的驗證敘述；這些證據仍用於本輪 C 級以上獨立驗證，full-runtime 的詳細驗證與稽核規則保持不變。壓縮既有檔案時不得改變候選集合、六項分數、總分或 C 級以上 `selected_event_id` 映射。
+   - `MOBILE_NATIVE_COMPACT_DURABLE_AUDIT`：mobile-native 的 durable 十四天清單只保存每日合併必需欄位：`candidate_id`、`dedup_key`、可用時的 `continuity_key`、`event_date`、`section`、`title`、`importance_breakdown`、`importance_score`、逐項 `dimension_evidence`、`provisional_grade`、`decision`、`reason`、`source_ids`、`selected_event_id`，以及精簡的 `continuity` 狀態與本輪影響變化。`MUST_OMIT_VERBOSE_GRADING_EVIDENCE`：此 mobile artifact 不得重複保存 verbose `grading_evidence`、逐頁 `source_audit`、文章全文或重複的驗證敘述；這些證據仍用於本輪 C 級以上獨立驗證，full-runtime 的詳細驗證與稽核規則保持不變。壓縮既有檔案時不得改變候選集合、六項分數、總分或 C 級以上 `selected_event_id` 映射。
    - `DAILY_COVERAGE_IS_NOT_HISTORICAL_PROOF`：本日 24 小時 source coverage 只能證明本日掃描，不得冒充過去十四天逐站掃描；內部 audit 必須如實保留 `bootstrap_mode` 與各 run 的時間窗。這項限制只禁止誇大證據，不得把可用、來源可核對且符合模板的每日讀者版改判失敗。
 6. 本輪及十四天清單內所有 C 級以上新聞都必須出現在更新後的讀者版；同事件可合併成一則，但不得漏掉其重要更新與來源。
 7. 圖片內容沿用原先為該則新聞選定的圖片，不得為了縮小檔案改換另一張圖。`IMAGE_DEFAULT_ONE_ASSET`：每則預設一張內嵌圖片；`IMAGE_SECOND_ASSET_REQUIRES_INCREMENTAL_INFORMATION`：只有第二張能補充第一張未呈現的範圍、數字、現場或時間變化時才追加，並記錄新增資訊理由，每則最多兩張：

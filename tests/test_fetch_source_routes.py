@@ -2,6 +2,7 @@ import json
 import tempfile
 import threading
 import unittest
+from unittest import mock
 from datetime import datetime, timedelta
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -19,6 +20,84 @@ SPEC.loader.exec_module(MODULE)
 
 
 class FetchSourceRoutesTests(unittest.TestCase):
+    def test_gdelt_primary_failure_switches_to_official_export_fallback(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            config = root / "routes.json"
+            config.write_text(json.dumps({
+                "minimum_ready_routes": 1,
+                "routes": [{
+                    "source_id": "gdelt", "route": "aggregate_api",
+                    "request_url_template": "http://127.0.0.1:1/unavailable",
+                    "snapshot_name": "gdelt.json", "max_attempts": 1,
+                    "fallback": {
+                        "type": "gdelt_export_24h",
+                        "request_url_template": "http://official.test/{yyyyMMddHHmm}.zip",
+                    },
+                }],
+            }), encoding="utf-8")
+            fallback_result = {
+                "source_id": "gdelt", "route": "aggregate_api",
+                "request_url": "http://official.test/archive", "http_status": 200,
+                "route_ready": True, "acquisition_mode": "gdelt_export_24h",
+                "gdelt_live_ready": True,
+            }
+            with mock.patch.object(
+                MODULE, "fetch_gdelt_export_fallback", return_value=fallback_result
+            ) as fallback:
+                coverage = MODULE.fetch_routes(
+                    config, root / "out", 1,
+                    "2026-08-19T03:00:00+00:00", "2026-08-20T03:00:00+00:00",
+                )
+            fallback.assert_called_once()
+            self.assertTrue(coverage["publication_ready"])
+            self.assertEqual("gdelt_export_24h", coverage["gdelt_acquisition_mode"])
+            self.assertEqual("ready", coverage["status"])
+
+    def test_total_gdelt_failure_is_explicit_but_supplement_keeps_publication_running(self):
+        class Handler(BaseHTTPRequestHandler):
+            def do_GET(self):
+                body = b"<html>supplement</html>"
+                self.send_response(200)
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+
+            def log_message(self, format, *args):
+                return
+
+        server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                config = root / "routes.json"
+                config.write_text(json.dumps({
+                    "minimum_ready_routes": 1,
+                    "routes": [
+                        {
+                            "source_id": "gdelt", "route": "aggregate_api",
+                            "request_url_template": "http://127.0.0.1:1/unavailable",
+                            "snapshot_name": "gdelt.json", "max_attempts": 1,
+                        },
+                        {
+                            "source_id": "cna", "route": "structured_direct",
+                            "request_url_template": f"http://127.0.0.1:{server.server_port}/news",
+                            "snapshot_name": "cna.html",
+                        },
+                    ],
+                }), encoding="utf-8")
+                coverage = MODULE.fetch_routes(config, root / "out", 1)
+                self.assertTrue(coverage["publication_ready"])
+                self.assertFalse(coverage["gdelt_live_ready"])
+                self.assertEqual("unavailable", coverage["gdelt_acquisition_mode"])
+                self.assertEqual("degraded", coverage["status"])
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=2)
+
     def test_dated_route_keeps_two_successful_days_when_local_today_is_missing(self):
         requested_days = []
         today = datetime.now().astimezone().date()

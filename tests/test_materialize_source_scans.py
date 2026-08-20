@@ -23,6 +23,43 @@ VALIDATOR_SPEC.loader.exec_module(VALIDATOR)
 
 
 class MaterializeSourceScansTests(unittest.TestCase):
+    def test_more_than_thirty_items_all_enter_candidate_pool(self):
+        articles = [
+            {
+                "url": f"https://example.net/world/event-{index}",
+                "title": f"World event {index}",
+                "seendate": f"20260818T10{index:02d}00Z",
+            }
+            for index in range(35)
+        ]
+        payload = json.dumps({"articles": articles}, separators=(",", ":"))
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            snapshot = root / "gdelt.json"
+            snapshot.write_bytes(payload.encode("utf-8"))
+            route = {
+                "source_id": "gdelt", "route": "aggregate_api",
+                "request_url": "https://api.gdeltproject.org/api/v2/doc/doc",
+                "http_status": 200, "content_type": "application/json",
+                "snapshot_path": str(snapshot),
+                "sha256": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
+                "route_ready": True, "source_exhaustion_marker": '"articles"',
+            }
+            source = {
+                "source_id": "gdelt", "homepage": "https://api.gdeltproject.org/",
+                "section": "GLB", "allow_external_article_urls": True,
+            }
+            _scan, coverage = MODULE.materialize_source(
+                source, route, "2026-08-18T09:00:00+00:00",
+                "2026-08-18T12:00:00+00:00", root,
+            )
+            self.assertEqual(35, coverage["ranked_count"])
+            self.assertEqual(35, coverage["selected_for_pool_count"])
+            self.assertEqual(
+                [item["url"] for item in coverage["ranked_items"]],
+                coverage["selected_item_urls"],
+            )
+
     def test_gdelt_json_discovers_external_articles_and_image_hints(self):
         payload = json.dumps({"articles": [{
             "url": "https://example.net/world/major-event",

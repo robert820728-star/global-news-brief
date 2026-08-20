@@ -69,6 +69,27 @@ class _FlakyHandler(BaseHTTPRequestHandler):
         return
 
 
+class _RateLimitedThenReadyHandler(BaseHTTPRequestHandler):
+    attempts = 0
+    payload = b'{"articles":[]}'
+
+    def do_GET(self):
+        type(self).attempts += 1
+        if type(self).attempts == 1:
+            self.send_response(429)
+            self.send_header("Retry-After", "0")
+            self.end_headers()
+            return
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(self.payload)))
+        self.end_headers()
+        self.wfile.write(self.payload)
+
+    def log_message(self, _format, *_args):
+        return
+
+
 class SourceRouteFetcherTests(unittest.TestCase):
     def test_route_config_covers_every_primary_source(self):
         pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8-sig"))
@@ -83,6 +104,10 @@ class SourceRouteFetcherTests(unittest.TestCase):
         self.assertEqual("aggregate_api", gdelt["route"])
         self.assertIn("api.gdeltproject.org/api/v2/doc/doc", gdelt["request_url_template"])
         self.assertIn("format=json", gdelt["request_url_template"])
+        self.assertEqual(5, gdelt["max_attempts"])
+        self.assertEqual(120, gdelt["retry_interval_seconds"])
+        self.assertEqual("gdelt_export_24h", gdelt["fallback"]["type"])
+        self.assertIn("data.gdeltproject.org/gdeltv2", gdelt["fallback"]["request_url_template"])
         cna = next(route for route in config["routes"] if route["source_id"] == "cna")
         self.assertEqual("structured_direct", cna["route"])
         self.assertEqual("POST", cna["request_method"])
@@ -210,6 +235,42 @@ class SourceRouteFetcherTests(unittest.TestCase):
         finally:
             server.shutdown()
             server.server_close()
+
+    def test_python_fetcher_honors_retry_after_before_declaring_gdelt_failure(self):
+        _RateLimitedThenReadyHandler.attempts = 0
+        server = ThreadingHTTPServer(("127.0.0.1", 0), _RateLimitedThenReadyHandler)
+        worker = threading.Thread(target=server.serve_forever, daemon=True)
+        worker.start()
+        try:
+            with tempfile.TemporaryDirectory() as temp:
+                root = Path(temp)
+                route_config = root / "routes.json"
+                output_dir = root / "out"
+                route_config.write_text(json.dumps({
+                    "minimum_ready_routes": 1,
+                    "routes": [{
+                        "source_id": "gdelt", "route": "aggregate_api",
+                        "request_url_template": f"http://127.0.0.1:{server.server_port}/doc",
+                        "snapshot_name": "gdelt.json", "max_attempts": 3,
+                    }],
+                }), encoding="utf-8")
+                completed = subprocess.run(
+                    [sys.executable, str(PYTHON_FETCHER),
+                     "--route-config", str(route_config),
+                     "--output-dir", str(output_dir), "--timeout-seconds", "5"],
+                    capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=20,
+                )
+                self.assertEqual(0, completed.returncode, completed.stderr + completed.stdout)
+                self.assertEqual(2, _RateLimitedThenReadyHandler.attempts)
+                result = json.loads(
+                    (output_dir / "source-route-coverage.json").read_text(encoding="utf-8")
+                )["results"][0]
+                self.assertEqual(1, result["retry_count"])
+                self.assertEqual("doc_api", result["acquisition_mode"])
+        finally:
+            server.shutdown()
+            server.server_close()
+            worker.join(timeout=2)
 
     def _assert_fetcher_contract(self, command):
         server = ThreadingHTTPServer(("127.0.0.1", 0), _Handler)

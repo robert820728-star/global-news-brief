@@ -40,6 +40,7 @@ RECOVERABLE_STAGES = {
 }
 REQUIRED_H2 = ["今日總覽", "逐條詳報", "後續觀察"]
 BACKEND_PHRASES = [
+    "修復紀錄",
     "本則 B 以上事件",
     "已下載或截圖",
     "可顯示附件",
@@ -1152,6 +1153,143 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
     return errors
 
 
+def _legacy_section_title(section: dict[str, Any]) -> str:
+    code = section.get("code")
+    if code == "TWN":
+        return "🇹🇼 台灣新聞"
+    if code == "CHN":
+        return "🇨🇳 中國新聞"
+    if code == "GLB":
+        return "🌍 國際世界"
+    return f"{section.get('name', '')}新聞"
+
+
+def validate_legacy_sectioned_layout(data: dict[str, Any], text: str) -> list[str]:
+    """Validate the reader-visible section/table/story layout used by ChatGPT."""
+    errors = validate_manifest_data(data)
+    nonempty = [line.strip() for line in text.splitlines() if line.strip()]
+    if not nonempty or nonempty[0] != "# 每日新聞讀者版":
+        errors.append("讀者版必須使用既有分區格式，第一行為 # 每日新聞讀者版")
+    if len(nonempty) < 2 or not nonempty[1].startswith("統計期間："):
+        errors.append("既有分區格式缺少統計期間")
+    expected_rubric = (
+        "評級綜合考量：重要性／嚴重程度、影響範圍、急迫與安全、"
+        "結構／政策意義、本期實質新進展、核心板塊關聯。"
+    )
+    if len(nonempty) < 3 or nonempty[2] != expected_rubric:
+        errors.append("既有分區格式缺少六項評級說明")
+
+    forbidden = (
+        "## 今日總覽", "## 逐條詳報", "## 後續觀察",
+        "**時間：**", "**來源：**", "**事件細節：**", "**分析：**",
+        "驗收摘要", "執行編號：", "程式版本：", "正式發布：",
+    )
+    for phrase in (*BACKEND_PHRASES, *forbidden):
+        if phrase in text:
+            errors.append(f"既有分區格式含有禁止內容：{phrase}")
+    for token in FORBIDDEN_RENDER_TOKENS:
+        if token in text:
+            errors.append(f"讀者版使用禁止的圖廊、疊圖或動態元件：{token}")
+
+    events = [event for event in data.get("events", []) if isinstance(event, dict)]
+    populated_sections: list[tuple[dict[str, Any], list[dict[str, Any]]]] = []
+    for section in data.get("sections", []):
+        if not isinstance(section, dict):
+            continue
+        section_events = [
+            event for event in events if event.get("primary_section") == section.get("code")
+        ]
+        if section_events:
+            populated_sections.append((section, section_events))
+
+    expected_h2 = [_legacy_section_title(section) for section, _ in populated_sections]
+    actual_h2 = re.findall(r"(?m)^## ([^\r\n]+)\r?$", text)
+    if actual_h2 != expected_h2:
+        errors.append("讀者版必須依設定順序使用既有分區格式與板塊標題")
+
+    section_matches = list(re.finditer(r"(?m)^## ([^\r\n]+)\r?$", text))
+    sections_by_title: dict[str, str] = {}
+    for index, match in enumerate(section_matches):
+        end = section_matches[index + 1].start() if index + 1 < len(section_matches) else len(text)
+        sections_by_title[match.group(1)] = text[match.end():end]
+
+    visible_timezone_re = re.compile(
+        r"(?i)(?:\b(?:UTC|GMT)\b|(?<!\d)[+-]\d{2}:\d{2}\b|"
+        r"\b(?:Africa|America|Antarctica|Asia|Atlantic|Australia|Europe|Indian|Pacific)/[A-Za-z_+-]+\b)"
+    )
+    for section, section_events in populated_sections:
+        section_title = _legacy_section_title(section)
+        body = sections_by_title.get(section_title)
+        if body is None:
+            continue
+        if body.count("| 時間 | 事件 | 評級 |") != 1:
+            errors.append(f"板塊「{section_title}」必須只有一張時間／事件／評級總清單")
+
+        rows: list[tuple[str, str, str]] = []
+        for line in body.splitlines():
+            if not line.lstrip().startswith("|"):
+                continue
+            cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+            if len(cells) == 3 and cells[0] not in {"時間", "---"} and not set(cells[0]) <= {"-", ":"}:
+                rows.append((cells[0], cells[1], cells[2]))
+        expected_rows = [
+            (
+                str(event.get("detail", {}).get("overview_time", "")),
+                str(event.get("title", "")),
+                str(event.get("grade", "")),
+            )
+            for event in section_events
+        ]
+        if rows != expected_rows:
+            errors.append(f"板塊「{section_title}」總清單與事件資料不一致")
+        if any(visible_timezone_re.search(row[0]) for row in rows):
+            errors.append("讀者可見時間不得顯示 UTC、GMT、數字偏移或時區標記")
+
+        heading_matches = list(re.finditer(r"(?m)^### (.+)｜(SS|[SABC][+-]?)\r?$", body))
+        actual_headings = [(match.group(1), match.group(2)) for match in heading_matches]
+        expected_headings = [
+            (str(event.get("title", "")), str(event.get("grade", "")))
+            for event in section_events
+        ]
+        if actual_headings != expected_headings:
+            errors.append(f"板塊「{section_title}」新聞標題、評級或順序不一致")
+
+        for index, event in enumerate(section_events):
+            if index >= len(heading_matches):
+                break
+            start = heading_matches[index].start()
+            end = heading_matches[index + 1].start() if index + 1 < len(heading_matches) else len(body)
+            block = body[start:end]
+            grade = str(event.get("grade", ""))
+            if f"評為{grade}級" not in block:
+                errors.append(f"{event.get('event_id')} 缺少「評為{grade}級」的評級評論")
+            verification = event.get("verification", {})
+            if isinstance(verification, dict):
+                if verification.get("finding") == "single_reliable_source" and SINGLE_SOURCE_NOTE not in block:
+                    errors.append(f"{event.get('event_id')} 讀者版缺少單一來源說明")
+                for source in verification.get("sources", []):
+                    if isinstance(source, dict) and source.get("url") not in block:
+                        errors.append(f"{event.get('event_id')} 缺少來源連結：{source.get('url')}")
+            for field_key in ("map", "charts", "images"):
+                result = event.get(field_key, {})
+                if not isinstance(result, dict):
+                    continue
+                if field_key == "images" and result.get("status") == "omitted":
+                    note = result.get("reader_omission_note")
+                    if not isinstance(note, str) or f"**圖片說明：**{note}" not in block:
+                        errors.append(f"{event.get('event_id')} 無合格圖片時必須顯示圖片說明")
+                for asset in result.get("assets", []):
+                    if not isinstance(asset, dict):
+                        continue
+                    path = asset.get("path")
+                    caption = asset.get("caption")
+                    if isinstance(path, str) and path not in block:
+                        errors.append(f"{event.get('event_id')} 漏放附件：{path}")
+                    if isinstance(caption, str) and caption not in block:
+                        errors.append(f"{event.get('event_id')} 漏放圖說：{caption}")
+    return errors
+
+
 def print_result(errors: list[str]) -> int:
     if errors:
         for error in errors:
@@ -1176,6 +1314,11 @@ def build_parser() -> argparse.ArgumentParser:
     brief = subparsers.add_parser("brief", help="驗證事件資料與讀者版一致性")
     brief.add_argument("--manifest", required=True)
     brief.add_argument("--input", required=True)
+    brief.add_argument(
+        "--reader-layout",
+        choices=("structured", "legacy-sectioned"),
+        default="structured",
+    )
     return parser
 
 
@@ -1198,6 +1341,8 @@ def main(argv: list[str] | None = None) -> int:
             )
         manifest = load_json(args.manifest)
         text = Path(args.input).read_text(encoding="utf-8")
+        if args.reader_layout == "legacy-sectioned":
+            return print_result(validate_legacy_sectioned_layout(manifest, text))
         return print_result(validate_brief_text(manifest, text))
     except (OSError, ValueError, json.JSONDecodeError) as error:
         print(f"FAIL: {error}")

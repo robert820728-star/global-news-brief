@@ -8,7 +8,14 @@
       "route": "aggregate_api",
       "request_url_template": "https://api.gdeltproject.org/api/v2/doc/doc?query=(sourcelang%3Aenglish%20OR%20sourcelang%3Achinese)&mode=artlist&maxrecords=250&timespan=24h&sort=datedesc&format=json",
       "snapshot_name": "gdelt.discovery.json",
-      "source_exhaustion_marker": "\"articles\""
+      "source_exhaustion_marker": "\"articles\"",
+      "max_attempts": 5,
+      "retry_interval_seconds": 120,
+      "fallback": {
+        "type": "gdelt_export_24h",
+        "request_url_template": "http://data.gdeltproject.org/gdeltv2/{yyyyMMddHHmm}00.export.CSV.zip",
+        "max_workers": 8
+      }
     },
     {
       "source_id": "cna",
