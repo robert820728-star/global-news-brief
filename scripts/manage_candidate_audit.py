@@ -4,6 +4,7 @@
 import argparse
 import json
 import sys
+from collections import Counter
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -368,6 +369,8 @@ def validate(data, source_pool=None):
                 "merged_article_row_count", "in_window_article_row_count",
                 "canonical_url_count", "provisional_title_cluster_count",
                 "semantic_event_count", "scored_event_count",
+                "event_evidence_article_row_count", "non_news_article_row_count",
+                "unresolved_article_row_count",
                 "c_or_higher_scored_event_count", "selected_event_count",
             }
             if not isinstance(processing_counts, dict) or set(processing_counts) != count_fields:
@@ -382,11 +385,19 @@ def validate(data, source_pool=None):
             ):
                 errors.append(run_label + ".processing_counts 全部欄位必須是非負整數")
             else:
+                dispositions = run.get("article_dispositions")
+                disposition_counts = Counter(
+                    item.get("disposition") for item in dispositions
+                    if isinstance(dispositions, list) and isinstance(item, dict)
+                ) if isinstance(dispositions, list) else Counter()
                 expected_counts = {
                     "merged_article_row_count": run.get("raw_item_count"),
                     "in_window_article_row_count": run.get("raw_item_count"),
                     "semantic_event_count": len(candidates),
                     "scored_event_count": len(candidates),
+                    "event_evidence_article_row_count": disposition_counts["event_evidence"],
+                    "non_news_article_row_count": disposition_counts["non_news"],
+                    "unresolved_article_row_count": disposition_counts["unresolved"],
                     "c_or_higher_scored_event_count": sum(
                         isinstance(item, dict) and item.get("provisional_grade") in AUTO_SELECT
                         for item in candidates
@@ -412,6 +423,86 @@ def validate(data, source_pool=None):
                     errors.append(
                         run_label + ".processing_counts 不得在去重或分群後反而增加"
                     )
+                if (
+                    processing_counts["event_evidence_article_row_count"]
+                    + processing_counts["non_news_article_row_count"]
+                    + processing_counts["unresolved_article_row_count"]
+                    != processing_counts["in_window_article_row_count"]
+                ):
+                    errors.append(
+                        run_label + ".processing_counts 文章處置數總和必須等於時間窗內文章列數"
+                    )
+
+        semantic_event_ids = []
+        candidate_by_event_id = {}
+        if run_index == len(runs):
+            identity_fields = {
+                "who_or_what", "what_happened", "where", "when", "semantic_merge_basis"
+            }
+            for candidate_index, candidate in enumerate(candidates, 1):
+                label = f"{run_label}.candidates[{candidate_index}]"
+                if not isinstance(candidate, dict):
+                    continue
+                semantic_event_id = candidate.get("semantic_event_id")
+                if not isinstance(semantic_event_id, str) or not semantic_event_id.strip():
+                    errors.append(label + ".semantic_event_id 必須是非空白語意事件識別碼")
+                else:
+                    semantic_event_ids.append(semantic_event_id)
+                    candidate_by_event_id[semantic_event_id] = candidate
+                identity = candidate.get("event_identity")
+                if not isinstance(identity, dict) or set(identity) != identity_fields:
+                    errors.append(label + ".event_identity 必須包含事件主體、行動、地點、時間與合併依據")
+                elif any(
+                    not isinstance(identity[field], str) or not identity[field].strip()
+                    for field in identity_fields
+                ):
+                    errors.append(label + ".event_identity 全部欄位都必須是非空白文字")
+            if len(semantic_event_ids) != len(set(semantic_event_ids)):
+                errors.append(run_label + ".semantic_event_id 不得由兩個候選重複使用")
+
+            dispositions = run.get("article_dispositions")
+            expected_rows = Counter(
+                (item.get("source_id"), url)
+                for item in coverage if isinstance(item, dict)
+                for url in item.get("selected_item_urls", [])
+            )
+            actual_rows = Counter()
+            mapped_event_ids = set()
+            if not isinstance(dispositions, list):
+                errors.append(run_label + ".article_dispositions 必須逐列保存文章處置")
+                dispositions = []
+            for disposition_index, disposition in enumerate(dispositions, 1):
+                label = f"{run_label}.article_dispositions[{disposition_index}]"
+                if not isinstance(disposition, dict):
+                    errors.append(label + " 必須是物件")
+                    continue
+                source_id = disposition.get("source_id")
+                url = disposition.get("url")
+                outcome = disposition.get("disposition")
+                semantic_event_id = disposition.get("semantic_event_id")
+                reason = disposition.get("reason")
+                actual_rows[(source_id, url)] += 1
+                if not isinstance(reason, str) or not reason.strip():
+                    errors.append(label + ".reason 不得為空")
+                if outcome == "event_evidence":
+                    candidate = candidate_by_event_id.get(semantic_event_id)
+                    if candidate is None:
+                        errors.append(label + ".semantic_event_id 必須指向一個語意事件候選")
+                    elif url not in candidate.get("candidate_urls", []):
+                        errors.append(label + " 網址必須列在所指語意事件的 candidate_urls")
+                    else:
+                        mapped_event_ids.add(semantic_event_id)
+                elif outcome == "non_news":
+                    if semantic_event_id is not None:
+                        errors.append(label + " non_news 不得指向語意事件")
+                elif outcome == "unresolved":
+                    errors.append(label + " unresolved 文章不得通過完成驗收")
+                else:
+                    errors.append(label + ".disposition 無效")
+            if actual_rows != expected_rows:
+                errors.append(run_label + ".article_dispositions 必須與來源文章列逐筆完全一致")
+            if set(semantic_event_ids) - mapped_event_ids:
+                errors.append(run_label + " 每個語意事件都必須至少有一筆 event_evidence")
 
         valid_source_ids = all_configured_source_ids or set(coverage_ids)
         candidate_url_list = []
@@ -659,7 +750,14 @@ def validate(data, source_pool=None):
         ]
         if len(candidate_url_list) != len(set(candidate_url_list)):
             errors.append(run_label + " 去重候選之間重複占用同一原始網址")
-        if set(candidate_url_list) != set(pool_urls):
+        if run_index == len(runs) and isinstance(run.get("article_dispositions"), list):
+            event_urls = {
+                item.get("url") for item in run["article_dispositions"]
+                if isinstance(item, dict) and item.get("disposition") == "event_evidence"
+            }
+            if set(candidate_url_list) != event_urls:
+                errors.append(run_label + " candidate_urls 必須精確等於 event_evidence 網址")
+        elif set(candidate_url_list) != set(pool_urls):
             errors.append(run_label + " 每個核心來源入池網址都必須歸屬一個去重候選，禁止候選無聲消失")
     return errors
 

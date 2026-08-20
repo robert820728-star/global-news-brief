@@ -529,6 +529,9 @@ class PipelineContractTests(unittest.TestCase):
             "scored_event_count",
             "c_or_higher_scored_event_count",
             "selected_event_count",
+            "event_evidence_article_row_count",
+            "non_news_article_row_count",
+            "unresolved_article_row_count",
         }, required)
         for document_path in (
             ROOT / "daily-schedule-prompt.md",
@@ -540,6 +543,45 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("文章列數不得稱為語意事件數", document)
             for field in required:
                 self.assertIn(f"`{field}`", document)
+
+    def test_semantic_event_ledger_schema_contract(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-candidate-audit.schema.json").read_text(encoding="utf-8")
+        )
+        run = schema["$defs"]["run"]
+        dispositions = run["properties"]["article_dispositions"]
+        self.assertEqual("#/$defs/articleDisposition", dispositions["items"]["$ref"])
+        self.assertEqual(
+            ["event_evidence", "non_news", "unresolved"],
+            schema["$defs"]["articleDisposition"]["properties"]["disposition"]["enum"],
+        )
+        candidate_required = set(schema["$defs"]["candidate"]["required"])
+        self.assertNotIn("semantic_event_id", candidate_required)
+        self.assertNotIn("event_identity", candidate_required)
+        self.assertIn("semantic_event_id", schema["$defs"]["candidate"]["properties"])
+        self.assertIn("event_identity", schema["$defs"]["candidate"]["properties"])
+        self.assertEqual({
+            "who_or_what", "what_happened", "where", "when", "semantic_merge_basis"
+        }, set(schema["$defs"]["eventIdentity"]["required"]))
+        count_fields = set(run["properties"]["processing_counts"]["required"])
+        self.assertTrue({
+            "event_evidence_article_row_count",
+            "non_news_article_row_count",
+            "unresolved_article_row_count",
+        }.issubset(count_fields))
+        for document_path in (
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/daily-news-brief/SKILL.md",
+            ROOT / ".agents/skills/select-news-events/SKILL.md",
+            ROOT / ".agents/skills/audit-news-candidates/SKILL.md",
+        ):
+            document = document_path.read_text(encoding="utf-8")
+            self.assertIn("SEMANTIC_EVENT_LEDGER_GATE", document)
+            self.assertIn("只有語意事件才算新聞", document)
+            self.assertIn("`article_dispositions`", document)
+            self.assertIn("`semantic_event_id`", document)
+            self.assertIn("`event_identity`", document)
 
     def test_mobile_native_durable_audit_uses_compact_profile_without_verbose_evidence(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")

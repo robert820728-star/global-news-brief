@@ -10,6 +10,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
 SPEC = importlib.util.spec_from_file_location("manage_candidate_audit", ROOT / "scripts" / "manage_candidate_audit.py")
 MODULE = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
@@ -131,11 +132,35 @@ def valid_audit(candidates=None, per_source_count=1):
     items = candidates if candidates is not None else [candidate()]
     all_urls = [url for item in coverage for url in item["selected_item_urls"]]
     for index, item in enumerate(items):
+        item["semantic_event_id"] = f"semantic-event-{index + 1}"
+        item["event_identity"] = {
+            "who_or_what": item["title"],
+            "what_happened": "發生一項可核實的新進展",
+            "where": item["section"],
+            "when": window_end,
+            "semantic_merge_basis": "依主體、行動、地點與時間確認為同一事件",
+        }
         item["candidate_urls"] = [all_urls[index]] if index < len(all_urls) else []
         item["source_ids"] = [all_urls[index].split("/")[3]] if index < len(all_urls) else []
     if items and len(all_urls) > len(items):
         items[0]["candidate_urls"].extend(all_urls[len(items):])
         items[0]["source_ids"] = sorted({url.split("/")[3] for url in items[0]["candidate_urls"]})
+    event_by_url = {
+        url: item["semantic_event_id"]
+        for item in items
+        for url in item["candidate_urls"]
+    }
+    article_dispositions = [
+        {
+            "source_id": coverage_item["source_id"],
+            "url": url,
+            "disposition": "event_evidence",
+            "semantic_event_id": event_by_url[url],
+            "reason": "文章內容已對應至語意事件",
+        }
+        for coverage_item in coverage
+        for url in coverage_item["selected_item_urls"]
+    ]
     now = window_end
     raw_count = len(coverage) * per_source_count
     c_or_higher = {
@@ -153,6 +178,9 @@ def valid_audit(candidates=None, per_source_count=1):
                       "provisional_title_cluster_count": raw_count,
                       "semantic_event_count": len(items),
                       "scored_event_count": len(items),
+                      "event_evidence_article_row_count": raw_count,
+                      "non_news_article_row_count": 0,
+                      "unresolved_article_row_count": 0,
                       "c_or_higher_scored_event_count": sum(
                           item["provisional_grade"] in c_or_higher for item in items
                       ),
@@ -160,11 +188,52 @@ def valid_audit(candidates=None, per_source_count=1):
                           item["decision"] == "selected" for item in items
                       ),
                   },
+                  "article_dispositions": article_dispositions,
                   "deduplicated_candidate_count": len(items), "candidates": items}],
     }
 
 
 class CandidateAuditTests(unittest.TestCase):
+    def test_non_news_article_is_accounted_without_becoming_a_news_candidate(self):
+        audit = valid_audit()
+        run = audit["runs"][0]
+        disposition = run["article_dispositions"][-1]
+        removed_url = disposition["url"]
+        disposition.update({
+            "disposition": "non_news",
+            "semantic_event_id": None,
+            "reason": "頁面是導覽索引，不包含可辨識的新聞事件",
+        })
+        run["candidates"][0]["candidate_urls"].remove(removed_url)
+        run["processing_counts"]["event_evidence_article_row_count"] -= 1
+        run["processing_counts"]["non_news_article_row_count"] += 1
+        self.assertEqual([], MODULE.validate(audit, source_pool()))
+
+    def test_unresolved_article_cannot_complete_semantic_event_audit(self):
+        audit = valid_audit()
+        audit["runs"][0]["article_dispositions"][0].update({
+            "disposition": "unresolved",
+            "semantic_event_id": None,
+            "reason": "內容解析失敗",
+        })
+        audit["runs"][0]["processing_counts"]["event_evidence_article_row_count"] -= 1
+        audit["runs"][0]["processing_counts"]["unresolved_article_row_count"] += 1
+        errors = MODULE.validate(audit, source_pool())
+        self.assertTrue(any("unresolved" in error for error in errors))
+
+    def test_latest_candidate_requires_unique_semantic_event_identity(self):
+        missing = valid_audit()
+        del missing["runs"][0]["candidates"][0]["event_identity"]
+        errors = MODULE.validate(missing, source_pool())
+        self.assertTrue(any("event_identity" in error for error in errors))
+
+        duplicate = valid_audit([candidate(), candidate()])
+        duplicate["runs"][0]["candidates"][1]["semantic_event_id"] = (
+            duplicate["runs"][0]["candidates"][0]["semantic_event_id"]
+        )
+        errors = MODULE.validate(duplicate, source_pool())
+        self.assertTrue(any("semantic_event_id" in error for error in errors))
+
     def test_latest_run_requires_conserved_processing_counts(self):
         missing = valid_audit()
         del missing["runs"][0]["processing_counts"]
@@ -247,6 +316,13 @@ class CandidateAuditTests(unittest.TestCase):
         run["processing_counts"]["in_window_article_row_count"] = 1
         run["processing_counts"]["canonical_url_count"] = 1
         run["processing_counts"]["provisional_title_cluster_count"] = 1
+        run["processing_counts"]["event_evidence_article_row_count"] = 1
+        run["processing_counts"]["non_news_article_row_count"] = 0
+        run["processing_counts"]["unresolved_article_row_count"] = 0
+        run["article_dispositions"] = [
+            item for item in run["article_dispositions"]
+            if item["source_id"] == "cna"
+        ]
         run["candidates"][0]["candidate_urls"] = [only_url]
         run["candidates"][0]["source_ids"] = ["cna"]
         self.assertEqual([], MODULE.validate(audit, pool))
@@ -482,7 +558,7 @@ class CandidateAuditTests(unittest.TestCase):
         audit = valid_audit()
         audit["runs"][0]["candidates"][0]["candidate_urls"].pop()
         errors = MODULE.validate(audit, source_pool())
-        self.assertTrue(any("禁止候選無聲消失" in error for error in errors))
+        self.assertTrue(any("candidate_urls 必須精確等於 event_evidence 網址" in error for error in errors))
 
     def test_c_and_above_must_be_selected_without_quota(self):
         items = []

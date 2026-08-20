@@ -1,5 +1,14 @@
 # 版本紀錄 / Version Record
 
+## v0.4.2-semantic-event-ledger — 2026-08-20
+
+- 建立原因 / Reason: 前處理曾把 19,307 個正規化網址／標題群組稱為「去重新聞」，但沒有證據證明它們都是新聞事件或都完成六項評分。 / Preprocessing had described 19,307 normalized URLs/title groups as “deduplicated news” without evidence that they were news events or had completed six-dimension scoring.
+- 實作方式 / Approach: 文章層前處理只輸出 `normalized_articles` 與 `provisional_article_groups`；只有讀取內容後建立的唯一 `semantic_event_id`／`event_identity` 才算新聞並進入評分。每個窗內文章列必須記為 `event_evidence`、`non_news` 或 `unresolved`，未歸零的 `unresolved` 阻擋 audit 完成。 / Article preprocessing now emits only `normalized_articles` and `provisional_article_groups`; only a unique `semantic_event_id`/`event_identity` established from content counts as news and proceeds to scoring. Every in-window article row must be classified as `event_evidence`, `non_news`, or `unresolved`, and unresolved rows block audit completion.
+- 變更入口 / Changed entry points: `scripts/preprocess_news_candidates.py`, `scripts/manage_candidate_audit.py`, `schemas/news-candidate-audit.schema.json`, both schedule prompts, the daily/select/audit skills, and related audit/publisher/contract tests.
+- 重要參數 / Key parameters: 不設新聞篇數上限；文章列、網址數與標題群組數只作內部診斷，不得稱為新聞數或完成評分數。`event_evidence` 必須指向事件，`non_news` 必須保存理由，而且每個語意事件至少要有一筆文章證據。 / There is no event-count cap. Article-row, URL, and title-group counts are internal diagnostics only and cannot be called news or completed scores. Event evidence must point to an event, non-news rows require reasons, and every semantic event requires at least one evidence article.
+- 驗證方式 / Validation: 新契約先重現文章列被當成候選、未解析文章未阻擋、事件身分缺漏及重複事件 ID 等缺口；修正後定向與相容性測試 89/89 通過，並再執行完整回歸。 / New contract tests first reproduced article rows being treated as candidates, unresolved rows being ignored, missing event identity, and duplicate event IDs; focused and compatibility tests pass 89/89 after the fix, followed by the full regression.
+- 結果 / Result: 19,307 這類數字只能報為文章／網址／暫定群組處理量；真正新聞數只能取自可稽核的 `semantic_event_count`。 / Numbers such as 19,307 can only be reported as article/URL/provisional-group processing volume; the true news count must come from the auditable `semantic_event_count`.
+
 ## v0.4.0-reader-overview-and-120s-retry — 2026-08-20
 
 - 建立原因 / Reason: 真實單次新聞執行漏掉既有 `## 今日總覽` 格式，並把內部修復過程附在讀者版後方；使用者同時要求把 GDELT 429 最低等待由 60 秒改為 120 秒。 / A live one-time news run omitted the established `## 今日總覽` format and appended internal repair details to the reader delivery; the user also required the GDELT 429 minimum wait to change from 60 to 120 seconds.

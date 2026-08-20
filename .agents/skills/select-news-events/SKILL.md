@@ -22,6 +22,8 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 
 先執行 `python3 scripts/preprocess_news_candidates.py`，以程式完成時間窗檢查、網址正規化、完全重複及高相似標題聚類。程式輸出只作為候選索引，不得直接決定入選、排除或評級。
 
+`SEMANTIC_EVENT_LEDGER_GATE`：只有語意事件才算新聞、才可進入六項評分。前處理輸出的 `provisional_article_groups` 只是文章索引，不是事件。必須讀取文章內容或來源支援摘要，為每個真正事件建立唯一 `semantic_event_id` 與完整 `event_identity`，並逐列寫入 `article_dispositions`。每列只能是 `event_evidence`、`non_news` 或 `unresolved`；`event_evidence` 指向事件，`non_news` 保存具體理由，`unresolved` 必須排查歸零才能交付 audit。文章列數、網址數與標題群組數不得稱為新聞數或完成評分數。
+
 模型路由依序為：
 
 1. 規則與程式：處理時間、網址、重複、既有十四天紀錄比對及固定欄位。

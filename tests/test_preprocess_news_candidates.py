@@ -26,10 +26,13 @@ class PreprocessNewsCandidatesTests(unittest.TestCase):
             "window_end": "2026-08-16T12:00:00+08:00",
             "items": [self.candidate()],
         }, 0.55)
-        self.assertEqual(1, result["candidate_count"])
-        self.assertEqual(1, result["within_window_count"])
-        self.assertEqual(1, len(result["normalized_candidates"]))
-        self.assertEqual(1, len(result["clusters"]))
+        self.assertEqual(1, result["article_row_count"])
+        self.assertEqual(1, result["within_window_article_row_count"])
+        self.assertEqual(1, len(result["normalized_articles"]))
+        self.assertEqual(1, len(result["provisional_article_groups"]))
+        self.assertNotIn("candidate_count", result)
+        self.assertNotIn("clusters", result)
+        self.assertFalse(result["semantic_event_creation_performed"])
 
     def test_legacy_candidates_key_remains_supported(self):
         result = MODULE.preprocess({
@@ -37,7 +40,7 @@ class PreprocessNewsCandidatesTests(unittest.TestCase):
             "window_end": "2026-08-16T12:00:00+08:00",
             "candidates": [self.candidate()],
         }, 0.55)
-        self.assertEqual(1, result["candidate_count"])
+        self.assertEqual(1, result["article_row_count"])
 
     def test_article_count_receipt_conserves_each_preprocessing_stage(self):
         exact_duplicate = dict(self.candidate())

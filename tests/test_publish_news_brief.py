@@ -80,6 +80,14 @@ def write_valid_audit(root: Path):
         })
     candidate = {
         "candidate_id": "cand-1", "dedup_key": "test-event", "title": "測試事件",
+        "semantic_event_id": "semantic-event-1",
+        "event_identity": {
+            "who_or_what": "測試事件主體",
+            "what_happened": "完成一項可核實的政策變更",
+            "where": "台灣",
+            "when": "2026-08-14T06:00:00+08:00",
+            "semantic_merge_basis": "所有文章描述同一主體、行動、地點與時間",
+        },
         "section": "TWN", "provisional_grade": "B",
         "importance_score": 62,
         "importance_breakdown": {
@@ -153,7 +161,17 @@ def write_valid_audit(root: Path):
                 "scored_event_count": 1,
                 "c_or_higher_scored_event_count": 1,
                 "selected_event_count": 1,
+                "event_evidence_article_row_count": len(coverage),
+                "non_news_article_row_count": 0,
+                "unresolved_article_row_count": 0,
             },
+            "article_dispositions": [{
+                "source_id": item["source_id"],
+                "url": item["selected_item_urls"][0],
+                "disposition": "event_evidence",
+                "semantic_event_id": "semantic-event-1",
+                "reason": "文章內容已對應至同一語意事件",
+            } for item in coverage],
             "deduplicated_candidate_count": 1, "candidates": [candidate],
         }],
     }
