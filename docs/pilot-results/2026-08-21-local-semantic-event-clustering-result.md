@@ -2,9 +2,9 @@
 
 ## 結論 / Conclusion
 
-本機多語 embedding 可以在零 GPT/API token 下處理新聞事件近鄰，但目前的 embedding 相似度與時間／傷亡量級閘門仍不足以安全自動合併。修正識別碼型標題後，3,000 組固定樣本產生 22 個多成員事件群，其中 20 群確認為同事件、1 群明確誤合併、1 群資訊不足。確認誤合併率為 4.55%，最壞值為 9.09%。本版不得升級為正式規則。
+本機多語 embedding 可以在零 GPT/API token 下處理新聞事件近鄰，但不得單靠 embedding 相似度自動合併。第一輪修正識別碼型標題後，3,000 組固定樣本仍有 1 群明確誤合併。第二輪加入標題表面重疊與事件身分錨點後，修正後的另一份固定 3,000 組樣本產生 41 個多成員事件群，人工逐群審核為 41 群同事件、0 群確認誤合併。第二輪仍是實驗規則，尚未升級正式流程。
 
-Local multilingual embeddings can generate news-event neighbors with zero GPT/API tokens, but embedding similarity plus time and casualty-magnitude gates are not yet sufficient for safe automatic merging. After excluding identifier-like titles from embedding, a deterministic 3,000-group sample produced 22 multi-member event clusters: 20 confirmed same-event clusters, one confirmed false merge, and one uncertain cluster. The confirmed false-merge rate is 4.55%; the worst-case rate is 9.09%. This version must not be promoted to production.
+Local multilingual embeddings can generate news-event neighbors with zero GPT/API tokens, but embedding similarity alone must not authorize automatic merging. After identifier-like titles were excluded, the first deterministic 3,000-group sample still contained one confirmed false merge. A second iteration added title-surface overlap and event-identity anchors. On a corrected deterministic 3,000-group sample, it produced 41 multi-member clusters; manual cluster-by-cluster review found 41 same-event clusters and zero confirmed false merges. The second iteration remains experimental and has not been promoted to production.
 
 ## 輸入與資源 / Input and Resources
 
@@ -23,6 +23,30 @@ Local multilingual embeddings can generate news-event neighbors with zero GPT/AP
 模型為 `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`，透過 FastEmbed/ONNX 在本機 CPU 執行。第一次把標題與完整摘要一起處理，在 23 分 28 秒硬停，約使用 2.61 GB RAM；第二次只處理全量標題，在約 14 分鐘硬停，約使用 1.71 GB RAM。固定 3,000 組樣本在 172.105 秒完成。兩次中止均未產生可誤用的半成品向量。
 
 The model was `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`, executed locally through FastEmbed/ONNX. The first full attempt, embedding titles plus complete summaries, was stopped after 23 minutes 28 seconds at approximately 2.61 GB RAM. The second title-only full attempt was stopped near 14 minutes at approximately 1.71 GB RAM. The deterministic 3,000-group sample completed in 172.105 seconds. Neither stopped run produced a reusable partial vector file.
+
+## 第二輪：身分閘門與向量綁定 / Iteration 2: Identity Gates and Vector Binding
+
+第二輪仍把 embedding 只當候選產生器。自動合併除了相似度至少 0.86，還必須同時符合標題字元三連詞 Jaccard 至少 0.18、至少一個共同事件身分錨點、48 小時時間閘門，以及傷亡數量級風險閘門；未通過者只能進入模型確認，不得自動淘汰或降級。
+
+Iteration 2 still uses embeddings only as a candidate generator. Automatic merging requires similarity of at least 0.86, title character-trigram Jaccard of at least 0.18, at least one shared event-identity anchor, the 48-hour time gate, and the casualty-magnitude risk gate. Anything that does not pass can only enter model review; it cannot be automatically discarded or downgraded.
+
+| 第二輪指標 / Iteration 2 Metric | 結果 / Result |
+|---|---:|
+| 修正後固定樣本 / Corrected deterministic sample | 3,000 groups |
+| 可用標題母體 / Eligible-title population | 17,791 groups |
+| 近鄰候選對 / Neighbor candidate pairs | 581 |
+| 自動合併邊 / Automatic merge edges | 57 |
+| 多成員事件群 / Multi-member event clusters | 41 |
+| 合併減少暫定組 / Consolidated provisional groups | 51 |
+| 外部模型確認對 / External model-review pairs | 159 |
+| 確認正確自動群 / Confirmed correct automatic clusters | 41 / 41 |
+| 確認誤合併 / Confirmed false merges | 0 / 41 |
+| 自動刪除／重要性判定 / Automatic deletion or importance decisions | 0 / 0 |
+| GPT/API token | 0 |
+
+舊向量檔曾只以「向量筆數相同」判定可重用；修正抽樣母體後，3,000 個向量可能對到不同的 3,000 個事件而不報錯。第二輪已新增向量 manifest，綁定每個向量的 `group_id`、順序、模型名稱與輸入模式；任何不一致都直接停止。修正後向量重建耗時 177.394 秒。同一向量與設定連跑兩次，扣除執行時間欄位後的完整語意結果 SHA-256 均為 `c54573142f3a76ee2fbe9ae67af5c2d1ddf92211e6e3f20d48357f6c577aec76`。
+
+The old vector cache was reusable whenever only the vector count matched. After the sampling population changed, 3,000 vectors could silently map to a different set of 3,000 events. Iteration 2 adds a vector manifest binding every vector to its ordered `group_id`, model name, and input mode; any mismatch now stops the run. Rebuilding the corrected vectors took 177.394 seconds. Two runs with the same vectors and settings produced the same complete semantic-result SHA-256 after excluding the elapsed-time field: `c54573142f3a76ee2fbe9ae67af5c2d1ddf92211e6e3f20d48357f6c577aec76`.
 
 ## 錯誤審核 / Error Audit
 
@@ -60,8 +84,7 @@ No. URL recovery already restored 2,906 originally unusable titles, and this pil
 
 ## 下一步 / Next Step
 
-在自動合併前加入可驗證的事件身分錨點：地點、人物、機構、事件動作與時間。傷亡數保留所有原始版本，使用有無死亡與數量級作風險訊號；21→23 不阻止同事件合併，21→2300 則轉入確認。完成後重新使用同一固定樣本，要求確認誤合併率降至可接受門檻，再考慮離線全量執行。
+第二輪已證明表面身分閘門可以擋住第一輪已知誤合併，且本次 41 個自動群未發現誤合併；但目前的身分錨點仍只是字詞與中文三連詞，不是完整的人物／地點／機構辨識。下一步應先完成 metadata 補取與本機實體／地理標記，再以其他固定樣本重複誤合併審核。達到多批樣本均無確認誤合併後，才考慮離線全量執行。
 
-Add verifiable identity anchors before automatic merging: place, person, organization, event action, and time. Preserve every casualty value and use death presence plus magnitude only as risk signals; 21→23 does not block a same-event merge, while 21→2300 enters review. Reuse the same deterministic sample and require an acceptable confirmed false-merge rate before considering an offline full run.
-
+Iteration 2 shows that surface identity gates block the known first-iteration false merge, with no confirmed false merge among this run's 41 automatic clusters. The present anchors are still word tokens and Chinese trigrams, however, not full person/place/organization recognition. The next step is metadata recovery plus local entity and geographic labeling, followed by repeated false-merge audits on other deterministic samples. A full offline run should be considered only after multiple samples produce no confirmed false merge.
 

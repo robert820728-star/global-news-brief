@@ -11,21 +11,25 @@ sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 from pilot_local_semantic_event_clustering import (  # noqa: E402
     build_semantic_texts,
     cluster_from_neighbor_pairs,
+    embedding_vector_manifest,
     embed_texts,
     extract_fact_anchors,
     is_semantic_title_eligible,
     nearest_neighbor_pairs,
     pair_decision,
     select_embedding_groups,
+    surface_identity_evidence,
     verify_semantic_report,
 )
 
 
 CONFIG = {
-    "auto_merge_similarity": 0.94,
-    "review_similarity": 0.82,
+    "auto_merge_similarity": 0.86,
+    "review_similarity": 0.75,
     "max_auto_merge_hours": 48,
     "max_death_magnitude_gap": 1,
+    "minimum_char_ngram_jaccard": 0.18,
+    "minimum_shared_identity_anchors": 1,
 }
 
 
@@ -79,6 +83,41 @@ class LocalSemanticEventClusteringTests(unittest.TestCase):
 
         vectors = embed_texts(texts, "fake-model", "unused-cache", embedder_factory=lambda **_: FakeEmbedder())
         self.assertAlmostEqual(sum(value * value for value in vectors[0]), 1.0)
+
+        unrelated_chinese = [
+            group("c1", "河南省各民主党派四新三好青年说活动成功举办", 1, "cr1"),
+            group("c2", "秦腔名家扬州艺术交流会水袖皇后齐爱云亲授水袖绝技", 2, "cr2"),
+        ]
+        same_chinese_event = [
+            group("c3", "中共中央国务院中央军委决定给张陆颁发二级航天功勋奖章授予武飞张洪章英雄航天员荣誉称号", 1, "cr3"),
+            group("c4", "中共中央国务院中央军委关于给张陆颁发二级航天功勋奖章授予武飞张洪章英雄航天员荣誉称号的决定", 2, "cr4"),
+        ]
+        template_collision = [
+            group("e1", "Ituran ITRN Q2 2026 earnings call transcript", 1, "er1"),
+            group("e2", "Comscore SCOR Q2 2026 earnings call transcript", 2, "er2"),
+        ]
+        self.assertEqual(pair_decision(*unrelated_chinese, 0.969, CONFIG), "review")
+        self.assertEqual(pair_decision(*same_chinese_event, 0.92, CONFIG), "auto_merge")
+        self.assertEqual(pair_decision(*template_collision, 0.917, CONFIG), "review")
+        evidence = surface_identity_evidence(*same_chinese_event)
+        self.assertGreaterEqual(evidence["shared_identity_anchors"], 1)
+
+        chain_groups = [
+            group("x1", "Prince Harry Meghan plan return to Britain", 1, "xr1"),
+            group("x2", "Prince Harry and Meghan plan return to Britain", 2, "xr2"),
+            group("x3", "Harry Meghan plan returning to Britain", 3, "xr3"),
+        ]
+        chain_result = cluster_from_neighbor_pairs(
+            report(chain_groups),
+            [
+                {"left_group_id": "x1", "right_group_id": "x2", "similarity": 0.97},
+                {"left_group_id": "x2", "right_group_id": "x3", "similarity": 0.97},
+                {"left_group_id": "x1", "right_group_id": "x3", "similarity": 0.83},
+            ],
+            CONFIG,
+        )
+        self.assertEqual(chain_result["counts"]["semantic_event_clusters"], 1)
+        self.assertEqual(chain_result["ambiguity_review_queue"], [])
 
     def test_evolving_casualty_counts_use_typed_magnitude_and_preserve_values(self):
         first = group("g1", "Brazil bus crash kills 21 people", 1, "r1")
@@ -147,6 +186,9 @@ class LocalSemanticEventClusteringTests(unittest.TestCase):
         self.assertEqual([(item["left_index"], item["right_index"]) for item in neighbors], [(0, 1)])
         sampled = select_embedding_groups(groups + [group("g3", "Budget bill passes parliament", 3, "r3")], 2, 20260821)
         self.assertEqual([item["group_id"] for item in sampled], [item["group_id"] for item in select_embedding_groups(groups + [group("g3", "Budget bill passes parliament", 3, "r3")], 2, 20260821)])
+        manifest = embedding_vector_manifest(sampled, "test-model", "title")
+        self.assertEqual(manifest["group_ids"], [item["group_id"] for item in sampled])
+        self.assertNotEqual(manifest, embedding_vector_manifest(list(reversed(sampled)), "test-model", "title"))
 
 
 if __name__ == "__main__":

@@ -35,6 +35,11 @@ FACT_PATTERNS = {
     ),
 }
 GENERIC_IDENTIFIER_WORDS = {"arid", "content", "detail", "document", "file", "item", "mil", "news", "report"}
+GENERIC_IDENTITY_WORDS = {
+    "about", "after", "against", "amid", "among", "and", "announces", "before", "call", "conference",
+    "could", "decision", "earnings", "from", "into", "latest", "meeting", "more", "over", "plans", "report",
+    "reports", "says", "statement", "than", "that", "the", "this", "today", "transcript", "under", "with",
+}
 
 
 def _number_magnitude(value: int) -> str:
@@ -86,6 +91,37 @@ def is_semantic_title_eligible(title: str) -> bool:
     return len(descriptive) >= 3 and sum(len(token) for token in descriptive) >= 15
 
 
+def _identity_anchors(title: str) -> set[str]:
+    value = (title or "").casefold()
+    anchors = {
+        f"w:{token}"
+        for token in re.findall(r"[a-z]+", value)
+        if len(token) >= 3 and token not in GENERIC_IDENTITY_WORDS and token not in GENERIC_IDENTIFIER_WORDS
+    }
+    cjk = "".join(re.findall(r"[\u3400-\u9fff]", value))
+    anchors.update(f"c:{cjk[index:index + 3]}" for index in range(max(0, len(cjk) - 2)))
+    return anchors
+
+
+def _char_ngrams(title: str) -> set[str]:
+    value = "".join(re.findall(r"[a-z0-9\u3400-\u9fff]", (title or "").casefold()))
+    return {value[index:index + 3] for index in range(max(0, len(value) - 2))}
+
+
+def surface_identity_evidence(left: dict[str, Any], right: dict[str, Any]) -> dict[str, Any]:
+    left_title = left.get("effective_title", "")
+    right_title = right.get("effective_title", "")
+    left_ngrams = _char_ngrams(left_title)
+    right_ngrams = _char_ngrams(right_title)
+    union = left_ngrams | right_ngrams
+    shared_anchors = _identity_anchors(left_title) & _identity_anchors(right_title)
+    return {
+        "char_ngram_jaccard": round(len(left_ngrams & right_ngrams) / len(union), 6) if union else 0.0,
+        "shared_identity_anchors": len(shared_anchors),
+        "shared_anchor_values": sorted(shared_anchors),
+    }
+
+
 def build_semantic_texts(groups: list[dict[str, Any]], summaries_by_row_id: dict[str, str]) -> list[str]:
     texts = []
     for group in groups:
@@ -130,6 +166,19 @@ def select_embedding_groups(groups: list[dict[str, Any]], sample_size: int, seed
     return sorted(selected, key=lambda item: item["group_id"])
 
 
+def embedding_vector_manifest(
+    groups: list[dict[str, Any]],
+    model_name: str,
+    embedding_text: str,
+) -> dict[str, Any]:
+    return {
+        "schema_version": "local-semantic-vector-manifest/v1",
+        "model_name": model_name,
+        "embedding_text": embedding_text,
+        "group_ids": [group["group_id"] for group in groups],
+    }
+
+
 def embed_texts(
     texts: list[str],
     model_name: str,
@@ -169,9 +218,9 @@ def nearest_neighbor_pairs(vectors: Any, top_k: int, minimum_similarity: float) 
     matrix = matrix / norms
     index = Index(ndim=matrix.shape[1], metric="cos", dtype="f32", connectivity=16, expansion_add=128, expansion_search=128)
     keys = np.arange(len(matrix), dtype=np.uint64)
-    index.add(keys, matrix)
+    index.add(keys, matrix, threads=1)
     count = min(len(matrix), top_k + 1)
-    matches = index.search(matrix, count=count, exact=len(matrix) <= 100)
+    matches = index.search(matrix, count=count, exact=len(matrix) <= 100, threads=1)
     best: dict[tuple[int, int], float] = {}
     for source_index, (neighbor_keys, distances) in enumerate(zip(matches.keys, matches.distances)):
         for raw_key, raw_distance in zip(neighbor_keys, distances):
@@ -220,7 +269,12 @@ def pair_decision(left: dict[str, Any], right: dict[str, Any], similarity: float
         if gap > int(config["max_death_magnitude_gap"]):
             return "review"
     if similarity >= float(config["auto_merge_similarity"]):
-        return "auto_merge"
+        surface = surface_identity_evidence(left, right)
+        if (
+            surface["char_ngram_jaccard"] >= float(config.get("minimum_char_ngram_jaccard", 0.0))
+            and surface["shared_identity_anchors"] >= int(config.get("minimum_shared_identity_anchors", 0))
+        ):
+            return "auto_merge"
     return "review"
 
 
@@ -296,6 +350,12 @@ def cluster_from_neighbor_pairs(report: dict[str, Any], pairs: list[dict[str, An
         elif decision == "review":
             review_queue.append(item)
 
+    review_queue = [
+        item
+        for item in review_queue
+        if union_find.find(item["left_group_id"]) != union_find.find(item["right_group_id"])
+    ]
+
     members_by_root: dict[str, list[dict[str, Any]]] = collections.defaultdict(list)
     for group_id in sorted(group_by_id):
         members_by_root[union_find.find(group_id)].append(group_by_id[group_id])
@@ -352,6 +412,8 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--review-similarity", type=float, default=0.82)
     parser.add_argument("--max-auto-merge-hours", type=float, default=48)
     parser.add_argument("--max-death-magnitude-gap", type=int, default=1)
+    parser.add_argument("--minimum-char-ngram-jaccard", type=float, default=0.18)
+    parser.add_argument("--minimum-shared-identity-anchors", type=int, default=1)
     parser.add_argument("--verify", type=Path)
     args = parser.parse_args()
     if args.verify is None and (args.recovery_report is None or args.source_input is None or args.output is None):
@@ -385,7 +447,14 @@ def main() -> int:
         eligible_groups,
         summaries_by_row_id if args.embedding_text == "title-summary" else {},
     )
+    vector_manifest = embedding_vector_manifest(eligible_groups, args.model_name, args.embedding_text)
     if args.vectors and args.vectors.exists():
+        manifest_path = args.vectors.with_suffix(args.vectors.suffix + ".manifest.json")
+        if not manifest_path.exists():
+            raise ValueError("saved vectors are missing their group-identity manifest")
+        saved_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if saved_manifest != vector_manifest:
+            raise ValueError("saved vectors do not match the selected group identities or embedding configuration")
         vectors = np.load(args.vectors)
         if len(vectors) != len(eligible_groups):
             raise ValueError("saved vector count does not match eligible groups")
@@ -394,6 +463,10 @@ def main() -> int:
         if args.vectors:
             args.vectors.parent.mkdir(parents=True, exist_ok=True)
             np.save(args.vectors, vectors)
+            args.vectors.with_suffix(args.vectors.suffix + ".manifest.json").write_text(
+                json.dumps(vector_manifest, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
     indexed_pairs = nearest_neighbor_pairs(vectors, args.top_k, args.neighbor_minimum_similarity)
     pairs = [
         {
@@ -408,6 +481,8 @@ def main() -> int:
         "review_similarity": args.review_similarity,
         "max_auto_merge_hours": args.max_auto_merge_hours,
         "max_death_magnitude_gap": args.max_death_magnitude_gap,
+        "minimum_char_ngram_jaccard": args.minimum_char_ngram_jaccard,
+        "minimum_shared_identity_anchors": args.minimum_shared_identity_anchors,
     }
     result = cluster_from_neighbor_pairs(recovery_report, pairs, config)
     result["runtime"] = {
