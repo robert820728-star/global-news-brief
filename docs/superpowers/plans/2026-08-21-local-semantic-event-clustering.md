@@ -13,7 +13,7 @@
 - Preserve every source row exactly once.
 - Never delete, grade, promote, demote, or make a publication decision.
 - Unresolved titles stay separate until metadata or body recovery.
-- Similarity alone cannot override explicit factual contradictions.
+- Similarity alone cannot override incompatible event-identity anchors; changing casualty totals are preserved as versioned facts rather than treated as different events.
 - Use no GPT or remote embedding API for bulk clustering.
 - Do not modify production schedule files or GitHub `main`.
 
@@ -30,7 +30,7 @@
 - Produces `pair_decision(left: dict, right: dict, similarity: float, config: dict) -> str`.
 - Produces `cluster_from_neighbor_pairs(report: dict, pairs: list, config: dict) -> dict`.
 
-- [ ] Write six frozen tests covering positive merging, numeric contradiction, time gating, unresolved preservation, row conservation, and deterministic output.
+- [ ] Write six frozen tests covering positive merging, evolving casualty facts, time gating, unresolved preservation, row conservation, and deterministic output.
 - [ ] Run the focused suite and observe RED because the module does not exist.
 - [ ] Implement the minimal pure clustering core and rerun until GREEN.
 
@@ -65,5 +65,4 @@
 - [ ] Run the complete pilot test suite, compile checks, conservation verifier, and deterministic repeat check.
 - [ ] Commit and push to `codex/lossless-article-grouping-pilot` without force.
 - [ ] Verify the branch remains ahead of and not behind `main`, with no production schedule change.
-
 

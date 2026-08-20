@@ -14,8 +14,8 @@ This is an experimental-branch pilot over the saved 20,450-row 2026-08-20 artifa
 2. Leave unresolved placeholder groups as singletons. They require metadata or body recovery and are never discarded.
 3. Generate normalized multilingual embeddings locally with FastEmbed and a fixed multilingual model. No GPT or embedding API is used.
 4. Use a local nearest-neighbor index to produce bounded candidate neighbors instead of an all-pairs comparison.
-5. Extract deterministic anchors from text: numbers, dates, named capitalized or CJK spans, and explicit place terms available in the text.
-6. Auto-merge only high-similarity pairs that pass time and contradiction gates. Conflicting casualty counts, dates, explicit countries, or incompatible anchor evidence block automatic merging.
+5. Extract deterministic anchors from text: typed numeric facts, dates, named capitalized or CJK spans, and explicit place terms available in the text.
+6. Auto-merge only high-similarity pairs that pass time and identity-anchor gates. Changing casualty counts such as 21 then 23 do not identify different events; the cluster preserves both values as a versioned fact conflict. Different metric types, incompatible event dates, explicit countries, or incompatible identity anchors raise review risk instead of silently discarding evidence.
 7. Keep medium-similarity pairs in an ambiguity review queue. Similarity or keywords never score importance and never delete a group.
 8. Produce a conservation ledger from every input `row_id` to exactly one semantic cluster and package one compact event card per cluster.
 
@@ -34,8 +34,7 @@ Known deterministic duplicate groups serve as positive controls. Explicitly unre
 - exact row conservation with zero automatic deletions and zero importance decisions;
 - deterministic clustering for fixed vectors and configuration;
 - unresolved-title rows remain present as singletons;
-- factual contradictions prevent automatic merging;
+- changing casualty totals remain mergeable when event identity anchors agree, while all conflicting values remain preserved;
 - full-run counts, elapsed time, local resource usage, and audited false-merge/missed-merge estimates are recorded;
 - no production promotion based on this single artifact.
-
 
