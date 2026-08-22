@@ -1,0 +1,187 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-s3-r1-20260822T194531Z-9436b643",
+  "run_id": "gnb-20260822T194531Z-9436b643",
+  "task_name": "新聞管線診斷 S3-R1：source-scan",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T03:44:00+08:00",
+  "observed_at": "2026-08-22T20:00:49.840Z",
+  "sequence": "990",
+  "step": "terminal",
+  "status": "passed",
+  "resolved_main_sha": "318db6c62ce8a968f2466e29238379ca948984ed",
+  "previous_receipt_path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/990-terminal-running.json",
+  "previous_receipt_blob_sha": "ca38c75a91dfd47155412b6c2c0a05a45fea1343",
+  "evidence_paths": [
+    "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/artifacts/checkpoint.json",
+    "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/artifacts/source-route-coverage.json",
+    "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/artifacts/source-coverage.json",
+    "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/artifacts/source-scan-summary.json"
+  ],
+  "evidence_sha256": [
+    "32811ae89bcfadc6d5766efaaa05f0154068a8db",
+    "14cb653374d7d2ae5db573189570ff5038d866ef",
+    "6189c6b50de1d290784102d4295676635f99a468",
+    "9e17a03711d4bb4d43dd97b822782ba330c3d40a"
+  ],
+  "elapsed_ms": 918840,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "overall_status": "passed",
+  "last_completed_step": "source-scan-validated",
+  "first_incomplete_step": "preprocess-news-candidates",
+  "earliest_failure": null,
+  "exact_error": null,
+  "pipeline_boundary": "stopped_before_preprocess-news-candidates",
+  "RUN_RECEIPT": {
+    "run_id": "gnb-20260822T194531Z-9436b643",
+    "main_sha": "318db6c62ce8a968f2466e29238379ca948984ed",
+    "last_completed_stage": "source-scan-completed",
+    "bootstrap_chunks": "0/52",
+    "current_chunk": "none",
+    "current_block": "none",
+    "last_error": "none",
+    "retry_count": 0,
+    "external_ledger": "available",
+    "canonical_delivery": false,
+    "raw": "RUN_RECEIPT\nrun_id: gnb-20260822T194531Z-9436b643\nmain_sha: 318db6c62ce8a968f2466e29238379ca948984ed\nlast_completed_stage: source-scan-completed\nbootstrap_chunks: 0/52\ncurrent_chunk: none\ncurrent_block: none\nlast_error: none\nretry_count: 0\nexternal_ledger: available\ncanonical_delivery: false"
+  },
+  "receipts": [
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/010-main-pinned-running.json",
+      "sha": "f89748ff068a9befed168ce3cb0f1afa97b6ffe1"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/010-main-pinned-passed.json",
+      "sha": "9ca538a3f2c2df0047018190d898f6deb4368026"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/020-tree-verified-running.json",
+      "sha": "7cca7e1136442b1ffe05a30024ee148c7bbe9391"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/020-tree-verified-passed.json",
+      "sha": "14fbb4ae17b348bb495c242925afd65fb328e55c"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/030-manifest-verified-running.json",
+      "sha": "501773f477fec40a31853f44ab4e3bb8e543d831"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/030-manifest-verified-passed.json",
+      "sha": "87fa9a8b12891f013c890463768cccefacb122c7"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/040-helpers-verified-running.json",
+      "sha": "4947dcc7cb03e250747703eaa12af24ee80d593c"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/040-helpers-verified-passed.json",
+      "sha": "e19bfd051a96d8b0b9464f15b338deb3ee8dcbcf"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/050-transport-attempt-running.json",
+      "sha": "3419f363e340873eb261fcedcdcb35bf29ac50b7"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/050-transport-attempt-passed.json",
+      "sha": "55daf39f618ac2a4714d34fb8b217351988077f2"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/060-workspace-materialized-running.json",
+      "sha": "2201a27fb2ffeb6c36c33b46a4f714d299bb9024"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/060-workspace-materialized-passed.json",
+      "sha": "1fd7ff3f4548af405445f9f8c4069c48de59571c"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/070-runtime-ready-running.json",
+      "sha": "5efc3602182de501970b8b03b1bb2ef5c9f06e0d"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/070-runtime-ready-passed.json",
+      "sha": "b761007d1a3028109442b03f855494911d5977a1"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/100-checkpoint-initialized-running.json",
+      "sha": "fbe17b1db9c3a28c8b0a9ee6859336cea2458dca"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/100-checkpoint-initialized-passed.json",
+      "sha": "7ab339e57fae4af1a5af150dc10bd8a12eb812eb"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/110-source-routes-fetched-running.json",
+      "sha": "00121d2ce96611fc241ea06775028393ee198c25"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/110-source-routes-fetched-passed.json",
+      "sha": "cb19dafbdbda68b79304f8cc4d002a8111b53369"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/120-source-scans-materialized-running.json",
+      "sha": "d63fa721997f15104fcbee81963fc4046335ffa7"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/120-source-scans-materialized-passed.json",
+      "sha": "56e7d64274a37296684f8f2f999fd2438439f073"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/130-source-candidates-built-running.json",
+      "sha": "2b71b482b814f7b9c21c635915ee19799f7c0944"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/130-source-candidates-built-passed.json",
+      "sha": "09b90648b96f3ece7229fd68a3fbef06ce861ad6"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/140-source-scan-validated-running.json",
+      "sha": "9eb288bfdcf49cb8c839c8bd9a762d1dc7ddc458"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/140-source-scan-validated-passed.json",
+      "sha": "f03df55c4967291edd07616d94427b7bbfb71ace"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/990-terminal-running.json",
+      "sha": "ca38c75a91dfd47155412b6c2c0a05a45fea1343"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/990-terminal-passed.json",
+      "sha": null,
+      "note": "terminal blob SHA resolved by immediate readback"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/artifacts/checkpoint.json",
+      "sha": "32811ae89bcfadc6d5766efaaa05f0154068a8db"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/artifacts/source-route-coverage.json",
+      "sha": "14cb653374d7d2ae5db573189570ff5038d866ef"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/artifacts/source-coverage.json",
+      "sha": "6189c6b50de1d290784102d4295676635f99a468"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/artifacts/source-scan-summary.json",
+      "sha": "9e17a03711d4bb4d43dd97b822782ba330c3d40a"
+    }
+  ],
+  "source_candidates": {
+    "path": "/workspace/scratch/e71b6149f33b/gnb-s3-r1/workspace/work/runs/gnb-20260822T194531Z-9436b643/work/source-candidates.json",
+    "size": 14055147,
+    "sha256": "329aaef8fa43cb35fdec2ea6612deddf17c743ae57172650c189306bae9bab94",
+    "github_persistence": "not_attempted_size_guard"
+  }
+}
