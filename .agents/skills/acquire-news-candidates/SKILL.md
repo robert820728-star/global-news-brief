@@ -34,6 +34,8 @@ The required order for every configured source is: `canonical route -> same-site
 
 ## 路由順序
 
+GDELT 固定先讀官方 15 分鐘 export archives，依精確時間窗下載完整分片並在本地過濾。只有 archive 不可用時才可送出一次 DOC API 補充請求；不得因 429 等待或重試，DOC API 結果必須標示為非完整補充。兩者皆不可用才使用有時效標記的最近有效快取。
+
 每個主要來源依序嘗試：
 
 1. 官方 API、JSON、RSS 或其他結構化直接介面。

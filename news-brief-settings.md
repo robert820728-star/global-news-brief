@@ -4,7 +4,7 @@
 
 `DISCOVERY_THEN_VERIFY`
 
-The initial list comes from GDELT, CNA, and China News Service. `GDELT_RESILIENT_ACQUISITION` retries the DOC API with `Retry-After`, then uses GDELT's official 15-minute export archives, then a labeled last-known-good cache. A discovery source failure degrades coverage but does not block the whole brief when another route yields verifiable current candidates. `FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` sends every verified in-window item from a successful route into deduplication and scoring; there is no per-source top-N cutoff.
+The initial list comes from GDELT, CNA, and China News Service. `GDELT_RESILIENT_ACQUISITION` uses GDELT's official 15-minute export archives as primary discovery, permits one non-blocking DOC API request only when the archive is unavailable, and then uses a labeled last-known-good cache. A discovery source failure degrades coverage but does not block the whole brief when another route yields verifiable current candidates. `FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` sends every verified in-window item from a successful route into deduplication and scoring; there is no per-source top-N cutoff.
 
 +## Same-source recovery order
 
@@ -86,7 +86,7 @@ The required order for every configured source is: `canonical route -> same-site
 ## 候選海選
 
 - 前期候選可由任何目前可用的新聞清單或網頁搜尋入口取得。`GDELT` 是主要彙整入口；中央社與中新社是台灣、中國的區域補充，但都不是完成門檻。任一入口失敗時記錄 coverage 降級並換用其他入口；只要仍有可核實的精確 24 小時候選就繼續，只有完全沒有可核實候選才停止。
-- `GDELT_RESILIENT_ACQUISITION`：GDELT DOC API 遇到 429 或暫時錯誤時最多請求 5 次，每次至少間隔 120 秒；若 `Retry-After` 要求更久則依其指定。仍失敗就改讀 GDELT 官方 15 分鐘 export archives，兩個即時介面都不可用才採最近一次有效快取並明確標示 degraded。不得把中央社或中新社冒充為 GDELT，但 GDELT 單一介面故障不得停止發佈。
+- `GDELT_RESILIENT_ACQUISITION`：GDELT 官方 15 分鐘 export archives 是主要 discovery。只有 archive 不可用時才允許一次不阻塞的 DOC API 補充請求；不得為 429 等待或重試，DOC API 成功也必須標為非完整補充。兩者都不可用才採最近一次有效快取並明確標示 degraded。不得把中央社或中新社冒充為 GDELT，但 GDELT 單一路徑故障不得停止發佈。
 - `FULL_DISCOVERY_POOL_NO_FIXED_LIMIT`：每個成功取得的 discovery route 保存時間窗內數量、完整排序數量、實際入池數量及全部入池網址；精確 24 小時窗內已驗證的清單條目全部進入去重與評分，不設前 30、前 100 或其他固定名額。
 - `TAIWAN_DOMESTIC_COVERAGE_GUARD`：中央社另對經濟／貿易／產業、食藥／消費安全、中央預算／立法／憲政三個領域各執行一次同一 24 小時窗搜尋，每個領域最多 `5 results`。中央社不可用或明顯過舊時才使用網頁搜尋補候選；線索不得繞過去重或六項評分，也不得直接觸發圖片流程。
 - 每個可用 discovery route 的完整 24 小時清單使用 `public_value_v1` 百分制：重要性／嚴重程度（`public_impact`）30、地理／人口／公共系統直接範圍 20、急迫與安全 15、結構／政策意義 15、實質新進展 10、核心板塊關聯 10。十四天稽核中的每筆海選條目都必須保存六項 `importance_breakdown`、總分與逐項 `dimension_evidence`；每項不得超過設定權重，六項總和必須等於 `importance_score`。任何單一項都不是評級硬上限，也不使用地域例外補丁；最終等級直接依總分級距換算。同分依發布時間、原始證據直接性及穩定網址排序。

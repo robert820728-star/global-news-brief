@@ -104,8 +104,12 @@ class SourceRouteFetcherTests(unittest.TestCase):
         self.assertEqual("aggregate_api", gdelt["route"])
         self.assertIn("api.gdeltproject.org/api/v2/doc/doc", gdelt["request_url_template"])
         self.assertIn("format=json", gdelt["request_url_template"])
-        self.assertEqual(5, gdelt["max_attempts"])
-        self.assertEqual(120, gdelt["retry_interval_seconds"])
+        self.assertEqual(1, gdelt["max_attempts"])
+        self.assertEqual(0, gdelt["retry_interval_seconds"])
+        self.assertEqual(
+            ["gdelt_export_24h", "doc_api_optional", "last_known_good_cache"],
+            gdelt["acquisition_order"],
+        )
         self.assertEqual("gdelt_export_24h", gdelt["fallback"]["type"])
         self.assertIn("data.gdeltproject.org/gdeltv2", gdelt["fallback"]["request_url_template"])
         cna = next(route for route in config["routes"] if route["source_id"] == "cna")
@@ -266,7 +270,7 @@ class SourceRouteFetcherTests(unittest.TestCase):
                     (output_dir / "source-route-coverage.json").read_text(encoding="utf-8")
                 )["results"][0]
                 self.assertEqual(1, result["retry_count"])
-                self.assertEqual("doc_api", result["acquisition_mode"])
+                self.assertEqual("doc_api_optional", result["acquisition_mode"])
         finally:
             server.shutdown()
             server.server_close()

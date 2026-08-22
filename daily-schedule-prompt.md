@@ -5,7 +5,7 @@
 `DISCOVERY_THEN_VERIFY`
 
 - The pre-selection list uses exactly three configured discovery sources: GDELT for broad global discovery, CNA as the Taiwan supplement, and China News Service as the China supplement.
-- `GDELT_RESILIENT_ACQUISITION` makes at most five total DOC API requests; after a 429, wait at least 120 秒, or longer when required by `Retry-After`. After a fifth failure, do not send a sixth request and switch to the official 15-minute export archives.
+- `GDELT_RESILIENT_ACQUISITION` uses the official 15-minute export archives as primary discovery. Only when the archive is unavailable may it make one non-blocking DOC API request; never wait or retry after a 429, and label any DOC result as incomplete supplemental coverage.
 - A discovery source failure must not block the whole brief. Continue in degraded mode when at least one configured discovery route or the final browser/web-search fallback yields verifiable current candidates. Stop only if no current candidate can be verified.
 - The fixed order is `discover -> deduplicate -> score -> independently verify selected C-or-higher events -> collect images -> render`.
 - `PIPELINE_COUNT_RECEIPT_V1`: candidate audit 的最新一輪必須保存 `merged_article_row_count`、`in_window_article_row_count`、`canonical_url_count`、`provisional_title_cluster_count`、`semantic_event_count`、`scored_event_count`、`c_or_higher_scored_event_count`、`selected_event_count`，以及 `event_evidence_article_row_count`、`non_news_article_row_count`、`unresolved_article_row_count`。各欄必須由實際 artifact 重算並依序守恆；文章列數不得稱為語意事件數，網址正規化或標題分群也不得冒充語意去重。數量小計不相等時，停止宣稱該數字已驗證，但不得因此停止以可核實候選發布讀者版。
@@ -146,7 +146,7 @@ Stage -1 完成後，至少讀取並遵守：
 1. `source-scan`
    - 必須先調用 `acquire-news-candidates`，依 `news-source-pool.json.discovery_sources` 取得 GDELT、中央社與中新社候選並產生 `work/source-candidates.json`；其餘來源只在評分後作事件驗證。
    - 來源擷取必須以 Stage -1 回傳的 `<bundled-python> scripts/fetch_source_routes.py --route-config source-route-config.json --output-dir <run-work-dir> --window-start <window-start>` 執行；此跨平台 canonical fetcher 保存逐站及已設定分頁的原始 bytes、SHA-256、page chain 與 `source-route-coverage.json`。不得改用 PowerShell web cmdlet、Node `fetch` 或臨時 helper 重試同一批路由。
-   - `source-route-config.json` 只定義 GDELT、中央社與中新社三個 discovery routes；`minimum_ready_routes=1`。`GDELT_RESILIENT_ACQUISITION` 必須先依 `Retry-After` 重試 DOC API，再改讀 GDELT 官方 15 分鐘 export archives，最後才使用有時效標記的有效快取；任何降級都要記錄 acquisition mode，但不得停止發佈。`FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` 要求每個成功 route 的精確 24 小時完整清單全部進入去重與評分，不得截斷為前 30 或其他固定數量。
+   - `source-route-config.json` 只定義 GDELT、中央社與中新社三個 discovery routes；`minimum_ready_routes=1`。`GDELT_RESILIENT_ACQUISITION` 必須直接讀 GDELT 官方 15 分鐘 export archives；只有 archive 不可用時才可發送一次不阻塞的 DOC API 補充請求，且不得因 429 等待或重試，最後才使用有時效標記的有效快取。任何降級都要記錄 acquisition mode，但不得停止發佈。`FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` 要求每個成功 route 的精確 24 小時完整清單全部進入去重與評分，不得截斷為前 30 或其他固定數量。
    - route fetch 完成後必須執行 `scripts/materialize_source_scans.py --checkpoint <checkpoint> --source-pool news-source-pool.json --route-coverage <route-coverage> --output-dir <source-scans-dir> --coverage-output <source-coverage.json>`；只有此 canonical materializer 產生的逐站 scans、terminal proof、完整 ranked_items 與六項分數可進入 candidate audit。不得改用 run 目錄內的臨時 helper。
    - materializer 完成後只驗證實際成功的 discovery scans；失敗路由保留在 route coverage 中供診斷，不得把驗證來源清單誤當 discovery completeness gate。
    - 每個站內海選條目必須保存 `public_value_v1` 六項 `importance_breakdown`、總分與理由；六項總和必須等於 `importance_score`，並隨十四天候選稽核保存。

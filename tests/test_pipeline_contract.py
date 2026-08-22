@@ -382,13 +382,16 @@ class PipelineContractTests(unittest.TestCase):
         gdelt = next(
             route for route in route_config["routes"] if route["source_id"] == "gdelt"
         )
-        self.assertEqual(5, gdelt["max_attempts"])
-        self.assertEqual(120, gdelt["retry_interval_seconds"])
+        self.assertEqual(1, gdelt["max_attempts"])
+        self.assertEqual(
+            ["gdelt_export_24h", "doc_api_optional", "last_known_good_cache"],
+            gdelt["acquisition_order"],
+        )
         self.assertEqual("gdelt_export_24h", gdelt["fallback"]["type"])
         for document in (daily, scheduled):
             self.assertIn("GDELT_RESILIENT_ACQUISITION", document)
             self.assertIn("FULL_DISCOVERY_POOL_NO_FIXED_LIMIT", document)
-            self.assertIn("120 秒", document)
+            self.assertIn("15-minute", document)
 
     def test_candidate_discovery_has_no_fixed_source_completion_gate(self):
         documents = {

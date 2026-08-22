@@ -1,5 +1,14 @@
 # 版本紀錄 / Version Record
 
+## v0.4.3-gdelt-archive-primary — 2026-08-22
+
+- 建立原因 / Reason: DOC API 即使成功也只回傳最多 250 筆，且反覆 429 會浪費至少數分鐘，無法滿足完整 24 小時 discovery。 / Even a successful DOC API response returns at most 250 items, while repeated 429 waits waste minutes and cannot satisfy complete 24-hour discovery.
+- 實作方式 / Approach: 官方 15 分鐘 export archives 改為主要 discovery；archive 不可用時才允許一次不阻塞的 DOC API 補充請求，且不得等待或重試 429，最後才使用有時效標記的 cache。 / Official 15-minute export archives are now primary discovery; only an archive failure permits one non-blocking supplemental DOC API request, with no wait or retry after 429, followed by an age-labeled cache as last resort.
+- 變更入口 / Changed entry points: `scripts/fetch_source_routes.py`, `source-route-config.json`, acquisition settings/prompts/skill, and focused route/contract tests.
+- 重要參數 / Key parameters: `acquisition_order=gdelt_export_24h,doc_api_optional,last_known_good_cache`; DOC API `max_attempts=1`; archive `max_workers=8`; no change to downstream model-card volume. / The downstream model-card workload is unchanged.
+- 驗證方式 / Validation: Archive-primary regression test was observed failing before implementation and passing afterward; 52 focused fetcher, route, and pipeline-contract tests pass. / Archive-primary regression test was observed failing before implementation and passing afterward; 52 focused fetcher, route, and pipeline-contract tests pass.
+- 結果 / Result: Archive success skips DOC API entirely; an optional DOC result is explicitly marked incomplete/degraded and cannot masquerade as full GDELT coverage. / Archive success skips DOC API entirely; optional DOC results are explicitly incomplete/degraded.
+
 ## v0.4.2-semantic-event-ledger — 2026-08-20
 
 - 建立原因 / Reason: 前處理曾把 19,307 個正規化網址／標題群組稱為「去重新聞」，但沒有證據證明它們都是新聞事件或都完成六項評分。 / Preprocessing had described 19,307 normalized URLs/title groups as “deduplicated news” without evidence that they were news events or had completed six-dimension scoring.

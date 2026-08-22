@@ -20,7 +20,7 @@ SPEC.loader.exec_module(MODULE)
 
 
 class FetchSourceRoutesTests(unittest.TestCase):
-    def test_gdelt_primary_failure_switches_to_official_export_fallback(self):
+    def test_gdelt_official_export_is_primary_and_skips_doc_api_when_ready(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             config = root / "routes.json"
@@ -44,12 +44,15 @@ class FetchSourceRoutesTests(unittest.TestCase):
             }
             with mock.patch.object(
                 MODULE, "fetch_gdelt_export_fallback", return_value=fallback_result
-            ) as fallback:
+            ) as archive, mock.patch.object(
+                MODULE, "fetch_date_variants"
+            ) as doc_api:
                 coverage = MODULE.fetch_routes(
                     config, root / "out", 1,
                     "2026-08-19T03:00:00+00:00", "2026-08-20T03:00:00+00:00",
                 )
-            fallback.assert_called_once()
+            archive.assert_called_once()
+            doc_api.assert_not_called()
             self.assertTrue(coverage["publication_ready"])
             self.assertEqual("gdelt_export_24h", coverage["gdelt_acquisition_mode"])
             self.assertEqual("ready", coverage["status"])
@@ -171,8 +174,11 @@ class FetchSourceRoutesTests(unittest.TestCase):
             [item["source_id"] for item in config["routes"]],
         )
         gdelt = config["routes"][0]
-        self.assertEqual("aggregate_api", gdelt["route"])
-        self.assertIn("api.gdeltproject.org/api/v2/doc/doc", gdelt["request_url_template"])
+        self.assertEqual(
+            ["gdelt_export_24h", "doc_api_optional", "last_known_good_cache"],
+            gdelt["acquisition_order"],
+        )
+        self.assertEqual(1, gdelt["max_attempts"])
 
     def test_configured_json_pagination_stops_after_crossing_window_start(self):
         requested_pages = []

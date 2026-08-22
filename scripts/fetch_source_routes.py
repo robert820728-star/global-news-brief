@@ -494,21 +494,34 @@ def fetch_routes(route_config: Path, output_dir: Path, timeout_seconds: int,
     snapshot_dir.mkdir(parents=True, exist_ok=True)
     results = []
     for route in config.get("routes", []):
-        result = fetch_date_variants(route, snapshot_dir, timeout_seconds)
         if str(route.get("source_id")) == "gdelt":
-            primary_result = result
-            if not result.get("route_ready"):
-                result = fetch_gdelt_export_fallback(
-                    route, snapshot_dir, timeout_seconds, window_start, window_end
-                ) or reuse_recent_gdelt_snapshot(route, snapshot_dir, output_dir) or primary_result
-                result["primary_attempt"] = {
-                    key: primary_result.get(key)
+            archive_result = fetch_gdelt_export_fallback(
+                route, snapshot_dir, timeout_seconds, window_start, window_end
+            )
+            if archive_result and archive_result.get("route_ready"):
+                result = archive_result
+                result["optional_doc_api_attempted"] = False
+            else:
+                doc_result = fetch_date_variants(route, snapshot_dir, timeout_seconds)
+                if doc_result.get("route_ready"):
+                    result = doc_result
+                    result["acquisition_mode"] = "doc_api_optional"
+                    result["gdelt_live_ready"] = False
+                else:
+                    result = reuse_recent_gdelt_snapshot(
+                        route, snapshot_dir, output_dir
+                    ) or doc_result
+                result["archive_attempt"] = {
+                    key: (archive_result or {}).get(key)
                     for key in ("http_status", "retry_count", "error", "request_url")
                 }
+                result["optional_doc_api_attempted"] = True
             result.setdefault("gdelt_live_ready", bool(
                 result.get("route_ready")
-                and result.get("acquisition_mode") != "last_known_good_cache"
+                and result.get("acquisition_mode") == "gdelt_export_24h"
             ))
+        else:
+            result = fetch_date_variants(route, snapshot_dir, timeout_seconds)
         if result.get("route_ready"):
             result = fetch_pagination(
                 route, result, snapshot_dir, timeout_seconds, window_start
