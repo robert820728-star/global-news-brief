@@ -1,0 +1,164 @@
+{
+  "schema_version": "1.1.0",
+  "run_id": "gnb-20260822T201537Z-02c564e5",
+  "window_start": "2026-08-21T20:20:13Z",
+  "window_end": "2026-08-22T20:20:13Z",
+  "created_at": "2026-08-22T13:20:13-07:00",
+  "updated_at": "2026-08-22T13:46:11-07:00",
+  "bootstrap": {
+    "repository": "robert820728-star/global-news-brief",
+    "commit_sha": "318db6c62ce8a968f2466e29238379ca948984ed",
+    "materialization_method": "github-connector-capsule",
+    "receipt": {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/bootstrap-workspace.json",
+      "sha256": "c0eb82a25866c3ddb882f725d15c61a64c17936b9ca21542f5754ce6233134c7",
+      "size": 81110
+    }
+  },
+  "bootstrap_required": true,
+  "stage_status": {
+    "source-scan": "completed",
+    "preprocess-news-candidates": "completed",
+    "select-news-events": "completed",
+    "audit-news-candidates": "completed",
+    "materialize-manifest": "completed",
+    "verify-news-events": "completed",
+    "build-news-maps": "completed",
+    "build-news-charts": "completed",
+    "collect-news-images": "completed",
+    "render": "completed"
+  },
+  "stage_evidence": {
+    "source-scan": {
+      "recorded_at": "2026-08-22T13:24:14-07:00",
+      "status": "completed",
+      "message": "archive-first routes materialized and source candidates schema validated",
+      "artifacts": {
+        "source_candidates": {
+          "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/source-candidates.json",
+          "sha256": "6380e2d7b46043cd84afeae181e012012c15846d3d41b43e6c6d011c583dc230",
+          "size": 13770407
+        }
+      }
+    },
+    "preprocess-news-candidates": {
+      "recorded_at": "2026-08-22T13:34:08-07:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "preprocessed_candidates": {
+          "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/preprocessed-candidates.json",
+          "sha256": "a9676aadeb0760efb953827a62737ce40128bce8d4752d678afe06ff60587125",
+          "size": 22773944
+        }
+      }
+    },
+    "select-news-events": {
+      "recorded_at": "2026-08-22T13:34:08-07:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "selection_results": {
+          "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/selection-results.json",
+          "sha256": "3235f1bb379ae86c73bc76b51d30b56e202ad159c3c1c01d7a7cf482498162e1",
+          "size": 141151
+        }
+      }
+    },
+    "audit-news-candidates": {
+      "recorded_at": "2026-08-22T13:34:08-07:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "candidate_audit": {
+          "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/candidate-audit.json",
+          "sha256": "c11fab43ea804c1fc14d45d358e5ff41a95f439475824bd39992a353e13f30dd",
+          "size": 17879293
+        }
+      }
+    },
+    "materialize-manifest": {
+      "recorded_at": "2026-08-22T13:38:02-07:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "manifest": {
+          "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/event-manifest.base.json",
+          "sha256": "a82e9f28720138532583c59fc99575a00c20f36699b0ec4cded4227d5a6b2d1b",
+          "size": 58334
+        }
+      }
+    },
+    "verify-news-events": {
+      "recorded_at": "2026-08-22T13:38:02-07:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "manifest": {
+          "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/event-manifest.verified.json",
+          "sha256": "06663541df9df896ce5529ca010af81228a671eef0c7e90b4922b8689a75ade9",
+          "size": 93684
+        }
+      }
+    },
+    "build-news-maps": {
+      "recorded_at": "2026-08-22T13:38:47-07:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "manifest": {
+          "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/event-manifest.maps.json",
+          "sha256": "b698ba85c916a873ae8699b69bc2be58a0b76e3b7c5c163f57db0bf9bb6cfb16",
+          "size": 93686
+        }
+      }
+    },
+    "build-news-charts": {
+      "recorded_at": "2026-08-22T13:38:47-07:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "manifest": {
+          "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/event-manifest.charts.json",
+          "sha256": "8c226e7e81503fce3970817dafe419dadc160ecec185bb67b86598dd42478daf",
+          "size": 93688
+        }
+      }
+    },
+    "collect-news-images": {
+      "recorded_at": "2026-08-22T13:38:47-07:00",
+      "status": "completed",
+      "message": "",
+      "artifacts": {
+        "manifest": {
+          "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/event-manifest.images.json",
+          "sha256": "3221a38fc1e272c3130e11580f6a8bf6c4730001167f23980e594da6461df62f",
+          "size": 117292
+        }
+      }
+    },
+    "render": {
+      "recorded_at": "2026-08-22T13:46:11-07:00",
+      "status": "completed",
+      "message": "legacy sectioned reader rendered; 16 image cards and 4 locator maps verified",
+      "artifacts": {
+        "manifest": {
+          "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/event-manifest.final.json",
+          "sha256": "e96cbcbf53aac243e2777f8443fda3ae88866584ed261d5d6a00cbafda2f81db",
+          "size": 147424
+        },
+        "brief": {
+          "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/reader.md",
+          "sha256": "85b50c3c3b9e3208a47bd0bd72186a13981f5d417bfb285d4bde2f34d8b9bd94",
+          "size": 16664
+        }
+      }
+    }
+  },
+  "recovery": {
+    "status": "pending",
+    "max_attempts_per_target": 3,
+    "attempts": [],
+    "unresolved_targets": []
+  }
+}
