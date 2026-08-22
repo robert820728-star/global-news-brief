@@ -1,0 +1,39 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-final-s5-20260822T222821Z-8f3c2a71",
+  "run_id": "gnb-20260822T222821Z-8f3c2a71",
+  "task_name": "新聞管線最終驗收重測",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T06:30:00+08:00",
+  "observed_at": "2026-08-23T06:45:03+08:00",
+  "sequence": 130,
+  "step": "content-hydration-recovery",
+  "status": "running",
+  "resolved_main_sha": "f2eb93e100f01a2e830cd9988ed3f4a73449f390",
+  "previous_receipt_path": null,
+  "previous_receipt_blob_sha": null,
+  "evidence_paths": [
+    "bootstrap-workspace.json",
+    "work/runs/gnb-20260822T222821Z-8f3c2a71/checkpoint.json",
+    "work/runs/gnb-20260822T222821Z-8f3c2a71/work/model-source-candidates.json",
+    "work/runs/gnb-20260822T222821Z-8f3c2a71/work/content-hydration/receipts/batch-0002-running.json"
+  ],
+  "evidence_sha256": [
+    "75047426dc3a30853a083fd946e65739a1066eff213a0401366ec346600e7866",
+    "34c8a393afe1849d77b66f16f9c9d963a54e82a8038efbdfa4f62281910dca68",
+    "2da7f7989935b4409fea8cf6263c1f5e19345cae502ca50aeb613ae128d07f56",
+    "144e18a46f5d1004bb4482d6a33e99df47227eea614ba8757ec5ec0e8affdb4f"
+  ],
+  "elapsed_ms": 1002000,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "last_completed_step": "preprocess-news-candidates",
+  "first_incomplete_step": "select-news-events/content-hydration-batch-0002",
+  "error": {
+    "classification": "batch_receipt_packaging",
+    "message": "Browser navigation completed for batch-0002, but the first local base64 payload was truncated before JSON summary parsing; recovery is repackaging the same in-memory batch without refetching completed source stages.",
+    "tool_or_endpoint": "mcp__node_repl__js -> local batch receipt parser",
+    "http_status": null,
+    "request_id": null
+  }
+}
