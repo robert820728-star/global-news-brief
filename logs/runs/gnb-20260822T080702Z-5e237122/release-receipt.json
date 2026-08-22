@@ -1,0 +1,52 @@
+{
+  "schema_version": "2.0.0",
+  "status": "ready",
+  "gate": "scripts/publish_news_brief.py",
+  "gate_version": "2.2.0",
+  "run_id": "gnb-20260822T080702Z-5e237122",
+  "main_sha": "d06603802ccc827f9f319bec889f601058c563c6",
+  "published_at": "2026-08-22T02:39:32-07:00",
+  "artifacts": {
+    "gate": {
+      "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/scripts/publish_news_brief.py",
+      "sha256": "f27bb79f66e7fe3b33671f4193eef48e2f34fa51137cc6d473238c430ce9693c"
+    },
+    "delivery_contract": {
+      "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/daily-schedule-prompt.md",
+      "sha256": "a0f90e0cf45892e2eed3a3b6e6c59682be34d90382562bee33117cb45bcf6695"
+    },
+    "checkpoint": {
+      "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/news-run-checkpoint.json",
+      "sha256": "ea01cb4c82db9047102a2ea5b19ed3d993db24aacad77431357f305f3d84d123"
+    },
+    "manifest": {
+      "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/news-event-manifest.json",
+      "sha256": "602ef44c4ba557bc83bcc916e83e2d71ea4d0a821647a35eb7b170e711bc2387"
+    },
+    "audit": {
+      "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/candidate-audit.json",
+      "sha256": "4ece48fcb86d1ce062b20bd52da6d72968e14f08fcca066abdb5ba25f70f456a"
+    },
+    "source_pool": {
+      "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/news-source-pool.json",
+      "sha256": "319d8b8a95855c09aa2cf93a3db23df0b0e3834598d11c8aca1897ed36c7bd8a"
+    },
+    "brief": {
+      "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/reader.md",
+      "sha256": "d1880c08a442c86327f07f4b32d89f83571299b1804d27c73bed84326411c512"
+    },
+    "release": {
+      "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/release/news-brief.md",
+      "sha256": "d1880c08a442c86327f07f4b32d89f83571299b1804d27c73bed84326411c512"
+    }
+  },
+  "authorized_release_sha256": "d1880c08a442c86327f07f4b32d89f83571299b1804d27c73bed84326411c512",
+  "validators": {
+    "unique_delivery_gate": "passed",
+    "pre_manifest_checkpoint": "passed",
+    "source_scan_and_candidate_audit": "passed",
+    "attachment_and_visual_evidence": "passed",
+    "map_decisions": "passed",
+    "manifest_and_brief": "passed"
+  }
+}
