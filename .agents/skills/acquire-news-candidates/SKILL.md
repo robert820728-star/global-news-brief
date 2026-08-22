@@ -59,13 +59,15 @@ GDELT 固定先讀官方 15 分鐘 export archives，依精確時間窗下載完
 
 - `source_id`、`source_name`、`section`
 - `title`、`summary`
+- `summary_quality`：`source_summary`、`listing_context` 或 `title_only`；不得因欄位非空就把標題副本當作摘要證據
+- `discovery_signals`：GDELT event code、country、heat 等結構化欄位；非 GDELT 來源可為空物件
 - `published_at`、`url`
 - `categories`
 - `importance_hint`：只寫可能重要的具體原因，不做最終評級
 - `acquisition_route`：實際成功的 `structured_direct`、`html_direct`、`same_source_alternate` 或在允許時使用的 `browser_rendered`
 - `snapshot_path`、`page_index`
 
-標題或摘要缺失時，必須進入同站文章頁或可用的同站替代入口補齊；只有工具契約允許時才用瀏覽器。不得留下只有首頁網址的候選。
+標題缺失時必須進入同站文章頁或可用的同站替代入口補齊。摘要缺失時不得以標題副本宣稱已有內容；保存 `summary_quality=title_only`，交由後續 relevance gate 決定是否進行內容補齊。不得留下只有首頁網址的候選。
 
 ## 產物
 
@@ -78,6 +80,11 @@ python3 scripts/build_source_candidate_list.py \
   --output work/source-candidates.json \
   --window-start <window-start> \
   --window-end <window-end>
+
+python3 scripts/build_news_relevance_gate.py \
+  --source-candidates work/source-candidates.json \
+  --gate-output work/news-relevance-gate.json \
+  --admitted-output work/model-source-candidates.json
 ```
 
-接著以 `scripts/validate_source_scan_evidence.py` 驗證實際成功的 discovery scans，並用 JSON Schema 驗證候選清單。至少一個 discovery source 或最後搜尋備援取得可核實候選即可交給 `select-news-events`；只有完全沒有可核實候選才停止。
+接著以 `scripts/validate_source_scan_evidence.py` 驗證實際成功的 discovery scans，並以 `news-source-candidate-list.schema.json` 及 `news-relevance-gate.schema.json` 驗證兩份候選清單與 gate。Gate 必須逐列守恆、`fixed_top_n_applied=false`，且所有 regional supplements 都進 admitted output。至少一個 discovery source 或最後搜尋備援取得可核實候選即可交給 `select-news-events`；只有完全沒有可核實候選才停止。

@@ -20,6 +20,42 @@ SPEC.loader.exec_module(MODULE)
 
 
 class FetchSourceRoutesTests(unittest.TestCase):
+    def test_gdelt_export_row_preserves_structured_discovery_signals(self):
+        columns = [""] * 61
+        columns[7] = "TWN"
+        columns[17] = "CHN"
+        columns[26] = "190"
+        columns[28] = "19"
+        columns[29] = "4"
+        columns[30] = "-10.0"
+        columns[31] = "42"
+        columns[32] = "8"
+        columns[33] = "11"
+        columns[34] = "-3.5"
+        columns[53] = "TWN"
+        columns[59] = "20260822120000"
+        columns[60] = "https://example.test/world/major-event"
+
+        parsed = MODULE.parse_gdelt_export_row(columns)
+
+        self.assertEqual("20260822120000", parsed["seen_date"])
+        self.assertEqual("https://example.test/world/major-event", parsed["url"])
+        self.assertEqual(
+            {
+                "actor_country_codes": ["CHN", "TWN"],
+                "action_geo_country_code": "TWN",
+                "event_code": "190",
+                "event_root_code": "19",
+                "quad_class": 4,
+                "goldstein_scale": -10.0,
+                "num_mentions": 42,
+                "num_sources": 8,
+                "num_articles": 11,
+                "avg_tone": -3.5,
+            },
+            parsed["discovery_signals"],
+        )
+
     def test_gdelt_official_export_is_primary_and_skips_doc_api_when_ready(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

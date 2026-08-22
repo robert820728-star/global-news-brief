@@ -200,6 +200,48 @@ def title_from_gdelt_url(url: str) -> str:
     return f"{parsed.netloc or 'GDELT'} news report"
 
 
+def _gdelt_int(value: str) -> int | None:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _gdelt_float(value: str) -> float | None:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def parse_gdelt_export_row(columns: list[str]) -> dict | None:
+    """Return the URL, archive time and source-backed GDELT discovery signals."""
+    if (
+        len(columns) < 61
+        or not columns[59]
+        or not columns[60].startswith(("http://", "https://"))
+    ):
+        return None
+    countries = sorted({value for value in (columns[7], columns[17]) if value})
+    signals = {
+        "actor_country_codes": countries,
+        "action_geo_country_code": columns[53] or None,
+        "event_code": columns[26] or None,
+        "event_root_code": columns[28] or None,
+        "quad_class": _gdelt_int(columns[29]),
+        "goldstein_scale": _gdelt_float(columns[30]),
+        "num_mentions": _gdelt_int(columns[31]),
+        "num_sources": _gdelt_int(columns[32]),
+        "num_articles": _gdelt_int(columns[33]),
+        "avg_tone": _gdelt_float(columns[34]),
+    }
+    return {
+        "seen_date": columns[59],
+        "url": columns[60],
+        "discovery_signals": signals,
+    }
+
+
 def fetch_gdelt_export_part(url: str, timeout_seconds: int) -> dict:
     request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT}, method="GET")
     try:
@@ -210,8 +252,9 @@ def fetch_gdelt_export_part(url: str, timeout_seconds: int) -> dict:
             for name in archive.namelist():
                 for line in archive.read(name).decode("utf-8", errors="replace").splitlines():
                     columns = line.split("\t")
-                    if len(columns) >= 61 and columns[59] and columns[60].startswith(("http://", "https://")):
-                        rows.append((columns[59], columns[60]))
+                    parsed = parse_gdelt_export_row(columns)
+                    if parsed is not None:
+                        rows.append(parsed)
         return {
             "url": url, "sha256": hashlib.sha256(body).hexdigest(),
             "bytes": len(body), "rows": rows, "error": None,
@@ -241,11 +284,13 @@ def fetch_gdelt_export_fallback(route: Mapping, snapshot_dir: Path,
         return None
     articles = {}
     for part in successful:
-        for seen_date, url in part["rows"]:
+        for row in part["rows"]:
+            seen_date, url = row["seen_date"], row["url"]
             candidate = {
                 "url": url,
                 "title": title_from_gdelt_url(url),
                 "seendate": f"{seen_date[:8]}T{seen_date[8:14]}Z",
+                "discovery_signals": row["discovery_signals"],
             }
             current = articles.get(url)
             if current is None or candidate["seendate"] > current["seendate"]:

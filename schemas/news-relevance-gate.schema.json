@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/news-relevance-gate.schema.json",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "input_article_row_count",
+    "content_hydration_count",
+    "structured_review_count",
+    "fixed_top_n_applied",
+    "decisions"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "input_article_row_count": {"type": "integer", "minimum": 0},
+    "content_hydration_count": {"type": "integer", "minimum": 0},
+    "structured_review_count": {"type": "integer", "minimum": 0},
+    "fixed_top_n_applied": {"const": false},
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "candidate_id", "source_id", "canonical_url", "route", "reasons",
+          "matched_discovery_signals"
+        ],
+        "properties": {
+          "candidate_id": {"type": "string", "minLength": 1},
+          "source_id": {"type": "string", "minLength": 1},
+          "canonical_url": {"type": "string", "format": "uri"},
+          "route": {"enum": ["content_hydration", "structured_review"]},
+          "reasons": {
+            "type": "array", "minItems": 1,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "matched_discovery_signals": {"type": "object"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

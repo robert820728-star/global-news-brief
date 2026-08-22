@@ -62,7 +62,7 @@ POST_MANIFEST_STAGES = (
 )
 RELEASE_REQUIRED_STAGES = PRE_MANIFEST_STAGES + POST_MANIFEST_STAGES
 REQUIRED_STAGE_ARTIFACTS = {
-    "source-scan": ("source_candidates",),
+    "source-scan": ("source_candidates", "relevance_gate", "model_source_candidates"),
     "preprocess-news-candidates": ("preprocessed_candidates",),
     "select-news-events": ("selection_results",),
     "audit-news-candidates": ("candidate_audit",),

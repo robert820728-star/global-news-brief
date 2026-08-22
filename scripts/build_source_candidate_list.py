@@ -94,6 +94,10 @@ def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
                     "section": section,
                     "title": title,
                     "summary": summary,
+                    "summary_quality": raw.get("summary_quality") or (
+                        "title_only" if summary.casefold() == title.casefold() else "source_summary"
+                    ),
+                    "discovery_signals": raw.get("discovery_signals") or {},
                     "published_at": published.isoformat(),
                     "url": url,
                     "categories": raw.get("categories") or source.get("categories", []),

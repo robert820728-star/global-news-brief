@@ -129,7 +129,8 @@ def likely_article(url: str, homepage: str, allow_external_links: bool = False) 
 
 def add_item(items: dict, *, request_url: str, homepage: str, route: str, url_evidence: str,
              title: str, summary: str, published_evidence: str, published: datetime | None,
-             allow_external_links: bool = False, image_url_hint: str | None = None):
+             allow_external_links: bool = False, image_url_hint: str | None = None,
+             discovery_signals: dict | None = None):
     url = urljoin(request_url, html.unescape(url_evidence))
     if not published or not likely_article(url, homepage, allow_external_links):
         return
@@ -137,11 +138,20 @@ def add_item(items: dict, *, request_url: str, homepage: str, route: str, url_ev
     if not title:
         title = "Source article"
     canonical = url.split("#", 1)[0]
+    clean_summary = clean_text(summary)
+    summary_value = (clean_summary or title)[:800]
+    summary_quality = (
+        "title_only"
+        if not clean_summary or clean_summary.casefold() == title.casefold()
+        else "source_summary"
+    )
     candidate = {
-        "url": canonical, "title": title[:300], "summary": (clean_text(summary) or title)[:800],
+        "url": canonical, "title": title[:300], "summary": summary_value,
+        "summary_quality": summary_quality,
         "published_at": published.isoformat(), "url_evidence": url_evidence,
         "published_evidence": published_evidence, "categories": [],
         "importance_hint": title[:160], "acquisition_route": route,
+        "discovery_signals": discovery_signals if isinstance(discovery_signals, dict) else {},
     }
     if isinstance(image_url_hint, str) and image_url_hint.startswith(("http://", "https://")):
         candidate["image_url_hint"] = image_url_hint
@@ -221,6 +231,7 @@ def parse_json_items(text: str, request_url: str, homepage: str, route: str, yea
                 published_evidence=date_ev, published=parse_time(date_ev, year),
                 allow_external_links=allow_external_links,
                 image_url_hint=obj.get("socialimage"),
+                discovery_signals=obj.get("discovery_signals"),
             )
     return items
 
