@@ -1,0 +1,33 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-s3-r1-20260822T194531Z-9436b643",
+  "run_id": "gnb-20260822T194531Z-9436b643",
+  "task_name": "新聞管線診斷 S3-R1：source-scan",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T03:44:00+08:00",
+  "observed_at": "2026-08-22T19:49:42.580Z",
+  "sequence": "070",
+  "step": "runtime-ready",
+  "status": "passed",
+  "resolved_main_sha": "318db6c62ce8a968f2466e29238379ca948984ed",
+  "previous_receipt_path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/070-runtime-ready-running.json",
+  "previous_receipt_blob_sha": "5efc3602182de501970b8b03b1bb2ef5c9f06e0d",
+  "evidence_paths": [
+    "scripts/resolve_bundled_python.py",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12"
+  ],
+  "evidence_sha256": [
+    "e5831dd621c02dcf03b5c242146876c3bfa62181e412acc08aa4dd84c6ecc226",
+    "Pillow-12.3.0"
+  ],
+  "elapsed_ms": 251580,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  }
+}
