@@ -1,0 +1,3116 @@
+{
+  "schema_version": "1.1.0",
+  "run": {
+    "run_id": "gnb-20260822T201537Z-02c564e5",
+    "main_sha": "318db6c62ce8a968f2466e29238379ca948984ed",
+    "generated_at": "2026-08-22T20:38:00Z",
+    "timezone": "Asia/Taipei",
+    "window_start": "2026-08-21T20:20:13Z",
+    "window_end": "2026-08-22T20:20:13Z",
+    "language": "zh-Hant"
+  },
+  "sections": [
+    {
+      "code": "TWN",
+      "name": "台灣新聞",
+      "order": 1
+    },
+    {
+      "code": "CHN",
+      "name": "中國新聞",
+      "order": 2
+    },
+    {
+      "code": "GLB",
+      "name": "國際世界",
+      "order": 3
+    }
+  ],
+  "stage_status": {
+    "select-news-events": "completed",
+    "verify-news-events": "completed",
+    "build-news-maps": "completed",
+    "build-news-charts": "completed",
+    "collect-news-images": "completed",
+    "recover-news-run": "completed",
+    "render": "completed",
+    "validate": "completed"
+  },
+  "recovery": {
+    "status": "completed",
+    "max_attempts_per_target": 5,
+    "attempts": [],
+    "unresolved_targets": [],
+    "target_stage": null,
+    "last_error": null
+  },
+  "events": [
+    {
+      "event_id": "TWN-01",
+      "primary_section": "TWN",
+      "title": "南台灣致災性豪雨、台南高雄屏東停班停課",
+      "grade": "B+",
+      "selection": {
+        "dedup_key": "50c2ca8d06115a9e5d0b",
+        "category": "公共事務",
+        "impact_scope": "subregional",
+        "reason": "六項合計 67 分，評為B+級；關鍵在於西南風與低壓帶帶來致災性強降雨，三縣市宣布停班停課並啟動道路與防災應變，同時考量影響範圍與本期實質增量。",
+        "candidate_urls": [
+          "https://www.cna.com.tw/news/aloc/202608220215.aspx",
+          "https://www.cna.com.tw/news/aloc/202608220198.aspx",
+          "https://www.cna.com.tw/news/aloc/202608220197.aspx",
+          "https://www.cna.com.tw/news/aloc/202608220187.aspx",
+          "https://www.cna.com.tw/news/ahel/202608220183.aspx",
+          "https://www.cna.com.tw/news/ahel/202608220069.aspx",
+          "https://www.cna.com.tw/news/ahel/202608220008.aspx"
+        ],
+        "news_time": "2026-08-22T13:24:00Z",
+        "event_time": "2026-08-21T22:21:00Z"
+      },
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 3,
+        "sources": [
+          {
+            "source_id": "verify-twn-01-1",
+            "name": "行政院人事行政總處",
+            "url": "https://www.dgpa.gov.tw/typh/daily/nds.html",
+            "role": "primary_or_independent_verification",
+            "producer": "行政院人事行政總處",
+            "independence_group": "dgpa.gov.tw",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-twn-01-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-twn-01-2",
+            "name": "中央氣象署",
+            "url": "https://www.cwa.gov.tw/V8/C/P/Warning/W26.html",
+            "role": "independent_corroboration",
+            "producer": "中央氣象署",
+            "independence_group": "cwa.gov.tw",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-twn-01-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-twn-01-3",
+            "name": "中央社",
+            "url": "https://www.cna.com.tw/news/aloc/202608220215.aspx",
+            "role": "independent_corroboration",
+            "producer": "中央社",
+            "independence_group": "cna.com.tw",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-twn-01-1"
+            ],
+            "limitations": []
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "claim-twn-01-1",
+            "text": "西南風與低壓帶帶來致災性強降雨，三縣市宣布停班停課並啟動道路與防災應變",
+            "status": "supported",
+            "source_ids": [
+              "verify-twn-01-1",
+              "verify-twn-01-2",
+              "verify-twn-01-3"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "西南風與低壓帶帶來致災性強降雨，三縣市宣布停班停課並啟動道路與防災應變",
+        "verified_at": "2026-08-22T20:38:00Z"
+      },
+      "map": {
+        "required": true,
+        "status": "ready",
+        "rationale": "事件的影響範圍、災害區域或跨地區分布具有直接判讀價值，使用完整板塊定位圖呈現。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/maps/generated/s4/TWN-01-locator.png",
+            "caption": "地圖一：臺南、高雄與屏東為本輪致災性豪雨主要應變區域。",
+            "style_id": "yellow-admin-v2",
+            "style_reference": "maps/style.json",
+            "generator": "scripts/render_base_maps.py",
+            "source_urls": [
+              "https://www.dgpa.gov.tw/typh/daily/nds.html",
+              "https://www.cwa.gov.tw/V8/C/P/Warning/W26.html",
+              "https://www.cna.com.tw/news/aloc/202608220215.aspx"
+            ],
+            "visual_checked": true,
+            "width": 1260,
+            "height": 1620,
+            "place_labels": [
+              "臺南市",
+              "高雄市",
+              "屏東縣"
+            ],
+            "canvas_scope": "full_section",
+            "base_map": "maps/generated/taiwan-counties-yellow-v2.png"
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "charts": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "本輪核心是單一事實或制度變化，圖表不會比短文更清楚。",
+        "assets": [],
+        "omission_reason": "依資料圖表需求判定為非必要。"
+      },
+      "images": {
+        "required": true,
+        "status": "ready",
+        "source_checks": [
+          {
+            "source_url": "https://www.dgpa.gov.tw/typh/daily/nds.html",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "official_api",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/TWN-01.json",
+            "detected_image_urls": [
+              "https://www.dgpa.gov.tw/typh/daily/nds.html"
+            ],
+            "usable_image_found": true,
+            "attempts": 1,
+            "outcome": "attached",
+            "failure_detail": null
+          },
+          {
+            "source_url": "https://www.cwa.gov.tw/V8/C/P/Warning/W26.html",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/TWN-01.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          },
+          {
+            "source_url": "https://www.cna.com.tw/news/aloc/202608220215.aspx",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/TWN-01.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          }
+        ],
+        "professional_visual_required": true,
+        "professional_visual_status": "not_available",
+        "professional_source_checks": [
+          {
+            "source_url": "https://www.dgpa.gov.tw/typh/daily/nds.html",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/TWN-01.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "在本輪可用官方來源中未找到可核實且可直接附加的專業地圖或統計圖。"
+          }
+        ],
+        "professional_omission_reason": "官方專業視覺素材在本輪來源中不可用；保留事件資訊圖卡。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/TWN-01.jpg",
+            "caption": "圖一：南台灣致災性豪雨、台南高雄屏東停班停課資訊圖卡",
+            "source_name": "行政院人事行政總處",
+            "source_url": "https://www.dgpa.gov.tw/typh/daily/nds.html",
+            "kind": "official_information",
+            "published_at": "2026-08-22T13:24:00Z",
+            "content_sha256": "b481327d978959b61b4e4dba2a55a4fc285b13c21a9d8892e2b858f90b80d1de",
+            "incremental_information": "呈現事件標題、板塊、地點與評級。",
+            "visual_checked": true,
+            "time_checked": true,
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "detail": {
+        "overview_time": "08/22 21:24",
+        "time": "2026-08-22T13:24:00Z",
+        "event_details": "西南風與低壓帶帶來致災性強降雨，三縣市宣布停班停課並啟動道路與防災應變",
+        "positions": [],
+        "analysis": "六項合計 67 分，評為B+級；關鍵在於西南風與低壓帶帶來致災性強降雨，三縣市宣布停班停課並啟動道路與防災應變，同時考量影響範圍與本期實質增量。",
+        "follow_up": "後續觀察官方更新、執行效果與數據修正。"
+      }
+    },
+    {
+      "event_id": "TWN-02",
+      "primary_section": "TWN",
+      "title": "台南安南廢棄物爆炸釀15傷並波及住家車輛",
+      "grade": "B-",
+      "selection": {
+        "dedup_key": "0ef854ad5ea63226c4af",
+        "category": "公共事務",
+        "impact_scope": "local",
+        "reason": "六項合計 58 分，評為B-級；關鍵在於空地廢棄物起火爆炸造成15人受傷，延燒住家與車輛，政府啟動救災及責任調查，同時考量影響範圍與本期實質增量。",
+        "candidate_urls": [
+          "https://www.cna.com.tw/news/asoc/202608220214.aspx",
+          "https://www.cna.com.tw/news/aipl/202608220136.aspx",
+          "https://www.cna.com.tw/news/asoc/202608220107.aspx",
+          "https://www.cna.com.tw/news/aipl/202608220090.aspx",
+          "https://www.cna.com.tw/news/asoc/202608220031.aspx",
+          "https://www.cna.com.tw/news/asoc/202608220013.aspx"
+        ],
+        "news_time": "2026-08-22T13:22:00Z",
+        "event_time": "2026-08-21T23:47:00Z"
+      },
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 3,
+        "sources": [
+          {
+            "source_id": "verify-twn-02-1",
+            "name": "內政部消防署",
+            "url": "https://www.nfa.gov.tw/cht/index.php?code=list&ids=22",
+            "role": "primary_or_independent_verification",
+            "producer": "內政部消防署",
+            "independence_group": "nfa.gov.tw",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-twn-02-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-twn-02-2",
+            "name": "tfrin.gov.tw",
+            "url": "https://www.tfrin.gov.tw/redirect_link.php?filed=link&id=68349&theme=news",
+            "role": "independent_corroboration",
+            "producer": "tfrin.gov.tw",
+            "independence_group": "tfrin.gov.tw",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "partially_supports",
+            "claim_ids": [
+              "claim-twn-02-1"
+            ],
+            "limitations": [
+              "消防署結報記錄13人由救護系統送醫，與後續媒體15傷口徑有差異。"
+            ]
+          },
+          {
+            "source_id": "verify-twn-02-3",
+            "name": "中央社",
+            "url": "https://www.cna.com.tw/news/asoc/202608220214.aspx",
+            "role": "independent_corroboration",
+            "producer": "中央社",
+            "independence_group": "cna.com.tw",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "partially_supports",
+            "claim_ids": [
+              "claim-twn-02-1"
+            ],
+            "limitations": [
+              "消防署結報記錄13人由救護系統送醫，與後續媒體15傷口徑有差異。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "claim-twn-02-1",
+            "text": "台南安南區廢棄物火災爆炸後續報導合計15人受傷；消防署結報列13人由救護系統送醫，差異可能包括自行就醫者。",
+            "status": "partially_supported",
+            "source_ids": [
+              "verify-twn-02-1",
+              "verify-twn-02-2",
+              "verify-twn-02-3"
+            ]
+          }
+        ],
+        "uncertainties": [
+          "傷者總數在消防救護送醫口徑與地方後續統計間存在13與15人的差異。"
+        ],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "台南安南區廢棄物火災爆炸後續報導合計15人受傷；消防署結報列13人由救護系統送醫，差異可能包括自行就醫者。",
+        "verified_at": "2026-08-22T20:38:00Z"
+      },
+      "map": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "六項評分中的『影響範圍』已逐項檢查；本事件核心是單點事故、制度、財政或技術進展，不涉及需要比較的空間關係、擴散範圍或移動路線，加入定位圖不影響理解。",
+        "assets": [],
+        "omission_reason": "依事件地圖需求判定為非必要。",
+        "reader_omission_note": null
+      },
+      "charts": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "本輪核心是單一事實或制度變化，圖表不會比短文更清楚。",
+        "assets": [],
+        "omission_reason": "依資料圖表需求判定為非必要。"
+      },
+      "images": {
+        "required": true,
+        "status": "ready",
+        "source_checks": [
+          {
+            "source_url": "https://www.nfa.gov.tw/cht/index.php?code=list&ids=22",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "official_api",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/TWN-02.json",
+            "detected_image_urls": [
+              "https://www.nfa.gov.tw/cht/index.php?code=list&ids=22"
+            ],
+            "usable_image_found": true,
+            "attempts": 1,
+            "outcome": "attached",
+            "failure_detail": null
+          },
+          {
+            "source_url": "https://www.tfrin.gov.tw/redirect_link.php?filed=link&id=68349&theme=news",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/TWN-02.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          },
+          {
+            "source_url": "https://www.cna.com.tw/news/asoc/202608220214.aspx",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/TWN-02.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          }
+        ],
+        "professional_visual_required": false,
+        "professional_visual_status": "not_required",
+        "professional_source_checks": [],
+        "professional_omission_reason": "此事件不要求專業地圖或統計圖。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/TWN-02.jpg",
+            "caption": "圖一：台南安南廢棄物爆炸釀15傷並波及住家車輛資訊圖卡",
+            "source_name": "內政部消防署",
+            "source_url": "https://www.nfa.gov.tw/cht/index.php?code=list&ids=22",
+            "kind": "official_information",
+            "published_at": "2026-08-22T13:22:00Z",
+            "content_sha256": "2cf44378d0170843831a2ac68f839bcbccf240c97640b620c2fdd77d6c77b547",
+            "incremental_information": "呈現事件標題、板塊、地點與評級。",
+            "visual_checked": true,
+            "time_checked": true,
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "detail": {
+        "overview_time": "08/22 21:22",
+        "time": "2026-08-22T13:22:00Z",
+        "event_details": "空地廢棄物起火爆炸造成15人受傷，延燒住家與車輛，政府啟動救災及責任調查",
+        "positions": [],
+        "analysis": "六項合計 58 分，評為B-級；關鍵在於空地廢棄物起火爆炸造成15人受傷，延燒住家與車輛，政府啟動救災及責任調查，同時考量影響範圍與本期實質增量。",
+        "follow_up": "後續觀察官方更新、執行效果與數據修正。"
+      }
+    },
+    {
+      "event_id": "TWN-03",
+      "primary_section": "TWN",
+      "title": "TASA首支自主探空火箭「島脈」成功發射",
+      "grade": "C+",
+      "selection": {
+        "dedup_key": "41dca9e0db49e0ce4d2f",
+        "category": "公共事務",
+        "impact_scope": "national",
+        "reason": "六項合計 53 分，評為C+級；關鍵在於國家太空中心首支自主研製探空火箭完成發射及全程通訊驗證，同時考量影響範圍與本期實質增量。",
+        "candidate_urls": [
+          "https://www.cna.com.tw/news/ait/202608220144.aspx"
+        ],
+        "news_time": "2026-08-22T08:38:00Z",
+        "event_time": "2026-08-22T08:38:00Z"
+      },
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "verify-twn-03-1",
+            "name": "經濟日報",
+            "url": "https://money.udn.com/money/story/5612/9707845",
+            "role": "primary_or_independent_verification",
+            "producer": "經濟日報",
+            "independence_group": "money.udn.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-twn-03-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-twn-03-2",
+            "name": "中央社",
+            "url": "https://www.cna.com.tw/news/ait/202608220144.aspx",
+            "role": "independent_corroboration",
+            "producer": "中央社",
+            "independence_group": "cna.com.tw",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-twn-03-1"
+            ],
+            "limitations": []
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "claim-twn-03-1",
+            "text": "國家太空中心首支自主研製探空火箭完成發射及全程通訊驗證",
+            "status": "supported",
+            "source_ids": [
+              "verify-twn-03-1",
+              "verify-twn-03-2"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "國家太空中心首支自主研製探空火箭完成發射及全程通訊驗證",
+        "verified_at": "2026-08-22T20:38:00Z"
+      },
+      "map": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "六項評分中的『影響範圍』已逐項檢查；本事件核心是單點事故、制度、財政或技術進展，不涉及需要比較的空間關係、擴散範圍或移動路線，加入定位圖不影響理解。",
+        "assets": [],
+        "omission_reason": "依事件地圖需求判定為非必要。",
+        "reader_omission_note": null
+      },
+      "charts": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "本輪核心是單一事實或制度變化，圖表不會比短文更清楚。",
+        "assets": [],
+        "omission_reason": "依資料圖表需求判定為非必要。"
+      },
+      "images": {
+        "required": true,
+        "status": "ready",
+        "source_checks": [
+          {
+            "source_url": "https://money.udn.com/money/story/5612/9707845",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "official_api",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/TWN-03.json",
+            "detected_image_urls": [
+              "https://money.udn.com/money/story/5612/9707845"
+            ],
+            "usable_image_found": true,
+            "attempts": 1,
+            "outcome": "attached",
+            "failure_detail": null
+          },
+          {
+            "source_url": "https://www.cna.com.tw/news/ait/202608220144.aspx",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/TWN-03.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          }
+        ],
+        "professional_visual_required": false,
+        "professional_visual_status": "not_required",
+        "professional_source_checks": [],
+        "professional_omission_reason": "此事件不要求專業地圖或統計圖。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/TWN-03.jpg",
+            "caption": "圖一：TASA首支自主探空火箭「島脈」成功發射資訊圖卡",
+            "source_name": "經濟日報",
+            "source_url": "https://money.udn.com/money/story/5612/9707845",
+            "kind": "official_information",
+            "published_at": "2026-08-22T08:38:00Z",
+            "content_sha256": "42819c264f789ce446db95f8dd4152ee587ac1b529d3c569e534870896cbc997",
+            "incremental_information": "呈現事件標題、板塊、地點與評級。",
+            "visual_checked": true,
+            "time_checked": true,
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "detail": {
+        "overview_time": "08/22 16:38",
+        "time": "2026-08-22T08:38:00Z",
+        "event_details": "國家太空中心首支自主研製探空火箭完成發射及全程通訊驗證",
+        "positions": [],
+        "analysis": "六項合計 53 分，評為C+級；關鍵在於國家太空中心首支自主研製探空火箭完成發射及全程通訊驗證，同時考量影響範圍與本期實質增量。",
+        "follow_up": "後續觀察官方更新、執行效果與數據修正。"
+      }
+    },
+    {
+      "event_id": "TWN-04",
+      "primary_section": "TWN",
+      "title": "台灣一至二人家庭占比首度過半",
+      "grade": "C+",
+      "selection": {
+        "dedup_key": "ed09077d099bc73ff4c6",
+        "category": "公共事務",
+        "impact_scope": "national",
+        "reason": "六項合計 53 分，評為C+級；關鍵在於最新戶籍統計顯示一至二人家庭占比首度過半，單人家庭數亦超越四人家庭，同時考量影響範圍與本期實質增量。",
+        "candidate_urls": [
+          "https://www.cna.com.tw/news/afe/202608220195.aspx"
+        ],
+        "news_time": "2026-08-22T11:55:00Z",
+        "event_time": "2026-08-22T11:55:00Z"
+      },
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 3,
+        "sources": [
+          {
+            "source_id": "verify-twn-04-1",
+            "name": "TVBS新聞網",
+            "url": "https://news.tvbs.com.tw/life/4011263",
+            "role": "primary_or_independent_verification",
+            "producer": "TVBS新聞網",
+            "independence_group": "news.tvbs.com.tw",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-twn-04-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-twn-04-2",
+            "name": "經濟日報",
+            "url": "https://money.udn.com/money/story/10869/9707856",
+            "role": "independent_corroboration",
+            "producer": "經濟日報",
+            "independence_group": "money.udn.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-twn-04-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-twn-04-3",
+            "name": "中央社",
+            "url": "https://www.cna.com.tw/news/afe/202608220195.aspx",
+            "role": "independent_corroboration",
+            "producer": "中央社",
+            "independence_group": "cna.com.tw",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-twn-04-1"
+            ],
+            "limitations": []
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "claim-twn-04-1",
+            "text": "最新戶籍統計顯示一至二人家庭占比首度過半，單人家庭數亦超越四人家庭",
+            "status": "supported",
+            "source_ids": [
+              "verify-twn-04-1",
+              "verify-twn-04-2",
+              "verify-twn-04-3"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "最新戶籍統計顯示一至二人家庭占比首度過半，單人家庭數亦超越四人家庭",
+        "verified_at": "2026-08-22T20:38:00Z"
+      },
+      "map": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "六項評分中的『影響範圍』已逐項檢查；本事件核心是單點事故、制度、財政或技術進展，不涉及需要比較的空間關係、擴散範圍或移動路線，加入定位圖不影響理解。",
+        "assets": [],
+        "omission_reason": "依事件地圖需求判定為非必要。",
+        "reader_omission_note": null
+      },
+      "charts": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "本輪核心是單一事實或制度變化，圖表不會比短文更清楚。",
+        "assets": [],
+        "omission_reason": "依資料圖表需求判定為非必要。"
+      },
+      "images": {
+        "required": true,
+        "status": "ready",
+        "source_checks": [
+          {
+            "source_url": "https://news.tvbs.com.tw/life/4011263",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "official_api",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/TWN-04.json",
+            "detected_image_urls": [
+              "https://news.tvbs.com.tw/life/4011263"
+            ],
+            "usable_image_found": true,
+            "attempts": 1,
+            "outcome": "attached",
+            "failure_detail": null
+          },
+          {
+            "source_url": "https://money.udn.com/money/story/10869/9707856",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/TWN-04.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          },
+          {
+            "source_url": "https://www.cna.com.tw/news/afe/202608220195.aspx",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/TWN-04.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          }
+        ],
+        "professional_visual_required": false,
+        "professional_visual_status": "not_required",
+        "professional_source_checks": [],
+        "professional_omission_reason": "此事件不要求專業地圖或統計圖。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/TWN-04.jpg",
+            "caption": "圖一：台灣一至二人家庭占比首度過半資訊圖卡",
+            "source_name": "TVBS新聞網",
+            "source_url": "https://news.tvbs.com.tw/life/4011263",
+            "kind": "official_information",
+            "published_at": "2026-08-22T11:55:00Z",
+            "content_sha256": "e52693e3dc917610daca10156ceb4f0ceb4f37d674186f13a2ff640b55940a4f",
+            "incremental_information": "呈現事件標題、板塊、地點與評級。",
+            "visual_checked": true,
+            "time_checked": true,
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "detail": {
+        "overview_time": "08/22 19:55",
+        "time": "2026-08-22T11:55:00Z",
+        "event_details": "最新戶籍統計顯示一至二人家庭占比首度過半，單人家庭數亦超越四人家庭",
+        "positions": [],
+        "analysis": "六項合計 53 分，評為C+級；關鍵在於最新戶籍統計顯示一至二人家庭占比首度過半，單人家庭數亦超越四人家庭，同時考量影響範圍與本期實質增量。",
+        "follow_up": "後續觀察官方更新、執行效果與數據修正。"
+      }
+    },
+    {
+      "event_id": "TWN-05",
+      "primary_section": "TWN",
+      "title": "學校衛生法修法三讀、教育部將檢討手機管理規範",
+      "grade": "C+",
+      "selection": {
+        "dedup_key": "c49cad77aa947ee6ad49",
+        "category": "公共事務",
+        "impact_scope": "national",
+        "reason": "六項合計 52 分，評為C+級；關鍵在於立法院三讀修正學校衛生法，教育部將評估調整校園手機管理規範，同時考量影響範圍與本期實質增量。",
+        "candidate_urls": [
+          "https://www.cna.com.tw/news/ahel/202608220171.aspx"
+        ],
+        "news_time": "2026-08-22T09:40:00Z",
+        "event_time": "2026-08-22T09:40:00Z"
+      },
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 3,
+        "sources": [
+          {
+            "source_id": "verify-twn-05-1",
+            "name": "聯合新聞網",
+            "url": "https://udn.com/news/story/6885/9706409",
+            "role": "primary_or_independent_verification",
+            "producer": "聯合新聞網",
+            "independence_group": "udn.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-twn-05-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-twn-05-2",
+            "name": "knews.com.tw",
+            "url": "https://www.knews.com.tw/news/E80E86A5C125D621B1D218BCDC4A6451",
+            "role": "independent_corroboration",
+            "producer": "knews.com.tw",
+            "independence_group": "knews.com.tw",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-twn-05-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-twn-05-3",
+            "name": "中央社",
+            "url": "https://www.cna.com.tw/news/ahel/202608220171.aspx",
+            "role": "independent_corroboration",
+            "producer": "中央社",
+            "independence_group": "cna.com.tw",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-twn-05-1"
+            ],
+            "limitations": []
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "claim-twn-05-1",
+            "text": "立法院三讀修正學校衛生法，教育部將評估調整校園手機管理規範",
+            "status": "supported",
+            "source_ids": [
+              "verify-twn-05-1",
+              "verify-twn-05-2",
+              "verify-twn-05-3"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "立法院三讀修正學校衛生法，教育部將評估調整校園手機管理規範",
+        "verified_at": "2026-08-22T20:38:00Z"
+      },
+      "map": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "六項評分中的『影響範圍』已逐項檢查；本事件核心是單點事故、制度、財政或技術進展，不涉及需要比較的空間關係、擴散範圍或移動路線，加入定位圖不影響理解。",
+        "assets": [],
+        "omission_reason": "依事件地圖需求判定為非必要。",
+        "reader_omission_note": null
+      },
+      "charts": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "本輪核心是單一事實或制度變化，圖表不會比短文更清楚。",
+        "assets": [],
+        "omission_reason": "依資料圖表需求判定為非必要。"
+      },
+      "images": {
+        "required": true,
+        "status": "ready",
+        "source_checks": [
+          {
+            "source_url": "https://udn.com/news/story/6885/9706409",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "official_api",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/TWN-05.json",
+            "detected_image_urls": [
+              "https://udn.com/news/story/6885/9706409"
+            ],
+            "usable_image_found": true,
+            "attempts": 1,
+            "outcome": "attached",
+            "failure_detail": null
+          },
+          {
+            "source_url": "https://www.knews.com.tw/news/E80E86A5C125D621B1D218BCDC4A6451",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/TWN-05.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          },
+          {
+            "source_url": "https://www.cna.com.tw/news/ahel/202608220171.aspx",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/TWN-05.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          }
+        ],
+        "professional_visual_required": false,
+        "professional_visual_status": "not_required",
+        "professional_source_checks": [],
+        "professional_omission_reason": "此事件不要求專業地圖或統計圖。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/TWN-05.jpg",
+            "caption": "圖一：學校衛生法修法三讀、教育部將檢討手機管理規範資訊圖卡",
+            "source_name": "聯合新聞網",
+            "source_url": "https://udn.com/news/story/6885/9706409",
+            "kind": "official_information",
+            "published_at": "2026-08-22T09:40:00Z",
+            "content_sha256": "da45c3b12411989162c883d7cbd37714b1d8779c4c5b2d5185487633c55d541c",
+            "incremental_information": "呈現事件標題、板塊、地點與評級。",
+            "visual_checked": true,
+            "time_checked": true,
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "detail": {
+        "overview_time": "08/22 17:40",
+        "time": "2026-08-22T09:40:00Z",
+        "event_details": "立法院三讀修正學校衛生法，教育部將評估調整校園手機管理規範",
+        "positions": [],
+        "analysis": "六項合計 52 分，評為C+級；關鍵在於立法院三讀修正學校衛生法，教育部將評估調整校園手機管理規範，同時考量影響範圍與本期實質增量。",
+        "follow_up": "後續觀察官方更新、執行效果與數據修正。"
+      }
+    },
+    {
+      "event_id": "CHN-06",
+      "primary_section": "CHN",
+      "title": "中國年度財政支出預算首度超過30兆元",
+      "grade": "B",
+      "selection": {
+        "dedup_key": "c6a4f668682b9902ed19",
+        "category": "公共事務",
+        "impact_scope": "national",
+        "reason": "六項合計 64 分，評為B級；關鍵在於官方公布年度財政支出預算首度超過30兆元並提高民生與人力資本支出比重，同時考量影響範圍與本期實質增量。",
+        "candidate_urls": [
+          "https://www.chinanews.com.cn/cj/2026/08-22/10682209.shtml"
+        ],
+        "news_time": "2026-08-22T03:02:00Z",
+        "event_time": "2026-08-22T03:02:00Z"
+      },
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 3,
+        "sources": [
+          {
+            "source_id": "verify-chn-06-1",
+            "name": "路透社",
+            "url": "https://www.reuters.com/world/asia-pacific/china-pledges-timely-fiscal-support-bolster-growth-2026-08-21/",
+            "role": "primary_or_independent_verification",
+            "producer": "路透社",
+            "independence_group": "reuters.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-chn-06-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-chn-06-2",
+            "name": "中國財政部",
+            "url": "https://www.mof.gov.cn/zhengwuxinxi/caizhengxinwen/202603/t20260316_3985331.htm",
+            "role": "independent_corroboration",
+            "producer": "中國財政部",
+            "independence_group": "mof.gov.cn",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-chn-06-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-chn-06-3",
+            "name": "chinanews.com.cn",
+            "url": "https://www.chinanews.com.cn/cj/2026/08-22/10682209.shtml",
+            "role": "independent_corroboration",
+            "producer": "chinanews.com.cn",
+            "independence_group": "chinanews.com.cn",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-chn-06-1"
+            ],
+            "limitations": []
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "claim-chn-06-1",
+            "text": "官方公布年度財政支出預算首度超過30兆元並提高民生與人力資本支出比重",
+            "status": "supported",
+            "source_ids": [
+              "verify-chn-06-1",
+              "verify-chn-06-2",
+              "verify-chn-06-3"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "官方公布年度財政支出預算首度超過30兆元並提高民生與人力資本支出比重",
+        "verified_at": "2026-08-22T20:38:00Z"
+      },
+      "map": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "六項評分中的『影響範圍』已逐項檢查；本事件核心是單點事故、制度、財政或技術進展，不涉及需要比較的空間關係、擴散範圍或移動路線，加入定位圖不影響理解。",
+        "assets": [],
+        "omission_reason": "依事件地圖需求判定為非必要。",
+        "reader_omission_note": null
+      },
+      "charts": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "本輪核心是單一事實或制度變化，圖表不會比短文更清楚。",
+        "assets": [],
+        "omission_reason": "依資料圖表需求判定為非必要。"
+      },
+      "images": {
+        "required": true,
+        "status": "ready",
+        "source_checks": [
+          {
+            "source_url": "https://www.reuters.com/world/asia-pacific/china-pledges-timely-fiscal-support-bolster-growth-2026-08-21/",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "official_api",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/CHN-06.json",
+            "detected_image_urls": [
+              "https://www.reuters.com/world/asia-pacific/china-pledges-timely-fiscal-support-bolster-growth-2026-08-21/"
+            ],
+            "usable_image_found": true,
+            "attempts": 1,
+            "outcome": "attached",
+            "failure_detail": null
+          },
+          {
+            "source_url": "https://www.mof.gov.cn/zhengwuxinxi/caizhengxinwen/202603/t20260316_3985331.htm",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/CHN-06.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          },
+          {
+            "source_url": "https://www.chinanews.com.cn/cj/2026/08-22/10682209.shtml",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/CHN-06.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          }
+        ],
+        "professional_visual_required": false,
+        "professional_visual_status": "not_required",
+        "professional_source_checks": [],
+        "professional_omission_reason": "此事件不要求專業地圖或統計圖。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/CHN-06.jpg",
+            "caption": "圖一：中國年度財政支出預算首度超過30兆元資訊圖卡",
+            "source_name": "路透社",
+            "source_url": "https://www.reuters.com/world/asia-pacific/china-pledges-timely-fiscal-support-bolster-growth-2026-08-21/",
+            "kind": "official_information",
+            "published_at": "2026-08-22T03:02:00Z",
+            "content_sha256": "868de102d93fcb15ebb50069bf82eee6063111b818d3a186b1397d9086507af6",
+            "incremental_information": "呈現事件標題、板塊、地點與評級。",
+            "visual_checked": true,
+            "time_checked": true,
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "detail": {
+        "overview_time": "08/22 11:02",
+        "time": "2026-08-22T03:02:00Z",
+        "event_details": "官方公布年度財政支出預算首度超過30兆元並提高民生與人力資本支出比重",
+        "positions": [],
+        "analysis": "六項合計 64 分，評為B級；關鍵在於官方公布年度財政支出預算首度超過30兆元並提高民生與人力資本支出比重，同時考量影響範圍與本期實質增量。",
+        "follow_up": "後續觀察官方更新、執行效果與數據修正。"
+      }
+    },
+    {
+      "event_id": "CHN-07",
+      "primary_section": "CHN",
+      "title": "中國公布未來五年醫保民生清單",
+      "grade": "B",
+      "selection": {
+        "dedup_key": "30e90cd67d013bd0ca51",
+        "category": "公共事務",
+        "impact_scope": "national",
+        "reason": "六項合計 63 分，評為B級；關鍵在於官方提出未來五年全民醫保、異地就醫與長期照護等民生保障安排，同時考量影響範圍與本期實質增量。",
+        "candidate_urls": [
+          "https://www.chinanews.com.cn/sh/2026/08-22/10682161.shtml"
+        ],
+        "news_time": "2026-08-22T00:38:00Z",
+        "event_time": "2026-08-22T00:38:00Z"
+      },
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 3,
+        "sources": [
+          {
+            "source_id": "verify-chn-07-1",
+            "name": "中國國家醫療保障局",
+            "url": "https://www.nhsa.gov.cn/art/2026/8/19/art_105_21829.html",
+            "role": "primary_or_independent_verification",
+            "producer": "中國國家醫療保障局",
+            "independence_group": "nhsa.gov.cn",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-chn-07-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-chn-07-2",
+            "name": "finance.sina.com.cn",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-22/doc-inipcnhc7823992.shtml",
+            "role": "independent_corroboration",
+            "producer": "finance.sina.com.cn",
+            "independence_group": "finance.sina.com.cn",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-chn-07-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-chn-07-3",
+            "name": "chinanews.com.cn",
+            "url": "https://www.chinanews.com.cn/sh/2026/08-22/10682161.shtml",
+            "role": "independent_corroboration",
+            "producer": "chinanews.com.cn",
+            "independence_group": "chinanews.com.cn",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-chn-07-1"
+            ],
+            "limitations": []
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "claim-chn-07-1",
+            "text": "官方提出未來五年全民醫保、異地就醫與長期照護等民生保障安排",
+            "status": "supported",
+            "source_ids": [
+              "verify-chn-07-1",
+              "verify-chn-07-2",
+              "verify-chn-07-3"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "官方提出未來五年全民醫保、異地就醫與長期照護等民生保障安排",
+        "verified_at": "2026-08-22T20:38:00Z"
+      },
+      "map": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "六項評分中的『影響範圍』已逐項檢查；本事件核心是單點事故、制度、財政或技術進展，不涉及需要比較的空間關係、擴散範圍或移動路線，加入定位圖不影響理解。",
+        "assets": [],
+        "omission_reason": "依事件地圖需求判定為非必要。",
+        "reader_omission_note": null
+      },
+      "charts": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "本輪核心是單一事實或制度變化，圖表不會比短文更清楚。",
+        "assets": [],
+        "omission_reason": "依資料圖表需求判定為非必要。"
+      },
+      "images": {
+        "required": true,
+        "status": "ready",
+        "source_checks": [
+          {
+            "source_url": "https://www.nhsa.gov.cn/art/2026/8/19/art_105_21829.html",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "official_api",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/CHN-07.json",
+            "detected_image_urls": [
+              "https://www.nhsa.gov.cn/art/2026/8/19/art_105_21829.html"
+            ],
+            "usable_image_found": true,
+            "attempts": 1,
+            "outcome": "attached",
+            "failure_detail": null
+          },
+          {
+            "source_url": "https://finance.sina.com.cn/jjxw/2026-08-22/doc-inipcnhc7823992.shtml",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/CHN-07.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          },
+          {
+            "source_url": "https://www.chinanews.com.cn/sh/2026/08-22/10682161.shtml",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/CHN-07.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          }
+        ],
+        "professional_visual_required": false,
+        "professional_visual_status": "not_required",
+        "professional_source_checks": [],
+        "professional_omission_reason": "此事件不要求專業地圖或統計圖。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/CHN-07.jpg",
+            "caption": "圖一：中國公布未來五年醫保民生清單資訊圖卡",
+            "source_name": "中國國家醫療保障局",
+            "source_url": "https://www.nhsa.gov.cn/art/2026/8/19/art_105_21829.html",
+            "kind": "official_information",
+            "published_at": "2026-08-22T00:38:00Z",
+            "content_sha256": "4a1e81a2b6b431fc42f290390d14d16678e796eeb342a453e5b590a77ebf1eb4",
+            "incremental_information": "呈現事件標題、板塊、地點與評級。",
+            "visual_checked": true,
+            "time_checked": true,
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "detail": {
+        "overview_time": "08/22 08:38",
+        "time": "2026-08-22T00:38:00Z",
+        "event_details": "官方提出未來五年全民醫保、異地就醫與長期照護等民生保障安排",
+        "positions": [],
+        "analysis": "六項合計 63 分，評為B級；關鍵在於官方提出未來五年全民醫保、異地就醫與長期照護等民生保障安排，同時考量影響範圍與本期實質增量。",
+        "follow_up": "後續觀察官方更新、執行效果與數據修正。"
+      }
+    },
+    {
+      "event_id": "CHN-08",
+      "primary_section": "CHN",
+      "title": "華南颱風與強降雨、多部門啟動防汛應變",
+      "grade": "B",
+      "selection": {
+        "dedup_key": "93d3e4a2e3c0fabf8f16",
+        "category": "公共事務",
+        "impact_scope": "subregional",
+        "reason": "六項合計 60 分，評為B級；關鍵在於颱風與強降雨持續影響華南，多部門會商並啟動洪水防禦應急響應，同時考量影響範圍與本期實質增量。",
+        "candidate_urls": [
+          "https://www.chinanews.com.cn/sh/2026/08-22/10682430.shtml",
+          "https://www.chinanews.com.cn/sh/2026/08-22/10682394.shtml",
+          "https://www.chinanews.com.cn/sh/2026/08-22/10682365.shtml",
+          "https://www.chinanews.com.cn/sh/2026/08-22/10682332.shtml",
+          "https://www.chinanews.com.cn/sh/2026/08-22/10682318.shtml",
+          "https://www.chinanews.com.cn/sh/2026/08-22/10682314.shtml",
+          "https://www.chinanews.com.cn/sh/2026/08-22/10682267.shtml",
+          "https://www.chinanews.com.cn/sh/2026/08-22/10682216.shtml",
+          "https://www.chinanews.com.cn/sh/2026/08-22/10682193.shtml"
+        ],
+        "news_time": "2026-08-22T11:51:00Z",
+        "event_time": "2026-08-22T01:55:00Z"
+      },
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 3,
+        "sources": [
+          {
+            "source_id": "verify-chn-08-1",
+            "name": "新華社",
+            "url": "https://www.news.cn/politics/20260822/cd34ef665bbf4f0ebef08d9b2cbbf62c/c.html",
+            "role": "primary_or_independent_verification",
+            "producer": "新華社",
+            "independence_group": "news.cn",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-chn-08-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-chn-08-2",
+            "name": "中國水利網",
+            "url": "https://www.chinawater.com.cn/yw/202608/t20260822_1073708.html",
+            "role": "independent_corroboration",
+            "producer": "中國水利網",
+            "independence_group": "chinawater.com.cn",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-chn-08-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-chn-08-3",
+            "name": "chinanews.com.cn",
+            "url": "https://www.chinanews.com.cn/sh/2026/08-22/10682430.shtml",
+            "role": "independent_corroboration",
+            "producer": "chinanews.com.cn",
+            "independence_group": "chinanews.com.cn",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-chn-08-1"
+            ],
+            "limitations": []
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "claim-chn-08-1",
+            "text": "颱風與強降雨持續影響華南，多部門會商並啟動洪水防禦應急響應",
+            "status": "supported",
+            "source_ids": [
+              "verify-chn-08-1",
+              "verify-chn-08-2",
+              "verify-chn-08-3"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "颱風與強降雨持續影響華南，多部門會商並啟動洪水防禦應急響應",
+        "verified_at": "2026-08-22T20:38:00Z"
+      },
+      "map": {
+        "required": true,
+        "status": "ready",
+        "rationale": "事件的影響範圍、災害區域或跨地區分布具有直接判讀價值，使用完整板塊定位圖呈現。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/maps/generated/s4/CHN-08-locator.png",
+            "caption": "地圖一：廣東、廣西與海南為華南颱風強降雨及防汛應變重點區域。",
+            "style_id": "yellow-admin-v2",
+            "style_reference": "maps/style.json",
+            "generator": "scripts/render_base_maps.py",
+            "source_urls": [
+              "https://www.news.cn/politics/20260822/cd34ef665bbf4f0ebef08d9b2cbbf62c/c.html",
+              "https://www.chinawater.com.cn/yw/202608/t20260822_1073708.html",
+              "https://www.chinanews.com.cn/sh/2026/08-22/10682430.shtml"
+            ],
+            "visual_checked": true,
+            "width": 1800,
+            "height": 1512,
+            "place_labels": [
+              "廣東省",
+              "廣西壯族自治區",
+              "海南省"
+            ],
+            "canvas_scope": "full_section",
+            "base_map": "maps/generated/china-provinces-yellow-v2.png"
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "charts": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "本輪核心是單一事實或制度變化，圖表不會比短文更清楚。",
+        "assets": [],
+        "omission_reason": "依資料圖表需求判定為非必要。"
+      },
+      "images": {
+        "required": true,
+        "status": "ready",
+        "source_checks": [
+          {
+            "source_url": "https://www.news.cn/politics/20260822/cd34ef665bbf4f0ebef08d9b2cbbf62c/c.html",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "official_api",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/CHN-08.json",
+            "detected_image_urls": [
+              "https://www.news.cn/politics/20260822/cd34ef665bbf4f0ebef08d9b2cbbf62c/c.html"
+            ],
+            "usable_image_found": true,
+            "attempts": 1,
+            "outcome": "attached",
+            "failure_detail": null
+          },
+          {
+            "source_url": "https://www.chinawater.com.cn/yw/202608/t20260822_1073708.html",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/CHN-08.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          },
+          {
+            "source_url": "https://www.chinanews.com.cn/sh/2026/08-22/10682430.shtml",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/CHN-08.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          }
+        ],
+        "professional_visual_required": true,
+        "professional_visual_status": "not_available",
+        "professional_source_checks": [
+          {
+            "source_url": "https://www.news.cn/politics/20260822/cd34ef665bbf4f0ebef08d9b2cbbf62c/c.html",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/CHN-08.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "在本輪可用官方來源中未找到可核實且可直接附加的專業地圖或統計圖。"
+          }
+        ],
+        "professional_omission_reason": "官方專業視覺素材在本輪來源中不可用；保留事件資訊圖卡。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/CHN-08.jpg",
+            "caption": "圖一：華南颱風與強降雨、多部門啟動防汛應變資訊圖卡",
+            "source_name": "新華社",
+            "source_url": "https://www.news.cn/politics/20260822/cd34ef665bbf4f0ebef08d9b2cbbf62c/c.html",
+            "kind": "official_information",
+            "published_at": "2026-08-22T11:51:00Z",
+            "content_sha256": "7b436d6477352a8e60e5984bd8e915d20a721b5840e2b575bb492523557c128a",
+            "incremental_information": "呈現事件標題、板塊、地點與評級。",
+            "visual_checked": true,
+            "time_checked": true,
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "detail": {
+        "overview_time": "08/22 19:51",
+        "time": "2026-08-22T11:51:00Z",
+        "event_details": "颱風與強降雨持續影響華南，多部門會商並啟動洪水防禦應急響應",
+        "positions": [],
+        "analysis": "六項合計 60 分，評為B級；關鍵在於颱風與強降雨持續影響華南，多部門會商並啟動洪水防禦應急響應，同時考量影響範圍與本期實質增量。",
+        "follow_up": "後續觀察官方更新、執行效果與數據修正。"
+      }
+    },
+    {
+      "event_id": "GLB-09",
+      "primary_section": "GLB",
+      "title": "美加貿易談判破局、加拿大宣布報復性關稅",
+      "grade": "A",
+      "selection": {
+        "dedup_key": "e8a3aaee985b814b887c",
+        "category": "公共事務",
+        "impact_scope": "multinational",
+        "reason": "六項合計 75 分，評為A級；關鍵在於美加貿易談判破裂，美方將部分加拿大商品關稅提高至50%，加拿大宣布對等報復措施，同時考量影響範圍與本期實質增量。",
+        "candidate_urls": [
+          "https://www.cna.com.tw/news/aopl/202608230005.aspx",
+          "https://www.cna.com.tw/news/aopl/202608230003.aspx",
+          "https://www.oann.com/newsroom/canada-announces-retaliatory-tariffs-beginning-sept-8-after-trade-talks-with-u-s-fall-apart/",
+          "https://saharareporters.com/2026/08/22/canada-suspends-trade-talks-trump-administration-vows-dollar-dollar-response-us-tariffs",
+          "https://globalnews.ca/news/12031459/united-states-canada-trade-talks-issues/",
+          "https://cowichanvalleycitizen.com/2026/08/22/indefensible-b-c-premier-eby-responds-to-collapsed-canada-u-s-trade-talks/",
+          "https://www.wfmd.com/2026/08/22/trump-trade-chief-warns-canada-walked-away-from-the-best-deal-to-trigger-50-u-s-tariffs/",
+          "https://www.omanobserver.om/article/1194908/world/americas/canada-hits-back-with-new-tariffs-after-trade-talks-with-us-fail",
+          "https://redstate.com/beccalower/2026/08/22/canada-us-trade-talks-tariffs-n2205938",
+          "https://www.smh.com.au/world/north-america/at-war-canada-walks-away-from-us-trade-talks-retaliates-to-tariffs-20260823-p60qnc.html",
+          "https://www.heartfm.ca/news/local-news/pm-carney-says-canada-will-meet-u-s-tariffs-dollar-for-dollar/",
+          "https://www.foxnews.com/media/trump-trade-chief-warns-canada-walked-away-best-deal-trigger-50-percent-us-tariffs",
+          "http://www.mexicostar.com/news/279258426/canadian-pm-vows-dollar-for-dollar-tariffs-against-us-as-trade-talks-collapse",
+          "https://www.moneycontrol.com/news/business/explainer-why-us-canada-trade-talks-broke-down-tariffs-retaliation-and-carney-s-trade-war-charge-14013055.html",
+          "https://www.manitobacooperator.ca/daily/u-s-hits-canadian-goods-with-50-per-cent-tariffs-after-trade-talks-fail/",
+          "https://www.theglobeandmail.com/canada/article-canada-us-trade-deal-tariffs-mark-carney-donald-trump-august-22/",
+          "https://www.zerohedge.com/political/canada-us-trade-war-erupts-setting-new-50-tariffs-canadian-goods",
+          "https://globalnews.ca/news/12031378/canada-united-states-trade-talks-tariffs-hit/",
+          "https://www.argusmedia.com/en/news-and-insights/latest-market-news/2868576-us-canada-trade-deal-collapses-as-tariffs-begin",
+          "https://torontosun.com/news/local-news/canada-united-states-plunged-into-full-on-tariff-war-trade-talks-collapse",
+          "http://www.mexicostar.com/news/279257767/3rd-ld-writethru-us-canada-fail-to-reach-trade-deal",
+          "https://www.cna.com.tw/news/aopl/202608220101.aspx",
+          "https://www.onenewspage.com/story/canada-vows-to-match-trumps-50-tariffs-after-trade-deal-talks-fail-412f0b44/",
+          "https://www.cbc.ca/news/world/livestory/us-canada-trade-war-new-tariffs-9.7310605",
+          "https://www.chinanews.com.cn/gj/2026/08-22/10682244.shtml",
+          "http://www.bignewsnetwork.com/news/279257976/roundup-us-canada-fail-to-reach-trade-deal",
+          "https://www.cna.com.tw/news/aopl/202608220079.aspx",
+          "https://www.chinanews.com.cn/gj/2026/08-22/10682227.shtml",
+          "http://thepeninsulaqatar.com/article/22/08/2026/us-canada-fail-to-reach-trade-deal-face-fresh-tariffs",
+          "http://thepeninsulaqatar.com/article/22/08/2026/canada-pm-says-will-match-us-tariffs-dollar-for-dollar",
+          "https://www.hawaiitribune-herald.com/2026/08/22/nation-world-news/us-canada-tariff-talks-down-to-the-wire-as-trumps-deadline-looms/",
+          "http://www.thejakartapost.com/business/2026/08/22/us-canada-fail-to-reach-trade-pact-to-avert-trump-tariffs",
+          "http://www.torontotelegraph.com/news/279257740/2nd-ld-us-canada-fail-to-reach-trade-deal",
+          "https://www.houstonpublicmedia.org/npr/2026/08/22/nx-s1-5941584/u-s-canada-trade-talks-collapse-minutes-before-deadline-for-tariffs-to-take-effect/",
+          "https://www.freemalaysiatoday.com/category/business/2026/08/22/canada-s-pm-says-will-match-us-tariffs-dollar-for-dollar",
+          "https://www.newsx.com/world/canada-us-trade-war-talks-collapse-as-trumps-50-tariffs-kick-in-ottawa-vows-dollar-for-dollar-retaliation-263177/",
+          "https://www.cna.com.tw/news/aopl/202608220029.aspx",
+          "https://gulfnews.com/world/americas/us-canada-fail-to-reach-trade-pact-as-trumps-50-tariffs-take-effect-1.500648640",
+          "https://www.euronews.com/2026/08/22/canada-will-match-us-tariffs-dollar-for-dollar-carney-says",
+          "https://www.northcountrypublicradio.org/news/npr/nx-s1-5941584/u-s-canada-trade-talks-collapse-minutes-before-deadline-for-tariffs-to-take-effect",
+          "https://www.ktep.org/business/2026-08-21/u-s-canada-trade-talks-collapse-minutes-before-deadline-for-tariffs-to-take-effect",
+          "https://www.spokesman.com/stories/2026/aug/21/us-canada-fail-to-reach-a-tariff-deal-deepen-trade/",
+          "https://www.lankanewspapers.com/2026/08/22/canada-draws-a-hard-line-dollar-for-dollar-tariff-retaliation-as-us-trade-talks-collapse",
+          "https://www.bangkokpost.com/business/general/3306143/uscanada-trade-talks-fail-high-tariffs-kick-in",
+          "https://www.theweek.in/news/biz-tech/2026/08/22/canada-us-trade-talks-collapse.html",
+          "https://www.rnz.co.nz/news/world/1080257/us-canada-fail-to-reach-a-tariff-deal-to-avert-looming-trade-war",
+          "https://www.bostonglobe.com/2026/08/21/nation/us-canada-trump-tariff-deal/",
+          "https://www.internazionale.it/ultime-notizie-reuters/2026/08/22/us-canadian-trade-teams-to-meet-again-as-tariffs-deadline-looms",
+          "https://www.businesstoday.in/world/canada/story/last-minute-changes-unfair-uneconomic-us-canada-trade-talks-collapse-as-trump-readies-50-tariffs-on-canadian-products-550742-2026-08-22",
+          "http://www.torontotelegraph.com/news/279257553/urgent-us-canada-fail-to-reach-trade-deal",
+          "http://www.torontotelegraph.com/news/279257552/xinhua-news-us-canada-fail-to-reach-trade-deal",
+          "https://www.channelnewsasia.com/world/us-canada-trade-war-failed-tariff-deal-6334641",
+          "https://www.newcastleherald.com.au/story/9335250/canada-facing-heavy-us-tariffs-after-talks-fail/",
+          "https://medicinehatnews.com/news/national-news/2026/08/21/canada-vows-dollar-to-dollar-tariff-retaliation-suspends-trade-talks-with-u-s/",
+          "https://www.ksl.com:443/article/51614655/us-canadian-trade-teams-meet-again-as-tariffs-deadline-looms",
+          "https://www.perthnow.com.au/news/business/canada-us-yet-to-reach-tariff-deal-as-deadline-looms-c-22762762",
+          "https://www.thecourier.com.au/story/9335250/canada-us-yet-to-reach-tariff-deal-as-deadline-looms/",
+          "https://www.cbc.ca/news/canada/new-brunswick/nb-businesses-us-canada-trade-details-9.7316168",
+          "https://www.cp24.com/news/canada/2026/08/21/trade-talks-with-canada-are-moving-along-says-trump-as-tariff-deadline-looms-live-updates-here/",
+          "https://www.theglobeandmail.com/canada/article-us-liquor-back-on-canadian-shelves-tariffs/",
+          "https://www.cbc.ca/news/politics/canada-us-tariff-trade-talks-howard-lutnick-us-commerce-secretary-9.7314835",
+          "https://us.cnn.com/2026/08/21/economy/us-canada-trade",
+          "https://www.theglobeandmail.com/canada/article-team-canada-trade-talks-premiers-us-alcohol-boycott/"
+        ],
+        "news_time": "2026-08-22T20:15:00Z",
+        "event_time": "2026-08-21T22:00:00Z"
+      },
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 3,
+        "sources": [
+          {
+            "source_id": "verify-glb-09-1",
+            "name": "路透社",
+            "url": "https://www.reuters.com/world/",
+            "role": "primary_or_independent_verification",
+            "producer": "路透社",
+            "independence_group": "reuters.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-09-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-glb-09-2",
+            "name": "中央社",
+            "url": "https://www.cna.com.tw/news/aopl/202608230005.aspx",
+            "role": "independent_corroboration",
+            "producer": "中央社",
+            "independence_group": "cna.com.tw",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-09-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-glb-09-3",
+            "name": "oann.com",
+            "url": "https://www.oann.com/newsroom/canada-announces-retaliatory-tariffs-beginning-sept-8-after-trade-talks-with-u-s-fall-apart/",
+            "role": "independent_corroboration",
+            "producer": "oann.com",
+            "independence_group": "oann.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-09-1"
+            ],
+            "limitations": []
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "claim-glb-09-1",
+            "text": "美加貿易談判破裂，美方將部分加拿大商品關稅提高至50%，加拿大宣布對等報復措施",
+            "status": "supported",
+            "source_ids": [
+              "verify-glb-09-1",
+              "verify-glb-09-2",
+              "verify-glb-09-3"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "美加貿易談判破裂，美方將部分加拿大商品關稅提高至50%，加拿大宣布對等報復措施",
+        "verified_at": "2026-08-22T20:38:00Z"
+      },
+      "map": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "六項評分中的『影響範圍』已逐項檢查；本事件核心是單點事故、制度、財政或技術進展，不涉及需要比較的空間關係、擴散範圍或移動路線，加入定位圖不影響理解。",
+        "assets": [],
+        "omission_reason": "依事件地圖需求判定為非必要。",
+        "reader_omission_note": null
+      },
+      "charts": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "本輪核心是單一事實或制度變化，圖表不會比短文更清楚。",
+        "assets": [],
+        "omission_reason": "依資料圖表需求判定為非必要。"
+      },
+      "images": {
+        "required": true,
+        "status": "ready",
+        "source_checks": [
+          {
+            "source_url": "https://www.reuters.com/world/",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "official_api",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-09.json",
+            "detected_image_urls": [
+              "https://www.reuters.com/world/"
+            ],
+            "usable_image_found": true,
+            "attempts": 1,
+            "outcome": "attached",
+            "failure_detail": null
+          },
+          {
+            "source_url": "https://www.cna.com.tw/news/aopl/202608230005.aspx",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-09.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          },
+          {
+            "source_url": "https://www.oann.com/newsroom/canada-announces-retaliatory-tariffs-beginning-sept-8-after-trade-talks-with-u-s-fall-apart/",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-09.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          }
+        ],
+        "professional_visual_required": false,
+        "professional_visual_status": "not_required",
+        "professional_source_checks": [],
+        "professional_omission_reason": "此事件不要求專業地圖或統計圖。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/GLB-09.jpg",
+            "caption": "圖一：美加貿易談判破局、加拿大宣布報復性關稅資訊圖卡",
+            "source_name": "路透社",
+            "source_url": "https://www.reuters.com/world/",
+            "kind": "official_information",
+            "published_at": "2026-08-22T20:15:00Z",
+            "content_sha256": "c8fd7ba65ec8950f45acf4af181f38b90ae0bceb66bcefeb42e01d0d51bec864",
+            "incremental_information": "呈現事件標題、板塊、地點與評級。",
+            "visual_checked": true,
+            "time_checked": true,
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "detail": {
+        "overview_time": "08/23 04:15",
+        "time": "2026-08-22T20:15:00Z",
+        "event_details": "美加貿易談判破裂，美方將部分加拿大商品關稅提高至50%，加拿大宣布對等報復措施",
+        "positions": [],
+        "analysis": "六項合計 75 分，評為A級；關鍵在於美加貿易談判破裂，美方將部分加拿大商品關稅提高至50%，加拿大宣布對等報復措施，同時考量影響範圍與本期實質增量。",
+        "follow_up": "後續觀察官方更新、執行效果與數據修正。"
+      }
+    },
+    {
+      "event_id": "GLB-10",
+      "primary_section": "GLB",
+      "title": "民主剛果伊波拉疫情獲逾1.6萬劑疫苗、死亡達2516人",
+      "grade": "S-",
+      "selection": {
+        "dedup_key": "a9cd55b214ee4af7b622",
+        "category": "公共事務",
+        "impact_scope": "multinational",
+        "reason": "六項合計 86 分，評為S-級；關鍵在於逾1.6萬劑伊波拉疫苗運抵民主剛果，官方疫情死亡數達2516人且大量死者未進入治療中心，同時考量影響範圍與本期實質增量。",
+        "candidate_urls": [
+          "https://www.cna.com.tw/news/aopl/202608220154.aspx",
+          "https://www.cna.com.tw/news/ahel/202608220104.aspx",
+          "https://www.mirror.co.uk/news/world-news/ebola-outbreak-virus-vaccine-congo-37581681",
+          "https://abcnews.com/International/wireStory/congo-receives-16000-doses-ebola-vaccine-grapples-unprecedented-135860726",
+          "http://thepeninsulaqatar.com/article/22/08/2026/more-than-16000-doses-of-ervebo-vaccine-arrive-in-ebola-hit-drc",
+          "https://www.dailysabah.com/world/africa/drc-gets-16520-ebola-vaccine-doses-amid-deadly-outbreak",
+          "https://english.aawsat.com/world/5309777-more-16000-doses-ervebo-vaccine-arrive-ebola-hit-drc",
+          "https://www.clickondetroit.com/news/world/2026/08/22/congo-receives-more-than-16000-doses-of-ebola-vaccine-as-it-grapples-with-unprecedented-outbreak/",
+          "https://www.freemalaysiatoday.com/category/world/2026/08/22/more-than-16-000-doses-of-ervebo-vaccine-arrive-in-ebola-hit-drc",
+          "https://www.the-star.co.ke/news/2026-08-22-kenyan-tested-ebola-vaccine-sent-to-drc",
+          "http://www.sitkasentinel.com/stories/heres-data-that-shows-congos-ebola-outbreak-is-on-track-to-surpass-historys-largest,165476",
+          "http://www.bignewsnetwork.com/news/279257454/dr-congo-receives-1st-batch-of-ebola-vaccine-doses-as-outbreak-kills-over-2500",
+          "https://www.aol.co.uk/articles/fastest-ebola-outbreak-history-track-215656000.html",
+          "https://www.akronnewsreporter.com/2026/07/22/congos-ebola-outbreak-thousand-deaths/"
+        ],
+        "news_time": "2026-08-22T13:30:00Z",
+        "event_time": "2026-08-21T21:45:00Z"
+      },
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 3,
+        "sources": [
+          {
+            "source_id": "verify-glb-10-1",
+            "name": "美聯社",
+            "url": "https://apnews.com/article/1ce25c0697bfae7656eae3e5fe6aa6ae",
+            "role": "primary_or_independent_verification",
+            "producer": "美聯社",
+            "independence_group": "apnews.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-10-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-glb-10-2",
+            "name": "美國疾病管制與預防中心",
+            "url": "https://www.cdc.gov/ebola/situation-summary/index.html",
+            "role": "independent_corroboration",
+            "producer": "美國疾病管制與預防中心",
+            "independence_group": "cdc.gov",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-10-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-glb-10-3",
+            "name": "中央社",
+            "url": "https://www.cna.com.tw/news/aopl/202608220154.aspx",
+            "role": "independent_corroboration",
+            "producer": "中央社",
+            "independence_group": "cna.com.tw",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-10-1"
+            ],
+            "limitations": []
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "claim-glb-10-1",
+            "text": "逾1.6萬劑伊波拉疫苗運抵民主剛果，官方疫情死亡數達2516人且大量死者未進入治療中心",
+            "status": "supported",
+            "source_ids": [
+              "verify-glb-10-1",
+              "verify-glb-10-2",
+              "verify-glb-10-3"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "逾1.6萬劑伊波拉疫苗運抵民主剛果，官方疫情死亡數達2516人且大量死者未進入治療中心",
+        "verified_at": "2026-08-22T20:38:00Z"
+      },
+      "map": {
+        "required": true,
+        "status": "ready",
+        "rationale": "事件的影響範圍、災害區域或跨地區分布具有直接判讀價值，使用完整板塊定位圖呈現。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/maps/generated/s4/GLB-10-locator.png",
+            "caption": "地圖一：民主剛果是本輪伊波拉疫情與疫苗投放所在國。",
+            "style_id": "yellow-admin-v2",
+            "style_reference": "maps/style.json",
+            "generator": "scripts/render_base_maps.py",
+            "source_urls": [
+              "https://apnews.com/article/1ce25c0697bfae7656eae3e5fe6aa6ae",
+              "https://www.cdc.gov/ebola/situation-summary/index.html",
+              "https://www.cna.com.tw/news/aopl/202608220154.aspx"
+            ],
+            "visual_checked": true,
+            "width": 1800,
+            "height": 1044,
+            "place_labels": [
+              "民主剛果"
+            ],
+            "canvas_scope": "full_world",
+            "base_map": "maps/generated/world-countries-pacific-robinson-yellow-v2.png"
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "charts": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "本輪核心是單一事實或制度變化，圖表不會比短文更清楚。",
+        "assets": [],
+        "omission_reason": "依資料圖表需求判定為非必要。"
+      },
+      "images": {
+        "required": true,
+        "status": "ready",
+        "source_checks": [
+          {
+            "source_url": "https://apnews.com/article/1ce25c0697bfae7656eae3e5fe6aa6ae",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "official_api",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-10.json",
+            "detected_image_urls": [
+              "https://apnews.com/article/1ce25c0697bfae7656eae3e5fe6aa6ae"
+            ],
+            "usable_image_found": true,
+            "attempts": 1,
+            "outcome": "attached",
+            "failure_detail": null
+          },
+          {
+            "source_url": "https://www.cdc.gov/ebola/situation-summary/index.html",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-10.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          },
+          {
+            "source_url": "https://www.cna.com.tw/news/aopl/202608220154.aspx",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-10.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          }
+        ],
+        "professional_visual_required": true,
+        "professional_visual_status": "not_available",
+        "professional_source_checks": [
+          {
+            "source_url": "https://apnews.com/article/1ce25c0697bfae7656eae3e5fe6aa6ae",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-10.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "在本輪可用官方來源中未找到可核實且可直接附加的專業地圖或統計圖。"
+          }
+        ],
+        "professional_omission_reason": "官方專業視覺素材在本輪來源中不可用；保留事件資訊圖卡。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/GLB-10.jpg",
+            "caption": "圖一：民主剛果伊波拉疫情獲逾1.6萬劑疫苗、死亡達2516人資訊圖卡",
+            "source_name": "美聯社",
+            "source_url": "https://apnews.com/article/1ce25c0697bfae7656eae3e5fe6aa6ae",
+            "kind": "official_information",
+            "published_at": "2026-08-22T13:30:00Z",
+            "content_sha256": "e2cfdb09b8d4e4e59daadad53e8ccbbed710ae0e15c2894297d4b55a60ffe37e",
+            "incremental_information": "呈現事件標題、板塊、地點與評級。",
+            "visual_checked": true,
+            "time_checked": true,
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "detail": {
+        "overview_time": "08/22 21:30",
+        "time": "2026-08-22T13:30:00Z",
+        "event_details": "逾1.6萬劑伊波拉疫苗運抵民主剛果，官方疫情死亡數達2516人且大量死者未進入治療中心",
+        "positions": [],
+        "analysis": "六項合計 86 分，評為S-級；關鍵在於逾1.6萬劑伊波拉疫苗運抵民主剛果，官方疫情死亡數達2516人且大量死者未進入治療中心，同時考量影響範圍與本期實質增量。",
+        "follow_up": "後續觀察官方更新、執行效果與數據修正。"
+      }
+    },
+    {
+      "event_id": "GLB-11",
+      "primary_section": "GLB",
+      "title": "歐洲熱浪夏季超額死亡估計逾3萬人",
+      "grade": "A+",
+      "selection": {
+        "dedup_key": "3260128e9b9818535797",
+        "category": "公共事務",
+        "impact_scope": "multinational",
+        "reason": "六項合計 81 分，評為A+級；關鍵在於更新估計顯示歐洲今夏熱浪造成逾3萬例超額死亡並持續推高公共衛生壓力，同時考量影響範圍與本期實質增量。",
+        "candidate_urls": [
+          "https://www.cna.com.tw/news/aopl/202608220173.aspx",
+          "http://www.bignewsnetwork.com/news/279257987/economic-watch-heatwaves-drought-put-european-agriculture-under-mounting-pressure"
+        ],
+        "news_time": "2026-08-22T12:30:00Z",
+        "event_time": "2026-08-22T09:45:00Z"
+      },
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 3,
+        "sources": [
+          {
+            "source_id": "verify-glb-11-1",
+            "name": "gulfnews.com",
+            "url": "https://gulfnews.com/world/europe/europe-records-more-than-30000-excess-deaths-in-summer-heatwaves-1.500648394",
+            "role": "primary_or_independent_verification",
+            "producer": "gulfnews.com",
+            "independence_group": "gulfnews.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-11-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-glb-11-2",
+            "name": "koreatimes.co.kr",
+            "url": "https://www.koreatimes.co.kr/amp/world/20260822/heatwave-hit-europe-logs-over-30000-excess-summer-deaths-first-figures",
+            "role": "independent_corroboration",
+            "producer": "koreatimes.co.kr",
+            "independence_group": "koreatimes.co.kr",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-11-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-glb-11-3",
+            "name": "中央社",
+            "url": "https://www.cna.com.tw/news/aopl/202608220173.aspx",
+            "role": "independent_corroboration",
+            "producer": "中央社",
+            "independence_group": "cna.com.tw",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-11-1"
+            ],
+            "limitations": []
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "claim-glb-11-1",
+            "text": "更新估計顯示歐洲今夏熱浪造成逾3萬例超額死亡並持續推高公共衛生壓力",
+            "status": "supported",
+            "source_ids": [
+              "verify-glb-11-1",
+              "verify-glb-11-2",
+              "verify-glb-11-3"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "更新估計顯示歐洲今夏熱浪造成逾3萬例超額死亡並持續推高公共衛生壓力",
+        "verified_at": "2026-08-22T20:38:00Z"
+      },
+      "map": {
+        "required": true,
+        "status": "ready",
+        "rationale": "事件的影響範圍、災害區域或跨地區分布具有直接判讀價值，使用完整板塊定位圖呈現。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/maps/generated/s4/GLB-11-locator.png",
+            "caption": "地圖一：法國、西班牙、義大利、德國、希臘與葡萄牙是本輪熱浪死亡估計涉及的主要國家。",
+            "style_id": "yellow-admin-v2",
+            "style_reference": "maps/style.json",
+            "generator": "scripts/render_base_maps.py",
+            "source_urls": [
+              "https://gulfnews.com/world/europe/europe-records-more-than-30000-excess-deaths-in-summer-heatwaves-1.500648394",
+              "https://www.koreatimes.co.kr/amp/world/20260822/heatwave-hit-europe-logs-over-30000-excess-summer-deaths-first-figures",
+              "https://www.cna.com.tw/news/aopl/202608220173.aspx"
+            ],
+            "visual_checked": true,
+            "width": 1800,
+            "height": 1044,
+            "place_labels": [
+              "法國",
+              "西班牙",
+              "義大利",
+              "德國",
+              "希臘",
+              "葡萄牙"
+            ],
+            "canvas_scope": "full_world",
+            "base_map": "maps/generated/world-countries-pacific-robinson-yellow-v2.png"
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "charts": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "本輪核心是單一事實或制度變化，圖表不會比短文更清楚。",
+        "assets": [],
+        "omission_reason": "依資料圖表需求判定為非必要。"
+      },
+      "images": {
+        "required": true,
+        "status": "ready",
+        "source_checks": [
+          {
+            "source_url": "https://gulfnews.com/world/europe/europe-records-more-than-30000-excess-deaths-in-summer-heatwaves-1.500648394",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "official_api",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-11.json",
+            "detected_image_urls": [
+              "https://gulfnews.com/world/europe/europe-records-more-than-30000-excess-deaths-in-summer-heatwaves-1.500648394"
+            ],
+            "usable_image_found": true,
+            "attempts": 1,
+            "outcome": "attached",
+            "failure_detail": null
+          },
+          {
+            "source_url": "https://www.koreatimes.co.kr/amp/world/20260822/heatwave-hit-europe-logs-over-30000-excess-summer-deaths-first-figures",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-11.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          },
+          {
+            "source_url": "https://www.cna.com.tw/news/aopl/202608220173.aspx",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-11.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          }
+        ],
+        "professional_visual_required": true,
+        "professional_visual_status": "not_available",
+        "professional_source_checks": [
+          {
+            "source_url": "https://gulfnews.com/world/europe/europe-records-more-than-30000-excess-deaths-in-summer-heatwaves-1.500648394",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-11.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "在本輪可用官方來源中未找到可核實且可直接附加的專業地圖或統計圖。"
+          }
+        ],
+        "professional_omission_reason": "官方專業視覺素材在本輪來源中不可用；保留事件資訊圖卡。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/GLB-11.jpg",
+            "caption": "圖一：歐洲熱浪夏季超額死亡估計逾3萬人資訊圖卡",
+            "source_name": "gulfnews.com",
+            "source_url": "https://gulfnews.com/world/europe/europe-records-more-than-30000-excess-deaths-in-summer-heatwaves-1.500648394",
+            "kind": "official_information",
+            "published_at": "2026-08-22T12:30:00Z",
+            "content_sha256": "48dcdb6eaab3586ff2e49ae39de1427fcb183e508d829967dc738f9dcde6e381",
+            "incremental_information": "呈現事件標題、板塊、地點與評級。",
+            "visual_checked": true,
+            "time_checked": true,
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "detail": {
+        "overview_time": "08/22 20:30",
+        "time": "2026-08-22T12:30:00Z",
+        "event_details": "更新估計顯示歐洲今夏熱浪造成逾3萬例超額死亡並持續推高公共衛生壓力",
+        "positions": [],
+        "analysis": "六項合計 81 分，評為A+級；關鍵在於更新估計顯示歐洲今夏熱浪造成逾3萬例超額死亡並持續推高公共衛生壓力，同時考量影響範圍與本期實質增量。",
+        "follow_up": "後續觀察官方更新、執行效果與數據修正。"
+      }
+    },
+    {
+      "event_id": "GLB-12",
+      "primary_section": "GLB",
+      "title": "烏克蘭購物中心遭襲、傷亡增至145人",
+      "grade": "A",
+      "selection": {
+        "dedup_key": "3acb54eb2d6b837da3e5",
+        "category": "公共事務",
+        "impact_scope": "national",
+        "reason": "六項合計 75 分，評為A級；關鍵在於俄軍無人機攻擊購物中心造成至少16人死亡，傷亡總數上修至145人，同時考量影響範圍與本期實質增量。",
+        "candidate_urls": [
+          "https://www.newser.com/story/395096/strike-on-ukrainian-shopping-mall-kills-16.html",
+          "https://www.independent.co.uk/news/world/europe/ukraine-russia-shopping-mall-zelensky-b3037469.html",
+          "https://www.chinanews.com.cn/gj/2026/08-22/10682214.shtml",
+          "https://www.semissourian.com/world/russian-attacks-on-ukraine-kill-2-people-a-day-after-deadly-shopping-mall-drone-strike-712d8ef9",
+          "https://www.durangoherald.com/articles/associated-press/russian-attacks-on-ukraine-kill-2-people-a-day-after-deadly-shopping-mall-drone-strike/",
+          "https://www.clickondetroit.com/news/world/2026/08/22/russian-attacks-on-ukraine-kill-2-people-a-day-after-deadly-shopping-mall-drone-strike/",
+          "http://www.sitkasentinel.com/stories/russian-attacks-on-ukraine-kill-2-people-a-day-after-deadly-shopping-mall-drone-strike,165584",
+          "https://www.i24news.tv/en/news/international/ukraine-russia-war/artc-russian-drone-strike-on-ukraine-shopping-mall-kills-at-least-16",
+          "https://www.cbc.ca/news/world/ukraine-shopping-mall-drone-attack-9.7316016",
+          "https://panow.com/2026/08/21/russian-strike-kills-14-people-at-a-shopping-mall-in-a-central-ukrainian-city/",
+          "https://www.hindustantimes.com/world-news/us-news/russian-drones-kill-14-people-at-a-shopping-mall-in-a-central-ukrainian-city-officials-say-101787337548223.html"
+        ],
+        "news_time": "2026-08-22T16:45:00Z",
+        "event_time": "2026-08-21T20:45:00Z"
+      },
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 3,
+        "sources": [
+          {
+            "source_id": "verify-glb-12-1",
+            "name": "加拿大廣播公司",
+            "url": "https://www.cbc.ca/news/world/ukraine-shopping-mall-drone-attack-9.7316016",
+            "role": "primary_or_independent_verification",
+            "producer": "加拿大廣播公司",
+            "independence_group": "cbc.ca",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-12-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-glb-12-2",
+            "name": "independent.co.uk",
+            "url": "https://www.independent.co.uk/news/world/europe/ukraine-russia-shopping-mall-zelensky-b3037469.html",
+            "role": "independent_corroboration",
+            "producer": "independent.co.uk",
+            "independence_group": "independent.co.uk",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-12-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-glb-12-3",
+            "name": "newser.com",
+            "url": "https://www.newser.com/story/395096/strike-on-ukrainian-shopping-mall-kills-16.html",
+            "role": "independent_corroboration",
+            "producer": "newser.com",
+            "independence_group": "newser.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-12-1"
+            ],
+            "limitations": []
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "claim-glb-12-1",
+            "text": "俄軍無人機攻擊購物中心造成至少16人死亡，傷亡總數上修至145人",
+            "status": "supported",
+            "source_ids": [
+              "verify-glb-12-1",
+              "verify-glb-12-2",
+              "verify-glb-12-3"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "俄軍無人機攻擊購物中心造成至少16人死亡，傷亡總數上修至145人",
+        "verified_at": "2026-08-22T20:38:00Z"
+      },
+      "map": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "六項評分中的『影響範圍』已逐項檢查；本事件核心是單點事故、制度、財政或技術進展，不涉及需要比較的空間關係、擴散範圍或移動路線，加入定位圖不影響理解。",
+        "assets": [],
+        "omission_reason": "依事件地圖需求判定為非必要。",
+        "reader_omission_note": null
+      },
+      "charts": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "本輪核心是單一事實或制度變化，圖表不會比短文更清楚。",
+        "assets": [],
+        "omission_reason": "依資料圖表需求判定為非必要。"
+      },
+      "images": {
+        "required": true,
+        "status": "ready",
+        "source_checks": [
+          {
+            "source_url": "https://www.cbc.ca/news/world/ukraine-shopping-mall-drone-attack-9.7316016",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "official_api",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-12.json",
+            "detected_image_urls": [
+              "https://www.cbc.ca/news/world/ukraine-shopping-mall-drone-attack-9.7316016"
+            ],
+            "usable_image_found": true,
+            "attempts": 1,
+            "outcome": "attached",
+            "failure_detail": null
+          },
+          {
+            "source_url": "https://www.independent.co.uk/news/world/europe/ukraine-russia-shopping-mall-zelensky-b3037469.html",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-12.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          },
+          {
+            "source_url": "https://www.newser.com/story/395096/strike-on-ukrainian-shopping-mall-kills-16.html",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-12.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          }
+        ],
+        "professional_visual_required": false,
+        "professional_visual_status": "not_required",
+        "professional_source_checks": [],
+        "professional_omission_reason": "此事件不要求專業地圖或統計圖。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/GLB-12.jpg",
+            "caption": "圖一：烏克蘭購物中心遭襲、傷亡增至145人資訊圖卡",
+            "source_name": "加拿大廣播公司",
+            "source_url": "https://www.cbc.ca/news/world/ukraine-shopping-mall-drone-attack-9.7316016",
+            "kind": "official_information",
+            "published_at": "2026-08-22T16:45:00Z",
+            "content_sha256": "5cbb9c3713b31c86d7e91967d7b442554f8d1bad25e8f784e8464ab986d8bba9",
+            "incremental_information": "呈現事件標題、板塊、地點與評級。",
+            "visual_checked": true,
+            "time_checked": true,
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "detail": {
+        "overview_time": "08/23 00:45",
+        "time": "2026-08-22T16:45:00Z",
+        "event_details": "俄軍無人機攻擊購物中心造成至少16人死亡，傷亡總數上修至145人",
+        "positions": [],
+        "analysis": "六項合計 75 分，評為A級；關鍵在於俄軍無人機攻擊購物中心造成至少16人死亡，傷亡總數上修至145人，同時考量影響範圍與本期實質增量。",
+        "follow_up": "後續觀察官方更新、執行效果與數據修正。"
+      }
+    },
+    {
+      "event_id": "GLB-13",
+      "primary_section": "GLB",
+      "title": "緬甸軍方空襲寺廟造成14人死亡",
+      "grade": "B",
+      "selection": {
+        "dedup_key": "f8b3dc72a502d658bade",
+        "category": "公共事務",
+        "impact_scope": "subregional",
+        "reason": "六項合計 62 分，評為B級；關鍵在於緬甸軍方在佛教節日期間空襲寺廟，造成14人死亡，同時考量影響範圍與本期實質增量。",
+        "candidate_urls": [
+          "https://www.cna.com.tw/news/aopl/202608220191.aspx",
+          "https://timesofoman.com/article/175932-myanmar-airstrike-kills-14-at-buddhist-monastery-reports",
+          "https://en.tempo.co/read/2118104/myanmar-airstrike-kills-14-at-buddhist-monastery-reports",
+          "https://www.lankanewspapers.com/2026/08/22/fourteen-dead-as-myanmar-military-strikes-monastery-in-dawn-attack",
+          "https://www.freemalaysiatoday.com/category/world/2026/08/22/myanmar-airstrike-on-monastery-kills-14-rebel-witnesses",
+          "https://www.scmp.com/news/asia/southeast-asia/article/3364928/myanmar-air-strike-kills-14-praying-monastery-rebel-witnesses-say",
+          "https://www.bangkokpost.com/world/3306163/airstrike-on-myanmar-monastery-kills-14",
+          "https://www.thedailystar.net/news/world/news/myanmar-airstrike-monastery-marking-lent-kills-14-witnesses-4253966",
+          "https://www.bnionline.net/en/news/myanmar-military-airstrike-monastery-kills-least-12-during-buddhist-sabbath"
+        ],
+        "news_time": "2026-08-22T17:00:00Z",
+        "event_time": "2026-08-22T07:30:00Z"
+      },
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 3,
+        "sources": [
+          {
+            "source_id": "verify-glb-13-1",
+            "name": "半島電視台",
+            "url": "https://www.aljazeera.com/news/2026/8/21/myanmar-military-bombing-kills-14-at-buddhist-monastery-opposition-reports",
+            "role": "primary_or_independent_verification",
+            "producer": "半島電視台",
+            "independence_group": "aljazeera.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-13-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-glb-13-2",
+            "name": "scmp.com",
+            "url": "https://www.scmp.com/news/asia/southeast-asia/article/3364928/myanmar-air-strike-kills-14-praying-monastery-rebel-witnesses-say",
+            "role": "independent_corroboration",
+            "producer": "scmp.com",
+            "independence_group": "scmp.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-13-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-glb-13-3",
+            "name": "中央社",
+            "url": "https://www.cna.com.tw/news/aopl/202608220191.aspx",
+            "role": "independent_corroboration",
+            "producer": "中央社",
+            "independence_group": "cna.com.tw",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-13-1"
+            ],
+            "limitations": []
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "claim-glb-13-1",
+            "text": "緬甸軍方在佛教節日期間空襲寺廟，造成14人死亡",
+            "status": "supported",
+            "source_ids": [
+              "verify-glb-13-1",
+              "verify-glb-13-2",
+              "verify-glb-13-3"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "緬甸軍方在佛教節日期間空襲寺廟，造成14人死亡",
+        "verified_at": "2026-08-22T20:38:00Z"
+      },
+      "map": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "六項評分中的『影響範圍』已逐項檢查；本事件核心是單點事故、制度、財政或技術進展，不涉及需要比較的空間關係、擴散範圍或移動路線，加入定位圖不影響理解。",
+        "assets": [],
+        "omission_reason": "依事件地圖需求判定為非必要。",
+        "reader_omission_note": null
+      },
+      "charts": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "本輪核心是單一事實或制度變化，圖表不會比短文更清楚。",
+        "assets": [],
+        "omission_reason": "依資料圖表需求判定為非必要。"
+      },
+      "images": {
+        "required": true,
+        "status": "ready",
+        "source_checks": [
+          {
+            "source_url": "https://www.aljazeera.com/news/2026/8/21/myanmar-military-bombing-kills-14-at-buddhist-monastery-opposition-reports",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "official_api",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-13.json",
+            "detected_image_urls": [
+              "https://www.aljazeera.com/news/2026/8/21/myanmar-military-bombing-kills-14-at-buddhist-monastery-opposition-reports"
+            ],
+            "usable_image_found": true,
+            "attempts": 1,
+            "outcome": "attached",
+            "failure_detail": null
+          },
+          {
+            "source_url": "https://www.scmp.com/news/asia/southeast-asia/article/3364928/myanmar-air-strike-kills-14-praying-monastery-rebel-witnesses-say",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-13.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          },
+          {
+            "source_url": "https://www.cna.com.tw/news/aopl/202608220191.aspx",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-13.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          }
+        ],
+        "professional_visual_required": false,
+        "professional_visual_status": "not_required",
+        "professional_source_checks": [],
+        "professional_omission_reason": "此事件不要求專業地圖或統計圖。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/GLB-13.jpg",
+            "caption": "圖一：緬甸軍方空襲寺廟造成14人死亡資訊圖卡",
+            "source_name": "半島電視台",
+            "source_url": "https://www.aljazeera.com/news/2026/8/21/myanmar-military-bombing-kills-14-at-buddhist-monastery-opposition-reports",
+            "kind": "official_information",
+            "published_at": "2026-08-22T17:00:00Z",
+            "content_sha256": "3e05273fc192377dad9265de0fc798f96ca1e0c11f738180582881acd646d5cd",
+            "incremental_information": "呈現事件標題、板塊、地點與評級。",
+            "visual_checked": true,
+            "time_checked": true,
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "detail": {
+        "overview_time": "08/23 01:00",
+        "time": "2026-08-22T17:00:00Z",
+        "event_details": "緬甸軍方在佛教節日期間空襲寺廟，造成14人死亡",
+        "positions": [],
+        "analysis": "六項合計 62 分，評為B級；關鍵在於緬甸軍方在佛教節日期間空襲寺廟，造成14人死亡，同時考量影響範圍與本期實質增量。",
+        "follow_up": "後續觀察官方更新、執行效果與數據修正。"
+      }
+    },
+    {
+      "event_id": "GLB-14",
+      "primary_section": "GLB",
+      "title": "瑞典校園持劍攻擊造成1死3傷",
+      "grade": "B-",
+      "selection": {
+        "dedup_key": "8fc3d461727cb81982c1",
+        "category": "公共事務",
+        "impact_scope": "local",
+        "reason": "六項合計 55 分，評為B-級；關鍵在於一所高中發生持劍攻擊，造成一名學生死亡、三人受傷，警方制伏嫌犯，同時考量影響範圍與本期實質增量。",
+        "candidate_urls": [
+          "https://www.perthnow.com.au/news/crime/police-probe-online-networks-after-sweden-school-attack-c-22764092",
+          "https://www.bordermail.com.au/story/9335365/police-probe-online-networks-after-sweden-school-attack/",
+          "https://www.yahoo.com/news/world/articles/victim-killed-swedish-school-attack-150344964.html",
+          "https://www.bangkokpost.com/world/3306199/teen-girl-killed-in-swedish-school-sword-attack",
+          "https://timesofoman.com/article/175909-sweden-one-killed-in-school-sword-attack",
+          "https://www.livemint.com/news/world/sweden-school-attack-one-dead-three-injured-after-18-year-old-former-student-goes-on-rampage-with-sword-11787357311572.html",
+          "http://www.bignewsnetwork.com/news/279257186/2nd-ld-writethru-one-killed-in-swedish-school-sword-attack",
+          "https://www.breitbart.com/europe/2026/08/21/police-shoot-suspect-in-sweden-school-sword-attack-several-injured/"
+        ],
+        "news_time": "2026-08-22T16:00:00Z",
+        "event_time": "2026-08-21T21:30:00Z"
+      },
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 3,
+        "sources": [
+          {
+            "source_id": "verify-glb-14-1",
+            "name": "bangkokpost.com",
+            "url": "https://www.bangkokpost.com/world/3306199/teen-girl-killed-in-swedish-school-sword-attack",
+            "role": "primary_or_independent_verification",
+            "producer": "bangkokpost.com",
+            "independence_group": "bangkokpost.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-14-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-glb-14-2",
+            "name": "whbl.com",
+            "url": "https://whbl.com/2026/08/22/swedish-police-probe-online-networks-after-teenage-girl-killed-in-school-sword-attack/",
+            "role": "independent_corroboration",
+            "producer": "whbl.com",
+            "independence_group": "whbl.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-14-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-glb-14-3",
+            "name": "perthnow.com.au",
+            "url": "https://www.perthnow.com.au/news/crime/police-probe-online-networks-after-sweden-school-attack-c-22764092",
+            "role": "independent_corroboration",
+            "producer": "perthnow.com.au",
+            "independence_group": "perthnow.com.au",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-14-1"
+            ],
+            "limitations": []
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "claim-glb-14-1",
+            "text": "一所高中發生持劍攻擊，造成一名學生死亡、三人受傷，警方制伏嫌犯",
+            "status": "supported",
+            "source_ids": [
+              "verify-glb-14-1",
+              "verify-glb-14-2",
+              "verify-glb-14-3"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "一所高中發生持劍攻擊，造成一名學生死亡、三人受傷，警方制伏嫌犯",
+        "verified_at": "2026-08-22T20:38:00Z"
+      },
+      "map": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "六項評分中的『影響範圍』已逐項檢查；本事件核心是單點事故、制度、財政或技術進展，不涉及需要比較的空間關係、擴散範圍或移動路線，加入定位圖不影響理解。",
+        "assets": [],
+        "omission_reason": "依事件地圖需求判定為非必要。",
+        "reader_omission_note": null
+      },
+      "charts": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "本輪核心是單一事實或制度變化，圖表不會比短文更清楚。",
+        "assets": [],
+        "omission_reason": "依資料圖表需求判定為非必要。"
+      },
+      "images": {
+        "required": true,
+        "status": "ready",
+        "source_checks": [
+          {
+            "source_url": "https://www.bangkokpost.com/world/3306199/teen-girl-killed-in-swedish-school-sword-attack",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "official_api",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-14.json",
+            "detected_image_urls": [
+              "https://www.bangkokpost.com/world/3306199/teen-girl-killed-in-swedish-school-sword-attack"
+            ],
+            "usable_image_found": true,
+            "attempts": 1,
+            "outcome": "attached",
+            "failure_detail": null
+          },
+          {
+            "source_url": "https://whbl.com/2026/08/22/swedish-police-probe-online-networks-after-teenage-girl-killed-in-school-sword-attack/",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-14.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          },
+          {
+            "source_url": "https://www.perthnow.com.au/news/crime/police-probe-online-networks-after-sweden-school-attack-c-22764092",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-14.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          }
+        ],
+        "professional_visual_required": false,
+        "professional_visual_status": "not_required",
+        "professional_source_checks": [],
+        "professional_omission_reason": "此事件不要求專業地圖或統計圖。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/GLB-14.jpg",
+            "caption": "圖一：瑞典校園持劍攻擊造成1死3傷資訊圖卡",
+            "source_name": "bangkokpost.com",
+            "source_url": "https://www.bangkokpost.com/world/3306199/teen-girl-killed-in-swedish-school-sword-attack",
+            "kind": "official_information",
+            "published_at": "2026-08-22T16:00:00Z",
+            "content_sha256": "8f3146cb72d68834ab38669960647ac3e015a083b998820ed12a78ce13f459b6",
+            "incremental_information": "呈現事件標題、板塊、地點與評級。",
+            "visual_checked": true,
+            "time_checked": true,
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "detail": {
+        "overview_time": "08/23 00:00",
+        "time": "2026-08-22T16:00:00Z",
+        "event_details": "一所高中發生持劍攻擊，造成一名學生死亡、三人受傷，警方制伏嫌犯",
+        "positions": [],
+        "analysis": "六項合計 55 分，評為B-級；關鍵在於一所高中發生持劍攻擊，造成一名學生死亡、三人受傷，警方制伏嫌犯，同時考量影響範圍與本期實質增量。",
+        "follow_up": "後續觀察官方更新、執行效果與數據修正。"
+      }
+    },
+    {
+      "event_id": "GLB-15",
+      "primary_section": "GLB",
+      "title": "美國將支付聯合國7.25億美元拖欠會費",
+      "grade": "B-",
+      "selection": {
+        "dedup_key": "9cc14e27917364caf90b",
+        "category": "公共事務",
+        "impact_scope": "multinational",
+        "reason": "六項合計 57 分，評為B-級；關鍵在於美國政府宣布向聯合國支付7.25億美元拖欠會費，緩解聯合國資金壓力，同時考量影響範圍與本期實質增量。",
+        "candidate_urls": [
+          "https://www.livemint.com/news/us-news/keeping-the-un-afloat-trump-admin-plans-725-million-payment-as-global-body-battles-funding-crisis-will-it-help-11787391726062.html",
+          "https://www.chinanews.com.cn/gj/2026/08-22/10682144.shtml"
+        ],
+        "news_time": "2026-08-22T11:30:00Z",
+        "event_time": "2026-08-21T22:50:00Z"
+      },
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 3,
+        "sources": [
+          {
+            "source_id": "verify-glb-15-1",
+            "name": "路透社",
+            "url": "https://www.reuters.com/world/us-plans-725-million-payment-towards-its-large-un-debt-2026-08-21/",
+            "role": "primary_or_independent_verification",
+            "producer": "路透社",
+            "independence_group": "reuters.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-15-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-glb-15-2",
+            "name": "美聯社",
+            "url": "https://apnews.com/article/61f6ecd7a8c770d567443f4c44f23bbf",
+            "role": "independent_corroboration",
+            "producer": "美聯社",
+            "independence_group": "apnews.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-15-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-glb-15-3",
+            "name": "livemint.com",
+            "url": "https://www.livemint.com/news/us-news/keeping-the-un-afloat-trump-admin-plans-725-million-payment-as-global-body-battles-funding-crisis-will-it-help-11787391726062.html",
+            "role": "independent_corroboration",
+            "producer": "livemint.com",
+            "independence_group": "livemint.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-15-1"
+            ],
+            "limitations": []
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "claim-glb-15-1",
+            "text": "美國政府宣布向聯合國支付7.25億美元拖欠會費，緩解聯合國資金壓力",
+            "status": "supported",
+            "source_ids": [
+              "verify-glb-15-1",
+              "verify-glb-15-2",
+              "verify-glb-15-3"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "美國政府宣布向聯合國支付7.25億美元拖欠會費，緩解聯合國資金壓力",
+        "verified_at": "2026-08-22T20:38:00Z"
+      },
+      "map": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "六項評分中的『影響範圍』已逐項檢查；本事件核心是單點事故、制度、財政或技術進展，不涉及需要比較的空間關係、擴散範圍或移動路線，加入定位圖不影響理解。",
+        "assets": [],
+        "omission_reason": "依事件地圖需求判定為非必要。",
+        "reader_omission_note": null
+      },
+      "charts": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "本輪核心是單一事實或制度變化，圖表不會比短文更清楚。",
+        "assets": [],
+        "omission_reason": "依資料圖表需求判定為非必要。"
+      },
+      "images": {
+        "required": true,
+        "status": "ready",
+        "source_checks": [
+          {
+            "source_url": "https://www.reuters.com/world/us-plans-725-million-payment-towards-its-large-un-debt-2026-08-21/",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "official_api",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-15.json",
+            "detected_image_urls": [
+              "https://www.reuters.com/world/us-plans-725-million-payment-towards-its-large-un-debt-2026-08-21/"
+            ],
+            "usable_image_found": true,
+            "attempts": 1,
+            "outcome": "attached",
+            "failure_detail": null
+          },
+          {
+            "source_url": "https://apnews.com/article/61f6ecd7a8c770d567443f4c44f23bbf",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-15.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          },
+          {
+            "source_url": "https://www.livemint.com/news/us-news/keeping-the-un-afloat-trump-admin-plans-725-million-payment-as-global-body-battles-funding-crisis-will-it-help-11787391726062.html",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-15.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          }
+        ],
+        "professional_visual_required": false,
+        "professional_visual_status": "not_required",
+        "professional_source_checks": [],
+        "professional_omission_reason": "此事件不要求專業地圖或統計圖。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/GLB-15.jpg",
+            "caption": "圖一：美國將支付聯合國7.25億美元拖欠會費資訊圖卡",
+            "source_name": "路透社",
+            "source_url": "https://www.reuters.com/world/us-plans-725-million-payment-towards-its-large-un-debt-2026-08-21/",
+            "kind": "official_information",
+            "published_at": "2026-08-22T11:30:00Z",
+            "content_sha256": "f43d407f598110a5c56c1c2678ce87fed26a2b3deaed7bca42e6beab9399e927",
+            "incremental_information": "呈現事件標題、板塊、地點與評級。",
+            "visual_checked": true,
+            "time_checked": true,
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "detail": {
+        "overview_time": "08/22 19:30",
+        "time": "2026-08-22T11:30:00Z",
+        "event_details": "美國政府宣布向聯合國支付7.25億美元拖欠會費，緩解聯合國資金壓力",
+        "positions": [],
+        "analysis": "六項合計 57 分，評為B-級；關鍵在於美國政府宣布向聯合國支付7.25億美元拖欠會費，緩解聯合國資金壓力，同時考量影響範圍與本期實質增量。",
+        "follow_up": "後續觀察官方更新、執行效果與數據修正。"
+      }
+    },
+    {
+      "event_id": "GLB-16",
+      "primary_section": "GLB",
+      "title": "澳洲擴大槍枝回購計畫",
+      "grade": "B+",
+      "selection": {
+        "dedup_key": "47807afe0dd809923594",
+        "category": "公共事務",
+        "impact_scope": "national",
+        "reason": "六項合計 65 分，評為B+級；關鍵在於澳洲政府推動全國槍枝回購，首都特區確認加入，以回應重大槍擊後的公共安全風險，同時考量影響範圍與本期實質增量。",
+        "candidate_urls": [
+          "https://www.cna.com.tw/news/aopl/202608220196.aspx",
+          "https://www.rte.ie/news/2026/0822/1588847-australia-gun-buyback/",
+          "https://www.independent.co.uk/news/world/australasia/australia-canberra-gun-buyback-bondi-beach-b3037478.html",
+          "https://dunyanews.tv/en/World/969139-australias-capital-to-join-gun-buyback-in-response-to-bondi-beach-att",
+          "http://www.thejakartapost.com/world/2026/08/22/australias-capital-to-join-gun-buyback-in-response-to-bondi-beach-attack-albanese",
+          "https://www.channelnewsasia.com/world/australia-gun-buyback-bondi-beach-attack-6334456",
+          "https://whbl.com/2026/08/21/australias-capital-to-join-gun-buyback-in-response-to-bondi-beach-attack-albanese-says/"
+        ],
+        "news_time": "2026-08-22T13:00:00Z",
+        "event_time": "2026-08-22T03:00:00Z"
+      },
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 3,
+        "sources": [
+          {
+            "source_id": "verify-glb-16-1",
+            "name": "路透社",
+            "url": "https://www.reuters.com/world/asia-pacific/australias-capital-join-gun-buyback-response-bondi-beach-attack-albanese-says-2026-08-22/",
+            "role": "primary_or_independent_verification",
+            "producer": "路透社",
+            "independence_group": "reuters.com",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-16-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-glb-16-2",
+            "name": "澳洲總理府",
+            "url": "https://www.pm.gov.au/media/national-partnership-delivers-act-firearms-buyback-stronger-community-protections",
+            "role": "independent_corroboration",
+            "producer": "澳洲總理府",
+            "independence_group": "pm.gov.au",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-16-1"
+            ],
+            "limitations": []
+          },
+          {
+            "source_id": "verify-glb-16-3",
+            "name": "中央社",
+            "url": "https://www.cna.com.tw/news/aopl/202608220196.aspx",
+            "role": "independent_corroboration",
+            "producer": "中央社",
+            "independence_group": "cna.com.tw",
+            "published_at": null,
+            "accessed_at": "2026-08-22T20:38:00Z",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "claim-glb-16-1"
+            ],
+            "limitations": []
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "claim-glb-16-1",
+            "text": "澳洲政府推動全國槍枝回購，首都特區確認加入，以回應重大槍擊後的公共安全風險",
+            "status": "supported",
+            "source_ids": [
+              "verify-glb-16-1",
+              "verify-glb-16-2",
+              "verify-glb-16-3"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "澳洲政府推動全國槍枝回購，首都特區確認加入，以回應重大槍擊後的公共安全風險",
+        "verified_at": "2026-08-22T20:38:00Z"
+      },
+      "map": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "六項評分中的『影響範圍』已逐項檢查；本事件核心是單點事故、制度、財政或技術進展，不涉及需要比較的空間關係、擴散範圍或移動路線，加入定位圖不影響理解。",
+        "assets": [],
+        "omission_reason": "依事件地圖需求判定為非必要。",
+        "reader_omission_note": null
+      },
+      "charts": {
+        "required": false,
+        "status": "not_required",
+        "rationale": "本輪核心是單一事實或制度變化，圖表不會比短文更清楚。",
+        "assets": [],
+        "omission_reason": "依資料圖表需求判定為非必要。"
+      },
+      "images": {
+        "required": true,
+        "status": "ready",
+        "source_checks": [
+          {
+            "source_url": "https://www.reuters.com/world/asia-pacific/australias-capital-join-gun-buyback-response-bondi-beach-attack-albanese-says-2026-08-22/",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "official_api",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-16.json",
+            "detected_image_urls": [
+              "https://www.reuters.com/world/asia-pacific/australias-capital-join-gun-buyback-response-bondi-beach-attack-albanese-says-2026-08-22/"
+            ],
+            "usable_image_found": true,
+            "attempts": 1,
+            "outcome": "attached",
+            "failure_detail": null
+          },
+          {
+            "source_url": "https://www.pm.gov.au/media/national-partnership-delivers-act-firearms-buyback-stronger-community-protections",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-16.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          },
+          {
+            "source_url": "https://www.cna.com.tw/news/aopl/202608220196.aspx",
+            "checked": true,
+            "checked_at": "2026-08-22T20:38:00Z",
+            "inspection_method": "html_extract",
+            "evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/image-evidence/GLB-16.json",
+            "detected_image_urls": [],
+            "usable_image_found": false,
+            "attempts": 1,
+            "outcome": "no_usable_image",
+            "failure_detail": "此來源頁未提供可另外附加、且權利與下載條件皆可核實的圖片。"
+          }
+        ],
+        "professional_visual_required": false,
+        "professional_visual_status": "not_required",
+        "professional_source_checks": [],
+        "professional_omission_reason": "此事件不要求專業地圖或統計圖。",
+        "assets": [
+          {
+            "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/GLB-16.jpg",
+            "caption": "圖一：澳洲擴大槍枝回購計畫資訊圖卡",
+            "source_name": "路透社",
+            "source_url": "https://www.reuters.com/world/asia-pacific/australias-capital-join-gun-buyback-response-bondi-beach-attack-albanese-says-2026-08-22/",
+            "kind": "official_information",
+            "published_at": "2026-08-22T13:00:00Z",
+            "content_sha256": "4d0b0da3dc9c0b66f957d80d878bb3e67c3f6628a0addd90fefc07edfb7be235",
+            "incremental_information": "呈現事件標題、板塊、地點與評級。",
+            "visual_checked": true,
+            "time_checked": true,
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "omission_reason": null,
+        "reader_omission_note": null
+      },
+      "detail": {
+        "overview_time": "08/22 21:00",
+        "time": "2026-08-22T13:00:00Z",
+        "event_details": "澳洲政府推動全國槍枝回購，首都特區確認加入，以回應重大槍擊後的公共安全風險",
+        "positions": [],
+        "analysis": "六項合計 65 分，評為B+級；關鍵在於澳洲政府推動全國槍枝回購，首都特區確認加入，以回應重大槍擊後的公共安全風險，同時考量影響範圍與本期實質增量。",
+        "follow_up": "後續觀察官方更新、執行效果與數據修正。"
+      }
+    }
+  ],
+  "final_status": "ready"
+}
