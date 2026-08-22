@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0.0",
+  "diag_run_id": "diag-s3-20260822T185717Z-61152887",
+  "run_id": "gnb-20260822T185717Z-61152887",
+  "resolved_main_sha": "f213e7edc88ae3928ac4bc2fb5454c21ee135dc2",
+  "window": {
+    "start_utc": "2026-08-21T19:02:03Z",
+    "end_utc": "2026-08-22T19:02:03Z",
+    "start_taipei": "2026-08-22T03:02:03+08:00",
+    "end_taipei": "2026-08-23T03:02:03+08:00"
+  },
+  "GDELT_acquisition_mode": "gdelt_export_24h",
+  "archive_intervals_requested": 97,
+  "archive_intervals_completed": 97,
+  "DOC_API_calls": 0,
+  "routes": {
+    "gdelt": {
+      "status": "ready",
+      "row_count": 12586
+    },
+    "cna": {
+      "status": "ready",
+      "row_count": 214
+    },
+    "chinanews": {
+      "status": "ready",
+      "row_count": 311
+    }
+  },
+  "merged_article_row_count": 13111,
+  "in_window_article_row_count": 13111,
+  "canonical_url_count": 13110,
+  "source_candidates": {
+    "local_path": "/workspace/scratch/e71b6149f33b/gnb-s3/workspace/work/runs/gnb-20260822T185717Z-61152887/work/source-candidates.json",
+    "size": 14432617,
+    "sha256": "98c2ec167ace0a955af94563923c722c5b438930fc9a62974467a94758e1c3f0",
+    "github_persistence": "not_attempted_size_guard"
+  },
+  "materializer": {
+    "result": "passed",
+    "sources": 3,
+    "within_window_rows": 13111
+  },
+  "validators": {
+    "source_scan_evidence": "passed",
+    "source_candidate_schema": "failed",
+    "schema_error_count": 12586,
+    "classification": "source_scan_validation",
+    "exact_error": "news-source-candidate-list schema violation: 12586 GDELT rows use acquisition_route=aggregate_api, but schema enum excludes aggregate_api"
+  },
+  "checkpoint_transition": [
+    "running",
+    "failed"
+  ],
+  "downstream_stages": "not_started"
+}
