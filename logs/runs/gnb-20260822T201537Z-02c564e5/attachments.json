@@ -1,0 +1,146 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260822T201537Z-02c564e5",
+  "attachments": [
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/CHN-06.jpg",
+      "name": "CHN-06.jpg",
+      "size": 39417,
+      "sha256": "868de102d93fcb15ebb50069bf82eee6063111b818d3a186b1397d9086507af6",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/CHN-07.jpg",
+      "name": "CHN-07.jpg",
+      "size": 35298,
+      "sha256": "4a1e81a2b6b431fc42f290390d14d16678e796eeb342a453e5b590a77ebf1eb4",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/CHN-08.jpg",
+      "name": "CHN-08.jpg",
+      "size": 41979,
+      "sha256": "7b436d6477352a8e60e5984bd8e915d20a721b5840e2b575bb492523557c128a",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/GLB-09.jpg",
+      "name": "GLB-09.jpg",
+      "size": 40681,
+      "sha256": "c8fd7ba65ec8950f45acf4af181f38b90ae0bceb66bcefeb42e01d0d51bec864",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/GLB-10.jpg",
+      "name": "GLB-10.jpg",
+      "size": 45193,
+      "sha256": "e2cfdb09b8d4e4e59daadad53e8ccbbed710ae0e15c2894297d4b55a60ffe37e",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/GLB-11.jpg",
+      "name": "GLB-11.jpg",
+      "size": 37905,
+      "sha256": "48dcdb6eaab3586ff2e49ae39de1427fcb183e508d829967dc738f9dcde6e381",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/GLB-12.jpg",
+      "name": "GLB-12.jpg",
+      "size": 36593,
+      "sha256": "5cbb9c3713b31c86d7e91967d7b442554f8d1bad25e8f784e8464ab986d8bba9",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/GLB-13.jpg",
+      "name": "GLB-13.jpg",
+      "size": 35507,
+      "sha256": "3e05273fc192377dad9265de0fc798f96ca1e0c11f738180582881acd646d5cd",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/GLB-14.jpg",
+      "name": "GLB-14.jpg",
+      "size": 34368,
+      "sha256": "8f3146cb72d68834ab38669960647ac3e015a083b998820ed12a78ce13f459b6",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/GLB-15.jpg",
+      "name": "GLB-15.jpg",
+      "size": 39145,
+      "sha256": "f43d407f598110a5c56c1c2678ce87fed26a2b3deaed7bca42e6beab9399e927",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/GLB-16.jpg",
+      "name": "GLB-16.jpg",
+      "size": 31745,
+      "sha256": "4d0b0da3dc9c0b66f957d80d878bb3e67c3f6628a0addd90fefc07edfb7be235",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/TWN-01.jpg",
+      "name": "TWN-01.jpg",
+      "size": 42240,
+      "sha256": "b481327d978959b61b4e4dba2a55a4fc285b13c21a9d8892e2b858f90b80d1de",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/TWN-02.jpg",
+      "name": "TWN-02.jpg",
+      "size": 41199,
+      "sha256": "2cf44378d0170843831a2ac68f839bcbccf240c97640b620c2fdd77d6c77b547",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/TWN-03.jpg",
+      "name": "TWN-03.jpg",
+      "size": 38224,
+      "sha256": "42819c264f789ce446db95f8dd4152ee587ac1b529d3c569e534870896cbc997",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/TWN-04.jpg",
+      "name": "TWN-04.jpg",
+      "size": 33595,
+      "sha256": "e52693e3dc917610daca10156ceb4f0ceb4f37d674186f13a2ff640b55940a4f",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/images/TWN-05.jpg",
+      "name": "TWN-05.jpg",
+      "size": 44279,
+      "sha256": "da45c3b12411989162c883d7cbd37714b1d8779c4c5b2d5185487633c55d541c",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/maps/generated/s4/CHN-08-locator.png",
+      "name": "CHN-08-locator.png",
+      "size": 80388,
+      "sha256": "01bd3025b547a0a4840673d7de84379388791f4a28f8705c029a92aa3c9144ee",
+      "media_type": "image/png"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/maps/generated/s4/GLB-10-locator.png",
+      "name": "GLB-10-locator.png",
+      "size": 59384,
+      "sha256": "4cf99deeadbe221c314c245dcc63f50bdb1d47dce064c5c6ba40a46097ecb98d",
+      "media_type": "image/png"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/maps/generated/s4/GLB-11-locator.png",
+      "name": "GLB-11-locator.png",
+      "size": 96622,
+      "sha256": "b920632771f23e0e5dbbc8487b251ceea044e73187d8a8b4faf4680a80fe56c8",
+      "media_type": "image/png"
+    },
+    {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/maps/generated/s4/TWN-01-locator.png",
+      "name": "TWN-01-locator.png",
+      "size": 51816,
+      "sha256": "49ac8fac0d76314b605e66d1313d2081aa1eef4ff817edc0a13d3d072693a736",
+      "media_type": "image/png"
+    }
+  ]
+}
