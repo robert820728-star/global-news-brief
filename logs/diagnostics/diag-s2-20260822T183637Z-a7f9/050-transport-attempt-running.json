@@ -1,0 +1,31 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-s2-20260822T183637Z-a7f9",
+  "task_name": "新聞管線診斷 S2：Stage -1",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T02:37:00+08:00",
+  "observed_at": "2026-08-23T02:40:00+08:00",
+  "sequence": "050",
+  "step": "transport-attempt",
+  "status": "running",
+  "resolved_main_sha": "f213e7edc88ae3928ac4bc2fb5454c21ee135dc2",
+  "previous_receipt_path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/040-helpers-verified-passed.json",
+  "previous_receipt_blob_sha": "fe3c0df326e5a625d9252feb12475455f5c1227b",
+  "evidence_paths": [
+    "bootstrap_loader.py",
+    "https://raw.githubusercontent.com/robert820728-star/global-news-brief/f213e7edc88ae3928ac4bc2fb5454c21ee135dc2/bootstrap/capsule-payload.tar.xz"
+  ],
+  "evidence_sha256": [
+    "2488abe88a06d1388ef1b841abdb74e77724a5ff841d9f23dcfc016bf67b6d18"
+  ],
+  "elapsed_ms": 203000,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  }
+}
