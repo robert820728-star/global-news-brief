@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "status": "ready",
+  "route_ready_count": 3,
+  "route_total_count": 3,
+  "minimum_ready_routes": 1,
+  "publication_ready": true,
+  "gdelt_live_ready": true,
+  "gdelt_acquisition_mode": "gdelt_export_24h",
+  "archive_intervals_requested": 97,
+  "archive_intervals_completed": 97,
+  "DOC_API_calls": 0,
+  "routes": [
+    {
+      "source_id": "gdelt",
+      "route": "aggregate_api",
+      "status": "ready",
+      "rows": 12586,
+      "http_status": 200,
+      "bytes": 3261774,
+      "retry_count": 0,
+      "archive_complete": true,
+      "snapshot_sha256": "12df64d0abd79e3a846aa62e9bb58459b34c1ae782a3690635221700e0109f56"
+    },
+    {
+      "source_id": "cna",
+      "route": "structured_direct",
+      "status": "ready",
+      "rows": 214,
+      "http_status": 200,
+      "bytes": 119787,
+      "retry_count": 0,
+      "snapshot_sha256": "bdea82a16a8ce5067bb25000d0b79bb8783c9297a580d45c5a3388b790c2eb57"
+    },
+    {
+      "source_id": "chinanews",
+      "route": "html_direct",
+      "status": "ready",
+      "rows": 311,
+      "http_status": 200,
+      "bytes": 139921,
+      "retry_count": 0,
+      "snapshot_sha256": "c8b390ab3d22e4881d42fb8930ad7852d194377d36aaefa46d5c7428acbc6b60"
+    }
+  ],
+  "evidence_sha256": "b38890a6f7f1f55025a63ae0be37ca2efbac4ff7f09d1ea9e089a3462628b8b0"
+}
