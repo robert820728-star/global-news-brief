@@ -1,0 +1,171 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-s3-20260822T185717Z-61152887",
+  "task_name": "新聞管線診斷 S3：source-scan",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T02:59:11+08:00",
+  "observed_at": "2026-08-22T19:11:25.974Z",
+  "sequence": "990",
+  "step": "terminal",
+  "status": "failed",
+  "resolved_main_sha": "f213e7edc88ae3928ac4bc2fb5454c21ee135dc2",
+  "previous_receipt_path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/990-terminal-running.json",
+  "previous_receipt_blob_sha": "8f933a92344bf42899356f84bcadb9d37d1574b0",
+  "evidence_paths": [
+    "logs/diagnostics/diag-s3-20260822T185717Z-61152887/artifacts/checkpoint.json",
+    "logs/diagnostics/diag-s3-20260822T185717Z-61152887/artifacts/source-route-coverage.json",
+    "logs/diagnostics/diag-s3-20260822T185717Z-61152887/artifacts/source-coverage.json",
+    "logs/diagnostics/diag-s3-20260822T185717Z-61152887/artifacts/source-scan-summary.json"
+  ],
+  "evidence_sha256": [
+    "ee0881b9bf2b04585b406120fbb504d0a7e12b58",
+    "a8998599928a7a6eba7cc9611a193c9e60d32bdf",
+    "0a79f90e38b53270fb5723ba0fc5b4d42b8b9abb",
+    "7028d3134727dfd0d9a7550951539c0c374fb9cb"
+  ],
+  "elapsed_ms": 848974,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "error": {
+    "classification": "source_scan_validation",
+    "message": "news-source-candidate-list schema violation: 12586 GDELT rows use acquisition_route=aggregate_api, but schema enum excludes aggregate_api",
+    "tool_or_endpoint": "schemas/news-source-candidate-list.schema.json",
+    "http_status": null,
+    "request_id": null
+  },
+  "overall_status": "failed",
+  "last_completed_step": "source-scans-materialized",
+  "first_incomplete_step": "source-scan-validated",
+  "earliest_failure": "source_scan_validation",
+  "exact_error": "news-source-candidate-list schema violation: 12586 GDELT rows use acquisition_route=aggregate_api, but schema enum excludes aggregate_api",
+  "RUN_RECEIPT": {
+    "run_id": "gnb-20260822T185717Z-61152887",
+    "main_sha": "f213e7edc88ae3928ac4bc2fb5454c21ee135dc2",
+    "last_completed_stage": "bootstrap-runtime-ready",
+    "bootstrap_chunks": "0/52",
+    "current_chunk": "none",
+    "current_block": "none",
+    "last_error": "news-source-candidate-list schema violation: 12586 GDELT rows use acquisition_route=aggregate_api, but schema enum excludes aggregate_api",
+    "retry_count": 0,
+    "external_ledger": "available",
+    "canonical_delivery": false
+  },
+  "receipts": [
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/010-main-pinned-running.json",
+      "sha": "768425a354355ede39088d5a4049c27cd9dcf773"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/010-main-pinned-passed.json",
+      "sha": "f0e4ad43242a869b26bf7ed90ca134791713e30e"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/020-tree-verified-running.json",
+      "sha": "195882b13a2b2fad1d6b13f15eab730dd9adc689"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/020-tree-verified-passed.json",
+      "sha": "aa177c61c487c247f13b38e1c43759c7ed1c57c2"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/030-manifest-verified-running.json",
+      "sha": "b69a0a149f9d9c6afe3a0cc86c9bb5e808610aa0"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/030-manifest-verified-passed.json",
+      "sha": "f9738cf176d992e7aa1173d4b1dd6d85fdfc963d"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/040-helpers-verified-running.json",
+      "sha": "2270ab5850777966531a57c5fd6beb779e177075"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/040-helpers-verified-passed.json",
+      "sha": "95304c64e10e9efa7dfda29533e1e84e7bf76c04"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/050-transport-attempt-running.json",
+      "sha": "eeafec7bb8a63dd26059e7e2702d22e37639f601"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/050-transport-attempt-passed.json",
+      "sha": "631310a465d0ce44737d37fbcd7fdabaee2967b1"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/060-workspace-materialized-running.json",
+      "sha": "b1a1884c646a44697a02a59c29ce60177120ccf8"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/060-workspace-materialized-passed.json",
+      "sha": "f2b263fb4bead8de390a25c9ebcf17016d24cf62"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/070-runtime-ready-running.json",
+      "sha": "1c17b68ca975a9579981b0790fa56299a0a10e85"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/070-runtime-ready-passed.json",
+      "sha": "7f3669c1e688d212f22d414be97a31d3edcb7b36"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/100-checkpoint-initialized-running.json",
+      "sha": "96e4026d3ce4f7c2c515a930a691bcd6e3b91a70"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/100-checkpoint-initialized-passed.json",
+      "sha": "6838576c1d3bd5712deb4814c28a0d9c523eeb0d"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/110-source-routes-fetched-running.json",
+      "sha": "46216b17aeb2179a679451cd5ae0ac984eaf6f50"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/110-source-routes-fetched-passed.json",
+      "sha": "f5fb83a3ebdc7a98094f1ce59b7891397c603302"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/120-source-scans-materialized-running.json",
+      "sha": "b9f01969795d378878e28d4281129a3aaaf70414"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/120-source-scans-materialized-passed.json",
+      "sha": "c813d9a35bdb9154bc1e4b06c87244f38db09d2b"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/130-source-scan-validated-running.json",
+      "sha": "9f01708430977abd1e5b4a779b8ba0f9aa6fc814"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/130-source-scan-validated-failed.json",
+      "sha": "739d16674caca6bbd8527f275f04b55c068ffa04"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/990-terminal-running.json",
+      "sha": "8f933a92344bf42899356f84bcadb9d37d1574b0"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/artifacts/checkpoint.json",
+      "sha": "ee0881b9bf2b04585b406120fbb504d0a7e12b58"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/artifacts/source-route-coverage.json",
+      "sha": "a8998599928a7a6eba7cc9611a193c9e60d32bdf"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/artifacts/source-coverage.json",
+      "sha": "0a79f90e38b53270fb5723ba0fc5b4d42b8b9abb"
+    },
+    {
+      "path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/artifacts/source-scan-summary.json",
+      "sha": "7028d3134727dfd0d9a7550951539c0c374fb9cb"
+    }
+  ],
+  "source_candidates": {
+    "local_path": "/workspace/scratch/e71b6149f33b/gnb-s3/workspace/work/runs/gnb-20260822T185717Z-61152887/work/source-candidates.json",
+    "size": 14432617,
+    "sha256": "98c2ec167ace0a955af94563923c722c5b438930fc9a62974467a94758e1c3f0",
+    "github_persistence": "not_attempted_size_guard"
+  }
+}
