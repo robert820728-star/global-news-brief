@@ -1,0 +1,30 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-s3-20260822T185717Z-61152887",
+  "task_name": "新聞管線診斷 S3：source-scan",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T02:59:11+08:00",
+  "observed_at": "2026-08-22T19:02:38.951Z",
+  "sequence": "100",
+  "step": "checkpoint-initialized",
+  "status": "passed",
+  "resolved_main_sha": "f213e7edc88ae3928ac4bc2fb5454c21ee135dc2",
+  "previous_receipt_path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/100-checkpoint-initialized-running.json",
+  "previous_receipt_blob_sha": "96e4026d3ce4f7c2c515a930a691bcd6e3b91a70",
+  "evidence_paths": [
+    "work/runs/gnb-20260822T185717Z-61152887/checkpoint.json"
+  ],
+  "evidence_sha256": [
+    "256e014832cb2674a51c7b20e2a03fb3c47e63f5931df7cd292caa626eeb9943"
+  ],
+  "elapsed_ms": 321951,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  }
+}
