@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260822T201537Z-02c564e5",
+  "diag_run_id": "diag-s4-20260822T201537Z-02c564e5",
+  "window_start": "2026-08-21T20:20:13Z",
+  "window_end": "2026-08-22T20:20:13Z",
+  "merged_article_row_count": 12520,
+  "in_window_article_row_count": 12520,
+  "canonical_url_count": 12519,
+  "provisional_title_cluster_count": 10402,
+  "semantic_event_count": 16,
+  "scored_event_count": 16,
+  "event_evidence_article_row_count": 143,
+  "non_news_article_row_count": 12377,
+  "unresolved_article_row_count": 0,
+  "c_or_higher_scored_event_count": 16,
+  "selected_event_count": 16,
+  "route_counts": {
+    "gdelt": 12015,
+    "cna": 215,
+    "chinanews": 290
+  },
+  "gdelt_acquisition_mode": "gdelt_export_24h",
+  "archive_intervals_requested": 97,
+  "archive_intervals_completed": 97,
+  "doc_api_calls": 0
+}
