@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.1.0",
+  "run_id": "gnb-20260822T185717Z-61152887",
+  "resolved_main_sha": "f213e7edc88ae3928ac4bc2fb5454c21ee135dc2",
+  "window": {
+    "start_utc": "2026-08-21T19:02:03Z",
+    "end_utc": "2026-08-22T19:02:03Z",
+    "start_taipei": "2026-08-22T03:02:03+08:00",
+    "end_taipei": "2026-08-23T03:02:03+08:00"
+  },
+  "source_scan": {
+    "status": "failed",
+    "previous_status": "running",
+    "message": "news-source-candidate-list schema violation: 12586 GDELT rows use acquisition_route=aggregate_api, but schema allows only structured_direct, html_direct, browser_rendered, same_source_alternate"
+  },
+  "downstream_stages": "not_started",
+  "bootstrap_receipt": {
+    "path": "/workspace/scratch/e71b6149f33b/gnb-s3/workspace/bootstrap-workspace.json",
+    "sha256": "58fb8007aec1b94a42deca8447164f688671d9b66602c0cb6496e0f841f33d48",
+    "size": 81110
+  }
+}
