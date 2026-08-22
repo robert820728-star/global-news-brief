@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.1.0",
+  "run_id": "gnb-20260822T194531Z-9436b643",
+  "window_start": "2026-08-21T19:49:54Z",
+  "window_end": "2026-08-22T19:49:54Z",
+  "created_at": "2026-08-22T12:50:14-07:00",
+  "updated_at": "2026-08-22T12:58:01-07:00",
+  "bootstrap": {
+    "repository": "robert820728-star/global-news-brief",
+    "commit_sha": "318db6c62ce8a968f2466e29238379ca948984ed",
+    "materialization_method": "github-connector-capsule",
+    "receipt": {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s3-r1/workspace/bootstrap-workspace.json",
+      "sha256": "1e3553acb6837ec469ff5e91ac62223bbc577255a7d9180b115541e84e57cba7",
+      "size": 81113
+    }
+  },
+  "bootstrap_required": true,
+  "stage_status": {
+    "source-scan": "completed",
+    "preprocess-news-candidates": "pending",
+    "select-news-events": "pending",
+    "audit-news-candidates": "pending",
+    "materialize-manifest": "pending",
+    "verify-news-events": "pending",
+    "build-news-maps": "pending",
+    "build-news-charts": "pending",
+    "collect-news-images": "pending",
+    "render": "pending"
+  },
+  "stage_evidence": {
+    "source-scan": {
+      "recorded_at": "2026-08-22T12:58:01-07:00",
+      "status": "completed",
+      "message": "canonical source-scan validated; stopped before preprocess-news-candidates",
+      "artifacts": {
+        "source_candidates": {
+          "path": "/workspace/scratch/e71b6149f33b/gnb-s3-r1/workspace/work/runs/gnb-20260822T194531Z-9436b643/work/source-candidates.json",
+          "sha256": "329aaef8fa43cb35fdec2ea6612deddf17c743ae57172650c189306bae9bab94",
+          "size": 14055147
+        }
+      }
+    }
+  },
+  "recovery": {
+    "status": "pending",
+    "max_attempts_per_target": 3,
+    "attempts": [],
+    "unresolved_targets": []
+  }
+}
