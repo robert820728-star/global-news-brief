@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "window": {
+    "start_utc": "2026-08-21T19:02:03Z",
+    "end_utc": "2026-08-22T19:02:03Z"
+  },
+  "materializer_status": "passed",
+  "validator_status": "passed",
+  "ranking_method": "canonical_source_scan_no_top_n",
+  "routes": [
+    {
+      "source_id": "gdelt",
+      "status": "ready",
+      "within_window_count": 12586,
+      "ranked_count": 12586,
+      "selected_for_pool_count": 12586
+    },
+    {
+      "source_id": "cna",
+      "status": "ready",
+      "within_window_count": 214,
+      "ranked_count": 214,
+      "selected_for_pool_count": 214
+    },
+    {
+      "source_id": "chinanews",
+      "status": "ready",
+      "within_window_count": 311,
+      "ranked_count": 311,
+      "selected_for_pool_count": 311
+    }
+  ],
+  "merged_article_row_count": 13111,
+  "in_window_article_row_count": 13111,
+  "canonical_url_count": 13110,
+  "local_evidence_path": "/workspace/scratch/e71b6149f33b/gnb-s3/workspace/work/runs/gnb-20260822T185717Z-61152887/work/source-coverage.json",
+  "local_evidence_sha256": "ede0726bc3ae1a783bf34eeefa7d1e26a33b6ba530b8cc1dc00644efbf7931bd"
+}
