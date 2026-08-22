@@ -1,0 +1,32 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-s2-20260822T183637Z-a7f9",
+  "task_name": "新聞管線診斷 S2：Stage -1",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T02:37:00+08:00",
+  "resolved_main_sha": "f213e7edc88ae3928ac4bc2fb5454c21ee135dc2",
+  "retry_count": 0,
+  "external_ledger": "available",
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "observed_at": "2026-08-23T02:40:52+08:00",
+  "sequence": "050",
+  "step": "transport-attempt",
+  "status": "passed",
+  "previous_receipt_path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/050-transport-attempt-running.json",
+  "previous_receipt_blob_sha": "1b3f26a0abf52a0cca3cd1bf31afe4a8395e967d",
+  "evidence_paths": [
+    "bootstrap/capsule-payload.tar.xz",
+    "bootstrap_loader.py",
+    "bootstrap-workspace.json"
+  ],
+  "evidence_sha256": [
+    "2488abe88a06d1388ef1b841abdb74e77724a5ff841d9f23dcfc016bf67b6d18"
+  ],
+  "elapsed_ms": 255000
+}
