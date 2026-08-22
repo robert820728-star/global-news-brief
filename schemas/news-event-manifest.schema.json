@@ -406,7 +406,8 @@
           "maxItems": 2,
           "items": { "$ref": "#/$defs/imageAsset" }
         },
-        "omission_reason": { "type": ["string", "null"] }
+        "omission_reason": { "type": ["string", "null"] },
+        "reader_omission_note": { "type": ["string", "null"] }
       },
       "additionalProperties": false
     },

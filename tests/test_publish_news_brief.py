@@ -8,7 +8,12 @@ from pathlib import Path
 
 from PIL import Image
 
-from tests.test_validate_news_brief import MAIN_SHA, RUN_ID, valid_brief, valid_manifest
+from tests.test_validate_news_brief import (
+    MAIN_SHA,
+    RUN_ID,
+    legacy_sectioned_brief,
+    valid_manifest,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLISHER = ROOT / "scripts" / "publish_news_brief.py"
@@ -195,7 +200,7 @@ def prepare_inputs(root: Path):
     manifest["events"][0]["images"]["assets"][0]["path"] = str(image_path)
     manifest["events"][0]["images"]["source_checks"][0]["evidence_path"] = str(source_check_path)
     manifest["events"][0]["images"]["professional_source_checks"][0]["evidence_path"] = str(professional_check_path)
-    brief = valid_brief().replace("sandbox:/tmp/map.png", str(map_path)).replace(
+    brief = legacy_sectioned_brief().replace("sandbox:/tmp/map.png", str(map_path)).replace(
         "sandbox:/tmp/image.png", str(image_path)
     )
     manifest_path = root / "manifest.json"

@@ -43,12 +43,21 @@ The required order for every configured source is: `canonical route -> same-site
 
 ## 固定輸出設定
 
-- 區域：`TWN`、`CHN`、`GLB`。
+- 預設區域：`TWN`、`CHN`、`GLB`；本輪明確指定的國家、區域、洲別或國際組織板塊覆寫預設。
 - 語言：繁體中文。
 - 時區語意：`Asia/Taipei`。
 - 新聞時間窗：以本輪**實際執行時間**為 `window_end`，精確向前 24 小時為 `window_start`。不得用「今天 00:00 起」或排程原定時間替代。
 - 不設定任意篇數上限；依 `news-brief-settings.md` 的評級、門檻與 continuity 規則決定事件數量。
 - 讀者版標題固定為「每日新聞」；若宿主可控制對話標題則使用此名稱。
+
+## 執行輸入正規化
+
+`RUN_INPUT_NORMALIZATION_GATE`
+
+- 使用者只需說明「依 GitHub 規定執行」，並另外列出本輪區域與監控類型；其餘 discovery、事件去重、六項評分、驗證、圖片、地圖、reader 與發布規則全部由本 repository 決定，不要求使用者重貼。
+- 區域正規化為 `sections`：國家優先使用 ISO 3166-1 alpha-3；跨國區域使用穩定三碼。未指定區域時才使用 `TWN`、`CHN`、`GLB`。
+- 監控類型正規化為 `topic_weights`。先比對既有主題鍵；沒有完全相同鍵時保存使用者原詞與最接近的主題映射，不得靜默忽略，也不得因此改變六項評分公式或設定篇數上限。
+- 正規化結果必須在 discovery 前寫入本輪 manifest／audit 的設定證據；後段不得自行改區域或監控類型。
 
 ## Stage -1：先取得可執行 workspace
 
@@ -61,7 +70,7 @@ Before reading the recursive tree, capsule manifest, helpers, payload, or chunks
 - If the probe succeeds, continue the full verified-runtime path below.
 - If the local execution backend is absent or returns a host execution error, classify it as `host_execution_unavailable`, not as a repository materialization defect. Do not fetch the capsule, do not fetch chunks, do not disable the daily schedule, and do not modify `main`.
 - In that case, fetch `mobile-chatgpt-daily-prompt.md` from the same pinned `main` SHA and immediately run its `mobile-native` path in the same scheduled task. This fallback must still deliver the source-backed reader edition, full fourteen-day candidate audit, six scores and totals, every C-or-higher event, and the mobile image decision or non-technical no-image explanation.
-- A `mobile-native` result is a usable degraded reader edition, not a canonical full-asset release. If the host cannot create stable map/chart attachments, omit them and state that the scheduled host did not provide executable visual rendering; never claim full visual validation.
+- A `mobile-native` result is a usable degraded reader draft, not a canonical full-asset release. If any selected event requires a map or another attachment that the host cannot materialize and validate, preserve the completed news stages and hand only that visual stage to full-runtime. Never mark the canonical checkpoint completed or claim full visual validation while a required attachment is omitted.
 - Record `execution_mode=full-runtime` or `execution_mode=mobile-native` in the run ledger. The next scheduled run probes capabilities again and resolves fresh `main`; it must not create a second task merely to retry the missing runtime.
 
 `PRE_PROBE_METADATA_READ_RECOVERY`: if the executor accidentally reads only repository tree, manifest, helper, payload, or chunk metadata before the capability probe, that ordering mistake must not fail the run. The recovery must occur before any news source or prior result is read: immediately perform the one probe, discard the pre-read metadata, and continue through the selected execution mode. The executor must not reuse any pre-read tree, manifest, helper, payload, or chunk; it must refetch the required metadata from the same pinned SHA after routing. This recovery does not permit pre-reading news, an old reader, candidate audit, or source results, and it does not relax any capsule hash or workspace verification.
@@ -240,6 +249,8 @@ Repository 內只有 canonical publisher 可以建立 reader-facing release。�
 - candidate audit 與 source-scan 證據有效；
 - manifest/schema 有效；
 - map decisions、reader brief 與附件 validators 通過；
+- 每個 `map.required=true` 的事件皆為 `map.status=ready` 且至少有一張地圖附件；
+- reader 中所有 Markdown 圖片都逐一對應 manifest，位於所屬新聞內，依地圖、資料圖表、來源圖片排序，並由緊接附件的地圖一／資料圖表一／圖一／圖二圖說識別；reader 其他位置不得有圖片；
 - unique delivery gate 通過；
 - publisher 建立 `release-receipt.json`；
 - 交付當下 publisher 再次 revalidate bootstrap binding、checkpoint、manifest、audit、source pool、brief、attachments 與 map decisions。

@@ -107,4 +107,14 @@ When GitHub write access is available, follow `bootstrap/RUN_LEDGER_PROTOCOL.md`
 
 Retain `bootstrap-progress.json` on failure so the final report can diagnose the earliest boundary. After successful canonical reader delivery, print the final receipt first and then clear the local progress file. The compact final external ledger record may remain.
 
+## Canonical completion capability
+
+`CANONICAL_COMPLETION_REQUIRES_FULL_ASSET_VALIDATION`
+
+Canonical completion requires the verified runtime, the canonical publisher,
+materialized local attachments, and all manifest/reader/map/image validators.
+A mobile-native path may preserve and hand off a degraded reader draft, but it
+must not clear bootstrap progress, mark the canonical checkpoint completed, or
+claim full visual validation while any required map or attachment is omitted.
+
 Do not mislabel it as source-scan, preprocessing, validation, image, map, or publisher failure. Do not bypass the repository pipeline by manually producing a news brief.

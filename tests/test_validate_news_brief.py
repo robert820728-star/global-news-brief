@@ -287,6 +287,56 @@ class ValidatorTests(unittest.TestCase):
         errors = VALIDATOR.validate_legacy_sectioned_layout(valid_manifest(), valid_brief())
         self.assertTrue(any("既有分區格式" in error for error in errors), errors)
 
+    def test_sectioned_reader_rejects_reversed_attachment_order(self):
+        text = legacy_sectioned_brief()
+        map_block = """![地圖一](sandbox:/tmp/map.png)
+
+地圖一：事件位置，依來源資料整理。"""
+        image_block = """![圖一](sandbox:/tmp/image.png)
+
+圖一：官方資訊圖（來源：官方來源）。"""
+        text = text.replace(
+            map_block + "\n\n" + image_block,
+            image_block + "\n\n" + map_block,
+        )
+        errors = VALIDATOR.validate_legacy_sectioned_layout(valid_manifest(), text)
+        self.assertTrue(any("附件順序" in error for error in errors), errors)
+
+    def test_sectioned_reader_requires_caption_immediately_after_attachment(self):
+        text = legacy_sectioned_brief().replace(
+            "![圖一](sandbox:/tmp/image.png)\n\n圖一：",
+            "![圖一](sandbox:/tmp/image.png)\n\n插入了不屬於圖說的文字。\n\n圖一：",
+        )
+        errors = VALIDATOR.validate_legacy_sectioned_layout(valid_manifest(), text)
+        self.assertTrue(any("圖說必須緊接" in error for error in errors), errors)
+
+    def test_sectioned_reader_rejects_unmanifested_story_image(self):
+        text = legacy_sectioned_brief().replace(
+            "據官方來源指出，地震事件已發生。",
+            "![額外圖片](sandbox:/tmp/extra.png)\n\n額外圖片說明。\n\n"
+            "據官方來源指出，地震事件已發生。",
+        )
+        errors = VALIDATOR.validate_legacy_sectioned_layout(valid_manifest(), text)
+        self.assertTrue(any("未列入 manifest" in error for error in errors), errors)
+
+    def test_sectioned_reader_rejects_image_outside_story(self):
+        text = legacy_sectioned_brief().replace(
+            "## 🇹🇼 台灣新聞",
+            "![頁首圖片](sandbox:/tmp/header.png)\n\n## 🇹🇼 台灣新聞",
+        )
+        errors = VALIDATOR.validate_legacy_sectioned_layout(valid_manifest(), text)
+        self.assertTrue(any("新聞區塊之外" in error for error in errors), errors)
+
+    def test_ready_manifest_blocks_required_omitted_map(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["map"].update({
+            "status": "omitted",
+            "assets": [],
+            "omission_reason": "renderer failed",
+        })
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("必要地圖" in error and "ready" in error for error in errors), errors)
+
     def test_reader_rejects_generic_follow_up_placeholder(self):
         manifest = valid_manifest()
         manifest["events"][0]["detail"]["follow_up"] = "追蹤官方後續更新與實際影響。"

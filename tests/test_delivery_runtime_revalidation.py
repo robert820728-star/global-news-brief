@@ -45,7 +45,11 @@ class DeliveryRuntimeRevalidationTests(unittest.TestCase):
                 "candidate_errors": lambda *args: [],
                 "attachment_errors": lambda *args: [],
                 "validate_map_decisions": type("M", (), {"validate": staticmethod(lambda *args: [])}),
-                "validate_news_brief": type("B", (), {"validate_brief_text": staticmethod(lambda *args: [])}),
+                "validate_news_brief": type(
+                    "B",
+                    (),
+                    {"validate_canonical_reader": staticmethod(lambda *args: [])},
+                ),
             }
             for name, value in helpers.items():
                 old[name] = getattr(main, name, None)

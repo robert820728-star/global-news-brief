@@ -120,7 +120,7 @@ def _runtime_revalidation_errors(root: Path) -> list[str]:
     errors += publisher.candidate_errors(audit, manifest, pool)
     errors += publisher.attachment_errors(manifest)
     errors += publisher.validate_map_decisions.validate(manifest)
-    errors += publisher.validate_news_brief.validate_brief_text(manifest, brief)
+    errors += publisher.validate_news_brief.validate_canonical_reader(manifest, brief)
 
     visuals = _visual_paths(manifest)
     before: dict[str, str] = {}

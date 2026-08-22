@@ -1,5 +1,13 @@
 # 手機 ChatGPT 基礎每日新聞規則
 
+## 執行輸入正規化
+
+`RUN_INPUT_NORMALIZATION_GATE`
+
+- 使用者只需說明依 GitHub 規定執行，並指定本輪區域與監控類型；區域正規化為 `sections`，監控類型正規化為 `topic_weights`。
+- 國家優先使用 ISO 3166-1 alpha-3，跨國區域使用穩定三碼；沒有完全相同的監控鍵時保存使用者原詞與最接近的主題映射，不得靜默忽略。
+- 未指定部分才使用 repository 預設；輸入正規化不得改變六項評分、C 級門檻或加入篇數上限。
+
 ## Discovery first, verification second
 
 `DISCOVERY_THEN_VERIFY`
@@ -57,7 +65,7 @@ The required order for every configured source is: `canonical route -> same-site
    - `LEGACY_TODAY_OVERVIEW_NO_OMISSION_GATE`：每個有新聞的板塊開頭都必須原樣保留既有 `時間｜事件｜評級` 三欄總清單並列出該區全部入選事件；這就是今日總清單，不是可選摘要。不得省略、跨區集中或重新設計。
    - `LEGACY_SECTIONED_READER_LAYOUT_GATE`：總清單後必須在同一板塊內依序放該區新聞；每則固定為「標題｜評級 → 可見圖片或圖片說明 → 新聞摘要 → 評為X級的評論與段末來源」。不得改成欄位式逐條詳報，不得顯示事件編號，也不得產生 `時間／來源／事件細節／分析` 欄位組。送出前必須執行 `scripts/validate_news_brief.py brief --reader-layout legacy-sectioned`；格式錯誤時只重做 reader render，不重跑新聞階段。
    - `READER_INTERNAL_REPAIR_LOG_EXCLUSION_GATE`：重試、429、archive 切換、去重效能、圖片補救、checkpoint 重建及其他「修復紀錄」只可寫入內部 run log／audit receipt，不得出現在讀者版、`latest-reader.md` 或其逐字對話副本。對話如需附 run receipt，只能在完整 reader 之後以一行列出 run_id 與驗收結果，不得附修復過程。
-7. 輸出對話前最後一次持久更新為 `delivery-handoff`、`status=completed`、`delivery_status=handoff_started`。這只證明新聞流程完成、讀者版已存 GitHub並開始交給 ChatGPT；目前排程沒有手機客戶端顯示回執，因此沒有外部明確回執時不得宣稱 `client_confirmed` 或手機畫面已收到。
+7. 只有所有必要視覺與 canonical reader validators 均通過時，輸出對話前最後一次持久更新才可為 `delivery-handoff`、`status=completed`、`delivery_status=handoff_started`。若必要地圖或附件仍需 full-runtime，保持 `status=running` 並保存 handoff target，不得提前 completed。即使已 handoff，沒有外部明確回執時仍不得宣稱 `client_confirmed` 或手機畫面已收到。
    - `CONVERSATION_READER_BYTE_IDENTITY_GATE`：排程最終訊息必須直接交付 `logs/latest-reader.md` 的完整內容，順序與文字不得改成摘要、驗收報告、節錄或僅告知 GitHub 已保存。可以在完整 reader 之後附極短的 run receipt，但不得以 receipt 取代讀者版。若最終訊息未包含完整 reader，`delivery-handoff` 不得視為驗收通過。
 
 紀錄格式必須符合 `schemas/mobile-run-log.schema.json`，並明確寫入 `execution_mode=mobile-native`；詳細輪替規則見 `docs/mobile-run-ledger.md`。紀錄只包含階段、時間、commit、錯誤摘要、完整海選清單位置及讀者版位置，不保存憑證、完整來源頁或圖片二進位內容。
@@ -128,16 +136,9 @@ The required order for every configured source is: `canonical route -> same-site
    - 外部驗收器必須用結構化 `read_thread` 讀取本輪最終回覆，確認存在非文字的 `image/media content block` 或原生 `async_image_group`，再以唯讀畫面擷取確認實際 `rendered pixel` 圖片區域寬高非零。若只有一般 `agentMessage text`、圖片網址、Markdown、圖說，或畫面仍空白，立即判定圖片交付失敗，不得要求使用者目視補驗。
    - mobile-native 若沒有可產生原生媒體區塊的工具，必須回報 `NATIVE_MEDIA_UNAVAILABLE`，保留本輪 discovery、評分、驗證與 reader checkpoint，只把圖片交付切換到既有 full-runtime：由 full-runtime 執行 `<bundled-python> scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>`，使用 manifest 中 `status=ready` 的本機 JPEG 實體檔以上傳附件方式交付；不得建立新 run、重跑新聞流程或只改成另一個外部圖片網址。
    - 若無法在送出前確認圖片可見，必須移除該圖片標記，改成一句非技術性的 `**圖片說明：**`；不得寫「沿用前輪選圖」、「前輪同圖」、「不重新驗收」或「圖片待補」。
-8. `## 後續觀察` 每一項必須是可驗證的具體條件，包含事件編號與數值門檻、日期、決策節點或明確官方動作；不得使用「追蹤官方後續更新與實際影響」等通用占位句。
-
-## 基礎讀者版
-
-依序輸出：
-
-1. `YYYY/MM/DD 每日新聞`
-2. 本期總數與各區域數量
-3. 今日重點表：時間、區域、標題、等級
-4. 每則新聞：標題、時間、摘要、為何重要、已確認事實、不確定處、新聞來源連結，以及「同圖低解析內嵌」、「同一張原圖」或「圖片說明」；圖片區不顯示圖片網址或圖片來源頁
-5. 十四天海選清單：每筆列出日期、區域、標題、六項大評分、總分、等級、決定、理由與來源
+8. reader 只使用 `news-brief-template.md` 的分區版型：每區完整 `時間｜事件｜評級` 表後緊接該區新聞。不得另建「今日總覽／逐條詳報／後續觀察」三大區塊。
+9. 每則新聞的地圖、資料圖表與來源圖片依序直向排列；每張附件的下一個非空白行必須是對應的地圖一／資料圖表一／圖一／圖二圖說。禁止圖廊、輪播、同列圖片、疊圖、manifest 外圖片及新聞區塊外圖片。
+10. `map.required=true` 但無法產生並驗收附件時，不得標記 canonical completed；保留已完成新聞階段，只把地圖／render 交給 full-runtime。
+11. 十四天海選清單保留在 audit artifact，不附加到 canonical reader；每筆仍保存日期、區域、標題、六項評分、總分、等級、決定、理由與來源。
 
 只提供有來源支持的內容。GitHub 規則、搜尋或來源無法讀取時，回報實際缺口，不得假裝完成。

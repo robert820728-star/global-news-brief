@@ -7,6 +7,43 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PipelineContractTests(unittest.TestCase):
+    def test_short_run_instruction_normalizes_regions_and_monitoring_types(self):
+        documents = (
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / "news-brief-settings.md",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("RUN_INPUT_NORMALIZATION_GATE", text, path.name)
+            self.assertIn("sections", text, path.name)
+            self.assertIn("topic_weights", text, path.name)
+
+    def test_contract_documents_do_not_reintroduce_retired_reader_outline(self):
+        settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        self.assertNotIn("其後只能有三個二級標題", settings)
+        self.assertNotRegex(mobile, r"(?m)^## 基礎讀者版$")
+        self.assertNotRegex(mobile, r"(?m)^8\. `## 後續觀察`")
+
+    def test_manifest_schema_allows_reader_image_omission_note(self):
+        schema = json.loads(
+            (ROOT / "schemas" / "news-event-manifest.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        image_properties = schema["$defs"]["imageResult"]["properties"]
+        self.assertIn("reader_omission_note", image_properties)
+
+    def test_publisher_uses_only_canonical_sectioned_reader_validator(self):
+        for relative in (
+            "scripts/publish_news_brief.py",
+            "scripts/check_unique_delivery_gate.py",
+        ):
+            text = (ROOT / relative).read_text(encoding="utf-8")
+            self.assertIn("validate_canonical_reader", text)
+            self.assertNotIn("validate_news_brief.validate_brief_text", text)
+
     def test_scheduled_host_without_python_uses_mobile_native_fallback(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
 

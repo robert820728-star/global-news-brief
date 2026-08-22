@@ -56,6 +56,9 @@ FORBIDDEN_RENDER_TOKENS = (
     "<gallery",
     "<carousel",
 )
+MARKDOWN_IMAGE_RE = re.compile(
+    r"(?m)^!\[([^\]\r\n]*)\]\(([^)\r\n]+)\)[ \t]*\r?$"
+)
 GENERIC_FOLLOW_UP_PHRASES = {
     "追蹤官方後續更新與實際影響。",
     "追蹤官方後續更新。",
@@ -829,6 +832,19 @@ def validate_manifest_data(data: dict[str, Any]) -> list[str]:
                 field_value = event.get(field_name)
                 if isinstance(field_value, dict) and field_value.get("status") == "pending":
                     errors.append(f"{label}.{field_name} 尚未完成判斷")
+            map_value = event.get("map")
+            if (
+                isinstance(map_value, dict)
+                and map_value.get("required") is True
+                and (
+                    map_value.get("status") != "ready"
+                    or not map_value.get("assets")
+                )
+            ):
+                errors.append(
+                    f"{label}.map 必要地圖必須為 ready 且至少包含一張附件，"
+                    "不得以 omitted 完成發布"
+                )
         for left_name, left_paths, right_name, right_paths in (
             ("地圖", map_paths, "資料圖表", chart_paths),
             ("地圖", map_paths, "圖片", image_paths),
@@ -1164,6 +1180,77 @@ def _legacy_section_title(section: dict[str, Any]) -> str:
     return f"{section.get('name', '')}新聞"
 
 
+def _expected_reader_assets(
+    event: dict[str, Any],
+) -> list[tuple[str, str, str, str]]:
+    expected: list[tuple[str, str, str, str]] = []
+    for field_key in ("map", "charts", "images"):
+        result = event.get(field_key)
+        if not isinstance(result, dict):
+            continue
+        for index, asset in enumerate(result.get("assets", []), start=1):
+            if not isinstance(asset, dict):
+                continue
+            number = (
+                CHINESE_NUMERALS[index - 1]
+                if index <= len(CHINESE_NUMERALS)
+                else str(index)
+            )
+            expected.append(
+                (
+                    str(asset.get("path", "")),
+                    str(asset.get("caption", "")),
+                    f"{FIGURE_PREFIXES[field_key]}{number}",
+                    field_key,
+                )
+            )
+    return expected
+
+
+def _next_nonblank_line(text: str, offset: int) -> str | None:
+    for line in text[offset:].splitlines():
+        if line.strip():
+            return line.strip()
+    return None
+
+
+def _validate_story_asset_stream(
+    event: dict[str, Any],
+    block: str,
+    errors: list[str],
+) -> None:
+    event_id = str(event.get("event_id", "事件"))
+    expected = _expected_reader_assets(event)
+    matches = list(MARKDOWN_IMAGE_RE.finditer(block))
+    actual_paths = [match.group(2) for match in matches]
+    expected_paths = [item[0] for item in expected]
+
+    extra_paths = [path for path in actual_paths if path not in expected_paths]
+    for path in extra_paths:
+        errors.append(f"{event_id} 讀者版圖片未列入 manifest：{path}")
+
+    missing_paths = [path for path in expected_paths if path not in actual_paths]
+    for path in missing_paths:
+        errors.append(f"{event_id} 漏放附件：{path}")
+
+    if not extra_paths and not missing_paths and actual_paths != expected_paths:
+        errors.append(
+            f"{event_id} 附件順序錯誤：必須依序放置地圖、資料圖表、來源圖片"
+        )
+
+    for index, (path, caption, prefix, _field_key) in enumerate(expected):
+        if index >= len(matches) or matches[index].group(2) != path:
+            continue
+        match = matches[index]
+        alt = match.group(1).strip()
+        if not alt.startswith(prefix):
+            errors.append(f"{event_id} 附件必須依序標示 {prefix}：{path}")
+        if _next_nonblank_line(block, match.end()) != caption:
+            errors.append(
+                f"{event_id} {prefix}圖說必須緊接在附件之後，且與 manifest 一致"
+            )
+
+
 def validate_legacy_sectioned_layout(data: dict[str, Any], text: str) -> list[str]:
     """Validate the reader-visible section/table/story layout used by ChatGPT."""
     errors = validate_manifest_data(data)
@@ -1190,6 +1277,32 @@ def validate_legacy_sectioned_layout(data: dict[str, Any], text: str) -> list[st
     for token in FORBIDDEN_RENDER_TOKENS:
         if token in text:
             errors.append(f"讀者版使用禁止的圖廊、疊圖或動態元件：{token}")
+
+    story_heading_matches = list(
+        re.finditer(r"(?m)^### (.+)｜(SS|[SABC][+-]?)\r?$", text)
+    )
+    story_spans: list[tuple[int, int]] = []
+    for index, match in enumerate(story_heading_matches):
+        later_headings = [
+            candidate.start()
+            for candidate in story_heading_matches[index + 1:]
+            if candidate.start() > match.start()
+        ]
+        next_section = re.search(r"(?m)^## [^\r\n]+\r?$", text[match.end():])
+        boundaries = later_headings
+        if next_section:
+            boundaries = boundaries + [match.end() + next_section.start()]
+        story_spans.append(
+            (match.start(), min(boundaries) if boundaries else len(text))
+        )
+    for image_match in MARKDOWN_IMAGE_RE.finditer(text):
+        if not any(
+            start <= image_match.start() < end for start, end in story_spans
+        ):
+            errors.append(
+                "讀者版圖片出現在新聞區塊之外："
+                f"{image_match.group(2)}"
+            )
 
     events = [event for event in data.get("events", []) if isinstance(event, dict)]
     populated_sections: list[tuple[dict[str, Any], list[dict[str, Any]]]] = []
@@ -1263,6 +1376,7 @@ def validate_legacy_sectioned_layout(data: dict[str, Any], text: str) -> list[st
             grade = str(event.get("grade", ""))
             if f"評為{grade}級" not in block:
                 errors.append(f"{event.get('event_id')} 缺少「評為{grade}級」的評級評論")
+            _validate_story_asset_stream(event, block, errors)
             verification = event.get("verification", {})
             if isinstance(verification, dict):
                 if verification.get("finding") == "single_reliable_source" and SINGLE_SOURCE_NOTE not in block:
@@ -1278,16 +1392,12 @@ def validate_legacy_sectioned_layout(data: dict[str, Any], text: str) -> list[st
                     note = result.get("reader_omission_note")
                     if not isinstance(note, str) or f"**圖片說明：**{note}" not in block:
                         errors.append(f"{event.get('event_id')} 無合格圖片時必須顯示圖片說明")
-                for asset in result.get("assets", []):
-                    if not isinstance(asset, dict):
-                        continue
-                    path = asset.get("path")
-                    caption = asset.get("caption")
-                    if isinstance(path, str) and path not in block:
-                        errors.append(f"{event.get('event_id')} 漏放附件：{path}")
-                    if isinstance(caption, str) and caption not in block:
-                        errors.append(f"{event.get('event_id')} 漏放圖說：{caption}")
     return errors
+
+
+def validate_canonical_reader(data: dict[str, Any], text: str) -> list[str]:
+    """Validate the only reader layout accepted by canonical publication."""
+    return validate_legacy_sectioned_layout(data, text)
 
 
 def print_result(errors: list[str]) -> int:
@@ -1317,7 +1427,7 @@ def build_parser() -> argparse.ArgumentParser:
     brief.add_argument(
         "--reader-layout",
         choices=("structured", "legacy-sectioned"),
-        default="structured",
+        default="legacy-sectioned",
     )
     return parser
 
@@ -1342,7 +1452,7 @@ def main(argv: list[str] | None = None) -> int:
         manifest = load_json(args.manifest)
         text = Path(args.input).read_text(encoding="utf-8")
         if args.reader_layout == "legacy-sectioned":
-            return print_result(validate_legacy_sectioned_layout(manifest, text))
+            return print_result(validate_canonical_reader(manifest, text))
         return print_result(validate_brief_text(manifest, text))
     except (OSError, ValueError, json.JSONDecodeError) as error:
         print(f"FAIL: {error}")

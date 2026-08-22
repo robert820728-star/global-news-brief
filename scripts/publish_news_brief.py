@@ -165,7 +165,7 @@ def publish(args) -> int:
     errors += candidate_errors(audit, manifest, pool)
     errors += attachment_errors(manifest)
     errors += validate_map_decisions.validate(manifest)
-    errors += validate_news_brief.validate_brief_text(manifest, brief)
+    errors += validate_news_brief.validate_canonical_reader(manifest, brief)
     if errors:
         print("RELEASE NEEDS REPAIR", file=sys.stderr)
         for error in errors: print("-", error, file=sys.stderr)

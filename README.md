@@ -80,4 +80,4 @@ python3 scripts/validate_news_brief.py manifest --input /path/to/news-event-mani
 python3 scripts/validate_news_brief.py brief --manifest /path/to/news-event-manifest.json --input /path/to/news-brief.md
 ```
 
-驗證器只依標準函式庫執行，不需要另裝 Python 套件。
+上述 brief 命令預設驗證唯一 canonical 分區版型；舊欄位式三大區塊版型不再是發布路徑。驗證器只依標準函式庫執行，不需要另裝 Python 套件。
