@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "diag_run_id": "diag-final-s5-20260822T231541Z-d3e25aed",
+  "run_id": "gnb-20260822T231541Z-d3e25aed",
+  "task_name": "新聞管線最終驗收重測",
+  "observed_at": "2026-08-22T16:57:47-07:00",
+  "sequence": 990,
+  "step": "terminal",
+  "status": "failed",
+  "resolved_main_sha": "60f3caefee4b360619ff15a090a3126610752bac",
+  "overall_status": "failed",
+  "last_completed_step": "canonical-publisher-local",
+  "first_incomplete_step": "persist-canonical-run-bundle",
+  "earliest_failure": "CANONICAL_RUN_BUNDLE_GATE",
+  "exact_error": {
+    "classification": "connector_local_file_upload_unavailable",
+    "message": "GitHub connector exposes create_blob(content:string) but no local-file/binary upload primitive; required candidate-audit.json is 30,467,725 bytes and 24 JPEG attachments must retain exact bytes. Persisting partial or truncated artifacts would violate CANONICAL_RUN_BUNDLE_GATE.",
+    "tool_or_endpoint": "mcp__codex_apps__github_create_blob",
+    "http_status": null,
+    "request_id": null
+  },
+  "evidence_paths": [
+    "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/s5/bundle-manifest.json",
+    "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/s5/rule-matrix-result.json",
+    "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/release/canonical/release-receipt.json"
+  ],
+  "evidence_sha256": {
+    "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/s5/bundle-manifest.json": "db4935d744d5532f22ae6d966bef093f4250faf389d854f121a049fea9a649bd",
+    "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/s5/rule-matrix-result.json": "85fc98dfbafe255a3bce02bce6040ace54b71fbc00c1e21e8a33502adb684eef",
+    "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/release/canonical/release-receipt.json": "9cabea1fda3a43ca9eb5ad23fd7577cd1b1b2d2c1a2a781f94b2faa2d08e720a"
+  },
+  "elapsed_ms": null,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "canonical_delivery": false
+}
