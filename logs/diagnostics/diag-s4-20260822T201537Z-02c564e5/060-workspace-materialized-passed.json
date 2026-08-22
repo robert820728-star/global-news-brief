@@ -1,0 +1,33 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-s4-20260822T201537Z-02c564e5",
+  "run_id": "gnb-20260822T201537Z-02c564e5",
+  "task_name": "新聞管線診斷 S4：完整流程",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T04:15:00+08:00",
+  "observed_at": "2026-08-22T20:19:17.914Z",
+  "sequence": "060",
+  "step": "workspace-materialized",
+  "status": "passed",
+  "resolved_main_sha": "318db6c62ce8a968f2466e29238379ca948984ed",
+  "previous_receipt_path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/060-workspace-materialized-running.json",
+  "previous_receipt_blob_sha": "f51f3140ff69ca78e2b6f417d5e5b04e9cbbb77c",
+  "evidence_paths": [
+    "bootstrap-workspace.json"
+  ],
+  "evidence_sha256": [
+    "c0eb82a25866c3ddb882f725d15c61a64c17936b9ca21542f5754ce6233134c7"
+  ],
+  "elapsed_ms": 220914,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "workspace_materialized": true,
+  "runtime_file_count": 65
+}
