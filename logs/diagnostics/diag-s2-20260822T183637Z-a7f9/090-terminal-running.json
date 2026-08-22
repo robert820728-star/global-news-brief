@@ -1,0 +1,119 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-s2-20260822T183637Z-a7f9",
+  "task_name": "新聞管線診斷 S2：Stage -1",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T02:37:00+08:00",
+  "started_at": "2026-08-23T02:36:37+08:00",
+  "sequence": "090",
+  "step": "terminal",
+  "resolved_main_sha": "f213e7edc88ae3928ac4bc2fb5454c21ee135dc2",
+  "bootstrap_contract_blob_sha": "89a611990431eb970f96c6aabddf973c5bd69b0b",
+  "manifest_blob_sha": "cb0eabcb26cf5915925895a0fae223d2d8838847",
+  "manifest_source_commit": "b9b998de31fc24e79c911ec81c372987edf8b60d",
+  "transport": "direct-payload",
+  "payload_attempt_result": "passed",
+  "chunks_completed": 0,
+  "blocks_completed": 0,
+  "workspace_materialized": true,
+  "bootstrap_receipt_valid": true,
+  "bundled_python_path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+  "pillow_import_ok": true,
+  "external_ledger": "available",
+  "retry_count": 0,
+  "evidence_paths": [
+    "workspace/bootstrap-workspace.json",
+    "staging/bootstrap-progress.json",
+    "issue#3/comment/5381972509"
+  ],
+  "evidence_sha256": [
+    "448720d9d357aac557845fa0c772fbee7cfec9f9dbdc840863351561abb58024"
+  ],
+  "overall_status": "passed",
+  "last_completed_step": "runtime-ready",
+  "first_incomplete_step": "news_run_checkpoint.py init (intentionally not started)",
+  "earliest_failure": null,
+  "exact_error": null,
+  "RUN_RECEIPT": {
+    "run_id": "gnb-20260822T184134Z-35b18e10",
+    "main_sha": "f213e7edc88ae3928ac4bc2fb5454c21ee135dc2",
+    "last_completed_stage": "bootstrap-runtime-ready",
+    "bootstrap_chunks": "0/52",
+    "current_chunk": "none",
+    "current_block": "none",
+    "last_error": "none",
+    "retry_count": 0,
+    "external_ledger": "available",
+    "canonical_delivery": false
+  },
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "observed_at": "2026-08-23T02:42:52+08:00",
+  "status": "running",
+  "previous_receipt_path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/070-runtime-ready-passed.json",
+  "previous_receipt_blob_sha": "7fc3d5dfed55592245c9125794a4b5cc0d85374b",
+  "elapsed_ms": 375000,
+  "receipt_chain": [
+    {
+      "path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/010-main-pinned-running.json",
+      "blob_sha": "2fb7351e52729acebb1cb9e2cf61157bce391d89"
+    },
+    {
+      "path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/010-main-pinned-passed.json",
+      "blob_sha": "f29c20c4873ce2804b77a8900766d366d399f54b"
+    },
+    {
+      "path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/020-tree-verified-running.json",
+      "blob_sha": "dff147e5ef6eedba4f284f2d5169b9bf0dd0e2ca"
+    },
+    {
+      "path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/020-tree-verified-passed.json",
+      "blob_sha": "7a9462a4818bacb6f4a9906ab4aab5e602332b83"
+    },
+    {
+      "path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/030-manifest-verified-running.json",
+      "blob_sha": "548e6a8f6c7b898a7ba8bdd28f337631bf8b8c90"
+    },
+    {
+      "path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/030-manifest-verified-passed.json",
+      "blob_sha": "d7d7fda38235e30aab58cf521c273e494f59db41"
+    },
+    {
+      "path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/040-helpers-verified-running.json",
+      "blob_sha": "08e4c57e23a3065a95b51104a7571dba001d6e49"
+    },
+    {
+      "path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/040-helpers-verified-passed.json",
+      "blob_sha": "fe3c0df326e5a625d9252feb12475455f5c1227b"
+    },
+    {
+      "path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/050-transport-attempt-running.json",
+      "blob_sha": "1b3f26a0abf52a0cca3cd1bf31afe4a8395e967d"
+    },
+    {
+      "path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/050-transport-attempt-passed.json",
+      "blob_sha": "d229e57ba307fc7bf77271fc38a967e9166b24eb"
+    },
+    {
+      "path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/060-workspace-materialized-running.json",
+      "blob_sha": "ecc3c9a5e9307f4dc5ce14b9d74f7d8b59f7e35e"
+    },
+    {
+      "path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/060-workspace-materialized-passed.json",
+      "blob_sha": "442506bacee5d1fb31a5ec36a6ce9b66c3151486"
+    },
+    {
+      "path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/070-runtime-ready-running.json",
+      "blob_sha": "f44b54c944886651ed2c14976d266281a484dbc0"
+    },
+    {
+      "path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/070-runtime-ready-passed.json",
+      "blob_sha": "7fc3d5dfed55592245c9125794a4b5cc0d85374b"
+    }
+  ]
+}
