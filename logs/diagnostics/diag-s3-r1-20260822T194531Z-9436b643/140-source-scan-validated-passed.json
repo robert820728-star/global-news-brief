@@ -1,0 +1,48 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-s3-r1-20260822T194531Z-9436b643",
+  "run_id": "gnb-20260822T194531Z-9436b643",
+  "task_name": "新聞管線診斷 S3-R1：source-scan",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T03:44:00+08:00",
+  "observed_at": "2026-08-22T19:58:48.774Z",
+  "sequence": "140",
+  "step": "source-scan-validated",
+  "status": "passed",
+  "resolved_main_sha": "318db6c62ce8a968f2466e29238379ca948984ed",
+  "previous_receipt_path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/140-source-scan-validated-running.json",
+  "previous_receipt_blob_sha": "9eb288bfdcf49cb8c839c8bd9a762d1dc7ddc458",
+  "evidence_paths": [
+    "schemas/news-source-candidate-list.schema.json",
+    "/workspace/scratch/e71b6149f33b/gnb-s3-r1/workspace/work/runs/gnb-20260822T194531Z-9436b643/work/source-candidates.json",
+    "/workspace/scratch/e71b6149f33b/gnb-s3-r1/workspace/work/runs/gnb-20260822T194531Z-9436b643/checkpoint.json"
+  ],
+  "evidence_sha256": [
+    "2043ac717f5325cd82e79c3f8604c74b3deb92f52e3178e5dd72bd58047b11ca",
+    "329aaef8fa43cb35fdec2ea6612deddf17c743ae57172650c189306bae9bab94",
+    "40971008624f5f7b2e5cfa0d7f0bdffe1ef8f6e97345f3f3c64dca9993349db8"
+  ],
+  "elapsed_ms": 797774,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "schema_enum": [
+    "aggregate_api",
+    "structured_direct",
+    "html_direct",
+    "browser_rendered",
+    "same_source_alternate"
+  ],
+  "acquisition_route_counts": {
+    "aggregate_api": 12235,
+    "structured_direct": 214,
+    "html_direct": 290
+  },
+  "items_validated": 12739,
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  }
+}
