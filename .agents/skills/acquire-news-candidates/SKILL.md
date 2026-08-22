@@ -59,7 +59,7 @@ GDELT 固定先讀官方 15 分鐘 export archives，依精確時間窗下載完
 
 - `source_id`、`source_name`、`section`
 - `title`、`summary`
-- `summary_quality`：`source_summary`、`listing_context` 或 `title_only`；不得因欄位非空就把標題副本當作摘要證據
+- `summary_quality`：`source_summary`、`listing_context`、`structured_event_context` 或 `title_only`；`structured_event_context` 只適用於同列同時具有 GDELT event identity 與來源支持的 country／quad／heat 脈絡，仍不得把標題副本當作正文摘要證據
 - `discovery_signals`：GDELT event code、country、heat 等結構化欄位；非 GDELT 來源可為空物件
 - `published_at`、`url`
 - `categories`
@@ -67,7 +67,7 @@ GDELT 固定先讀官方 15 分鐘 export archives，依精確時間窗下載完
 - `acquisition_route`：實際成功的 `structured_direct`、`html_direct`、`same_source_alternate` 或在允許時使用的 `browser_rendered`
 - `snapshot_path`、`page_index`
 
-標題缺失時必須進入同站文章頁或可用的同站替代入口補齊。摘要缺失時不得以標題副本宣稱已有內容；保存 `summary_quality=title_only`，交由後續 relevance gate 決定是否進行內容補齊。不得留下只有首頁網址的候選。
+標題缺失時必須進入同站文章頁或可用的同站替代入口補齊。摘要缺失時不得以標題副本宣稱已有內容；只有具備 GDELT event identity 與結構化佐證脈絡者可保存 `summary_quality=structured_event_context`，其餘保存 `summary_quality=title_only`，交由後續 relevance gate 決定是否進行內容補齊。不得留下只有首頁網址的候選。
 
 ## 產物
 

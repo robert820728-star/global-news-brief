@@ -39,6 +39,20 @@ SCOPE_TERMS = ("global", "national", "million", "country", "全國", "全球", "
 STRUCTURAL_TERMS = ("reform", "regulation", "infrastructure", "agreement", "改革", "監管", "基礎設施", "協議")
 
 
+def has_structured_event_context(signals: dict | None) -> bool:
+    """Return true when a GDELT row has event identity plus corroborating context."""
+    if not isinstance(signals, dict):
+        return False
+    has_event_identity = any(signals.get(key) not in (None, "") for key in (
+        "event_code", "event_root_code",
+    ))
+    has_context = any(signals.get(key) not in (None, "", [], {}) for key in (
+        "actor_country_codes", "action_geo_country_code", "quad_class",
+        "num_mentions", "num_sources", "num_articles",
+    ))
+    return has_event_identity and has_context
+
+
 def load_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8-sig"))
 
@@ -140,18 +154,20 @@ def add_item(items: dict, *, request_url: str, homepage: str, route: str, url_ev
     canonical = url.split("#", 1)[0]
     clean_summary = clean_text(summary)
     summary_value = (clean_summary or title)[:800]
-    summary_quality = (
-        "title_only"
-        if not clean_summary or clean_summary.casefold() == title.casefold()
-        else "source_summary"
-    )
+    signals = discovery_signals if isinstance(discovery_signals, dict) else {}
+    if clean_summary and clean_summary.casefold() != title.casefold():
+        summary_quality = "source_summary"
+    elif has_structured_event_context(signals):
+        summary_quality = "structured_event_context"
+    else:
+        summary_quality = "title_only"
     candidate = {
         "url": canonical, "title": title[:300], "summary": summary_value,
         "summary_quality": summary_quality,
         "published_at": published.isoformat(), "url_evidence": url_evidence,
         "published_evidence": published_evidence, "categories": [],
         "importance_hint": title[:160], "acquisition_route": route,
-        "discovery_signals": discovery_signals if isinstance(discovery_signals, dict) else {},
+        "discovery_signals": signals,
     }
     if isinstance(image_url_hint, str) and image_url_hint.startswith(("http://", "https://")):
         candidate["image_url_hint"] = image_url_hint

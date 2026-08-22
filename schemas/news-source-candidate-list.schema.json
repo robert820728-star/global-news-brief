@@ -27,7 +27,7 @@
           "section": {"enum": ["TWN", "CHN", "GLB"]},
           "title": {"type": "string", "minLength": 1},
           "summary": {"type": "string", "minLength": 1},
-          "summary_quality": {"enum": ["source_summary", "listing_context", "title_only"]},
+          "summary_quality": {"enum": ["source_summary", "listing_context", "structured_event_context", "title_only"]},
           "discovery_signals": {"type": "object"},
           "published_at": {"type": "string", "format": "date-time"},
           "url": {"type": "string", "format": "uri"},

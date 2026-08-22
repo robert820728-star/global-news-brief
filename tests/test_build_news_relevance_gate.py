@@ -22,7 +22,12 @@ class BuildNewsRelevanceGateTests(unittest.TestCase):
                 "title": f"Government election policy update {index}",
                 "summary": f"Government election policy update {index}",
                 "summary_quality": "title_only",
-                "discovery_signals": {"num_articles": 1},
+                "discovery_signals": {
+                    "event_root_code": "04",
+                    "num_articles": 8,
+                    "num_sources": 5,
+                    "num_mentions": 20,
+                },
                 "canonical_url": f"https://example.test/news/{index}",
             }
             for index in range(1500)
@@ -84,6 +89,50 @@ class BuildNewsRelevanceGateTests(unittest.TestCase):
         )
         self.assertEqual(len(decisions), filtered["discovery_article_row_count"])
         self.assertEqual(1502, filtered["admitted_article_row_count"])
+
+    def test_gate_requires_compound_evidence_instead_of_keyword_or_heat_alone(self):
+        rows = [
+            {
+                "candidate_id": "keyword-only", "source_id": "gdelt",
+                "title": "Government election policy update", "summary": "Government election policy update",
+                "summary_quality": "title_only", "discovery_signals": {"num_articles": 1},
+                "canonical_url": "https://example.test/keyword-only",
+            },
+            {
+                "candidate_id": "heat-only", "source_id": "gdelt",
+                "title": "Lifestyle feature", "summary": "Lifestyle feature",
+                "summary_quality": "structured_event_context",
+                "discovery_signals": {"event_root_code": "04", "num_sources": 6},
+                "canonical_url": "https://example.test/heat-only",
+            },
+            {
+                "candidate_id": "compound", "source_id": "gdelt",
+                "title": "Government election policy update", "summary": "Government election policy update",
+                "summary_quality": "structured_event_context",
+                "discovery_signals": {
+                    "event_root_code": "04", "num_articles": 8, "num_sources": 5,
+                },
+                "canonical_url": "https://example.test/compound",
+            },
+            {
+                "candidate_id": "high-impact", "source_id": "gdelt",
+                "title": "Regional developments", "summary": "Regional developments",
+                "summary_quality": "structured_event_context",
+                "discovery_signals": {
+                    "event_root_code": "19", "num_sources": 3, "num_mentions": 10,
+                },
+                "canonical_url": "https://example.test/high-impact",
+            },
+        ]
+
+        decisions = {
+            item["candidate_id"]: item for item in MODULE.build_gate({"items": rows})["decisions"]
+        }
+
+        self.assertEqual("structured_review", decisions["keyword-only"]["route"])
+        self.assertEqual("structured_review", decisions["heat-only"]["route"])
+        self.assertEqual("content_hydration", decisions["compound"]["route"])
+        self.assertEqual("content_hydration", decisions["high-impact"]["route"])
 
 
 if __name__ == "__main__":

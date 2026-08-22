@@ -10,6 +10,7 @@ from pathlib import Path
 
 
 REGIONAL_SUPPLEMENT_IDS = {"cna", "chinanews"}
+HIGH_IMPACT_EVENT_ROOT_CODES = {"13", "14", "17", "18", "19", "20"}
 RELEVANCE_TERMS = {
     "accident", "attack", "bank", "bill", "border", "budget", "ceasefire",
     "climate", "conflict", "court", "crisis", "currency", "defense", "disease",
@@ -29,21 +30,26 @@ def route_item(item: dict) -> dict:
     signals = item.get("discovery_signals")
     signals = signals if isinstance(signals, dict) else {}
     reasons = []
-    if source_id in REGIONAL_SUPPLEMENT_IDS:
+    regional_supplement = source_id in REGIONAL_SUPPLEMENT_IDS
+    if regional_supplement:
         reasons.append("regional_supplement_complete_admission")
     words = set(re.findall(r"[a-z]+", f"{item.get('title', '')} {item.get('summary', '')}".casefold()))
     matched_terms = sorted(words & RELEVANCE_TERMS)
-    if matched_terms:
-        reasons.append("relevance_terms:" + ",".join(matched_terms))
-    if _number(signals, "num_articles") >= 5:
-        reasons.append("gdelt_num_articles>=5")
-    if _number(signals, "num_sources") >= 3:
-        reasons.append("gdelt_num_sources>=3")
-    if _number(signals, "num_mentions") >= 10:
-        reasons.append("gdelt_num_mentions>=10")
-    if abs(_number(signals, "goldstein_scale")) >= 5:
-        reasons.append("gdelt_abs_goldstein>=5")
-    admitted = bool(reasons)
+    num_articles = _number(signals, "num_articles")
+    num_sources = _number(signals, "num_sources")
+    num_mentions = _number(signals, "num_mentions")
+    strong_heat = num_articles >= 8 or num_sources >= 5 or num_mentions >= 20
+    corroborated = num_articles >= 5 or num_sources >= 3 or num_mentions >= 10
+    event_root_code = str(signals.get("event_root_code") or "")
+    if matched_terms and strong_heat:
+        reasons.append(
+            "compound_relevance_and_heat:" + ",".join(matched_terms)
+        )
+    if event_root_code in HIGH_IMPACT_EVENT_ROOT_CODES and corroborated:
+        reasons.append("compound_high_impact_event_and_corroboration")
+    if abs(_number(signals, "goldstein_scale")) >= 5 and corroborated:
+        reasons.append("compound_goldstein_and_corroboration")
+    admitted = regional_supplement or bool(reasons)
     return {
         "candidate_id": item["candidate_id"],
         "source_id": source_id,

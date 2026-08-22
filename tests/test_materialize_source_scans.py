@@ -84,7 +84,7 @@ class MaterializeSourceScansTests(unittest.TestCase):
         article = items["https://example.net/world/major-event"]
         self.assertEqual("2026-08-18T10:15:00+00:00", article["published_at"])
         self.assertEqual("https://images.example.net/event.jpg", article["image_url_hint"])
-        self.assertEqual("title_only", article["summary_quality"])
+        self.assertEqual("structured_event_context", article["summary_quality"])
         self.assertEqual(
             {"event_root_code": "19", "num_articles": 11},
             article["discovery_signals"],
