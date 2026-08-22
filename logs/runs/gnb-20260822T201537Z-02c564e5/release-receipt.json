@@ -1,0 +1,52 @@
+{
+  "schema_version": "2.0.0",
+  "status": "ready",
+  "gate": "scripts/publish_news_brief.py",
+  "gate_version": "2.2.0",
+  "run_id": "gnb-20260822T201537Z-02c564e5",
+  "main_sha": "318db6c62ce8a968f2466e29238379ca948984ed",
+  "published_at": "2026-08-22T13:46:47-07:00",
+  "artifacts": {
+    "gate": {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/scripts/publish_news_brief.py",
+      "sha256": "6f932b32ac128650ddb6eb063842b4d201dbd78e21858dc98ec7a97ebd116edc"
+    },
+    "delivery_contract": {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/daily-schedule-prompt.md",
+      "sha256": "80057c65e81901f719272a5206fe0cd4ed4648c2b1914e0184d2ae6eb89550eb"
+    },
+    "checkpoint": {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/checkpoint.json",
+      "sha256": "884f2aeac4ea02de03b3698bdad37e6f3ee52ce51d19d87ef160d1941801a2e9"
+    },
+    "manifest": {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/event-manifest.final.json",
+      "sha256": "e96cbcbf53aac243e2777f8443fda3ae88866584ed261d5d6a00cbafda2f81db"
+    },
+    "audit": {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/candidate-audit.json",
+      "sha256": "c11fab43ea804c1fc14d45d358e5ff41a95f439475824bd39992a353e13f30dd"
+    },
+    "source_pool": {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/news-source-pool.json",
+      "sha256": "ce121937d0ffde3e6f68f43f8ceeb94e3d943517fc852ab4ebe4d2b085e45d19"
+    },
+    "brief": {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/reader.md",
+      "sha256": "85b50c3c3b9e3208a47bd0bd72186a13981f5d417bfb285d4bde2f34d8b9bd94"
+    },
+    "release": {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/release/news-brief.md",
+      "sha256": "85b50c3c3b9e3208a47bd0bd72186a13981f5d417bfb285d4bde2f34d8b9bd94"
+    }
+  },
+  "authorized_release_sha256": "85b50c3c3b9e3208a47bd0bd72186a13981f5d417bfb285d4bde2f34d8b9bd94",
+  "validators": {
+    "unique_delivery_gate": "passed",
+    "pre_manifest_checkpoint": "passed",
+    "source_scan_and_candidate_audit": "passed",
+    "attachment_and_visual_evidence": "passed",
+    "map_decisions": "passed",
+    "manifest_and_brief": "passed"
+  }
+}
