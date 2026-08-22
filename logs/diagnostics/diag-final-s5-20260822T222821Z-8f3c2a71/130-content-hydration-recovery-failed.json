@@ -1,0 +1,51 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-final-s5-20260822T222821Z-8f3c2a71",
+  "run_id": "gnb-20260822T222821Z-8f3c2a71",
+  "task_name": "新聞管線最終驗收重測",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T06:30:00+08:00",
+  "observed_at": "2026-08-23T06:52:22+08:00",
+  "sequence": 130,
+  "step": "content-hydration-recovery",
+  "status": "failed",
+  "resolved_main_sha": "f2eb93e100f01a2e830cd9988ed3f4a73449f390",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260822T222821Z-8f3c2a71/130-content-hydration-recovery-running.json",
+  "previous_receipt_blob_sha": "659f2facda6c04abc4b24b35b7e415b89b46c212",
+  "evidence_paths": [
+    "work/runs/gnb-20260822T222821Z-8f3c2a71/checkpoint.json",
+    "work/runs/gnb-20260822T222821Z-8f3c2a71/work/content-hydration/content-hydration-failure-summary.json",
+    "work/runs/gnb-20260822T222821Z-8f3c2a71/work/content-hydration/receipts/batch-0003-terminal.json",
+    "work/runs/gnb-20260822T222821Z-8f3c2a71/work/content-hydration/receipts/batch-0007-terminal.json"
+  ],
+  "evidence_sha256": [
+    "c92ff3a98503cc59b8c7042495bc3bc5a02ec1284b12d0968e5c7c77a781db54",
+    "ed11528be8fbed2255678ae7c65de52972fbc2fd09a5bd0f8feb51a01182dec4",
+    "b62fc53d4b9bf53880fad3fae165795c0619bc05446f1a0875dd51bb076fcdb2",
+    "f2942b149c690031e5450f3ccac55b778520c8d80a924c57e4c576a4a9f46e73"
+  ],
+  "elapsed_ms": 1436100,
+  "retry_count": 1,
+  "retry_signature": "batch-0002 cloud_browser then web_search alternate passed; batches-0003-through-0007 cloud_browser max20 left 68 unresolved; checkpoint mark retried once after NAME=PATH contract error",
+  "external_ledger": "available",
+  "last_completed_step": "preprocess-news-candidates",
+  "first_incomplete_step": "select-news-events/content-hydration-batch-0003",
+  "counts": {
+    "discovery_rows": 11709,
+    "admitted_rows": 8791,
+    "title_only_rows": 8519,
+    "urls_attempted": 120,
+    "direct_browser_succeeded": 49,
+    "alternate_search_succeeded": 3,
+    "hydration_unresolved": 8467,
+    "semantic_event_ledger_unresolved": 8791
+  },
+  "error": {
+    "classification": "content_hydration_connector_failure",
+    "message": "68 of 100 URLs in canonical batches 0003-0007 remained unresolved after purpose-built cloud-browser attempts due navigation timeouts or site-safety rejections. 8,467 title_only rows therefore lack auditable content evidence, so SEMANTIC_EVENT_LEDGER_GATE cannot reach unresolved=0 without forbidden bulk title-only classification.",
+    "tool_or_endpoint": "cloud_browser.navigate; local news_run_checkpoint.py mark",
+    "http_status": null,
+    "request_id": null,
+    "checkpoint_mark_first_error": "ValueError: --artifact 必須使用 NAME=PATH"
+  }
+}
