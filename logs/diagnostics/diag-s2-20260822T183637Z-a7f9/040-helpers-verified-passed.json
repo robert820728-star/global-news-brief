@@ -1,0 +1,34 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-s2-20260822T183637Z-a7f9",
+  "task_name": "新聞管線診斷 S2：Stage -1",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T02:37:00+08:00",
+  "observed_at": "2026-08-23T02:37:46+08:00",
+  "sequence": "040",
+  "step": "helpers-verified",
+  "status": "passed",
+  "resolved_main_sha": "f213e7edc88ae3928ac4bc2fb5454c21ee135dc2",
+  "previous_receipt_path": "logs/diagnostics/diag-s2-20260822T183637Z-a7f9/040-helpers-verified-running.json",
+  "previous_receipt_blob_sha": "08e4c57e23a3065a95b51104a7571dba001d6e49",
+  "evidence_paths": [
+    "bootstrap/bootstrap_loader.py",
+    "bootstrap/bootstrap_progress.py",
+    "bootstrap/bootstrap-progress.schema.json"
+  ],
+  "evidence_sha256": [
+    "gitblob:5cc4ae0751de53cf1b55849c7588554adb7eafc7",
+    "gitblob:19193f9fcf7289f9f0f2746195fd8385e15da972",
+    "gitblob:d936e437ab791b7f6419c72581d0aa3fa539903d"
+  ],
+  "elapsed_ms": 69000,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  }
+}
