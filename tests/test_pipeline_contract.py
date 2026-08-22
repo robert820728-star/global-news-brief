@@ -623,6 +623,33 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("`semantic_event_id`", document)
             self.assertIn("`event_identity`", document)
 
+    def test_event_region_and_time_identity_gate_contract(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-candidate-audit.schema.json").read_text(encoding="utf-8")
+        )
+        identity = schema["$defs"]["eventIdentity"]
+        structured_fields = {
+            "country_codes", "primary_country_code", "location_evidence",
+            "event_occurred_at", "material_update_at", "material_update_type",
+            "material_update_evidence",
+        }
+        self.assertTrue(structured_fields.issubset(identity["properties"]))
+        documents = (
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / "news-brief-settings.md",
+            ROOT / ".agents/skills/daily-news-brief/SKILL.md",
+            ROOT / ".agents/skills/select-news-events/SKILL.md",
+            ROOT / ".agents/skills/audit-news-candidates/SKILL.md",
+        )
+        for path in documents:
+            document = path.read_text(encoding="utf-8")
+            self.assertIn("EVENT_REGION_AND_TIME_IDENTITY_GATE", document)
+            self.assertIn("來源分桶", document)
+            self.assertIn("`event_occurred_at`", document)
+            self.assertIn("`material_update_at`", document)
+            self.assertIn("舊事件", document)
+
     def test_mobile_native_durable_audit_uses_compact_profile_without_verbose_evidence(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         skill = (ROOT / ".agents/skills/audit-news-candidates/SKILL.md").read_text(

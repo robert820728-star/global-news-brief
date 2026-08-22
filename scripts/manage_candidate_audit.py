@@ -92,6 +92,12 @@ REASON_CODES = {
     "search_recall_failure",
 }
 
+MATERIAL_UPDATE_TYPES = {
+    "new_event", "official_confirmation", "casualty_or_impact_revision",
+    "policy_or_legal_change", "operational_or_status_change",
+    "material_escalation_or_deescalation", "other_verified_material_change",
+}
+
 
 def load(path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
@@ -436,9 +442,20 @@ def validate(data, source_pool=None):
         semantic_event_ids = []
         candidate_by_event_id = {}
         if run_index == len(runs):
-            identity_fields = {
+            legacy_identity_fields = {
                 "who_or_what", "what_happened", "where", "when", "semantic_merge_basis"
             }
+            structured_identity_fields = {
+                "country_codes", "primary_country_code", "location_evidence",
+                "event_occurred_at", "material_update_at", "material_update_type",
+                "material_update_evidence",
+            }
+            identity_fields = legacy_identity_fields | structured_identity_fields
+            try:
+                run_window_start = parse_datetime(run.get("window_start", ""))
+                run_window_end = parse_datetime(run.get("window_end", ""))
+            except (TypeError, ValueError):
+                run_window_start = run_window_end = None
             for candidate_index, candidate in enumerate(candidates, 1):
                 label = f"{run_label}.candidates[{candidate_index}]"
                 if not isinstance(candidate, dict):
@@ -450,13 +467,73 @@ def validate(data, source_pool=None):
                     semantic_event_ids.append(semantic_event_id)
                     candidate_by_event_id[semantic_event_id] = candidate
                 identity = candidate.get("event_identity")
-                if not isinstance(identity, dict) or set(identity) != identity_fields:
-                    errors.append(label + ".event_identity 必須包含事件主體、行動、地點、時間與合併依據")
-                elif any(
+                if not isinstance(identity, dict) or not identity_fields.issubset(identity):
+                    errors.append(
+                        label + ".event_identity 必須包含事件主體、結構化地區、"
+                        "事件發生時間、實質更新時間與合併依據"
+                    )
+                    continue
+                text_fields = identity_fields - {"country_codes"}
+                if any(
                     not isinstance(identity[field], str) or not identity[field].strip()
-                    for field in identity_fields
+                    for field in text_fields
                 ):
-                    errors.append(label + ".event_identity 全部欄位都必須是非空白文字")
+                    errors.append(label + ".event_identity 文字欄位都必須是非空白文字")
+
+                country_codes = identity.get("country_codes")
+                primary_country = identity.get("primary_country_code")
+                if (
+                    not isinstance(country_codes, list)
+                    or not country_codes
+                    or any(
+                        not isinstance(code, str) or len(code) != 3 or not code.isupper()
+                        for code in country_codes
+                    )
+                    or len(country_codes) != len(set(country_codes))
+                ):
+                    errors.append(label + ".event_identity.country_codes 必須是唯一三碼大寫代碼陣列")
+                elif primary_country not in country_codes:
+                    errors.append(label + ".event_identity.primary_country_code 必須列在 country_codes")
+
+                expected_section = (
+                    "TWN" if primary_country == "TWN"
+                    else "CHN" if primary_country == "CHN"
+                    else "GLB"
+                )
+                if candidate.get("section") != expected_section:
+                    errors.append(
+                        label + f".section 必須由 event_identity.primary_country_code "
+                        f"推導為 {expected_section}；來源分桶不得參與"
+                    )
+
+                update_type = identity.get("material_update_type")
+                if update_type not in MATERIAL_UPDATE_TYPES:
+                    errors.append(label + ".event_identity.material_update_type 不是允許的實質更新類型")
+                try:
+                    occurred_at = parse_datetime(identity.get("event_occurred_at", ""))
+                    material_update_at = parse_datetime(identity.get("material_update_at", ""))
+                except (TypeError, ValueError):
+                    errors.append(label + ".event_identity 事件與更新時間必須是含時區的 ISO 時間")
+                    continue
+                if occurred_at > material_update_at:
+                    errors.append(label + ".event_identity.event_occurred_at 不得晚於 material_update_at")
+                if (
+                    run_window_start is not None
+                    and not (run_window_start < material_update_at <= run_window_end)
+                ):
+                    errors.append(label + ".event_identity.material_update_at 必須落在精確執行時間窗內")
+                occurred_in_window = (
+                    run_window_start is not None
+                    and run_window_start < occurred_at <= run_window_end
+                )
+                if update_type == "new_event" and not occurred_in_window:
+                    errors.append(label + ".event_identity 舊事件不得以 new_event 或今日重整冒充新事件")
+                if (
+                    not occurred_in_window
+                    and update_type != "new_event"
+                    and candidate.get("continuity", {}).get("status") == "new"
+                ):
+                    errors.append(label + ".continuity.status 舊事件的實質更新必須標為 continuing")
             if len(semantic_event_ids) != len(set(semantic_event_ids)):
                 errors.append(run_label + ".semantic_event_id 不得由兩個候選重複使用")
 

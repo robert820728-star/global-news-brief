@@ -138,6 +138,13 @@ def valid_audit(candidates=None, per_source_count=1):
             "what_happened": "發生一項可核實的新進展",
             "where": item["section"],
             "when": window_end,
+            "country_codes": ["GLB"],
+            "primary_country_code": "GLB",
+            "location_evidence": "事件內容確認屬世界板塊，未使用來源媒體分桶。",
+            "event_occurred_at": window_end,
+            "material_update_at": window_end,
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪來源確認一項可獨立辨識的實質新進展。",
             "semantic_merge_basis": "依主體、行動、地點與時間確認為同一事件",
         }
         item["candidate_urls"] = [all_urls[index]] if index < len(all_urls) else []
@@ -194,6 +201,74 @@ def valid_audit(candidates=None, per_source_count=1):
 
 
 class CandidateAuditTests(unittest.TestCase):
+    @staticmethod
+    def add_structured_identity(audit, *, country="CHN", occurred=None,
+                                updated=None, update_type="new_event"):
+        run = audit["runs"][0]
+        identity = run["candidates"][0]["event_identity"]
+        identity.update({
+            "country_codes": [country],
+            "primary_country_code": country,
+            "location_evidence": f"事件發生地由內容確認為 {country}，未使用來源媒體分桶。",
+            "event_occurred_at": occurred or run["window_end"],
+            "material_update_at": updated or run["window_end"],
+            "material_update_type": update_type,
+            "material_update_evidence": "本輪來源確認一項可獨立辨識的實質新進展。",
+        })
+        return run, identity
+
+    def test_china_event_from_taiwan_publisher_is_classified_by_event_location(self):
+        audit = valid_audit()
+        run, _ = self.add_structured_identity(audit, country="CHN")
+        run["candidates"][0]["section"] = "CHN"
+        run["candidates"][0]["source_ids"] = ["cna"]
+        self.assertEqual([], MODULE.validate(audit, source_pool()))
+
+    def test_event_section_must_match_structured_primary_country(self):
+        audit = valid_audit()
+        run, _ = self.add_structured_identity(audit, country="CHN")
+        run["candidates"][0]["section"] = "TWN"
+        errors = MODULE.validate(audit, source_pool())
+        self.assertTrue(any("section 必須由 event_identity.primary_country_code" in error for error in errors))
+
+    def test_non_taiwan_non_china_event_maps_to_world(self):
+        audit = valid_audit()
+        run, _ = self.add_structured_identity(audit, country="KOR")
+        run["candidates"][0]["section"] = "GLB"
+        self.assertEqual([], MODULE.validate(audit, source_pool()))
+
+    def test_material_update_time_must_be_inside_exact_run_window(self):
+        audit = valid_audit()
+        self.add_structured_identity(
+            audit, country="CHN", updated="2026-08-12T20:59:59+00:00"
+        )
+        errors = MODULE.validate(audit, source_pool())
+        self.assertTrue(any("material_update_at 必須落在精確執行時間窗內" in error for error in errors))
+
+    def test_old_event_recap_cannot_claim_new_event(self):
+        audit = valid_audit()
+        run, _ = self.add_structured_identity(
+            audit,
+            country="CHN",
+            occurred="2026-07-01T00:00:00+08:00",
+            update_type="new_event",
+        )
+        run["candidates"][0]["section"] = "CHN"
+        errors = MODULE.validate(audit, source_pool())
+        self.assertTrue(any("舊事件不得以 new_event" in error for error in errors))
+
+    def test_old_event_with_in_window_material_update_can_continue(self):
+        audit = valid_audit()
+        run, _ = self.add_structured_identity(
+            audit,
+            country="CHN",
+            occurred="2026-07-01T00:00:00+08:00",
+            update_type="official_confirmation",
+        )
+        run["candidates"][0]["section"] = "CHN"
+        run["candidates"][0]["continuity"]["status"] = "continuing"
+        self.assertEqual([], MODULE.validate(audit, source_pool()))
+
     def test_non_news_article_is_accounted_without_becoming_a_news_candidate(self):
         audit = valid_audit()
         run = audit["runs"][0]

@@ -74,6 +74,14 @@ The required order for every configured source is: `canonical route -> same-site
 
 ## 動態板塊與編號
 
+`EVENT_REGION_AND_TIME_IDENTITY_GATE`
+
+- 候選來源的來源分桶、媒體所在地與首頁分類都不是事件地區；它們不得複製到語意事件的主要板塊。
+- 每個新語意事件先保存 `event_identity.country_codes`、`primary_country_code` 與 `location_evidence`。`primary_country_code=TWN` 對應台灣、`CHN` 對應中國，其餘國家、跨國或全球事件對應世界；來源是中央社、中新社或其他媒體都不得改變此映射。
+- 同時保存 `event_occurred_at` 與 `material_update_at`。前者是底層事件真正發生時間，後者是本輪可驗證實質變化時間，不得用文章 `published_at` 自動代填任一欄。
+- 舊事件重新整理、回顧、週年、重刊或換標題不是新事件；沒有窗內實質更新就標為 `non_news`。地區或時間無法確認則保持 `unresolved`，不得進入六項評分。
+- 地區閘門通過後才計算 `core_section_relevance`；修改地區必須重做該項及總分，不得沿用錯誤板塊下的分數。
+
 - 板塊由使用者偏好驅動，數量不限，可以是國家、區域、洲別、國際組織範圍或全球。
 - 台灣、中國及其他國家或地區預設各自獨立；只有使用者明確要求才可合併。
 - 同一事件只放入一個主要板塊。跨國系統性事件或未被其他板塊涵蓋的重要事件才放全球板塊。
