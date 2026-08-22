@@ -1,0 +1,30 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-s3-20260822T185717Z-61152887",
+  "task_name": "新聞管線診斷 S3：source-scan",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T02:59:11+08:00",
+  "observed_at": "2026-08-22T19:07:45.006Z",
+  "sequence": "130",
+  "step": "source-scan-validated",
+  "status": "failed",
+  "resolved_main_sha": "f213e7edc88ae3928ac4bc2fb5454c21ee135dc2",
+  "previous_receipt_path": "logs/diagnostics/diag-s3-20260822T185717Z-61152887/130-source-scan-validated-running.json",
+  "previous_receipt_blob_sha": "9f01708430977abd1e5b4a779b8ba0f9aa6fc814",
+  "evidence_paths": [
+    "work/runs/gnb-20260822T185717Z-61152887/work/source-candidates.json"
+  ],
+  "evidence_sha256": [
+    "98c2ec167ace0a955af94563923c722c5b438930fc9a62974467a94758e1c3f0"
+  ],
+  "elapsed_ms": 628006,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "error": {
+    "classification": "source_scan_validation",
+    "message": "news-source-candidate-list schema violation: 12586 GDELT rows use acquisition_route=aggregate_api, but schema enum excludes aggregate_api",
+    "tool_or_endpoint": "schemas/news-source-candidate-list.schema.json",
+    "http_status": null,
+    "request_id": null
+  }
+}
