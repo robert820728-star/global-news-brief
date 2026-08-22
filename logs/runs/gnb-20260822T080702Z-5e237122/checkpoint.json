@@ -1,0 +1,204 @@
+{
+  "schema_version": "1.1.0",
+  "run_id": "gnb-20260822T080702Z-5e237122",
+  "window_start": "2026-08-21T16:07:02.656+08:00",
+  "window_end": "2026-08-22T16:07:02.656+08:00",
+  "created_at": "2026-08-22T01:38:56-07:00",
+  "updated_at": "2026-08-22T02:39:04-07:00",
+  "bootstrap": {
+    "repository": "robert820728-star/global-news-brief",
+    "commit_sha": "d06603802ccc827f9f319bec889f601058c563c6",
+    "materialization_method": "github-connector-capsule",
+    "receipt": {
+      "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/bootstrap-workspace.json",
+      "sha256": "18ccf6612f109aa48127e95070394f7a845901ae3ed612d1efd80230a68f27bf",
+      "size": 79016
+    }
+  },
+  "bootstrap_required": true,
+  "stage_status": {
+    "source-scan": "completed",
+    "preprocess-news-candidates": "completed",
+    "select-news-events": "completed",
+    "audit-news-candidates": "completed",
+    "materialize-manifest": "completed",
+    "verify-news-events": "completed",
+    "build-news-maps": "completed",
+    "build-news-charts": "completed",
+    "collect-news-images": "completed",
+    "render": "completed"
+  },
+  "stage_evidence": {
+    "source-scan": {
+      "recorded_at": "2026-08-22T01:44:21-07:00",
+      "status": "completed",
+      "message": "d066 archive-first: GDELT 97/97; DOC API 0; CNA and China News ready; source evidence OK",
+      "artifacts": {
+        "source_candidates": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/source-candidates.json",
+          "sha256": "034e23331b9dd55eb706631eecbcf27798125bf03645294324e5dd1821a24658",
+          "size": 18020462
+        }
+      }
+    },
+    "preprocess-news-candidates": {
+      "recorded_at": "2026-08-22T01:48:11-07:00",
+      "status": "completed",
+      "message": "Pure-program preprocess complete; 17086 rows, 17084 canonical URLs, 14042 provisional title clusters; no semantic event or grading",
+      "artifacts": {
+        "preprocessed_candidates": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/preprocessed-candidates.json",
+          "sha256": "0619e6b3a98cc0e6a09050e752f94cb19885b24c33bdd88ddaff59c5f265a1a7",
+          "size": 30218589
+        }
+      }
+    },
+    "select-news-events": {
+      "recorded_at": "2026-08-22T01:56:01-07:00",
+      "status": "completed",
+      "message": "Model event-card review complete; 13103 semantic events scored; 31 C-or-higher selected; 17086 article dispositions; unresolved=0",
+      "artifacts": {
+        "selection_results": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/selection-results.json",
+          "sha256": "87e030726917617382ad3a17d87d0805528df65645b865a08b85792c56160e7f",
+          "size": 63789534
+        },
+        "semantic_event_ledger": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/semantic-event-ledger.json",
+          "sha256": "f92ac0cce0c72b075d24ef533eeb439aceaaa57377377f9854e7f93dcd591ca7",
+          "size": 14344506
+        },
+        "candidate_audit_run": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/candidate-audit-run.json",
+          "sha256": "a92b4e12f20d8c3fc329e56065db5dbd3a0f13a08b4472f3219d3e17e7b3956a",
+          "size": 84744647
+        }
+      }
+    },
+    "audit-news-candidates": {
+      "recorded_at": "2026-08-22T02:01:46-07:00",
+      "status": "completed",
+      "message": "Audit complete after aligning audit coverage to the already-materialized source rows; 17086 per-row dispositions, unresolved=0; audit and source evidence validators OK",
+      "artifacts": {
+        "candidate_audit": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/candidate-audit.json",
+          "sha256": "4ece48fcb86d1ce062b20bd52da6d72968e14f08fcca066abdb5ba25f70f456a",
+          "size": 90944362
+        },
+        "candidate_audit_run": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/candidate-audit-run.json",
+          "sha256": "d66ab42634befcec059678111b1942601d607dbc46deb12c25dc59c210cc4d41",
+          "size": 84440001
+        },
+        "audit_source_coverage": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/audit-source-coverage.json",
+          "sha256": "4f9b94a0d9f138fd51327ff6eae41987b5bc2a497805bd6f870cae121533fe2d",
+          "size": 14295236
+        }
+      }
+    },
+    "materialize-manifest": {
+      "recorded_at": "2026-08-22T02:03:25-07:00",
+      "status": "completed",
+      "message": "Manifest materialized one-to-one from all 31 C-or-higher selected event ids; schema OK",
+      "artifacts": {
+        "manifest": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/news-event-manifest.json",
+          "sha256": "00d526a1908dc10728cefb06c279ae7fc4281c4e25a15d09b89c6287130bd8f4",
+          "size": 102176
+        }
+      }
+    },
+    "verify-news-events": {
+      "recorded_at": "2026-08-22T02:08:39-07:00",
+      "status": "completed",
+      "message": "Verified all 31 selected events with multilingual web search and claim ledgers: 25 corroborated, 5 single reliable source, 1 conflicting injury count",
+      "artifacts": {
+        "manifest": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/news-event-manifest.json",
+          "sha256": "5480d2d6700ac5836308a3f3731a8b0bf9fbdf15afd066e8ca7d23ca3d87ac0b",
+          "size": 165901
+        }
+      }
+    },
+    "build-news-maps": {
+      "recorded_at": "2026-08-22T02:11:41-07:00",
+      "status": "completed",
+      "message": "Map decisions 31/31: 13 required and ready, 18 not required; canonical map decision validator OK; visual contact sheet checked",
+      "artifacts": {
+        "manifest": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/news-event-manifest.json",
+          "sha256": "67a25978ee8c8b6e36bdf7e84e19774c0cd2a0d00cd32c8acb6b6bb14c1d8ab0",
+          "size": 183246
+        },
+        "map_contact_sheet": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/map-contact-sheet.png",
+          "sha256": "771eca8f7ed1a92d7fa210b5e3f21104d1de801a0496790b05f8c7d0f6ca3d1a",
+          "size": 800168
+        }
+      }
+    },
+    "build-news-charts": {
+      "recorded_at": "2026-08-22T02:15:10-07:00",
+      "status": "completed",
+      "message": "Chart decisions 31/31: 16 verified metric cards ready, 15 not required; ownership validator OK; data and visual checks complete",
+      "artifacts": {
+        "manifest": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/news-event-manifest.json",
+          "sha256": "e3312b1411cbed24a45c7cdb292f57d5fab592dcb928904889744c06960c57b8",
+          "size": 203241
+        },
+        "chart_contact_sheet": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/chart-contact-sheet.png",
+          "sha256": "38afdfd0e42faf4ae08bff4def30fadb9432a661c8dd3a053c8478ad9b5c2e92",
+          "size": 381678
+        }
+      }
+    },
+    "collect-news-images": {
+      "recorded_at": "2026-08-22T02:29:45-07:00",
+      "status": "completed",
+      "message": "Image checks 31/31: 69 page evidence files; 26 events ready with 37 visually checked assets; 5 evidence-backed omissions; 8 professional gates searched and not_available",
+      "artifacts": {
+        "manifest": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/news-event-manifest.json",
+          "sha256": "cd68aa7f0282b6f9962437e08b45196ab3d9bfe617584625b509c6f1febc30c7",
+          "size": 294533
+        },
+        "image_collection_report": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/image-collection-report.json",
+          "sha256": "1889419632a9fb378bb06df54487b8e8788521487ec422cda7eb2190149fcd3e",
+          "size": 4756
+        },
+        "image_contact_sheet": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/image-contact-sheet.jpg",
+          "sha256": "4d353f8a785293d6db84a51e53ce566f6a14d3bb09d105aab3ce3893dbd68953",
+          "size": 745667
+        }
+      }
+    },
+    "render": {
+      "recorded_at": "2026-08-22T02:39:04-07:00",
+      "status": "completed",
+      "message": "Structured canonical reader validated; existing 今日總覽 and per-event format preserved",
+      "artifacts": {
+        "brief": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/reader.md",
+          "sha256": "d1880c08a442c86327f07f4b32d89f83571299b1804d27c73bed84326411c512",
+          "size": 39913
+        },
+        "manifest": {
+          "path": "/workspace/scratch/9e19d3ad3b1c/run-5e237122/work/news-event-manifest.json",
+          "sha256": "602ef44c4ba557bc83bcc916e83e2d71ea4d0a821647a35eb7b170e711bc2387",
+          "size": 307064
+        }
+      }
+    }
+  },
+  "recovery": {
+    "status": "pending",
+    "max_attempts_per_target": 3,
+    "attempts": [],
+    "unresolved_targets": []
+  }
+}
