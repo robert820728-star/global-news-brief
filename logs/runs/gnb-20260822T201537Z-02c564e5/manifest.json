@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260822T201537Z-02c564e5",
+  "diag_run_id": "diag-s4-20260822T201537Z-02c564e5",
+  "generated_at": "2026-08-22T20:48:29.985150Z",
+  "artifacts": {
+    "checkpoint": {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/checkpoint.json",
+      "size": 6199,
+      "sha256": "884f2aeac4ea02de03b3698bdad37e6f3ee52ce51d19d87ef160d1941801a2e9"
+    },
+    "counts": {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/counts.json",
+      "size": 839,
+      "sha256": "fd15e19ac141a0cd58ea218727fb46e716c021ecddecb9d51ce4a7fca59ee5f7"
+    },
+    "manifest": {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/work/event-manifest.final.json",
+      "size": 147424,
+      "sha256": "e96cbcbf53aac243e2777f8443fda3ae88866584ed261d5d6a00cbafda2f81db"
+    },
+    "reader": {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/release/news-brief.md",
+      "size": 16664,
+      "sha256": "85b50c3c3b9e3208a47bd0bd72186a13981f5d417bfb285d4bde2f34d8b9bd94"
+    },
+    "release_receipt": {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/release/release-receipt.json",
+      "size": 2440,
+      "sha256": "b76f46f01af8ba8d4bd5fbb39df0e97dab31d4da0690511ea42258d644a317ec"
+    },
+    "attachments_manifest": {
+      "path": "/workspace/scratch/e71b6149f33b/gnb-s4/workspace/work/runs/gnb-20260822T201537Z-02c564e5/attachments.json",
+      "size": 6104,
+      "sha256": "e548b9e4ebcc482e318b9eb8b7aa8b1af6d401fff0105caea5ffd968bd8fe00e"
+    }
+  },
+  "validators": {
+    "unique_delivery_gate": "passed",
+    "candidate_audit": "passed",
+    "manifest": "passed",
+    "reader_legacy_sectioned": "passed",
+    "map_decisions": "passed",
+    "checkpoint": "passed",
+    "canonical_publisher": "passed",
+    "release_receipt": "passed"
+  },
+  "degraded": [
+    {
+      "component": "source_photographs",
+      "reason": "來源頁未提供權利與下載條件皆可核實的可用照片；改附逐事件、可見且已驗證的資訊圖卡。",
+      "publication_blocking": false
+    }
+  ]
+}
