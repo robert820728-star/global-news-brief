@@ -1,0 +1,32 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-s3-r1-20260822T194531Z-9436b643",
+  "run_id": "gnb-20260822T194531Z-9436b643",
+  "task_name": "新聞管線診斷 S3-R1：source-scan",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T03:44:00+08:00",
+  "observed_at": "2026-08-22T19:55:01.197Z",
+  "sequence": "140",
+  "step": "source-scan-validated",
+  "status": "running",
+  "resolved_main_sha": "318db6c62ce8a968f2466e29238379ca948984ed",
+  "previous_receipt_path": "logs/diagnostics/diag-s3-r1-20260822T194531Z-9436b643/130-source-candidates-built-passed.json",
+  "previous_receipt_blob_sha": "09b90648b96f3ece7229fd68a3fbef06ce861ad6",
+  "evidence_paths": [
+    "schemas/news-source-candidate-list.schema.json",
+    "work/runs/gnb-20260822T194531Z-9436b643/work/source-candidates.json"
+  ],
+  "evidence_sha256": [
+    "329aaef8fa43cb35fdec2ea6612deddf17c743ae57172650c189306bae9bab94"
+  ],
+  "elapsed_ms": 570197,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  }
+}
