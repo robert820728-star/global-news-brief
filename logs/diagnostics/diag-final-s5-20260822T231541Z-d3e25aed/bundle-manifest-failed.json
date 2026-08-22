@@ -1,0 +1,257 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260822T231541Z-d3e25aed",
+  "diag_run_id": "diag-final-s5-20260822T231541Z-d3e25aed",
+  "created_at": "2026-08-22T16:57:47-07:00",
+  "status": "failed",
+  "first_incomplete_step": "persist-canonical-run-bundle",
+  "earliest_failure": "CANONICAL_RUN_BUNDLE_GATE",
+  "exact_error": {
+    "classification": "connector_local_file_upload_unavailable",
+    "message": "GitHub connector exposes create_blob(content:string) but no local-file/binary upload primitive; required candidate-audit.json is 30,467,725 bytes and 24 JPEG attachments must retain exact bytes. Persisting partial or truncated artifacts would violate CANONICAL_RUN_BUNDLE_GATE.",
+    "tool_or_endpoint": "mcp__codex_apps__github_create_blob",
+    "http_status": null,
+    "request_id": null
+  },
+  "items": [
+    {
+      "name": "candidate-audit.json",
+      "local_path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/candidate-audit.json",
+      "size": 30467725,
+      "sha256": "9cb3c9108e0f395ee982764560c325b085d9d0ddf2cf6288137795e943f5da8e",
+      "git_blob_sha": null,
+      "persistence": "blocked_no_local_file_upload_primitive"
+    },
+    {
+      "name": "article-dispositions.json",
+      "local_path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/s5/article-dispositions.json",
+      "size": 3423170,
+      "sha256": "a95e10d807ac26fcad59395549cddf3b791ede2ffe1c57e0ed320c6b0257f155",
+      "git_blob_sha": null,
+      "persistence": "blocked_no_local_file_upload_primitive"
+    },
+    {
+      "name": "image-evidence",
+      "local_path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence",
+      "size": 11090,
+      "sha256": "50ee756c39168af1d6e53a993c444492c838cfbf616485be89232284ae87c628",
+      "members": [
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/CHN-01-source-01.json",
+          "size": 299,
+          "sha256": "59f39cf1718e2cd750691435f1cecb438abcab911463e8959572257f2bd85503"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/CHN-02-source-01.json",
+          "size": 348,
+          "sha256": "2c6c25d698da3f3522b6a202746ca9805a3cdacbd776fbe007231137296fb612"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/CHN-03-source-01.json",
+          "size": 348,
+          "sha256": "1685eff487801d7d0b23573a6c689357bf361205430e65358353a14cc570c485"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/CHN-04-source-01.json",
+          "size": 349,
+          "sha256": "92c97659e737fb73a5712593dadcac93eb901f48e2552e8c3bf5de94a5035e0f"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/CHN-05-source-01.json",
+          "size": 348,
+          "sha256": "3f487905b96e6515e7b900eee9f481402cf81a2aedece5651ee03ce51175477f"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-01-source-01.json",
+          "size": 349,
+          "sha256": "c0a4b1918bd601365c39d5ecd86b8be50c430e039b52a75c8903475a277b05ac"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-01-source-02.json",
+          "size": 399,
+          "sha256": "be7a04707b951ac05ef353ebc5c84ae1de96c7b06b6f7a3d14252d8571ccafb4"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-02-source-01.json",
+          "size": 384,
+          "sha256": "1968553259cbce36da54f90c6428e84eaf40fa74d04a3c76f5d44adde7e1948c"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-03-source-01.json",
+          "size": 387,
+          "sha256": "191bb212d5f4f7edc1da0ac245fcfc7c3c10875a922e261fa1cbbe4adaaf8d84"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-03-source-02.json",
+          "size": 299,
+          "sha256": "d467a7de12ad7bf0f927552cc41eeac0a3c7b9cd71b26575706b66bed196f7d5"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-04-source-01.json",
+          "size": 349,
+          "sha256": "c075bd5062a4e49f28bbfbcc32ab049765b9387c8846a62aca671a1e6e3d3120"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-04-source-02.json",
+          "size": 446,
+          "sha256": "28ac828c2fdb4688541ac42dd0762245b6b90fe16b42783f7e80da93c1c23b21"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-05-source-01.json",
+          "size": 387,
+          "sha256": "80165714e77df546612f221c9977b1583ae1a44313d6bf114eb4f7f2233518c5"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-05-source-02.json",
+          "size": 402,
+          "sha256": "f123f4cce014d0e04122bdc2c1d6d4467629b20687f6602c47d6f2fe7ed89bba"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-06-source-01.json",
+          "size": 349,
+          "sha256": "52bf20deefd92c044e7a325126f26c66e985f610e1db6235dfacfaf5b491882a"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-06-source-02.json",
+          "size": 407,
+          "sha256": "d899bd2649a60f44854e1e09cf182650ef54fc3fafc32a10890e3794b8d224aa"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-07-source-01.json",
+          "size": 388,
+          "sha256": "894505df85d4b92de52646c8a55c7d8ede8cbb2037b2b60ecdc5a025eeb67fde"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-07-source-02.json",
+          "size": 1104,
+          "sha256": "2ada3f23c621f671b960b7ff90fdcfe2e4095163315515b2cc42f58c5653f977"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-08-source-01.json",
+          "size": 349,
+          "sha256": "e72a1c960a9ae69532b97e3188bea63e2199aadbcf715e2b4419ac9d9b07eba0"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-09-source-01.json",
+          "size": 349,
+          "sha256": "535a8a5ff78f0ce59170d3d5f4880a3e71e3cf5add129013f836ca2331f64365"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-09-source-02.json",
+          "size": 386,
+          "sha256": "5bc12a94f042e5646d659e442b3de3577ccba9d46b502f365059df6968f87f73"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-10-source-01.json",
+          "size": 391,
+          "sha256": "3e358509c2600f627fc302204db4df0098dc2da447ff6a745a04a2e5be33ea8e"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/GLB-11-source-01.json",
+          "size": 349,
+          "sha256": "52f36893cfc63ad74d1377b04cd68a3a74fd53b7754de4cb44363acbb34c39c7"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/TWN-01-source-01.json",
+          "size": 349,
+          "sha256": "ab0cb3ebbf19a5ba30cd01fd9bf0ec8373de048e80a90c84e6cafd022a67233e"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/TWN-02-source-01.json",
+          "size": 408,
+          "sha256": "49f6e0087f65aa667f4c1206920c773c15976fa1450a037ff63a1ff8bbc1b66a"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/TWN-03-source-01.json",
+          "size": 389,
+          "sha256": "ad6729a34599fb112a52b0c96adf0c4af85e0ad3f1ff471536703d9dca41f0fc"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/TWN-04-source-01.json",
+          "size": 387,
+          "sha256": "d9e02ebad289c229a112ac995ca15b2c9504c50ad40285d7c0b4104e84ea80d7"
+        },
+        {
+          "path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/image-evidence/TWN-05-source-01.json",
+          "size": 391,
+          "sha256": "ecaf0342ea4154c85deda9ac594c6c4e08b4634d47b3629cb485e9905791c3b8"
+        }
+      ],
+      "git_blob_sha": null,
+      "persistence": "blocked_no_local_file_upload_primitive"
+    },
+    {
+      "name": "materialized-images.json",
+      "local_path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/materialized-images.json",
+      "size": 19930,
+      "sha256": "877c4f594daa8df873cc122e58717120678ec02f72206cc482703a326dff8ddb",
+      "git_blob_sha": null,
+      "persistence": "blocked_no_local_file_upload_primitive"
+    },
+    {
+      "name": "map-decisions.json",
+      "local_path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/s5/map-decisions.json",
+      "size": 6473,
+      "sha256": "a401c86317e8234ae418a752df88542660022c66ddd17a55c0d8bd8fdbfc0f62",
+      "git_blob_sha": null,
+      "persistence": "blocked_no_local_file_upload_primitive"
+    },
+    {
+      "name": "checkpoint.json",
+      "local_path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/checkpoint.json",
+      "size": 6868,
+      "sha256": "cf0d706f1a6496d23976f9a7ad7c47a9f89d1655e18175c4d7895e10c9de87a8",
+      "git_blob_sha": null,
+      "persistence": "blocked_no_local_file_upload_primitive"
+    },
+    {
+      "name": "counts.json",
+      "local_path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/counts.json",
+      "size": 406,
+      "sha256": "4b5094dac07917c1e198ca420ccba604e60e62f5f4652ad31df0cb3a1ff6f900",
+      "git_blob_sha": null,
+      "persistence": "blocked_no_local_file_upload_primitive"
+    },
+    {
+      "name": "event-manifest.json",
+      "local_path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/news-event-manifest.json",
+      "size": 191628,
+      "sha256": "b7de0c3c15b13d2d05fa2f74022a26891dfaaf6458b739b7699d4df7492282c0",
+      "git_blob_sha": null,
+      "persistence": "blocked_no_local_file_upload_primitive"
+    },
+    {
+      "name": "reader.md",
+      "local_path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/release/canonical/news-brief.md",
+      "size": 18872,
+      "sha256": "9ef6d24c5dcb1c4c8bd10f9aeabd45c72685cad3c72fb2ae1e072afc94876fff",
+      "git_blob_sha": null,
+      "persistence": "blocked_no_local_file_upload_primitive"
+    },
+    {
+      "name": "attachments.json",
+      "local_path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/s5/attachments.json",
+      "size": 10567,
+      "sha256": "30e15b4d449753c58d87d9e0f332b1ab5ddadec62c1b07caa0583fb8239fd3bd",
+      "git_blob_sha": null,
+      "persistence": "blocked_no_local_file_upload_primitive"
+    },
+    {
+      "name": "release-receipt.json",
+      "local_path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/release/canonical/release-receipt.json",
+      "size": 2572,
+      "sha256": "9cabea1fda3a43ca9eb5ad23fd7577cd1b1b2d2c1a2a781f94b2faa2d08e720a",
+      "git_blob_sha": null,
+      "persistence": "blocked_no_local_file_upload_primitive"
+    },
+    {
+      "name": "rule-matrix-result.json",
+      "local_path": "/workspace/scratch/fa209eafdcb0/gnb-final-retest-0715/workspace/work/runs/gnb-20260822T231541Z-d3e25aed/work/s5/rule-matrix-result.json",
+      "size": 1543,
+      "sha256": "85fc98dfbafe255a3bce02bce6040ace54b71fbc00c1e21e8a33502adb684eef",
+      "git_blob_sha": null,
+      "persistence": "blocked_no_local_file_upload_primitive"
+    }
+  ],
+  "logs_current_updated": false
+}
