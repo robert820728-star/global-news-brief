@@ -22,6 +22,8 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 
 先執行 `python3 scripts/preprocess_news_candidates.py`，以程式完成時間窗檢查、網址正規化、完全重複及高相似標題聚類。程式輸出只作為候選索引，不得直接決定入選、排除或評級。
 
+`REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE`：`news-source-pool.json` 中角色為 `regional_supplement` 的來源（目前中央社與中新社），其全部精確窗內 provisional groups 與文章列都必須出現在模型 `candidate_groups`。不得因缺少 GDELT heat、Google Trends、Google News coverage 或關鍵字命中而省略；熱度只可增加召回或排序，不能判斷重要性。模型輸入建立後、語意合併與六項評分前，執行 `python3 scripts/validate_local_source_admission.py --preprocessed <preprocessed-candidates.json> --selection <selection-results.json> --source-pool news-source-pool.json`，驗證失敗不得進入後續階段。
+
 `SEMANTIC_EVENT_LEDGER_GATE`：只有語意事件才算新聞、才可進入六項評分。前處理輸出的 `provisional_article_groups` 只是文章索引，不是事件。必須讀取文章內容或來源支援摘要，為每個真正事件建立唯一 `semantic_event_id` 與完整 `event_identity`，並逐列寫入 `article_dispositions`。每列只能是 `event_evidence`、`non_news` 或 `unresolved`；`event_evidence` 指向事件，`non_news` 保存具體理由，`unresolved` 必須排查歸零才能交付 audit。文章列數、網址數與標題群組數不得稱為新聞數或完成評分數。
 
 `EVENT_REGION_AND_TIME_IDENTITY_GATE`：在任何六項評分之前，必須讀取內容並獨立建立事件的 `country_codes`、`primary_country_code`、`location_evidence`、`event_occurred_at`、`material_update_at`、`material_update_type`、`material_update_evidence` 與 `temporal_review`。來源分桶與媒體國別只是 discovery 提示，絕不能當事件地區。高階模型必須逐事件比較文章內容、十四天時間線、舊數據與本輪事實，將時間資格判為 `new_event`、`ongoing_current_impact`、`material_update` 或 `old_restatement`，並分列新增／變更事實、重複舊事實與窗內當下影響；程式只檢查結構與一致性。已結束的舊事件只重複舊傷亡、重新整理、回顧、週年、換標題或重刊時為 `non_news`。開始較早但有內容證明事件仍持續跨越精確時間窗、並在窗內造成當下影響時可列 `ongoing_current_impact`，不得因開始日久遠排除，也不得強迫必須新增傷亡。地區或時間缺漏／矛盾時保持 `unresolved`，不得評分；地區修正後必須重算 `core_section_relevance` 與總分。

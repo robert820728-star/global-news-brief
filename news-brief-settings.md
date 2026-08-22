@@ -6,6 +6,8 @@
 
 The initial list comes from GDELT, CNA, and China News Service. `GDELT_RESILIENT_ACQUISITION` uses GDELT's official 15-minute export archives as primary discovery, permits one non-blocking DOC API request only when the archive is unavailable, and then uses a labeled last-known-good cache. A discovery source failure degrades coverage but does not block the whole brief when another route yields verifiable current candidates. `FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` sends every verified in-window item from a successful route into deduplication and scoring; there is no per-source top-N cutoff.
 
+`REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE`：中央社與中新社等 `regional_supplement` 的所有精確窗內 provisional groups 必須完整出現在模型 `candidate_groups`，不得因沒有 GDELT heat、Google Trends、Google News coverage 或關鍵字命中而省略。熱度只能增加召回或安排處理順序，不能決定重要性或排除；模型輸入建立後、語意合併與六項評分前，必須執行 `python3 scripts/validate_local_source_admission.py --preprocessed <preprocessed-candidates.json> --selection <selection-results.json> --source-pool news-source-pool.json`，失敗時不得繼續。
+
 +## Same-source recovery order
 
 `SAME_SOURCE_RECOVERY_ORDER`

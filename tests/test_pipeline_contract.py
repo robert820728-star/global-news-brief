@@ -7,6 +7,24 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PipelineContractTests(unittest.TestCase):
+    def test_regional_supplements_have_complete_model_admission_gate(self):
+        pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
+        policy = pool["model_admission_policy"]
+        self.assertEqual(["regional_supplement"], policy["complete_source_roles"])
+        self.assertTrue(policy["heat_is_recall_only"])
+        self.assertTrue(policy["absence_from_heat_never_excludes_complete_sources"])
+
+        documents = (
+            ROOT / "news-brief-settings.md",
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/select-news-events/SKILL.md",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE", text, path.name)
+            self.assertIn("validate_local_source_admission.py", text, path.name)
+
     def test_short_run_instruction_normalizes_regions_and_monitoring_types(self):
         documents = (
             ROOT / "daily-schedule-prompt.md",

@@ -2,6 +2,12 @@
   "schema_version": "1.3.0",
   "window_hours": 24,
   "candidate_transfer_policy": "all_verified_in_window",
+  "model_admission_policy": {
+    "complete_source_roles": ["regional_supplement"],
+    "heat_is_recall_only": true,
+    "absence_from_heat_never_excludes_complete_sources": true,
+    "validator": "scripts/validate_local_source_admission.py"
+  },
   "primary_sources_per_section": 5,
   "source_scan_evidence_required": true,
   "discovery_policy": {
