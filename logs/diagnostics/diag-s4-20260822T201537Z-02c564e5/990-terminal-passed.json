@@ -1,0 +1,379 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-s4-20260822T201537Z-02c564e5",
+  "run_id": "gnb-20260822T201537Z-02c564e5",
+  "task_name": "新聞管線診斷 S4：完整流程",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T04:15:00+08:00",
+  "observed_at": "2026-08-22T20:51:05.774Z",
+  "sequence": 990,
+  "step": "terminal",
+  "status": "passed",
+  "resolved_main_sha": "318db6c62ce8a968f2466e29238379ca948984ed",
+  "previous_receipt_path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/990-terminal-running.json",
+  "previous_receipt_blob_sha": "6868b2214de91437e209880200793ca3aba8551e",
+  "evidence_paths": [
+    "logs/runs/gnb-20260822T201537Z-02c564e5/reader.md",
+    "logs/runs/gnb-20260822T201537Z-02c564e5/release-receipt.json",
+    "logs/runs/gnb-20260822T201537Z-02c564e5/checkpoint.json",
+    "logs/runs/gnb-20260822T201537Z-02c564e5/counts.json"
+  ],
+  "evidence_sha256": [
+    "85b50c3c3b9e3208a47bd0bd72186a13981f5d417bfb285d4bde2f34d8b9bd94",
+    "b76f46f01af8ba8d4bd5fbb39df0e97dab31d4da0690511ea42258d644a317ec",
+    "884f2aeac4ea02de03b3698bdad37e6f3ee52ce51d19d87ef160d1941801a2e9",
+    "fd15e19ac141a0cd58ea218727fb46e716c021ecddecb9d51ce4a7fca59ee5f7"
+  ],
+  "elapsed_ms": 2128774,
+  "retry_count": 1,
+  "external_ledger": "available",
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "overall_status": "passed",
+  "last_completed_step": "publisher",
+  "first_incomplete_step": null,
+  "earliest_failure": null,
+  "exact_error": null,
+  "run_receipt": {
+    "run_id": "gnb-20260822T201537Z-02c564e5",
+    "main_sha": "318db6c62ce8a968f2466e29238379ca948984ed",
+    "last_completed_stage": "canonical-delivery",
+    "bootstrap_chunks": "0/52",
+    "current_chunk": "none",
+    "current_block": "none",
+    "last_error": "none",
+    "retry_count": 0,
+    "external_ledger": "available",
+    "canonical_delivery": true
+  },
+  "processing_counts": {
+    "merged_article_row_count": 12520,
+    "in_window_article_row_count": 12520,
+    "canonical_url_count": 12519,
+    "provisional_title_cluster_count": 10402,
+    "event_evidence_article_row_count": 143,
+    "non_news_article_row_count": 12377,
+    "unresolved_article_row_count": 0,
+    "semantic_event_count": 16,
+    "scored_event_count": 16,
+    "c_or_higher_scored_event_count": 16,
+    "selected_event_count": 16
+  },
+  "validators": {
+    "unique_delivery_gate": "passed",
+    "candidate_audit": "passed",
+    "manifest": "passed",
+    "reader_legacy_sectioned": "passed",
+    "map_decisions": "passed",
+    "checkpoint": "passed",
+    "canonical_publisher": "passed",
+    "release_receipt": "passed"
+  },
+  "receipt_chain": [
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/010-main-pinned-running.json",
+      "sha": "381d9d353b60b2313b6a7b183e20b2d12dab6731"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/010-main-pinned-passed.json",
+      "sha": "7ff936df09fad6aa6c43747d2daea7d7710fd783"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/020-tree-verified-running.json",
+      "sha": "52cb85aade18aea77fb56248882f58ff31ac963c"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/020-tree-verified-passed.json",
+      "sha": "f0d7881a6a57407ea4df1d6414704a13fce02b4c"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/030-manifest-verified-running.json",
+      "sha": "c15685e08713975cafd329a8155ca80ee4e7a69a"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/030-manifest-verified-passed.json",
+      "sha": "6de739185bad5ef3cf424c1ecb3a973e920a33ba"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/040-helpers-verified-running.json",
+      "sha": "6af185271e0c75c49511026e8141a18db9234e26"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/040-helpers-verified-passed.json",
+      "sha": "f964644e1961bad0d074668c47c77e5a528a586a"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/050-transport-attempt-running.json",
+      "sha": "d5d2ad27d10546d328375fb6f849d190e0beba14"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/050-transport-attempt-passed.json",
+      "sha": "39378780774ee839c17062f2e9c1f181780d6c10"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/060-workspace-materialized-running.json",
+      "sha": "f51f3140ff69ca78e2b6f417d5e5b04e9cbbb77c"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/060-workspace-materialized-passed.json",
+      "sha": "9464b7371b63bfc0dbaa7408f776d913cbc23790"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/070-runtime-ready-running.json",
+      "sha": "39b6a1ae13be097335106f8f62e31fce09f82726"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/070-runtime-ready-passed.json",
+      "sha": "6c295a3674fe13d4565005dda11e60c80aca4274"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/100-checkpoint-initialized-running.json",
+      "sha": "babed24cc47a60a74d85bbc3ee2d14bf7ddac3c2"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/100-checkpoint-initialized-passed.json",
+      "sha": "fb8c00b89507121a744b79e77abb73a621b71fb0"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/110-source-routes-fetched-running.json",
+      "sha": "957c3dac445b390914363ada7b9379ce127c59e0"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/110-source-routes-fetched-passed.json",
+      "sha": "ed9c7b447edcc391fff8a665fea43ce115eaf96b"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/120-source-scans-materialized-running.json",
+      "sha": "cf517daa0697799ba5e87a067b26158aae689e31"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/120-source-scans-materialized-passed.json",
+      "sha": "90aab9e6f6b9f6b0654ee91df31abb5ea154e2a1"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/200-source-scan-running.json",
+      "sha": "15192c80d08b801feb3def0b8de9a213b5c50c74"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/200-source-scan-passed.json",
+      "sha": "796d1c20b830cee54951136f4bfe61fd5df8ba9e"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/210-preprocess-news-candidates-running.json",
+      "sha": "d332bc8725b558fce4d7dcdbbd55d27fa68371e6"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/210-preprocess-news-candidates-passed.json",
+      "sha": "23edc930e7fd7a7e9540bfbc185ab83c1deb4e28"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/220-select-news-events-running.json",
+      "sha": "4bf7a085201b20fd302327f76e19103c9995c5dd"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/220-select-news-events-passed.json",
+      "sha": "f46d360c3fe24d1097c7217a46cbea4718a04d9d"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/230-audit-news-candidates-running.json",
+      "sha": "30fdd985f8d760e7addf50a3514842526c02792a"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/230-audit-news-candidates-passed.json",
+      "sha": "406c35793affb460fdf378ef0510b3de571a1718"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/240-materialize-manifest-running.json",
+      "sha": "886b57c6d88d44f443ece6426766a21bbf3aa2d4"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/240-materialize-manifest-passed.json",
+      "sha": "6603f3082d8aeb2ab2dfd31760fa3fb0573921c9"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/250-verify-news-events-running.json",
+      "sha": "d5995465783a008622f86250a9046821751a905b"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/250-verify-news-events-passed.json",
+      "sha": "724adcb2127aed3f14dcf3132adeec6d23e4d2d3"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/260-build-news-maps-running.json",
+      "sha": "cf0a9f5384e4895d4dd9a5904121bc25e18e6768"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/260-build-news-maps-passed.json",
+      "sha": "c42eef602d2388ed081e8b7305178f813bd350ae"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/270-build-news-charts-running.json",
+      "sha": "e27ab19f2825ad5adf86927c7834510dfd6c26a6"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/270-build-news-charts-passed.json",
+      "sha": "f0699967e6dafe4988244bcd024cbf15d3f239b7"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/280-collect-news-images-running.json",
+      "sha": "1a53905258454834f0f2ed3747361d88c44eb6dd"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/280-collect-news-images-passed.json",
+      "sha": "6369d4e7f2a4601fc3351b4c413e010af49b59c4"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/290-render-running.json",
+      "sha": "20ce44697050395d06cafbfae52793bdfc1628c6"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/290-render-passed.json",
+      "sha": "21d961d41ed34cd432b6763c5d87c4ca088f567f"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/900-validators-running.json",
+      "sha": "2caf32876bda125baccf5ff9787023b308456888"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/900-validators-passed.json",
+      "sha": "f3fee3e141beba9787f3cc8e32c16ce646c7abf6"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/910-publisher-running.json",
+      "sha": "47375baa32802d34d0ce5a12ff48dfdcf6e8aaba"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/910-publisher-passed.json",
+      "sha": "d52761fc3c5c7ff8e663378e2c6bfb8f052994db"
+    },
+    {
+      "path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/990-terminal-running.json",
+      "sha": "6868b2214de91437e209880200793ca3aba8551e"
+    }
+  ],
+  "persisted_artifacts": [
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/checkpoint.json",
+      "sha": "db703f1c97c5bd2530506f8ccef4dbe162da564b"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/counts.json",
+      "sha": "cb9090de87ca602010a751948e50d6bbeda476de"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/event-manifest.json",
+      "sha": "0ba385866ac465596046cecdf83ca7770af508c5"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/manifest.json",
+      "sha": "8c5fd750622837b44caa26077a2091974775cb80"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/release-receipt.json",
+      "sha": "61e8742a710f891e0252d0b1bef414abcdd6be4d"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/reader.md",
+      "sha": "2f25a873fad99909d9a5f692215907f597612850"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments.json",
+      "sha": "6c4e83462cf77ae98a1da7f372d0d51a35783e2e"
+    }
+  ],
+  "binary_attachments": [
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/CHN-06.jpg",
+      "sha": "aaf387c49b6c4f102e66e40456d5864b50649dc8"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/CHN-07.jpg",
+      "sha": "880093b0cd09e6a55a71fdc0a2cda1f826cd8ecf"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/CHN-08.jpg",
+      "sha": "0bc1e560711fa3f1516c3c0b7cfe66985b687ef1"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/GLB-09.jpg",
+      "sha": "f5628b7449c11baf12cef6fc7d07245699e24138"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/GLB-10.jpg",
+      "sha": "6772f65af6da41351bc37c06c84724847ead199b"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/GLB-11.jpg",
+      "sha": "2a21a068d2a71b2883291a6bd98cd442ef141e68"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/GLB-12.jpg",
+      "sha": "17f89060b30cc605f2d2dd9e382c134e7c933460"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/GLB-13.jpg",
+      "sha": "37d3d58b1ce847710ede821701e80228ad9e8bad"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/GLB-14.jpg",
+      "sha": "3bae0983cf8962c0b4066e2c26986f27fb9808b2"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/GLB-15.jpg",
+      "sha": "36389ea191a198cafe4caef4031021f372c3bd52"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/GLB-16.jpg",
+      "sha": "532b25626c766e4bae784f39d1897488c8bb62d4"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/TWN-01.jpg",
+      "sha": "fa9d5643976935a10b3a99bc2d4af83a8ab8e289"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/TWN-02.jpg",
+      "sha": "ce0ad2c176fcaa8cc7ba61cc7046ddba3fd548b0"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/TWN-03.jpg",
+      "sha": "88432ba67d2865e4343c2b6e4f1d97135f29c348"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/TWN-04.jpg",
+      "sha": "d71d016642c7d4d263f1957f53234955e54bdbf4"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/TWN-05.jpg",
+      "sha": "02833ffd61bb8a83fee4bc275c5f01ea0612df68"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/CHN-08-locator.png",
+      "sha": "74c248fc165b7a9249efd8186c1b061eacce49ec"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/GLB-10-locator.png",
+      "sha": "6e2d138886acb06f3adb3e7868867965517f4168"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/GLB-11-locator.png",
+      "sha": "bbd27f69c9c5e22aff74e6f5ecb141ef9976034c"
+    },
+    {
+      "path": "logs/runs/gnb-20260822T201537Z-02c564e5/attachments/TWN-01-locator.png",
+      "sha": "ec024b096c9a6aada4bc65362fa937bb6be019f4"
+    }
+  ],
+  "attachment_commit_sha": "9b3ffeb45b5bc7decd0a6f48244ecf35c80b49a8",
+  "degraded": [
+    {
+      "component": "source_photographs",
+      "reason": "來源頁未提供權利與下載條件皆可核實的可用照片；改附逐事件資訊圖卡。",
+      "publication_blocking": false
+    }
+  ]
+}
