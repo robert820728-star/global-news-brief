@@ -1,0 +1,31 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-s4-20260822T201537Z-02c564e5",
+  "run_id": "gnb-20260822T201537Z-02c564e5",
+  "task_name": "新聞管線診斷 S4：完整流程",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T04:15:00+08:00",
+  "observed_at": "2026-08-22T20:38:19.946Z",
+  "sequence": "240",
+  "step": "materialize-manifest",
+  "status": "passed",
+  "resolved_main_sha": "318db6c62ce8a968f2466e29238379ca948984ed",
+  "previous_receipt_path": "logs/diagnostics/diag-s4-20260822T201537Z-02c564e5/240-materialize-manifest-running.json",
+  "previous_receipt_blob_sha": "886b57c6d88d44f443ece6426766a21bbf3aa2d4",
+  "evidence_paths": [
+    "work/event-manifest.base.json"
+  ],
+  "evidence_sha256": [
+    "a82e9f28720138532583c59fc99575a00c20f36699b0ec4cded4227d5a6b2d1b"
+  ],
+  "elapsed_ms": 400,
+  "retry_count": 1,
+  "external_ledger": "available",
+  "error": {
+    "classification": null,
+    "message": "checkpoint artifact key corrected from manifest_base to required manifest; no content stage rerun",
+    "tool_or_endpoint": "news_run_checkpoint.py",
+    "http_status": null,
+    "request_id": null
+  }
+}
