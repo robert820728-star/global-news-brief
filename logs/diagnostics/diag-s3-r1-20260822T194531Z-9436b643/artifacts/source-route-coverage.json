@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-08-22T12:52:39.596421-07:00",
+  "route_ready_count": 3,
+  "route_total_count": 3,
+  "minimum_ready_routes": 1,
+  "publication_ready": true,
+  "gdelt_live_ready": true,
+  "gdelt_acquisition_mode": "gdelt_export_24h",
+  "status": "ready",
+  "results": [
+    {
+      "source_id": "gdelt",
+      "route": "aggregate_api",
+      "request_method": "GET",
+      "request_url": "http://data.gdeltproject.org/gdeltv2/{yyyyMMddHHmm}00.export.CSV.zip",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 3180607,
+      "snapshot_path": "/workspace/scratch/e71b6149f33b/gnb-s3-r1/workspace/work/runs/gnb-20260822T194531Z-9436b643/work/source-route/route-snapshots/gdelt.discovery.json",
+      "sha256": "e02fd4ab7aa7bd37a274762ee8c6ab0be4261fec203a9be67a42389780c0fed1",
+      "route_ready": true,
+      "json_exhaustion_path": null,
+      "source_exhaustion_marker": "\"articles\"",
+      "retry_count": 0,
+      "error": null,
+      "acquisition_mode": "gdelt_export_24h",
+      "gdelt_live_ready": true,
+      "archive_requested_count": 97,
+      "archive_ready_count": 97,
+      "archive_complete": true,
+      "optional_doc_api_attempted": false
+    },
+    {
+      "source_id": "cna",
+      "route": "structured_direct",
+      "request_method": "POST",
+      "request_url": "https://www.cna.com.tw/cna2018api/api/WNewsList",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 119525,
+      "snapshot_path": "/workspace/scratch/e71b6149f33b/gnb-s3-r1/workspace/work/runs/gnb-20260822T194531Z-9436b643/work/source-route/route-snapshots/cna.discovery.json",
+      "sha256": "dbe54e86ab4464d18b3e1452798b40b7c0aa9f135a00fe0919e09810f5eb0eb6",
+      "route_ready": true,
+      "json_exhaustion_path": [
+        "ResultData",
+        "NextPageIdx"
+      ],
+      "source_exhaustion_marker": null,
+      "retry_count": 0,
+      "error": null,
+      "acquisition_mode": "primary_route"
+    },
+    {
+      "source_id": "chinanews",
+      "route": "html_direct",
+      "request_method": "GET",
+      "request_url": "https://www.chinanews.com.cn/scroll-news/2026/0822/news.shtml",
+      "http_status": 200,
+      "content_type": "text/html",
+      "bytes": 139921,
+      "snapshot_path": "/workspace/scratch/e71b6149f33b/gnb-s3-r1/workspace/work/runs/gnb-20260822T194531Z-9436b643/work/source-route/route-snapshots/chinanews.discovery.html",
+      "sha256": "aca2122825c3081360e70b796a811cb1dc2585f3a313a0713bdfba4e10d0bdea",
+      "route_ready": true,
+      "json_exhaustion_path": null,
+      "source_exhaustion_marker": "</html>",
+      "retry_count": 0,
+      "error": null,
+      "acquisition_mode": "primary_route"
+    }
+  ]
+}
