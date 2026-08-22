@@ -634,6 +634,10 @@ class PipelineContractTests(unittest.TestCase):
             "material_update_evidence",
         }
         self.assertTrue(structured_fields.issubset(identity["properties"]))
+        temporal_review = identity["properties"]["temporal_review"]
+        self.assertEqual("model_content_comparison", temporal_review["properties"]["review_method"]["const"])
+        self.assertIn("ongoing_current_impact", temporal_review["properties"]["window_status"]["enum"])
+        self.assertIn("old_restatement", temporal_review["properties"]["window_status"]["enum"])
         documents = (
             ROOT / "daily-schedule-prompt.md",
             ROOT / "mobile-chatgpt-daily-prompt.md",
@@ -649,6 +653,8 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("`event_occurred_at`", document)
             self.assertIn("`material_update_at`", document)
             self.assertIn("舊事件", document)
+            self.assertIn("模型", document)
+            self.assertIn("`temporal_review`", document)
 
     def test_mobile_native_durable_audit_uses_compact_profile_without_verbose_evidence(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")

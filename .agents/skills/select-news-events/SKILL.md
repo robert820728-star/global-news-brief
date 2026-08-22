@@ -24,7 +24,7 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 
 `SEMANTIC_EVENT_LEDGER_GATE`：只有語意事件才算新聞、才可進入六項評分。前處理輸出的 `provisional_article_groups` 只是文章索引，不是事件。必須讀取文章內容或來源支援摘要，為每個真正事件建立唯一 `semantic_event_id` 與完整 `event_identity`，並逐列寫入 `article_dispositions`。每列只能是 `event_evidence`、`non_news` 或 `unresolved`；`event_evidence` 指向事件，`non_news` 保存具體理由，`unresolved` 必須排查歸零才能交付 audit。文章列數、網址數與標題群組數不得稱為新聞數或完成評分數。
 
-`EVENT_REGION_AND_TIME_IDENTITY_GATE`：在任何六項評分之前，必須讀取內容並獨立建立事件的 `country_codes`、`primary_country_code`、`location_evidence`、`event_occurred_at`、`material_update_at`、`material_update_type`、`material_update_evidence`。來源分桶與媒體國別只是 discovery 提示，絕不能當事件地區；中央社報導廣西仍是 `CHN`，外國事件也不因台灣媒體報導變成 `TWN`。文章發布時間不是事件時間或實質更新時間。舊事件的重新整理、回顧、週年、換標題與重刊都是 `non_news`；只有窗內發生可驗證的官方確認、傷亡／影響修正、政策／法律變化、狀態轉折或實質升降級，才可沿用原 `semantic_event_id` 作為延續更新。地區或時間缺漏／矛盾時保持 `unresolved`，不得評分；地區修正後必須重算 `core_section_relevance` 與總分。
+`EVENT_REGION_AND_TIME_IDENTITY_GATE`：在任何六項評分之前，必須讀取內容並獨立建立事件的 `country_codes`、`primary_country_code`、`location_evidence`、`event_occurred_at`、`material_update_at`、`material_update_type`、`material_update_evidence` 與 `temporal_review`。來源分桶與媒體國別只是 discovery 提示，絕不能當事件地區。高階模型必須逐事件比較文章內容、十四天時間線、舊數據與本輪事實，將時間資格判為 `new_event`、`ongoing_current_impact`、`material_update` 或 `old_restatement`，並分列新增／變更事實、重複舊事實與窗內當下影響；程式只檢查結構與一致性。已結束的舊事件只重複舊傷亡、重新整理、回顧、週年、換標題或重刊時為 `non_news`。開始較早但有內容證明事件仍持續跨越精確時間窗、並在窗內造成當下影響時可列 `ongoing_current_impact`，不得因開始日久遠排除，也不得強迫必須新增傷亡。地區或時間缺漏／矛盾時保持 `unresolved`，不得評分；地區修正後必須重算 `core_section_relevance` 與總分。
 
 模型路由依序為：
 

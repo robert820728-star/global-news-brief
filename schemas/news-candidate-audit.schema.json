@@ -146,10 +146,25 @@
             "policy_or_legal_change",
             "operational_or_status_change",
             "material_escalation_or_deescalation",
+            "ongoing_verified_current_impact",
             "other_verified_material_change"
           ]
         },
         "material_update_evidence": {"type": "string", "minLength": 1},
+        "temporal_review": {
+          "type": "object",
+          "required": ["review_method", "window_status", "active_during_window", "new_or_changed_facts", "repeated_old_facts", "current_window_impact", "comparison_evidence"],
+          "properties": {
+            "review_method": {"const": "model_content_comparison"},
+            "window_status": {"enum": ["new_event", "ongoing_current_impact", "material_update", "old_restatement"]},
+            "active_during_window": {"type": "boolean"},
+            "new_or_changed_facts": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "repeated_old_facts": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "current_window_impact": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "comparison_evidence": {"type": "string", "minLength": 1}
+          },
+          "additionalProperties": false
+        },
         "semantic_merge_basis": {"type": "string", "minLength": 1}
       },
       "additionalProperties": false

@@ -96,6 +96,7 @@ MATERIAL_UPDATE_TYPES = {
     "new_event", "official_confirmation", "casualty_or_impact_revision",
     "policy_or_legal_change", "operational_or_status_change",
     "material_escalation_or_deescalation", "other_verified_material_change",
+    "ongoing_verified_current_impact",
 }
 
 
@@ -534,6 +535,55 @@ def validate(data, source_pool=None):
                     and candidate.get("continuity", {}).get("status") == "new"
                 ):
                     errors.append(label + ".continuity.status 舊事件的實質更新必須標為 continuing")
+
+                temporal_review = identity.get("temporal_review")
+                temporal_fields = {
+                    "review_method", "window_status", "active_during_window",
+                    "new_or_changed_facts", "repeated_old_facts",
+                    "current_window_impact", "comparison_evidence",
+                }
+                if (
+                    not isinstance(temporal_review, dict)
+                    or not temporal_fields.issubset(temporal_review)
+                    or temporal_review.get("review_method") != "model_content_comparison"
+                ):
+                    errors.append(
+                        label + ".event_identity.temporal_review 必須由模型比較事件內容、"
+                        "既有時間線與本輪事實"
+                    )
+                    continue
+                for field in (
+                    "new_or_changed_facts", "repeated_old_facts", "current_window_impact"
+                ):
+                    value = temporal_review.get(field)
+                    if not isinstance(value, list) or any(
+                        not isinstance(item, str) or not item.strip() for item in value
+                    ):
+                        errors.append(label + f".event_identity.temporal_review.{field} 必須是文字陣列")
+                if not isinstance(temporal_review.get("comparison_evidence"), str) or not temporal_review["comparison_evidence"].strip():
+                    errors.append(label + ".event_identity.temporal_review.comparison_evidence 不得為空")
+
+                window_status = temporal_review.get("window_status")
+                new_facts = temporal_review.get("new_or_changed_facts", [])
+                current_impact = temporal_review.get("current_window_impact", [])
+                active_during_window = temporal_review.get("active_during_window")
+                if window_status == "old_restatement":
+                    errors.append(label + ".event_identity.temporal_review old_restatement 不得成為語意事件候選；文章應記為 non_news")
+                elif window_status == "new_event":
+                    if update_type != "new_event" or not occurred_in_window or not new_facts:
+                        errors.append(label + ".event_identity.temporal_review new_event 必須列出窗內首次發生的事實")
+                elif window_status == "material_update":
+                    if update_type in {"new_event", "ongoing_verified_current_impact"} or not new_facts:
+                        errors.append(label + ".event_identity.temporal_review material_update 必須列出本輪新增或變更事實")
+                elif window_status == "ongoing_current_impact":
+                    if (
+                        update_type != "ongoing_verified_current_impact"
+                        or active_during_window is not True
+                        or not current_impact
+                    ):
+                        errors.append(label + ".event_identity.temporal_review ongoing_current_impact 必須證明事件在窗內仍持續造成影響")
+                else:
+                    errors.append(label + ".event_identity.temporal_review.window_status 無效")
             if len(semantic_event_ids) != len(set(semantic_event_ids)):
                 errors.append(run_label + ".semantic_event_id 不得由兩個候選重複使用")
 

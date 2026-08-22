@@ -145,6 +145,15 @@ def valid_audit(candidates=None, per_source_count=1):
             "material_update_at": window_end,
             "material_update_type": "new_event",
             "material_update_evidence": "本輪來源確認一項可獨立辨識的實質新進展。",
+            "temporal_review": {
+                "review_method": "model_content_comparison",
+                "window_status": "new_event",
+                "active_during_window": True,
+                "new_or_changed_facts": ["本輪首次正式確認事件"],
+                "repeated_old_facts": [],
+                "current_window_impact": ["事件在本輪時間窗內發生"],
+                "comparison_evidence": "模型比較事件內容與十四天時間線後確認為新事件。",
+            },
             "semantic_merge_basis": "依主體、行動、地點與時間確認為同一事件",
         }
         item["candidate_urls"] = [all_urls[index]] if index < len(all_urls) else []
@@ -215,6 +224,30 @@ class CandidateAuditTests(unittest.TestCase):
             "material_update_type": update_type,
             "material_update_evidence": "本輪來源確認一項可獨立辨識的實質新進展。",
         })
+        if update_type == "new_event":
+            window_status = "new_event"
+            new_facts = ["本輪首次發生事件"]
+            current_impact = ["事件在本輪時間窗內發生"]
+            active = True
+        elif update_type == "ongoing_verified_current_impact":
+            window_status = "ongoing_current_impact"
+            new_facts = []
+            current_impact = ["事件在本輪時間窗內仍持續造成影響"]
+            active = True
+        else:
+            window_status = "material_update"
+            new_facts = ["本輪首次確認一項實質變更"]
+            current_impact = []
+            active = False
+        identity["temporal_review"] = {
+            "review_method": "model_content_comparison",
+            "window_status": window_status,
+            "active_during_window": active,
+            "new_or_changed_facts": new_facts,
+            "repeated_old_facts": [],
+            "current_window_impact": current_impact,
+            "comparison_evidence": "模型已比較事件內容、既有時間線與本輪事實。",
+        }
         return run, identity
 
     def test_china_event_from_taiwan_publisher_is_classified_by_event_location(self):
@@ -268,6 +301,77 @@ class CandidateAuditTests(unittest.TestCase):
         run["candidates"][0]["section"] = "CHN"
         run["candidates"][0]["continuity"]["status"] = "continuing"
         self.assertEqual([], MODULE.validate(audit, source_pool()))
+
+    def test_latest_event_requires_model_content_temporal_review(self):
+        audit = valid_audit()
+        del audit["runs"][0]["candidates"][0]["event_identity"]["temporal_review"]
+        errors = MODULE.validate(audit, source_pool())
+        self.assertTrue(any("temporal_review 必須由模型比較事件內容" in error for error in errors))
+
+    def test_month_long_active_event_can_remain_a_candidate(self):
+        audit = valid_audit()
+        run, identity = self.add_structured_identity(
+            audit,
+            country="CHN",
+            occurred="2026-07-15T00:00:00+08:00",
+            update_type="ongoing_verified_current_impact",
+        )
+        run["candidates"][0]["section"] = "CHN"
+        run["candidates"][0]["continuity"]["status"] = "continuing"
+        identity["temporal_review"] = {
+            "review_method": "model_content_comparison",
+            "window_status": "ongoing_current_impact",
+            "active_during_window": True,
+            "new_or_changed_facts": [],
+            "repeated_old_facts": ["事件於七月開始"],
+            "current_window_impact": ["本時間窗仍有可驗證的撤離與交通中斷"],
+            "comparison_evidence": "模型比較內文時序後確認影響持續跨越本輪時間窗。",
+        }
+        self.assertEqual([], MODULE.validate(audit, source_pool()))
+
+    def test_ended_event_with_only_repeated_casualty_data_is_not_a_candidate(self):
+        audit = valid_audit()
+        run, identity = self.add_structured_identity(
+            audit,
+            country="CHN",
+            occurred="2026-07-01T00:00:00+08:00",
+            update_type="official_confirmation",
+        )
+        run["candidates"][0]["section"] = "CHN"
+        run["candidates"][0]["continuity"]["status"] = "continuing"
+        identity["temporal_review"] = {
+            "review_method": "model_content_comparison",
+            "window_status": "old_restatement",
+            "active_during_window": False,
+            "new_or_changed_facts": [],
+            "repeated_old_facts": ["159 人死亡是七月既有數據"],
+            "current_window_impact": [],
+            "comparison_evidence": "模型比較文章與既有時間線後，未發現本輪新數據。",
+        }
+        errors = MODULE.validate(audit, source_pool())
+        self.assertTrue(any("old_restatement 不得成為語意事件候選" in error for error in errors))
+
+    def test_ended_event_material_update_requires_a_new_or_changed_fact(self):
+        audit = valid_audit()
+        run, identity = self.add_structured_identity(
+            audit,
+            country="CHN",
+            occurred="2026-07-01T00:00:00+08:00",
+            update_type="casualty_or_impact_revision",
+        )
+        run["candidates"][0]["section"] = "CHN"
+        run["candidates"][0]["continuity"]["status"] = "continuing"
+        identity["temporal_review"] = {
+            "review_method": "model_content_comparison",
+            "window_status": "material_update",
+            "active_during_window": False,
+            "new_or_changed_facts": [],
+            "repeated_old_facts": ["文章重複舊傷亡總數"],
+            "current_window_impact": [],
+            "comparison_evidence": "未找到數據首次公布或修正的證據。",
+        }
+        errors = MODULE.validate(audit, source_pool())
+        self.assertTrue(any("material_update 必須列出本輪新增或變更事實" in error for error in errors))
 
     def test_non_news_article_is_accounted_without_becoming_a_news_candidate(self):
         audit = valid_audit()

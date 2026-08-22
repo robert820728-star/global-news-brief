@@ -79,7 +79,8 @@ The required order for every configured source is: `canonical route -> same-site
 - 候選來源的來源分桶、媒體所在地與首頁分類都不是事件地區；它們不得複製到語意事件的主要板塊。
 - 每個新語意事件先保存 `event_identity.country_codes`、`primary_country_code` 與 `location_evidence`。`primary_country_code=TWN` 對應台灣、`CHN` 對應中國，其餘國家、跨國或全球事件對應世界；來源是中央社、中新社或其他媒體都不得改變此映射。
 - 同時保存 `event_occurred_at` 與 `material_update_at`。前者是底層事件真正發生時間，後者是本輪可驗證實質變化時間，不得用文章 `published_at` 自動代填任一欄。
-- 舊事件重新整理、回顧、週年、重刊或換標題不是新事件；沒有窗內實質更新就標為 `non_news`。地區或時間無法確認則保持 `unresolved`，不得進入六項評分。
+- 同時保存模型產生的 `temporal_review`，逐項區分本輪新增／變更事實、重複舊事實與仍在窗內持續的當下影響。模型必須比較文章內容與十四天事件時間線；程式只驗證欄位與結論一致，不得靠文章發布日或傷亡數字關鍵字自行決定新舊。
+- 已結束的舊事件若只是重新整理、回顧、週年、重刊、換標題或重複舊傷亡數字，標為 `non_news`。事件雖開始較早但確實持續跨越本輪時間窗並仍造成可驗證影響時，可列 `ongoing_current_impact`，不要求一定有新增傷亡。地區或時間無法確認則保持 `unresolved`，不得進入六項評分。
 - 地區閘門通過後才計算 `core_section_relevance`；修改地區必須重做該項及總分，不得沿用錯誤板塊下的分數。
 
 - 板塊由使用者偏好驅動，數量不限，可以是國家、區域、洲別、國際組織範圍或全球。
