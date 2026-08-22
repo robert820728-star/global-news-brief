@@ -1,0 +1,14 @@
+{
+  "task_id": "unavailable",
+  "scheduled_for": "2026-08-23T02:08:41+08:00",
+  "started_at": "2026-08-23T02:07:14+08:00",
+  "resolved_main_sha": "f213e7edc88ae3928ac4bc2fb5454c21ee135dc2",
+  "run_logs_sha_before": "6dd0adf2d89441197cb8d093f3623e2c043a1dfb",
+  "stages": [
+    "scheduler_started",
+    "github_read",
+    "github_write",
+    "marker_readback"
+  ],
+  "write_result": "created"
+}
