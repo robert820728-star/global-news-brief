@@ -477,6 +477,24 @@ class PipelineContractTests(unittest.TestCase):
         self.assertEqual(1, schema["properties"]["sources"]["minItems"])
         self.assertNotIn("maxItems", schema["properties"]["sources"])
 
+    def test_configured_discovery_routes_are_candidate_schema_admissible(self):
+        route_config = json.loads(
+            (ROOT / "source-route-config.json").read_text(encoding="utf-8")
+        )
+        schema = json.loads(
+            (ROOT / "schemas" / "news-source-candidate-list.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+        configured_routes = {route["route"] for route in route_config["routes"]}
+        admissible_routes = set(
+            schema["properties"]["items"]["items"]["properties"]
+            ["acquisition_route"]["enum"]
+        )
+
+        self.assertLessEqual(configured_routes, admissible_routes)
+
     def test_conversation_delivery_requires_complete_reader_not_summary(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
