@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260822T231541Z-d3e25aed",
+  "resolved_main_sha": "60f3caefee4b360619ff15a090a3126610752bac",
+  "fresh_resolve_nonce": "s5-1787442961394-e4812b2b32ec18",
+  "evaluated_at": "2026-08-22T16:57:47-07:00",
+  "rules": [
+    {
+      "rule_id": "reader_layout",
+      "requirement": "讀者版先有唯一今日總覽，再依台灣、中國、世界順序輸出單項新聞。",
+      "status": "passed",
+      "evidence": "scripts/validate_news_brief.py brief --reader-layout legacy-sectioned"
+    },
+    {
+      "rule_id": "story_image_stream",
+      "requirement": "圖片僅位於所屬新聞，依序直向排列且圖說緊接。",
+      "status": "passed",
+      "evidence": "validate_canonical_reader::_validate_story_asset_stream"
+    },
+    {
+      "rule_id": "source_image_identity",
+      "requirement": "每張來源圖的實際圖片網址與文章頁不同且出現在檢查證據。",
+      "status": "passed",
+      "evidence": "validate_news_brief::_validate_image_gate"
+    },
+    {
+      "rule_id": "materialized_image_integrity",
+      "requirement": "發布器重算圖片 SHA-256、尺寸並核對 materializer ready 紀錄。",
+      "status": "passed",
+      "evidence": "publish_news_brief.py::attachment_errors"
+    },
+    {
+      "rule_id": "canonical_run_bundle",
+      "requirement": "run-logs 保存完整可重算 bundle 並原子更新 current.json。",
+      "status": "failed",
+      "evidence": "CANONICAL_RUN_BUNDLE_GATE"
+    }
+  ],
+  "overall_status": "failed"
+}
