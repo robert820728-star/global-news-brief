@@ -1,0 +1,86 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-final-s5-20260822T222821Z-8f3c2a71",
+  "run_id": "gnb-20260822T222821Z-8f3c2a71",
+  "task_name": "新聞管線最終驗收重測",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T06:30:00+08:00",
+  "observed_at": "2026-08-23T06:53:14+08:00",
+  "sequence": 990,
+  "step": "terminal",
+  "status": "failed",
+  "overall_status": "failed",
+  "resolved_main_sha": "f2eb93e100f01a2e830cd9988ed3f4a73449f390",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260822T222821Z-8f3c2a71/130-content-hydration-recovery-failed.json",
+  "previous_receipt_blob_sha": "1e5eb33702929ac4dd252217eca554fb426e4128",
+  "last_completed_step": "preprocess-news-candidates",
+  "first_incomplete_step": "select-news-events/content-hydration-batch-0003",
+  "earliest_failure": "content-hydration batch-0003",
+  "exact_error": "Purpose-built cloud-browser hydration left 68 of 100 URLs in batches 0003-0007 unresolved because of navigation timeouts or site-safety rejection. 8,467 title_only admitted rows remain without auditable content evidence; SEMANTIC_EVENT_LEDGER_GATE requires unresolved=0 and forbids bulk title-only non_news classification.",
+  "elapsed_ms": 1493000,
+  "retry_count": 1,
+  "retry_signature": "batch-0002 alternate fallback succeeded; batches-0003-through-0007 browser max20 failed for 68 URLs; checkpoint mark had one corrected NAME=PATH retry",
+  "external_ledger": "available",
+  "canonical_delivery": false,
+  "s5_executed": false,
+  "logs_current_updated": false,
+  "run_receipt": {
+    "run_id": "gnb-20260822T222821Z-8f3c2a71",
+    "main_sha": "f2eb93e100f01a2e830cd9988ed3f4a73449f390",
+    "last_completed_stage": "bootstrap-runtime-ready",
+    "bootstrap_chunks": "0/52",
+    "current_chunk": "none",
+    "current_block": "none",
+    "last_error": "content_hydration_connector_failure: 68/100 cloud-browser URL attempts in batches 0003-0007 unresolved; 8467 title_only rows lack auditable content evidence; first_incomplete_step=select-news-events/content-hydration-batch-0003",
+    "retry_count": 0,
+    "external_ledger": "available",
+    "canonical_delivery": false
+  },
+  "counts": {
+    "merged_article_row_count": 11709,
+    "in_window_article_row_count": 11709,
+    "canonical_url_count": null,
+    "admitted_article_row_count": 8791,
+    "structured_review_article_row_count": 2918,
+    "title_only_article_row_count": 8519,
+    "content_hydration_attempted": 120,
+    "content_hydration_resolved": 52,
+    "content_hydration_unresolved": 8467,
+    "event_evidence_article_row_count": 0,
+    "non_news_article_row_count": 0,
+    "unresolved_article_row_count": 8791,
+    "semantic_event_count": 0,
+    "scored_event_count": 0,
+    "c_or_higher_scored_event_count": 0,
+    "selected_event_count": 0
+  },
+  "evidence_paths": [
+    "work/runs/gnb-20260822T222821Z-8f3c2a71/checkpoint.json",
+    "work/runs/gnb-20260822T222821Z-8f3c2a71/work/news-relevance-gate.json",
+    "work/runs/gnb-20260822T222821Z-8f3c2a71/work/model-source-candidates.json",
+    "work/runs/gnb-20260822T222821Z-8f3c2a71/work/content-hydration/content-hydration-failure-summary.json"
+  ],
+  "evidence_sha256": [
+    "c92ff3a98503cc59b8c7042495bc3bc5a02ec1284b12d0968e5c7c77a781db54",
+    "1ca09aba88ec5791b912050709d5a2f9344ba7d8c3f19198884e7cdca3e77f98",
+    "2da7f7989935b4409fea8cf6263c1f5e19345cae502ca50aeb613ae128d07f56",
+    "ed11528be8fbed2255678ae7c65de52972fbc2fd09a5bd0f8feb51a01182dec4"
+  ],
+  "receipts": [
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260822T222821Z-8f3c2a71/130-content-hydration-recovery-running.json",
+      "blob_sha": "659f2facda6c04abc4b24b35b7e415b89b46c212"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260822T222821Z-8f3c2a71/130-content-hydration-recovery-failed.json",
+      "blob_sha": "1e5eb33702929ac4dd252217eca554fb426e4128"
+    }
+  ],
+  "error": {
+    "classification": "content_hydration_connector_failure",
+    "message": "Lossless admitted-row hydration could not be completed; pipeline stopped before semantic event construction, scoring, publisher, and S5.",
+    "tool_or_endpoint": "cloud_browser.navigate",
+    "http_status": null,
+    "request_id": null
+  }
+}
