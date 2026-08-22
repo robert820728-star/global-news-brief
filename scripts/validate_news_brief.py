@@ -183,6 +183,10 @@ def _validate_media_result(
         if asset.get("visual_checked") is not True:
             errors.append(f"{asset_label} 尚未完成視覺驗收")
         if field == "images":
+            if asset.get("materialized_by") != "scripts/materialize_news_images.py":
+                errors.append(
+                    f"{asset_label}.materialized_by 必須是 scripts/materialize_news_images.py"
+                )
             content_sha256 = asset.get("content_sha256")
             if not isinstance(content_sha256, str) or not re.fullmatch(
                 r"[0-9a-f]{64}", content_sha256
@@ -361,6 +365,7 @@ def _validate_image_gate(
     checked_urls: set[str] = set()
     usable_found = False
     usable_source_urls: set[str] = set()
+    detected_by_source: dict[str, set[str]] = {}
     for index, check in enumerate(checks, start=1):
         label = f"{event_id}.images.source_checks[{index}]"
         if not isinstance(check, dict):
@@ -394,6 +399,10 @@ def _validate_image_gate(
             for url in detected_urls
         ):
             errors.append(f"{label}.detected_image_urls 必須是已檢出的圖片網址陣列")
+        elif isinstance(source_url, str):
+            detected_by_source[source_url] = set(detected_urls)
+            if source_url in detected_urls:
+                errors.append(f"{label} 文章頁網址不得冒充圖片網址")
         if not isinstance(check.get("attempts"), int) or check.get("attempts", 0) < 1:
             errors.append(f"{label}.attempts 必須至少為 1")
         if check.get("outcome") not in {"attached", "no_usable_image", "acquisition_failed"}:
@@ -422,6 +431,16 @@ def _validate_image_gate(
     if final_status != "ready":
         return
     assets = images.get("assets", []) if isinstance(images.get("assets"), list) else []
+    if images.get("status") == "ready":
+        materialization_path = images.get("materialization_manifest_path")
+        if not isinstance(materialization_path, str) or not materialization_path:
+            errors.append(f"{event_id}.images.ready 缺少 materialization_manifest_path")
+        else:
+            _validate_asset_path(
+                materialization_path,
+                f"{event_id}.images.materialization_manifest_path",
+                errors,
+            )
     asset_source_urls = {
         asset.get("source_url") for asset in assets if isinstance(asset, dict)
     }
@@ -430,6 +449,19 @@ def _validate_image_gate(
         errors.append(
             f"{event_id}.images 找到來源圖片但缺少對應附件：{', '.join(sorted(missing_attachments))}"
         )
+    for index, asset in enumerate(assets, start=1):
+        if not isinstance(asset, dict):
+            continue
+        label = f"{event_id}.images.assets[{index}]"
+        source_url = asset.get("source_url")
+        source_image_url = asset.get("source_image_url")
+        if not isinstance(source_image_url, str) or not source_image_url.startswith(("http://", "https://")):
+            errors.append(f"{label}.source_image_url 必須是實際下載的 HTTP(S) 圖片網址")
+            continue
+        if source_image_url == source_url:
+            errors.append(f"{label} 文章頁網址不得冒充圖片網址")
+        if not isinstance(source_url, str) or source_image_url not in detected_by_source.get(source_url, set()):
+            errors.append(f"{label}.source_image_url 必須出現在同一來源頁的 detected_image_urls")
     if usable_found:
         if images.get("status") != "ready" or not images.get("assets"):
             errors.append(
@@ -1267,7 +1299,7 @@ def validate_legacy_sectioned_layout(data: dict[str, Any], text: str) -> list[st
         errors.append("既有分區格式缺少六項評級說明")
 
     forbidden = (
-        "## 今日總覽", "## 逐條詳報", "## 後續觀察",
+        "## 逐條詳報", "## 後續觀察",
         "**時間：**", "**來源：**", "**事件細節：**", "**分析：**",
         "驗收摘要", "執行編號：", "程式版本：", "正式發布：",
     )
@@ -1315,16 +1347,26 @@ def validate_legacy_sectioned_layout(data: dict[str, Any], text: str) -> list[st
         if section_events:
             populated_sections.append((section, section_events))
 
-    expected_h2 = [_legacy_section_title(section) for section, _ in populated_sections]
+    expected_section_h2 = [_legacy_section_title(section) for section, _ in populated_sections]
+    expected_h2 = ["今日總覽", *expected_section_h2]
     actual_h2 = re.findall(r"(?m)^## ([^\r\n]+)\r?$", text)
     if actual_h2 != expected_h2:
-        errors.append("讀者版必須依設定順序使用既有分區格式與板塊標題")
+        errors.append("讀者版必須先有今日總覽，再依設定順序使用分區新聞標題")
 
     section_matches = list(re.finditer(r"(?m)^## ([^\r\n]+)\r?$", text))
     sections_by_title: dict[str, str] = {}
     for index, match in enumerate(section_matches):
         end = section_matches[index + 1].start() if index + 1 < len(section_matches) else len(text)
         sections_by_title[match.group(1)] = text[match.end():end]
+
+    overview_body = sections_by_title.get("今日總覽", "")
+    overview_matches = list(re.finditer(r"(?m)^### ([^\r\n]+)\r?$", overview_body))
+    overview_by_title: dict[str, str] = {}
+    for index, match in enumerate(overview_matches):
+        end = overview_matches[index + 1].start() if index + 1 < len(overview_matches) else len(overview_body)
+        overview_by_title[match.group(1)] = overview_body[match.end():end]
+    if [match.group(1) for match in overview_matches] != expected_section_h2:
+        errors.append("今日總覽必須依設定順序列出每個有新聞的板塊")
 
     visible_timezone_re = re.compile(
         r"(?i)(?:\b(?:UTC|GMT)\b|(?<!\d)[+-]\d{2}:\d{2}\b|"
@@ -1335,11 +1377,14 @@ def validate_legacy_sectioned_layout(data: dict[str, Any], text: str) -> list[st
         body = sections_by_title.get(section_title)
         if body is None:
             continue
-        if body.count("| 時間 | 事件 | 評級 |") != 1:
-            errors.append(f"板塊「{section_title}」必須只有一張時間／事件／評級總清單")
+        overview_section = overview_by_title.get(section_title, "")
+        if overview_section.count("| 時間 | 事件 | 評級 |") != 1:
+            errors.append(f"今日總覽的板塊「{section_title}」必須只有一張時間／事件／評級清單")
+        if "| 時間 | 事件 | 評級 |" in body:
+            errors.append(f"板塊「{section_title}」不得重複今日總覽清單")
 
         rows: list[tuple[str, str, str]] = []
-        for line in body.splitlines():
+        for line in overview_section.splitlines():
             if not line.lstrip().startswith("|"):
                 continue
             cells = [cell.strip() for cell in line.strip().strip("|").split("|")]

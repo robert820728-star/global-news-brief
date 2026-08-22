@@ -1,5 +1,13 @@
 # 版本紀錄 / Version Record
 
+## v0.4.5-reader-image-provenance — 2026-08-23
+
+- 建立原因 / Reason: S4 缺少前置今日總覽，並將文章頁網址與模型自製文字資訊卡誤當成來源圖片；GitHub run bundle 也未保存足以獨立重算的 candidate audit 與圖片證據。 / S4 omitted the front Today Overview, treated article URLs and model-made text cards as source images, and did not persist enough candidate-audit and image evidence for independent recomputation.
+- 實作方式 / Approach: 恢復唯一前置今日總覽並保留現行單項新聞格式；每張來源圖綁定實際 `source_image_url`、來源頁檢出結果及 canonical materializer ready 紀錄；新增可重算 run bundle 契約。 / Restore one front Today Overview while retaining the current per-story format; bind each image to a detected `source_image_url` and canonical materializer ready record; require a recomputable run bundle.
+- 變更入口 / Changed entry points: reader template/validator, image schema/materializer/publisher, schedule and mobile prompts, image skill, settings, rule matrix, and regression tests. / reader template/validator、圖片 schema/materializer/publisher、排程與 mobile prompts、圖片技能、設定、規則矩陣及回歸測試。
+- 驗證方式 / Validation: 四個核心案例先 RED，修正後 114/114 目標測試通過；完整回歸在 capsule 重建前為 276/277，唯一失敗為預期的舊 capsule hash 不符。 / Four core cases first failed; 114/114 targeted tests pass after the fix. Full regression is 276/277 before capsule rebuild, with only the expected stale capsule hash mismatch.
+- 結果與下一決定 / Result and next decision: 建立 source commit、由 GitHub Actions 重建 verified capsule，之後執行 fresh S4+S5 五分鐘重測。 / Create the source commit, rebuild the verified capsule through GitHub Actions, then run a fresh S4+S5 five-minute retest.
+
 ## v0.4.4-policy-governance-evidence-gate — 2026-08-23
 
 - 建立原因 / Reason: 政策、法規與平台治理事件可能在尚未證明制度性核心事實前就被當成一般輿論爭議低評，且既有結構無法強制處理「官方制度證據很強、六項分數卻偏低」的矛盾。 / Policy, regulatory, and platform-governance events could be scored as superficial controversy before their institutional facts were established, while the existing structure could not force review when strong official evidence conflicted with a low six-dimension score.

@@ -165,12 +165,15 @@ def valid_manifest():
                         }
                     ],
                     "professional_omission_reason": None,
+                    "materialization_manifest_path": "sandbox:/tmp/materialized-images.json",
                     "assets": [
                         {
                             "path": "sandbox:/tmp/image.png",
                             "caption": "圖一：官方資訊圖（來源：官方來源）。",
                             "source_name": "官方來源",
                             "source_url": "https://example.com/source",
+                            "source_image_url": "https://example.com/image.png",
+                            "materialized_by": "scripts/materialize_news_images.py",
                             "kind": "official_information",
                             "published_at": "2026-08-14T05:30:00+08:00",
                             "content_sha256": "a" * 64,
@@ -252,11 +255,15 @@ def legacy_sectioned_brief():
 
 評級綜合考量：重要性／嚴重程度、影響範圍、急迫與安全、結構／政策意義、本期實質新進展、核心板塊關聯。
 
-## 🇹🇼 台灣新聞
+## 今日總覽
+
+### 🇹🇼 台灣新聞
 
 | 時間 | 事件 | 評級 |
 |---|---|---:|
 | 8/14 05:30 | 測試地震事件 | B |
+
+## 🇹🇼 台灣新聞
 
 ### 測試地震事件｜B
 
@@ -275,6 +282,33 @@ def legacy_sectioned_brief():
 
 
 class ValidatorTests(unittest.TestCase):
+    def test_canonical_reader_requires_a_front_today_overview(self):
+        text = legacy_sectioned_brief().replace(
+            "## 今日總覽\n\n### 🇹🇼 台灣新聞\n\n"
+            "| 時間 | 事件 | 評級 |\n|---|---|---:|\n"
+            "| 8/14 05:30 | 測試地震事件 | B |\n\n",
+            "",
+        )
+        errors = VALIDATOR.validate_canonical_reader(
+            valid_manifest(), text
+        )
+        self.assertTrue(any("今日總覽" in error for error in errors), errors)
+
+    def test_article_page_url_cannot_masquerade_as_detected_image_url(self):
+        manifest = valid_manifest()
+        images = manifest["events"][0]["images"]
+        source_url = images["source_checks"][0]["source_url"]
+        images["source_checks"][0]["detected_image_urls"] = [source_url]
+        images["professional_source_checks"][0]["detected_image_urls"] = [source_url]
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("文章頁網址不得冒充圖片網址" in error for error in errors), errors)
+
+    def test_ready_image_asset_requires_detected_source_image_url(self):
+        manifest = valid_manifest()
+        del manifest["events"][0]["images"]["assets"][0]["source_image_url"]
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("source_image_url" in error for error in errors), errors)
+
     def test_legacy_sectioned_reader_layout_passes(self):
         self.assertEqual(
             [],

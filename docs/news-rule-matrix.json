@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0.0",
+  "title_zh_tw": "每日新聞現行規則矩陣",
+  "title_en": "Current Daily News Rule Matrix",
+  "generated_for": "S5 repository-wide rule integration",
+  "rules": [
+    {
+      "requirement_zh_tw": "讀者版先有唯一今日總覽，再依台灣、中國、世界順序輸出單項新聞。",
+      "requirement_en": "The reader begins with one Today Overview, followed by per-story Taiwan, China, and World sections.",
+      "authority": ["news-brief-template.md#固定骨架", "news-brief-settings.md#輸出規格"],
+      "producer": "canonical reader renderer",
+      "validator": "scripts/validate_news_brief.py::validate_canonical_reader",
+      "test": "tests/test_validate_news_brief.py::test_canonical_reader_requires_a_front_today_overview",
+      "legacy_status": "retired: field-based 逐條詳報/後續觀察; retained: per-story title/image/summary/grade/source layout",
+      "status": "enforced"
+    },
+    {
+      "requirement_zh_tw": "圖片只能位於所屬新聞內，依地圖、資料圖表、圖一、圖二直向排列，圖說緊接且不得疊圖。",
+      "requirement_en": "Images stay inside their owning story, vertically ordered after maps/charts, with adjacent numbered captions and no overlap.",
+      "authority": ["news-brief-template.md#圖片、地圖與資料圖表"],
+      "producer": "reader renderer",
+      "validator": "scripts/validate_news_brief.py::_validate_story_asset_stream",
+      "test": "tests/test_validate_news_brief.py::test_sectioned_reader_rejects_image_outside_story",
+      "legacy_status": "current",
+      "status": "enforced"
+    },
+    {
+      "requirement_zh_tw": "每張來源圖必須有不同於文章頁的實際圖片網址，且出現在來源頁檢查結果中。",
+      "requirement_en": "Every source image has a media URL distinct from the article URL and present in that page's inspection evidence.",
+      "authority": [".agents/skills/collect-news-images/SKILL.md", "schemas/news-event-manifest.schema.json"],
+      "producer": "scripts/materialize_news_images.py",
+      "validator": "scripts/validate_news_brief.py::_validate_image_gate",
+      "test": "tests/test_validate_news_brief.py::test_article_page_url_cannot_masquerade_as_detected_image_url",
+      "legacy_status": "retired: self-made text card as source image",
+      "status": "enforced"
+    },
+    {
+      "requirement_zh_tw": "發布器重算圖片 SHA-256、尺寸，並核對 canonical materializer ready 紀錄。",
+      "requirement_en": "The publisher recomputes image SHA-256 and dimensions and matches the canonical materializer ready record.",
+      "authority": ["daily-schedule-prompt.md#collect-news-images"],
+      "producer": "scripts/materialize_news_images.py",
+      "validator": "scripts/publish_news_brief.py::attachment_errors",
+      "test": "tests/test_publish_news_brief.py::test_publisher_rejects_image_without_matching_materializer_record",
+      "legacy_status": "current",
+      "status": "enforced"
+    },
+    {
+      "requirement_zh_tw": "GitHub run bundle 必須保存可重算候選稽核、逐列 dispositions、圖片證據與 materializer manifest，並原子更新 current.json。",
+      "requirement_en": "The GitHub run bundle preserves recomputable candidate audit, row dispositions, image evidence, and materializer manifest, then atomically updates current.json.",
+      "authority": ["daily-schedule-prompt.md#CANONICAL_RUN_BUNDLE_GATE"],
+      "producer": "canonical publisher and run-logs persistence step",
+      "validator": "scheduled S5 artifact audit",
+      "test": "tests/test_pipeline_contract.py::test_canonical_run_bundle_persists_recomputable_audit_and_image_evidence",
+      "legacy_status": "retired: chat/local-path-only evidence",
+      "status": "enforced"
+    }
+  ]
+}

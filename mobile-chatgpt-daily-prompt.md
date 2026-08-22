@@ -62,11 +62,11 @@ The required order for every configured source is: `canonical route -> same-site
 3. 每次用 GitHub contents API 更新同一個 `current.json`，必須先取得目前 blob SHA；檔案更新失敗時只重試一次，仍失敗就改在 Issue #3 建立或更新本輪單一留言，不得因紀錄失敗重跑已完成的新聞搜尋。
 4. 每到下一個高階階段時更新一次，因此同一筆紀錄會保留「最後完成階段」和「目前執行階段」。固定順序不得倒退：`schedule-prepared`、`executor-started`、`main-pinned`、`workspace-ready`、`source-scan`、`candidate-audit`、`selection-verified`、`visuals-completed`、`reader-rendered`、`github-result-saved`、`delivery-handoff`。
 5. 任一步驟失敗時，立即將 `status=failed`，並在 `last_error.code` 與 `last_error.message` 寫入精簡、可排查且不含憑證的原因。突然中斷時，GitHub 保留最後一次成功更新；下一輪會把它標成 `interrupted_by_next_run`。
-6. 完成評分後，先以 UTF-8 JSON 覆寫 `run-logs/logs/latest-candidate-audit.json`，內容必須是本輪完整十四天海選清單、每筆六項分數、總分、等級、決定、理由、來源與 `selected_event_id`；將其 blob SHA 記入 `current.json.candidate_audit_artifact`。完整讀者版產生後，再以 UTF-8 Markdown 覆寫 `run-logs/logs/latest-reader.md`，並把其 blob SHA 記入 `current.json.reader_artifact`，階段才可進入 `github-result-saved`。完成這一步後才嘗試把同一份內容輸出至排程對話。
-   - 讀者版日期後必須依序顯示 `執行編號：<run_id>`、`程式版本：<main_sha>`、`正式發布：是`。任何十四天清單與新聞內容都屬於這三行所識別的同一輪；不得混用舊清單。
-   - `READER_TEMPLATE_STRUCTURE_GATE`：產生讀者版前必須讀取同一 pinned main 的 `news-brief-template.md`，並依該檔固定骨架輸出。讀者版必須以「每日新聞讀者版」、統計期間及六項評級說明開頭，再依設定順序逐區輸出；不得加入十四天海選清單、驗收摘要、執行模式或其他測試／後台內容。結構不符時不得寫入 `latest-reader.md`，也不得進入 `github-result-saved`。
-   - `LEGACY_TODAY_OVERVIEW_NO_OMISSION_GATE`：每個有新聞的板塊開頭都必須原樣保留既有 `時間｜事件｜評級` 三欄總清單並列出該區全部入選事件；這就是今日總清單，不是可選摘要。不得省略、跨區集中或重新設計。
-   - `LEGACY_SECTIONED_READER_LAYOUT_GATE`：總清單後必須在同一板塊內依序放該區新聞；每則固定為「標題｜評級 → 可見圖片或圖片說明 → 新聞摘要 → 評為X級的評論與段末來源」。不得改成欄位式逐條詳報，不得顯示事件編號，也不得產生 `時間／來源／事件細節／分析` 欄位組。送出前必須執行 `scripts/validate_news_brief.py brief --reader-layout legacy-sectioned`；格式錯誤時只重做 reader render，不重跑新聞階段。
+6. 完成評分後，將本輪完整十四天海選清單寫入 `run-logs/logs/runs/<run_id>/candidate-audit.json`，內容必須含每筆六項分數、完整 `article_dispositions`、總分、等級、決定、理由、來源與 `selected_event_id`。完整讀者版產生後，將同一 bytes 寫入本輪 `reader.md` 與 `logs/latest-reader.md`；同時持久化 image evidence、`materialized-images.json`、map decisions、checkpoint、counts、manifest、attachments、release receipt 與 bundle manifest，最後才原子更新 `logs/current.json`。缺少任何可重算證據不得進入 `github-result-saved`。
+   - 執行編號、程式版本與正式發布狀態只保存在 manifest、receipt 與 `logs/current.json`，不得顯示於讀者版。
+   - `READER_TEMPLATE_STRUCTURE_GATE`：產生讀者版前必須讀取同一 pinned main 的 `news-brief-template.md`，並依該檔固定骨架輸出。讀者版必須以「每日新聞讀者版」、統計期間及六項評級說明開頭，先輸出唯一 `## 今日總覽`，再依設定順序逐區輸出單項新聞；不得加入十四天海選清單、驗收摘要、執行模式或其他測試／後台內容。結構不符時不得寫入 `latest-reader.md`，也不得進入 `github-result-saved`。
+   - `LEGACY_TODAY_OVERVIEW_NO_OMISSION_GATE`：`## 今日總覽` 內每個有新聞的板塊都必須原樣保留既有 `時間｜事件｜評級` 三欄總清單並列出該區全部入選事件。不得省略、跨區集中或重新設計。
+   - `LEGACY_SECTIONED_READER_LAYOUT_GATE`：今日總覽後必須依相同板塊順序放逐區新聞；每則固定為「標題｜評級 → 可見圖片或圖片說明 → 新聞摘要 → 評為X級的評論與段末來源」。不得改成欄位式逐條詳報，不得顯示事件編號，也不得產生 `時間／來源／事件細節／分析` 欄位組。送出前必須執行 `scripts/validate_news_brief.py brief --reader-layout legacy-sectioned`；格式錯誤時只重做 reader render，不重跑新聞階段。
    - `READER_INTERNAL_REPAIR_LOG_EXCLUSION_GATE`：重試、429、archive 切換、去重效能、圖片補救、checkpoint 重建及其他「修復紀錄」只可寫入內部 run log／audit receipt，不得出現在讀者版、`latest-reader.md` 或其逐字對話副本。對話如需附 run receipt，只能在完整 reader 之後以一行列出 run_id 與驗收結果，不得附修復過程。
 7. 只有所有必要視覺與 canonical reader validators 均通過時，輸出對話前最後一次持久更新才可為 `delivery-handoff`、`status=completed`、`delivery_status=handoff_started`。若必要地圖或附件仍需 full-runtime，保持 `status=running` 並保存 handoff target，不得提前 completed。即使已 handoff，沒有外部明確回執時仍不得宣稱 `client_confirmed` 或手機畫面已收到。
    - `CONVERSATION_READER_BYTE_IDENTITY_GATE`：排程最終訊息必須直接交付 `logs/latest-reader.md` 的完整內容，順序與文字不得改成摘要、驗收報告、節錄或僅告知 GitHub 已保存。可以在完整 reader 之後附極短的 run receipt，但不得以 receipt 取代讀者版。若最終訊息未包含完整 reader，`delivery-handoff` 不得視為驗收通過。
@@ -139,7 +139,7 @@ The required order for every configured source is: `canonical route -> same-site
    - 外部驗收器必須用結構化 `read_thread` 讀取本輪最終回覆，確認存在非文字的 `image/media content block` 或原生 `async_image_group`，再以唯讀畫面擷取確認實際 `rendered pixel` 圖片區域寬高非零。若只有一般 `agentMessage text`、圖片網址、Markdown、圖說，或畫面仍空白，立即判定圖片交付失敗，不得要求使用者目視補驗。
    - mobile-native 若沒有可產生原生媒體區塊的工具，必須回報 `NATIVE_MEDIA_UNAVAILABLE`，保留本輪 discovery、評分、驗證與 reader checkpoint，只把圖片交付切換到既有 full-runtime：由 full-runtime 執行 `<bundled-python> scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>`，使用 manifest 中 `status=ready` 的本機 JPEG 實體檔以上傳附件方式交付；不得建立新 run、重跑新聞流程或只改成另一個外部圖片網址。
    - 若無法在送出前確認圖片可見，必須移除該圖片標記，改成一句非技術性的 `**圖片說明：**`；不得寫「沿用前輪選圖」、「前輪同圖」、「不重新驗收」或「圖片待補」。
-8. reader 只使用 `news-brief-template.md` 的分區版型：每區完整 `時間｜事件｜評級` 表後緊接該區新聞。不得另建「今日總覽／逐條詳報／後續觀察」三大區塊。
+8. reader 只使用 `news-brief-template.md` 的「今日總覽＋分區單項新聞」版型；不得另建 `逐條詳報`、`後續觀察` 或欄位式事件卡。
 9. 每則新聞的地圖、資料圖表與來源圖片依序直向排列；每張附件的下一個非空白行必須是對應的地圖一／資料圖表一／圖一／圖二圖說。禁止圖廊、輪播、同列圖片、疊圖、manifest 外圖片及新聞區塊外圖片。
 10. `map.required=true` 但無法產生並驗收附件時，不得標記 canonical completed；保留已完成新聞階段，只把地圖／render 交給 full-runtime。
 11. 十四天海選清單保留在 audit artifact，不附加到 canonical reader；每筆仍保存日期、區域、標題、六項評分、總分、等級、決定、理由與來源。

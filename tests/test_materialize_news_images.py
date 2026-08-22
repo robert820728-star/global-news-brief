@@ -27,6 +27,8 @@ class MaterializeNewsImagesTests(unittest.TestCase):
             )
 
             self.assertEqual("ready", record["status"])
+            self.assertEqual("https://images.example.test/event.jpg", record["source_image_url"])
+            self.assertEqual("scripts/materialize_news_images.py", record["materialized_by"])
             self.assertEqual("image/jpeg", record["mime_type"])
             self.assertEqual(64, len(record["sha256"]))
             asset = Path(record["local_path"])

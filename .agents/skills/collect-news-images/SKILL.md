@@ -16,7 +16,8 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 所有入選事件（SS 至 C-）：`images.required` 固定為 `true`，逐一開啟 `verification.sources` 的來源頁檢查圖片；評級不得作為跳過圖片流程的條件。
 - 每個引用來源都必須寫入 `images.source_checks`；除是否找到可用圖片、嘗試次數與結果外，必須保存 `checked_at`、`inspection_method`、本地 `evidence_path`、`detected_image_urls` 與 `failure_detail`。
 - `evidence_path` 必須是頁面截圖、保存頁面或可重現檢查結果的本地證據；發布器會確認檔案實際存在。宣告 `no_usable_image` 時不得只填布林值，必須有頁面證據與具體理由。
-- 偵測到官方或媒體圖片時，必須下載原圖或截取來源頁中的實際圖片，並以相同 `source_url` 寫入 `images.assets`；找到圖片卻沒有對應附件時維持 `pending` 並恢復。
+- 偵測到官方或媒體圖片時，必須下載來源頁中的實際媒體檔。`images.assets[].source_url` 保存文章頁，`images.assets[].source_image_url` 保存實際圖片網址；後者必須出現在同一文章頁檢查的 `detected_image_urls`，且不得等於文章頁網址。找到圖片卻沒有對應附件時維持 `pending` 並恢復。
+- 每張來源圖片必須由 `scripts/materialize_news_images.py` 對 `source_image_url` 下載、解碼與寫檔，並保存 `materialized-images.json`；不得手工產生同名檔或只憑 manifest 宣告來源。
 - 任一來源找到可信且相關圖片後，`images.status` 只能在至少一張附件通過驗收後改為 `ready`。
 - 已找到可用圖片但下載或截圖失敗時，`images.status` 維持 `pending`，並把圖片階段標成失敗後回到本技能重試；不得改成 `omitted` 後交付。
 - 只有全部引用來源都已檢查且均無可用圖片，才可使用 `omitted`，並保存具體後台原因；同時填寫繁體中文、非技術性的 `reader_omission_note`，供讀者版說明為何本則沒有圖片。
@@ -70,6 +71,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 ## 禁止以自製內容冒充來源圖片
 
 - 不得自行把新聞文字、各方立場、摘要、結論或三個數字排成卡片後寫入 `images.assets`。
+- 不得把文章頁 HTML、搜尋結果頁、模型自製資訊卡或只含標題的占位圖標記為 `official_information`、`professional_information` 或 `news_photo`。
 - 不得把「俄羅斯／烏克蘭及盟友」、「安全評估／全面否認」等純文字對照卡當成新聞圖片。
 - 自製圖表只限至少兩個可比較的數值、時間序列、比例或分布；必須寫入獨立 `charts` 欄位。
 - 自製圖表的圖說須標示「本簡報依○○資料製作」，不得宣稱為該媒體或官方發布的圖片。
@@ -163,6 +165,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - `images.assets[].caption`
 - `images.assets[].source_name`
 - `images.assets[].source_url`
+- `images.assets[].source_image_url`
 - `images.assets[].kind`
 - `images.assets[].published_at`
 - `images.assets[].content_sha256`

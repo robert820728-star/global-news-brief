@@ -87,8 +87,53 @@ def attachment_errors(manifest: dict) -> list[str]:
                 if not local.is_file() or local.stat().st_size < 1:
                     errors.append(f"{eid}.{field}.assets[{i}] 附件不存在或為空：{path}")
                 elif field == "map": errors += map_pixel_errors(local, f"{eid}.{field}.assets[{i}]")
+                elif field == "images":
+                    if sha_file(local) != asset.get("content_sha256"):
+                        errors.append(f"{eid}.{field}.assets[{i}] 實體檔 SHA-256 與 manifest 不一致")
+                    try:
+                        with Image.open(local) as image:
+                            actual_size = image.size
+                    except (OSError, ValueError) as error:
+                        errors.append(f"{eid}.{field}.assets[{i}] 無法解碼圖片：{error}")
+                    else:
+                        if actual_size != (asset.get("width"), asset.get("height")):
+                            errors.append(f"{eid}.{field}.assets[{i}] 實體尺寸與 manifest 不一致")
         images = event.get("images", {})
         if isinstance(images, dict):
+            materialized_records = []
+            materialization_path = images.get("materialization_manifest_path")
+            if images.get("status") == "ready":
+                if not isinstance(materialization_path, str):
+                    errors.append(f"{eid}.images 缺少 materialized-images manifest")
+                else:
+                    local_manifest = local_path(materialization_path)
+                    try:
+                        materialized_records = json.loads(local_manifest.read_text(encoding="utf-8"))
+                        if not isinstance(materialized_records, list):
+                            raise ValueError("top level must be a list")
+                    except (OSError, ValueError, json.JSONDecodeError) as error:
+                        errors.append(f"{eid}.images materialized-images manifest 無法讀取：{error}")
+                        materialized_records = []
+                for i, asset in enumerate(images.get("assets", []), 1):
+                    if not isinstance(asset, dict):
+                        continue
+                    asset_path = local_path(str(asset.get("path", "")))
+                    matches = [
+                        record for record in materialized_records
+                        if isinstance(record, dict)
+                        and record.get("event_id") == eid
+                        and record.get("status") == "ready"
+                        and record.get("source_image_url") == asset.get("source_image_url")
+                        and record.get("materialized_by") == "scripts/materialize_news_images.py"
+                        and Path(str(record.get("local_path", ""))).resolve() == asset_path.resolve()
+                        and record.get("sha256") == asset.get("content_sha256")
+                        and record.get("width") == asset.get("width")
+                        and record.get("height") == asset.get("height")
+                    ]
+                    if not matches:
+                        errors.append(
+                            f"{eid}.images.assets[{i}] 缺少相符的 materialized-images ready 紀錄"
+                        )
             for group in ("source_checks", "professional_source_checks"):
                 for i, check in enumerate(images.get(group, []), 1):
                     path = check.get("evidence_path") if isinstance(check, dict) else None

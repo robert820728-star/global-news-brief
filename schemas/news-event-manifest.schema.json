@@ -401,6 +401,7 @@
           "items": { "$ref": "#/$defs/imageSourceCheck" }
         },
         "professional_omission_reason": { "type": ["string", "null"] },
+        "materialization_manifest_path": { "type": ["string", "null"], "pattern": "^(sandbox:)?/" },
         "assets": {
           "type": "array",
           "maxItems": 2,
@@ -496,6 +497,8 @@
         "caption",
         "source_name",
         "source_url",
+        "source_image_url",
+        "materialized_by",
         "kind",
         "published_at",
         "content_sha256",
@@ -509,6 +512,8 @@
         "caption": { "type": "string", "minLength": 1 },
         "source_name": { "type": "string", "minLength": 1 },
         "source_url": { "type": "string", "format": "uri" },
+        "source_image_url": { "type": "string", "format": "uri" },
+        "materialized_by": { "const": "scripts/materialize_news_images.py" },
         "kind": {
           "enum": ["official_information", "professional_information", "news_photo"]
         },

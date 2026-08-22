@@ -542,6 +542,7 @@ class PipelineContractTests(unittest.TestCase):
             "# 每日新聞讀者版",
             "統計期間：",
             "評級綜合考量：",
+            "## 今日總覽",
             "## 🇹🇼 台灣新聞",
             "| 時間 | 事件 | 評級 |",
             "### 事件名稱｜A",
@@ -555,6 +556,19 @@ class PipelineContractTests(unittest.TestCase):
             "**分析：**說明真正值得注意",
         ):
             self.assertNotIn(forbidden_example, template)
+
+    def test_canonical_run_bundle_persists_recomputable_audit_and_image_evidence(self):
+        scheduled = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        for requirement in (
+            "CANONICAL_RUN_BUNDLE_GATE",
+            "candidate-audit.json",
+            "article_dispositions",
+            "image-evidence/",
+            "materialized-images.json",
+            "logs/current.json",
+            "byte identity",
+        ):
+            self.assertIn(requirement, scheduled)
 
     def test_mobile_increment_recovers_without_blocking_daily_reader(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")

@@ -30,11 +30,14 @@ def _safe_event_id(event_id: str) -> str:
 
 
 def _failed_record(
-    *, event_id: str, source_url: str, alt: str, credit: str, error: str
+    *, event_id: str, source_url: str, source_page_url: str = "", alt: str, credit: str, error: str
 ) -> dict[str, Any]:
     return {
         "event_id": event_id,
         "source_url": source_url,
+        "source_image_url": source_url,
+        "source_page_url": source_page_url,
+        "materialized_by": "scripts/materialize_news_images.py",
         "status": "failed",
         "alt": alt,
         "credit": credit,
@@ -48,6 +51,7 @@ def materialize_image_bytes(
     output_dir: Path,
     event_id: str,
     source_url: str,
+    source_page_url: str = "",
     index: int = 1,
     alt: str = "",
     credit: str = "",
@@ -61,6 +65,7 @@ def materialize_image_bytes(
         return _failed_record(
             event_id=event_id,
             source_url=source_url,
+            source_page_url=source_page_url,
             alt=alt,
             credit=credit,
             error=f"decode failed: {exc}",
@@ -70,6 +75,7 @@ def materialize_image_bytes(
         return _failed_record(
             event_id=event_id,
             source_url=source_url,
+            source_page_url=source_page_url,
             alt=alt,
             credit=credit,
             error="decode failed: image has zero-sized dimensions",
@@ -97,6 +103,7 @@ def materialize_image_bytes(
         return _failed_record(
             event_id=event_id,
             source_url=source_url,
+            source_page_url=source_page_url,
             alt=alt,
             credit=credit,
             error=f"write failed: {exc}",
@@ -106,6 +113,9 @@ def materialize_image_bytes(
     return {
         "event_id": event_id,
         "source_url": source_url,
+        "source_image_url": source_url,
+        "source_page_url": source_page_url,
+        "materialized_by": "scripts/materialize_news_images.py",
         "status": "ready",
         "local_path": str(asset_path.resolve()),
         "mime_type": "image/jpeg",
@@ -138,7 +148,8 @@ def materialize(inputs: list[dict[str, Any]], output_dir: Path) -> list[dict[str
     records: list[dict[str, Any]] = []
     for index, item in enumerate(inputs, start=1):
         event_id = str(item.get("event_id", "")).strip()
-        source_url = str(item.get("source_url", "")).strip()
+        source_url = str(item.get("source_image_url", item.get("source_url", ""))).strip()
+        source_page_url = str(item.get("source_page_url", "")).strip()
         alt = str(item.get("alt", "")).strip()
         credit = str(item.get("credit", "")).strip()
         try:
@@ -148,6 +159,7 @@ def materialize(inputs: list[dict[str, Any]], output_dir: Path) -> list[dict[str
                 _failed_record(
                     event_id=event_id,
                     source_url=source_url,
+                    source_page_url=source_page_url,
                     alt=alt,
                     credit=credit,
                     error=f"download failed: {exc}",
@@ -160,6 +172,7 @@ def materialize(inputs: list[dict[str, Any]], output_dir: Path) -> list[dict[str
                 output_dir=output_dir,
                 event_id=event_id,
                 source_url=source_url,
+                source_page_url=source_page_url,
                 index=index,
                 alt=alt,
                 credit=credit,

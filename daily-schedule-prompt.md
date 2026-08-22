@@ -180,7 +180,7 @@ Stage -1 完成後，至少讀取並遵守：
    - 先執行一次無參數 renderer，確認三個 canonical 底圖 `taiwan-counties-yellow-v2.png`、`china-provinces-yellow-v2.png`、`world-countries-pacific-robinson-yellow-v2.png` 都由本輪 workspace 產生。每個 `map.required=true` 事件再建立 overlay JSON，依行政區精確鍵值著色並提供繁中 `label`，以 `<bundled-python> scripts/render_base_maps.py --overlay-spec <file>` 產生事件圖；不得直接引用 workspace 外殘留的舊 PNG。
 8. `build-news-charts`
 9. `collect-news-images`
-   - 對已選取且有候選來源圖片的事件，先建立只含 `event_id`、`source_url`、`alt`、`credit` 的 JSON 陣列，再執行 `<bundled-python> scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>`。只有 manifest 中 `status=ready`、可解碼且有本機 `local_path`、MIME、尺寸與 SHA-256 的實體檔可以交給原生附件／媒體交付層；外部網址、Markdown 或工具內部預覽不得取代該實體檔。
+   - 對已選取且有候選來源圖片的事件，先建立只含 `event_id`、`source_page_url`、`source_image_url`、`alt`、`credit` 的 JSON 陣列；`source_image_url` 必須是來源頁實際檢出的 og:image、src/srcset 或官方媒體檔，不得等於文章頁網址。再執行 `<bundled-python> scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>`。只有 materializer manifest 中 `status=ready`、可解碼且有本機 `local_path`、MIME、尺寸與 SHA-256 的實體檔可以交給原生附件／媒體交付層；外部網址、Markdown、工具內部預覽或模型自製文字資訊卡不得冒充來源圖片。
    - 單張下載、解碼或寫檔失敗只影響該事件圖片，不得重跑 discovery、評分、驗證或 reader 文字；保留既有 checkpoint，依圖片契約改用合規的無圖說明或只重做圖片交付。
    - 只有 checkpoint 的 `collect-news-images` completed 後，才可第一次執行 `scripts/validate_news_brief.py manifest --input <final-manifest>`；final-manifest validator 不得提前到 verify、map 或 chart 階段。
    - 若執行者誤在圖片階段完成前呼叫該命令，script 會輸出 `DEFERRED` 並以成功狀態返回；這不是 validator 通過，也不得標記整輪失敗。立即繼續原定 pipeline，並在 `collect-news-images` completed 後重新執行到真正輸出 `OK`。
@@ -243,7 +243,9 @@ Repository 內只有 canonical publisher 可以建立 reader-facing release。�
 
 `READER_INTERNAL_REPAIR_LOG_EXCLUSION_GATE`：任何「修復紀錄」、429／HTTP 狀態、重試等待、archive 備援、去重效能修正、圖片補救與 checkpoint 重建都只屬內部 run log／audit receipt，不得出現在 canonical reader 或 reader bytes 的對話副本。
 
-`LEGACY_SECTIONED_READER_LAYOUT_GATE`：canonical reader 必須沿用 `news-brief-template.md` 的既有分區版型：標題、統計期間、六項評級說明後，逐區輸出 `時間｜事件｜評級` 完整清單，緊接該區所有新聞；每則固定為「標題｜評級 → 可見圖片或圖片說明 → 新聞摘要 → 評為X級的評論與段末來源」。不得改成欄位式逐條詳報，不得將所有總清單與所有新聞拆成兩大區，也不得加入事件編號、驗收摘要或後台欄位。格式錯誤只重做 reader render。
+`LEGACY_SECTIONED_READER_LAYOUT_GATE`：canonical reader 必須沿用 `news-brief-template.md` 的既有分區版型：標題、統計期間、六項評級說明後，先輸出唯一 `## 今日總覽`，依板塊列出 `時間｜事件｜評級` 完整清單；再依相同順序輸出各板塊所有單項新聞。每則固定為「標題｜評級 → 可見圖片或圖片說明 → 新聞摘要 → 評為X級的評論與段末來源」。不得改成欄位式逐條詳報，也不得加入事件編號、驗收摘要或後台欄位。格式錯誤只重做 reader render。
+
+`CANONICAL_RUN_BUNDLE_GATE`：canonical publisher 成功後，run-logs 的同一 `logs/runs/<run_id>/` 必須持久化可獨立重算的 `candidate-audit.json`（含完整 `article_dispositions`）、`image-evidence/`、`materialized-images.json`、map decisions、checkpoint、counts、event manifest、reader、attachments index、release receipt 與 bundle manifest；每項保存 path、size、SHA-256 與 Git blob SHA。只有上述 bundle 與 canonical release 具有 byte identity，且 `logs/current.json` 原子指向本輪 completed run 後，才可宣稱 GitHub canonical delivery 完成。缺少證據時不得用本機路徑、聊天文字或舊 artifact 代替。
 
 發布前必須：
 

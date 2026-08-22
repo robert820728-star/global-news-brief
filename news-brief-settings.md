@@ -69,6 +69,7 @@ The required order for every configured source is: `canonical route -> same-site
 - 每個事件獨立處理；失敗只重跑該事件與原欄位技能。避免整份候選、十四天歷史與所有來源在每次請求重複載入。
 - 所有 C 級以上新聞仍完整納入，不以節省圖片成本縮減新聞或來源覆蓋。
 - `IMAGE_DEFAULT_ONE_ASSET`：每則事件預設一張來源圖片；`IMAGE_SECOND_ASSET_REQUIRES_INCREMENTAL_INFORMATION`：第二張必須提供第一張沒有的範圍、數字、現場或時間資訊，最多兩張。
+- `IMAGE_SOURCE_FILE_IDENTITY_GATE`：每張來源圖片同時保存文章頁 `source_url` 與實際媒體檔 `source_image_url`；實際圖片網址必須出現在同一來源頁的 `detected_image_urls`、不得等於文章頁，且必須由 canonical materializer 的 `materialized-images.json` 綁定本機檔案、SHA-256 與尺寸。
 - `MOBILE_PER_STORY_VISIBLE_IMAGE_GATE`：mobile-native 對每一則本輪入選新聞逐則執行圖片搜尋與可見性驗收；先查已引用來源的內文圖片、`og:image`、`srcset`、縮圖欄位與官方圖資，再查一個已引用且可靠的同事件來源。一則新聞的圖片不得替其他新聞通過。只有逐則確認沒有合格公開圖片，或合格圖片確實不適合公開內嵌時，才可用該則專屬的非技術性無圖說明；找到可用圖片但顯示失敗時只重做該則圖片階段。
 - `IMAGE_ONE_ASSET_MAY_SATISFY_BOTH_SOURCE_AND_PROFESSIONAL`：同一張合格官方／專業圖可同時滿足引用來源圖片與專業圖資要求，但兩組來源檢查紀錄都要保留。
 - `IMAGE_SHA256_REUSE`：同一輪以圖片內容 SHA-256 去重，相同內容沿用一次下載、一次 `640px` 縮圖與一次驗收結果。
@@ -241,7 +242,7 @@ The required order for every configured source is: `canonical route -> same-site
 
 ## 讀者版
 
-- 唯一 canonical reader 為 `news-brief-template.md` 的分區版型，不再接受欄位式三大區塊版型。
+- 唯一 canonical reader 為 `news-brief-template.md` 的「今日總覽＋分區單項新聞」版型，不再接受欄位式逐條詳報／後續觀察版型。
 - 開頭固定為 `# 每日新聞讀者版`、由 manifest 換算的統計期間與六項評級說明。
 - 每個有新聞的板塊先列完整 `時間 | 事件 | 評級` 表格，緊接該板塊全部單項新聞；不得跨區集中總覽。
 - 每則固定為 `### 事件名稱｜評級`，接著依序放地圖、資料圖表、來源圖片、新聞摘要、評級評論與段末來源。

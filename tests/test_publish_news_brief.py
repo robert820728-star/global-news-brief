@@ -214,7 +214,29 @@ def prepare_inputs(root: Path):
 
     manifest = valid_manifest()
     manifest["events"][0]["map"]["assets"][0]["path"] = str(map_path)
-    manifest["events"][0]["images"]["assets"][0]["path"] = str(image_path)
+    image_asset = manifest["events"][0]["images"]["assets"][0]
+    image_asset["path"] = str(image_path)
+    image_asset["content_sha256"] = hashlib.sha256(image_path.read_bytes()).hexdigest()
+    image_asset["width"] = 100
+    image_asset["height"] = 100
+    materialization_path = root / "materialized-images.json"
+    materialization_path.write_text(json.dumps([{
+        "event_id": "TWN-01",
+        "source_page_url": image_asset["source_url"],
+        "source_image_url": image_asset["source_image_url"],
+        "source_url": image_asset["source_image_url"],
+        "status": "ready",
+        "local_path": str(image_path),
+        "mime_type": "image/jpeg",
+        "width": 100,
+        "height": 100,
+        "byte_size": image_path.stat().st_size,
+        "sha256": image_asset["content_sha256"],
+        "materialized_by": "scripts/materialize_news_images.py",
+        "alt": "測試圖片",
+        "credit": "官方來源",
+    }], ensure_ascii=False), encoding="utf-8")
+    manifest["events"][0]["images"]["materialization_manifest_path"] = str(materialization_path)
     manifest["events"][0]["images"]["source_checks"][0]["evidence_path"] = str(source_check_path)
     manifest["events"][0]["images"]["professional_source_checks"][0]["evidence_path"] = str(professional_check_path)
     brief = legacy_sectioned_brief().replace("sandbox:/tmp/map.png", str(map_path)).replace(
@@ -286,6 +308,22 @@ class PublisherTests(unittest.TestCase):
             self.assertEqual(0, result.returncode, result.stdout + result.stderr)
             receipt = json.loads((release_dir / "release-receipt.json").read_text(encoding="utf-8"))
             self.assertEqual(MAIN_SHA, receipt["main_sha"])
+
+    def test_publisher_rejects_image_without_matching_materializer_record(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint, manifest_path, audit, brief = prepare_inputs(root)
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            materialization_path = Path(
+                manifest["events"][0]["images"]["materialization_manifest_path"]
+            )
+            materialization_path.write_text("[]", encoding="utf-8")
+            result = subprocess.run(
+                publish_command(checkpoint, manifest_path, audit, brief, root / "release"),
+                capture_output=True, text=True, check=False,
+            )
+            self.assertNotEqual(0, result.returncode)
+            self.assertIn("materialized-images", result.stderr)
 
     def test_publish_uses_final_render_manifest_binding(self):
         with tempfile.TemporaryDirectory() as directory:
