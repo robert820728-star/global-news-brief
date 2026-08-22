@@ -136,6 +136,7 @@ def write_valid_audit(root: Path):
             "why_current_grade": "具全國性實質政策影響",
             "why_not_higher": "沒有跨國或重大系統危機",
             "why_not_lower": "政策已正式生效而非僅為表態",
+            "policy_governance_review": {"applies": False},
             "local_disaster_review": {"applies": False},
             "border_conflict_review": {
                 "is_border_conflict": False, "formal_war": False,

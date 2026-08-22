@@ -76,6 +76,30 @@ LOCAL_DISASTER_SPECIAL_TRIGGERS = {
     "special_security_or_public_health",
     "other_verified_special_significance",
 }
+POLICY_GOVERNANCE_TRIGGERS = {
+    "official_legal_interpretation",
+    "investigation_or_enforcement_referral",
+    "binding_or_operational_compliance_request",
+    "platform_or_operator_action",
+    "multi_agency_coordination",
+    "precedent_or_spillover_risk",
+    "public_reaction",
+}
+POLICY_GOVERNANCE_OFFICIAL_ACTION_TRIGGERS = {
+    "official_legal_interpretation",
+    "investigation_or_enforcement_referral",
+    "binding_or_operational_compliance_request",
+}
+POLICY_GOVERNANCE_SCOPE_TRIGGERS = {
+    "multi_agency_coordination",
+    "precedent_or_spillover_risk",
+}
+POLICY_SCORE_ALIGNMENT_FIELDS = {
+    "public_impact_alignment",
+    "scope_alignment",
+    "structural_alignment",
+    "window_alignment",
+}
 TEMPLATE_GRADE_REASONS = {
     "依公共影響評級",
     "具有公共影響",
@@ -117,6 +141,127 @@ def grade_from_importance_score(score):
         if score >= minimum:
             return grade
     raise AssertionError("unreachable score band")
+
+
+def validate_policy_governance_review(review, importance_score, label):
+    """Require event identity and institutional evidence to agree with scoring."""
+    errors = []
+    if not isinstance(review, dict):
+        return [label + " 最新一輪缺少 policy_governance_review"]
+    applies = review.get("applies")
+    if not isinstance(applies, bool):
+        return [label + " policy_governance_review.applies 必須是布林值"]
+    if not applies:
+        return errors
+
+    required_fields = {
+        "triggered_by", "legal_basis", "official_actions",
+        "direct_operational_effects", "affected_actor_classes",
+        "cross_agency_effects", "precedent_or_spillover_scope",
+        "window_material_effects", "evidence_urls",
+        "unverified_allegations", "unverified_allegations_separated",
+        "score_consistency_review",
+    }
+    missing = sorted(required_fields - set(review))
+    if missing:
+        errors.append(label + " policy_governance_review 缺少：" + ", ".join(missing))
+
+    triggered_by = review.get("triggered_by")
+    if not isinstance(triggered_by, list) or not triggered_by:
+        errors.append(label + " policy_governance_review.triggered_by 必須是非空陣列")
+        triggered_by = []
+    else:
+        invalid_triggers = [
+            trigger for trigger in triggered_by
+            if not isinstance(trigger, str) or trigger not in POLICY_GOVERNANCE_TRIGGERS
+        ]
+        if invalid_triggers:
+            errors.append(
+                label + " policy_governance_review.triggered_by 無效："
+                + ", ".join(map(str, invalid_triggers))
+            )
+        if all(isinstance(trigger, str) for trigger in triggered_by) and len(triggered_by) != len(set(triggered_by)):
+            errors.append(label + " policy_governance_review.triggered_by 不得重複")
+
+    required_nonempty_lists = (
+        "legal_basis", "official_actions", "direct_operational_effects",
+        "affected_actor_classes", "window_material_effects", "evidence_urls",
+    )
+    for field in required_nonempty_lists:
+        value = review.get(field)
+        if not isinstance(value, list) or not value or any(
+            not isinstance(item, str) or not item.strip() for item in value
+        ):
+            errors.append(label + f" policy_governance_review.{field} 必須是非空具體文字陣列")
+    for field in ("cross_agency_effects", "precedent_or_spillover_scope", "unverified_allegations"):
+        value = review.get(field)
+        if not isinstance(value, list) or any(
+            not isinstance(item, str) or not item.strip() for item in value
+        ):
+            errors.append(label + f" policy_governance_review.{field} 必須是具體文字陣列")
+    if "multi_agency_coordination" in triggered_by and not review.get("cross_agency_effects"):
+        errors.append(label + " multi_agency_coordination 必須有 cross_agency_effects 證據")
+    if "precedent_or_spillover_risk" in triggered_by and not review.get("precedent_or_spillover_scope"):
+        errors.append(label + " precedent_or_spillover_risk 必須有 precedent_or_spillover_scope 證據")
+    evidence_urls = review.get("evidence_urls")
+    if isinstance(evidence_urls, list) and any(
+        isinstance(url, str) and not url.startswith(("https://", "http://"))
+        for url in evidence_urls
+    ):
+        errors.append(label + " policy_governance_review.evidence_urls 必須是 HTTP(S) 網址")
+
+    allegations = review.get("unverified_allegations")
+    separated = review.get("unverified_allegations_separated")
+    if not isinstance(separated, bool):
+        errors.append(label + " unverified_allegations_separated 必須是布林值")
+    elif isinstance(allegations, list) and allegations and not separated:
+        errors.append(label + " unverified_allegations 必須與已證實事件身分及六項評分分離")
+
+    consistency = review.get("score_consistency_review")
+    if not isinstance(consistency, dict):
+        errors.append(label + " policy_governance_review 缺少 score_consistency_review")
+        consistency = {}
+    required_consistency = POLICY_SCORE_ALIGNMENT_FIELDS | {
+        "contradiction_reasons", "why_not_b", "review_outcome",
+    }
+    missing_consistency = sorted(required_consistency - set(consistency))
+    if missing_consistency:
+        errors.append(
+            label + " score_consistency_review 缺少：" + ", ".join(missing_consistency)
+        )
+    alignment_values = [consistency.get(field) for field in POLICY_SCORE_ALIGNMENT_FIELDS]
+    invalid_alignments = [
+        field for field in POLICY_SCORE_ALIGNMENT_FIELDS
+        if consistency.get(field) not in {"consistent", "contradiction", "unresolved"}
+    ]
+    if invalid_alignments:
+        errors.append(label + " score_consistency_review 對齊狀態無效：" + ", ".join(sorted(invalid_alignments)))
+    contradiction_reasons = consistency.get("contradiction_reasons")
+    if not isinstance(contradiction_reasons, list) or any(
+        not isinstance(item, str) or not item.strip() for item in contradiction_reasons
+    ):
+        errors.append(label + " score_consistency_review.contradiction_reasons 必須是具體文字陣列")
+    if any(value in {"contradiction", "unresolved"} for value in alignment_values) or consistency.get("review_outcome") != "consistent":
+        errors.append(label + " 制度證據與六項評分矛盾或未解，必須退回重審並修正事件身分或重新評分")
+
+    trigger_set = {trigger for trigger in triggered_by if isinstance(trigger, str)}
+    strong_profile = (
+        bool(trigger_set & POLICY_GOVERNANCE_OFFICIAL_ACTION_TRIGGERS)
+        and "platform_or_operator_action" in trigger_set
+        and bool(trigger_set & POLICY_GOVERNANCE_SCOPE_TRIGGERS)
+    )
+    if (
+        strong_profile
+        and isinstance(importance_score, (int, float))
+        and not isinstance(importance_score, bool)
+        and importance_score < GRADE_MINIMUM_SCORES["B"]
+        and (
+            not isinstance(consistency.get("why_not_b"), str)
+            or not consistency["why_not_b"].strip()
+        )
+    ):
+        errors.append(label + " 強制度治理證據低於 B 時必須提供具體 why_not_b 挑戰理由")
+    return errors
 
 
 def grade_from_importance_breakdown(breakdown):
@@ -654,7 +799,7 @@ def validate(data, source_pool=None):
                 "why_not_lower", "border_conflict_review", "ongoing_conflict_review",
             }
             if run_index == len(runs):
-                required_grading.add("local_disaster_review")
+                required_grading.update({"local_disaster_review", "policy_governance_review"})
             missing_grading = sorted(required_grading - set(grading))
             if missing_grading:
                 errors.append(label + " grading_evidence 缺少：" + ", ".join(missing_grading))
@@ -714,6 +859,9 @@ def validate(data, source_pool=None):
                     for value in dimension_evidence.values()
                 ):
                     errors.append(label + " dimension_evidence 每一大項都必須是非空白具體文字")
+                errors.extend(validate_policy_governance_review(
+                    grading.get("policy_governance_review"), importance_score, label
+                ))
 
             border = grading.get("border_conflict_review")
             if not isinstance(border, dict):

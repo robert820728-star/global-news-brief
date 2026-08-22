@@ -67,6 +67,7 @@ def grading_evidence(grade="C"):
         "why_current_grade": "影響範圍與本期增量符合目前級距",
         "why_not_higher": "尚未造成更廣泛的跨國或系統性影響",
         "why_not_lower": "存在具體且可驗證的新進展",
+        "policy_governance_review": policy_governance_review(),
         "local_disaster_review": {"applies": False},
         "border_conflict_review": {
             "is_border_conflict": False, "formal_war": False,
@@ -80,6 +81,40 @@ def grading_evidence(grade="C"):
             "change_types": [], "reversal_or_escalation_possible": False,
             "external_system_impact": False, "continuity_discount_applied": False,
             "exception_reason": None,
+        },
+    }
+
+
+def policy_governance_review(applies=False):
+    if not applies:
+        return {"applies": False}
+    return {
+        "applies": True,
+        "triggered_by": [
+            "official_legal_interpretation",
+            "investigation_or_enforcement_referral",
+            "platform_or_operator_action",
+            "multi_agency_coordination",
+            "precedent_or_spillover_risk",
+        ],
+        "legal_basis": ["主管機關引用現行法律條文並說明適用範圍。"],
+        "official_actions": ["主管機關移交調查並要求業者採取合規措施。"],
+        "direct_operational_effects": ["多個業者實際下架或修改內容。"],
+        "affected_actor_classes": ["全國性內容平台", "境外影視內容提供者"],
+        "cross_agency_effects": ["兩個以上中央主管機關共同監督。"],
+        "precedent_or_spillover_scope": ["同一解釋可能適用其他平台及相似內容。"],
+        "window_material_effects": ["時間窗內平台處置仍生效且主管機關持續執行。"],
+        "evidence_urls": ["https://example.com/official-policy-record"],
+        "unverified_allegations": [],
+        "unverified_allegations_separated": True,
+        "score_consistency_review": {
+            "public_impact_alignment": "consistent",
+            "scope_alignment": "consistent",
+            "structural_alignment": "consistent",
+            "window_alignment": "consistent",
+            "contradiction_reasons": [],
+            "why_not_b": "直接影響仍限於特定內容類型，尚未形成更廣泛權利或市場後果。",
+            "review_outcome": "consistent",
         },
     }
 
@@ -828,6 +863,43 @@ class CandidateAuditTests(unittest.TestCase):
         item["grading_evidence"]["direct_consequences"] = []
         errors = MODULE.validate(valid_audit([item]), source_pool())
         self.assertTrue(any("B- 以上" in error for error in errors))
+
+    def test_strong_policy_governance_below_b_requires_why_not_b(self):
+        item = candidate("C+", "selected")
+        review = policy_governance_review(applies=True)
+        review["score_consistency_review"]["why_not_b"] = ""
+        item["grading_evidence"]["policy_governance_review"] = review
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("why_not_b" in error for error in errors))
+
+    def test_unverified_policy_allegations_must_be_separated(self):
+        item = candidate("B", "selected")
+        review = policy_governance_review(applies=True)
+        review["unverified_allegations"] = ["未經可靠來源證實的歷史指控"]
+        review["unverified_allegations_separated"] = False
+        item["grading_evidence"]["policy_governance_review"] = review
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("unverified_allegations" in error for error in errors))
+
+    def test_policy_score_contradiction_requires_rescoring(self):
+        item = candidate("B", "selected")
+        review = policy_governance_review(applies=True)
+        review["score_consistency_review"]["structural_alignment"] = "contradiction"
+        review["score_consistency_review"]["contradiction_reasons"] = [
+            "跨機關規範外溢與結構分數不一致。"
+        ]
+        review["score_consistency_review"]["review_outcome"] = "rescore_required"
+        item["grading_evidence"]["policy_governance_review"] = review
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertTrue(any("必須退回重審" in error for error in errors))
+
+    def test_strong_policy_governance_below_b_can_pass_after_challenge(self):
+        item = candidate("C+", "selected")
+        item["grading_evidence"]["policy_governance_review"] = policy_governance_review(
+            applies=True
+        )
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+        self.assertFalse(any("policy_governance_review" in error for error in errors))
 
 
 if __name__ == "__main__":

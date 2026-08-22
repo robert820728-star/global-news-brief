@@ -205,6 +205,62 @@
       ],
       "additionalProperties": false
     },
+    "policyGovernanceReview": {
+      "type": "object",
+      "required": ["applies"],
+      "properties": {
+        "applies": {"type": "boolean"},
+        "triggered_by": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "official_legal_interpretation",
+              "investigation_or_enforcement_referral",
+              "binding_or_operational_compliance_request",
+              "platform_or_operator_action",
+              "multi_agency_coordination",
+              "precedent_or_spillover_risk",
+              "public_reaction"
+            ]
+          }
+        },
+        "legal_basis": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "official_actions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "direct_operational_effects": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "affected_actor_classes": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "cross_agency_effects": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "precedent_or_spillover_scope": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "window_material_effects": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "evidence_urls": {"type": "array", "minItems": 1, "items": {"type": "string", "format": "uri"}},
+        "unverified_allegations": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "unverified_allegations_separated": {"type": "boolean"},
+        "score_consistency_review": {
+          "type": "object",
+          "required": ["public_impact_alignment", "scope_alignment", "structural_alignment", "window_alignment", "contradiction_reasons", "why_not_b", "review_outcome"],
+          "properties": {
+            "public_impact_alignment": {"enum": ["consistent", "contradiction", "unresolved"]},
+            "scope_alignment": {"enum": ["consistent", "contradiction", "unresolved"]},
+            "structural_alignment": {"enum": ["consistent", "contradiction", "unresolved"]},
+            "window_alignment": {"enum": ["consistent", "contradiction", "unresolved"]},
+            "contradiction_reasons": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "why_not_b": {"type": ["string", "null"]},
+            "review_outcome": {"enum": ["consistent", "rescore_required"]}
+          },
+          "additionalProperties": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"applies": {"const": true}}},
+          "then": {
+            "required": ["triggered_by", "legal_basis", "official_actions", "direct_operational_effects", "affected_actor_classes", "cross_agency_effects", "precedent_or_spillover_scope", "window_material_effects", "evidence_urls", "unverified_allegations", "unverified_allegations_separated", "score_consistency_review"]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
     "candidate": {
       "type": "object",
       "required": ["candidate_id", "dedup_key", "title", "section", "provisional_grade", "grade_reason", "grading_evidence", "decision", "reason_code", "reason", "source_ids", "source_audit", "continuity"],
@@ -256,6 +312,7 @@
             "why_current_grade": {"type": "string", "minLength": 1},
             "why_not_higher": {"type": "string", "minLength": 1},
             "why_not_lower": {"type": "string", "minLength": 1},
+            "policy_governance_review": {"$ref": "#/$defs/policyGovernanceReview"},
             "local_disaster_review": {"$ref": "#/$defs/localDisasterReview"},
             "border_conflict_review": {
               "type": "object",

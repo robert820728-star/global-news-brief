@@ -674,6 +674,30 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("模型", document)
             self.assertIn("`temporal_review`", document)
 
+    def test_policy_governance_evidence_gate_contract(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-candidate-audit.schema.json").read_text(encoding="utf-8")
+        )
+        review = schema["$defs"]["policyGovernanceReview"]
+        self.assertIn("score_consistency_review", review["properties"])
+        self.assertIn(
+            "policy_governance_review",
+            schema["$defs"]["candidate"]["properties"]["grading_evidence"]["properties"],
+        )
+        documents = (
+            ROOT / "news-brief-settings.md",
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/select-news-events/SKILL.md",
+        )
+        for path in documents:
+            document = path.read_text(encoding="utf-8")
+            self.assertIn("POLICY_GOVERNANCE_EVIDENCE_GATE", document, path.name)
+            self.assertIn("`policy_governance_review`", document, path.name)
+            self.assertIn("`why_not_b`", document, path.name)
+            self.assertIn("必須退回重審", document, path.name)
+            self.assertIn("未經證實", document, path.name)
+
     def test_mobile_native_durable_audit_uses_compact_profile_without_verbose_evidence(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         skill = (ROOT / ".agents/skills/audit-news-candidates/SKILL.md").read_text(

@@ -1,5 +1,14 @@
 # 版本紀錄 / Version Record
 
+## v0.4.4-policy-governance-evidence-gate — 2026-08-23
+
+- 建立原因 / Reason: 政策、法規與平台治理事件可能在尚未證明制度性核心事實前就被當成一般輿論爭議低評，且既有結構無法強制處理「官方制度證據很強、六項分數卻偏低」的矛盾。 / Policy, regulatory, and platform-governance events could be scored as superficial controversy before their institutional facts were established, while the existing structure could not force review when strong official evidence conflicted with a low six-dimension score.
+- 實作方式 / Approach: 新增 `POLICY_GOVERNANCE_EVIDENCE_GATE`；先完成事件身分與時間資格，再分列法律依據、官方行動、業者實際效果、受影響行為者、跨機關／外溢範圍與窗內效果，之後才進六項評分。未經證實的指控必須分離；任何矛盾或未解狀態阻擋 audit。 / Add `POLICY_GOVERNANCE_EVIDENCE_GATE`: after identity and time qualification, record legal basis, official action, operational effects, affected actor classes, cross-agency/spillover scope, and in-window effects before six-dimension scoring. Unverified allegations must remain separate, and any contradiction or unresolved state blocks audit completion.
+- 變更入口 / Changed entry points: `scripts/manage_candidate_audit.py`, `schemas/news-candidate-audit.schema.json`, `news-brief-settings.md`, both schedule prompts, `.agents/skills/select-news-events/SKILL.md`, and focused validator/contract tests.
+- 重要參數 / Key parameters: 最新一輪每個候選都要有 `policy_governance_review`；官方行動、業者／平台實際效果及跨機關或規則外溢同時成立但總分低於 B（60）時，必須提供可核實 `why_not_b`。這是反向挑戰，不是自動升 B，也不是特定事件例外。 / Every latest-run candidate requires `policy_governance_review`; a strong profile with official action, actual operator/platform effects, and cross-agency or spillover evidence below B (60) requires an evidence-backed `why_not_b`. This is a challenge, not an automatic grade floor or named-event exception.
+- 驗證方式 / Validation: 三個拒絕案例先 RED、一個完成反向說明的案例保持可通過；實作後四項全綠，候選稽核回歸 49/49、四介面規範契約測試通過。改用 bundled runtime 並重建 capsule 後，完整回歸 271/271 通過。 / Three rejection cases first failed while the challenged low-grade case remained valid; all four pass after implementation, together with 49/49 candidate-audit tests and the four-surface contract test. After switching to the bundled runtime and rebuilding the capsule, the full regression passes 271/271.
+- 結果與下一決定 / Result and next decision: 規則、schema、validator 與 verified bootstrap capsule 均已整合並通過驗證；直接推送最新 `main`，讓後續排程自 GitHub 取得同一規則。 / Rules, schema, validator, and the verified bootstrap capsule are integrated and verified; push directly to latest `main` so subsequent schedules load the same rule from GitHub.
+
 ## v0.4.3-gdelt-archive-primary — 2026-08-22
 
 - 建立原因 / Reason: DOC API 即使成功也只回傳最多 250 筆，且反覆 429 會浪費至少數分鐘，無法滿足完整 24 小時 discovery。 / Even a successful DOC API response returns at most 250 items, while repeated 429 waits waste minutes and cannot satisfy complete 24-hour discovery.

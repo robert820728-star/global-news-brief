@@ -28,6 +28,8 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 
 `EVENT_REGION_AND_TIME_IDENTITY_GATE`：在任何六項評分之前，必須讀取內容並獨立建立事件的 `country_codes`、`primary_country_code`、`location_evidence`、`event_occurred_at`、`material_update_at`、`material_update_type`、`material_update_evidence` 與 `temporal_review`。來源分桶與媒體國別只是 discovery 提示，絕不能當事件地區。高階模型必須逐事件比較文章內容、十四天時間線、舊數據與本輪事實，將時間資格判為 `new_event`、`ongoing_current_impact`、`material_update` 或 `old_restatement`，並分列新增／變更事實、重複舊事實與窗內當下影響；程式只檢查結構與一致性。已結束的舊事件只重複舊傷亡、重新整理、回顧、週年、換標題或重刊時為 `non_news`。開始較早但有內容證明事件仍持續跨越精確時間窗、並在窗內造成當下影響時可列 `ongoing_current_impact`，不得因開始日久遠排除，也不得強迫必須新增傷亡。地區或時間缺漏／矛盾時保持 `unresolved`，不得評分；地區修正後必須重算 `core_section_relevance` 與總分。
 
+`POLICY_GOVERNANCE_EVIDENCE_GATE`：事件身分與時間資格確認後、六項評分前，先證明政策、法規、主管機關處置、平台治理或文化產業制度事件真正是什麼。最新一輪每個候選必須填 `policy_governance_review`；適用時分列法律依據、官方行動、業者／平台實際效果、受影響行為者、跨機關影響、先例／外溢範圍、窗內效果與證據網址。未經證實的歷史指控必須置於 `unverified_allegations`，與事件身分、直接後果及六項分數分離。六項草評後逐項比對制度證據；任何 `contradiction`、`unresolved` 或非 `consistent` 結果都必須退回重審，修正事件身分或重新評分。若官方行動、業者實際效果及跨機關／外溢證據同時成立但總分低於 B，必須填寫證據支持的 `why_not_b`；這是反向挑戰，不是自動 B 級下限。
+
 模型路由依序為：
 
 1. 規則與程式：處理時間、網址、重複、既有十四天紀錄比對及固定欄位。
