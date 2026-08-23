@@ -1,0 +1,44 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "task_name": "新聞管線最終驗收重測",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T18:00:00+08:00",
+  "observed_at": "2026-08-23T12:39:26.366Z",
+  "sequence": 910,
+  "step": "canonical-publisher",
+  "status": "passed",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/910-canonical-publisher-running.json",
+  "previous_receipt_blob_sha": "07e8ec148dc9e1379cf9f21c923bd3251f0982f0",
+  "evidence_paths": [
+    "logs/runs/gnb-20260823T100250Z-7b62d4e1/bundle-manifest.json",
+    "logs/current.json"
+  ],
+  "evidence_sha256": {
+    "logs/runs/gnb-20260823T100250Z-7b62d4e1/bundle-manifest.json": "5dad8c33bf5adc425f67a5c0c76cadb9224ca372827e75e2231f33f2de117b5d",
+    "logs/current.json": "e6f2dcb7b75b790e574f6bbd7b122bef437636ff"
+  },
+  "elapsed_ms": 12628,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "canonical_commit": "f5ef9e5c04c3c3926631c35df286865fc765b952",
+  "canonical_tree": "66f5262db26e1809f5c82650ce17f8d56d135f30",
+  "remote_blob_closure": {
+    "expected": 431,
+    "verified": 431
+  },
+  "restore_artifacts": {
+    "expected": 110,
+    "verified": 110
+  },
+  "conversation_delivery": true
+}
