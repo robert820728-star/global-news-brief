@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "step": "pre-manifest-recovery-bundle-restore",
+  "status": "passed",
+  "observed_at": "2026-08-23T20:35:42+10:00",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "recovery_commit_sha": "3462dbadf20b6a037fb16c563a0e522fcaf0bff2",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/150-pre-manifest-recovery-restore-running.json",
+  "previous_receipt_blob_sha": "2a47f2f2fb75eec77219c8722692ad5f6a53fdb9",
+  "artifact_count": 6,
+  "upload_count": 160,
+  "byte_identity_verified": true,
+  "first_incomplete_step": "select-news-events.content-hydration.batch-001",
+  "retry_count": 1,
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  }
+}
