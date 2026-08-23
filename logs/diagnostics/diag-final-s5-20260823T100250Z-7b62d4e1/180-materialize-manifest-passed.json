@@ -1,0 +1,33 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "task_name": "新聞管線最終驗收重測",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T18:00:00+08:00",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "sequence": "180",
+  "step": "materialize-manifest",
+  "external_ledger": "available",
+  "retry_count": 0,
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "observed_at": "2026-08-23T19:21:49+08:00",
+  "status": "passed",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/180-materialize-manifest-running.json",
+  "previous_receipt_blob_sha": "f3593bf5f17e50fbe7aa480288bcdc2422297c29",
+  "evidence_paths": [
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/work/event-manifest.json",
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/checkpoint.json"
+  ],
+  "evidence_sha256": [
+    "0b6ae06e7a0be747682173b0efbf51de85b7684ac2f1d44a956cf44e0408e06b",
+    "a2107ba17b495e489dc1116905e2f5acc41a96a64159aba92b3ad5a5cdbc031b"
+  ],
+  "elapsed_ms": 1
+}
