@@ -1,0 +1,52 @@
+{
+  "schema_version": "2.0.0",
+  "status": "ready",
+  "gate": "scripts/publish_news_brief.py",
+  "gate_version": "2.2.0",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "published_at": "2026-08-23T22:13:49+10:00",
+  "artifacts": {
+    "gate": {
+      "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/scripts/publish_news_brief.py",
+      "sha256": "27a8e9fdad906968277835a962e85e011a146259d57f8855c6fb87a955d5ea39"
+    },
+    "delivery_contract": {
+      "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/daily-schedule-prompt.md",
+      "sha256": "dfa06bc0a818ebdfdac4d7fd06158bff6575ff27d8b79ce03077b5aef79b5869"
+    },
+    "checkpoint": {
+      "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/checkpoint.json",
+      "sha256": "ba8112e7993e006427cd07ae8f740937111f2519c37ff508c7d925938119751d"
+    },
+    "manifest": {
+      "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/event-manifest.json",
+      "sha256": "8a18329573d94dbdae703ce543a85e70fd50631b0f3e5e1fe53552bf86369445"
+    },
+    "audit": {
+      "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/candidate-audit.json",
+      "sha256": "4ceaacec06ece6456a2bbe8edb9d391f94505743285652f4e9897f3e5a2b61ce"
+    },
+    "source_pool": {
+      "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/news-source-pool.json",
+      "sha256": "ce121937d0ffde3e6f68f43f8ceeb94e3d943517fc852ab4ebe4d2b085e45d19"
+    },
+    "brief": {
+      "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/reader-draft.md",
+      "sha256": "7485e395b22df9d70d087ffe4de57c59c311531a9a8a0da89c5cbe26db0d0eae"
+    },
+    "release": {
+      "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/release/news-brief.md",
+      "sha256": "7485e395b22df9d70d087ffe4de57c59c311531a9a8a0da89c5cbe26db0d0eae"
+    }
+  },
+  "authorized_release_sha256": "7485e395b22df9d70d087ffe4de57c59c311531a9a8a0da89c5cbe26db0d0eae",
+  "validators": {
+    "unique_delivery_gate": "passed",
+    "pre_manifest_checkpoint": "passed",
+    "source_scan_and_candidate_audit": "passed",
+    "attachment_and_visual_evidence": "passed",
+    "map_decisions": "passed",
+    "manifest_and_brief": "passed"
+  }
+}

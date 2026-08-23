@@ -1,0 +1,19 @@
+{
+  "checks": {
+    "image_evidence_file_count": 60,
+    "reader_visible_asset_count": 31,
+    "region_order": [
+      137,
+      369,
+      594
+    ],
+    "source_images_ready": 17,
+    "today_overview_unique": true,
+    "unique_visible_asset_hashes": 31,
+    "visible_attachment_count": 31
+  },
+  "errors": [],
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "schema_version": "1.0.0",
+  "status": "passed"
+}

@@ -1,0 +1,4562 @@
+ion_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/tp/2026/08-23/10682684.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "高温天气来袭 重庆人在水中涮火锅"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-17a87413179725c0",
+      "dedup_key": "9b42766a561c6fa29d6e0519",
+      "semantic_event_id": "sem-row-530d308f748b79629440",
+      "event_identity": {
+        "who_or_what": "（文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游",
+        "what_happened": "本輪來源確認「（文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T15:37:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T15:37:00+08:00",
+        "material_update_at": "2026-08-23T15:37:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：/div> 8-23 15:44 [ 东西问 ] 东西问丨“树”的猜想 8-23 15:40 [ 图片 ] 高温天气来袭 重庆人在水中涮火锅 8-23 15:37 [ 社会 ] （文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游 8-23 15:37 [ 法治 ] 骗子租写字楼让求职者上假班 揭秘虚假招聘骗局 8-23 15:37 [ 图片 ] 山海为家，草木为邻——英国植物画家奔雅的香港情缘 8-23 15:36 [ 财经 ] 上",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：（文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：/div> 8-23 15:44 [ 东西问 ] 东西问丨“树”的猜想 8-23 15:40 [ 图片 ] 高温天气来袭 重庆人在水中涮火锅 8-23 15:37 [ 社会 ] （文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游 8-23 15:37 [ 法治 ] 骗子租写字楼让求职者上假班 揭秘虚假招聘骗局 8-23 15:37 [ 图片 ] 山海为家，草木为邻——英国植物画家奔雅的香港情缘 8-23 15:36 [ 财经 ] 上"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "（文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "（文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "（文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "（文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：（文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682704.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "（文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-e0924c4f8f96ed38",
+      "dedup_key": "41c9a16e02b5a8e00f48c5c6",
+      "semantic_event_id": "sem-row-2e53e2a16fe4f6a1c58b",
+      "event_identity": {
+        "who_or_what": "骗子租写字楼让求职者上假班 揭秘虚假招聘骗局",
+        "what_happened": "本輪來源確認「骗子租写字楼让求职者上假班 揭秘虚假招聘骗局」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T15:37:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T15:37:00+08:00",
+        "material_update_at": "2026-08-23T15:37:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：\">8-23 15:40 [ 图片 ] 高温天气来袭 重庆人在水中涮火锅 8-23 15:37 [ 社会 ] （文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游 8-23 15:37 [ 法治 ] 骗子租写字楼让求职者上假班 揭秘虚假招聘骗局 8-23 15:37 [ 图片 ] 山海为家，草木为邻——英国植物画家奔雅的香港情缘 8-23 15:36 [ 财经 ] 上海楼市“沪八条”施行 新政组合拳激活消费需求 8-23 15:33 ",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：骗子租写字楼让求职者上假班 揭秘虚假招聘骗局"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：\">8-23 15:40 [ 图片 ] 高温天气来袭 重庆人在水中涮火锅 8-23 15:37 [ 社会 ] （文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游 8-23 15:37 [ 法治 ] 骗子租写字楼让求职者上假班 揭秘虚假招聘骗局 8-23 15:37 [ 图片 ] 山海为家，草木为邻——英国植物画家奔雅的香港情缘 8-23 15:36 [ 财经 ] 上海楼市“沪八条”施行 新政组合拳激活消费需求 8-23 15:33 "
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "骗子租写字楼让求职者上假班 揭秘虚假招聘骗局",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "骗子租写字楼让求职者上假班 揭秘虚假招聘骗局 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "骗子租写字楼让求职者上假班 揭秘虚假招聘骗局：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "骗子租写字楼让求职者上假班 揭秘虚假招聘骗局 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：骗子租写字楼让求职者上假班 揭秘虚假招聘骗局"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/fz/2026/08-23/10682705.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "骗子租写字楼让求职者上假班 揭秘虚假招聘骗局"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-d48d3422ac82662c",
+      "dedup_key": "0d7054980e1eaeb438cb25a5",
+      "semantic_event_id": "sem-row-dedf82761cb4adad41af",
+      "event_identity": {
+        "who_or_what": "山海为家，草木为邻——英国植物画家奔雅的香港情缘",
+        "what_happened": "本輪來源確認「山海为家，草木为邻——英国植物画家奔雅的香港情缘」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T15:36:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T15:36:00+08:00",
+        "material_update_at": "2026-08-23T15:36:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：iv> [ 社会 ] （文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游 8-23 15:37 [ 法治 ] 骗子租写字楼让求职者上假班 揭秘虚假招聘骗局 8-23 15:37 [ 图片 ] 山海为家，草木为邻——英国植物画家奔雅的香港情缘 8-23 15:36 [ 财经 ] 上海楼市“沪八条”施行 新政组合拳激活消费需求 8-23 15:33 [ 时政 ] 三部门调拨2万件中央救灾物资支持广西做好台风“紫檀”救灾救助工作 8-23",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：山海为家，草木为邻——英国植物画家奔雅的香港情缘"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：iv> [ 社会 ] （文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游 8-23 15:37 [ 法治 ] 骗子租写字楼让求职者上假班 揭秘虚假招聘骗局 8-23 15:37 [ 图片 ] 山海为家，草木为邻——英国植物画家奔雅的香港情缘 8-23 15:36 [ 财经 ] 上海楼市“沪八条”施行 新政组合拳激活消费需求 8-23 15:33 [ 时政 ] 三部门调拨2万件中央救灾物资支持广西做好台风“紫檀”救灾救助工作 8-23"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "山海为家，草木为邻——英国植物画家奔雅的香港情缘",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "山海为家，草木为邻——英国植物画家奔雅的香港情缘 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "山海为家，草木为邻——英国植物画家奔雅的香港情缘：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "山海为家，草木为邻——英国植物画家奔雅的香港情缘 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：山海为家，草木为邻——英国植物画家奔雅的香港情缘"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/tp/2026/08-23/10682679.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "山海为家，草木为邻——英国植物画家奔雅的香港情缘"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-a8010204712f60cb",
+      "dedup_key": "4ca4930c5a8796dbeab2563f",
+      "semantic_event_id": "sem-row-19e9e9d5452c2aa8bf6e",
+      "event_identity": {
+        "who_or_what": "（活力中国调研行）福建古村新潮：喝老祖宗的酒，走年轻人的路",
+        "what_happened": "本輪來源確認「（活力中国调研行）福建古村新潮：喝老祖宗的酒，走年轻人的路」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T15:32:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T15:32:00+08:00",
+        "material_update_at": "2026-08-23T15:32:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：23 15:36 [ 财经 ] 上海楼市“沪八条”施行 新政组合拳激活消费需求 8-23 15:33 [ 时政 ] 三部门调拨2万件中央救灾物资支持广西做好台风“紫檀”救灾救助工作 8-23 15:32 [ 社会 ] （活力中国调研行）福建古村新潮：喝老祖宗的酒，走年轻人的路 8-23 15:32 [ 时政 ] 第48届世界技能大赛中国代表团成立 8-23 15:31 [ 图片 ] 新疆第十五届运动会航模比赛在伊宁开赛 8-23 15:",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：（活力中国调研行）福建古村新潮：喝老祖宗的酒，走年轻人的路"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：23 15:36 [ 财经 ] 上海楼市“沪八条”施行 新政组合拳激活消费需求 8-23 15:33 [ 时政 ] 三部门调拨2万件中央救灾物资支持广西做好台风“紫檀”救灾救助工作 8-23 15:32 [ 社会 ] （活力中国调研行）福建古村新潮：喝老祖宗的酒，走年轻人的路 8-23 15:32 [ 时政 ] 第48届世界技能大赛中国代表团成立 8-23 15:31 [ 图片 ] 新疆第十五届运动会航模比赛在伊宁开赛 8-23 15:"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "（活力中国调研行）福建古村新潮：喝老祖宗的酒，走年轻人的路",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "（活力中国调研行）福建古村新潮：喝老祖宗的酒，走年轻人的路 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "（活力中国调研行）福建古村新潮：喝老祖宗的酒，走年轻人的路：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "（活力中国调研行）福建古村新潮：喝老祖宗的酒，走年轻人的路 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：（活力中国调研行）福建古村新潮：喝老祖宗的酒，走年轻人的路"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682685.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "（活力中国调研行）福建古村新潮：喝老祖宗的酒，走年轻人的路"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-955834da63bfbb09",
+      "dedup_key": "e5e4fd6dd1dddf5f2c149c14",
+      "semantic_event_id": "sem-row-9c586985cc9d998d31ea",
+      "event_identity": {
+        "who_or_what": "法國緊急回收破洞保險套 食藥署：未輸入台灣",
+        "what_happened": "本輪來源確認「法國緊急回收破洞保險套 食藥署：未輸入台灣」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T15:28:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T15:28:00+08:00",
+        "material_update_at": "2026-08-23T15:28:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 生活\n法國緊急回收破洞保險套　食藥署：未輸入台灣\n2026/8/23 15:28（8/23 16:03 更新）\n示意圖。（圖取自Unsplash圖庫）\n\n（中央社記者陳婕翎台北23日電）法國緊急回收約26萬個破洞保險套，避免避孕失敗及增加性傳染病傳播風險，食藥署今天回應，依據法國公開資訊，該檢驗不合格產品未取得台灣醫療器材許可證，未輸入台灣市場。\n\n法國衛生與消費者保護機構近期發布緊急健康警訊，全面緊急回收市場上約26萬個存在",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：法國緊急回收破洞保險套 食藥署：未輸入台灣"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 生活\n法國緊急回收破洞保險套　食藥署：未輸入台灣\n2026/8/23 15:28（8/23 16:03 更新）\n示意圖。（圖取自Unsplash圖庫）\n\n（中央社記者陳婕翎台北23日電）法國緊急回收約26萬個破洞保險套，避免避孕失敗及增加性傳染病傳播風險，食藥署今天回應，依據法國公開資訊，該檢驗不合格產品未取得台灣醫療器材許可證，未輸入台灣市場。\n\n法國衛生與消費者保護機構近期發布緊急健康警訊，全面緊急回收市場上約26萬個存在"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "法國緊急回收破洞保險套 食藥署：未輸入台灣",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "法國緊急回收破洞保險套 食藥署：未輸入台灣 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "法國緊急回收破洞保險套 食藥署：未輸入台灣：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "法國緊急回收破洞保險套 食藥署：未輸入台灣 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：法國緊急回收破洞保險套 食藥署：未輸入台灣"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/ahel/202608230107.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "法國緊急回收破洞保險套 食藥署：未輸入台灣"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-8ef9612d1cb88559",
+      "dedup_key": "a230aab2bf63e37fd5759073",
+      "semantic_event_id": "sem-row-484ea72009957b6a3d56",
+      "event_identity": {
+        "who_or_what": "截资金、假出票、低赔率设套 警惕非法彩票骗局",
+        "what_happened": "本輪來源確認「截资金、假出票、低赔率设套 警惕非法彩票骗局」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T15:28:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T15:28:00+08:00",
+        "material_update_at": "2026-08-23T15:28:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：1 [ 图片 ] 新疆第十五届运动会航模比赛在伊宁开赛 8-23 15:31 [ 文化 ] “东方美学生活方式展”在京开展 融汇古今中外艺术家作品 8-23 15:29 [ 法治 ] 截资金、假出票、低赔率设套 警惕非法彩票骗局 8-23 15:28 [ 社会 ] 保护动物绝非“想养就能养” 异宠暗藏生态风险 8-23 15:25 [ 东西问 ] 东西问·人物｜从“令狐冲”到“郭靖”，多变的李亚鹏有一个不变的心愿 8-23 15:16 ",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：截资金、假出票、低赔率设套 警惕非法彩票骗局"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：1 [ 图片 ] 新疆第十五届运动会航模比赛在伊宁开赛 8-23 15:31 [ 文化 ] “东方美学生活方式展”在京开展 融汇古今中外艺术家作品 8-23 15:29 [ 法治 ] 截资金、假出票、低赔率设套 警惕非法彩票骗局 8-23 15:28 [ 社会 ] 保护动物绝非“想养就能养” 异宠暗藏生态风险 8-23 15:25 [ 东西问 ] 东西问·人物｜从“令狐冲”到“郭靖”，多变的李亚鹏有一个不变的心愿 8-23 15:16 "
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "截资金、假出票、低赔率设套 警惕非法彩票骗局",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "截资金、假出票、低赔率设套 警惕非法彩票骗局 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "截资金、假出票、低赔率设套 警惕非法彩票骗局：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "截资金、假出票、低赔率设套 警惕非法彩票骗局 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：截资金、假出票、低赔率设套 警惕非法彩票骗局"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/fz/2026/08-23/10682699.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "截资金、假出票、低赔率设套 警惕非法彩票骗局"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-bd0e9a486048b7ab",
+      "dedup_key": "b982970c0e3ac255676f340b",
+      "semantic_event_id": "sem-row-8413327370844dd62f83",
+      "event_identity": {
+        "who_or_what": "保护动物绝非“想养就能养” 异宠暗藏生态风险",
+        "what_happened": "本輪來源確認「保护动物绝非“想养就能养” 异宠暗藏生态风险」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T15:25:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T15:25:00+08:00",
+        "material_update_at": "2026-08-23T15:25:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：8-23 15:31 [ 文化 ] “东方美学生活方式展”在京开展 融汇古今中外艺术家作品 8-23 15:29 [ 法治 ] 截资金、假出票、低赔率设套 警惕非法彩票骗局 8-23 15:28 [ 社会 ] 保护动物绝非“想养就能养” 异宠暗藏生态风险 8-23 15:25 [ 东西问 ] 东西问·人物｜从“令狐冲”到“郭靖”，多变的李亚鹏有一个不变的心愿 8-23 15:16 [ 社会 ] 受台风“紫檀”影响 今日至25日部分列车停",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：保护动物绝非“想养就能养” 异宠暗藏生态风险"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：8-23 15:31 [ 文化 ] “东方美学生活方式展”在京开展 融汇古今中外艺术家作品 8-23 15:29 [ 法治 ] 截资金、假出票、低赔率设套 警惕非法彩票骗局 8-23 15:28 [ 社会 ] 保护动物绝非“想养就能养” 异宠暗藏生态风险 8-23 15:25 [ 东西问 ] 东西问·人物｜从“令狐冲”到“郭靖”，多变的李亚鹏有一个不变的心愿 8-23 15:16 [ 社会 ] 受台风“紫檀”影响 今日至25日部分列车停"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "保护动物绝非“想养就能养” 异宠暗藏生态风险",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "保护动物绝非“想养就能养” 异宠暗藏生态风险 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "保护动物绝非“想养就能养” 异宠暗藏生态风险：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "保护动物绝非“想养就能养” 异宠暗藏生态风险 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：保护动物绝非“想养就能养” 异宠暗藏生态风险"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682696.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "保护动物绝非“想养就能养” 异宠暗藏生态风险"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-9bfcf51c6076d0f9",
+      "dedup_key": "2a52be2bccc15bae2bc982fd",
+      "semantic_event_id": "sem-row-f4c08ddd2a1d927beb60",
+      "event_identity": {
+        "who_or_what": "刑事局：暑假356學生遭色情詐財 男大生慘失30萬",
+        "what_happened": "本輪來源確認「刑事局：暑假356學生遭色情詐財 男大生慘失30萬」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T15:23:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T15:23:00+08:00",
+        "material_update_at": "2026-08-23T15:23:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 社會\n刑事局：暑假356學生遭色情詐財 男大生慘失30萬\n2026/8/23 15:23（8/23 16:17 更新）\n圖為刑事局大樓外觀。（中央社檔案照片）\n\n（中央社記者黃麗芸台北23日電）色情應召詐財案例居高不下，刑事局今天表示，分析暑假期間竟多達356名學生受害被騙，南部有名男大生網路援交天蠍小隻女就被騙30萬元，呼籲民眾交友遇詐或遭脅迫應速報案。\n\n警政署刑事局下午發布新聞稿表示，近年透過交友軟體、社群平台快速約砲現",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：刑事局：暑假356學生遭色情詐財 男大生慘失30萬"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 社會\n刑事局：暑假356學生遭色情詐財 男大生慘失30萬\n2026/8/23 15:23（8/23 16:17 更新）\n圖為刑事局大樓外觀。（中央社檔案照片）\n\n（中央社記者黃麗芸台北23日電）色情應召詐財案例居高不下，刑事局今天表示，分析暑假期間竟多達356名學生受害被騙，南部有名男大生網路援交天蠍小隻女就被騙30萬元，呼籲民眾交友遇詐或遭脅迫應速報案。\n\n警政署刑事局下午發布新聞稿表示，近年透過交友軟體、社群平台快速約砲現"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "刑事局：暑假356學生遭色情詐財 男大生慘失30萬",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "刑事局：暑假356學生遭色情詐財 男大生慘失30萬 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "刑事局：暑假356學生遭色情詐財 男大生慘失30萬：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "刑事局：暑假356學生遭色情詐財 男大生慘失30萬 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：刑事局：暑假356學生遭色情詐財 男大生慘失30萬"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/asoc/202608230106.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "刑事局：暑假356學生遭色情詐財 男大生慘失30萬"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-637f6757c0d15452",
+      "dedup_key": "c75f2de80c2521b7c4a009d2",
+      "semantic_event_id": "sem-row-bc202e3c468feb2caf4e",
+      "event_identity": {
+        "who_or_what": "獅隊本季4洋投確定 銳力獅告假期間已有妥善安排",
+        "what_happened": "本輪來源確認「獅隊本季4洋投確定 銳力獅告假期間已有妥善安排」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T15:18:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T15:18:00+08:00",
+        "material_update_at": "2026-08-23T15:18:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 運動\n獅隊本季4洋投確定　銳力獅告假期間已有妥善安排\n2026/8/23 15:18（8/23 15:42 更新）\n圖為中職統一7-ELEVEn獅隊洋投銳力獅（Denyi Reyes）。（中央社檔案照片）\n\n（中央社記者謝靜雯台北23日電）中華職棒831洋將大限將至，統一7-ELEVEn獅隊總教練林岳平今天受訪表示，本季4名洋投確定為布雷克、喬登、銳力獅和獅帝芬，不會再變動，銳力獅告假期間已有妥善安排。\n\n獅隊本季確定4名洋投",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：獅隊本季4洋投確定 銳力獅告假期間已有妥善安排"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 運動\n獅隊本季4洋投確定　銳力獅告假期間已有妥善安排\n2026/8/23 15:18（8/23 15:42 更新）\n圖為中職統一7-ELEVEn獅隊洋投銳力獅（Denyi Reyes）。（中央社檔案照片）\n\n（中央社記者謝靜雯台北23日電）中華職棒831洋將大限將至，統一7-ELEVEn獅隊總教練林岳平今天受訪表示，本季4名洋投確定為布雷克、喬登、銳力獅和獅帝芬，不會再變動，銳力獅告假期間已有妥善安排。\n\n獅隊本季確定4名洋投"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "獅隊本季4洋投確定 銳力獅告假期間已有妥善安排",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "獅隊本季4洋投確定 銳力獅告假期間已有妥善安排 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "獅隊本季4洋投確定 銳力獅告假期間已有妥善安排：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "獅隊本季4洋投確定 銳力獅告假期間已有妥善安排 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：獅隊本季4洋投確定 銳力獅告假期間已有妥善安排"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aspt/202608230103.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "獅隊本季4洋投確定 銳力獅告假期間已有妥善安排"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-fb091362cf4af311",
+      "dedup_key": "b136331583819f3f4bc52261",
+      "semantic_event_id": "sem-row-355def4e348a8cc2d383",
+      "event_identity": {
+        "who_or_what": "視盟發起連署 盼正名光州雙年展台灣館",
+        "what_happened": "本輪來源確認「視盟發起連署 盼正名光州雙年展台灣館」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T15:16:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T15:16:00+08:00",
+        "material_update_at": "2026-08-23T15:16:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：視盟發起連署　盼正名光州雙年展台灣館\n2026/8/23 15:16\n\n（中央社記者王寶兒台北23日電）針對韓國光州雙年展基金會逕自以國立台灣美術館英文館名（NTMoFA）替代台灣館（Taiwan Pavilion）名稱，視盟發起英文表單連署，希望能為台灣館正名。\n\n台灣視覺藝術協會（視盟）理事長沈伯丞向中央社記者表示，希望透過連署邀請全世界的藝術工作者，一起正視極權國家對藝術表達的自由及普世價值的破壞已然滲透至國際雙年展中，並以連署共",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：視盟發起連署 盼正名光州雙年展台灣館"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：視盟發起連署　盼正名光州雙年展台灣館\n2026/8/23 15:16\n\n（中央社記者王寶兒台北23日電）針對韓國光州雙年展基金會逕自以國立台灣美術館英文館名（NTMoFA）替代台灣館（Taiwan Pavilion）名稱，視盟發起英文表單連署，希望能為台灣館正名。\n\n台灣視覺藝術協會（視盟）理事長沈伯丞向中央社記者表示，希望透過連署邀請全世界的藝術工作者，一起正視極權國家對藝術表達的自由及普世價值的破壞已然滲透至國際雙年展中，並以連署共"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "視盟發起連署 盼正名光州雙年展台灣館",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "視盟發起連署 盼正名光州雙年展台灣館 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "視盟發起連署 盼正名光州雙年展台灣館：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "視盟發起連署 盼正名光州雙年展台灣館 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：視盟發起連署 盼正名光州雙年展台灣館"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/acul/202608230100.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "視盟發起連署 盼正名光州雙年展台灣館"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-052dfcb54af6000c",
+      "dedup_key": "b86678fcccc8e3dc565c0bf1",
+      "semantic_event_id": "sem-row-9f81159c68bafdd4b057",
+      "event_identity": {
+        "who_or_what": "桃園峇峇娘惹文化節 長桌宴、童玩認識馬來西亞土生華人文化",
+        "what_happened": "本輪來源確認「桃園峇峇娘惹文化節 長桌宴、童玩認識馬來西亞土生華人文化」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T15:13:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T15:13:00+08:00",
+        "material_update_at": "2026-08-23T15:13:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 地方\n桃園峇峇娘惹文化節　長桌宴、童玩認識馬來西亞土生華人文化\n2026/8/23 15:13（8/23 15:31 更新）\n桃園市政府與桃園市馬來西亞藝文協會23日在虎頭山創新園區舉辦「2026年馬來西亞峇峇娘惹文化節」，引領民眾從飲食、童玩及藝術等面向，認識馬來西亞土生華人文化。（桃園市婦幼發展局提供）中央社記者吳睿騏傳真　115年8月23日\n\n（中央社記者吳睿騏桃園23日電）桃市府與桃園市馬來西亞藝文協會今天在虎頭山創新",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：桃園峇峇娘惹文化節 長桌宴、童玩認識馬來西亞土生華人文化"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 地方\n桃園峇峇娘惹文化節　長桌宴、童玩認識馬來西亞土生華人文化\n2026/8/23 15:13（8/23 15:31 更新）\n桃園市政府與桃園市馬來西亞藝文協會23日在虎頭山創新園區舉辦「2026年馬來西亞峇峇娘惹文化節」，引領民眾從飲食、童玩及藝術等面向，認識馬來西亞土生華人文化。（桃園市婦幼發展局提供）中央社記者吳睿騏傳真　115年8月23日\n\n（中央社記者吳睿騏桃園23日電）桃市府與桃園市馬來西亞藝文協會今天在虎頭山創新"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "桃園峇峇娘惹文化節 長桌宴、童玩認識馬來西亞土生華人文化",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "桃園峇峇娘惹文化節 長桌宴、童玩認識馬來西亞土生華人文化 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "桃園峇峇娘惹文化節 長桌宴、童玩認識馬來西亞土生華人文化：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "桃園峇峇娘惹文化節 長桌宴、童玩認識馬來西亞土生華人文化 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：桃園峇峇娘惹文化節 長桌宴、童玩認識馬來西亞土生華人文化"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aloc/202608230099.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "桃園峇峇娘惹文化節 長桌宴、童玩認識馬來西亞土生華人文化"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-056813e3d6042717",
+      "dedup_key": "0b4a2631b29cf56eb9d833ac",
+      "semantic_event_id": "sem-row-d6504a280ca26cb18691",
+      "event_identity": {
+        "who_or_what": "進口怪手鏟斗夾藏227公斤大麻 基隆男否認犯行判10年10月",
+        "what_happened": "本輪來源確認「進口怪手鏟斗夾藏227公斤大麻 基隆男否認犯行判10年10月」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T15:00:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T15:00:00+08:00",
+        "material_update_at": "2026-08-23T15:00:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 社會\n進口怪手鏟斗夾藏227公斤大麻　基隆男否認犯行判10年10月\n2026/8/23 15:00\n\n（中央社記者王朝鈺基隆23日電）吳姓、黃姓男子進口夾藏227公斤大麻的怪手鏟斗來台遭查獲，吳男在法院審理時否認犯行，法官依共同運輸二級毒品罪，判處10年10月徒刑，黃男則判5年8月徒刑。全案可上訴。\n\n基隆地方法院判決書指出，黃男、吳男與暱稱「長鴻」的男子共謀運毒，由黃男出面擔任公司負責人，承租桃園倉庫及負責收貨，吳男則提供協",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：進口怪手鏟斗夾藏227公斤大麻 基隆男否認犯行判10年10月"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 社會\n進口怪手鏟斗夾藏227公斤大麻　基隆男否認犯行判10年10月\n2026/8/23 15:00\n\n（中央社記者王朝鈺基隆23日電）吳姓、黃姓男子進口夾藏227公斤大麻的怪手鏟斗來台遭查獲，吳男在法院審理時否認犯行，法官依共同運輸二級毒品罪，判處10年10月徒刑，黃男則判5年8月徒刑。全案可上訴。\n\n基隆地方法院判決書指出，黃男、吳男與暱稱「長鴻」的男子共謀運毒，由黃男出面擔任公司負責人，承租桃園倉庫及負責收貨，吳男則提供協"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "進口怪手鏟斗夾藏227公斤大麻 基隆男否認犯行判10年10月",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "進口怪手鏟斗夾藏227公斤大麻 基隆男否認犯行判10年10月 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "進口怪手鏟斗夾藏227公斤大麻 基隆男否認犯行判10年10月：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "進口怪手鏟斗夾藏227公斤大麻 基隆男否認犯行判10年10月 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：進口怪手鏟斗夾藏227公斤大麻 基隆男否認犯行判10年10月"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/asoc/202608230098.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "進口怪手鏟斗夾藏227公斤大麻 基隆男否認犯行判10年10月"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-76edd47f541b2121",
+      "dedup_key": "037d3b0d4fe93bd998888168",
+      "semantic_event_id": "sem-row-8f0580c7fa6b97bd204d",
+      "event_identity": {
+        "who_or_what": "中國奇葩片「牛來」票房直逼2億 評價兩極引發模仿創作",
+        "what_happened": "本輪來源確認「中國奇葩片「牛來」票房直逼2億 評價兩極引發模仿創作」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T14:47:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T14:47:00+08:00",
+        "material_update_at": "2026-08-23T14:47:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 兩岸\n中國奇葩片「牛來」票房直逼2億　評價兩極引發模仿創作\n2026/8/23 14:47（8/23 17:11 更新）\n中國動畫片「牛來」海報。（圖取自https://weibo.com）\n\n（中央社台北23日電）因製作粗糙反而引爆票房的中國動畫片「牛來」，票房已突破人民幣4000萬元（約新台幣1億8800萬元），更引發模仿潮，連廣東省東莞市政府也仿製短片「鵝來」作為美食宣傳。影片的相關現象引起探討。\n\n「牛來」5日公映，首",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：中國奇葩片「牛來」票房直逼2億 評價兩極引發模仿創作"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 兩岸\n中國奇葩片「牛來」票房直逼2億　評價兩極引發模仿創作\n2026/8/23 14:47（8/23 17:11 更新）\n中國動畫片「牛來」海報。（圖取自https://weibo.com）\n\n（中央社台北23日電）因製作粗糙反而引爆票房的中國動畫片「牛來」，票房已突破人民幣4000萬元（約新台幣1億8800萬元），更引發模仿潮，連廣東省東莞市政府也仿製短片「鵝來」作為美食宣傳。影片的相關現象引起探討。\n\n「牛來」5日公映，首"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "中國奇葩片「牛來」票房直逼2億 評價兩極引發模仿創作",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "中國奇葩片「牛來」票房直逼2億 評價兩極引發模仿創作 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "中國奇葩片「牛來」票房直逼2億 評價兩極引發模仿創作：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "中國奇葩片「牛來」票房直逼2億 評價兩極引發模仿創作 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：中國奇葩片「牛來」票房直逼2億 評價兩極引發模仿創作"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/acn/202608230096.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "中國奇葩片「牛來」票房直逼2億 評價兩極引發模仿創作"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-50346467fc81849d",
+      "dedup_key": "db13ac56b1b696e1fdd05d0a",
+      "semantic_event_id": "sem-row-5cc0103b88a6fbc9c8cd",
+      "event_identity": {
+        "who_or_what": "搜救犬Wilson死因爭議 花蓮檢方接獲告發分案調查",
+        "what_happened": "本輪來源確認「搜救犬Wilson死因爭議 花蓮檢方接獲告發分案調查」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T14:42:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T14:42:00+08:00",
+        "material_update_at": "2026-08-23T14:42:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 社會\n搜救犬Wilson死因爭議　花蓮檢方接獲告發分案調查\n2026/8/23 14:42（8/23 15:10 更新）\n搜救犬Wilson（圖）去年5月底離世。（中央社檔案照片）\n\n（中央社記者張祈花蓮縣23日電）花蓮搜救犬Wilson死因爭議未完，內政部消防署發函花蓮動植物防疫所，依動物保護法查察死因；花蓮地檢署則收到民眾告發狀，控告花蓮縣消防局長及領犬員違反動保法、刑法等罪。\n\nWilson在0403花蓮地震搜救任務立功",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：搜救犬Wilson死因爭議 花蓮檢方接獲告發分案調查"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 社會\n搜救犬Wilson死因爭議　花蓮檢方接獲告發分案調查\n2026/8/23 14:42（8/23 15:10 更新）\n搜救犬Wilson（圖）去年5月底離世。（中央社檔案照片）\n\n（中央社記者張祈花蓮縣23日電）花蓮搜救犬Wilson死因爭議未完，內政部消防署發函花蓮動植物防疫所，依動物保護法查察死因；花蓮地檢署則收到民眾告發狀，控告花蓮縣消防局長及領犬員違反動保法、刑法等罪。\n\nWilson在0403花蓮地震搜救任務立功"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "搜救犬Wilson死因爭議 花蓮檢方接獲告發分案調查",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "搜救犬Wilson死因爭議 花蓮檢方接獲告發分案調查 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "搜救犬Wilson死因爭議 花蓮檢方接獲告發分案調查：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "搜救犬Wilson死因爭議 花蓮檢方接獲告發分案調查 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：搜救犬Wilson死因爭議 花蓮檢方接獲告發分案調查"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/asoc/202608230095.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "搜救犬Wilson死因爭議 花蓮檢方接獲告發分案調查"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-cb66a68a53d85bde",
+      "dedup_key": "06cc99548c7e669295be03cb",
+      "semantic_event_id": "sem-row-80449ef3b43131d6cb81",
+      "event_identity": {
+        "who_or_what": "中国驻菲律宾大使：菲方选择性执法意图何在？",
+        "what_happened": "本輪來源確認「中国驻菲律宾大使：菲方选择性执法意图何在？」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T14:38:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T14:38:00+08:00",
+        "material_update_at": "2026-08-23T14:38:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：iv> [ 东西问 ] 东西问·人物｜从“令狐冲”到“郭靖”，多变的李亚鹏有一个不变的心愿 8-23 15:16 [ 社会 ] 受台风“紫檀”影响 今日至25日部分列车停运 8-23 14:38 [ 视频 ] 中国驻菲律宾大使：菲方选择性执法意图何在？ 8-23 14:26 [ 时政 ] 双台风影响中国 多地现强降雨 8-23 14:09 [ 体育 ] 五支国际船队山东青岛起航竞逐“远东杯”国际帆船拉力赛 8-23 14:08 [ 社会",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：中国驻菲律宾大使：菲方选择性执法意图何在？"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：iv> [ 东西问 ] 东西问·人物｜从“令狐冲”到“郭靖”，多变的李亚鹏有一个不变的心愿 8-23 15:16 [ 社会 ] 受台风“紫檀”影响 今日至25日部分列车停运 8-23 14:38 [ 视频 ] 中国驻菲律宾大使：菲方选择性执法意图何在？ 8-23 14:26 [ 时政 ] 双台风影响中国 多地现强降雨 8-23 14:09 [ 体育 ] 五支国际船队山东青岛起航竞逐“远东杯”国际帆船拉力赛 8-23 14:08 [ 社会"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "中国驻菲律宾大使：菲方选择性执法意图何在？",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "中国驻菲律宾大使：菲方选择性执法意图何在？ 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "中国驻菲律宾大使：菲方选择性执法意图何在？：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "中国驻菲律宾大使：菲方选择性执法意图何在？ 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：中国驻菲律宾大使：菲方选择性执法意图何在？"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/gn/shipin/cns-d/2026/08-23/news1066257.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "中国驻菲律宾大使：菲方选择性执法意图何在？"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-b5c6ee2f4dfc947d",
+      "dedup_key": "d304ff4aeebe2cb7da310851",
+      "semantic_event_id": "sem-row-d4b64d67a789b9741bc4",
+      "event_identity": {
+        "who_or_what": "823戰役68週年 鄭麗文：賴總統承認九二共識兩岸就能對話",
+        "what_happened": "本輪來源確認「823戰役68週年 鄭麗文：賴總統承認九二共識兩岸就能對話」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T14:26:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T14:26:00+08:00",
+        "material_update_at": "2026-08-23T14:26:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 政治\n823戰役68週年　鄭麗文：賴總統承認九二共識兩岸就能對話\n2026/8/23 14:26（8/23 14:52 更新）\n中國國民黨主席鄭麗文（前排中）23日赴金門823戰史館參訪並發表談話表示，如果要締造和平，只要賴總統願意在中華民國憲法基礎上承認九二共識，「兩岸就可以接觸對話交流，立刻把兩岸緊張、緊繃大幅降低」。中央社記者吳玟嶸攝　115年8月23日\n\n（中央社記者吳玟嶸金門23日電）今天是823戰役68週年，國民黨",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：823戰役68週年 鄭麗文：賴總統承認九二共識兩岸就能對話"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 政治\n823戰役68週年　鄭麗文：賴總統承認九二共識兩岸就能對話\n2026/8/23 14:26（8/23 14:52 更新）\n中國國民黨主席鄭麗文（前排中）23日赴金門823戰史館參訪並發表談話表示，如果要締造和平，只要賴總統願意在中華民國憲法基礎上承認九二共識，「兩岸就可以接觸對話交流，立刻把兩岸緊張、緊繃大幅降低」。中央社記者吳玟嶸攝　115年8月23日\n\n（中央社記者吳玟嶸金門23日電）今天是823戰役68週年，國民黨"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "823戰役68週年 鄭麗文：賴總統承認九二共識兩岸就能對話",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "823戰役68週年 鄭麗文：賴總統承認九二共識兩岸就能對話 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "823戰役68週年 鄭麗文：賴總統承認九二共識兩岸就能對話：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "823戰役68週年 鄭麗文：賴總統承認九二共識兩岸就能對話 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：823戰役68週年 鄭麗文：賴總統承認九二共識兩岸就能對話"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aipl/202608230094.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "823戰役68週年 鄭麗文：賴總統承認九二共識兩岸就能對話"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-027fba56cbd2a5fe",
+      "dedup_key": "31913bea032e673909f5232f",
+      "semantic_event_id": "sem-row-51a12ef325bc9a47f033",
+      "event_identity": {
+        "who_or_what": "日本行動電源頻起火 政府擬強制第三方機構檢驗",
+        "what_happened": "本輪來源確認「日本行動電源頻起火 政府擬強制第三方機構檢驗」所述具體事件或實質更新。",
+        "where": "JPN",
+        "when": "2026-08-23T14:11:00+08:00",
+        "country_codes": [
+          "JPN"
+        ],
+        "primary_country_code": "JPN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 JPN。",
+        "event_occurred_at": "2026-08-23T14:11:00+08:00",
+        "material_update_at": "2026-08-23T14:11:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 國際\n日本行動電源頻起火　政府擬強制第三方機構檢驗\n2026/8/23 14:11（8/23 15:25 更新）\n示意圖。（圖取自pakutaso圖庫）\n\n（中央社東京23日綜合外電報導）有鑑於日本近期行動電源起火事故頻傳，日本政府已決定大幅強化安全規範，強制實施第三方機構檢驗，希望藉由加強製造階段把關，防止劣質產品流入市場。\n\n日本「讀賣新聞」報導，日本政府預計最快於本月公布相關方針，並透過修正相關法規，期望在本年度內完成制",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：日本行動電源頻起火 政府擬強制第三方機構檢驗"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 國際\n日本行動電源頻起火　政府擬強制第三方機構檢驗\n2026/8/23 14:11（8/23 15:25 更新）\n示意圖。（圖取自pakutaso圖庫）\n\n（中央社東京23日綜合外電報導）有鑑於日本近期行動電源起火事故頻傳，日本政府已決定大幅強化安全規範，強制實施第三方機構檢驗，希望藉由加強製造階段把關，防止劣質產品流入市場。\n\n日本「讀賣新聞」報導，日本政府預計最快於本月公布相關方針，並透過修正相關法規，期望在本年度內完成制"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "日本行動電源頻起火 政府擬強制第三方機構檢驗",
+      "section": "GLB",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "日本行動電源頻起火 政府擬強制第三方機構檢驗 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "日本行動電源頻起火 政府擬強制第三方機構檢驗：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "日本行動電源頻起火 政府擬強制第三方機構檢驗 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：日本行動電源頻起火 政府擬強制第三方機構檢驗"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": false,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aopl/202608230092.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "日本行動電源頻起火 政府擬強制第三方機構檢驗"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-4c8761238e5b23e2",
+      "dedup_key": "8f2f9a619e8410a055dc7f3b",
+      "semantic_event_id": "sem-row-234b672a581531724324",
+      "event_identity": {
+        "who_or_what": "哈利王子攜妻兒返英定居 試修復王室關係",
+        "what_happened": "本輪來源確認「哈利王子攜妻兒返英定居 試修復王室關係」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T14:11:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T14:11:00+08:00",
+        "material_update_at": "2026-08-23T14:11:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 國際\n哈利王子攜妻兒返英定居　試修復王室關係\n2026/8/23 14:11\n\n（中央社倫敦22日綜合外電報導）英國哈利王子（Prince Harry）即將與妻兒子女一同搬回英國。過去紛紛擾擾，一度讓大眾認為哈利此生想要返國定居幾乎不可能。\n\n41歲的哈利早前傳出與哥哥威廉王子（William）不合、他打官司要求英政府出錢保護他的人身安全，以及他對英國小報提起訴訟，發生種種情事與王室格格不入，儘管他努力擺脫「憤怒青年」與「花花",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：哈利王子攜妻兒返英定居 試修復王室關係"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 國際\n哈利王子攜妻兒返英定居　試修復王室關係\n2026/8/23 14:11\n\n（中央社倫敦22日綜合外電報導）英國哈利王子（Prince Harry）即將與妻兒子女一同搬回英國。過去紛紛擾擾，一度讓大眾認為哈利此生想要返國定居幾乎不可能。\n\n41歲的哈利早前傳出與哥哥威廉王子（William）不合、他打官司要求英政府出錢保護他的人身安全，以及他對英國小報提起訴訟，發生種種情事與王室格格不入，儘管他努力擺脫「憤怒青年」與「花花"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "哈利王子攜妻兒返英定居 試修復王室關係",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "哈利王子攜妻兒返英定居 試修復王室關係 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "哈利王子攜妻兒返英定居 試修復王室關係：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "哈利王子攜妻兒返英定居 試修復王室關係 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：哈利王子攜妻兒返英定居 試修復王室關係"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aopl/202608230091.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "哈利王子攜妻兒返英定居 試修復王室關係"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-cd71f53f58a6f069",
+      "dedup_key": "7f33151f67d5f2809ba6eee2",
+      "semantic_event_id": "sem-row-94228cdfde8eae195d7e",
+      "event_identity": {
+        "who_or_what": "強化戰時及災防運補 陸、空軍聯手演練物資空投",
+        "what_happened": "本輪來源確認「強化戰時及災防運補 陸、空軍聯手演練物資空投」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T14:10:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T14:10:00+08:00",
+        "material_update_at": "2026-08-23T14:10:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 政治\n強化戰時及災防運補　陸、空軍聯手演練物資空投\n2026/8/23 14:10（8/23 14:21 更新）\n國軍執行物資空投演練，陸軍空降訓練中心空投連負責先期完成物資配重、A-22空投包綑紮等作業檢整，結合空軍C-130運輸機實施空勘、物資空投等課目。（軍聞社提供）中央社記者游凱翔傳真　115年8月23日\n\n（中央社記者游凱翔台北23日電）軍聞社今天指出，陸軍後勤指揮部為強化戰時及重大災害時的物資補給，統籌規劃年度空中",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：強化戰時及災防運補 陸、空軍聯手演練物資空投"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 政治\n強化戰時及災防運補　陸、空軍聯手演練物資空投\n2026/8/23 14:10（8/23 14:21 更新）\n國軍執行物資空投演練，陸軍空降訓練中心空投連負責先期完成物資配重、A-22空投包綑紮等作業檢整，結合空軍C-130運輸機實施空勘、物資空投等課目。（軍聞社提供）中央社記者游凱翔傳真　115年8月23日\n\n（中央社記者游凱翔台北23日電）軍聞社今天指出，陸軍後勤指揮部為強化戰時及重大災害時的物資補給，統籌規劃年度空中"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "強化戰時及災防運補 陸、空軍聯手演練物資空投",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "強化戰時及災防運補 陸、空軍聯手演練物資空投 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "強化戰時及災防運補 陸、空軍聯手演練物資空投：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "強化戰時及災防運補 陸、空軍聯手演練物資空投 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：強化戰時及災防運補 陸、空軍聯手演練物資空投"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aipl/202608230090.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "強化戰時及災防運補 陸、空軍聯手演練物資空投"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-9ad596e60c731388",
+      "dedup_key": "3f2c524db28f170dea717c30",
+      "semantic_event_id": "sem-row-65ccf74b855ce2c92dd7",
+      "event_identity": {
+        "who_or_what": "騎士集結南投「泡麵土地公」 單車漫遊中寮秘境",
+        "what_happened": "本輪來源確認「騎士集結南投「泡麵土地公」 單車漫遊中寮秘境」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T14:08:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T14:08:00+08:00",
+        "material_update_at": "2026-08-23T14:08:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 地方\n騎士集結南投「泡麵土地公」　單車漫遊中寮秘境\n2026/8/23 14:08（8/23 14:16 更新）\n「南投旅遊百K自行車小鎮漫遊」系列活動6月起舉行，「中寮秘境祈福探索」路線23日從「泡麵土地公」所在地南投縣中寮鄉石龍宮出發。（南投縣政府提供）中央社記者蕭博陽南投縣傳真　115年8月23日\n\n（中央社記者蕭博陽南投縣23日電）南投縣政府「南投旅遊百K自行車小鎮漫遊」中寮鄉場次今天從「泡麵土地公」石龍宮出發，沿途串",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：騎士集結南投「泡麵土地公」 單車漫遊中寮秘境"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 地方\n騎士集結南投「泡麵土地公」　單車漫遊中寮秘境\n2026/8/23 14:08（8/23 14:16 更新）\n「南投旅遊百K自行車小鎮漫遊」系列活動6月起舉行，「中寮秘境祈福探索」路線23日從「泡麵土地公」所在地南投縣中寮鄉石龍宮出發。（南投縣政府提供）中央社記者蕭博陽南投縣傳真　115年8月23日\n\n（中央社記者蕭博陽南投縣23日電）南投縣政府「南投旅遊百K自行車小鎮漫遊」中寮鄉場次今天從「泡麵土地公」石龍宮出發，沿途串"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "騎士集結南投「泡麵土地公」 單車漫遊中寮秘境",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "騎士集結南投「泡麵土地公」 單車漫遊中寮秘境 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "騎士集結南投「泡麵土地公」 單車漫遊中寮秘境：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "騎士集結南投「泡麵土地公」 單車漫遊中寮秘境 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：騎士集結南投「泡麵土地公」 單車漫遊中寮秘境"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aloc/202608230089.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "騎士集結南投「泡麵土地公」 單車漫遊中寮秘境"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-b01e5ddcfa0443a8",
+      "dedup_key": "910fcbd83d1d2099e43df149",
+      "semantic_event_id": "sem-row-9240a1466085a3fc3eec",
+      "event_identity": {
+        "who_or_what": "五支国际船队山东青岛起航竞逐“远东杯”国际帆船拉力赛",
+        "what_happened": "本輪來源確認「五支国际船队山东青岛起航竞逐“远东杯”国际帆船拉力赛」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T14:08:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T14:08:00+08:00",
+        "material_update_at": "2026-08-23T14:08:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：> [ 视频 ] 中国驻菲律宾大使：菲方选择性执法意图何在？ 8-23 14:26 [ 时政 ] 双台风影响中国 多地现强降雨 8-23 14:09 [ 体育 ] 五支国际船队山东青岛起航竞逐“远东杯”国际帆船拉力赛 8-23 14:08 [ 社会 ] 广东多地暴雨、大暴雨 最大降雨量达143.3毫米 8-23 14:07 [ 社会 ] 海外华媒走进长白山：感受世界级生态宝库的“绿色脉动” 8-23 14:05 [ 社会 ] 全国各地1",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：五支国际船队山东青岛起航竞逐“远东杯”国际帆船拉力赛"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：> [ 视频 ] 中国驻菲律宾大使：菲方选择性执法意图何在？ 8-23 14:26 [ 时政 ] 双台风影响中国 多地现强降雨 8-23 14:09 [ 体育 ] 五支国际船队山东青岛起航竞逐“远东杯”国际帆船拉力赛 8-23 14:08 [ 社会 ] 广东多地暴雨、大暴雨 最大降雨量达143.3毫米 8-23 14:07 [ 社会 ] 海外华媒走进长白山：感受世界级生态宝库的“绿色脉动” 8-23 14:05 [ 社会 ] 全国各地1"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "五支国际船队山东青岛起航竞逐“远东杯”国际帆船拉力赛",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "五支国际船队山东青岛起航竞逐“远东杯”国际帆船拉力赛 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "五支国际船队山东青岛起航竞逐“远东杯”国际帆船拉力赛：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "五支国际船队山东青岛起航竞逐“远东杯”国际帆船拉力赛 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：五支国际船队山东青岛起航竞逐“远东杯”国际帆船拉力赛"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/ty/2026/08-23/10682671.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "五支国际船队山东青岛起航竞逐“远东杯”国际帆船拉力赛"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-629350a9d4f667cf",
+      "dedup_key": "f6b4be1a5ce70fe5def25f06",
+      "semantic_event_id": "sem-row-3fa50369763918336d55",
+      "event_identity": {
+        "who_or_what": "广东多地暴雨、大暴雨 最大降雨量达143.3毫米",
+        "what_happened": "本輪來源確認「广东多地暴雨、大暴雨 最大降雨量达143.3毫米」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T14:07:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T14:07:00+08:00",
+        "material_update_at": "2026-08-23T14:07:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：s=\"dd_time\">8-23 14:26 [ 时政 ] 双台风影响中国 多地现强降雨 8-23 14:09 [ 体育 ] 五支国际船队山东青岛起航竞逐“远东杯”国际帆船拉力赛 8-23 14:08 [ 社会 ] 广东多地暴雨、大暴雨 最大降雨量达143.3毫米 8-23 14:07 [ 社会 ] 海外华媒走进长白山：感受世界级生态宝库的“绿色脉动” 8-23 14:05 [ 社会 ] 全国各地18支炒菜机器人队伍齐聚东莞秀“锅气” ",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：广东多地暴雨、大暴雨 最大降雨量达143.3毫米"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：s=\"dd_time\">8-23 14:26 [ 时政 ] 双台风影响中国 多地现强降雨 8-23 14:09 [ 体育 ] 五支国际船队山东青岛起航竞逐“远东杯”国际帆船拉力赛 8-23 14:08 [ 社会 ] 广东多地暴雨、大暴雨 最大降雨量达143.3毫米 8-23 14:07 [ 社会 ] 海外华媒走进长白山：感受世界级生态宝库的“绿色脉动” 8-23 14:05 [ 社会 ] 全国各地18支炒菜机器人队伍齐聚东莞秀“锅气” "
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "广东多地暴雨、大暴雨 最大降雨量达143.3毫米",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "广东多地暴雨、大暴雨 最大降雨量达143.3毫米 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "广东多地暴雨、大暴雨 最大降雨量达143.3毫米：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "广东多地暴雨、大暴雨 最大降雨量达143.3毫米 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：广东多地暴雨、大暴雨 最大降雨量达143.3毫米"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682668.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "广东多地暴雨、大暴雨 最大降雨量达143.3毫米"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-ab115f63983c5760",
+      "dedup_key": "8cebf3fede5d4324c3552bbd",
+      "semantic_event_id": "sem-row-9507b349e9abe75331fe",
+      "event_identity": {
+        "who_or_what": "全国各地18支炒菜机器人队伍齐聚东莞秀“锅气”",
+        "what_happened": "本輪來源確認「全国各地18支炒菜机器人队伍齐聚东莞秀“锅气”」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T14:04:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T14:04:00+08:00",
+        "material_update_at": "2026-08-23T14:04:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：[ 社会 ] 广东多地暴雨、大暴雨 最大降雨量达143.3毫米 8-23 14:07 [ 社会 ] 海外华媒走进长白山：感受世界级生态宝库的“绿色脉动” 8-23 14:05 [ 社会 ] 全国各地18支炒菜机器人队伍齐聚东莞秀“锅气” 8-23 14:04 [ 社会 ] 水利部：全国29条河流仍维持超警 8-23 14:03 [ 国际 ] 日本茨城县5.9级地震已致37人受伤 8-23 13:59 [ 国际 ] 美国共和党议员批评特朗",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：全国各地18支炒菜机器人队伍齐聚东莞秀“锅气”"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：[ 社会 ] 广东多地暴雨、大暴雨 最大降雨量达143.3毫米 8-23 14:07 [ 社会 ] 海外华媒走进长白山：感受世界级生态宝库的“绿色脉动” 8-23 14:05 [ 社会 ] 全国各地18支炒菜机器人队伍齐聚东莞秀“锅气” 8-23 14:04 [ 社会 ] 水利部：全国29条河流仍维持超警 8-23 14:03 [ 国际 ] 日本茨城县5.9级地震已致37人受伤 8-23 13:59 [ 国际 ] 美国共和党议员批评特朗"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "全国各地18支炒菜机器人队伍齐聚东莞秀“锅气”",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "全国各地18支炒菜机器人队伍齐聚东莞秀“锅气” 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "全国各地18支炒菜机器人队伍齐聚东莞秀“锅气”：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "全国各地18支炒菜机器人队伍齐聚东莞秀“锅气” 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：全国各地18支炒菜机器人队伍齐聚东莞秀“锅气”"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682666.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "全国各地18支炒菜机器人队伍齐聚东莞秀“锅气”"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-b9c7cafc3c7d8eee",
+      "dedup_key": "9a03bc082e454d8bb6193bb2",
+      "semantic_event_id": "sem-row-6258f9954a9b6d22e2bb",
+      "event_identity": {
+        "who_or_what": "美国共和党议员批评特朗普的牛肉进口计划",
+        "what_happened": "本輪來源確認「美国共和党议员批评特朗普的牛肉进口计划」所述具體事件或實質更新。",
+        "where": "USA",
+        "when": "2026-08-23T13:58:00+08:00",
+        "country_codes": [
+          "USA"
+        ],
+        "primary_country_code": "USA",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 USA。",
+        "event_occurred_at": "2026-08-23T13:58:00+08:00",
+        "material_update_at": "2026-08-23T13:58:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：iv class=\"dd_time\">8-23 14:04 [ 社会 ] 水利部：全国29条河流仍维持超警 8-23 14:03 [ 国际 ] 日本茨城县5.9级地震已致37人受伤 8-23 13:59 [ 国际 ] 美国共和党议员批评特朗普的牛肉进口计划 8-23 13:58 [ 社会 ] （活力中国调研行）“闽超”掀观赛热潮 厦门借势促消费 8-23 13:51 [ 社会 ] 81.6公里串联山水秘境 重庆涪陵一条“环线”重塑武陵山",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：美国共和党议员批评特朗普的牛肉进口计划"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：iv class=\"dd_time\">8-23 14:04 [ 社会 ] 水利部：全国29条河流仍维持超警 8-23 14:03 [ 国际 ] 日本茨城县5.9级地震已致37人受伤 8-23 13:59 [ 国际 ] 美国共和党议员批评特朗普的牛肉进口计划 8-23 13:58 [ 社会 ] （活力中国调研行）“闽超”掀观赛热潮 厦门借势促消费 8-23 13:51 [ 社会 ] 81.6公里串联山水秘境 重庆涪陵一条“环线”重塑武陵山"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "美国共和党议员批评特朗普的牛肉进口计划",
+      "section": "GLB",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "美国共和党议员批评特朗普的牛肉进口计划 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "美国共和党议员批评特朗普的牛肉进口计划：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "美国共和党议员批评特朗普的牛肉进口计划 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：美国共和党议员批评特朗普的牛肉进口计划"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": false,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/gj/2026/08-23/10682665.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "美国共和党议员批评特朗普的牛肉进口计划"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-3bf9a6e8ae282cd8",
+      "dedup_key": "5f2d0be68130c5559981c841",
+      "semantic_event_id": "sem-row-f30ea6629c11e522cda2",
+      "event_identity": {
+        "who_or_what": "台塑石化：汽柴油價格不調整",
+        "what_happened": "本輪來源確認「台塑石化：汽柴油價格不調整」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T13:52:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T13:52:00+08:00",
+        "material_update_at": "2026-08-23T13:52:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 生活\n台塑石化：汽柴油價格不調整\n2026/8/23 13:52\n\n（中央社記者張建中台北23日電）台塑石化今天宣布，不調整油價。這是台塑石化連續4週油價不調整。\n\n台塑石化表示，加盟加油站參考零售價，92無鉛汽油每公升新台幣30.5元、95+無鉛汽油每公升32元、98無鉛汽油每公升34元、超級柴油每公升29.1元。（編輯：蘇志宗）1150823\n\n#台塑石化#油價#92無鉛汽油#95+無鉛汽油\n支持中央社\n\n選擇與事實站在一",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：台塑石化：汽柴油價格不調整"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 生活\n台塑石化：汽柴油價格不調整\n2026/8/23 13:52\n\n（中央社記者張建中台北23日電）台塑石化今天宣布，不調整油價。這是台塑石化連續4週油價不調整。\n\n台塑石化表示，加盟加油站參考零售價，92無鉛汽油每公升新台幣30.5元、95+無鉛汽油每公升32元、98無鉛汽油每公升34元、超級柴油每公升29.1元。（編輯：蘇志宗）1150823\n\n#台塑石化#油價#92無鉛汽油#95+無鉛汽油\n支持中央社\n\n選擇與事實站在一"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "台塑石化：汽柴油價格不調整",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "台塑石化：汽柴油價格不調整 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "台塑石化：汽柴油價格不調整：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "台塑石化：汽柴油價格不調整 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：台塑石化：汽柴油價格不調整"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/ahel/202608230087.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "台塑石化：汽柴油價格不調整"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-b86612755fab3028",
+      "dedup_key": "8223cab50dd679f4f7218da3",
+      "semantic_event_id": "sem-row-4932ccaaede69123f9e1",
+      "event_identity": {
+        "who_or_what": "（活力中国调研行）“闽超”掀观赛热潮 厦门借势促消费",
+        "what_happened": "本輪來源確認「（活力中国调研行）“闽超”掀观赛热潮 厦门借势促消费」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T13:51:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T13:51:00+08:00",
+        "material_update_at": "2026-08-23T13:51:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：_time\">8-23 14:03 [ 国际 ] 日本茨城县5.9级地震已致37人受伤 8-23 13:59 [ 国际 ] 美国共和党议员批评特朗普的牛肉进口计划 8-23 13:58 [ 社会 ] （活力中国调研行）“闽超”掀观赛热潮 厦门借势促消费 8-23 13:51 [ 社会 ] 81.6公里串联山水秘境 重庆涪陵一条“环线”重塑武陵山文旅新格局 8-23 13:48 [ 社会 ] 全国青少年心理成长知识与应用创新大赛总决赛在浙",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：（活力中国调研行）“闽超”掀观赛热潮 厦门借势促消费"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：_time\">8-23 14:03 [ 国际 ] 日本茨城县5.9级地震已致37人受伤 8-23 13:59 [ 国际 ] 美国共和党议员批评特朗普的牛肉进口计划 8-23 13:58 [ 社会 ] （活力中国调研行）“闽超”掀观赛热潮 厦门借势促消费 8-23 13:51 [ 社会 ] 81.6公里串联山水秘境 重庆涪陵一条“环线”重塑武陵山文旅新格局 8-23 13:48 [ 社会 ] 全国青少年心理成长知识与应用创新大赛总决赛在浙"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "（活力中国调研行）“闽超”掀观赛热潮 厦门借势促消费",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "（活力中国调研行）“闽超”掀观赛热潮 厦门借势促消费 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "（活力中国调研行）“闽超”掀观赛热潮 厦门借势促消费：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "（活力中国调研行）“闽超”掀观赛热潮 厦门借势促消费 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：（活力中国调研行）“闽超”掀观赛热潮 厦门借势促消费"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682656.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "（活力中国调研行）“闽超”掀观赛热潮 厦门借势促消费"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-167ce492b0ba0929",
+      "dedup_key": "4def68424eed09cbb7909053",
+      "semantic_event_id": "sem-row-32e18b90b7c24f8138c6",
+      "event_identity": {
+        "who_or_what": "首设AIGC短片单元 第十届贾家庄短片周探索技术与人文融合新路径",
+        "what_happened": "本輪來源確認「首设AIGC短片单元 第十届贾家庄短片周探索技术与人文融合新路径」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T13:46:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T13:46:00+08:00",
+        "material_update_at": "2026-08-23T13:46:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：/div> [ 社会 ] 81.6公里串联山水秘境 重庆涪陵一条“环线”重塑武陵山文旅新格局 8-23 13:48 [ 社会 ] 全国青少年心理成长知识与应用创新大赛总决赛在浙江横店举行 8-23 13:46 [ 文化 ] 首设AIGC短片单元 第十届贾家庄短片周探索技术与人文融合新路径 8-23 13:45 [ 社会 ] 台风“紫檀”影响珠江流域 部分中小河流或有超警洪水 8-23 13:44 [ 国际 ] 韩媒：青瓦台被游客破坏，李",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：首设AIGC短片单元 第十届贾家庄短片周探索技术与人文融合新路径"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：/div> [ 社会 ] 81.6公里串联山水秘境 重庆涪陵一条“环线”重塑武陵山文旅新格局 8-23 13:48 [ 社会 ] 全国青少年心理成长知识与应用创新大赛总决赛在浙江横店举行 8-23 13:46 [ 文化 ] 首设AIGC短片单元 第十届贾家庄短片周探索技术与人文融合新路径 8-23 13:45 [ 社会 ] 台风“紫檀”影响珠江流域 部分中小河流或有超警洪水 8-23 13:44 [ 国际 ] 韩媒：青瓦台被游客破坏，李"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "首设AIGC短片单元 第十届贾家庄短片周探索技术与人文融合新路径",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "首设AIGC短片单元 第十届贾家庄短片周探索技术与人文融合新路径 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "首设AIGC短片单元 第十届贾家庄短片周探索技术与人文融合新路径：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "首设AIGC短片单元 第十届贾家庄短片周探索技术与人文融合新路径 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：首设AIGC短片单元 第十届贾家庄短片周探索技术与人文融合新路径"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/cul/2026/08-23/10682648.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "首设AIGC短片单元 第十届贾家庄短片周探索技术与人文融合新路径"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-2e4e72d96f37aaae",
+      "dedup_key": "c704bc2642f0ee2aa0d1fc5f",
+      "semantic_event_id": "sem-row-3445b3eb0f184dad8a6b",
+      "event_identity": {
+        "who_or_what": "布雷迪完全打擊隊史第8人 紅人狂敲16安退響尾蛇",
+        "what_happened": "本輪來源確認「布雷迪完全打擊隊史第8人 紅人狂敲16安退響尾蛇」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T13:41:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T13:41:00+08:00",
+        "material_update_at": "2026-08-23T13:41:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：布雷迪完全打擊隊史第8人　紅人狂敲16安退響尾蛇\n2026/8/23 13:41（8/23 14:05 更新）\n美國職棒大聯盟MLB辛辛那提紅人外野手布雷迪22日完成生涯首次完全打擊。（圖取自x.com/Reds）\n\n（中央社鳳凰城22日綜合外電報導）美國職棒大聯盟MLB辛辛那提紅人外野手布雷迪今天6局上轟出全壘打後，成為隊史第8位完成「完全打擊」的打者，並率隊以11比5擊退地主亞利桑那響尾蛇。\n\n美聯社報導，紅人今天開局即展現火力，布",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：布雷迪完全打擊隊史第8人 紅人狂敲16安退響尾蛇"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：布雷迪完全打擊隊史第8人　紅人狂敲16安退響尾蛇\n2026/8/23 13:41（8/23 14:05 更新）\n美國職棒大聯盟MLB辛辛那提紅人外野手布雷迪22日完成生涯首次完全打擊。（圖取自x.com/Reds）\n\n（中央社鳳凰城22日綜合外電報導）美國職棒大聯盟MLB辛辛那提紅人外野手布雷迪今天6局上轟出全壘打後，成為隊史第8位完成「完全打擊」的打者，並率隊以11比5擊退地主亞利桑那響尾蛇。\n\n美聯社報導，紅人今天開局即展現火力，布"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "布雷迪完全打擊隊史第8人 紅人狂敲16安退響尾蛇",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "布雷迪完全打擊隊史第8人 紅人狂敲16安退響尾蛇 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "布雷迪完全打擊隊史第8人 紅人狂敲16安退響尾蛇：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "布雷迪完全打擊隊史第8人 紅人狂敲16安退響尾蛇 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：布雷迪完全打擊隊史第8人 紅人狂敲16安退響尾蛇"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aspt/202608230084.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "布雷迪完全打擊隊史第8人 紅人狂敲16安退響尾蛇"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-a366c8b042c039e9",
+      "dedup_key": "6bd802e0f6ac3381bdd3926c",
+      "semantic_event_id": "sem-row-1d6c3ac5a3b4e07fe42b",
+      "event_identity": {
+        "who_or_what": "韩媒：青瓦台被游客破坏，李在明入住日期仍未定",
+        "what_happened": "本輪來源確認「韩媒：青瓦台被游客破坏，李在明入住日期仍未定」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T13:36:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T13:36:00+08:00",
+        "material_update_at": "2026-08-23T13:36:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：> [ 文化 ] 首设AIGC短片单元 第十届贾家庄短片周探索技术与人文融合新路径 8-23 13:45 [ 社会 ] 台风“紫檀”影响珠江流域 部分中小河流或有超警洪水 8-23 13:44 [ 国际 ] 韩媒：青瓦台被游客破坏，李在明入住日期仍未定 8-23 13:36 [ 社会 ] 台青谢欣蓓：台湾美食联结两岸情 8-23 13:34 [ 社会 ] （走进中国乡村）从7亩试验田到畅销海外 葡萄“串”出湖南澧县近百亿元产业 8-23",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：韩媒：青瓦台被游客破坏，李在明入住日期仍未定"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：> [ 文化 ] 首设AIGC短片单元 第十届贾家庄短片周探索技术与人文融合新路径 8-23 13:45 [ 社会 ] 台风“紫檀”影响珠江流域 部分中小河流或有超警洪水 8-23 13:44 [ 国际 ] 韩媒：青瓦台被游客破坏，李在明入住日期仍未定 8-23 13:36 [ 社会 ] 台青谢欣蓓：台湾美食联结两岸情 8-23 13:34 [ 社会 ] （走进中国乡村）从7亩试验田到畅销海外 葡萄“串”出湖南澧县近百亿元产业 8-23"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "韩媒：青瓦台被游客破坏，李在明入住日期仍未定",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "韩媒：青瓦台被游客破坏，李在明入住日期仍未定 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "韩媒：青瓦台被游客破坏，李在明入住日期仍未定：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "韩媒：青瓦台被游客破坏，李在明入住日期仍未定 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：韩媒：青瓦台被游客破坏，李在明入住日期仍未定"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/gj/2026/08-23/10682649.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "韩媒：青瓦台被游客破坏，李在明入住日期仍未定"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-2d8fd512e261b273",
+      "dedup_key": "e297bc16bb4db9369b6b53e9",
+      "semantic_event_id": "sem-row-897bf6a638d3f52fcab2",
+      "event_identity": {
+        "who_or_what": "贵州首列采用“保税物流+铁路快通”新模式的回程中老班列抵达贵阳",
+        "what_happened": "本輪來源確認「贵州首列采用“保税物流+铁路快通”新模式的回程中老班列抵达贵阳」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T13:33:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T13:33:00+08:00",
+        "material_update_at": "2026-08-23T13:33:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：>8-23 13:36 [ 社会 ] 台青谢欣蓓：台湾美食联结两岸情 8-23 13:34 [ 社会 ] （走进中国乡村）从7亩试验田到畅销海外 葡萄“串”出湖南澧县近百亿元产业 8-23 13:33 [ 东盟 ] 贵州首列采用“保税物流+铁路快通”新模式的回程中老班列抵达贵阳 8-23 13:32 [ 湾区 ] 香港财政司长：国家AI迅速发展对香港发挥显著助力 8-23 13:30 [ 体育 ] 陕西：亲子家庭解锁别样体育课堂 走进训",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：贵州首列采用“保税物流+铁路快通”新模式的回程中老班列抵达贵阳"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：>8-23 13:36 [ 社会 ] 台青谢欣蓓：台湾美食联结两岸情 8-23 13:34 [ 社会 ] （走进中国乡村）从7亩试验田到畅销海外 葡萄“串”出湖南澧县近百亿元产业 8-23 13:33 [ 东盟 ] 贵州首列采用“保税物流+铁路快通”新模式的回程中老班列抵达贵阳 8-23 13:32 [ 湾区 ] 香港财政司长：国家AI迅速发展对香港发挥显著助力 8-23 13:30 [ 体育 ] 陕西：亲子家庭解锁别样体育课堂 走进训"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "贵州首列采用“保税物流+铁路快通”新模式的回程中老班列抵达贵阳",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "贵州首列采用“保税物流+铁路快通”新模式的回程中老班列抵达贵阳 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "贵州首列采用“保税物流+铁路快通”新模式的回程中老班列抵达贵阳：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "贵州首列采用“保税物流+铁路快通”新模式的回程中老班列抵达贵阳 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：贵州首列采用“保税物流+铁路快通”新模式的回程中老班列抵达贵阳"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/aseaninfo/2026/08-23/10682646.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "贵州首列采用“保税物流+铁路快通”新模式的回程中老班列抵达贵阳"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-6e576319f476bf22",
+      "dedup_key": "94b92ff74dbf4922725c257c",
+      "semantic_event_id": "sem-row-d0b420a1735d5b2c1982",
+      "event_identity": {
+        "who_or_what": "香港财政司长：国家AI迅速发展对香港发挥显著助力",
+        "what_happened": "本輪來源確認「香港财政司长：国家AI迅速发展对香港发挥显著助力」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T13:30:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T13:30:00+08:00",
+        "material_update_at": "2026-08-23T13:30:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：li> [ 社会 ] （走进中国乡村）从7亩试验田到畅销海外 葡萄“串”出湖南澧县近百亿元产业 8-23 13:33 [ 东盟 ] 贵州首列采用“保税物流+铁路快通”新模式的回程中老班列抵达贵阳 8-23 13:32 [ 湾区 ] 香港财政司长：国家AI迅速发展对香港发挥显著助力 8-23 13:30 [ 体育 ] 陕西：亲子家庭解锁别样体育课堂 走进训练场与田径冠军互动 8-23 13:19 [ 文化 ] 《非遗里的中国》走进四川德阳",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：香港财政司长：国家AI迅速发展对香港发挥显著助力"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：li> [ 社会 ] （走进中国乡村）从7亩试验田到畅销海外 葡萄“串”出湖南澧县近百亿元产业 8-23 13:33 [ 东盟 ] 贵州首列采用“保税物流+铁路快通”新模式的回程中老班列抵达贵阳 8-23 13:32 [ 湾区 ] 香港财政司长：国家AI迅速发展对香港发挥显著助力 8-23 13:30 [ 体育 ] 陕西：亲子家庭解锁别样体育课堂 走进训练场与田径冠军互动 8-23 13:19 [ 文化 ] 《非遗里的中国》走进四川德阳"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "香港财政司长：国家AI迅速发展对香港发挥显著助力",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "香港财政司长：国家AI迅速发展对香港发挥显著助力 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "香港财政司长：国家AI迅速发展对香港发挥显著助力：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "香港财政司长：国家AI迅速发展对香港发挥显著助力 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：香港财政司长：国家AI迅速发展对香港发挥显著助力"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/dwq/2026/08-23/10682645.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "香港财政司长：国家AI迅速发展对香港发挥显著助力"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-ce7447e1f5b38fe8",
+      "dedup_key": "097e492f925dbe9fbc2e422f",
+      "semantic_event_id": "sem-row-7b6656de295dd31a210e",
+      "event_identity": {
+        "who_or_what": "冒用證件被識破想落跑 桃園越籍失聯移工遭逮",
+        "what_happened": "本輪來源確認「冒用證件被識破想落跑 桃園越籍失聯移工遭逮」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T13:14:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T13:14:00+08:00",
+        "material_update_at": "2026-08-23T13:14:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 社會\n冒用證件被識破想落跑 桃園越籍失聯移工遭逮\n2026/8/23 13:14（8/23 15:06 更新）\n桃園市警局桃園分局大樹派出所員警22日晚間6時58分許，在桃園區延平路一處移工餐廳執行臨檢，查驗越南籍阮男身分時，發現居留證照片與本人容貌明顯不符，經警政系統查證確認阮男已被通報失聯，員警依法將阮男帶回派出所查證身分，過程中阮男突然推擠員警並企圖逃逸，最終遭員警逮捕。（桃園市警局桃園分局提供）中央社記者吳睿騏桃園傳真",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：冒用證件被識破想落跑 桃園越籍失聯移工遭逮"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 社會\n冒用證件被識破想落跑 桃園越籍失聯移工遭逮\n2026/8/23 13:14（8/23 15:06 更新）\n桃園市警局桃園分局大樹派出所員警22日晚間6時58分許，在桃園區延平路一處移工餐廳執行臨檢，查驗越南籍阮男身分時，發現居留證照片與本人容貌明顯不符，經警政系統查證確認阮男已被通報失聯，員警依法將阮男帶回派出所查證身分，過程中阮男突然推擠員警並企圖逃逸，最終遭員警逮捕。（桃園市警局桃園分局提供）中央社記者吳睿騏桃園傳真"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "冒用證件被識破想落跑 桃園越籍失聯移工遭逮",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "冒用證件被識破想落跑 桃園越籍失聯移工遭逮 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "冒用證件被識破想落跑 桃園越籍失聯移工遭逮：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "冒用證件被識破想落跑 桃園越籍失聯移工遭逮 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：冒用證件被識破想落跑 桃園越籍失聯移工遭逮"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/asoc/202608230081.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "冒用證件被識破想落跑 桃園越籍失聯移工遭逮"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-432b9134123f13c6",
+      "dedup_key": "a76128278443181791194e9d",
+      "semantic_event_id": "sem-row-76b858af1f201957dca8",
+      "event_identity": {
+        "who_or_what": "走近“医学传承人”：岐黄薪火绵延浙里 代代医者接续守望",
+        "what_happened": "本輪來源確認「走近“医学传承人”：岐黄薪火绵延浙里 代代医者接续守望」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T13:12:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T13:12:00+08:00",
+        "material_update_at": "2026-08-23T13:12:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：div> [ 体育 ] 陕西：亲子家庭解锁别样体育课堂 走进训练场与田径冠军互动 8-23 13:19 [ 文化 ] 《非遗里的中国》走进四川德阳解码古蜀文脉的当代传承 8-23 13:14 [ 社会 ] 走近“医学传承人”：岐黄薪火绵延浙里 代代医者接续守望 8-23 13:12 [ 社会 ] AI研学持续升温 专家提醒家长：别焦虑 警惕无效学习 8-23 13:11 [ 财经 ] 五大连池“冷矿泉”催生“热经济” 康养文旅吸引海外游",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：走近“医学传承人”：岐黄薪火绵延浙里 代代医者接续守望"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：div> [ 体育 ] 陕西：亲子家庭解锁别样体育课堂 走进训练场与田径冠军互动 8-23 13:19 [ 文化 ] 《非遗里的中国》走进四川德阳解码古蜀文脉的当代传承 8-23 13:14 [ 社会 ] 走近“医学传承人”：岐黄薪火绵延浙里 代代医者接续守望 8-23 13:12 [ 社会 ] AI研学持续升温 专家提醒家长：别焦虑 警惕无效学习 8-23 13:11 [ 财经 ] 五大连池“冷矿泉”催生“热经济” 康养文旅吸引海外游"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "走近“医学传承人”：岐黄薪火绵延浙里 代代医者接续守望",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "走近“医学传承人”：岐黄薪火绵延浙里 代代医者接续守望 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "走近“医学传承人”：岐黄薪火绵延浙里 代代医者接续守望：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "走近“医学传承人”：岐黄薪火绵延浙里 代代医者接续守望 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：走近“医学传承人”：岐黄薪火绵延浙里 代代医者接续守望"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682632.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "走近“医学传承人”：岐黄薪火绵延浙里 代代医者接续守望"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-7bf43b47ba4270a7",
+      "dedup_key": "7ffbda95777806b8b38b0e61",
+      "semantic_event_id": "sem-row-4dc880968e4043909630",
+      "event_identity": {
+        "who_or_what": "AI研学持续升温 专家提醒家长：别焦虑 警惕无效学习",
+        "what_happened": "本輪來源確認「AI研学持续升温 专家提醒家长：别焦虑 警惕无效学习」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T13:11:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T13:11:00+08:00",
+        "material_update_at": "2026-08-23T13:11:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：3 13:19 [ 文化 ] 《非遗里的中国》走进四川德阳解码古蜀文脉的当代传承 8-23 13:14 [ 社会 ] 走近“医学传承人”：岐黄薪火绵延浙里 代代医者接续守望 8-23 13:12 [ 社会 ] AI研学持续升温 专家提醒家长：别焦虑 警惕无效学习 8-23 13:11 [ 财经 ] 五大连池“冷矿泉”催生“热经济” 康养文旅吸引海外游客 8-23 13:06 [ 社会 ] 多预警齐发！北京启动防汛四级应急响应 注意防范 ",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：AI研学持续升温 专家提醒家长：别焦虑 警惕无效学习"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：3 13:19 [ 文化 ] 《非遗里的中国》走进四川德阳解码古蜀文脉的当代传承 8-23 13:14 [ 社会 ] 走近“医学传承人”：岐黄薪火绵延浙里 代代医者接续守望 8-23 13:12 [ 社会 ] AI研学持续升温 专家提醒家长：别焦虑 警惕无效学习 8-23 13:11 [ 财经 ] 五大连池“冷矿泉”催生“热经济” 康养文旅吸引海外游客 8-23 13:06 [ 社会 ] 多预警齐发！北京启动防汛四级应急响应 注意防范 "
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "AI研学持续升温 专家提醒家长：别焦虑 警惕无效学习",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "AI研学持续升温 专家提醒家长：别焦虑 警惕无效学习 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "AI研学持续升温 专家提醒家长：别焦虑 警惕无效学习：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "AI研学持续升温 专家提醒家长：别焦虑 警惕无效学习 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：AI研学持续升温 专家提醒家长：别焦虑 警惕无效学习"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682643.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "AI研学持续升温 专家提醒家长：别焦虑 警惕无效学习"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-58c7b46454801197",
+      "dedup_key": "3e8bc059df0c6a54c3a511e1",
+      "semantic_event_id": "sem-row-d09bd0ded1bbed4b0c66",
+      "event_identity": {
+        "who_or_what": "南投中寮龍眼文化季 傳統起灶飄香推廣優質農產",
+        "what_happened": "本輪來源確認「南投中寮龍眼文化季 傳統起灶飄香推廣優質農產」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T13:02:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T13:02:00+08:00",
+        "material_update_at": "2026-08-23T13:02:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 地方\n南投中寮龍眼文化季　傳統起灶飄香推廣優質農產\n2026/8/23 13:02（8/23 13:16 更新）\n南投縣中寮鄉公所23日在龍眼林休閒農業區舉辦龍眼文化季開幕起灶典禮，現場還有農產展售、舞台表演、龍眼乾免費品嚐等，推廣中寮龍眼知名度。（南投縣政府提供）中央社記者蕭博陽南投縣傳真　　115年8月23日\n\n（中央社記者蕭博陽南投縣23日電）中寮鄉是南投縣龍眼主要產區，種植面積約785公頃、年產量約170萬公斤，鄉公所",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：南投中寮龍眼文化季 傳統起灶飄香推廣優質農產"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 地方\n南投中寮龍眼文化季　傳統起灶飄香推廣優質農產\n2026/8/23 13:02（8/23 13:16 更新）\n南投縣中寮鄉公所23日在龍眼林休閒農業區舉辦龍眼文化季開幕起灶典禮，現場還有農產展售、舞台表演、龍眼乾免費品嚐等，推廣中寮龍眼知名度。（南投縣政府提供）中央社記者蕭博陽南投縣傳真　　115年8月23日\n\n（中央社記者蕭博陽南投縣23日電）中寮鄉是南投縣龍眼主要產區，種植面積約785公頃、年產量約170萬公斤，鄉公所"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "南投中寮龍眼文化季 傳統起灶飄香推廣優質農產",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "南投中寮龍眼文化季 傳統起灶飄香推廣優質農產 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "南投中寮龍眼文化季 傳統起灶飄香推廣優質農產：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "南投中寮龍眼文化季 傳統起灶飄香推廣優質農產 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：南投中寮龍眼文化季 傳統起灶飄香推廣優質農產"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aloc/202608230080.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "南投中寮龍眼文化季 傳統起灶飄香推廣優質農產"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-67953f931d70bd73",
+      "dedup_key": "41abd4beec5de86051989487",
+      "semantic_event_id": "sem-row-93e14399fdc7aef6958a",
+      "event_identity": {
+        "who_or_what": "多预警齐发！北京启动防汛四级应急响应 注意防范",
+        "what_happened": "本輪來源確認「多预警齐发！北京启动防汛四级应急响应 注意防范」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T12:56:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T12:56:00+08:00",
+        "material_update_at": "2026-08-23T12:56:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：/div> [ 社会 ] AI研学持续升温 专家提醒家长：别焦虑 警惕无效学习 8-23 13:11 [ 财经 ] 五大连池“冷矿泉”催生“热经济” 康养文旅吸引海外游客 8-23 13:06 [ 社会 ] 多预警齐发！北京启动防汛四级应急响应 注意防范 8-23 12:56 [ 财经 ] 贵州化肥借力铁路“运仓配”直奔东北粮仓 8-23 12:55 [ 社会 ] 湖畔歌声起 青山变靠山——迪庆普达措露营音乐节里的生态发展乐章 8-23",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：多预警齐发！北京启动防汛四级应急响应 注意防范"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：/div> [ 社会 ] AI研学持续升温 专家提醒家长：别焦虑 警惕无效学习 8-23 13:11 [ 财经 ] 五大连池“冷矿泉”催生“热经济” 康养文旅吸引海外游客 8-23 13:06 [ 社会 ] 多预警齐发！北京启动防汛四级应急响应 注意防范 8-23 12:56 [ 财经 ] 贵州化肥借力铁路“运仓配”直奔东北粮仓 8-23 12:55 [ 社会 ] 湖畔歌声起 青山变靠山——迪庆普达措露营音乐节里的生态发展乐章 8-23"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "多预警齐发！北京启动防汛四级应急响应 注意防范",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "多预警齐发！北京启动防汛四级应急响应 注意防范 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "多预警齐发！北京启动防汛四级应急响应 注意防范：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "多预警齐发！北京启动防汛四级应急响应 注意防范 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：多预警齐发！北京启动防汛四级应急响应 注意防范"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682634.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "多预警齐发！北京启动防汛四级应急响应 注意防范"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-fc8ef857f388f4a3",
+      "dedup_key": "ab0110749f87bea9a0cb1984",
+      "semantic_event_id": "sem-row-ef719dceffb152a703d5",
+      "event_identity": {
+        "who_or_what": "贵州化肥借力铁路“运仓配”直奔东北粮仓",
+        "what_happened": "本輪來源確認「贵州化肥借力铁路“运仓配”直奔东北粮仓」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T12:55:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T12:55:00+08:00",
+        "material_update_at": "2026-08-23T12:55:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：3:11 [ 财经 ] 五大连池“冷矿泉”催生“热经济” 康养文旅吸引海外游客 8-23 13:06 [ 社会 ] 多预警齐发！北京启动防汛四级应急响应 注意防范 8-23 12:56 [ 财经 ] 贵州化肥借力铁路“运仓配”直奔东北粮仓 8-23 12:55 [ 社会 ] 湖畔歌声起 青山变靠山——迪庆普达措露营音乐节里的生态发展乐章 8-23 12:54 [ 财经 ] 镇赉推出虾蟹区域公共品牌 夯实吉林“蓝色粮仓”建设 8-23 1",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：贵州化肥借力铁路“运仓配”直奔东北粮仓"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：3:11 [ 财经 ] 五大连池“冷矿泉”催生“热经济” 康养文旅吸引海外游客 8-23 13:06 [ 社会 ] 多预警齐发！北京启动防汛四级应急响应 注意防范 8-23 12:56 [ 财经 ] 贵州化肥借力铁路“运仓配”直奔东北粮仓 8-23 12:55 [ 社会 ] 湖畔歌声起 青山变靠山——迪庆普达措露营音乐节里的生态发展乐章 8-23 12:54 [ 财经 ] 镇赉推出虾蟹区域公共品牌 夯实吉林“蓝色粮仓”建设 8-23 1"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "贵州化肥借力铁路“运仓配”直奔东北粮仓",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "贵州化肥借力铁路“运仓配”直奔东北粮仓 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "贵州化肥借力铁路“运仓配”直奔东北粮仓：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "贵州化肥借力铁路“运仓配”直奔东北粮仓 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：贵州化肥借力铁路“运仓配”直奔东北粮仓"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/cj/2026/08-23/10682631.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "贵州化肥借力铁路“运仓配”直奔东北粮仓"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-1525f93cacec83a6",
+      "dedup_key": "fe3e2bf84feec48c9c20cf30",
+      "semantic_event_id": "sem-row-87e75d476879c9de10df",
+      "event_identity": {
+        "who_or_what": "湖畔歌声起 青山变靠山——迪庆普达措露营音乐节里的生态发展乐章",
+        "what_happened": "本輪來源確認「湖畔歌声起 青山变靠山——迪庆普达措露营音乐节里的生态发展乐章」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T12:54:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T12:54:00+08:00",
+        "material_update_at": "2026-08-23T12:54:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：8-23 13:06 [ 社会 ] 多预警齐发！北京启动防汛四级应急响应 注意防范 8-23 12:56 [ 财经 ] 贵州化肥借力铁路“运仓配”直奔东北粮仓 8-23 12:55 [ 社会 ] 湖畔歌声起 青山变靠山——迪庆普达措露营音乐节里的生态发展乐章 8-23 12:54 [ 财经 ] 镇赉推出虾蟹区域公共品牌 夯实吉林“蓝色粮仓”建设 8-23 12:49 [ 社会 ] 第三届“闽南魂”闽南语合唱艺术展演在福建漳州举行 8-2",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：湖畔歌声起 青山变靠山——迪庆普达措露营音乐节里的生态发展乐章"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：8-23 13:06 [ 社会 ] 多预警齐发！北京启动防汛四级应急响应 注意防范 8-23 12:56 [ 财经 ] 贵州化肥借力铁路“运仓配”直奔东北粮仓 8-23 12:55 [ 社会 ] 湖畔歌声起 青山变靠山——迪庆普达措露营音乐节里的生态发展乐章 8-23 12:54 [ 财经 ] 镇赉推出虾蟹区域公共品牌 夯实吉林“蓝色粮仓”建设 8-23 12:49 [ 社会 ] 第三届“闽南魂”闽南语合唱艺术展演在福建漳州举行 8-2"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "湖畔歌声起 青山变靠山——迪庆普达措露营音乐节里的生态发展乐章",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "湖畔歌声起 青山变靠山——迪庆普达措露营音乐节里的生态发展乐章 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "湖畔歌声起 青山变靠山——迪庆普达措露营音乐节里的生态发展乐章：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "湖畔歌声起 青山变靠山——迪庆普达措露营音乐节里的生态发展乐章 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：湖畔歌声起 青山变靠山——迪庆普达措露营音乐节里的生态发展乐章"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682630.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "湖畔歌声起 青山变靠山——迪庆普达措露营音乐节里的生态发展乐章"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-fc767702865dfd65",
+      "dedup_key": "7bbf42bbab141c881770d991",
+      "semantic_event_id": "sem-row

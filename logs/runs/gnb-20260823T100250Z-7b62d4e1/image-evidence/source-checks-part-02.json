@@ -1,0 +1,630 @@
+[
+  {
+    "event_id": "CHN-02",
+    "index": 1,
+    "name": "中新網",
+    "url": "https://www.chinanews.com.cn/gn/2026/08-23/10682538.shtml",
+    "actual_url": "https://www.chinanews.com.cn/gn/2026/08-23/10682538.shtml",
+    "title": "全国多个城市密集出台新政 你的住房公积金有这些新用途→-中新网",
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://www.chinanews.com.cn/gn/2026/08-23/U892P4T8D10682735F19930DT20260823174115.jpg",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260822/73e4d6f0-4ec7-4ece-82a6-d5cf1e13c0fc_700x1000_zsite_sl.jpg",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260822/ac38f294-9f23-4248-8c4e-8d0d8c6a6938_700x1000_zsite_sl.jpg",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260822/24f6bdba-732a-45ea-9889-f818130b34d0_700x1000_zsite_sl.jpg",
+      "https://image.chinanews.com/cspimp/2026/08-23/701f0dfc-5493-485d-8375-7b1605a3a68b.JPG",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260823/a667a830-db69-41c3-815c-a0decc71135f_700x1000_zsite_sl.jpg",
+      "https://i2.chinanews.com.cn/simg/cmshd/2026/08/22/4500820199114481a4d037529a5d72e3.png",
+      "https://image.chinanews.com/cspimp/2026/08-21/aa9753cc-ba77-49b9-9232-0bf201d79aa7.JPG",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260822/2f6aa72b-e97f-450f-888d-9c78d5199fea_700x1000_zsite_sl.jpg",
+      "https://image.chinanews.com/cspimp/2026/08-22/42570825-eb53-4c90-8838-f2585996a8da.JPG",
+      "https://www.chinanews.com.cn/ty/2026/08-22/U1101P4T8D10682170F19930DT20260822085543.jpg",
+      "https://image.chinanews.com/cspimp/2026/08-21/8042164d-2335-49d0-97be-8fe1dd9326af.JPG"
+    ],
+    "image_candidates": [
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/gn/2026/08-23/U892P4T8D10682735F19930DT20260823174115.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 466,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260822/73e4d6f0-4ec7-4ece-82a6-d5cf1e13c0fc_700x1000_zsite_sl.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 524,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260822/ac38f294-9f23-4248-8c4e-8d0d8c6a6938_700x1000_zsite_sl.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 466,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260822/24f6bdba-732a-45ea-9889-f818130b34d0_700x1000_zsite_sl.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 259,
+        "nw": 389,
+        "src": "https://image.chinanews.com/cspimp/2026/08-23/701f0dfc-5493-485d-8375-7b1605a3a68b.JPG"
+      },
+      {
+        "alt": "",
+        "nh": 466,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260823/a667a830-db69-41c3-815c-a0decc71135f_700x1000_zsite_sl.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 375,
+        "nw": 500,
+        "src": "https://i2.chinanews.com.cn/simg/cmshd/2026/08/22/4500820199114481a4d037529a5d72e3.png"
+      },
+      {
+        "alt": "",
+        "nh": 305,
+        "nw": 418,
+        "src": "https://image.chinanews.com/cspimp/2026/08-21/aa9753cc-ba77-49b9-9232-0bf201d79aa7.JPG"
+      },
+      {
+        "alt": "",
+        "nh": 450,
+        "nw": 677,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260822/2f6aa72b-e97f-450f-888d-9c78d5199fea_700x1000_zsite_sl.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 333,
+        "nw": 500,
+        "src": "https://image.chinanews.com/cspimp/2026/08-22/42570825-eb53-4c90-8838-f2585996a8da.JPG"
+      },
+      {
+        "alt": "",
+        "nh": 339,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/ty/2026/08-22/U1101P4T8D10682170F19930DT20260822085543.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 333,
+        "nw": 500,
+        "src": "https://image.chinanews.com/cspimp/2026/08-21/8042164d-2335-49d0-97be-8fe1dd9326af.JPG"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/CHN-02-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 2551
+  },
+  {
+    "event_id": "CHN-03",
+    "index": 1,
+    "name": "中新網",
+    "url": "https://www.chinanews.com.cn/sh/2026/08-23/10682711.shtml",
+    "actual_url": "https://www.chinanews.com.cn/sh/2026/08-23/10682711.shtml",
+    "title": "新发地启动紧急排查：涉事“甲醛白菜”未流入，当前市场白菜供应充足-中新网",
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://www.chinanews.com.cn/sh/2026/08-23/U892P4T8D10682708F19930DT20260823161854.png",
+      "https://www.chinanews.com.cn/sh/2026/08-23/U892P4T8D10682627F19930DT20260823123550.png",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260823/f6e8904e-6144-457a-a29b-ee5e85212b00_700x1000_zsite_sl.jpeg",
+      "https://www.chinanews.com.cn/sh/2026/08-23/U892P4T8D10682524F19930DT20260823091204.jpg",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260823/37170c1b-01b0-404f-8ea6-75cccbae4235_700x1000_zsite_sl.jpg",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260822/ac55d7b3-56ec-4fbd-893a-6f67718da73f_700x1000_zsite_sl.JPG",
+      "https://www.chinanews.com.cn/sh/2026/08-22/U1101P4T8D10682248F19930DT20260822132107.jpg",
+      "https://www.chinanews.com.cn/sh/2026/08-21/U892P4T8D10682117F19930DT20260821220307.jpg",
+      "https://www.chinanews.com.cn/sh/2026/08-21/U1045P4T8D10682065F19930DT20260821211048.jpg",
+      "https://www.chinanews.com.cn/sh/2026/08-21/U1118P4T8D10681806F19930DT20260821162851.png",
+      "https://image.chinanews.com/cspimp/2026/08-23/701f0dfc-5493-485d-8375-7b1605a3a68b.JPG",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260823/a667a830-db69-41c3-815c-a0decc71135f_700x1000_zsite_sl.jpg"
+    ],
+    "image_candidates": [
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/sh/2026/08-23/U892P4T8D10682708F19930DT20260823161854.png"
+      },
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 460,
+        "src": "https://www.chinanews.com.cn/sh/2026/08-23/U892P4T8D10682627F19930DT20260823123550.png"
+      },
+      {
+        "alt": "",
+        "nh": 466,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260823/f6e8904e-6144-457a-a29b-ee5e85212b00_700x1000_zsite_sl.jpeg"
+      },
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/sh/2026/08-23/U892P4T8D10682524F19930DT20260823091204.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 525,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260823/37170c1b-01b0-404f-8ea6-75cccbae4235_700x1000_zsite_sl.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 466,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260822/ac55d7b3-56ec-4fbd-893a-6f67718da73f_700x1000_zsite_sl.JPG"
+      },
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/sh/2026/08-22/U1101P4T8D10682248F19930DT20260822132107.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/sh/2026/08-21/U892P4T8D10682117F19930DT20260821220307.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 304,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/sh/2026/08-21/U1045P4T8D10682065F19930DT20260821211048.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/sh/2026/08-21/U1118P4T8D10681806F19930DT20260821162851.png"
+      },
+      {
+        "alt": "",
+        "nh": 259,
+        "nw": 389,
+        "src": "https://image.chinanews.com/cspimp/2026/08-23/701f0dfc-5493-485d-8375-7b1605a3a68b.JPG"
+      },
+      {
+        "alt": "",
+        "nh": 466,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260823/a667a830-db69-41c3-815c-a0decc71135f_700x1000_zsite_sl.jpg"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/CHN-03-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 4189
+  },
+  {
+    "event_id": "CHN-03",
+    "index": 2,
+    "name": "中央社",
+    "url": "https://www.cna.com.tw/news/acn/202608230111.aspx",
+    "actual_url": "https://www.cna.com.tw/news/acn/202608230111.aspx",
+    "title": "中國河北驚現甲醛白菜　警方緊急追運送流向 | 兩岸 | 中央社 CNA",
+    "og_image": "https://imgcdn.cna.com.tw/www/webphotos/WebOg/600/20260823/1879x985_745457714697.jpg",
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://imgcdn.cna.com.tw/www/webphotos/WebOg/600/20260823/1879x985_745457714697.jpg",
+      "https://imgcdn.cna.com.tw/www/website/img/line-ad-pc.jpg",
+      "https://imgcdn.cna.com.tw/www/WebPhotos/1024/20260823/2000x1333_wmkn_45813247939432_0.jpg",
+      "https://imgcdn.cna.com.tw/www/website/img/ad300x223.jpg"
+    ],
+    "image_candidates": [
+      {
+        "alt": "加入LINE官方帳號",
+        "nh": 220,
+        "nw": 2560,
+        "src": "https://imgcdn.cna.com.tw/www/website/img/line-ad-pc.jpg"
+      },
+      {
+        "alt": "中國河北有不肖業者為防止白菜腐爛，將其蘸取甲醛溶液保鮮。（示意圖／圖取自Unsplash圖庫）",
+        "nh": 682,
+        "nw": 1024,
+        "src": "https://imgcdn.cna.com.tw/www/WebPhotos/1024/20260823/2000x1333_wmkn_45813247939432_0.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 223,
+        "nw": 300,
+        "src": "https://imgcdn.cna.com.tw/www/website/img/ad300x223.jpg"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/CHN-03-source-02-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 3172
+  },
+  {
+    "event_id": "CHN-04",
+    "index": 1,
+    "name": "中新網",
+    "url": "https://www.chinanews.com.cn/cj/2026/08-23/10682703.shtml",
+    "actual_url": "https://www.chinanews.com.cn/cj/2026/08-23/10682703.shtml",
+    "title": "上海楼市“沪八条”施行 新政组合拳激活消费需求-中新网",
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://www.chinanews.com.cn/cj/2026/08-21/U1118P4T8D10681581F19930DT20260821113536.png",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260820/fb81a4be-80db-400b-9277-3f395d21c3a0_700x1000_zsite_sl.jpeg",
+      "https://image.chinanews.com/cspimp/2026/08-23/701f0dfc-5493-485d-8375-7b1605a3a68b.JPG",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260823/a667a830-db69-41c3-815c-a0decc71135f_700x1000_zsite_sl.jpg",
+      "https://i2.chinanews.com.cn/simg/cmshd/2026/08/22/4500820199114481a4d037529a5d72e3.png",
+      "https://image.chinanews.com/cspimp/2026/08-21/aa9753cc-ba77-49b9-9232-0bf201d79aa7.JPG",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260822/2f6aa72b-e97f-450f-888d-9c78d5199fea_700x1000_zsite_sl.jpg",
+      "https://image.chinanews.com/cspimp/2026/08-22/42570825-eb53-4c90-8838-f2585996a8da.JPG",
+      "https://www.chinanews.com.cn/ty/2026/08-22/U1101P4T8D10682170F19930DT20260822085543.jpg",
+      "https://image.chinanews.com/cspimp/2026/08-21/8042164d-2335-49d0-97be-8fe1dd9326af.JPG",
+      "https://www.chinanews.com.cn/dxw/2026/08-21/U1113P4T8D10682046F19930DT20260821204539.png",
+      "https://www.chinanews.com.cn/dxw/2026/08-21/U1113P4T8D10682021F19930DT20260821203759.png"
+    ],
+    "image_candidates": [
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/cj/2026/08-21/U1118P4T8D10681581F19930DT20260821113536.png"
+      },
+      {
+        "alt": "",
+        "nh": 466,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260820/fb81a4be-80db-400b-9277-3f395d21c3a0_700x1000_zsite_sl.jpeg"
+      },
+      {
+        "alt": "",
+        "nh": 259,
+        "nw": 389,
+        "src": "https://image.chinanews.com/cspimp/2026/08-23/701f0dfc-5493-485d-8375-7b1605a3a68b.JPG"
+      },
+      {
+        "alt": "",
+        "nh": 466,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260823/a667a830-db69-41c3-815c-a0decc71135f_700x1000_zsite_sl.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 375,
+        "nw": 500,
+        "src": "https://i2.chinanews.com.cn/simg/cmshd/2026/08/22/4500820199114481a4d037529a5d72e3.png"
+      },
+      {
+        "alt": "",
+        "nh": 305,
+        "nw": 418,
+        "src": "https://image.chinanews.com/cspimp/2026/08-21/aa9753cc-ba77-49b9-9232-0bf201d79aa7.JPG"
+      },
+      {
+        "alt": "",
+        "nh": 450,
+        "nw": 677,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260822/2f6aa72b-e97f-450f-888d-9c78d5199fea_700x1000_zsite_sl.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 333,
+        "nw": 500,
+        "src": "https://image.chinanews.com/cspimp/2026/08-22/42570825-eb53-4c90-8838-f2585996a8da.JPG"
+      },
+      {
+        "alt": "",
+        "nh": 339,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/ty/2026/08-22/U1101P4T8D10682170F19930DT20260822085543.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 333,
+        "nw": 500,
+        "src": "https://image.chinanews.com/cspimp/2026/08-21/8042164d-2335-49d0-97be-8fe1dd9326af.JPG"
+      },
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/dxw/2026/08-21/U1113P4T8D10682046F19930DT20260821204539.png"
+      },
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/dxw/2026/08-21/U1113P4T8D10682021F19930DT20260821203759.png"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/CHN-04-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 2536
+  },
+  {
+    "event_id": "CHN-05",
+    "index": 1,
+    "name": "中新網",
+    "url": "https://www.chinanews.com.cn/cj/2026/08-23/10682562.shtml",
+    "actual_url": "https://www.chinanews.com.cn/cj/2026/08-23/10682562.shtml",
+    "title": "我国实现多领域高端钢材自主量产-中新网",
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://www.chinanews.com.cn/cj/2026/08-21/U1118P4T8D10681581F19930DT20260821113536.png",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260820/fb81a4be-80db-400b-9277-3f395d21c3a0_700x1000_zsite_sl.jpeg",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260820/0d27edeb-a069-436d-ae89-263e0e3ef1ef_700x1000_zsite_sl.jpg",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260820/79aecc5d-40f7-4dea-9213-e9f6a4158561_700x1000_zsite_sl.jpg",
+      "https://image.chinanews.com/cspimp/2026/08-23/701f0dfc-5493-485d-8375-7b1605a3a68b.JPG",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260823/a667a830-db69-41c3-815c-a0decc71135f_700x1000_zsite_sl.jpg",
+      "https://i2.chinanews.com.cn/simg/cmshd/2026/08/22/4500820199114481a4d037529a5d72e3.png",
+      "https://image.chinanews.com/cspimp/2026/08-21/aa9753cc-ba77-49b9-9232-0bf201d79aa7.JPG",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260822/2f6aa72b-e97f-450f-888d-9c78d5199fea_700x1000_zsite_sl.jpg",
+      "https://image.chinanews.com/cspimp/2026/08-22/42570825-eb53-4c90-8838-f2585996a8da.JPG",
+      "https://www.chinanews.com.cn/ty/2026/08-22/U1101P4T8D10682170F19930DT20260822085543.jpg",
+      "https://image.chinanews.com/cspimp/2026/08-21/8042164d-2335-49d0-97be-8fe1dd9326af.JPG"
+    ],
+    "image_candidates": [
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/cj/2026/08-21/U1118P4T8D10681581F19930DT20260821113536.png"
+      },
+      {
+        "alt": "",
+        "nh": 466,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260820/fb81a4be-80db-400b-9277-3f395d21c3a0_700x1000_zsite_sl.jpeg"
+      },
+      {
+        "alt": "",
+        "nh": 466,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260820/0d27edeb-a069-436d-ae89-263e0e3ef1ef_700x1000_zsite_sl.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 466,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260820/79aecc5d-40f7-4dea-9213-e9f6a4158561_700x1000_zsite_sl.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 259,
+        "nw": 389,
+        "src": "https://image.chinanews.com/cspimp/2026/08-23/701f0dfc-5493-485d-8375-7b1605a3a68b.JPG"
+      },
+      {
+        "alt": "",
+        "nh": 466,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260823/a667a830-db69-41c3-815c-a0decc71135f_700x1000_zsite_sl.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 375,
+        "nw": 500,
+        "src": "https://i2.chinanews.com.cn/simg/cmshd/2026/08/22/4500820199114481a4d037529a5d72e3.png"
+      },
+      {
+        "alt": "",
+        "nh": 305,
+        "nw": 418,
+        "src": "https://image.chinanews.com/cspimp/2026/08-21/aa9753cc-ba77-49b9-9232-0bf201d79aa7.JPG"
+      },
+      {
+        "alt": "",
+        "nh": 450,
+        "nw": 677,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260822/2f6aa72b-e97f-450f-888d-9c78d5199fea_700x1000_zsite_sl.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 333,
+        "nw": 500,
+        "src": "https://image.chinanews.com/cspimp/2026/08-22/42570825-eb53-4c90-8838-f2585996a8da.JPG"
+      },
+      {
+        "alt": "",
+        "nh": 339,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/ty/2026/08-22/U1101P4T8D10682170F19930DT20260822085543.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 333,
+        "nw": 500,
+        "src": "https://image.chinanews.com/cspimp/2026/08-21/8042164d-2335-49d0-97be-8fe1dd9326af.JPG"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/CHN-05-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 3817
+  },
+  {
+    "event_id": "GLB-01",
+    "index": 1,
+    "name": "路透社",
+    "url": "https://www.reuters.com/business/carney-says-new-canadian-tariffs-us-goods-will-come-into-effect-september-8-2026-08-22/",
+    "actual_url": "https://www.reuters.com/business/carney-says-new-canadian-tariffs-us-goods-will-come-into-effect-september-8-2026-08-22/",
+    "title": "Canada to retaliate for US tariffs, worsening ties after talks fail | Reuters",
+    "og_image": "https://www.reuters.com/resizer/v2/X3EWNTQK2BKC5DFM2I6PJ4QYZY.jpg?auth=7626d1271dc77ca4918ed0f577374842426a9cc0ff7ad72c611a8066004aacfe&height=1005&width=1920&quality=80&smart=true",
+    "twitter_image": "https://www.reuters.com/resizer/v2/X3EWNTQK2BKC5DFM2I6PJ4QYZY.jpg?auth=7626d1271dc77ca4918ed0f577374842426a9cc0ff7ad72c611a8066004aacfe&height=1005&width=1920&quality=80&smart=true",
+    "detected_image_urls": [
+      "https://www.reuters.com/resizer/v2/X3EWNTQK2BKC5DFM2I6PJ4QYZY.jpg?auth=7626d1271dc77ca4918ed0f577374842426a9cc0ff7ad72c611a8066004aacfe&height=1005&width=1920&quality=80&smart=true",
+      "https://ajo.prod.reuters.tv/api/v2/img/6a89879ce4b08e2aff527903?width=1080&quality=80"
+    ],
+    "image_candidates": [
+      {
+        "alt": "US hits Canadian goods with 50% tariffs after trade talks fail",
+        "nh": 608,
+        "nw": 1080,
+        "src": "https://ajo.prod.reuters.tv/api/v2/img/6a89879ce4b08e2aff527903?width=1080&quality=80"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-01-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 2534
+  },
+  {
+    "event_id": "GLB-01",
+    "index": 2,
+    "name": "美聯社",
+    "url": "https://apnews.com/article/4d18583fe52134ca8550652ad9772d2c",
+    "actual_url": "https://apnews.com/article/canada-us-trade-war-trump-carney-tariffs-4d18583fe52134ca8550652ad9772d2c",
+    "title": "Canada-US trade war further ruptures a historic alliance | AP News",
+    "og_image": "https://dims.apnews.com/dims4/default/0f4b972/2147483647/strip/true/crop/2929x1952+35+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Ff7%2F32%2F0028f864e780861f28bdda886a8f%2F1a66736f059d4ba59339af0b1220be3b",
+    "twitter_image": "https://dims.apnews.com/dims4/default/0f4b972/2147483647/strip/true/crop/2929x1952+35+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Ff7%2F32%2F0028f864e780861f28bdda886a8f%2F1a66736f059d4ba59339af0b1220be3b",
+    "detected_image_urls": [
+      "https://dims.apnews.com/dims4/default/0f4b972/2147483647/strip/true/crop/2929x1952+35+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Ff7%2F32%2F0028f864e780861f28bdda886a8f%2F1a66736f059d4ba59339af0b1220be3b",
+      "https://dims.apnews.com/dims4/default/71e3853/2147483647/strip/true/crop/3000x1952+0+0/resize/1440x937!/format/webp/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Ff7%2F32%2F0028f864e780861f28bdda886a8f%2F1a66736f059d4ba59339af0b1220be3b",
+      "https://dims.apnews.com/dims4/default/527d497/2147483647/strip/true/crop/3000x2000+0+0/resize/1440x960!/format/webp/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Fcb%2F25%2F44210cc899a23a66a2172c808bbc%2Ff1c520b187eb4d71a9af803880fee0a7",
+      "https://dims.apnews.com/dims4/default/ed09fed/2147483647/strip/true/crop/8192x5464+0+0/resize/1440x960!/format/webp/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2F4d%2Fe5%2Ff8f11b757635e1651e95e5049b29%2Fe25433bf3ad54438b09dba555b7541e1",
+      "https://dims.apnews.com/dims4/default/1fccf29/2147483647/strip/true/crop/4118x2777+0+0/resize/1440x971!/format/webp/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2F72%2F8b%2Fe1f4e880cc5243197779efeca69d%2F756a37bb752d4c0bae2ef7cf0d9649d3",
+      "https://dims.apnews.com/dims4/default/406bb81/2147483647/strip/true/crop/5779x3853+0+0/resize/1440x960!/format/webp/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2F1a%2Feb%2F071350146e1a2c27c1c0e98de0b9%2Ff3f5b8321a27403c9196de377d5564ce",
+      "https://dims.apnews.com/dims4/default/6b19875/2147483647/strip/false/crop/1526x1017+0+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Ffc%2Fc1%2Fbea914fce58be3008b58f505dd45%2F3208ef8d9cf242c5a77dff3152e47f77",
+      "https://dims.apnews.com/dims4/default/a031c8d/2147483647/strip/false/crop/6000x4000+0+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Fa7%2F86%2F2a82841ca9027dcb0f43a2dc08dd%2F741531d5c8ff40f9b84f98e13773512c",
+      "https://dims.apnews.com/dims4/default/5516023/2147483647/strip/false/crop/5779x3853+0+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Fbf%2Fc5%2Fee4712bbcf7ae224e800348492f0%2F029e953c64194da0b29c3f2a0a80652d"
+    ],
+    "image_candidates": [
+      {
+        "alt": "People rally in response to U.S. President Donald Trump's threats to Canadian sovereignty on Parliament Hill in Ottawa, March 9, 2025. (Justin Tang/The Canadian Press via AP File)",
+        "nh": 937,
+        "nw": 1440,
+        "src": "https://dims.apnews.com/dims4/default/71e3853/2147483647/strip/true/crop/3000x1952+0+0/resize/1440x937!/format/webp/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Ff7%2F32%2F0028f864e780861f28bdda886a8f%2F1a66736f059d4ba59339af0b1220be3b"
+      },
+      {
+        "alt": "Canada Prime Minister Mark Carney and President Donald Trump hold a press conference at the White House in Washington, D.C., Oct. 7, 2025. (Adrian Wyld/The Canadian Press via AP, File)",
+        "nh": 960,
+        "nw": 1440,
+        "src": "https://dims.apnews.com/dims4/default/527d497/2147483647/strip/true/crop/3000x2000+0+0/resize/1440x960!/format/webp/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Fcb%2F25%2F44210cc899a23a66a2172c808bbc%2Ff1c520b187eb4d71a9af803880fee0a7"
+      },
+      {
+        "alt": "Prime Minister Mark Carney speaks about Canada's response to new U.S. tariffs during a news conference on Parliament Hill in Ottawa on Saturday, Aug. 22, 2026. (Patrick Doyle/The Canadian Press via AP)",
+        "nh": 960,
+        "nw": 1440,
+        "src": "https://dims.apnews.com/dims4/default/ed09fed/2147483647/strip/true/crop/8192x5464+0+0/resize/1440x960!/format/webp/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2F4d%2Fe5%2Ff8f11b757635e1651e95e5049b29%2Fe25433bf3ad54438b09dba555b7541e1"
+      },
+      {
+        "alt": "Canada-U.S. Trade Minister Dominic LeBlanc listens as Prime Minister Mark Carney speaks about Canada's response to new U.S. tariffs during a news conference on Parliament Hill in Ottawa on Saturday, Aug. 22, 2026. (Patrick Doyle/The Canadian Press via AP)",
+        "nh": 971,
+        "nw": 1440,
+        "src": "https://dims.apnews.com/dims4/default/1fccf29/2147483647/strip/true/crop/4118x2777+0+0/resize/1440x971!/format/webp/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2F72%2F8b%2Fe1f4e880cc5243197779efeca69d%2F756a37bb752d4c0bae2ef7cf0d9649d3"
+      },
+      {
+        "alt": "Manitoba Premier Wab Kinew talks to media as he arrives for a first ministers meeting in Ottawa on Jan.15, 2025. (Sean Kilpatrick/The Canadian Press via AP, File)",
+        "nh": 960,
+        "nw": 1440,
+        "src": "https://dims.apnews.com/dims4/default/406bb81/2147483647/strip/true/crop/5779x3853+0+0/resize/1440x960!/format/webp/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2F1a%2Feb%2F071350146e1a2c27c1c0e98de0b9%2Ff3f5b8321a27403c9196de377d5564ce"
+      },
+      {
+        "alt": "Trump says US and Canada have a trade deal, but key terms remain unclear",
+        "nh": 653,
+        "nw": 980,
+        "src": "https://dims.apnews.com/dims4/default/6b19875/2147483647/strip/false/crop/1526x1017+0+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Ffc%2Fc1%2Fbea914fce58be3008b58f505dd45%2F3208ef8d9cf242c5a77dff3152e47f77"
+      },
+      {
+        "alt": "Carney says US trade talks are ‘nasty’ after Trump criticizes Canada’s leadership",
+        "nh": 653,
+        "nw": 980,
+        "src": "https://dims.apnews.com/dims4/default/a031c8d/2147483647/strip/false/crop/6000x4000+0+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Fa7%2F86%2F2a82841ca9027dcb0f43a2dc08dd%2F741531d5c8ff40f9b84f98e13773512c"
+      },
+      {
+        "alt": "Canadian provincial leader says Trump is a ‘bad person’ as Canada weighs concessions for trade deal",
+        "nh": 653,
+        "nw": 980,
+        "src": "https://dims.apnews.com/dims4/default/5516023/2147483647/strip/false/crop/5779x3853+0+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Fbf%2Fc5%2Fee4712bbcf7ae224e800348492f0%2F029e953c64194da0b29c3f2a0a80652d"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-01-source-02-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 6231
+  },
+  {
+    "event_id": "GLB-02",
+    "index": 1,
+    "name": "美聯社",
+    "url": "https://apnews.com/article/3b39d6dc29cb5ad1bada31a524b6e0c6",
+    "actual_url": "https://apnews.com/article/japan-earthquake-tokyo-3b39d6dc29cb5ad1bada31a524b6e0c6",
+    "title": "Tokyo area rattled by magnitude 5.9 quake, no tsunami alert issued. More than 30 injured. | AP News",
+    "og_image": "https://dims.apnews.com/dims4/default/f5420ab/2147483647/strip/true/crop/3968x2644+0+1/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2F41%2F9b%2F8a2bafa78e313757db4441b73df3%2Fa8053be009b5429aa6eb8c96dd926cc5",
+    "twitter_image": "https://dims.apnews.com/dims4/default/f5420ab/2147483647/strip/true/crop/3968x2644+0+1/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2F41%2F9b%2F8a2bafa78e313757db4441b73df3%2Fa8053be009b5429aa6eb8c96dd926cc5",
+    "detected_image_urls": [
+      "https://dims.apnews.com/dims4/default/f5420ab/2147483647/strip/true/crop/3968x2644+0+1/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2F41%2F9b%2F8a2bafa78e313757db4441b73df3%2Fa8053be009b5429aa6eb8c96dd926cc5"
+    ],
+    "image_candidates": [],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-02-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 2109
+  },
+  {
+    "event_id": "GLB-02",
+    "index": 2,
+    "name": "時事通信／Nippon.com",
+    "url": "https://www.nippon.com/en/news/yjj2026082300142/quake-rocks-tokyo-nearby-areas-37-injured.html",
+    "actual_url": "https://www.nippon.com/en/news/yjj2026082300142/quake-rocks-tokyo-nearby-areas-37-injured.html",
+    "title": "Quake Rocks Tokyo, Nearby Areas; 37 Injured | Nippon.com",
+    "og_image": "https://www.nippon.com/en/ncommon/contents/news/3061325/3061325.jpg",
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://www.nippon.com/en/ncommon/contents/news/3061325/3061325.jpg"
+    ],
+    "image_candidates": [
+      {
+        "alt": "",
+        "nh": 300,
+        "nw": 450,
+        "src": "https://www.nippon.com/en/ncommon/contents/news/3061325/3061325.jpg"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-02-source-02-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 9427
+  },
+  {
+    "event_id": "GLB-03",
+    "index": 1,
+    "name": "Times of Oman",
+    "url": "https://timesofoman.com/article/175932-myanmar-airstrike-kills-14-at-buddhist-monastery-reports",
+    "actual_url": "https://timesofoman.com/article/175932-myanmar-airstrike-kills-14-at-buddhist-monastery-reports",
+    "title": "Myanmar airstrike kills 14 at Buddhist monastery: reports - Times of Oman",
+    "og_image": "https://shabiba.eu-central-1.linodeobjects.com/2026/08/1787408770-1787408770-qxlksjpei0xi-700x400.jpg",
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://shabiba.eu-central-1.linodeobjects.com/2026/08/1787408770-1787408770-qxlksjpei0xi-700x400.jpg",
+      "https://timesofoman.com/assets/img/top-icons/tmag.png"
+    ],
+    "image_candidates": [
+      {
+        "alt": "Times of Oman",
+        "nh": 200,
+        "nw": 300,
+        "src": "https://timesofoman.com/assets/img/top-icons/tmag.png"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-03-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 2806
+  }
+]

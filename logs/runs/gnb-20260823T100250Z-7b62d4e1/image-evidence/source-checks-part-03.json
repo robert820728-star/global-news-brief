@@ -1,0 +1,272 @@
+[
+  {
+    "event_id": "GLB-03",
+    "index": 2,
+    "name": "南華早報",
+    "url": "https://www.scmp.com/news/asia/southeast-asia/article/3364928/myanmar-air-strike-kills-14-praying-monastery-rebel-witnesses-say",
+    "actual_url": "https://www.scmp.com/news/asia/southeast-asia/article/3364928/myanmar-air-strike-kills-14-praying-monastery-rebel-witnesses-say",
+    "title": "Myanmar air strike kills 14 praying at monastery, rebel witnesses say | South China Morning Post",
+    "og_image": "https://cdn.i-scmp.com/sites/default/files/styles/og_image_scmp_generic/public/d8/images/canvas/2026/08/22/61459733-ea05-44e6-b85c-6f78b3931b48_18c1b5dc.jpg?itok=fY6rpo1x&v=1787395711",
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://cdn.i-scmp.com/sites/default/files/styles/og_image_scmp_generic/public/d8/images/canvas/2026/08/22/61459733-ea05-44e6-b85c-6f78b3931b48_18c1b5dc.jpg?itok=fY6rpo1x&v=1787395711",
+      "https://cdn.i-scmp.com/sites/default/files/styles/1200x800/public/d8/images/canvas/2026/08/22/61459733-ea05-44e6-b85c-6f78b3931b48_18c1b5dc.jpg?itok=SiGK4pjp&v=1787395711",
+      "https://img.i-scmp.com/cdn-cgi/image/fit=contain,width=1024,format=auto/sites/default/files/d8/images/canvas/2026/08/22/7646a125-0e09-4811-b450-1f9208048c36_f4966dbe.jpg"
+    ],
+    "image_candidates": [
+      {
+        "alt": "Debris litters a Buddhist monastery after an airstrike hit Swel Le Oh village in Myaung Township, Sagaing Region, Myanmar, on Friday. Photo: AP",
+        "nh": 800,
+        "nw": 1200,
+        "src": "https://cdn.i-scmp.com/sites/default/files/styles/1200x800/public/d8/images/canvas/2026/08/22/61459733-ea05-44e6-b85c-6f78b3931b48_18c1b5dc.jpg?itok=SiGK4pjp&v=1787395711"
+      },
+      {
+        "alt": "Belarus’ President Alexander Lukashenko (right) shakes hands with Myanmar’s President Min Aung Hlaing during a meeting in Minsk, Belarus on Friday.",
+        "nh": 682,
+        "nw": 1024,
+        "src": "https://img.i-scmp.com/cdn-cgi/image/fit=contain,width=1024,format=auto/sites/default/files/d8/images/canvas/2026/08/22/7646a125-0e09-4811-b450-1f9208048c36_f4966dbe.jpg"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-03-source-02-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 3998
+  },
+  {
+    "event_id": "GLB-04",
+    "index": 1,
+    "name": "路透社",
+    "url": "https://www.reuters.com/world/americas/panamaflagged-cargo-ship-sinks-off-eastern-india-coast-guard-says-2026-08-22/",
+    "actual_url": "https://www.reuters.com/world/americas/panamaflagged-cargo-ship-sinks-off-eastern-india-coast-guard-says-2026-08-22/",
+    "title": "India launches rescue operation as bulk carrier sinks off east coast | Reuters",
+    "og_image": "https://www.reuters.com/resizer/v2/466BJJQ7PVGY5O53NZ3KL65MHM.png?auth=b9c3bf166c40a6778eb5672993fde7c30a15f48329026674eff92afd8da1d0ca&height=1005&width=1920&quality=80&smart=true",
+    "twitter_image": "https://www.reuters.com/resizer/v2/UPWWXXGZ3ZDL5M4W66EWOZVRKM.png?auth=ba7701b661297d5d41b0a5a31a96de94084a623f7ecd4feed0180a877b985a8e&height=1005&width=1920&quality=80&smart=true",
+    "detected_image_urls": [
+      "https://www.reuters.com/resizer/v2/466BJJQ7PVGY5O53NZ3KL65MHM.png?auth=b9c3bf166c40a6778eb5672993fde7c30a15f48329026674eff92afd8da1d0ca&height=1005&width=1920&quality=80&smart=true",
+      "https://www.reuters.com/resizer/v2/UPWWXXGZ3ZDL5M4W66EWOZVRKM.png?auth=ba7701b661297d5d41b0a5a31a96de94084a623f7ecd4feed0180a877b985a8e&height=1005&width=1920&quality=80&smart=true"
+    ],
+    "image_candidates": [],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-04-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 2795
+  },
+  {
+    "event_id": "GLB-04",
+    "index": 2,
+    "name": "美聯社",
+    "url": "https://apnews.com/article/9299f36df9604d21fe7c7f8328ac5153",
+    "actual_url": "https://apnews.com/article/india-ship-rescue-distress-coast-guard-navy-9299f36df9604d21fe7c7f8328ac5153",
+    "title": "India rescues 2 people from Panama-flagged cargo ship after distress alert | AP News",
+    "og_image": "https://dims.apnews.com/dims4/default/74b899c/2147483647/strip/true/crop/1281x854+0+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2F0c%2F94%2Fcbc970464ba8bfbc6042dd7cdd78%2Fthe-ap-default-image-2026.png",
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://dims.apnews.com/dims4/default/74b899c/2147483647/strip/true/crop/1281x854+0+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2F0c%2F94%2Fcbc970464ba8bfbc6042dd7cdd78%2Fthe-ap-default-image-2026.png"
+    ],
+    "image_candidates": [],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-04-source-02-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 2710
+  },
+  {
+    "event_id": "GLB-05",
+    "index": 1,
+    "name": "路透社",
+    "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/australia-confirms-first-h5n1-bird-flu-case-local-mammal-2026-08-23/",
+    "actual_url": "https://www.reuters.com/business/healthcare-pharmaceuticals/australia-confirms-first-h5n1-bird-flu-case-local-mammal-2026-08-23/",
+    "title": "Australia confirms first H5N1 bird flu case in local mammal | Reuters",
+    "og_image": "https://www.reuters.com/resizer/v2/PD2AGCTU7RPA7GYQ6L34W3QXNA.jpg?auth=bd3e3363536959b345b8809e43202e7290dc0a956a51a6a1c2e9bd26d2eb020e&height=1005&width=1920&quality=80&smart=true",
+    "twitter_image": "https://www.reuters.com/resizer/v2/PD2AGCTU7RPA7GYQ6L34W3QXNA.jpg?auth=bd3e3363536959b345b8809e43202e7290dc0a956a51a6a1c2e9bd26d2eb020e&height=1005&width=1920&quality=80&smart=true",
+    "detected_image_urls": [
+      "https://www.reuters.com/resizer/v2/PD2AGCTU7RPA7GYQ6L34W3QXNA.jpg?auth=bd3e3363536959b345b8809e43202e7290dc0a956a51a6a1c2e9bd26d2eb020e&height=1005&width=1920&quality=80&smart=true",
+      "https://www.reuters.com/resizer/v2/PD2AGCTU7RPA7GYQ6L34W3QXNA.jpg?auth=bd3e3363536959b345b8809e43202e7290dc0a956a51a6a1c2e9bd26d2eb020e&width=640&quality=80"
+    ],
+    "image_candidates": [
+      {
+        "alt": "Illustration shows test tube labelled \"Bird Flu\", eggs and Australia flag",
+        "nh": 373,
+        "nw": 559,
+        "src": "https://www.reuters.com/resizer/v2/PD2AGCTU7RPA7GYQ6L34W3QXNA.jpg?auth=bd3e3363536959b345b8809e43202e7290dc0a956a51a6a1c2e9bd26d2eb020e&width=640&quality=80"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-05-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 2649
+  },
+  {
+    "event_id": "GLB-05",
+    "index": 2,
+    "name": "衛報",
+    "url": "https://www.theguardian.com/world/2026/aug/23/fur-seal-death-first-australian-mainland-mammal-h5-bird-flu",
+    "actual_url": "https://www.theguardian.com/world/2026/aug/23/fur-seal-death-first-australian-mainland-mammal-h5-bird-flu",
+    "title": "Fur seal’s death marks first Australian mainland mammal fatality from spreading H5 bird flu strain | Bird flu | The Guardian",
+    "og_image": "https://i.guim.co.uk/img/media/477e4b57e8708325995c483a09c9726c05d11095/2304_1636_2647_2118/master/2647.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=bccdeb47faeedb3f48a02360bb5c3f7b",
+    "twitter_image": "https://i.guim.co.uk/img/media/477e4b57e8708325995c483a09c9726c05d11095/2304_1636_2647_2118/master/2647.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&s=7b4ed7c81b736dcf2ba4cbd23ab0cf4a",
+    "detected_image_urls": [
+      "https://i.guim.co.uk/img/media/477e4b57e8708325995c483a09c9726c05d11095/2304_1636_2647_2118/master/2647.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=bccdeb47faeedb3f48a02360bb5c3f7b",
+      "https://i.guim.co.uk/img/media/477e4b57e8708325995c483a09c9726c05d11095/2304_1636_2647_2118/master/2647.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&s=7b4ed7c81b736dcf2ba4cbd23ab0cf4a",
+      "https://i.guim.co.uk/img/media/477e4b57e8708325995c483a09c9726c05d11095/2304_1636_2647_2118/master/2647.jpg?width=620&dpr=1&s=none&crop=none"
+    ],
+    "image_candidates": [
+      {
+        "alt": "A fur seal, similar to this one seen sleeping in New Zealand, is the first confirmed mammal death from the deadly H5 bird flu strain on the Australian mainland",
+        "nh": 496,
+        "nw": 620,
+        "src": "https://i.guim.co.uk/img/media/477e4b57e8708325995c483a09c9726c05d11095/2304_1636_2647_2118/master/2647.jpg?width=620&dpr=1&s=none&crop=none"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-05-source-02-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 2691
+  },
+  {
+    "event_id": "GLB-06",
+    "index": 1,
+    "name": "中央社",
+    "url": "https://www.cna.com.tw/news/aopl/202608230093.aspx",
+    "actual_url": "https://www.cna.com.tw/news/aopl/202608230093.aspx",
+    "title": "孟加拉天然氣短缺衝擊產業民生　停電抗議頻傳 | 國際 | 中央社 CNA",
+    "og_image": "https://imgcdn.cna.com.tw/www/images/pic_fb.jpg",
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://imgcdn.cna.com.tw/www/images/pic_fb.jpg",
+      "https://imgcdn.cna.com.tw/www/website/img/line-ad-pc.jpg",
+      "https://imgcdn.cna.com.tw/www/website/img/ad300x223.jpg"
+    ],
+    "image_candidates": [
+      {
+        "alt": "加入LINE官方帳號",
+        "nh": 220,
+        "nw": 2560,
+        "src": "https://imgcdn.cna.com.tw/www/website/img/line-ad-pc.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 223,
+        "nw": 300,
+        "src": "https://imgcdn.cna.com.tw/www/website/img/ad300x223.jpg"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-06-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 2377
+  },
+  {
+    "event_id": "GLB-06",
+    "index": 2,
+    "name": "The Business Standard",
+    "url": "https://www.tbsnews.net/bangladesh/energy/lng-terminal-glitch-cuts-gas-supply-450-mmcfd-nationwide-energy-division-1495201",
+    "actual_url": "https://www.tbsnews.net/bangladesh/energy/lng-terminal-glitch-cuts-gas-supply-450-mmcfd-nationwide-energy-division-1495201",
+    "title": "LNG terminal glitch cuts gas supply by 450 mmcfd nationwide: Energy division | The Business Standard",
+    "og_image": "https://www.tbsnews.net/sites/default/files/styles/social_share/public/images/2026/07/23/p3_cng_crisis_mhn_8080.jpeg",
+    "twitter_image": "https://www.tbsnews.net/sites/default/files/styles/social_share/public/images/2026/07/23/p3_cng_crisis_mhn_8080.jpeg",
+    "detected_image_urls": [
+      "https://www.tbsnews.net/sites/default/files/styles/social_share/public/images/2026/07/23/p3_cng_crisis_mhn_8080.jpeg"
+    ],
+    "image_candidates": [],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-06-source-02-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 5670
+  },
+  {
+    "event_id": "GLB-07",
+    "index": 1,
+    "name": "路透社",
+    "url": "https://www.reuters.com/business/energy/romania-adopts-new-measures-boost-danube-waters-cool-cernavoda-nuclear-plant-2026-08-22/",
+    "actual_url": "https://www.reuters.com/business/energy/romania-adopts-new-measures-boost-danube-waters-cool-cernavoda-nuclear-plant-2026-08-22/",
+    "title": "Romania adopts new measures to boost Danube waters to cool Cernavoda nuclear plant | Reuters",
+    "og_image": "https://www.reuters.com/resizer/v2/K7KRI4KW2JMNXLAHJA4NZBHKLM.jpg?auth=2a1ab73bd30e3503e4915208adf715002fc2c57f3970a795d43a3d8edacee853&height=1005&width=1920&quality=80&smart=true",
+    "twitter_image": "https://www.reuters.com/resizer/v2/K7KRI4KW2JMNXLAHJA4NZBHKLM.jpg?auth=2a1ab73bd30e3503e4915208adf715002fc2c57f3970a795d43a3d8edacee853&height=1005&width=1920&quality=80&smart=true",
+    "detected_image_urls": [
+      "https://www.reuters.com/resizer/v2/K7KRI4KW2JMNXLAHJA4NZBHKLM.jpg?auth=2a1ab73bd30e3503e4915208adf715002fc2c57f3970a795d43a3d8edacee853&height=1005&width=1920&quality=80&smart=true",
+      "https://www.reuters.com/resizer/v2/K7KRI4KW2JMNXLAHJA4NZBHKLM.jpg?auth=2a1ab73bd30e3503e4915208adf715002fc2c57f3970a795d43a3d8edacee853&width=640&quality=80"
+    ],
+    "image_candidates": [
+      {
+        "alt": "Romania will shut down its second nuclear reactor on the Danube river on Thursday, three days after decades-low river levels forced it to shut down the first",
+        "nh": 373,
+        "nw": 559,
+        "src": "https://www.reuters.com/resizer/v2/K7KRI4KW2JMNXLAHJA4NZBHKLM.jpg?auth=2a1ab73bd30e3503e4915208adf715002fc2c57f3970a795d43a3d8edacee853&width=640&quality=80"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-07-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 1687
+  },
+  {
+    "event_id": "GLB-07",
+    "index": 2,
+    "name": "衛報",
+    "url": "https://www.theguardian.com/world/2026/aug/03/romania-blasts-divert-danube-water-nuclear-reactor-energy-crisis-hungary",
+    "actual_url": "https://www.theguardian.com/world/2026/aug/03/romania-blasts-divert-danube-water-nuclear-reactor-energy-crisis-hungary",
+    "title": "Romania blasts rock to divert water from drought-hit Danube to nuclear reactor | Romania | The Guardian",
+    "og_image": "https://i.guim.co.uk/img/media/78fb0cd72e0eff7ab1baa3a10b52383fe366a418/448_0_6135_4908/master/6135.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=42bea57bbb6d307e5a303fe75d0e68eb",
+    "twitter_image": "https://i.guim.co.uk/img/media/78fb0cd72e0eff7ab1baa3a10b52383fe366a418/448_0_6135_4908/master/6135.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&s=89f0f1e7e586e84b303ce118b3dd0a4b",
+    "detected_image_urls": [
+      "https://i.guim.co.uk/img/media/78fb0cd72e0eff7ab1baa3a10b52383fe366a418/448_0_6135_4908/master/6135.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=42bea57bbb6d307e5a303fe75d0e68eb",
+      "https://i.guim.co.uk/img/media/78fb0cd72e0eff7ab1baa3a10b52383fe366a418/448_0_6135_4908/master/6135.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&s=89f0f1e7e586e84b303ce118b3dd0a4b",
+      "https://i.guim.co.uk/img/media/b7219ce21f9e847476fe7c59022d498b82105ead/0_408_4580_2577/4580.jpg?width=620&dpr=1&s=none&crop=none",
+      "https://i.guim.co.uk/img/media/1e47bf9dea2e9fafadef2a50717f9b6f66e937fe/0_0_6942_4667/master/6942.jpg?width=620&dpr=1&s=none&crop=none"
+    ],
+    "image_candidates": [
+      {
+        "alt": "Water and debris fly into the air after the blast",
+        "nh": 349,
+        "nw": 620,
+        "src": "https://i.guim.co.uk/img/media/b7219ce21f9e847476fe7c59022d498b82105ead/0_408_4580_2577/4580.jpg?width=620&dpr=1&s=none&crop=none"
+      },
+      {
+        "alt": "Landscape view of the nuclear plant",
+        "nh": 417,
+        "nw": 620,
+        "src": "https://i.guim.co.uk/img/media/1e47bf9dea2e9fafadef2a50717f9b6f66e937fe/0_0_6942_4667/master/6942.jpg?width=620&dpr=1&s=none&crop=none"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-07-source-02-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 1899
+  },
+  {
+    "event_id": "GLB-08",
+    "index": 1,
+    "name": "美聯社",
+    "url": "https://apnews.com/article/64feb19b54d1bce50891437a5ba25d50",
+    "actual_url": "https://apnews.com/article/trump-administration-visa-ban-immigration-64feb19b54d1bce50891437a5ba25d50",
+    "title": "Federal judge strikes down Trump-era visa ban affecting 75 countries | AP News",
+    "og_image": "https://dims.apnews.com/dims4/default/1905af5/2147483647/strip/true/crop/1816x1210+0+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Fab%2Fbf%2Fdd030425d3dcf96a316e49897d58%2Fe0a518ba855a4e66ba842402b1a86631",
+    "twitter_image": "https://dims.apnews.com/dims4/default/1905af5/2147483647/strip/true/crop/1816x1210+0+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Fab%2Fbf%2Fdd030425d3dcf96a316e49897d58%2Fe0a518ba855a4e66ba842402b1a86631",
+    "detected_image_urls": [
+      "https://dims.apnews.com/dims4/default/1905af5/2147483647/strip/true/crop/1816x1210+0+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Fab%2Fbf%2Fdd030425d3dcf96a316e49897d58%2Fe0a518ba855a4e66ba842402b1a86631",
+      "https://dims.apnews.com/dims4/default/ee473e3/2147483647/strip/true/crop/1816x1211+0+0/resize/979x653!/format/webp/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Fab%2Fbf%2Fdd030425d3dcf96a316e49897d58%2Fe0a518ba855a4e66ba842402b1a86631"
+    ],
+    "image_candidates": [
+      {
+        "alt": "Secretary of State Marco Rubio arrives with Austrian Foreign Minister Beate Meinl-Reisinger, not shown, to the Treaty Room at the State Department, Tuesday, Aug. 11, 2026, in Washington. (AP Photo/Tierney L. Cross)",
+        "nh": 653,
+        "nw": 979,
+        "src": "https://dims.apnews.com/dims4/default/ee473e3/2147483647/strip/true/crop/1816x1211+0+0/resize/979x653!/format/webp/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2Fab%2Fbf%2Fdd030425d3dcf96a316e49897d58%2Fe0a518ba855a4e66ba842402b1a86631"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-08-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 1641
+  }
+]

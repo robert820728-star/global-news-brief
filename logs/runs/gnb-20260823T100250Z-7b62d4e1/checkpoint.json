@@ -1,0 +1,174 @@
+{
+  "schema_version": "1.1.0",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "window_start": "2026-08-22T18:02:50+08:00",
+  "window_end": "2026-08-23T18:02:50+08:00",
+  "created_at": "2026-08-23T20:07:59+10:00",
+  "updated_at": "2026-08-23T22:13:38+10:00",
+  "bootstrap": {
+    "repository": "robert820728-star/global-news-brief",
+    "commit_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+    "materialization_method": "github-connector-capsule",
+    "receipt": {
+      "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/bootstrap-workspace.json",
+      "sha256": "4df44f2e2aa50d879a0a29139316f7451abf65c36d0ec3aeec036133eeb061d3",
+      "size": 83322
+    }
+  },
+  "bootstrap_required": true,
+  "stage_status": {
+    "source-scan": "completed",
+    "preprocess-news-candidates": "completed",
+    "select-news-events": "completed",
+    "audit-news-candidates": "completed",
+    "materialize-manifest": "completed",
+    "verify-news-events": "completed",
+    "build-news-maps": "completed",
+    "build-news-charts": "completed",
+    "collect-news-images": "completed",
+    "render": "completed"
+  },
+  "stage_evidence": {
+    "source-scan": {
+      "recorded_at": "2026-08-23T20:12:45+10:00",
+      "status": "completed",
+      "message": "GDELT archive-first 97/97; CNA/CNS ready; source evidence and lossless relevance gate validated",
+      "artifacts": {
+        "source_candidates": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/source-candidates.json",
+          "sha256": "561ea547c0cb6f4e43938a9030baac562449e963800a46143734047e918f8298",
+          "size": 14346320
+        },
+        "relevance_gate": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/news-relevance-gate.json",
+          "sha256": "b4f39955b733f13d37dad042915cf2a33e418f9cf05a2bccc4f07c34b658b096",
+          "size": 6555007
+        },
+        "model_source_candidates": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/model-source-candidates.json",
+          "sha256": "5e9b3e73a920b9a6af34c03fbfe86ee7efcee6e4a1a5d47951aee1a4345a2bce",
+          "size": 3674832
+        }
+      }
+    },
+    "preprocess-news-candidates": {
+      "recorded_at": "2026-08-23T20:13:01+10:00",
+      "status": "completed",
+      "message": "canonical preprocess completed; output is candidate index only",
+      "artifacts": {
+        "preprocessed_candidates": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/preprocessed-candidates.json",
+          "sha256": "b887f65351509e44e037d312b4a8658b1c58f6dce3857c4dcbd8fa1299d585e6",
+          "size": 5587006
+        }
+      }
+    },
+    "select-news-events": {
+      "recorded_at": "2026-08-23T21:26:26+10:00",
+      "status": "completed",
+      "message": "Semantic correction completed: 2150 events, 23 C-or-higher selected, unresolved=0",
+      "artifacts": {
+        "selection_results": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/selection-results.json",
+          "sha256": "3be0dd394a0b5a966a53031b77a0c9b06227f031ab2f9fdd4de504680296a1fc",
+          "size": 18864043
+        }
+      }
+    },
+    "audit-news-candidates": {
+      "recorded_at": "2026-08-23T22:13:38+10:00",
+      "status": "completed",
+      "message": "candidate audit re-bound after GLB-10/GLB-13 semantic split validation",
+      "artifacts": {
+        "candidate_audit": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/candidate-audit.json",
+          "sha256": "4ceaacec06ece6456a2bbe8edb9d391f94505743285652f4e9897f3e5a2b61ce",
+          "size": 27379888
+        }
+      }
+    },
+    "materialize-manifest": {
+      "recorded_at": "2026-08-23T21:28:49+10:00",
+      "status": "completed",
+      "message": "Canonical manifest materialized after temporal and semantic contradiction review",
+      "artifacts": {
+        "manifest": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/event-manifest.json",
+          "sha256": "9571d30a91429d54d02c9f9104f118f7fa2245a8e668513f7e52c49f4249cc23",
+          "size": 63290
+        }
+      }
+    },
+    "verify-news-events": {
+      "recorded_at": "2026-08-23T21:30:49+10:00",
+      "status": "completed",
+      "message": "All 23 selected events independently searched and verification ledger completed",
+      "artifacts": {
+        "manifest": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/event-manifest.json",
+          "sha256": "4f08f647da0d2550c8592cfcdfdbc594a30dda79c4cb28172b96d5aaa899980e",
+          "size": 101627
+        }
+      }
+    },
+    "build-news-maps": {
+      "recorded_at": "2026-08-23T21:38:01+10:00",
+      "status": "completed",
+      "message": "13/13 required maps rendered; 10/10 omission rationales validated; visual inspection passed",
+      "artifacts": {
+        "manifest": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/event-manifest.json",
+          "sha256": "42f98856bcdf751f86f2c4d7e487543fe6cc69d7b7f3e87e661c900d33af1b1e",
+          "size": 116319
+        }
+      }
+    },
+    "build-news-charts": {
+      "recorded_at": "2026-08-23T21:40:59+10:00",
+      "status": "completed",
+      "message": "1 evidence-backed comparison chart ready; 22 events reviewed not_required; visual and stage validators passed",
+      "artifacts": {
+        "manifest": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/event-manifest.json",
+          "sha256": "8794d8464506069c3b5994afb527c94b712d27110382cc511095f46ea75fbeb4",
+          "size": 120943
+        }
+      }
+    },
+    "collect-news-images": {
+      "recorded_at": "2026-08-23T22:08:24+10:00",
+      "status": "completed",
+      "message": "17個唯一來源圖片附件（含1張官方JMA圖）已驗證；7則依來源證據無圖。",
+      "artifacts": {
+        "manifest": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/event-manifest.json",
+          "sha256": "ba8fc36790746223c5ad5b406c8c9b9f7ce2280046b5e3b06be9309374bccaf4",
+          "size": 200723
+        }
+      }
+    },
+    "render": {
+      "recorded_at": "2026-08-23T22:13:04+10:00",
+      "status": "completed",
+      "message": "validated reader draft bound for canonical publisher",
+      "artifacts": {
+        "brief": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/reader-draft.md",
+          "sha256": "7485e395b22df9d70d087ffe4de57c59c311531a9a8a0da89c5cbe26db0d0eae",
+          "size": 22296
+        },
+        "manifest": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/event-manifest.json",
+          "sha256": "8a18329573d94dbdae703ce543a85e70fd50631b0f3e5e1fe53552bf86369445",
+          "size": 200731
+        }
+      }
+    }
+  },
+  "recovery": {
+    "status": "pending",
+    "max_attempts_per_target": 3,
+    "attempts": [],
+    "unresolved_targets": []
+  }
+}

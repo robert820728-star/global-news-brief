@@ -1,0 +1,107 @@
+inaustralia",
+      "dedup_seed": "fe8356b07553f96004998dba",
+      "snapshot_path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/routes/route-snapshots/gdelt.discovery.json",
+      "page_index": 1
+    },
+    {
+      "candidate_id": "0ffe15dbc39aefa1ac90",
+      "source_id": "gdelt",
+      "source_name": "GDELT DOC 2.0",
+      "section": "GLB",
+      "title": "amazon uber doordash walmart taking 070300525",
+      "summary": "amazon uber doordash walmart taking 070300525",
+      "summary_quality": "structured_event_context",
+      "discovery_signals": {
+        "actor_country_codes": [
+          "USA"
+        ],
+        "action_geo_country_code": "US",
+        "event_code": "033",
+        "event_root_code": "03",
+        "quad_class": 1,
+        "goldstein_scale": 5.2,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": 1.69491525423729
+      },
+      "published_at": "2026-08-22T10:15:00+00:00",
+      "url": "https://finance.yahoo.com/technology/articles/amazon-uber-doordash-walmart-taking-070300525.html",
+      "categories": [],
+      "importance_hint": "amazon uber doordash walmart taking 070300525",
+      "acquisition_route": "aggregate_api",
+      "canonical_url": "https://finance.yahoo.com/technology/articles/amazon-uber-doordash-walmart-taking-070300525.html",
+      "normalized_title": "amazonuberdoordashwalmarttaking070300525",
+      "dedup_seed": "c5432a32318c8e623160615d",
+      "snapshot_path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/routes/route-snapshots/gdelt.discovery.json",
+      "page_index": 1
+    },
+    {
+      "candidate_id": "a83a4b1bee57a57fd029",
+      "source_id": "gdelt",
+      "source_name": "GDELT DOC 2.0",
+      "section": "GLB",
+      "title": "5309776 houthis tighten security grip ibb",
+      "summary": "5309776 houthis tighten security grip ibb",
+      "summary_quality": "structured_event_context",
+      "discovery_signals": {
+        "actor_country_codes": [
+          "IRN"
+        ],
+        "action_geo_country_code": "YM",
+        "event_code": "190",
+        "event_root_code": "19",
+        "quad_class": 4,
+        "goldstein_scale": -10.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": -3.43878954607978
+      },
+      "published_at": "2026-08-22T10:15:00+00:00",
+      "url": "https://english.aawsat.com/arab-world/5309776-houthis-tighten-security-grip-ibb",
+      "categories": [],
+      "importance_hint": "5309776 houthis tighten security grip ibb",
+      "acquisition_route": "aggregate_api",
+      "canonical_url": "https://english.aawsat.com/arab-world/5309776-houthis-tighten-security-grip-ibb",
+      "normalized_title": "5309776houthistightensecuritygripibb",
+      "dedup_seed": "159a0dc9ae9b6cb506cb3085",
+      "snapshot_path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/routes/route-snapshots/gdelt.discovery.json",
+      "page_index": 1
+    },
+    {
+      "candidate_id": "6f6aab9c6bed02fd5ad8",
+      "source_id": "gdelt",
+      "source_name": "GDELT DOC 2.0",
+      "section": "GLB",
+      "title": "economictimes.indiatimes.com news report",
+      "summary": "economictimes.indiatimes.com news report",
+      "summary_quality": "structured_event_context",
+      "discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": null,
+        "event_code": "163",
+        "event_root_code": "16",
+        "quad_class": 4,
+        "goldstein_scale": -8.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": -3.83912248628884
+      },
+      "published_at": "2026-08-22T10:15:00+00:00",
+      "url": "https://economictimes.indiatimes.com/markets/stocks/news/cas-chaos-triggers-liquidity-spiral-nuvama-says-higher-participation-needed-to-break-cycle/articleshow/133421238.cms",
+      "categories": [],
+      "importance_hint": "economictimes.indiatimes.com news report",
+      "acquisition_route": "aggregate_api",
+      "canonical_url": "https://economictimes.indiatimes.com/markets/stocks/news/cas-chaos-triggers-liquidity-spiral-nuvama-says-higher-participation-needed-to-break-cycle/articleshow/133421238.cms",
+      "normalized_title": "economictimesindiatimescomnewsreport",
+      "dedup_seed": "edab16f95b75bcdf01c35a4f",
+      "snapshot_path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/routes/route-snapshots/gdelt.discovery.json",
+      "page_index": 1
+    }
+  ],
+  "discovery_article_row_count": 9525,
+  "admitted_article_row_count": 2451,
+  "relevance_gate_schema_version": "1.0.0"
+}

@@ -1,25 +1,19 @@
 {
-  "candidate_audit_artifact": {
-    "branch": "run-logs",
-    "path": "logs/latest-candidate-audit.json",
-    "blob_sha": "e80c53052c727d634b8a6127b67bd96efc13b009"
-  },
-  "client_confirmation_supported": false,
-  "current_stage": "canonical-delivery",
-  "delivery_status": "delivered",
-  "execution_mode": "full-runtime",
-  "last_completed_stage": "canonical-delivery",
-  "last_error": null,
-  "main_sha": "42a87ba0536971d08d4c86668a8e940b7a084a77",
-  "reader_artifact": {
-    "branch": "run-logs",
-    "path": "logs/latest-reader.md",
-    "blob_sha": "d202e7038a6f2a72c3dc9bd712fd780bf057b6cb"
-  },
-  "run_id": "gnb-20260819T130500Z-6e4a1d73",
-  "scheduled_for": "2026-08-19T21:05:00+08:00",
-  "schema_version": "1.1.0",
-  "stage_index": 11,
-  "status": "completed",
-  "updated_at": "2026-08-19T14:39:07Z"
+  "schema_version": "2.0.0",
+  "status": "ready",
+  "canonical_delivery": false,
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "source_commit": "573be9f342ef2f30d4d25877e14b21f8255e08a9",
+  "window_start": "2026-08-22T18:02:50+08:00",
+  "window_end": "2026-08-23T18:02:50+08:00",
+  "bundle_root": "logs/runs/gnb-20260823T100250Z-7b62d4e1",
+  "bundle_manifest_path": "logs/runs/gnb-20260823T100250Z-7b62d4e1/bundle-manifest.json",
+  "reader_path": "logs/runs/gnb-20260823T100250Z-7b62d4e1/reader.md",
+  "release_receipt_path": "logs/runs/gnb-20260823T100250Z-7b62d4e1/release-receipt.json",
+  "checkpoint_path": "logs/runs/gnb-20260823T100250Z-7b62d4e1/checkpoint.json",
+  "bundle_manifest_sha256": "5dad8c33bf5adc425f67a5c0c76cadb9224ca372827e75e2231f33f2de117b5d",
+  "reader_sha256": "7485e395b22df9d70d087ffe4de57c59c311531a9a8a0da89c5cbe26db0d0eae",
+  "release_receipt_sha256": "1aa0222b197f56ce788bcf3260337b8620d2338f7160af4a05590e1ea8ebabf8"
 }

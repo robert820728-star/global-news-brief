@@ -1,0 +1,7 @@
+{
+  "source_url": "https://www.cwa.gov.tw/V8/C/W/Warning.html",
+  "checked_at": "2026-08-23T20:10:00+08:00",
+  "inspection_method": "html_extract",
+  "result": "no_usable_event_specific_static_image",
+  "reason": "中央氣象署豪雨警示頁提供動態警示資訊，但檢查時未提供可與本事件時點綁定、可獨立下載的靜態專業圖資。"
+}

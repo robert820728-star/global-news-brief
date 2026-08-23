@@ -1,0 +1,358 @@
+[
+  {
+    "event_id": "GLB-08",
+    "index": 2,
+    "name": "路透社",
+    "url": "https://www.reuters.com/legal/government/us-judge-strikes-down-policy-suspending-immigrant-visa-processing-75-nations-2026-08-22/",
+    "actual_url": "https://www.reuters.com/legal/government/us-judge-strikes-down-policy-suspending-immigrant-visa-processing-75-nations-2026-08-22/",
+    "title": "US judge strikes down policy suspending immigrant visa processing for 75 nations | Reuters",
+    "og_image": "https://www.reuters.com/resizer/v2/Y5I3BLOUTNMC3G6D6XSL5VMT5A.jpg?auth=632ba7031097c6c46508a162d44dd357b2023175c672a64b8068429ecec35f9e&height=1005&width=1920&quality=80&smart=true",
+    "twitter_image": "https://www.reuters.com/resizer/v2/Y5I3BLOUTNMC3G6D6XSL5VMT5A.jpg?auth=632ba7031097c6c46508a162d44dd357b2023175c672a64b8068429ecec35f9e&height=1005&width=1920&quality=80&smart=true",
+    "detected_image_urls": [
+      "https://www.reuters.com/resizer/v2/Y5I3BLOUTNMC3G6D6XSL5VMT5A.jpg?auth=632ba7031097c6c46508a162d44dd357b2023175c672a64b8068429ecec35f9e&height=1005&width=1920&quality=80&smart=true",
+      "https://www.reuters.com/resizer/v2/Y5I3BLOUTNMC3G6D6XSL5VMT5A.jpg?auth=632ba7031097c6c46508a162d44dd357b2023175c672a64b8068429ecec35f9e&width=640&quality=80"
+    ],
+    "image_candidates": [
+      {
+        "alt": "State Department starts firing more than 1,350 workers in Trump's shake-up of diplomatic corps",
+        "nh": 373,
+        "nw": 559,
+        "src": "https://www.reuters.com/resizer/v2/Y5I3BLOUTNMC3G6D6XSL5VMT5A.jpg?auth=632ba7031097c6c46508a162d44dd357b2023175c672a64b8068429ecec35f9e&width=640&quality=80"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-08-source-02-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 1480
+  },
+  {
+    "event_id": "GLB-09",
+    "index": 1,
+    "name": "Mid-Day",
+    "url": "https://www.mid-day.com/mumbai/mumbai-news/article/mumbai-remains-on-alert-as-gujarat-reports-nearly-30-deaths-after-chandipura-virus-outbreak-23646134",
+    "actual_url": "https://www.mid-day.com/mumbai/mumbai-news/article/mumbai-remains-on-alert-as-gujarat-reports-nearly-30-deaths-after-chandipura-virus-outbreak-23646134",
+    "title": "Mumbai remains on alert as Gujarat battles deadly Chandipura virus outbreak",
+    "og_image": "https://images.mid-day.com/images/images/2026/aug/Virus-1787443007425_d.png",
+    "twitter_image": "https://images.mid-day.com/images/images/2026/aug/Virus-1787443007425_d.png",
+    "detected_image_urls": [
+      "https://images.mid-day.com/images/images/2026/aug/Virus-1787443007425_d.png",
+      "https://images.mid-day.com/images/images/twitter-new-icon.png",
+      "https://www.mid-day.com/_next/static/media/logo.5e7994dd.svg"
+    ],
+    "image_candidates": [
+      {
+        "alt": "Twitter",
+        "nh": 340,
+        "nw": 348,
+        "src": "https://images.mid-day.com/images/images/twitter-new-icon.png"
+      },
+      {
+        "alt": "Mid-Day",
+        "nh": 2092,
+        "nw": 9228,
+        "src": "https://www.mid-day.com/_next/static/media/logo.5e7994dd.svg"
+      },
+      {
+        "alt": "Twitter",
+        "nh": 340,
+        "nw": 348,
+        "src": "https://images.mid-day.com/images/images/twitter-new-icon.png"
+      },
+      {
+        "alt": "Chandipura virus originated from a small village in Maharashtra.  PIC/ISTOCK",
+        "nh": 720,
+        "nw": 1280,
+        "src": "https://images.mid-day.com/images/images/2026/aug/Virus-1787443007425_d.png"
+      },
+      {
+        "alt": "Mid-Day",
+        "nh": 2092,
+        "nw": 9228,
+        "src": "https://www.mid-day.com/_next/static/media/logo.5e7994dd.svg"
+      },
+      {
+        "alt": "Twitter",
+        "nh": 340,
+        "nw": 348,
+        "src": "https://images.mid-day.com/images/images/twitter-new-icon.png"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-09-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 3850
+  },
+  {
+    "event_id": "GLB-09",
+    "index": 2,
+    "name": "英國衛生安全局",
+    "url": "https://www.gov.uk/government/publications/outbreaks-under-monitoring-in-2026/outbreaks-under-monitoring-week-32-week-ending-9-august-2026",
+    "actual_url": "https://www.gov.uk/government/publications/outbreaks-under-monitoring-in-2026/outbreaks-under-monitoring-week-32-week-ending-9-august-2026",
+    "title": "Outbreaks under monitoring: week 32 (week ending 9 August 2026) - GOV.UK",
+    "og_image": "https://www.gov.uk/assets/frontend/govuk-opengraph-image-4196a4d6333cf92aaf720047f56cfd91b3532d7635fc21ebcf0d5897df6b5f77.png",
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://www.gov.uk/assets/frontend/govuk-opengraph-image-4196a4d6333cf92aaf720047f56cfd91b3532d7635fc21ebcf0d5897df6b5f77.png",
+      "https://www.gov.uk/assets/frontend/open-government-licence-min-93b6a51b518ff99714a1aa2a7d2162735c155ec3cb073c75fb88b2a332fa83d3.png"
+    ],
+    "image_candidates": [
+      {
+        "alt": "",
+        "nh": 346,
+        "nw": 854,
+        "src": "https://www.gov.uk/assets/frontend/open-government-licence-min-93b6a51b518ff99714a1aa2a7d2162735c155ec3cb073c75fb88b2a332fa83d3.png"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-09-source-02-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 3341
+  },
+  {
+    "event_id": "GLB-10",
+    "index": 1,
+    "name": "美聯社",
+    "url": "https://apnews.com/article/df9678a01c1e096404964496d5e6f905",
+    "actual_url": "https://apnews.com/article/nigeria-kidnappings-spree-villages-niger-df9678a01c1e096404964496d5e6f905",
+    "title": "Police report mass abduction from mosque in Nigeria's Niger state | AP News",
+    "og_image": "https://dims.apnews.com/dims4/default/74b899c/2147483647/strip/true/crop/1281x854+0+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2F0c%2F94%2Fcbc970464ba8bfbc6042dd7cdd78%2Fthe-ap-default-image-2026.png",
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://dims.apnews.com/dims4/default/74b899c/2147483647/strip/true/crop/1281x854+0+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2F0c%2F94%2Fcbc970464ba8bfbc6042dd7cdd78%2Fthe-ap-default-image-2026.png"
+    ],
+    "image_candidates": [],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-10-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 1819
+  },
+  {
+    "event_id": "GLB-10",
+    "index": 2,
+    "name": "Daily Trust／Trust TV",
+    "url": "https://trusttv.com/terrorists-break-into-niger-mosque-abduct-worshippers/",
+    "actual_url": "https://trusttv.com/terrorists-break-into-niger-mosque-abduct-worshippers/",
+    "title": "Terrorists break into Niger Mosque, abduct Worshippers - Trust TV",
+    "og_image": "https://trusttv.com/wp-content/uploads/2026/05/Trust_tv_logo-png.png",
+    "twitter_image": "https://trusttv.com/wp-content/uploads/2026/05/Trust_tv_logo-png.png",
+    "detected_image_urls": [
+      "https://trusttv.com/wp-content/uploads/2026/05/Trust_tv_logo-png.png",
+      "https://trusttv.com/wp-content/uploads/2025/08/1-Flood-Alert-9-Northern-States-at-Risk-FG-Warns-300x222.avif",
+      "https://trusttv.com/wp-content/uploads/2026/02/Gianni-Infantino-300x200.avif",
+      "https://trusttv.com/wp-content/uploads/2025/06/Man-Arrested-in-Niger-for-Allegedly-Killing-Pregnant-Wife.avif",
+      "https://trusttv.com/wp-content/themes/trust-tv-theme/assets/images/Trust-TV-Youtube-500x500.jpg"
+    ],
+    "image_candidates": [
+      {
+        "alt": "trust tv logo",
+        "nh": 500,
+        "nw": 500,
+        "src": "https://trusttv.com/wp-content/uploads/2026/05/Trust_tv_logo-png.png"
+      },
+      {
+        "alt": "FG Warns 17 States of Flood Risk – Full List",
+        "nh": 222,
+        "nw": 300,
+        "src": "https://trusttv.com/wp-content/uploads/2025/08/1-Flood-Alert-9-Northern-States-at-Risk-FG-Warns-300x222.avif"
+      },
+      {
+        "alt": "FIFA hand Paredes 10-match ban over World Cup final clash",
+        "nh": 200,
+        "nw": 300,
+        "src": "https://trusttv.com/wp-content/uploads/2026/02/Gianni-Infantino-300x200.avif"
+      },
+      {
+        "alt": "Terrorists break into Niger Mosque, abduct Worshippers",
+        "nh": 538,
+        "nw": 1000,
+        "src": "https://trusttv.com/wp-content/uploads/2025/06/Man-Arrested-in-Niger-for-Allegedly-Killing-Pregnant-Wife.avif"
+      },
+      {
+        "alt": "Trust TV YouTube",
+        "nh": 500,
+        "nw": 500,
+        "src": "https://trusttv.com/wp-content/themes/trust-tv-theme/assets/images/Trust-TV-Youtube-500x500.jpg"
+      },
+      {
+        "alt": "trust tv logo",
+        "nh": 500,
+        "nw": 500,
+        "src": "https://trusttv.com/wp-content/uploads/2026/05/Trust_tv_logo-png.png"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-10-source-02-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 6137
+  },
+  {
+    "event_id": "GLB-13",
+    "index": 1,
+    "name": "ThisDay",
+    "url": "https://www.thisdaylive.com/2026/08/22/ndume-to-military-rescue-78-school-children-abducted-by-bandits-in-two-borno-communities/",
+    "actual_url": "https://www.thisdaylive.com/2026/08/22/ndume-to-military-rescue-78-school-children-abducted-by-bandits-in-two-borno-communities/",
+    "title": "Ndume To Military: Rescue 78 School Children Abducted By Bandits in Two Borno Communities – THISDAYLIVE",
+    "og_image": "https://global.ariseplay.com/amg/www.thisdaylive.com/uploads/Ali-Ndume.jpg",
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://global.ariseplay.com/amg/www.thisdaylive.com/uploads/Ali-Ndume.jpg",
+      "https://global.ariseplay.com/amg/www.thisdaylive.com/uploads/Artificial-Intelligence.jpeg",
+      "https://global.ariseplay.com/amg/www.thisdaylive.com/uploads/Opay-banner-2026-08-18-at-17.53.28.jpeg",
+      "https://global.ariseplay.com/amg/www.thisdaylive.com/uploads/5026abd7-polaris-pearl-banner-3-300-x-300-1.jpeg",
+      "https://global.ariseplay.com/amg/www.thisdaylive.com/uploads/cbf71474-td-mtn-1024x1024-1-1024x1024.jpeg"
+    ],
+    "image_candidates": [
+      {
+        "alt": "",
+        "nh": 1707,
+        "nw": 2560,
+        "src": "https://global.ariseplay.com/amg/www.thisdaylive.com/uploads/Artificial-Intelligence.jpeg"
+      },
+      {
+        "alt": "",
+        "nh": 500,
+        "nw": 865,
+        "src": "https://global.ariseplay.com/amg/www.thisdaylive.com/uploads/Ali-Ndume.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 480,
+        "nw": 320,
+        "src": "https://global.ariseplay.com/amg/www.thisdaylive.com/uploads/Opay-banner-2026-08-18-at-17.53.28.jpeg"
+      },
+      {
+        "alt": "",
+        "nh": 300,
+        "nw": 300,
+        "src": "https://global.ariseplay.com/amg/www.thisdaylive.com/uploads/5026abd7-polaris-pearl-banner-3-300-x-300-1.jpeg"
+      },
+      {
+        "alt": "",
+        "nh": 1024,
+        "nw": 1024,
+        "src": "https://global.ariseplay.com/amg/www.thisdaylive.com/uploads/cbf71474-td-mtn-1024x1024-1-1024x1024.jpeg"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-13-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 8050
+  },
+  {
+    "event_id": "GLB-13",
+    "index": 2,
+    "name": "The Guardian Nigeria",
+    "url": "https://guardian.ng/news/ndume-tasks-military-to-rescue-79-abducted-schoolchildren-in-southern-borno/",
+    "actual_url": "https://guardian.ng/news/ndume-tasks-military-to-rescue-79-abducted-schoolchildren-in-southern-borno/",
+    "title": "请稍候…",
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [],
+    "image_candidates": [],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-13-source-02-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 1582
+  },
+  {
+    "event_id": "GLB-11",
+    "index": 1,
+    "name": "The Times",
+    "url": "https://www.thetimes.com/uk/defence/article/iranian-hackers-forced-uk-energy-facility-to-shut-for-four-days-q7tdg8dct",
+    "actual_url": "https://www.thetimes.com/uk/defence/article/iranian-hackers-forced-uk-energy-facility-to-shut-for-four-days-q7tdg8dct",
+    "title": "Verifying Device",
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [],
+    "image_candidates": [],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-11-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 1716
+  },
+  {
+    "event_id": "GLB-11",
+    "index": 2,
+    "name": "Financial Times",
+    "url": "https://www.ft.com/content/bae67bb7-ebf8-44fc-8d55-bbfaada47eb7",
+    "actual_url": "https://www.ft.com/content/bae67bb7-ebf8-44fc-8d55-bbfaada47eb7",
+    "title": "请稍候…",
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [],
+    "image_candidates": [],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-11-source-02-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 1390
+  },
+  {
+    "event_id": "GLB-12",
+    "index": 1,
+    "name": "路透社",
+    "url": "https://www.reuters.com/world/middle-east/iran-says-tehran-must-overcome-unjust-sanctions-us-ramps-up-economic-pressure-2026-08-21/",
+    "actual_url": "https://www.reuters.com/world/middle-east/iran-says-tehran-must-overcome-unjust-sanctions-us-ramps-up-economic-pressure-2026-08-21/",
+    "title": "Iran says Tehran must overcome 'unjust sanctions' as US ramps up economic pressure | Reuters",
+    "og_image": "https://www.reuters.com/resizer/v2/YRSMNHJBTFPBXEO6RCM6ZOBGXU.jpg?auth=0e2333df0c731299637386c0bd081520dd34e0db0c868f4ba7fa571577d3029f&height=1005&width=1920&quality=80&smart=true",
+    "twitter_image": "https://www.reuters.com/resizer/v2/YRSMNHJBTFPBXEO6RCM6ZOBGXU.jpg?auth=0e2333df0c731299637386c0bd081520dd34e0db0c868f4ba7fa571577d3029f&height=1005&width=1920&quality=80&smart=true",
+    "detected_image_urls": [
+      "https://www.reuters.com/resizer/v2/YRSMNHJBTFPBXEO6RCM6ZOBGXU.jpg?auth=0e2333df0c731299637386c0bd081520dd34e0db0c868f4ba7fa571577d3029f&height=1005&width=1920&quality=80&smart=true",
+      "https://ajo.prod.reuters.tv/api/v2/img/6a8856d1e4b00ebe10771cf9-1787320029668?width=1080&quality=80"
+    ],
+    "image_candidates": [
+      {
+        "alt": "Iranian shopkeepers see higher prices as US preps fresh sanctions",
+        "nh": 608,
+        "nw": 1080,
+        "src": "https://ajo.prod.reuters.tv/api/v2/img/6a8856d1e4b00ebe10771cf9-1787320029668?width=1080&quality=80"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-12-source-01-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 1734
+  },
+  {
+    "event_id": "GLB-12",
+    "index": 2,
+    "name": "海峽時報",
+    "url": "https://www.straitstimes.com/world/middle-east/iran-warns-any-country-joining-us-sanctions-will-be-considered-an-enemy",
+    "actual_url": "https://www.straitstimes.com/world/middle-east/iran-warns-any-country-joining-us-sanctions-will-be-considered-an-enemy",
+    "title": "Iran warns that any country joining US sanctions will be considered ‘an enemy’ | The Straits Times",
+    "og_image": "https://cassette.sphdigital.com.sg/image/straitstimes/9a8ff5ba8bfa4f33982a06290b5fb7bcc445af66630b03304c32308f0a7e6944",
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://cassette.sphdigital.com.sg/image/straitstimes/9a8ff5ba8bfa4f33982a06290b5fb7bcc445af66630b03304c32308f0a7e6944",
+      "https://www.straitstimes.com/assets/subscribe-placeholder-CAZVQ3f8.png"
+    ],
+    "image_candidates": [
+      {
+        "alt": "An Iranian woman walking past an anti-US mural in the Iranian capital, Tehran, on Aug 17.",
+        "nh": 760,
+        "nw": 1140,
+        "src": "https://cassette.sphdigital.com.sg/image/straitstimes/9a8ff5ba8bfa4f33982a06290b5fb7bcc445af66630b03304c32308f0a7e6944"
+      },
+      {
+        "alt": "Subscribe Placeholder",
+        "nh": 320,
+        "nw": 549,
+        "src": "https://www.straitstimes.com/assets/subscribe-placeholder-CAZVQ3f8.png"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/GLB-12-source-02-attempt-1.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 1,
+    "elapsed_ms": 9374
+  }
+]

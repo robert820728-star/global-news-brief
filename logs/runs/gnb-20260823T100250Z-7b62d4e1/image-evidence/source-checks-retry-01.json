@@ -1,0 +1,402 @@
+[
+  {
+    "event_id": "TWN-02",
+    "index": 1,
+    "name": "中央社",
+    "url": "https://www.cna.com.tw/news/asoc/202608220214.aspx",
+    "actual_url": "https://www.cna.com.tw/news/asoc/202608220214.aspx",
+    "title": "台南安南區廢棄物起火爆炸釀15傷　黃偉哲急返國慰問 | 社會 | 中央社 CNA",
+    "og_image": "https://imgcdn.cna.com.tw/www/webphotos/WebCover/800/20260822/1058x794_176828120028.jpg",
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://imgcdn.cna.com.tw/www/webphotos/WebCover/800/20260822/1058x794_176828120028.jpg",
+      "https://imgcdn.cna.com.tw/www/website/img/line-ad-pc.jpg",
+      "https://imgcdn.cna.com.tw/www/WebPhotos/1024/20260822/1365x768_wmky_0_C20260822000163.jpg"
+    ],
+    "image_candidates": [
+      {
+        "alt": "加入LINE官方帳號",
+        "nh": 220,
+        "nw": 2560,
+        "src": "https://imgcdn.cna.com.tw/www/website/img/line-ad-pc.jpg"
+      },
+      {
+        "alt": "台南市安南區海佃路住宅區空地廢棄物起火爆炸，延燒11戶，造成15人受傷。台南市長黃偉哲（前右）晚間從新加坡趕返探視，慰問災民。中央社記者張榮祥攝　115年8月22日",
+        "nh": 576,
+        "nw": 1024,
+        "src": "https://imgcdn.cna.com.tw/www/WebPhotos/1024/20260822/1365x768_wmky_0_C20260822000163.jpg"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/TWN-02-source-01-attempt-2.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 2,
+    "elapsed_ms": 948
+  },
+  {
+    "event_id": "TWN-02",
+    "index": 2,
+    "name": "聯合報",
+    "url": "https://udn.com/news/story/124990/9708445",
+    "actual_url": "https://udn.com/news/story/124990/9708445",
+    "title": "影／鋁鎂廢料起火…台南巨爆炸出蕈狀雲波及68民宅15人傷 建商急澄清 | 台南廢棄物爆炸 | 社會 | 聯合新聞網",
+    "og_image": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35255094.jpg&M=1&s=Y&x=0&y=0&sw=1279&sh=853&exp=3600",
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35255094.jpg&M=1&s=Y&x=0&y=0&sw=1279&sh=853&exp=3600",
+      "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35255094.jpg&M=1&s=Y&x=0&y=0&sw=1280&sh=960&sl=W&fw=930&exp=3600&w=930&nt=1",
+      "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35256178.png&M=2&s=Y&x=0&y=0&sw=1280&sh=960&exp=3600&w=300&nt=1",
+      "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35255094.jpg&M=1&s=Y&x=0&y=0&sw=1279&sh=853&exp=3600&w=300&nt=1",
+      "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35256130.jpg&M=1&s=Y&x=0&y=0&sw=1279&sh=853&exp=3600&w=300&nt=1",
+      "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35255914.jpg&M=1&s=Y&x=0&y=56&sw=639&sh=426&exp=3600&w=300&nt=1",
+      "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35255623.jpg&M=1&s=Y&x=0&y=0&sw=1143&sh=762&exp=3600&w=300&nt=1",
+      "https://p.udn.com.tw/upf/2014_banners/hype/260807_movie_ruby.jpg"
+    ],
+    "image_candidates": [
+      {
+        "alt": "台南安南區一處空地廢棄物昨天凌晨起火後多次爆炸，方圓100公尺內民宅受波及，3名消防人員在內共15人受傷。圖／消防局提供",
+        "nh": 697,
+        "nw": 929,
+        "src": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35255094.jpg&M=1&s=Y&x=0&y=0&sw=1280&sh=960&sl=W&fw=930&exp=3600&w=930&nt=1"
+      },
+      {
+        "alt": "",
+        "nh": 225,
+        "nw": 300,
+        "src": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35256178.png&M=2&s=Y&x=0&y=0&sw=1280&sh=960&exp=3600&w=300&nt=1"
+      },
+      {
+        "alt": "",
+        "nh": 200,
+        "nw": 300,
+        "src": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35255094.jpg&M=1&s=Y&x=0&y=0&sw=1279&sh=853&exp=3600&w=300&nt=1"
+      },
+      {
+        "alt": "",
+        "nh": 200,
+        "nw": 300,
+        "src": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35256130.jpg&M=1&s=Y&x=0&y=0&sw=1279&sh=853&exp=3600&w=300&nt=1"
+      },
+      {
+        "alt": "",
+        "nh": 200,
+        "nw": 300,
+        "src": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35255914.jpg&M=1&s=Y&x=0&y=56&sw=639&sh=426&exp=3600&w=300&nt=1"
+      },
+      {
+        "alt": "",
+        "nh": 200,
+        "nw": 300,
+        "src": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35255623.jpg&M=1&s=Y&x=0&y=0&sw=1143&sh=762&exp=3600&w=300&nt=1"
+      },
+      {
+        "alt": "",
+        "nh": 1042,
+        "nw": 1250,
+        "src": "https://p.udn.com.tw/upf/2014_banners/hype/260807_movie_ruby.jpg"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/TWN-02-source-02-attempt-2.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 2,
+    "elapsed_ms": 6044
+  },
+  {
+    "event_id": "TWN-03",
+    "index": 1,
+    "name": "路透社",
+    "url": "https://www.reuters.com/world/china/peace-through-strength-taiwan-president-says-china-battle-anniversary-2026-08-23/",
+    "actual_url": "https://www.reuters.com/world/china/peace-through-strength-taiwan-president-says-china-battle-anniversary-2026-08-23/",
+    "title": "Peace through strength, Taiwan president says on China battle anniversary | Reuters",
+    "og_image": "https://www.reuters.com/resizer/v2/JUSNI36J7FOIXOCPAUJLDT7H4M.jpg?auth=050360c4da599f3081a6aeb623533cfa0ba2757d2d8fca8e9bdcf841ae5da2bb&height=1005&width=1920&quality=80&smart=true",
+    "twitter_image": "https://www.reuters.com/resizer/v2/JUSNI36J7FOIXOCPAUJLDT7H4M.jpg?auth=050360c4da599f3081a6aeb623533cfa0ba2757d2d8fca8e9bdcf841ae5da2bb&height=1005&width=1920&quality=80&smart=true",
+    "detected_image_urls": [
+      "https://www.reuters.com/resizer/v2/JUSNI36J7FOIXOCPAUJLDT7H4M.jpg?auth=050360c4da599f3081a6aeb623533cfa0ba2757d2d8fca8e9bdcf841ae5da2bb&height=1005&width=1920&quality=80&smart=true",
+      "https://www.reuters.com/resizer/v2/JUSNI36J7FOIXOCPAUJLDT7H4M.jpg?auth=050360c4da599f3081a6aeb623533cfa0ba2757d2d8fca8e9bdcf841ae5da2bb&width=960&quality=80"
+    ],
+    "image_candidates": [
+      {
+        "alt": "Anniversary of the start of the 1958 Second Taiwan Strait Crisis in Kinmen",
+        "nh": 426,
+        "nw": 640,
+        "src": "https://www.reuters.com/resizer/v2/JUSNI36J7FOIXOCPAUJLDT7H4M.jpg?auth=050360c4da599f3081a6aeb623533cfa0ba2757d2d8fca8e9bdcf841ae5da2bb&width=960&quality=80"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/TWN-03-source-01-attempt-2.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 2,
+    "elapsed_ms": 2817
+  },
+  {
+    "event_id": "TWN-03",
+    "index": 2,
+    "name": "台視新聞",
+    "url": "https://news.ttv.com.tw/news/11508230013900N",
+    "actual_url": null,
+    "title": null,
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [],
+    "image_candidates": [],
+    "evidence_path": null,
+    "status": "failed",
+    "error": "Timed out waiting for tab 7 to navigate to https://news.ttv.com.tw/news/11508230013900N.",
+    "attempts": 2,
+    "elapsed_ms": 10059
+  },
+  {
+    "event_id": "TWN-04",
+    "index": 1,
+    "name": "中央社",
+    "url": "https://www.cna.com.tw/news/afe/202608220195.aspx",
+    "actual_url": "https://www.cna.com.tw/news/afe/202608220195.aspx",
+    "title": "台灣家庭結構轉變　2人以下占比首度過半、1人家庭數超越4人 | 產經 | 中央社 CNA",
+    "og_image": "https://imgcdn.cna.com.tw/www/webphotos/WebCover/800/20260822/1777x1332_538125557836.jpg",
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://imgcdn.cna.com.tw/www/webphotos/WebCover/800/20260822/1777x1332_538125557836.jpg",
+      "https://imgcdn.cna.com.tw/www/website/img/line-ad-pc.jpg",
+      "https://imgcdn.cna.com.tw/www/WebPhotos/1024/20260822/2000x1333_wmkn_325747994698_0.jpg",
+      "https://imgcdn.cna.com.tw/www/website/img/ad300x223.jpg"
+    ],
+    "image_candidates": [
+      {
+        "alt": "加入LINE官方帳號",
+        "nh": 220,
+        "nw": 2560,
+        "src": "https://imgcdn.cna.com.tw/www/website/img/line-ad-pc.jpg"
+      },
+      {
+        "alt": "台灣家庭結構隨婚育觀念改變與少子化趨勢轉變。主計總處最新調查顯示，2人以下家庭占比首度過半，達51.6%。（示意圖／圖取自Unsplash圖庫）",
+        "nh": 682,
+        "nw": 1024,
+        "src": "https://imgcdn.cna.com.tw/www/WebPhotos/1024/20260822/2000x1333_wmkn_325747994698_0.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 223,
+        "nw": 300,
+        "src": "https://imgcdn.cna.com.tw/www/website/img/ad300x223.jpg"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/TWN-04-source-01-attempt-2.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 2,
+    "elapsed_ms": 922
+  },
+  {
+    "event_id": "TWN-04",
+    "index": 2,
+    "name": "經濟日報／聯合新聞網",
+    "url": "https://udn.com/news/story/7266/9708232",
+    "actual_url": "https://udn.com/news/story/7266/9708232",
+    "title": "台灣家庭結構 二人以下成主流 | 生活新聞 | 生活 | 聯合新聞網",
+    "og_image": "https://udn.com/static/img/UDN_BABY.png",
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://udn.com/static/img/UDN_BABY.png",
+      "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/22/35254278.png&M=1&s=Y&x=0&y=0&sw=1200&sh=800&exp=3600&w=300&w=300&nt=1",
+      "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/22/35254556.jpg&M=1&s=Y&x=0&y=0&sw=1024&sh=683&exp=3600&w=300&w=300&nt=1",
+      "https://pgw.udn.com.tw/gw/photo.php?u=https://p.udn.com.tw/upf/2017_news/noimg_cid6649_7.jpg&w=300&nt=1",
+      "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35255661.png&M=1&s=Y&x=0&y=0&sw=1279&sh=853&exp=3600&w=300&nt=1",
+      "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35255654.png&M=1&s=Y&x=0&y=0&sw=954&sh=636&exp=3600&w=300&nt=1",
+      "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35256008.png&M=1&s=Y&x=0&y=0&sw=939&sh=626&exp=3600&w=300&nt=1",
+      "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35255431.png&M=1&s=Y&x=0&y=0&sw=1062&sh=708&exp=3600&w=300&nt=1",
+      "https://p.udn.com.tw/upf/2014_banners/hype/260818_pet_ruby.png"
+    ],
+    "image_candidates": [
+      {
+        "alt": "",
+        "nh": 200,
+        "nw": 300,
+        "src": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/22/35254278.png&M=1&s=Y&x=0&y=0&sw=1200&sh=800&exp=3600&w=300&w=300&nt=1"
+      },
+      {
+        "alt": "",
+        "nh": 200,
+        "nw": 300,
+        "src": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/22/35254556.jpg&M=1&s=Y&x=0&y=0&sw=1024&sh=683&exp=3600&w=300&w=300&nt=1"
+      },
+      {
+        "alt": "",
+        "nh": 200,
+        "nw": 300,
+        "src": "https://pgw.udn.com.tw/gw/photo.php?u=https://p.udn.com.tw/upf/2017_news/noimg_cid6649_7.jpg&w=300&nt=1"
+      },
+      {
+        "alt": "",
+        "nh": 200,
+        "nw": 300,
+        "src": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35255661.png&M=1&s=Y&x=0&y=0&sw=1279&sh=853&exp=3600&w=300&nt=1"
+      },
+      {
+        "alt": "",
+        "nh": 200,
+        "nw": 300,
+        "src": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35255654.png&M=1&s=Y&x=0&y=0&sw=954&sh=636&exp=3600&w=300&nt=1"
+      },
+      {
+        "alt": "",
+        "nh": 200,
+        "nw": 300,
+        "src": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35256008.png&M=1&s=Y&x=0&y=0&sw=939&sh=626&exp=3600&w=300&nt=1"
+      },
+      {
+        "alt": "",
+        "nh": 200,
+        "nw": 300,
+        "src": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/t3/2026/08/23/35255431.png&M=1&s=Y&x=0&y=0&sw=1062&sh=708&exp=3600&w=300&nt=1"
+      },
+      {
+        "alt": "",
+        "nh": 250,
+        "nw": 300,
+        "src": "https://p.udn.com.tw/upf/2014_banners/hype/260818_pet_ruby.png"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/TWN-04-source-02-attempt-2.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 2,
+    "elapsed_ms": 2008
+  },
+  {
+    "event_id": "TWN-05",
+    "index": 1,
+    "name": "中央社",
+    "url": "https://www.cna.com.tw/news/ahel/202608230072.aspx",
+    "actual_url": "https://www.cna.com.tw/news/ahel/202608230072.aspx",
+    "title": "胰臟癌新標靶生存期可望倍增　台灣啟動人體試驗 | 生活 | 中央社 CNA",
+    "og_image": "https://imgcdn.cna.com.tw/www/WebPhotos/1024/20260823/818x1024_wmky_0_C20260823000054.jpg",
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://imgcdn.cna.com.tw/www/WebPhotos/1024/20260823/818x1024_wmky_0_C20260823000054.jpg",
+      "https://imgcdn.cna.com.tw/www/website/img/line-ad-pc.jpg"
+    ],
+    "image_candidates": [
+      {
+        "alt": "加入LINE官方帳號",
+        "nh": 220,
+        "nw": 2560,
+        "src": "https://imgcdn.cna.com.tw/www/website/img/line-ad-pc.jpg"
+      },
+      {
+        "alt": "台北榮民總醫院胃腸肝膽科主治醫師許劭榮（圖）分享，近年胰臟癌治療出現重大突破，標靶治療有新進展，預防術後復發的疫苗治療，也逐漸成為研究新方向。 中央社記者陳婕翎攝 115年8月23日",
+        "nh": 1024,
+        "nw": 818,
+        "src": "https://imgcdn.cna.com.tw/www/WebPhotos/1024/20260823/818x1024_wmky_0_C20260823000054.jpg"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/TWN-05-source-01-attempt-2.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 2,
+    "elapsed_ms": 1066
+  },
+  {
+    "event_id": "CHN-01",
+    "index": 1,
+    "name": "中新網",
+    "url": "https://www.chinanews.com.cn/sh/2026/08-23/10682729.shtml",
+    "actual_url": "https://www.chinanews.com.cn/sh/2026/08-23/10682729.shtml",
+    "title": "台风“紫檀”致广西防城港上思河水暴涨 已转移民众三千多人-中新网",
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260823/a9cd0c31-7184-4861-9036-67a867b88ea5_zsite.jpg",
+      "https://www.chinanews.com.cn/sh/2026/08-23/U892P4T8D10682708F19930DT20260823161854.png",
+      "https://www.chinanews.com.cn/sh/2026/08-23/U892P4T8D10682627F19930DT20260823123550.png",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260823/f6e8904e-6144-457a-a29b-ee5e85212b00_700x1000_zsite_sl.jpeg",
+      "https://www.chinanews.com.cn/sh/2026/08-23/U892P4T8D10682524F19930DT20260823091204.jpg",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260823/37170c1b-01b0-404f-8ea6-75cccbae4235_700x1000_zsite_sl.jpg",
+      "https://i2.chinanews.com.cn/simg/ypt/2026/260822/ac55d7b3-56ec-4fbd-893a-6f67718da73f_700x1000_zsite_sl.JPG",
+      "https://www.chinanews.com.cn/sh/2026/08-22/U1101P4T8D10682248F19930DT20260822132107.jpg",
+      "https://www.chinanews.com.cn/sh/2026/08-21/U892P4T8D10682117F19930DT20260821220307.jpg",
+      "https://www.chinanews.com.cn/sh/2026/08-21/U1045P4T8D10682065F19930DT20260821211048.jpg",
+      "https://www.chinanews.com.cn/sh/2026/08-21/U1118P4T8D10681806F19930DT20260821162851.png",
+      "https://image.chinanews.com/cspimp/2026/08-23/701f0dfc-5493-485d-8375-7b1605a3a68b.JPG"
+    ],
+    "image_candidates": [
+      {
+        "alt": "",
+        "nh": 269,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260823/a9cd0c31-7184-4861-9036-67a867b88ea5_zsite.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/sh/2026/08-23/U892P4T8D10682708F19930DT20260823161854.png"
+      },
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 460,
+        "src": "https://www.chinanews.com.cn/sh/2026/08-23/U892P4T8D10682627F19930DT20260823123550.png"
+      },
+      {
+        "alt": "",
+        "nh": 466,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260823/f6e8904e-6144-457a-a29b-ee5e85212b00_700x1000_zsite_sl.jpeg"
+      },
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/sh/2026/08-23/U892P4T8D10682524F19930DT20260823091204.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 525,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260823/37170c1b-01b0-404f-8ea6-75cccbae4235_700x1000_zsite_sl.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 466,
+        "nw": 700,
+        "src": "https://i2.chinanews.com.cn/simg/ypt/2026/260822/ac55d7b3-56ec-4fbd-893a-6f67718da73f_700x1000_zsite_sl.JPG"
+      },
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/sh/2026/08-22/U1101P4T8D10682248F19930DT20260822132107.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/sh/2026/08-21/U892P4T8D10682117F19930DT20260821220307.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 304,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/sh/2026/08-21/U1045P4T8D10682065F19930DT20260821211048.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 340,
+        "nw": 510,
+        "src": "https://www.chinanews.com.cn/sh/2026/08-21/U1118P4T8D10681806F19930DT20260821162851.png"
+      },
+      {
+        "alt": "",
+        "nh": 259,
+        "nw": 389,
+        "src": "https://image.chinanews.com/cspimp/2026/08-23/701f0dfc-5493-485d-8375-7b1605a3a68b.JPG"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/CHN-01-source-01-attempt-2.jpg",
+    "status": "checked",
+    "error": null,
+    "attempts": 2,
+    "elapsed_ms": 2242
+  }
+]

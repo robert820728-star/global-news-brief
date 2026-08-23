@@ -1,0 +1,196 @@
+[
+  {
+    "event_id": "TWN-01",
+    "index": 1,
+    "name": "中央社",
+    "url": "https://www.cna.com.tw/news/aloc/202608230143.aspx",
+    "actual_url": "https://www.cna.com.tw/news/aloc/202608230143.aspx",
+    "title": "豪雨猛炸南台灣道路積淹水路樹傾倒　高屏撤離逾2000人 | 地方 | 中央社 CNA",
+    "og_image": "https://imgcdn.cna.com.tw/www/webphotos/WebCover/800/20260823/1777x1331_454049325350.jpg",
+    "twitter_image": null,
+    "detected_image_urls": [
+      "https://imgcdn.cna.com.tw/www/webphotos/WebCover/800/20260823/1777x1331_454049325350.jpg",
+      "https://imgcdn.cna.com.tw/www/website/img/line-ad-pc.jpg",
+      "https://imgcdn.cna.com.tw/www/WebPhotos/1024/20260823/1024x768_wmkn_0_C20260823000091.jpg",
+      "https://imgcdn.cna.com.tw/www/website/img/ad300x223.jpg"
+    ],
+    "image_candidates": [
+      {
+        "alt": "加入LINE官方帳號",
+        "nh": 220,
+        "nw": 2560,
+        "src": "https://imgcdn.cna.com.tw/www/website/img/line-ad-pc.jpg"
+      },
+      {
+        "alt": "高雄市政府因應豪雨，災害應變中心自23日下午起由二級提升為一級開設；在六龜與茂林等山區共34條溪流發布土石流紅色警戒，市府一共撤離2203人。（高雄市民政局提供）中央社記者蔡孟妤傳真　115年8月23日",
+        "nh": 768,
+        "nw": 1024,
+        "src": "https://imgcdn.cna.com.tw/www/WebPhotos/1024/20260823/1024x768_wmkn_0_C20260823000091.jpg"
+      },
+      {
+        "alt": "",
+        "nh": 223,
+        "nw": 300,
+        "src": "https://imgcdn.cna.com.tw/www/website/img/ad300x223.jpg"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/TWN-01-source-01.jpg",
+    "status": "checked",
+    "error": null,
+    "elapsed_ms": 751
+  },
+  {
+    "event_id": "TWN-01",
+    "index": 2,
+    "name": "鏡週刊",
+    "url": "https://www.mirrormedia.mg/story/20260823-172soc-120812",
+    "actual_url": "https://www.mirrormedia.mg/story/20260823-172soc-120812",
+    "title": "南部豪雨狂炸累計199件淹水　經濟部應變小組升二級 - 鏡週刊 Mirror Media",
+    "og_image": "https://v3-statics.mirrormedia.mg/images/f741bd77-3c4c-4e55-8f9f-2763fb55df84-w1600.jpg",
+    "twitter_image": "https://v3-statics.mirrormedia.mg/images/f741bd77-3c4c-4e55-8f9f-2763fb55df84-w1600.jpg",
+    "detected_image_urls": [
+      "https://v3-statics.mirrormedia.mg/images/f741bd77-3c4c-4e55-8f9f-2763fb55df84-w1600.jpg",
+      "https://v3-statics.mirrormedia.mg/images/f741bd77-3c4c-4e55-8f9f-2763fb55df84-w1600.webP"
+    ],
+    "image_candidates": [
+      {
+        "alt": "南部持續豪雨，民眾自主防災清除側溝淤積。（水利署提供）",
+        "nh": 1166,
+        "nw": 1600,
+        "src": "https://v3-statics.mirrormedia.mg/images/f741bd77-3c4c-4e55-8f9f-2763fb55df84-w1600.webP"
+      }
+    ],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/TWN-01-source-02.jpg",
+    "status": "checked",
+    "error": null,
+    "elapsed_ms": 5064
+  },
+  {
+    "event_id": "TWN-02",
+    "index": 1,
+    "name": "中央社",
+    "url": "https://www.cna.com.tw/news/asoc/202608220214.aspx",
+    "actual_url": "about:blank",
+    "title": "",
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [],
+    "image_candidates": [],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/TWN-02-source-01.jpg",
+    "status": "checked",
+    "error": null,
+    "elapsed_ms": 1936
+  },
+  {
+    "event_id": "TWN-02",
+    "index": 2,
+    "name": "聯合報",
+    "url": "https://udn.com/news/story/124990/9708445",
+    "actual_url": "about:blank",
+    "title": "",
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [],
+    "image_candidates": [],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/TWN-02-source-02.jpg",
+    "status": "checked",
+    "error": null,
+    "elapsed_ms": 7511
+  },
+  {
+    "event_id": "TWN-03",
+    "index": 1,
+    "name": "路透社",
+    "url": "https://www.reuters.com/world/china/peace-through-strength-taiwan-president-says-china-battle-anniversary-2026-08-23/",
+    "actual_url": "about:blank",
+    "title": "",
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [],
+    "image_candidates": [],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/TWN-03-source-01.jpg",
+    "status": "checked",
+    "error": null,
+    "elapsed_ms": 5277
+  },
+  {
+    "event_id": "TWN-03",
+    "index": 2,
+    "name": "台視新聞",
+    "url": "https://news.ttv.com.tw/news/11508230013900N",
+    "actual_url": null,
+    "title": null,
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [],
+    "image_candidates": [],
+    "evidence_path": null,
+    "status": "failed",
+    "error": "Timed out waiting for tab 3 to navigate to https://news.ttv.com.tw/news/11508230013900N.",
+    "elapsed_ms": 10934
+  },
+  {
+    "event_id": "TWN-04",
+    "index": 1,
+    "name": "中央社",
+    "url": "https://www.cna.com.tw/news/afe/202608220195.aspx",
+    "actual_url": "about:blank",
+    "title": "",
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [],
+    "image_candidates": [],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/TWN-04-source-01.jpg",
+    "status": "checked",
+    "error": null,
+    "elapsed_ms": 1416
+  },
+  {
+    "event_id": "TWN-04",
+    "index": 2,
+    "name": "經濟日報／聯合新聞網",
+    "url": "https://udn.com/news/story/7266/9708232",
+    "actual_url": "about:blank",
+    "title": "",
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [],
+    "image_candidates": [],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/TWN-04-source-02.jpg",
+    "status": "checked",
+    "error": null,
+    "elapsed_ms": 3236
+  },
+  {
+    "event_id": "TWN-05",
+    "index": 1,
+    "name": "中央社",
+    "url": "https://www.cna.com.tw/news/ahel/202608230072.aspx",
+    "actual_url": "about:blank",
+    "title": "",
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [],
+    "image_candidates": [],
+    "evidence_path": "/home/oai/share/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/image-evidence/TWN-05-source-01.jpg",
+    "status": "checked",
+    "error": null,
+    "elapsed_ms": 4923
+  },
+  {
+    "event_id": "CHN-01",
+    "index": 1,
+    "name": "中新網",
+    "url": "https://www.chinanews.com.cn/sh/2026/08-23/10682729.shtml",
+    "actual_url": null,
+    "title": null,
+    "og_image": null,
+    "twitter_image": null,
+    "detected_image_urls": [],
+    "image_candidates": [],
+    "evidence_path": null,
+    "status": "failed",
+    "error": "Timed out waiting for tab 3 to navigate to https://www.chinanews.com.cn/sh/2026/08-23/10682729.shtml.",
+    "elapsed_ms": 10390
+  }
+]

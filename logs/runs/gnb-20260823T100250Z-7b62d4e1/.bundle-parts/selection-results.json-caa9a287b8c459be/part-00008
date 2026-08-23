@@ -1,0 +1,4543 @@
+�持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aipl/202608230135.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "鄭麗文：盼八二三70週年由國民黨總統赴金門紀念"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-3e5fdaaef3c36162",
+      "dedup_key": "693a2b377feacf6239e8478a",
+      "semantic_event_id": "sem-row-f26cc5eaacf7f77c4c68",
+      "event_identity": {
+        "who_or_what": "蔣萬安輔選張啓楷 王美惠：持續爭取資源建設嘉義市",
+        "what_happened": "本輪來源確認「蔣萬安輔選張啓楷 王美惠：持續爭取資源建設嘉義市」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T17:04:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T17:04:00+08:00",
+        "material_update_at": "2026-08-23T17:04:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 地方\n蔣萬安輔選張啓楷　王美惠：持續爭取資源建設嘉義市\n2026/8/23 17:04（8/23 17:16 更新）\n台北市長蔣萬安（左3）23日在嘉義市長黃敏惠（右3）陪同下，出席國民黨嘉義市婦女會理事長交接典禮暨民眾黨嘉義市長參選人張啓楷（右2）婦女社團後援總會成立大會，受到熱烈歡迎。中央社記者黃國芳攝　115年8月23日\n\n（中央社記者黃國芳嘉義市23日電）台北市長蔣萬安今天至嘉義市為民眾黨嘉義市長參選人張啓楷輔選，推薦",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：蔣萬安輔選張啓楷 王美惠：持續爭取資源建設嘉義市"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 地方\n蔣萬安輔選張啓楷　王美惠：持續爭取資源建設嘉義市\n2026/8/23 17:04（8/23 17:16 更新）\n台北市長蔣萬安（左3）23日在嘉義市長黃敏惠（右3）陪同下，出席國民黨嘉義市婦女會理事長交接典禮暨民眾黨嘉義市長參選人張啓楷（右2）婦女社團後援總會成立大會，受到熱烈歡迎。中央社記者黃國芳攝　115年8月23日\n\n（中央社記者黃國芳嘉義市23日電）台北市長蔣萬安今天至嘉義市為民眾黨嘉義市長參選人張啓楷輔選，推薦"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "蔣萬安輔選張啓楷 王美惠：持續爭取資源建設嘉義市",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "蔣萬安輔選張啓楷 王美惠：持續爭取資源建設嘉義市 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "蔣萬安輔選張啓楷 王美惠：持續爭取資源建設嘉義市：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "蔣萬安輔選張啓楷 王美惠：持續爭取資源建設嘉義市 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：蔣萬安輔選張啓楷 王美惠：持續爭取資源建設嘉義市"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aloc/202608230134.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "蔣萬安輔選張啓楷 王美惠：持續爭取資源建設嘉義市"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-a238a2cedef4d0ef",
+      "dedup_key": "849f05c10ae713f724e456f3",
+      "semantic_event_id": "sem-row-bee06217e964d1597147",
+      "event_identity": {
+        "who_or_what": "烏克蘭無人機襲物流中心 俄電商Ozon倉庫受損",
+        "what_happened": "本輪來源確認「烏克蘭無人機襲物流中心 俄電商Ozon倉庫受損」所述具體事件或實質更新。",
+        "where": "UKR",
+        "when": "2026-08-23T16:58:00+08:00",
+        "country_codes": [
+          "UKR"
+        ],
+        "primary_country_code": "UKR",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 UKR。",
+        "event_occurred_at": "2026-08-23T16:58:00+08:00",
+        "material_update_at": "2026-08-23T16:58:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 國際\n烏克蘭無人機襲物流中心　俄電商Ozon倉庫受損\n2026/8/23 16:58\n\n（中央社莫斯科23日綜合外電報導）俄羅斯奧倫堡州州長索倫采夫今天表示，當地兩處工業設施遭無人機殘骸擊中，其中包括俄國大型網路零售業者Ozon擁有的一座倉庫。\n\n路透社報導，索倫采夫（Yevgeny Solntsev）指出，俄羅斯國防部在奧倫堡州（Orenburg）擊退6架無人機，無人受傷。他並未透露另一處受損設施的名稱。\n\n俄羅斯第2大網路",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：烏克蘭無人機襲物流中心 俄電商Ozon倉庫受損"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 國際\n烏克蘭無人機襲物流中心　俄電商Ozon倉庫受損\n2026/8/23 16:58\n\n（中央社莫斯科23日綜合外電報導）俄羅斯奧倫堡州州長索倫采夫今天表示，當地兩處工業設施遭無人機殘骸擊中，其中包括俄國大型網路零售業者Ozon擁有的一座倉庫。\n\n路透社報導，索倫采夫（Yevgeny Solntsev）指出，俄羅斯國防部在奧倫堡州（Orenburg）擊退6架無人機，無人受傷。他並未透露另一處受損設施的名稱。\n\n俄羅斯第2大網路"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "烏克蘭無人機襲物流中心 俄電商Ozon倉庫受損",
+      "section": "GLB",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "烏克蘭無人機襲物流中心 俄電商Ozon倉庫受損 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "烏克蘭無人機襲物流中心 俄電商Ozon倉庫受損：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "烏克蘭無人機襲物流中心 俄電商Ozon倉庫受損 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：烏克蘭無人機襲物流中心 俄電商Ozon倉庫受損"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": false,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aopl/202608230132.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "烏克蘭無人機襲物流中心 俄電商Ozon倉庫受損"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-fcb6980a4c0e3eed",
+      "dedup_key": "f387ece603e2f51089ea1f68",
+      "semantic_event_id": "sem-row-2ed72553332d730b90a6",
+      "event_identity": {
+        "who_or_what": "日本政府擬再砸300億出資Rapidus 總金額上看800億",
+        "what_happened": "本輪來源確認「日本政府擬再砸300億出資Rapidus 總金額上看800億」所述具體事件或實質更新。",
+        "where": "JPN",
+        "when": "2026-08-23T16:58:00+08:00",
+        "country_codes": [
+          "JPN"
+        ],
+        "primary_country_code": "JPN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 JPN。",
+        "event_occurred_at": "2026-08-23T16:58:00+08:00",
+        "material_update_at": "2026-08-23T16:58:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 產經\n日本政府擬再砸300億出資Rapidus　總金額上看800億\n2026/8/23 16:58（8/23 17:15 更新）\n圖為半導體大廠Rapidus的Logo。（路透社）\n\n（中央社東京23日綜合外電報導）日本經濟產業省預計將在明年度預算概算要求中，爭取對半導體大廠Rapidus追加1500億日圓出資。若順利實現，這將是日本政府第3度出資，累計出資額將達4000億日圓。\n\n日本放送協會（NHK）報導，半導體是家電、智",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：日本政府擬再砸300億出資Rapidus 總金額上看800億"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 產經\n日本政府擬再砸300億出資Rapidus　總金額上看800億\n2026/8/23 16:58（8/23 17:15 更新）\n圖為半導體大廠Rapidus的Logo。（路透社）\n\n（中央社東京23日綜合外電報導）日本經濟產業省預計將在明年度預算概算要求中，爭取對半導體大廠Rapidus追加1500億日圓出資。若順利實現，這將是日本政府第3度出資，累計出資額將達4000億日圓。\n\n日本放送協會（NHK）報導，半導體是家電、智"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "日本政府擬再砸300億出資Rapidus 總金額上看800億",
+      "section": "GLB",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "日本政府擬再砸300億出資Rapidus 總金額上看800億 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "日本政府擬再砸300億出資Rapidus 總金額上看800億：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "日本政府擬再砸300億出資Rapidus 總金額上看800億 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：日本政府擬再砸300億出資Rapidus 總金額上看800億"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": false,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/afe/202608230131.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "日本政府擬再砸300億出資Rapidus 總金額上看800億"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-063f2b6b36c3fa35",
+      "dedup_key": "6f6807e1a22d7d3efd3f9bbd",
+      "semantic_event_id": "sem-row-550c45fe567061bf1ca9",
+      "event_identity": {
+        "who_or_what": "跨界搶生意 中國西安電影院推午休服務日均不到5元",
+        "what_happened": "本輪來源確認「跨界搶生意 中國西安電影院推午休服務日均不到5元」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T16:53:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T16:53:00+08:00",
+        "material_update_at": "2026-08-23T16:53:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 兩岸\n跨界搶生意 中國西安電影院推午休服務日均不到5元\n2026/8/23 16:53\n\n（中央社台北23日電）中國陝西西安有家電影院推出「午休服務」，將放映廳打造為上班族的午間休息室，辦理會員即可在工作日中午「躺平」2個半小時，折合每天平均消費人民幣1元（約合新台幣4.7元），吸引不少附近上班族光顧。\n\n綜合大河報等陸媒報導，提供「午休服務」的是西安盧米埃影城，宣傳海報顯示，服務時間為工作日中午12時至下午2時30分，電影院",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：跨界搶生意 中國西安電影院推午休服務日均不到5元"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 兩岸\n跨界搶生意 中國西安電影院推午休服務日均不到5元\n2026/8/23 16:53\n\n（中央社台北23日電）中國陝西西安有家電影院推出「午休服務」，將放映廳打造為上班族的午間休息室，辦理會員即可在工作日中午「躺平」2個半小時，折合每天平均消費人民幣1元（約合新台幣4.7元），吸引不少附近上班族光顧。\n\n綜合大河報等陸媒報導，提供「午休服務」的是西安盧米埃影城，宣傳海報顯示，服務時間為工作日中午12時至下午2時30分，電影院"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "跨界搶生意 中國西安電影院推午休服務日均不到5元",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "跨界搶生意 中國西安電影院推午休服務日均不到5元 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "跨界搶生意 中國西安電影院推午休服務日均不到5元：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "跨界搶生意 中國西安電影院推午休服務日均不到5元 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：跨界搶生意 中國西安電影院推午休服務日均不到5元"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/acn/202608230129.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "跨界搶生意 中國西安電影院推午休服務日均不到5元"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-d51065d5d7a58316",
+      "dedup_key": "d27edd706be7095b3310c223",
+      "semantic_event_id": "sem-row-307bf8ae1dab45f8e377",
+      "event_identity": {
+        "who_or_what": "新疆葡萄产业加速“数智化”转型",
+        "what_happened": "本輪來源確認「新疆葡萄产业加速“数智化”转型」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T16:53:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T16:53:00+08:00",
+        "material_update_at": "2026-08-23T16:53:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：ime\">8-23 17:38 [ 理论 ] 【好评中国】致敬科学家，仰望时代最闪光的精神坐标 8-23 17:36 [ 时政 ] 外交部副部长苗得雨会见伊朗外交部副部长加里布阿巴迪 8-23 17:13 [ 财经 ] 新疆葡萄产业加速“数智化”转型 8-23 16:53 [ 时政 ] 2026年黄河流域找矿突破与生态修复技术发展大会在济南举行 8-23 16:48 [ 社会 ] 台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙 ",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：新疆葡萄产业加速“数智化”转型"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：ime\">8-23 17:38 [ 理论 ] 【好评中国】致敬科学家，仰望时代最闪光的精神坐标 8-23 17:36 [ 时政 ] 外交部副部长苗得雨会见伊朗外交部副部长加里布阿巴迪 8-23 17:13 [ 财经 ] 新疆葡萄产业加速“数智化”转型 8-23 16:53 [ 时政 ] 2026年黄河流域找矿突破与生态修复技术发展大会在济南举行 8-23 16:48 [ 社会 ] 台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙 "
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "新疆葡萄产业加速“数智化”转型",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "新疆葡萄产业加速“数智化”转型 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "新疆葡萄产业加速“数智化”转型：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "新疆葡萄产业加速“数智化”转型 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：新疆葡萄产业加速“数智化”转型"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/cj/2026/08-23/10682725.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "新疆葡萄产业加速“数智化”转型"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-31a514e20eba6505",
+      "dedup_key": "92984f2fa0cc88a42f60acb9",
+      "semantic_event_id": "sem-row-b036ea74a9ad9d13b34d",
+      "event_identity": {
+        "who_or_what": "台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙",
+        "what_happened": "本輪來源確認「台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T16:48:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T16:48:00+08:00",
+        "material_update_at": "2026-08-23T16:48:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：8-23 17:13 [ 财经 ] 新疆葡萄产业加速“数智化”转型 8-23 16:53 [ 时政 ] 2026年黄河流域找矿突破与生态修复技术发展大会在济南举行 8-23 16:48 [ 社会 ] 台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙 8-23 16:48 [ 社会 ] 广西崇左边境管理支队闻讯而动 奋战台风“紫檀”抢险救灾一线 8-23 16:44 [ 时政 ] 国家卫健委通报7位存在严重不良行为的项目评审专家被处",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：8-23 17:13 [ 财经 ] 新疆葡萄产业加速“数智化”转型 8-23 16:53 [ 时政 ] 2026年黄河流域找矿突破与生态修复技术发展大会在济南举行 8-23 16:48 [ 社会 ] 台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙 8-23 16:48 [ 社会 ] 广西崇左边境管理支队闻讯而动 奋战台风“紫檀”抢险救灾一线 8-23 16:44 [ 时政 ] 国家卫健委通报7位存在严重不良行为的项目评审专家被处"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682726.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-43d7e882e37dc514",
+      "dedup_key": "49c1f6acc89767e2f854be06",
+      "semantic_event_id": "sem-row-5a7fac624ca7ec514b38",
+      "event_identity": {
+        "who_or_what": "广西崇左边境管理支队闻讯而动 奋战台风“紫檀”抢险救灾一线",
+        "what_happened": "本輪來源確認「广西崇左边境管理支队闻讯而动 奋战台风“紫檀”抢险救灾一线」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T16:44:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T16:44:00+08:00",
+        "material_update_at": "2026-08-23T16:44:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：v> [ 时政 ] 2026年黄河流域找矿突破与生态修复技术发展大会在济南举行 8-23 16:48 [ 社会 ] 台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙 8-23 16:48 [ 社会 ] 广西崇左边境管理支队闻讯而动 奋战台风“紫檀”抢险救灾一线 8-23 16:44 [ 时政 ] 国家卫健委通报7位存在严重不良行为的项目评审专家被处理 8-23 16:43 [ 东盟 ] （走进中国乡村）古老民族服饰成“潮流” 广西",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：广西崇左边境管理支队闻讯而动 奋战台风“紫檀”抢险救灾一线"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：v> [ 时政 ] 2026年黄河流域找矿突破与生态修复技术发展大会在济南举行 8-23 16:48 [ 社会 ] 台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙 8-23 16:48 [ 社会 ] 广西崇左边境管理支队闻讯而动 奋战台风“紫檀”抢险救灾一线 8-23 16:44 [ 时政 ] 国家卫健委通报7位存在严重不良行为的项目评审专家被处理 8-23 16:43 [ 东盟 ] （走进中国乡村）古老民族服饰成“潮流” 广西"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "广西崇左边境管理支队闻讯而动 奋战台风“紫檀”抢险救灾一线",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "广西崇左边境管理支队闻讯而动 奋战台风“紫檀”抢险救灾一线 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "广西崇左边境管理支队闻讯而动 奋战台风“紫檀”抢险救灾一线：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "广西崇左边境管理支队闻讯而动 奋战台风“紫檀”抢险救灾一线 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：广西崇左边境管理支队闻讯而动 奋战台风“紫檀”抢险救灾一线"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682720.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "广西崇左边境管理支队闻讯而动 奋战台风“紫檀”抢险救灾一线"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-ec22355f1fb024b3",
+      "dedup_key": "60f9576d20b804e1c56e7deb",
+      "semantic_event_id": "sem-row-cb610c5a9e6a22634980",
+      "event_identity": {
+        "who_or_what": "部落農民響應玉山友善棲地標章 收成分享野生動物",
+        "what_happened": "本輪來源確認「部落農民響應玉山友善棲地標章 收成分享野生動物」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T16:43:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T16:43:00+08:00",
+        "material_update_at": "2026-08-23T16:43:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 生活\n部落農民響應玉山友善棲地標章　收成分享野生動物\n2026/8/23 16:43（8/23 16:56 更新）\n玉山國家公園管理處23日在台中舉辦「遇見玉山–夏日綠市集暨永續保育教育成果發表」，集結部落農民推廣友善耕作，搭配特展、生態影片放映與體驗等，帶領民眾認識玉山之美。（玉山國家公園管理處提供）中央社記者蕭博陽南投縣傳真　115年8月23日\n\n（中央社記者蕭博陽南投縣23日電）玉管處推動「玉山友善棲地標章」，玉山園區周",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：部落農民響應玉山友善棲地標章 收成分享野生動物"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 生活\n部落農民響應玉山友善棲地標章　收成分享野生動物\n2026/8/23 16:43（8/23 16:56 更新）\n玉山國家公園管理處23日在台中舉辦「遇見玉山–夏日綠市集暨永續保育教育成果發表」，集結部落農民推廣友善耕作，搭配特展、生態影片放映與體驗等，帶領民眾認識玉山之美。（玉山國家公園管理處提供）中央社記者蕭博陽南投縣傳真　115年8月23日\n\n（中央社記者蕭博陽南投縣23日電）玉管處推動「玉山友善棲地標章」，玉山園區周"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "部落農民響應玉山友善棲地標章 收成分享野生動物",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "部落農民響應玉山友善棲地標章 收成分享野生動物 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "部落農民響應玉山友善棲地標章 收成分享野生動物：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "部落農民響應玉山友善棲地標章 收成分享野生動物 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：部落農民響應玉山友善棲地標章 收成分享野生動物"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/ahel/202608230128.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "部落農民響應玉山友善棲地標章 收成分享野生動物"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-4661bd9c9f53bf83",
+      "dedup_key": "63af78fce95ea0654111a7a5",
+      "semantic_event_id": "sem-row-a505f01f379b96c17578",
+      "event_identity": {
+        "who_or_what": "国家卫健委通报7位存在严重不良行为的项目评审专家被处理",
+        "what_happened": "本輪來源確認「国家卫健委通报7位存在严重不良行为的项目评审专家被处理」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T16:43:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T16:43:00+08:00",
+        "material_update_at": "2026-08-23T16:43:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：v> [ 社会 ] 台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙 8-23 16:48 [ 社会 ] 广西崇左边境管理支队闻讯而动 奋战台风“紫檀”抢险救灾一线 8-23 16:44 [ 时政 ] 国家卫健委通报7位存在严重不良行为的项目评审专家被处理 8-23 16:43 [ 东盟 ] （走进中国乡村）古老民族服饰成“潮流” 广西乡镇“绣”出千万产业闯东盟 8-23 16:38 [ 社会 ] 受台风影响 海南环岛高铁24日部",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：国家卫健委通报7位存在严重不良行为的项目评审专家被处理"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：v> [ 社会 ] 台风“沙德尔”睁眼！中央气象台：睁眼的台风都是厉害家伙 8-23 16:48 [ 社会 ] 广西崇左边境管理支队闻讯而动 奋战台风“紫檀”抢险救灾一线 8-23 16:44 [ 时政 ] 国家卫健委通报7位存在严重不良行为的项目评审专家被处理 8-23 16:43 [ 东盟 ] （走进中国乡村）古老民族服饰成“潮流” 广西乡镇“绣”出千万产业闯东盟 8-23 16:38 [ 社会 ] 受台风影响 海南环岛高铁24日部"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "国家卫健委通报7位存在严重不良行为的项目评审专家被处理",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "国家卫健委通报7位存在严重不良行为的项目评审专家被处理 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "国家卫健委通报7位存在严重不良行为的项目评审专家被处理：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "国家卫健委通报7位存在严重不良行为的项目评审专家被处理 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：国家卫健委通报7位存在严重不良行为的项目评审专家被处理"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/gn/2026/08-23/10682717.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "国家卫健委通报7位存在严重不良行为的项目评审专家被处理"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-86d4db05ca329ba9",
+      "dedup_key": "4fcc5d07671d28d1435ce828",
+      "semantic_event_id": "sem-row-6ac3edf66c1ce7fd65df",
+      "event_identity": {
+        "who_or_what": "氣象署：南部、東部晚間防豪雨以上降雨 估雨勢至25日",
+        "what_happened": "本輪來源確認「氣象署：南部、東部晚間防豪雨以上降雨 估雨勢至25日」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T16:38:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T16:38:00+08:00",
+        "material_update_at": "2026-08-23T16:38:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：氣象署：南部、東部晚間防豪雨以上降雨　估雨勢至25日\n2026/8/23 16:38（8/23 17:45 更新）\n影片來源：CWA氣象署\n\n（中央社記者張雄風台北23日電）氣象署今天表示，晚間起南部降雨持續，東部雨勢也會愈晚愈明顯，均須嚴防豪雨等級以上降雨，預計降雨持續至25日；27日起的天氣與颱風沙德爾路徑有關，估北台灣降雨增加。\n\n氣象署23日表示，南部及東部須嚴防豪雨以上降雨。（圖取自中央氣象署網頁cwa.gov.tw）\n豪雨猛",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：氣象署：南部、東部晚間防豪雨以上降雨 估雨勢至25日"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：氣象署：南部、東部晚間防豪雨以上降雨　估雨勢至25日\n2026/8/23 16:38（8/23 17:45 更新）\n影片來源：CWA氣象署\n\n（中央社記者張雄風台北23日電）氣象署今天表示，晚間起南部降雨持續，東部雨勢也會愈晚愈明顯，均須嚴防豪雨等級以上降雨，預計降雨持續至25日；27日起的天氣與颱風沙德爾路徑有關，估北台灣降雨增加。\n\n氣象署23日表示，南部及東部須嚴防豪雨以上降雨。（圖取自中央氣象署網頁cwa.gov.tw）\n豪雨猛"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "氣象署：南部、東部晚間防豪雨以上降雨 估雨勢至25日",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "氣象署：南部、東部晚間防豪雨以上降雨 估雨勢至25日 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "氣象署：南部、東部晚間防豪雨以上降雨 估雨勢至25日：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "氣象署：南部、東部晚間防豪雨以上降雨 估雨勢至25日 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：氣象署：南部、東部晚間防豪雨以上降雨 估雨勢至25日"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/ahel/202608230126.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "氣象署：南部、東部晚間防豪雨以上降雨 估雨勢至25日"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-1db1981e1764258c",
+      "dedup_key": "ff6168e7432a30c27806a7e3",
+      "semantic_event_id": "sem-row-0d9192b0a17943fec1d0",
+      "event_identity": {
+        "who_or_what": "受台风影响 海南环岛高铁24日部分旅客列车临时停运",
+        "what_happened": "本輪來源確認「受台风影响 海南环岛高铁24日部分旅客列车临时停运」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T16:36:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T16:36:00+08:00",
+        "material_update_at": "2026-08-23T16:36:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：> [ 时政 ] 国家卫健委通报7位存在严重不良行为的项目评审专家被处理 8-23 16:43 [ 东盟 ] （走进中国乡村）古老民族服饰成“潮流” 广西乡镇“绣”出千万产业闯东盟 8-23 16:38 [ 社会 ] 受台风影响 海南环岛高铁24日部分旅客列车临时停运 8-23 16:36 [ 社会 ] 台风“紫檀”致广西崇左持续强降雨 多地景区临时关停 8-23 16:36 [ 社会 ] 一件红军衣背后的共同奔赴《五彩红军衣》讲述同心",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：受台风影响 海南环岛高铁24日部分旅客列车临时停运"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：> [ 时政 ] 国家卫健委通报7位存在严重不良行为的项目评审专家被处理 8-23 16:43 [ 东盟 ] （走进中国乡村）古老民族服饰成“潮流” 广西乡镇“绣”出千万产业闯东盟 8-23 16:38 [ 社会 ] 受台风影响 海南环岛高铁24日部分旅客列车临时停运 8-23 16:36 [ 社会 ] 台风“紫檀”致广西崇左持续强降雨 多地景区临时关停 8-23 16:36 [ 社会 ] 一件红军衣背后的共同奔赴《五彩红军衣》讲述同心"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "受台风影响 海南环岛高铁24日部分旅客列车临时停运",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "受台风影响 海南环岛高铁24日部分旅客列车临时停运 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "受台风影响 海南环岛高铁24日部分旅客列车临时停运：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "受台风影响 海南环岛高铁24日部分旅客列车临时停运 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：受台风影响 海南环岛高铁24日部分旅客列车临时停运"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682719.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "受台风影响 海南环岛高铁24日部分旅客列车临时停运"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-b4d7096975acf0ee",
+      "dedup_key": "c682870e2570ea5d9839f0c8",
+      "semantic_event_id": "sem-row-5bf0c127977e400333a9",
+      "event_identity": {
+        "who_or_what": "一件红军衣背后的共同奔赴《五彩红军衣》讲述同心长征路",
+        "what_happened": "本輪來源確認「一件红军衣背后的共同奔赴《五彩红军衣》讲述同心长征路」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T16:35:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T16:35:00+08:00",
+        "material_update_at": "2026-08-23T16:35:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：[ 社会 ] 受台风影响 海南环岛高铁24日部分旅客列车临时停运 8-23 16:36 [ 社会 ] 台风“紫檀”致广西崇左持续强降雨 多地景区临时关停 8-23 16:36 [ 社会 ] 一件红军衣背后的共同奔赴《五彩红军衣》讲述同心长征路 8-23 16:35 [ 社会 ] “旅客买票占座放零食”应如何处理？专家解读相关法规 8-23 16:29 [ 社会 ] 广西多地强降雨引发内涝洪水 台风“紫檀”影响仍将持续 8-23 16:2",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：一件红军衣背后的共同奔赴《五彩红军衣》讲述同心长征路"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：[ 社会 ] 受台风影响 海南环岛高铁24日部分旅客列车临时停运 8-23 16:36 [ 社会 ] 台风“紫檀”致广西崇左持续强降雨 多地景区临时关停 8-23 16:36 [ 社会 ] 一件红军衣背后的共同奔赴《五彩红军衣》讲述同心长征路 8-23 16:35 [ 社会 ] “旅客买票占座放零食”应如何处理？专家解读相关法规 8-23 16:29 [ 社会 ] 广西多地强降雨引发内涝洪水 台风“紫檀”影响仍将持续 8-23 16:2"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "一件红军衣背后的共同奔赴《五彩红军衣》讲述同心长征路",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "一件红军衣背后的共同奔赴《五彩红军衣》讲述同心长征路 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "一件红军衣背后的共同奔赴《五彩红军衣》讲述同心长征路：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "一件红军衣背后的共同奔赴《五彩红军衣》讲述同心长征路 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：一件红军衣背后的共同奔赴《五彩红军衣》讲述同心长征路"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682712.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "一件红军衣背后的共同奔赴《五彩红军衣》讲述同心长征路"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-e7818662f82d31ef",
+      "dedup_key": "b238d2e5e4f30967af613a47",
+      "semantic_event_id": "sem-row-15c8c3cc1522bc04e080",
+      "event_identity": {
+        "who_or_what": "投入教育40年 竹縣十興國小校長徐發斌獲師鐸獎",
+        "what_happened": "本輪來源確認「投入教育40年 竹縣十興國小校長徐發斌獲師鐸獎」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T16:34:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T16:34:00+08:00",
+        "material_update_at": "2026-08-23T16:34:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 地方\n投入教育40年　竹縣十興國小校長徐發斌獲師鐸獎\n2026/8/23 16:34（8/23 16:46 更新）\n新竹縣竹北市十興國小校長徐發斌（圖）投入教育40年，推動閱讀、科技及客語教育有成，在校內推動「大帶小」陪伴機制等，榮獲115年師鐸獎肯定。（新竹縣政府提供）中央社記者魯鋼駿傳真　115年8月23日\n\n（中央社記者魯鋼駿新竹縣23日電）新竹縣竹北市十興國小校長徐發斌獲教育部115年師鐸獎肯定，他表示，獲獎讓他重新省",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：投入教育40年 竹縣十興國小校長徐發斌獲師鐸獎"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 地方\n投入教育40年　竹縣十興國小校長徐發斌獲師鐸獎\n2026/8/23 16:34（8/23 16:46 更新）\n新竹縣竹北市十興國小校長徐發斌（圖）投入教育40年，推動閱讀、科技及客語教育有成，在校內推動「大帶小」陪伴機制等，榮獲115年師鐸獎肯定。（新竹縣政府提供）中央社記者魯鋼駿傳真　115年8月23日\n\n（中央社記者魯鋼駿新竹縣23日電）新竹縣竹北市十興國小校長徐發斌獲教育部115年師鐸獎肯定，他表示，獲獎讓他重新省"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "投入教育40年 竹縣十興國小校長徐發斌獲師鐸獎",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "投入教育40年 竹縣十興國小校長徐發斌獲師鐸獎 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "投入教育40年 竹縣十興國小校長徐發斌獲師鐸獎：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "投入教育40年 竹縣十興國小校長徐發斌獲師鐸獎 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：投入教育40年 竹縣十興國小校長徐發斌獲師鐸獎"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aloc/202608230125.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "投入教育40年 竹縣十興國小校長徐發斌獲師鐸獎"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-e0d8e40e736a82c4",
+      "dedup_key": "0bf6b79b0f1f6e601312f263",
+      "semantic_event_id": "sem-row-42bdc7288859dd28110d",
+      "event_identity": {
+        "who_or_what": "總統提立法院及行政院遷台中 何欣純江啟臣都支持",
+        "what_happened": "本輪來源確認「總統提立法院及行政院遷台中 何欣純江啟臣都支持」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T16:33:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T16:33:00+08:00",
+        "material_update_at": "2026-08-23T16:33:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：總統提立法院及行政院遷台中　何欣純江啟臣都支持\n2026/8/23 16:33（8/23 16:56 更新）\n總統賴清德22日提及行政院及立法院遷台中議題，民進黨台中市長參選人何欣純（前中）23日受訪時表達支持；但也知道須更多社會共識，認為是可讓全民討論的議題。中央社記者郝雪卿攝　115年8月23日\n\n（中央社記者郝雪卿台中23日電）總統賴清德昨天提到希望行政院及立法院遷台中，民進黨、國民黨台中市長參選人何欣純及江啟臣今天對此都表支持，",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：總統提立法院及行政院遷台中 何欣純江啟臣都支持"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：總統提立法院及行政院遷台中　何欣純江啟臣都支持\n2026/8/23 16:33（8/23 16:56 更新）\n總統賴清德22日提及行政院及立法院遷台中議題，民進黨台中市長參選人何欣純（前中）23日受訪時表達支持；但也知道須更多社會共識，認為是可讓全民討論的議題。中央社記者郝雪卿攝　115年8月23日\n\n（中央社記者郝雪卿台中23日電）總統賴清德昨天提到希望行政院及立法院遷台中，民進黨、國民黨台中市長參選人何欣純及江啟臣今天對此都表支持，"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "總統提立法院及行政院遷台中 何欣純江啟臣都支持",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "總統提立法院及行政院遷台中 何欣純江啟臣都支持 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "總統提立法院及行政院遷台中 何欣純江啟臣都支持：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "總統提立法院及行政院遷台中 何欣純江啟臣都支持 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：總統提立法院及行政院遷台中 何欣純江啟臣都支持"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aloc/202608230124.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "總統提立法院及行政院遷台中 何欣純江啟臣都支持"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-b1b7775e9e0ec6a7",
+      "dedup_key": "7eb926e78491cb94599d2576",
+      "semantic_event_id": "sem-row-5bbb405c902c47219232",
+      "event_identity": {
+        "who_or_what": "嚴防豪雨致災 陳其邁視察北高雄防汛設施強化整備",
+        "what_happened": "本輪來源確認「嚴防豪雨致災 陳其邁視察北高雄防汛設施強化整備」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T16:31:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T16:31:00+08:00",
+        "material_update_at": "2026-08-23T16:31:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 地方\n嚴防豪雨致災　陳其邁視察北高雄防汛設施強化整備\n2026/8/23 16:31（8/23 16:46 更新）\n連日受西南風及低壓帶影響，高雄地區23日仍是豪雨不斷，高雄市長陳其邁（前左）前往岡山、梓官、永安及茄萣等區視察防汛設施。（高雄市政府提供）中央社記者蔡孟妤傳真　115年8月23日\n\n（中央社記者蔡孟妤高雄23日電）受西南風偏強及低壓帶影響，高雄今天豪雨不斷，市長陳其邁前往岡山、梓官、永安及茄萣等區視察防汛設施，要",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：嚴防豪雨致災 陳其邁視察北高雄防汛設施強化整備"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 地方\n嚴防豪雨致災　陳其邁視察北高雄防汛設施強化整備\n2026/8/23 16:31（8/23 16:46 更新）\n連日受西南風及低壓帶影響，高雄地區23日仍是豪雨不斷，高雄市長陳其邁（前左）前往岡山、梓官、永安及茄萣等區視察防汛設施。（高雄市政府提供）中央社記者蔡孟妤傳真　115年8月23日\n\n（中央社記者蔡孟妤高雄23日電）受西南風偏強及低壓帶影響，高雄今天豪雨不斷，市長陳其邁前往岡山、梓官、永安及茄萣等區視察防汛設施，要"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "嚴防豪雨致災 陳其邁視察北高雄防汛設施強化整備",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "嚴防豪雨致災 陳其邁視察北高雄防汛設施強化整備 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "嚴防豪雨致災 陳其邁視察北高雄防汛設施強化整備：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "嚴防豪雨致災 陳其邁視察北高雄防汛設施強化整備 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：嚴防豪雨致災 陳其邁視察北高雄防汛設施強化整備"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aloc/202608230123.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "嚴防豪雨致災 陳其邁視察北高雄防汛設施強化整備"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-ec9847173ecb6d92",
+      "dedup_key": "9a4e92038522f74a72341c0a",
+      "semantic_event_id": "sem-row-e6c2d44d82e343b8429c",
+      "event_identity": {
+        "who_or_what": "王威晨下二軍目標最短時間歸隊 許庭綸回一軍",
+        "what_happened": "本輪來源確認「王威晨下二軍目標最短時間歸隊 許庭綸回一軍」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T16:30:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T16:30:00+08:00",
+        "material_update_at": "2026-08-23T16:30:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 運動\n王威晨下二軍目標最短時間歸隊　許庭綸回一軍\n2026/8/23 16:30\n\n（中央社記者謝靜雯台北23日電）中職中信兄弟野手王威晨因為腹部輕微拉傷昨天下二軍，總教練平野惠一表示，希望最短的時間能歸隊，今天拉上野手許庭綸，主要是考量比賽後半段替補人選。\n\n兄弟昨天將野手王威晨下放二軍，球團表示，「王威晨因腹部輕微拉傷，近期在打擊練習過程中仍有不適感，經討論後決議暫時先休息調整，避免拉傷程度加重。」兄弟總教練平野惠一今天賽",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：王威晨下二軍目標最短時間歸隊 許庭綸回一軍"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 運動\n王威晨下二軍目標最短時間歸隊　許庭綸回一軍\n2026/8/23 16:30\n\n（中央社記者謝靜雯台北23日電）中職中信兄弟野手王威晨因為腹部輕微拉傷昨天下二軍，總教練平野惠一表示，希望最短的時間能歸隊，今天拉上野手許庭綸，主要是考量比賽後半段替補人選。\n\n兄弟昨天將野手王威晨下放二軍，球團表示，「王威晨因腹部輕微拉傷，近期在打擊練習過程中仍有不適感，經討論後決議暫時先休息調整，避免拉傷程度加重。」兄弟總教練平野惠一今天賽"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "王威晨下二軍目標最短時間歸隊 許庭綸回一軍",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "王威晨下二軍目標最短時間歸隊 許庭綸回一軍 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "王威晨下二軍目標最短時間歸隊 許庭綸回一軍：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "王威晨下二軍目標最短時間歸隊 許庭綸回一軍 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：王威晨下二軍目標最短時間歸隊 許庭綸回一軍"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aspt/202608230122.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "王威晨下二軍目標最短時間歸隊 許庭綸回一軍"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-23837604a497be23",
+      "dedup_key": "f42307eb2133cdf52c49287e",
+      "semantic_event_id": "sem-row-c6dc59ca9b0060e70f9e",
+      "event_identity": {
+        "who_or_what": "泰國南部夜晚不平靜 多地同步遇襲致2傷",
+        "what_happened": "本輪來源確認「泰國南部夜晚不平靜 多地同步遇襲致2傷」所述具體事件或實質更新。",
+        "where": "THA",
+        "when": "2026-08-23T16:29:00+08:00",
+        "country_codes": [
+          "THA"
+        ],
+        "primary_country_code": "THA",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 THA。",
+        "event_occurred_at": "2026-08-23T16:29:00+08:00",
+        "material_update_at": "2026-08-23T16:29:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 國際\n泰國南部夜晚不平靜　多地同步遇襲致2傷\n2026/8/23 16:29\n\n（中央社曼谷23日綜合外電報導）泰國當局表示，受叛亂影響的泰國南部地區昨晚發生數十起涉及縱火、槍擊與爆炸的攻擊事件，造成2人受傷及政府財產毀損。\n\n綜合法新社與泰國公共電視台（Thai PBS World）報導，根據泰國軍方國內安全行動指揮部（ISOC）及當地媒體報導，在這波共計51起的攻擊事件中，有一棟地方政府辦公建築、一間7-Eleven超商及",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：泰國南部夜晚不平靜 多地同步遇襲致2傷"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 國際\n泰國南部夜晚不平靜　多地同步遇襲致2傷\n2026/8/23 16:29\n\n（中央社曼谷23日綜合外電報導）泰國當局表示，受叛亂影響的泰國南部地區昨晚發生數十起涉及縱火、槍擊與爆炸的攻擊事件，造成2人受傷及政府財產毀損。\n\n綜合法新社與泰國公共電視台（Thai PBS World）報導，根據泰國軍方國內安全行動指揮部（ISOC）及當地媒體報導，在這波共計51起的攻擊事件中，有一棟地方政府辦公建築、一間7-Eleven超商及"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "泰國南部夜晚不平靜 多地同步遇襲致2傷",
+      "section": "GLB",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "泰國南部夜晚不平靜 多地同步遇襲致2傷 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "泰國南部夜晚不平靜 多地同步遇襲致2傷：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "泰國南部夜晚不平靜 多地同步遇襲致2傷 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：泰國南部夜晚不平靜 多地同步遇襲致2傷"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": false,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aopl/202608230121.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "泰國南部夜晚不平靜 多地同步遇襲致2傷"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-fde51f9ad6e10f85",
+      "dedup_key": "89fb440a96c2526549e9456e",
+      "semantic_event_id": "sem-row-56275e19d152dca17aff",
+      "event_identity": {
+        "who_or_what": "“旅客买票占座放零食”应如何处理？专家解读相关法规",
+        "what_happened": "本輪來源確認「“旅客买票占座放零食”应如何处理？专家解读相关法规」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T16:29:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T16:29:00+08:00",
+        "material_update_at": "2026-08-23T16:29:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：/div> [ 社会 ] 台风“紫檀”致广西崇左持续强降雨 多地景区临时关停 8-23 16:36 [ 社会 ] 一件红军衣背后的共同奔赴《五彩红军衣》讲述同心长征路 8-23 16:35 [ 社会 ] “旅客买票占座放零食”应如何处理？专家解读相关法规 8-23 16:29 [ 社会 ] 广西多地强降雨引发内涝洪水 台风“紫檀”影响仍将持续 8-23 16:21 [ 同心 ] 从八桂风韵到白山黑水：四省区各族青少年以文化为媒绘就“北疆",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：“旅客买票占座放零食”应如何处理？专家解读相关法规"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：/div> [ 社会 ] 台风“紫檀”致广西崇左持续强降雨 多地景区临时关停 8-23 16:36 [ 社会 ] 一件红军衣背后的共同奔赴《五彩红军衣》讲述同心长征路 8-23 16:35 [ 社会 ] “旅客买票占座放零食”应如何处理？专家解读相关法规 8-23 16:29 [ 社会 ] 广西多地强降雨引发内涝洪水 台风“紫檀”影响仍将持续 8-23 16:21 [ 同心 ] 从八桂风韵到白山黑水：四省区各族青少年以文化为媒绘就“北疆"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "“旅客买票占座放零食”应如何处理？专家解读相关法规",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "“旅客买票占座放零食”应如何处理？专家解读相关法规 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "“旅客买票占座放零食”应如何处理？专家解读相关法规：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "“旅客买票占座放零食”应如何处理？专家解读相关法规 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：“旅客买票占座放零食”应如何处理？专家解读相关法规"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682723.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "“旅客买票占座放零食”应如何处理？专家解读相关法规"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-2c5e56cedb38a8c9",
+      "dedup_key": "3c23364436ee8d03cd6757c3",
+      "semantic_event_id": "sem-row-01fde529a57f3cda94b4",
+      "event_identity": {
+        "who_or_what": "北市微風南山女子3樓墜至1樓 手腳骨折送醫治療",
+        "what_happened": "本輪來源確認「北市微風南山女子3樓墜至1樓 手腳骨折送醫治療」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T16:25:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T16:25:00+08:00",
+        "material_update_at": "2026-08-23T16:25:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 社會\n北市微風南山女子3樓墜至1樓　手腳骨折送醫治療\n2026/8/23 16:25（8/23 17:26 更新）\n有名女子23日自微風南山商場墜樓造成右手骨折及雙膝開放性骨折。（中央社檔案照片）\n\n（中央社記者黃麗芸台北23日電）北市信義區微風南山商場今天發生墜樓事故，有女子不明原因自商場3樓墜至1樓；所幸商場鋪有軟墊，女子右手骨折及雙膝開放性骨折，警消獲報立即協助送醫，確切肇因待查。\n\n北市警消下午近3時許獲報，位於信義區",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：北市微風南山女子3樓墜至1樓 手腳骨折送醫治療"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 社會\n北市微風南山女子3樓墜至1樓　手腳骨折送醫治療\n2026/8/23 16:25（8/23 17:26 更新）\n有名女子23日自微風南山商場墜樓造成右手骨折及雙膝開放性骨折。（中央社檔案照片）\n\n（中央社記者黃麗芸台北23日電）北市信義區微風南山商場今天發生墜樓事故，有女子不明原因自商場3樓墜至1樓；所幸商場鋪有軟墊，女子右手骨折及雙膝開放性骨折，警消獲報立即協助送醫，確切肇因待查。\n\n北市警消下午近3時許獲報，位於信義區"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "北市微風南山女子3樓墜至1樓 手腳骨折送醫治療",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "北市微風南山女子3樓墜至1樓 手腳骨折送醫治療 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "北市微風南山女子3樓墜至1樓 手腳骨折送醫治療：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "北市微風南山女子3樓墜至1樓 手腳骨折送醫治療 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：北市微風南山女子3樓墜至1樓 手腳骨折送醫治療"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/asoc/202608230119.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "北市微風南山女子3樓墜至1樓 手腳骨折送醫治療"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-2738fe8266cc115c",
+      "dedup_key": "588bd46c724fbf83b040f7b6",
+      "semantic_event_id": "sem-row-24b6b7b0f8e5830e3aaf",
+      "event_identity": {
+        "who_or_what": "獅隊林子豪滿壘打擊數據佳 分析可能原因",
+        "what_happened": "本輪來源確認「獅隊林子豪滿壘打擊數據佳 分析可能原因」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T16:23:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T16:23:00+08:00",
+        "material_update_at": "2026-08-23T16:23:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 運動\n獅隊林子豪滿壘打擊數據佳　分析可能原因\n2026/8/23 16:23（8/23 16:42 更新）\n圖為中職統一7-ELEVEn獅隊打者林子豪。（中央社檔案照片）\n\n（中央社記者謝靜雯台北23日電）中職統一7-ELEVEn獅隊林子豪昨天比賽滿壘時有關鍵安打，本季滿壘打擊率3成75、數據不錯，但他表示失敗的時候也很多，並分析滿壘打擊率不錯的可能原因。\n\n獅隊打者林子豪昨天在與中信兄弟比賽，4局下球隊1分領先滿壘局面，關鍵",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：獅隊林子豪滿壘打擊數據佳 分析可能原因"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 運動\n獅隊林子豪滿壘打擊數據佳　分析可能原因\n2026/8/23 16:23（8/23 16:42 更新）\n圖為中職統一7-ELEVEn獅隊打者林子豪。（中央社檔案照片）\n\n（中央社記者謝靜雯台北23日電）中職統一7-ELEVEn獅隊林子豪昨天比賽滿壘時有關鍵安打，本季滿壘打擊率3成75、數據不錯，但他表示失敗的時候也很多，並分析滿壘打擊率不錯的可能原因。\n\n獅隊打者林子豪昨天在與中信兄弟比賽，4局下球隊1分領先滿壘局面，關鍵"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "獅隊林子豪滿壘打擊數據佳 分析可能原因",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "獅隊林子豪滿壘打擊數據佳 分析可能原因 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "獅隊林子豪滿壘打擊數據佳 分析可能原因：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "獅隊林子豪滿壘打擊數據佳 分析可能原因 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：獅隊林子豪滿壘打擊數據佳 分析可能原因"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aspt/202608230118.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "獅隊林子豪滿壘打擊數據佳 分析可能原因"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-33b859bc3d4fb32d",
+      "dedup_key": "e3e30ecc7e2d6843f45a429d",
+      "semantic_event_id": "sem-row-617cfac69bb259763f9e",
+      "event_identity": {
+        "who_or_what": "从八桂风韵到白山黑水：四省区各族青少年以文化为媒绘就“北疆·石榴情”",
+        "what_happened": "本輪來源確認「从八桂风韵到白山黑水：四省区各族青少年以文化为媒绘就“北疆·石榴情”」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T16:21:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T16:21:00+08:00",
+        "material_update_at": "2026-08-23T16:21:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：d_time\">8-23 16:35 [ 社会 ] “旅客买票占座放零食”应如何处理？专家解读相关法规 8-23 16:29 [ 社会 ] 广西多地强降雨引发内涝洪水 台风“紫檀”影响仍将持续 8-23 16:21 [ 同心 ] 从八桂风韵到白山黑水：四省区各族青少年以文化为媒绘就“北疆·石榴情” 8-23 16:20 [ 社会 ] 天工拿下“荣耀” 获得世界人形机器人运动会400米冠军 8-23 16:18 [ 社会 ] 2026年海",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：从八桂风韵到白山黑水：四省区各族青少年以文化为媒绘就“北疆·石榴情”"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：d_time\">8-23 16:35 [ 社会 ] “旅客买票占座放零食”应如何处理？专家解读相关法规 8-23 16:29 [ 社会 ] 广西多地强降雨引发内涝洪水 台风“紫檀”影响仍将持续 8-23 16:21 [ 同心 ] 从八桂风韵到白山黑水：四省区各族青少年以文化为媒绘就“北疆·石榴情” 8-23 16:20 [ 社会 ] 天工拿下“荣耀” 获得世界人形机器人运动会400米冠军 8-23 16:18 [ 社会 ] 2026年海"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "从八桂风韵到白山黑水：四省区各族青少年以文化为媒绘就“北疆·石榴情”",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "从八桂风韵到白山黑水：四省区各族青少年以文化为媒绘就“北疆·石榴情” 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "从八桂风韵到白山黑水：四省区各族青少年以文化为媒绘就“北疆·石榴情”：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "从八桂风韵到白山黑水：四省区各族青少年以文化为媒绘就“北疆·石榴情” 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：从八桂风韵到白山黑水：四省区各族青少年以文化为媒绘就“北疆·石榴情”"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/txy/2026/08-23/10682709.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "从八桂风韵到白山黑水：四省区各族青少年以文化为媒绘就“北疆·石榴情”"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-60e351cc1c00da14",
+      "dedup_key": "35ec10197b330d9997545ea2",
+      "semantic_event_id": "sem-row-578f055df6cdfebc3fe4",
+      "event_identity": {
+        "who_or_what": "避開因雨延賽 悍將領隊提議：可前一天更改開賽時間",
+        "what_happened": "本輪來源確認「避開因雨延賽 悍將領隊提議：可前一天更改開賽時間」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T16:12:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T16:12:00+08:00",
+        "material_update_at": "2026-08-23T16:12:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 運動\n避開因雨延賽　悍將領隊提議：可前一天更改開賽時間\n2026/8/23 16:12\n\n（中央社記者蘇志畬新北23日電）中華職棒富邦悍將隊近期深受延賽之苦，領隊陳昭如有新想法，若主客隊都同意，賽事開打時間可在前一天提出更動，避免受到可預期的雨勢影響，將在領隊會議提案討論。\n\n悍將19日作客桃園遇到下雨，21、22日回到新莊主場仍雨勢連綿，8月已累積5場延賽，近期北部雨勢多半在下午4、5點出現，球迷因此討論比賽彈性提早開打的可",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：避開因雨延賽 悍將領隊提議：可前一天更改開賽時間"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 運動\n避開因雨延賽　悍將領隊提議：可前一天更改開賽時間\n2026/8/23 16:12\n\n（中央社記者蘇志畬新北23日電）中華職棒富邦悍將隊近期深受延賽之苦，領隊陳昭如有新想法，若主客隊都同意，賽事開打時間可在前一天提出更動，避免受到可預期的雨勢影響，將在領隊會議提案討論。\n\n悍將19日作客桃園遇到下雨，21、22日回到新莊主場仍雨勢連綿，8月已累積5場延賽，近期北部雨勢多半在下午4、5點出現，球迷因此討論比賽彈性提早開打的可"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "避開因雨延賽 悍將領隊提議：可前一天更改開賽時間",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "避開因雨延賽 悍將領隊提議：可前一天更改開賽時間 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "避開因雨延賽 悍將領隊提議：可前一天更改開賽時間：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "避開因雨延賽 悍將領隊提議：可前一天更改開賽時間 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：避開因雨延賽 悍將領隊提議：可前一天更改開賽時間"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aspt/202608230116.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "避開因雨延賽 悍將領隊提議：可前一天更改開賽時間"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-9e3a2d44f100ec2a",
+      "dedup_key": "0aba5e3ee007d791b6df33a5",
+      "semantic_event_id": "sem-row-b910e96dbef698ac0deb",
+      "event_identity": {
+        "who_or_what": "總統提立法院及行政院遷台中 卓榮泰：回應對話過程",
+        "what_happened": "本輪來源確認「總統提立法院及行政院遷台中 卓榮泰：回應對話過程」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T16:08:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T16:08:00+08:00",
+        "material_update_at": "2026-08-23T16:08:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：總統提立法院及行政院遷台中　卓榮泰：回應對話過程\n2026/8/23 16:08（8/23 16:37 更新）\n對於總統賴清德提及希望將立法院及行政院遷到台中，行政院長卓榮泰（前）23日表示，總統的講話是一個回應對話的過程，但只要是符合均衡台灣的提議，政府都會非常重視。中央社記者郝雪卿攝　115年8月23日\n\n（中央社記者郝雪卿台中23日電）總統賴清德昨天提到希望將立法院及行政院遷到台中，行政院長卓榮泰今天表示，總統昨天的講話是回應主辦",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：總統提立法院及行政院遷台中 卓榮泰：回應對話過程"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：總統提立法院及行政院遷台中　卓榮泰：回應對話過程\n2026/8/23 16:08（8/23 16:37 更新）\n對於總統賴清德提及希望將立法院及行政院遷到台中，行政院長卓榮泰（前）23日表示，總統的講話是一個回應對話的過程，但只要是符合均衡台灣的提議，政府都會非常重視。中央社記者郝雪卿攝　115年8月23日\n\n（中央社記者郝雪卿台中23日電）總統賴清德昨天提到希望將立法院及行政院遷到台中，行政院長卓榮泰今天表示，總統昨天的講話是回應主辦"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "總統提立法院及行政院遷台中 卓榮泰：回應對話過程",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "總統提立法院及行政院遷台中 卓榮泰：回應對話過程 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "總統提立法院及行政院遷台中 卓榮泰：回應對話過程：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "總統提立法院及行政院遷台中 卓榮泰：回應對話過程 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：總統提立法院及行政院遷台中 卓榮泰：回應對話過程"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aipl/202608230115.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "總統提立法院及行政院遷台中 卓榮泰：回應對話過程"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-5b6614bb5254b976",
+      "dedup_key": "9fbf685d585720080f1f1bbe",
+      "semantic_event_id": "sem-row-56b137448e743a8048af",
+      "event_identity": {
+        "who_or_what": "2026年MAGIC3超级篮球赛大众组总决赛落幕",
+        "what_happened": "本輪來源確認「2026年MAGIC3超级篮球赛大众组总决赛落幕」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T16:06:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T16:06:00+08:00",
+        "material_update_at": "2026-08-23T16:06:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：6:18 [ 社会 ] 2026年海峡两岸（福建）书院文化交流活动在厦门启动 8-23 16:13 [ 体育 ] 2026上海明日之星冠军杯女子组收官 上海U17女足憾负阿森纳 8-23 16:06 [ 体育 ] 2026年MAGIC3超级篮球赛大众组总决赛落幕 8-23 16:06 [ 社会 ] 石榴花开 籽籽同心——多彩民族有多彩 | 曙光里，向阳花开情谊浓 8-23 16:03 [ 时政 ] 彭勇任湖北襄阳市委书记 8-23 15",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：2026年MAGIC3超级篮球赛大众组总决赛落幕"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：6:18 [ 社会 ] 2026年海峡两岸（福建）书院文化交流活动在厦门启动 8-23 16:13 [ 体育 ] 2026上海明日之星冠军杯女子组收官 上海U17女足憾负阿森纳 8-23 16:06 [ 体育 ] 2026年MAGIC3超级篮球赛大众组总决赛落幕 8-23 16:06 [ 社会 ] 石榴花开 籽籽同心——多彩民族有多彩 | 曙光里，向阳花开情谊浓 8-23 16:03 [ 时政 ] 彭勇任湖北襄阳市委书记 8-23 15"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "2026年MAGIC3超级篮球赛大众组总决赛落幕",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "2026年MAGIC3超级篮球赛大众组总决赛落幕 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "2026年MAGIC3超级篮球赛大众组总决赛落幕：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "2026年MAGIC3超级篮球赛大众组总决赛落幕 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：2026年MAGIC3超级篮球赛大众组总决赛落幕"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/ty/2026/08-23/10682676.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "2026年MAGIC3超级篮球赛大众组总决赛落幕"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-c9c540165d5d6558",
+      "dedup_key": "f1b503951ce1341827358b27",
+      "semantic_event_id": "sem-row-524fa0b3c9c4d71ec633",
+      "event_identity": {
+        "who_or_what": "石榴花开 籽籽同心——多彩民族有多彩 | 曙光里，向阳花开情谊浓",
+        "what_happened": "本輪來源確認「石榴花开 籽籽同心——多彩民族有多彩 | 曙光里，向阳花开情谊浓」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T16:06:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T16:06:00+08:00",
+        "material_update_at": "2026-08-23T16:06:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：16:13 [ 体育 ] 2026上海明日之星冠军杯女子组收官 上海U17女足憾负阿森纳 8-23 16:06 [ 体育 ] 2026年MAGIC3超级篮球赛大众组总决赛落幕 8-23 16:06 [ 社会 ] 石榴花开 籽籽同心——多彩民族有多彩 | 曙光里，向阳花开情谊浓 8-23 16:03 [ 时政 ] 彭勇任湖北襄阳市委书记 8-23 15:57 [ 文化 ] 北京市文联召开文艺与科技融合发展座谈会 8-23 15:56 [ ",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：石榴花开 籽籽同心——多彩民族有多彩 | 曙光里，向阳花开情谊浓"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：16:13 [ 体育 ] 2026上海明日之星冠军杯女子组收官 上海U17女足憾负阿森纳 8-23 16:06 [ 体育 ] 2026年MAGIC3超级篮球赛大众组总决赛落幕 8-23 16:06 [ 社会 ] 石榴花开 籽籽同心——多彩民族有多彩 | 曙光里，向阳花开情谊浓 8-23 16:03 [ 时政 ] 彭勇任湖北襄阳市委书记 8-23 15:57 [ 文化 ] 北京市文联召开文艺与科技融合发展座谈会 8-23 15:56 [ "
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "石榴花开 籽籽同心——多彩民族有多彩 | 曙光里，向阳花开情谊浓",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "石榴花开 籽籽同心——多彩民族有多彩 | 曙光里，向阳花开情谊浓 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "石榴花开 籽籽同心——多彩民族有多彩 | 曙光里，向阳花开情谊浓：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "石榴花开 籽籽同心——多彩民族有多彩 | 曙光里，向阳花开情谊浓 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：石榴花开 籽籽同心——多彩民族有多彩 | 曙光里，向阳花开情谊浓"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682714.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "石榴花开 籽籽同心——多彩民族有多彩 | 曙光里，向阳花开情谊浓"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-96d880f94b58b67b",
+      "dedup_key": "6c9fb298bbec70d7b2af0c68",
+      "semantic_event_id": "sem-row-c1d8fa08e9a3a3fb39b9",
+      "event_identity": {
+        "who_or_what": "無法接受判決說法 平野惠一：獅隊應該是跟我們一樣吧",
+        "what_happened": "本輪來源確認「無法接受判決說法 平野惠一：獅隊應該是跟我們一樣吧」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T16:04:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T16:04:00+08:00",
+        "material_update_at": "2026-08-23T16:04:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 運動\n無法接受判決說法　平野惠一：獅隊應該是跟我們一樣吧\n2026/8/23 16:04（8/23 16:27 更新）\n圖為中職中信兄弟總教練平野惠一。（中央社檔案照片）\n\n（中央社記者謝靜雯台北23日電）中職中信兄弟、統一獅昨天交手，兩隊總教練都出現較長時間抗議。兄弟總教練平野惠一今天表示，沒辦法接受說法，所以多做了解。對於林岳平的抗議，平野惠一則說：「應該是跟我們一樣吧。」\n\n兄弟、統一7-ELEVEn獅隊昨天比賽，兩隊在",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：無法接受判決說法 平野惠一：獅隊應該是跟我們一樣吧"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 運動\n無法接受判決說法　平野惠一：獅隊應該是跟我們一樣吧\n2026/8/23 16:04（8/23 16:27 更新）\n圖為中職中信兄弟總教練平野惠一。（中央社檔案照片）\n\n（中央社記者謝靜雯台北23日電）中職中信兄弟、統一獅昨天交手，兩隊總教練都出現較長時間抗議。兄弟總教練平野惠一今天表示，沒辦法接受說法，所以多做了解。對於林岳平的抗議，平野惠一則說：「應該是跟我們一樣吧。」\n\n兄弟、統一7-ELEVEn獅隊昨天比賽，兩隊在"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "無法接受判決說法 平野惠一：獅隊應該是跟我們一樣吧",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "無法接受判決說法 平野惠一：獅隊應該是跟我們一樣吧 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "無法接受判決說法 平野惠一：獅隊應該是跟我們一樣吧：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "無法接受判決說法 平野惠一：獅隊應該是跟我們一樣吧 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：無法接受判決說法 平野惠一：獅隊應該是跟我們一樣吧"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aspt/202608230114.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "無法接受判決說法 平野惠一：獅隊應該是跟我們一樣吧"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-728de0d80c34903a",
+      "dedup_key": "cda99127423a74d48f1e5b78",
+      "semantic_event_id": "sem-row-4b5e26d8688e785760e9",
+      "event_identity": {
+        "who_or_what": "車廂空間優化遭質疑有軍事目的 北捷：與事實不符",
+        "what_happened": "本輪來源確認「車廂空間優化遭質疑有軍事目的 北捷：與事實不符」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T16:04:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T16:04:00+08:00",
+        "material_update_at": "2026-08-23T16:04:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：車廂空間優化遭質疑有軍事目的　北捷：與事實不符\n2026/8/23 16:04（8/23 17:28 更新）\n有網友以圖文質疑台北捷運車廂移除座椅、扶手是為了方便軍隊進出、控制乘客。北捷23日對此表示，相關訊息與事實明顯不符，車廂空間配置調整是以提升旅客乘車便利性、無障礙服務及營運效率為目的。（台北捷運公司提供）中央社記者楊淑閔傳真　115年8月23日\n\n（中央社記者楊淑閔台北23日電）網路流傳圖文質疑北捷車廂移除座椅、扶手，是為了方便",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：車廂空間優化遭質疑有軍事目的 北捷：與事實不符"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：車廂空間優化遭質疑有軍事目的　北捷：與事實不符\n2026/8/23 16:04（8/23 17:28 更新）\n有網友以圖文質疑台北捷運車廂移除座椅、扶手是為了方便軍隊進出、控制乘客。北捷23日對此表示，相關訊息與事實明顯不符，車廂空間配置調整是以提升旅客乘車便利性、無障礙服務及營運效率為目的。（台北捷運公司提供）中央社記者楊淑閔傳真　115年8月23日\n\n（中央社記者楊淑閔台北23日電）網路流傳圖文質疑北捷車廂移除座椅、扶手，是為了方便"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "車廂空間優化遭質疑有軍事目的 北捷：與事實不符",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "車廂空間優化遭質疑有軍事目的 北捷：與事實不符 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "車廂空間優化遭質疑有軍事目的 北捷：與事實不符：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "車廂空間優化遭質疑有軍事目的 北捷：與事實不符 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：車廂空間優化遭質疑有軍事目的 北捷：與事實不符"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aloc/202608230113.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "車廂空間優化遭質疑有軍事目的 北捷：與事實不符"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-7de28ce896ff5e5d",
+      "dedup_key": "e0be240b50a89151cd7afa1a",
+      "semantic_event_id": "sem-row-514f7165d6627c5aebe7",
+      "event_identity": {
+        "who_or_what": "女籃好手米靖恩赴美追夢 朝WNBA邁進盼回饋台灣",
+        "what_happened": "本輪來源確認「女籃好手米靖恩赴美追夢 朝WNBA邁進盼回饋台灣」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T15:58:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T15:58:00+08:00",
+        "material_update_at": "2026-08-23T15:58:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 運動\n女籃好手米靖恩赴美追夢　朝WNBA邁進盼回饋台灣\n2026/8/23 15:58（8/23 16:11 更新）\n米靖恩2024年從北一女中畢業後選擇赴美，追尋更遠大的籃球夢，在堪薩斯州道奇城社區大學打出極佳成績。（米靖恩提供）中央社記者張欣瑜舊金山傳真　115年8月23日\n\n（中央社記者張欣瑜舊金山22日專電）曾拿下HBL冠軍賽最有價值球員的布農族女兒米靖恩，自北一女中畢業後赴美追夢，從堪薩斯州社區大學出發，今年加入美國",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：女籃好手米靖恩赴美追夢 朝WNBA邁進盼回饋台灣"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 運動\n女籃好手米靖恩赴美追夢　朝WNBA邁進盼回饋台灣\n2026/8/23 15:58（8/23 16:11 更新）\n米靖恩2024年從北一女中畢業後選擇赴美，追尋更遠大的籃球夢，在堪薩斯州道奇城社區大學打出極佳成績。（米靖恩提供）中央社記者張欣瑜舊金山傳真　115年8月23日\n\n（中央社記者張欣瑜舊金山22日專電）曾拿下HBL冠軍賽最有價值球員的布農族女兒米靖恩，自北一女中畢業後赴美追夢，從堪薩斯州社區大學出發，今年加入美國"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "女籃好手米靖恩赴美追夢 朝WNBA邁進盼回饋台灣",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "女籃好手米靖恩赴美追夢 朝WNBA邁進盼回饋台灣 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "女籃好手米靖恩赴美追夢 朝WNBA邁進盼回饋台灣：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "女籃好手米靖恩赴美追夢 朝WNBA邁進盼回饋台灣 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：女籃好手米靖恩赴美追夢 朝WNBA邁進盼回饋台灣"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/aspt/202608230112.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "女籃好手米靖恩赴美追夢 朝WNBA邁進盼回饋台灣"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-b69ba7163d52f269",
+      "dedup_key": "f4032e285c1d9447428f28b7",
+      "semantic_event_id": "sem-row-4c126a4190a36e86f9dc",
+      "event_identity": {
+        "who_or_what": "彭勇任湖北襄阳市委书记",
+        "what_happened": "本輪來源確認「彭勇任湖北襄阳市委书记」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T15:57:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T15:57:00+08:00",
+        "material_update_at": "2026-08-23T15:57:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：iv> [ 体育 ] 2026年MAGIC3超级篮球赛大众组总决赛落幕 8-23 16:06 [ 社会 ] 石榴花开 籽籽同心——多彩民族有多彩 | 曙光里，向阳花开情谊浓 8-23 16:03 [ 时政 ] 彭勇任湖北襄阳市委书记 8-23 15:57 [ 文化 ] 北京市文联召开文艺与科技融合发展座谈会 8-23 15:56 [ 社会 ] 新发地启动紧急排查：涉事“甲醛白菜”未流入，当前市场白菜供应充足 8-23 15:55 [ 时",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：彭勇任湖北襄阳市委书记"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：iv> [ 体育 ] 2026年MAGIC3超级篮球赛大众组总决赛落幕 8-23 16:06 [ 社会 ] 石榴花开 籽籽同心——多彩民族有多彩 | 曙光里，向阳花开情谊浓 8-23 16:03 [ 时政 ] 彭勇任湖北襄阳市委书记 8-23 15:57 [ 文化 ] 北京市文联召开文艺与科技融合发展座谈会 8-23 15:56 [ 社会 ] 新发地启动紧急排查：涉事“甲醛白菜”未流入，当前市场白菜供应充足 8-23 15:55 [ 时"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "彭勇任湖北襄阳市委书记",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "彭勇任湖北襄阳市委书记 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "彭勇任湖北襄阳市委书记：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "彭勇任湖北襄阳市委书记 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：彭勇任湖北襄阳市委书记"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/gn/2026/08-23/10682713.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "彭勇任湖北襄阳市委书记"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-c9185d3853591b74",
+      "dedup_key": "39bcd3a0e1e5d0e0734157f5",
+      "semantic_event_id": "sem-row-13c826e525aff7c8c3c5",
+      "event_identity": {
+        "who_or_what": "「角頭」電影人物走進高流 王識賢連唱招牌金曲",
+        "what_happened": "本輪來源確認「「角頭」電影人物走進高流 王識賢連唱招牌金曲」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T15:51:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T15:51:00+08:00",
+        "material_update_at": "2026-08-23T15:51:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：首頁 / 娛樂\n「角頭」電影人物走進高流　王識賢連唱招牌金曲\n2026/8/23 15:51（8/23 16:06 更新）\n「角頭」IP將電影宇宙延伸創作為演唱會，22日晚間在高雄流行音樂中心海音館登場，藝人王識賢（圖）現場演唱「勝者為王」、「一片天」等招牌歌曲。（曼尼娛樂提供）中央社記者王心妤傳真　115年8月23日\n\n（中央社記者王心妤台北23日電）「角頭」將電影宇宙延伸創作為演唱會，昨晚在高雄流行音樂中心海音館登場，演唱會以實境短",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：「角頭」電影人物走進高流 王識賢連唱招牌金曲"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：首頁 / 娛樂\n「角頭」電影人物走進高流　王識賢連唱招牌金曲\n2026/8/23 15:51（8/23 16:06 更新）\n「角頭」IP將電影宇宙延伸創作為演唱會，22日晚間在高雄流行音樂中心海音館登場，藝人王識賢（圖）現場演唱「勝者為王」、「一片天」等招牌歌曲。（曼尼娛樂提供）中央社記者王心妤傳真　115年8月23日\n\n（中央社記者王心妤台北23日電）「角頭」將電影宇宙延伸創作為演唱會，昨晚在高雄流行音樂中心海音館登場，演唱會以實境短"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "「角頭」電影人物走進高流 王識賢連唱招牌金曲",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "「角頭」電影人物走進高流 王識賢連唱招牌金曲 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "「角頭」電影人物走進高流 王識賢連唱招牌金曲：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "「角頭」電影人物走進高流 王識賢連唱招牌金曲 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：「角頭」電影人物走進高流 王識賢連唱招牌金曲"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/amov/202608230110.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "「角頭」電影人物走進高流 王識賢連唱招牌金曲"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-92c0184797d33aa6",
+      "dedup_key": "014229dc76180b81b8c48b3d",
+      "semantic_event_id": "sem-row-a7c6275ac0310019dcb1",
+      "event_identity": {
+        "who_or_what": "广东开展森林消防“以水灭火”实战拉练",
+        "what_happened": "本輪來源確認「广东开展森林消防“以水灭火”实战拉练」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T15:51:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T15:51:00+08:00",
+        "material_update_at": "2026-08-23T15:51:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：/div> [ 社会 ] 新发地启动紧急排查：涉事“甲醛白菜”未流入，当前市场白菜供应充足 8-23 15:55 [ 时政 ] 三部门调拨2万件中央救灾物资支持广西做好台风“紫檀”救灾救助工作 8-23 15:55 [ 时政 ] 广东开展森林消防“以水灭火”实战拉练 8-23 15:51 [ 时政 ] 2026年宋庆龄少年儿童未来科学日活动在北京启动 8-23 15:49 [ 体育 ] 街头田径燃动羊城 撑竿跳高、跳高项目同台绽放 8-",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：广东开展森林消防“以水灭火”实战拉练"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：/div> [ 社会 ] 新发地启动紧急排查：涉事“甲醛白菜”未流入，当前市场白菜供应充足 8-23 15:55 [ 时政 ] 三部门调拨2万件中央救灾物资支持广西做好台风“紫檀”救灾救助工作 8-23 15:55 [ 时政 ] 广东开展森林消防“以水灭火”实战拉练 8-23 15:51 [ 时政 ] 2026年宋庆龄少年儿童未来科学日活动在北京启动 8-23 15:49 [ 体育 ] 街头田径燃动羊城 撑竿跳高、跳高项目同台绽放 8-"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "广东开展森林消防“以水灭火”实战拉练",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "广东开展森林消防“以水灭火”实战拉练 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "广东开展森林消防“以水灭火”实战拉练：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "广东开展森林消防“以水灭火”实战拉练 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：广东开展森林消防“以水灭火”实战拉练"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/gn/2026/08-23/10682677.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "广东开展森林消防“以水灭火”实战拉练"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-e4a6285313ae34a8",
+      "dedup_key": "fc310a59b7b9c568241f6df1",
+      "semantic_event_id": "sem-row-69e5f73331380e47ad4f",
+      "event_identity": {
+        "who_or_what": "街头田径燃动羊城 撑竿跳高、跳高项目同台绽放",
+        "what_happened": "本輪來源確認「街头田径燃动羊城 撑竿跳高、跳高项目同台绽放」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T15:49:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T15:49:00+08:00",
+        "material_update_at": "2026-08-23T15:49:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：e\">8-23 15:55 [ 时政 ] 广东开展森林消防“以水灭火”实战拉练 8-23 15:51 [ 时政 ] 2026年宋庆龄少年儿童未来科学日活动在北京启动 8-23 15:49 [ 体育 ] 街头田径燃动羊城 撑竿跳高、跳高项目同台绽放 8-23 15:49 [ 社会 ] 数智赋能展风采 山东高校硬核成果亮相教育博览会 8-23 15:48 [ 财经 ] 海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来 8-23 15:4",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：街头田径燃动羊城 撑竿跳高、跳高项目同台绽放"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：e\">8-23 15:55 [ 时政 ] 广东开展森林消防“以水灭火”实战拉练 8-23 15:51 [ 时政 ] 2026年宋庆龄少年儿童未来科学日活动在北京启动 8-23 15:49 [ 体育 ] 街头田径燃动羊城 撑竿跳高、跳高项目同台绽放 8-23 15:49 [ 社会 ] 数智赋能展风采 山东高校硬核成果亮相教育博览会 8-23 15:48 [ 财经 ] 海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来 8-23 15:4"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "街头田径燃动羊城 撑竿跳高、跳高项目同台绽放",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "街头田径燃动羊城 撑竿跳高、跳高项目同台绽放 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "街头田径燃动羊城 撑竿跳高、跳高项目同台绽放：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "街头田径燃动羊城 撑竿跳高、跳高项目同台绽放 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：街头田径燃动羊城 撑竿跳高、跳高项目同台绽放"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/ty/2026/08-23/10682682.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "街头田径燃动羊城 撑竿跳高、跳高项目同台绽放"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-98ed43739e3b630c",
+      "dedup_key": "349efc17553e622605519bd5",
+      "semantic_event_id": "sem-row-215ef6347d034180916e",
+      "event_identity": {
+        "who_or_what": "数智赋能展风采 山东高校硬核成果亮相教育博览会",
+        "what_happened": "本輪來源確認「数智赋能展风采 山东高校硬核成果亮相教育博览会」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T15:48:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T15:48:00+08:00",
+        "material_update_at": "2026-08-23T15:48:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：3 15:51 [ 时政 ] 2026年宋庆龄少年儿童未来科学日活动在北京启动 8-23 15:49 [ 体育 ] 街头田径燃动羊城 撑竿跳高、跳高项目同台绽放 8-23 15:49 [ 社会 ] 数智赋能展风采 山东高校硬核成果亮相教育博览会 8-23 15:48 [ 财经 ] 海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来 8-23 15:45 [ 财经 ] 提前9年押注、个人砸下10亿，中国版Moderna背后的神秘科技大佬",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：数智赋能展风采 山东高校硬核成果亮相教育博览会"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：3 15:51 [ 时政 ] 2026年宋庆龄少年儿童未来科学日活动在北京启动 8-23 15:49 [ 体育 ] 街头田径燃动羊城 撑竿跳高、跳高项目同台绽放 8-23 15:49 [ 社会 ] 数智赋能展风采 山东高校硬核成果亮相教育博览会 8-23 15:48 [ 财经 ] 海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来 8-23 15:45 [ 财经 ] 提前9年押注、个人砸下10亿，中国版Moderna背后的神秘科技大佬"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "数智赋能展风采 山东高校硬核成果亮相教育博览会",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "数智赋能展风采 山东高校硬核成果亮相教育博览会 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "数智赋能展风采 山东高校硬核成果亮相教育博览会：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "数智赋能展风采 山东高校硬核成果亮相教育博览会 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：数智赋能展风采 山东高校硬核成果亮相教育博览会"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/sh/2026/08-23/10682691.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "数智赋能展风采 山东高校硬核成果亮相教育博览会"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-e88a7bb97cb97453",
+      "dedup_key": "0cca0f173814217fa092b3be",
+      "semantic_event_id": "sem-row-44531a0bc82c216e78c3",
+      "event_identity": {
+        "who_or_what": "輝達財報公布前 黃仁勳台北快閃引關注",
+        "what_happened": "本輪來源確認「輝達財報公布前 黃仁勳台北快閃引關注」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T15:46:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T15:46:00+08:00",
+        "material_update_at": "2026-08-23T15:46:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：輝達財報公布前　黃仁勳台北快閃引關注\n2026/8/23 15:46（8/23 15:51 更新）\n輝達執行長黃仁勳6月來台主持GTC Taipei大會並發表主題演講。（中央社檔案照片）\n\n（中央社記者張建中台北23日電）輝達（NVIDIA）執行長黃仁勳今天突然現身台北，據了解，他在短暫停留後，目前已搭機離開台灣，這次快閃行程引起各界關注。\n\n黃仁勳在今年5、6月來台參加台北國際電腦展後，時隔2個多月，今天再度出現在台北，大方與民眾合影",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：輝達財報公布前 黃仁勳台北快閃引關注"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：輝達財報公布前　黃仁勳台北快閃引關注\n2026/8/23 15:46（8/23 15:51 更新）\n輝達執行長黃仁勳6月來台主持GTC Taipei大會並發表主題演講。（中央社檔案照片）\n\n（中央社記者張建中台北23日電）輝達（NVIDIA）執行長黃仁勳今天突然現身台北，據了解，他在短暫停留後，目前已搭機離開台灣，這次快閃行程引起各界關注。\n\n黃仁勳在今年5、6月來台參加台北國際電腦展後，時隔2個多月，今天再度出現在台北，大方與民眾合影"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "輝達財報公布前 黃仁勳台北快閃引關注",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "輝達財報公布前 黃仁勳台北快閃引關注 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "輝達財報公布前 黃仁勳台北快閃引關注：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "輝達財報公布前 黃仁勳台北快閃引關注 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：輝達財報公布前 黃仁勳台北快閃引關注"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/afe/202608230109.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "輝達財報公布前 黃仁勳台北快閃引關注"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-a0de700853c01464",
+      "dedup_key": "21ba1608c8f2cf1f95dfc642",
+      "semantic_event_id": "sem-row-d3156a5c5a2280b7af4d",
+      "event_identity": {
+        "who_or_what": "海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来",
+        "what_happened": "本輪來源確認「海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T15:45:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T15:45:00+08:00",
+        "material_update_at": "2026-08-23T15:45:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：_time\">8-23 15:49 [ 体育 ] 街头田径燃动羊城 撑竿跳高、跳高项目同台绽放 8-23 15:49 [ 社会 ] 数智赋能展风采 山东高校硬核成果亮相教育博览会 8-23 15:48 [ 财经 ] 海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来 8-23 15:45 [ 财经 ] 提前9年押注、个人砸下10亿，中国版Moderna背后的神秘科技大佬 8-23 15:45 [ 体育 ] “东北超”官方推广曲及赛事荣",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：_time\">8-23 15:49 [ 体育 ] 街头田径燃动羊城 撑竿跳高、跳高项目同台绽放 8-23 15:49 [ 社会 ] 数智赋能展风采 山东高校硬核成果亮相教育博览会 8-23 15:48 [ 财经 ] 海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来 8-23 15:45 [ 财经 ] 提前9年押注、个人砸下10亿，中国版Moderna背后的神秘科技大佬 8-23 15:45 [ 体育 ] “东北超”官方推广曲及赛事荣"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/cj/2026/08-23/10682693.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-f0e264463c997b35",
+      "dedup_key": "d19ed493214a99335e2144e0",
+      "semantic_event_id": "sem-row-ad0dfc9d0099b3998a28",
+      "event_identity": {
+        "who_or_what": "提前9年押注、个人砸下10亿，中国版Moderna背后的神秘科技大佬",
+        "what_happened": "本輪來源確認「提前9年押注、个人砸下10亿，中国版Moderna背后的神秘科技大佬」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T15:45:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T15:45:00+08:00",
+        "material_update_at": "2026-08-23T15:45:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：me\">8-23 15:49 [ 社会 ] 数智赋能展风采 山东高校硬核成果亮相教育博览会 8-23 15:48 [ 财经 ] 海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来 8-23 15:45 [ 财经 ] 提前9年押注、个人砸下10亿，中国版Moderna背后的神秘科技大佬 8-23 15:45 [ 体育 ] “东北超”官方推广曲及赛事荣誉视觉发布会在沈阳举办 8-23 15:44 [ 东西问 ] 东西问丨“树”的猜想 8-",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：提前9年押注、个人砸下10亿，中国版Moderna背后的神秘科技大佬"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：me\">8-23 15:49 [ 社会 ] 数智赋能展风采 山东高校硬核成果亮相教育博览会 8-23 15:48 [ 财经 ] 海内外嘉宾青岛共议“可持续、高效、智能”交通能源未来 8-23 15:45 [ 财经 ] 提前9年押注、个人砸下10亿，中国版Moderna背后的神秘科技大佬 8-23 15:45 [ 体育 ] “东北超”官方推广曲及赛事荣誉视觉发布会在沈阳举办 8-23 15:44 [ 东西问 ] 东西问丨“树”的猜想 8-"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "提前9年押注、个人砸下10亿，中国版Moderna背后的神秘科技大佬",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "提前9年押注、个人砸下10亿，中国版Moderna背后的神秘科技大佬 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "提前9年押注、个人砸下10亿，中国版Moderna背后的神秘科技大佬：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "提前9年押注、个人砸下10亿，中国版Moderna背后的神秘科技大佬 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：提前9年押注、个人砸下10亿，中国版Moderna背后的神秘科技大佬"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.chinanews.com.cn/cj/2026/08-23/10682692.shtml"
+      ],
+      "source_ids": [
+        "chinanews"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "提前9年押注、个人砸下10亿，中国版Moderna背后的神秘科技大佬"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-acbf0094e0bc7fcb",
+      "dedup_key": "4be0ea1a109dfd251c0f582d",
+      "semantic_event_id": "sem-row-2540295aa260129d97da",
+      "event_identity": {
+        "who_or_what": "電力設備異常 台鐵台南至大湖、沙崙至中洲列車延誤",
+        "what_happened": "本輪來源確認「電力設備異常 台鐵台南至大湖、沙崙至中洲列車延誤」所述具體事件或實質更新。",
+        "where": "TWN",
+        "when": "2026-08-23T15:40:00+08:00",
+        "country_codes": [
+          "TWN"
+        ],
+        "primary_country_code": "TWN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 TWN。",
+        "event_occurred_at": "2026-08-23T15:40:00+08:00",
+        "material_update_at": "2026-08-23T15:40:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：電力設備異常　台鐵台南至大湖、沙崙至中洲列車延誤\n2026/8/23 15:40（8/23 17:41 更新）\n台鐵通報，台南站至大湖站、沙崙站至中洲站23日下午3時起暫時以單線雙向行駛，預計恢復時間仍在評估中。（中央社檔案照片）\n\n（中央社記者余曉涵台北23日電）根據台鐵最新通報，受到電力設備異常影響，台鐵台南-大湖、沙崙-中洲以西正線單線雙向行車，列車將有延誤，恢復時間仍在評估中。\n\n根據台鐵最新通報訊息，受到電力設備異常影響，台鐵",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：電力設備異常 台鐵台南至大湖、沙崙至中洲列車延誤"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：電力設備異常　台鐵台南至大湖、沙崙至中洲列車延誤\n2026/8/23 15:40（8/23 17:41 更新）\n台鐵通報，台南站至大湖站、沙崙站至中洲站23日下午3時起暫時以單線雙向行駛，預計恢復時間仍在評估中。（中央社檔案照片）\n\n（中央社記者余曉涵台北23日電）根據台鐵最新通報，受到電力設備異常影響，台鐵台南-大湖、沙崙-中洲以西正線單線雙向行車，列車將有延誤，恢復時間仍在評估中。\n\n根據台鐵最新通報訊息，受到電力設備異常影響，台鐵"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "電力設備異常 台鐵台南至大湖、沙崙至中洲列車延誤",
+      "section": "TWN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "電力設備異常 台鐵台南至大湖、沙崙至中洲列車延誤 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 TWN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "電力設備異常 台鐵台南至大湖、沙崙至中洲列車延誤：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "電力設備異常 台鐵台南至大湖、沙崙至中洲列車延誤 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：電力設備異常 台鐵台南至大湖、沙崙至中洲列車延誤"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 TWN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "exception_reason": null
+        },
+        "local_disaster_review": {
+          "applies": false
+        },
+        "policy_governance_review": {
+          "applies": false
+        }
+      },
+      "decision": "excluded",
+      "reason_code": "below_public_value_threshold",
+      "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+      "c_minus_use_reason": null,
+      "selected_event_id": null,
+      "candidate_urls": [
+        "https://www.cna.com.tw/news/ahel/202608230108.aspx"
+      ],
+      "source_ids": [
+        "cna"
+      ],
+      "source_audit": {
+        "search_performed": true,
+        "reliable_source_count": 1,
+        "independent_group_count": 1,
+        "official_or_primary_found": true,
+        "source_limit_note": "本輪 fresh pool 僅一筆直接事件證據；未以此作為硬性降級理由。"
+      },
+      "continuity": {
+        "status": "new",
+        "material_changes": [
+          "電力設備異常 台鐵台南至大湖、沙崙至中洲列車延誤"
+        ],
+        "unchanged_elements": [],
+        "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+      }
+    },
+    {
+      "candidate_id": "cand-98417c6808413f85",
+      "dedup_key": "4c9ef7d7cbd5a2bf970dcd86",
+      "semantic_event_id": "sem-row-cb717134b2526ef975b2",
+      "event_identity": {
+        "who_or_what": "高温天气来袭 重庆人在水中涮火锅",
+        "what_happened": "本輪來源確認「高温天气来袭 重庆人在水中涮火锅」所述具體事件或實質更新。",
+        "where": "CHN",
+        "when": "2026-08-23T15:37:00+08:00",
+        "country_codes": [
+          "CHN"
+        ],
+        "primary_country_code": "CHN",
+        "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 CHN。",
+        "event_occurred_at": "2026-08-23T15:37:00+08:00",
+        "material_update_at": "2026-08-23T15:37:00+08:00",
+        "material_update_type": "new_event",
+        "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：dd_time\">8-23 15:45 [ 体育 ] “东北超”官方推广曲及赛事荣誉视觉发布会在沈阳举办 8-23 15:44 [ 东西问 ] 东西问丨“树”的猜想 8-23 15:40 [ 图片 ] 高温天气来袭 重庆人在水中涮火锅 8-23 15:37 [ 社会 ] （文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游 8-23 15:37 [ 法治 ] 骗子租写字楼让求职者上假班 揭秘虚假招聘骗局 8-23 15:37 [ 图片",
+        "temporal_review": {
+          "review_method": "model_content_comparison",
+          "window_status": "new_event",
+          "active_during_window": true,
+          "new_or_changed_facts": [
+            "時間窗內首次納入的可驗證事實：高温天气来袭 重庆人在水中涮火锅"
+          ],
+          "repeated_old_facts": [],
+          "current_window_impact": [
+            "本輪來源記錄的直接現況：dd_time\">8-23 15:45 [ 体育 ] “东北超”官方推广曲及赛事荣誉视觉发布会在沈阳举办 8-23 15:44 [ 东西问 ] 东西问丨“树”的猜想 8-23 15:40 [ 图片 ] 高温天气来袭 重庆人在水中涮火锅 8-23 15:37 [ 社会 ] （文化中国行）敦煌医药文化跨界出圈 “滋补”丝路康养游 8-23 15:37 [ 法治 ] 骗子租写字楼让求职者上假班 揭秘虚假招聘骗局 8-23 15:37 [ 图片"
+          ],
+          "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+        },
+        "semantic_merge_basis": "單一文章列建立獨立語意事件；未以標題相似度與其他列合併。"
+      },
+      "continuity_key": null,
+      "title": "高温天气来袭 重庆人在水中涮火锅",
+      "section": "CHN",
+      "provisional_grade": "D",
+      "importance_score": 24,
+      "importance_breakdown": {
+        "public_impact": 8,
+        "geographic_or_population_scope": 4,
+        "urgency_and_safety": 2,
+        "structural_or_policy_significance": 2,
+        "material_new_development": 4,
+        "core_section_relevance": 4
+      },
+      "dimension_evidence": {
+        "public_impact": "高温天气来袭 重庆人在水中涮火锅 的直接公共影響依內容證據評為 8/30。",
+        "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+        "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+        "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+        "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+        "core_section_relevance": "事件屬 CHN 監控板塊，相關性評為 4/10。"
+      },
+      "grade_reason": "高温天气来袭 重庆人在水中涮火锅：六項總分 24，已發生影響與本輪增量由 1 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+      "grading_evidence": {
+        "impact_scope_level": "local",
+        "direct_consequences": [],
+        "structural_significance": "高温天气来袭 重庆人在水中涮火锅 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+        "window_material_changes": [
+          "時間窗內確認：高温天气来袭 重庆人在水中涮火锅"
+        ],
+        "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+        "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+        "why_not_lower": "本輪存在可核對的新事件／新措施，且與 CHN 板塊具直接關聯。",
+        "border_conflict_review": {
+          "is_border_conflict": false,
+          "formal_war": false,
+          "de_facto_war_scale": false,
+          "related_to_monitored_section": true,
+          "user_weight_elevated": false,
+          "default_d_applied": false,
+          "exception_reason": null
+        },
+        "ongoing_conflict_review": {
+          "is_ongoing_conflict": false,
+          "same_conflict_as_history": false,
+          "routine_incident": false,
+          "material_change": false,
+          "change_types": [],
+          "reversal_or_escalation_possible": false,
+          "external_system_impact": false,
+          "continuity_discount_applied": false,
+          "except

@@ -1,0 +1,1988 @@
+udulent somalia deal 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：world bank sanctions e citizen founder over fraudulent somalia deal"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://www.standardmedia.co.ke/business/article/2001555954/world-bank-sanctions-e-citizen-founder-over-fraudulent-somalia-deal",
+            "https://www.standardmedia.co.ke/business/business/article/2001555954/world-bank-sanctions-e-citizen-founder-over-fraudulent-somalia-deal"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 2,
+            "independent_group_count": 1,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "world bank sanctions e citizen founder over fraudulent somalia deal"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        },
+        {
+          "candidate_id": "cand-2215b45324f66f37",
+          "dedup_key": "27cf86fe3babe028450b783e",
+          "semantic_event_id": "sem-group-cluster-9645e4c77eb70a4f",
+          "event_identity": {
+            "who_or_what": "aisha wahab replaces eric swalwell",
+            "what_happened": "本輪來源確認「aisha wahab replaces eric swalwell」所述具體事件或實質更新。",
+            "where": "USA",
+            "when": "2026-08-23T00:15:00+00:00",
+            "country_codes": [
+              "USA"
+            ],
+            "primary_country_code": "USA",
+            "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 USA。",
+            "event_occurred_at": "2026-08-22T19:15:00+00:00",
+            "material_update_at": "2026-08-23T00:15:00+00:00",
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：aisha wahab replaces eric swalwell；aisha wahab replaces eric swalwell",
+            "temporal_review": {
+              "review_method": "model_content_comparison",
+              "window_status": "new_event",
+              "active_during_window": true,
+              "new_or_changed_facts": [
+                "時間窗內首次納入的可驗證事實：aisha wahab replaces eric swalwell"
+              ],
+              "repeated_old_facts": [],
+              "current_window_impact": [
+                "本輪來源記錄的直接現況：aisha wahab replaces eric swalwell；aisha wahab replaces eric swalwell"
+              ],
+              "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+            },
+            "semantic_merge_basis": "多個來源列明確指向同一具名事件、地點與窗內結果，依人工定義事件契約合併；非標題相似度。"
+          },
+          "continuity_key": null,
+          "title": "aisha wahab replaces eric swalwell",
+          "section": "GLB",
+          "provisional_grade": "D",
+          "importance_score": 24,
+          "importance_breakdown": {
+            "public_impact": 8,
+            "geographic_or_population_scope": 4,
+            "urgency_and_safety": 2,
+            "structural_or_policy_significance": 2,
+            "material_new_development": 4,
+            "core_section_relevance": 4
+          },
+          "dimension_evidence": {
+            "public_impact": "aisha wahab replaces eric swalwell 的直接公共影響依內容證據評為 8/30。",
+            "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+            "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+            "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+            "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+            "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+          },
+          "grade_reason": "aisha wahab replaces eric swalwell：六項總分 24，已發生影響與本輪增量由 2 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+          "grading_evidence": {
+            "impact_scope_level": "local",
+            "direct_consequences": [],
+            "structural_significance": "aisha wahab replaces eric swalwell 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：aisha wahab replaces eric swalwell"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://92q.com/5913407/aisha-wahab-replaces-eric-swalwell/",
+            "https://newsone.com/6870028/aisha-wahab-replaces-eric-swalwell/"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 2,
+            "independent_group_count": 2,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "aisha wahab replaces eric swalwell"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        },
+        {
+          "candidate_id": "cand-3d58da8951c6161f",
+          "dedup_key": "ea6942f555ba8280bf2ac3dc",
+          "semantic_event_id": "sem-group-cluster-3b16f5515945e4db",
+          "event_identity": {
+            "who_or_what": "us citizen in charge of security for cigarette company in haiti found stabbed to death 2",
+            "what_happened": "本輪來源確認「us citizen in charge of security for cigarette company in haiti found stabbed to death 2」所述具體事件或實質更新。",
+            "where": "HTI",
+            "when": "2026-08-23T00:00:00+00:00",
+            "country_codes": [
+              "HTI"
+            ],
+            "primary_country_code": "HTI",
+            "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 HTI。",
+            "event_occurred_at": "2026-08-22T22:30:00+00:00",
+            "material_update_at": "2026-08-23T00:00:00+00:00",
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：us citizen in charge of security for cigarette company in haiti found stabbed to death 2；us citizen in charge of security for cigarette company in haiti found stabbed to death 2",
+            "temporal_review": {
+              "review_method": "model_content_comparison",
+              "window_status": "new_event",
+              "active_during_window": true,
+              "new_or_changed_facts": [
+                "時間窗內首次納入的可驗證事實：us citizen in charge of security for cigarette company in haiti found stabbed to death 2"
+              ],
+              "repeated_old_facts": [],
+              "current_window_impact": [
+                "本輪來源記錄的直接現況：us citizen in charge of security for cigarette company in haiti found stabbed to death 2；us citizen in charge of security for cigarette company in haiti found stabbed to death 2"
+              ],
+              "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+            },
+            "semantic_merge_basis": "多個來源列明確指向同一具名事件、地點與窗內結果，依人工定義事件契約合併；非標題相似度。"
+          },
+          "continuity_key": null,
+          "title": "us citizen in charge of security for cigarette company in haiti found stabbed to death 2",
+          "section": "GLB",
+          "provisional_grade": "D",
+          "importance_score": 24,
+          "importance_breakdown": {
+            "public_impact": 8,
+            "geographic_or_population_scope": 4,
+            "urgency_and_safety": 2,
+            "structural_or_policy_significance": 2,
+            "material_new_development": 4,
+            "core_section_relevance": 4
+          },
+          "dimension_evidence": {
+            "public_impact": "us citizen in charge of security for cigarette company in haiti found stabbed to death 2 的直接公共影響依內容證據評為 8/30。",
+            "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+            "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+            "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+            "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+            "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+          },
+          "grade_reason": "us citizen in charge of security for cigarette company in haiti found stabbed to death 2：六項總分 24，已發生影響與本輪增量由 2 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+          "grading_evidence": {
+            "impact_scope_level": "local",
+            "direct_consequences": [],
+            "structural_significance": "us citizen in charge of security for cigarette company in haiti found stabbed to death 2 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：us citizen in charge of security for cigarette company in haiti found stabbed to death 2"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://www.eastbaytimes.com/2026/08/22/us-citizen-in-charge-of-security-for-cigarette-company-in-haiti-found-stabbed-to-death-2/",
+            "https://www.pressdemocrat.com/2026/08/22/us-citizen-in-charge-of-security-for-cigarette-company-in-haiti-found-stabbed-to-death-2/"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 2,
+            "independent_group_count": 2,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "us citizen in charge of security for cigarette company in haiti found stabbed to death 2"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        },
+        {
+          "candidate_id": "cand-d003bde60c738424",
+          "dedup_key": "9b8684b5be40de55a2ea838a",
+          "semantic_event_id": "sem-group-cluster-21e18bfae4924f95",
+          "event_identity": {
+            "who_or_what": "wisconsin police use flock cameras to arrest michigan man for stalking",
+            "what_happened": "本輪來源確認「wisconsin police use flock cameras to arrest michigan man for stalking」所述具體事件或實質更新。",
+            "where": "USA",
+            "when": "2026-08-23T00:00:00+00:00",
+            "country_codes": [
+              "USA"
+            ],
+            "primary_country_code": "USA",
+            "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 USA。",
+            "event_occurred_at": "2026-08-22T23:15:00+00:00",
+            "material_update_at": "2026-08-23T00:00:00+00:00",
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：wisconsin police use flock cameras to arrest michigan man for stalking；wisconsin police use flock cameras to arrest michigan man for stalking",
+            "temporal_review": {
+              "review_method": "model_content_comparison",
+              "window_status": "new_event",
+              "active_during_window": true,
+              "new_or_changed_facts": [
+                "時間窗內首次納入的可驗證事實：wisconsin police use flock cameras to arrest michigan man for stalking"
+              ],
+              "repeated_old_facts": [],
+              "current_window_impact": [
+                "本輪來源記錄的直接現況：wisconsin police use flock cameras to arrest michigan man for stalking；wisconsin police use flock cameras to arrest michigan man for stalking"
+              ],
+              "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+            },
+            "semantic_merge_basis": "多個來源列明確指向同一具名事件、地點與窗內結果，依人工定義事件契約合併；非標題相似度。"
+          },
+          "continuity_key": null,
+          "title": "wisconsin police use flock cameras to arrest michigan man for stalking",
+          "section": "GLB",
+          "provisional_grade": "D",
+          "importance_score": 24,
+          "importance_breakdown": {
+            "public_impact": 8,
+            "geographic_or_population_scope": 4,
+            "urgency_and_safety": 2,
+            "structural_or_policy_significance": 2,
+            "material_new_development": 4,
+            "core_section_relevance": 4
+          },
+          "dimension_evidence": {
+            "public_impact": "wisconsin police use flock cameras to arrest michigan man for stalking 的直接公共影響依內容證據評為 8/30。",
+            "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+            "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+            "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+            "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+            "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+          },
+          "grade_reason": "wisconsin police use flock cameras to arrest michigan man for stalking：六項總分 24，已發生影響與本輪增量由 2 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+          "grading_evidence": {
+            "impact_scope_level": "local",
+            "direct_consequences": [],
+            "structural_significance": "wisconsin police use flock cameras to arrest michigan man for stalking 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：wisconsin police use flock cameras to arrest michigan man for stalking"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://www.1039wvbo.com/2026/08/22/wisconsin-police-use-flock-cameras-to-arrest-michigan-man-for-stalking/",
+            "https://www.fox969.com/2026/08/22/wisconsin-police-use-flock-cameras-to-arrest-michigan-man-for-stalking/"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 2,
+            "independent_group_count": 2,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "wisconsin police use flock cameras to arrest michigan man for stalking"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        },
+        {
+          "candidate_id": "cand-336ef31dfd5ed5fb",
+          "dedup_key": "c26af25829e7f22fa678421b",
+          "semantic_event_id": "sem-group-cluster-dbfd519639cfa553",
+          "event_identity": {
+            "who_or_what": "political candidate jake lang arrested after vehicles drove toward city hall crowd riot minneapolis minnesota protests politics senate state patrol crime law enforcement",
+            "what_happened": "本輪來源確認「political candidate jake lang arrested after vehicles drove toward city hall crowd riot minneapolis minnesota protests politics senate state patrol crime law enforcement」所述具體事件或實質更新。",
+            "where": "USA",
+            "when": "2026-08-23T00:00:00+00:00",
+            "country_codes": [
+              "USA"
+            ],
+            "primary_country_code": "USA",
+            "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 USA。",
+            "event_occurred_at": "2026-08-22T21:30:00+00:00",
+            "material_update_at": "2026-08-23T00:00:00+00:00",
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：political candidate jake lang arrested after vehicles drove toward city hall crowd riot minneapolis minnesota protests politics senate state patrol crime law enforcement；political candidate jake lang arrested after vehicles drove toward city hall crowd riot minneapolis minnesota protests politics senate state patrol crime law enforcement",
+            "temporal_review": {
+              "review_method": "model_content_comparison",
+              "window_status": "new_event",
+              "active_during_window": true,
+              "new_or_changed_facts": [
+                "時間窗內首次納入的可驗證事實：political candidate jake lang arrested after vehicles drove toward city hall crowd riot minneapolis minnesota protests politics senate state patrol crime law enforcement"
+              ],
+              "repeated_old_facts": [],
+              "current_window_impact": [
+                "本輪來源記錄的直接現況：political candidate jake lang arrested after vehicles drove toward city hall crowd riot minneapolis minnesota protests politics senate state patrol crime law enforcement；political candidate jake lang arrested after vehicles drove toward city hall crowd riot minneapolis minnesota protests politics se"
+              ],
+              "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+            },
+            "semantic_merge_basis": "多個來源列明確指向同一具名事件、地點與窗內結果，依人工定義事件契約合併；非標題相似度。"
+          },
+          "continuity_key": null,
+          "title": "political candidate jake lang arrested after vehicles drove toward city hall crowd riot minneapolis minnesota protests politics senate state patrol crime law enforcement",
+          "section": "GLB",
+          "provisional_grade": "D",
+          "importance_score": 24,
+          "importance_breakdown": {
+            "public_impact": 8,
+            "geographic_or_population_scope": 4,
+            "urgency_and_safety": 2,
+            "structural_or_policy_significance": 2,
+            "material_new_development": 4,
+            "core_section_relevance": 4
+          },
+          "dimension_evidence": {
+            "public_impact": "political candidate jake lang arrested after vehicles drove toward city hall crowd riot minneapolis minnesota protests politics senate state patrol crime law enforcement 的直接公共影響依內容證據評為 8/30。",
+            "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+            "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+            "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+            "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+            "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+          },
+          "grade_reason": "political candidate jake lang arrested after vehicles drove toward city hall crowd riot minneapolis minnesota protests politics senate state patrol crime law enforcement：六項總分 24，已發生影響與本輪增量由 2 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+          "grading_evidence": {
+            "impact_scope_level": "local",
+            "direct_consequences": [],
+            "structural_significance": "political candidate jake lang arrested after vehicles drove toward city hall crowd riot minneapolis minnesota protests politics senate state patrol crime law enforcement 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：political candidate jake lang arrested after vehicles drove toward city hall crowd riot minneapolis minnesota protests politics senate state patrol crime law enforcement"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://wlos.com/news/nation-world/political-candidate-jake-lang-arrested-after-vehicles-drove-toward-city-hall-crowd-riot-minneapolis-minnesota-protests-politics-senate-state-patrol-crime-law-enforcement",
+            "https://wcyb.com/news/nation-world/political-candidate-jake-lang-arrested-after-vehicles-drove-toward-city-hall-crowd-riot-minneapolis-minnesota-protests-politics-senate-state-patrol-crime-law-enforcement"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 2,
+            "independent_group_count": 2,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "political candidate jake lang arrested after vehicles drove toward city hall crowd riot minneapolis minnesota protests politics senate state patrol crime law enforcement"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        },
+        {
+          "candidate_id": "cand-f6a3c98e1279fb63",
+          "dedup_key": "07d5cb7a05510b5d7af21df9",
+          "semantic_event_id": "sem-group-cluster-d3b3f4bf5dbc33e5",
+          "event_identity": {
+            "who_or_what": "fauci legal defense fund launched amid covid 19 investigations infectious disease expert coronavirus pandemic vaccines health president donald trump joe biden politics",
+            "what_happened": "本輪來源確認「fauci legal defense fund launched amid covid 19 investigations infectious disease expert coronavirus pandemic vaccines health president donald trump joe biden politics」所述具體事件或實質更新。",
+            "where": "USA",
+            "when": "2026-08-23T00:00:00+00:00",
+            "country_codes": [
+              "USA"
+            ],
+            "primary_country_code": "USA",
+            "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 USA。",
+            "event_occurred_at": "2026-08-22T20:30:00+00:00",
+            "material_update_at": "2026-08-23T00:00:00+00:00",
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：fauci legal defense fund launched amid covid 19 investigations infectious disease expert coronavirus pandemic vaccines health president donald trump joe biden politics；fauci legal defense fund launched amid covid 19 investigations infectious disease expert coronavirus pandemic vaccines health president donald trump joe biden politics",
+            "temporal_review": {
+              "review_method": "model_content_comparison",
+              "window_status": "new_event",
+              "active_during_window": true,
+              "new_or_changed_facts": [
+                "時間窗內首次納入的可驗證事實：fauci legal defense fund launched amid covid 19 investigations infectious disease expert coronavirus pandemic vaccines health president donald trump joe biden politics"
+              ],
+              "repeated_old_facts": [],
+              "current_window_impact": [
+                "本輪來源記錄的直接現況：fauci legal defense fund launched amid covid 19 investigations infectious disease expert coronavirus pandemic vaccines health president donald trump joe biden politics；fauci legal defense fund launched amid covid 19 investigations infectious disease expert coronavirus pandemic vaccines health presid"
+              ],
+              "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+            },
+            "semantic_merge_basis": "多個來源列明確指向同一具名事件、地點與窗內結果，依人工定義事件契約合併；非標題相似度。"
+          },
+          "continuity_key": null,
+          "title": "fauci legal defense fund launched amid covid 19 investigations infectious disease expert coronavirus pandemic vaccines health president donald trump joe biden politics",
+          "section": "GLB",
+          "provisional_grade": "D",
+          "importance_score": 24,
+          "importance_breakdown": {
+            "public_impact": 8,
+            "geographic_or_population_scope": 4,
+            "urgency_and_safety": 2,
+            "structural_or_policy_significance": 2,
+            "material_new_development": 4,
+            "core_section_relevance": 4
+          },
+          "dimension_evidence": {
+            "public_impact": "fauci legal defense fund launched amid covid 19 investigations infectious disease expert coronavirus pandemic vaccines health president donald trump joe biden politics 的直接公共影響依內容證據評為 8/30。",
+            "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+            "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+            "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+            "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+            "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+          },
+          "grade_reason": "fauci legal defense fund launched amid covid 19 investigations infectious disease expert coronavirus pandemic vaccines health president donald trump joe biden politics：六項總分 24，已發生影響與本輪增量由 2 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+          "grading_evidence": {
+            "impact_scope_level": "local",
+            "direct_consequences": [],
+            "structural_significance": "fauci legal defense fund launched amid covid 19 investigations infectious disease expert coronavirus pandemic vaccines health president donald trump joe biden politics 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：fauci legal defense fund launched amid covid 19 investigations infectious disease expert coronavirus pandemic vaccines health president donald trump joe biden politics"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://wlos.com/news/nation-world/fauci-legal-defense-fund-launched-amid-covid-19-investigations-infectious-disease-expert-coronavirus-pandemic-vaccines-health-president-donald-trump-joe-biden-politics",
+            "https://wsbt.com/news/nation-world/fauci-legal-defense-fund-launched-amid-covid-19-investigations-infectious-disease-expert-coronavirus-pandemic-vaccines-health-president-donald-trump-joe-biden-politics"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 2,
+            "independent_group_count": 2,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "fauci legal defense fund launched amid covid 19 investigations infectious disease expert coronavirus pandemic vaccines health president donald trump joe biden politics"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        },
+        {
+          "candidate_id": "cand-a7ac7527fbb40107",
+          "dedup_key": "5dfe2524b2660218e6cc9c5d",
+          "semantic_event_id": "sem-group-cluster-8968a8cac38ed624",
+          "event_identity": {
+            "who_or_what": "always natalie who is natalie harp trumps key aide west wing republican politics truth social turkey jon ossoff senator air force one white house one america news network election cnn preston harp interview",
+            "what_happened": "本輪來源確認「always natalie who is natalie harp trumps key aide west wing republican politics truth social turkey jon ossoff senator air force one white house one america news network election cnn preston harp interview」所述具體事件或實質更新。",
+            "where": "USA",
+            "when": "2026-08-23T00:00:00+00:00",
+            "country_codes": [
+              "USA"
+            ],
+            "primary_country_code": "USA",
+            "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 USA。",
+            "event_occurred_at": "2026-08-22T23:15:00+00:00",
+            "material_update_at": "2026-08-23T00:00:00+00:00",
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：always natalie who is natalie harp trumps key aide west wing republican politics truth social turkey jon ossoff senator air force one white house one america news network election cnn preston harp interview；always natalie who is natalie harp trumps key aide west wing republican politics truth social turkey jon ossoff senator air force one white house one america news network election cnn preston harp interview",
+            "temporal_review": {
+              "review_method": "model_content_comparison",
+              "window_status": "new_event",
+              "active_during_window": true,
+              "new_or_changed_facts": [
+                "時間窗內首次納入的可驗證事實：always natalie who is natalie harp trumps key aide west wing republican politics truth social turkey jon ossoff senator air force one white house one america news network election cnn preston harp interview"
+              ],
+              "repeated_old_facts": [],
+              "current_window_impact": [
+                "本輪來源記錄的直接現況：always natalie who is natalie harp trumps key aide west wing republican politics truth social turkey jon ossoff senator air force one white house one america news network election cnn preston harp interview；always natalie who is natalie harp trumps key aide west wing republican politics truth social"
+              ],
+              "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+            },
+            "semantic_merge_basis": "多個來源列明確指向同一具名事件、地點與窗內結果，依人工定義事件契約合併；非標題相似度。"
+          },
+          "continuity_key": null,
+          "title": "always natalie who is natalie harp trumps key aide west wing republican politics truth social turkey jon ossoff senator air force one white house one america news network election cnn preston harp interview",
+          "section": "GLB",
+          "provisional_grade": "D",
+          "importance_score": 24,
+          "importance_breakdown": {
+            "public_impact": 8,
+            "geographic_or_population_scope": 4,
+            "urgency_and_safety": 2,
+            "structural_or_policy_significance": 2,
+            "material_new_development": 4,
+            "core_section_relevance": 4
+          },
+          "dimension_evidence": {
+            "public_impact": "always natalie who is natalie harp trumps key aide west wing republican politics truth social turkey jon ossoff senator air force one white house one america news network election cnn preston harp interview 的直接公共影響依內容證據評為 8/30。",
+            "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+            "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+            "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+            "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+            "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+          },
+          "grade_reason": "always natalie who is natalie harp trumps key aide west wing republican politics truth social turkey jon ossoff senator air force one white house one america news network election cnn preston harp interview：六項總分 24，已發生影響與本輪增量由 2 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+          "grading_evidence": {
+            "impact_scope_level": "local",
+            "direct_consequences": [],
+            "structural_significance": "always natalie who is natalie harp trumps key aide west wing republican politics truth social turkey jon ossoff senator air force one white house one america news network election cnn preston harp interview 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：always natalie who is natalie harp trumps key aide west wing republican politics truth social turkey jon ossoff senator air force one white house one america news network election cnn preston harp interview"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://turnto10.com/news/nation-world/always-natalie-who-is-natalie-harp-trumps-key-aide-west-wing-republican-politics-truth-social-turkey-jon-ossoff-senator-air-force-one-white-house-one-america-news-network-election-cnn-preston-harp-interview",
+            "https://abc3340.com/news/nation-world/always-natalie-who-is-natalie-harp-trumps-key-aide-west-wing-republican-politics-truth-social-turkey-jon-ossoff-senator-air-force-one-white-house-one-america-news-network-election-cnn-preston-harp-interview"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 2,
+            "independent_group_count": 2,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "always natalie who is natalie harp trumps key aide west wing republican politics truth social turkey jon ossoff senator air force one white house one america news network election cnn preston harp interview"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        },
+        {
+          "candidate_id": "cand-186bd299541fda28",
+          "dedup_key": "822093663c6ca0b32f616903",
+          "semantic_event_id": "sem-group-cluster-76c4a693c0cc69ad",
+          "event_identity": {
+            "who_or_what": "www.samoaobserver.ws news report",
+            "what_happened": "本輪來源確認「www.samoaobserver.ws news report」所述具體事件或實質更新。",
+            "where": "WSM",
+            "when": "2026-08-22T23:15:00+00:00",
+            "country_codes": [
+              "WSM"
+            ],
+            "primary_country_code": "WSM",
+            "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 WSM。",
+            "event_occurred_at": "2026-08-22T23:15:00+00:00",
+            "material_update_at": "2026-08-22T23:15:00+00:00",
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：www.samoaobserver.ws news report；www.samoaobserver.ws news report",
+            "temporal_review": {
+              "review_method": "model_content_comparison",
+              "window_status": "new_event",
+              "active_during_window": true,
+              "new_or_changed_facts": [
+                "時間窗內首次納入的可驗證事實：www.samoaobserver.ws news report"
+              ],
+              "repeated_old_facts": [],
+              "current_window_impact": [
+                "本輪來源記錄的直接現況：www.samoaobserver.ws news report；www.samoaobserver.ws news report"
+              ],
+              "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+            },
+            "semantic_merge_basis": "多個來源列明確指向同一具名事件、地點與窗內結果，依人工定義事件契約合併；非標題相似度。"
+          },
+          "continuity_key": null,
+          "title": "www.samoaobserver.ws news report",
+          "section": "GLB",
+          "provisional_grade": "D",
+          "importance_score": 24,
+          "importance_breakdown": {
+            "public_impact": 8,
+            "geographic_or_population_scope": 4,
+            "urgency_and_safety": 2,
+            "structural_or_policy_significance": 2,
+            "material_new_development": 4,
+            "core_section_relevance": 4
+          },
+          "dimension_evidence": {
+            "public_impact": "www.samoaobserver.ws news report 的直接公共影響依內容證據評為 8/30。",
+            "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+            "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+            "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+            "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+            "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+          },
+          "grade_reason": "www.samoaobserver.ws news report：六項總分 24，已發生影響與本輪增量由 2 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+          "grading_evidence": {
+            "impact_scope_level": "local",
+            "direct_consequences": [],
+            "structural_significance": "www.samoaobserver.ws news report 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：www.samoaobserver.ws news report"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://www.samoaobserver.ws/category/samoa/121634",
+            "https://www.samoaobserver.ws/category/samoa/121633"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 2,
+            "independent_group_count": 1,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "www.samoaobserver.ws news report"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        },
+        {
+          "candidate_id": "cand-82d708bc5c239e16",
+          "dedup_key": "7a6e7324ae32fa31f8a2c929",
+          "semantic_event_id": "sem-group-cluster-ad5c8dc7f74ac825",
+          "event_identity": {
+            "who_or_what": "swedish police identify 17 year old girl as victim in school sword attack",
+            "what_happened": "本輪來源確認「swedish police identify 17 year old girl as victim in school sword attack」所述具體事件或實質更新。",
+            "where": "ZZZ",
+            "when": "2026-08-22T23:00:00+00:00",
+            "country_codes": [
+              "ZZZ"
+            ],
+            "primary_country_code": "ZZZ",
+            "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 ZZZ。",
+            "event_occurred_at": "2026-08-22T16:00:00+00:00",
+            "material_update_at": "2026-08-22T23:00:00+00:00",
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：swedish police identify 17 year old girl as victim in school sword attack；latest swedish police name sword attack victim as 17 year old student",
+            "temporal_review": {
+              "review_method": "model_content_comparison",
+              "window_status": "new_event",
+              "active_during_window": true,
+              "new_or_changed_facts": [
+                "時間窗內首次納入的可驗證事實：swedish police identify 17 year old girl as victim in school sword attack"
+              ],
+              "repeated_old_facts": [],
+              "current_window_impact": [
+                "本輪來源記錄的直接現況：swedish police identify 17 year old girl as victim in school sword attack；latest swedish police name sword attack victim as 17 year old student"
+              ],
+              "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+            },
+            "semantic_merge_basis": "多個來源列明確指向同一具名事件、地點與窗內結果，依人工定義事件契約合併；非標題相似度。"
+          },
+          "continuity_key": null,
+          "title": "swedish police identify 17 year old girl as victim in school sword attack",
+          "section": "GLB",
+          "provisional_grade": "D",
+          "importance_score": 24,
+          "importance_breakdown": {
+            "public_impact": 8,
+            "geographic_or_population_scope": 4,
+            "urgency_and_safety": 2,
+            "structural_or_policy_significance": 2,
+            "material_new_development": 4,
+            "core_section_relevance": 4
+          },
+          "dimension_evidence": {
+            "public_impact": "swedish police identify 17 year old girl as victim in school sword attack 的直接公共影響依內容證據評為 8/30。",
+            "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+            "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+            "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+            "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+            "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+          },
+          "grade_reason": "swedish police identify 17 year old girl as victim in school sword attack：六項總分 24，已發生影響與本輪增量由 2 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+          "grading_evidence": {
+            "impact_scope_level": "local",
+            "direct_consequences": [],
+            "structural_significance": "swedish police identify 17 year old girl as victim in school sword attack 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：swedish police identify 17 year old girl as victim in school sword attack"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://www.aljazeera.com/news/2026/8/22/swedish-police-identify-17-year-old-girl-as-victim-in-school-sword-attack",
+            "https://www.thelocal.se/20260822/latest-swedish-police-name-sword-attack-victim-as-17-year-old-student"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 2,
+            "independent_group_count": 2,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "swedish police identify 17 year old girl as victim in school sword attack"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        },
+        {
+          "candidate_id": "cand-56390afa8e789286",
+          "dedup_key": "19e0916af0d33a4a11f1e421",
+          "semantic_event_id": "sem-group-cluster-b11837777cba51ff",
+          "event_identity": {
+            "who_or_what": "assam meghalaya hold high level meet to address border tensions restore peace after shillong violence",
+            "what_happened": "本輪來源確認「assam meghalaya hold high level meet to address border tensions restore peace after shillong violence」所述具體事件或實質更新。",
+            "where": "IND",
+            "when": "2026-08-22T17:15:00+00:00",
+            "country_codes": [
+              "IND"
+            ],
+            "primary_country_code": "IND",
+            "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 IND。",
+            "event_occurred_at": "2026-08-22T10:30:00+00:00",
+            "material_update_at": "2026-08-22T17:15:00+00:00",
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：assam meghalaya hold high level meet to address border tensions restore peace after shillong violence；assam meghalaya hold high level meeting in guwahati to address escalating border tensions aim to restore peace after shillong violence20260822143639",
+            "temporal_review": {
+              "review_method": "model_content_comparison",
+              "window_status": "new_event",
+              "active_during_window": true,
+              "new_or_changed_facts": [
+                "時間窗內首次納入的可驗證事實：assam meghalaya hold high level meet to address border tensions restore peace after shillong violence"
+              ],
+              "repeated_old_facts": [],
+              "current_window_impact": [
+                "本輪來源記錄的直接現況：assam meghalaya hold high level meet to address border tensions restore peace after shillong violence；assam meghalaya hold high level meeting in guwahati to address escalating border tensions aim to restore peace after shillong violence20260822143639"
+              ],
+              "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+            },
+            "semantic_merge_basis": "多個來源列明確指向同一具名事件、地點與窗內結果，依人工定義事件契約合併；非標題相似度。"
+          },
+          "continuity_key": null,
+          "title": "assam meghalaya hold high level meet to address border tensions restore peace after shillong violence",
+          "section": "GLB",
+          "provisional_grade": "D",
+          "importance_score": 24,
+          "importance_breakdown": {
+            "public_impact": 8,
+            "geographic_or_population_scope": 4,
+            "urgency_and_safety": 2,
+            "structural_or_policy_significance": 2,
+            "material_new_development": 4,
+            "core_section_relevance": 4
+          },
+          "dimension_evidence": {
+            "public_impact": "assam meghalaya hold high level meet to address border tensions restore peace after shillong violence 的直接公共影響依內容證據評為 8/30。",
+            "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+            "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+            "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+            "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+            "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+          },
+          "grade_reason": "assam meghalaya hold high level meet to address border tensions restore peace after shillong violence：六項總分 24，已發生影響與本輪增量由 2 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+          "grading_evidence": {
+            "impact_scope_level": "local",
+            "direct_consequences": [],
+            "structural_significance": "assam meghalaya hold high level meet to address border tensions restore peace after shillong violence 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：assam meghalaya hold high level meet to address border tensions restore peace after shillong violence"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://northeasttoday.in/northeast/assam/assam-meghalaya-hold-high-level-meet-to-address-border-tensions-restore-peace-after-shillong-violence/",
+            "https://aninews.in/news/national/politics/assam-meghalaya-hold-high-level-meeting-in-guwahati-to-address-escalating-border-tensions-aim-to-restore-peace-after-shillong-violence20260822143639/"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 2,
+            "independent_group_count": 2,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "assam meghalaya hold high level meet to address border tensions restore peace after shillong violence"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        },
+        {
+          "candidate_id": "cand-b3b52ee90c96a53d",
+          "dedup_key": "eaf30b9c0d9789779d09030a",
+          "semantic_event_id": "sem-group-cluster-c85ef15b337e865e",
+          "event_identity": {
+            "who_or_what": "TGQD3QBNDMYKPB672NXFXPEHDY",
+            "what_happened": "本輪來源確認「TGQD3QBNDMYKPB672NXFXPEHDY」所述具體事件或實質更新。",
+            "where": "USA",
+            "when": "2026-08-22T16:15:00+00:00",
+            "country_codes": [
+              "USA"
+            ],
+            "primary_country_code": "USA",
+            "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 USA。",
+            "event_occurred_at": "2026-08-22T15:45:00+00:00",
+            "material_update_at": "2026-08-22T16:15:00+00:00",
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：TGQD3QBNDMYKPB672NXFXPEHDY；TGQD3QBNDMYKPB672NXFXPEHDY",
+            "temporal_review": {
+              "review_method": "model_content_comparison",
+              "window_status": "new_event",
+              "active_during_window": true,
+              "new_or_changed_facts": [
+                "時間窗內首次納入的可驗證事實：TGQD3QBNDMYKPB672NXFXPEHDY"
+              ],
+              "repeated_old_facts": [],
+              "current_window_impact": [
+                "本輪來源記錄的直接現況：TGQD3QBNDMYKPB672NXFXPEHDY；TGQD3QBNDMYKPB672NXFXPEHDY"
+              ],
+              "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+            },
+            "semantic_merge_basis": "多個來源列明確指向同一具名事件、地點與窗內結果，依人工定義事件契約合併；非標題相似度。"
+          },
+          "continuity_key": null,
+          "title": "TGQD3QBNDMYKPB672NXFXPEHDY",
+          "section": "GLB",
+          "provisional_grade": "D",
+          "importance_score": 24,
+          "importance_breakdown": {
+            "public_impact": 8,
+            "geographic_or_population_scope": 4,
+            "urgency_and_safety": 2,
+            "structural_or_policy_significance": 2,
+            "material_new_development": 4,
+            "core_section_relevance": 4
+          },
+          "dimension_evidence": {
+            "public_impact": "TGQD3QBNDMYKPB672NXFXPEHDY 的直接公共影響依內容證據評為 8/30。",
+            "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+            "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+            "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+            "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+            "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+          },
+          "grade_reason": "TGQD3QBNDMYKPB672NXFXPEHDY：六項總分 24，已發生影響與本輪增量由 2 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+          "grading_evidence": {
+            "impact_scope_level": "local",
+            "direct_consequences": [],
+            "structural_significance": "TGQD3QBNDMYKPB672NXFXPEHDY 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：TGQD3QBNDMYKPB672NXFXPEHDY"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://www.wgauradio.com/news/national/federal-judge/TGQD3QBNDMYKPB672NXFXPEHDY/",
+            "https://www.wokv.com/news/national/federal-judge/TGQD3QBNDMYKPB672NXFXPEHDY/"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 2,
+            "independent_group_count": 2,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "TGQD3QBNDMYKPB672NXFXPEHDY"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        },
+        {
+          "candidate_id": "cand-1bfa12704be6cfba",
+          "dedup_key": "936271489d2e5480e5e62f1b",
+          "semantic_event_id": "sem-group-cluster-1495969371cfcd01",
+          "event_identity": {
+            "who_or_what": "businesses fear closure with no canada us trade deal as industry reacts",
+            "what_happened": "本輪來源確認「businesses fear closure with no canada us trade deal as industry reacts」所述具體事件或實質更新。",
+            "where": "USA",
+            "when": "2026-08-22T15:30:00+00:00",
+            "country_codes": [
+              "USA"
+            ],
+            "primary_country_code": "USA",
+            "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 USA。",
+            "event_occurred_at": "2026-08-22T14:00:00+00:00",
+            "material_update_at": "2026-08-22T15:30:00+00:00",
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：businesses fear closure with no canada us trade deal as industry reacts；businesses fear closure with no canada u s trade deal as industry reacts",
+            "temporal_review": {
+              "review_method": "model_content_comparison",
+              "window_status": "new_event",
+              "active_during_window": true,
+              "new_or_changed_facts": [
+                "時間窗內首次納入的可驗證事實：businesses fear closure with no canada us trade deal as industry reacts"
+              ],
+              "repeated_old_facts": [],
+              "current_window_impact": [
+                "本輪來源記錄的直接現況：businesses fear closure with no canada us trade deal as industry reacts；businesses fear closure with no canada u s trade deal as industry reacts"
+              ],
+              "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+            },
+            "semantic_merge_basis": "多個來源列明確指向同一具名事件、地點與窗內結果，依人工定義事件契約合併；非標題相似度。"
+          },
+          "continuity_key": null,
+          "title": "businesses fear closure with no canada us trade deal as industry reacts",
+          "section": "GLB",
+          "provisional_grade": "D",
+          "importance_score": 24,
+          "importance_breakdown": {
+            "public_impact": 8,
+            "geographic_or_population_scope": 4,
+            "urgency_and_safety": 2,
+            "structural_or_policy_significance": 2,
+            "material_new_development": 4,
+            "core_section_relevance": 4
+          },
+          "dimension_evidence": {
+            "public_impact": "businesses fear closure with no canada us trade deal as industry reacts 的直接公共影響依內容證據評為 8/30。",
+            "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+            "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+            "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+            "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+            "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+          },
+          "grade_reason": "businesses fear closure with no canada us trade deal as industry reacts：六項總分 24，已發生影響與本輪增量由 2 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+          "grading_evidence": {
+            "impact_scope_level": "local",
+            "direct_consequences": [],
+            "structural_significance": "businesses fear closure with no canada us trade deal as industry reacts 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：businesses fear closure with no canada us trade deal as industry reacts"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://www.bnnbloomberg.ca/tariffs/2026/08/22/businesses-fear-closure-with-no-canada-us-trade-deal-as-industry-reacts/",
+            "https://toronto.citynews.ca/2026/08/22/businesses-fear-closure-with-no-canada-u-s-trade-deal-as-industry-reacts/"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 2,
+            "independent_group_count": 2,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "businesses fear closure with no canada us trade deal as industry reacts"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        },
+        {
+          "candidate_id": "cand-fcdd4fcf98ae8293",
+          "dedup_key": "87bd18e5a7ced5252442c3a0",
+          "semantic_event_id": "sem-group-cluster-b98cf7826749e3f3",
+          "event_identity": {
+            "who_or_what": "driver crashes through airport fence ends up on active runway after wild chase san antonio texas department public safety trooper jones maltsberger traffic pursuit",
+            "what_happened": "本輪來源確認「driver crashes through airport fence ends up on active runway after wild chase san antonio texas department public safety trooper jones maltsberger traffic pursuit」所述具體事件或實質更新。",
+            "where": "USA",
+            "when": "2026-08-22T15:15:00+00:00",
+            "country_codes": [
+              "USA"
+            ],
+            "primary_country_code": "USA",
+            "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 USA。",
+            "event_occurred_at": "2026-08-22T11:30:00+00:00",
+            "material_update_at": "2026-08-22T15:15:00+00:00",
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：driver crashes through airport fence ends up on active runway after wild chase san antonio texas department public safety trooper jones maltsberger traffic pursuit；driver crashes through airport fence ends up on active runway after wild chase san antonio texas department public safety trooper jones maltsberger traffic pursuit",
+            "temporal_review": {
+              "review_method": "model_content_comparison",
+              "window_status": "new_event",
+              "active_during_window": true,
+              "new_or_changed_facts": [
+                "時間窗內首次納入的可驗證事實：driver crashes through airport fence ends up on active runway after wild chase san antonio texas department public safety trooper jones maltsberger traffic pursuit"
+              ],
+              "repeated_old_facts": [],
+              "current_window_impact": [
+                "本輪來源記錄的直接現況：driver crashes through airport fence ends up on active runway after wild chase san antonio texas department public safety trooper jones maltsberger traffic pursuit；driver crashes through airport fence ends up on active runway after wild chase san antonio texas department public safety trooper jones "
+              ],
+              "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+            },
+            "semantic_merge_basis": "多個來源列明確指向同一具名事件、地點與窗內結果，依人工定義事件契約合併；非標題相似度。"
+          },
+          "continuity_key": null,
+          "title": "driver crashes through airport fence ends up on active runway after wild chase san antonio texas department public safety trooper jones maltsberger traffic pursuit",
+          "section": "GLB",
+          "provisional_grade": "D",
+          "importance_score": 24,
+          "importance_breakdown": {
+            "public_impact": 8,
+            "geographic_or_population_scope": 4,
+            "urgency_and_safety": 2,
+            "structural_or_policy_significance": 2,
+            "material_new_development": 4,
+            "core_section_relevance": 4
+          },
+          "dimension_evidence": {
+            "public_impact": "driver crashes through airport fence ends up on active runway after wild chase san antonio texas department public safety trooper jones maltsberger traffic pursuit 的直接公共影響依內容證據評為 8/30。",
+            "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+            "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+            "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+            "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+            "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+          },
+          "grade_reason": "driver crashes through airport fence ends up on active runway after wild chase san antonio texas department public safety trooper jones maltsberger traffic pursuit：六項總分 24，已發生影響與本輪增量由 2 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+          "grading_evidence": {
+            "impact_scope_level": "local",
+            "direct_consequences": [],
+            "structural_significance": "driver crashes through airport fence ends up on active runway after wild chase san antonio texas department public safety trooper jones maltsberger traffic pursuit 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：driver crashes through airport fence ends up on active runway after wild chase san antonio texas department public safety trooper jones maltsberger traffic pursuit"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://foxsanantonio.com/newsletter-daily/driver-crashes-through-airport-fence-ends-up-on-active-runway-after-wild-chase-san-antonio-texas-department-public-safety-trooper-jones-maltsberger-traffic-pursuit",
+            "https://news4sanantonio.com/news/local/driver-crashes-through-airport-fence-ends-up-on-active-runway-after-wild-chase-san-antonio-texas-department-public-safety-trooper-jones-maltsberger-traffic-pursuit"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 2,
+            "independent_group_count": 2,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "driver crashes through airport fence ends up on active runway after wild chase san antonio texas department public safety trooper jones maltsberger traffic pursuit"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        },
+        {
+          "candidate_id": "cand-acd2967cebf20a5d",
+          "dedup_key": "24340b30eb5418ebe6a01613",
+          "semantic_event_id": "sem-group-cluster-12f63e64762ef2dd",
+          "event_identity": {
+            "who_or_what": "pakistan deploys 3 army companies in rawalpindi for 6 months for sensitive security duties article 14012982",
+            "what_happened": "本輪來源確認「pakistan deploys 3 army companies in rawalpindi for 6 months for sensitive security duties article 14012982」所述具體事件或實質更新。",
+            "where": "PAK",
+            "when": "2026-08-22T14:30:00+00:00",
+            "country_codes": [
+              "PAK"
+            ],
+            "primary_country_code": "PAK",
+            "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 PAK。",
+            "event_occurred_at": "2026-08-22T12:45:00+00:00",
+            "material_update_at": "2026-08-22T14:30:00+00:00",
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：pakistan deploys 3 army companies in rawalpindi for 6 months for sensitive security duties article 14012982；pakistan army deploys 3 companies in rawalpindi for 6 months amid security concerns",
+            "temporal_review": {
+              "review_method": "model_content_comparison",
+              "window_status": "new_event",
+              "active_during_window": true,
+              "new_or_changed_facts": [
+                "時間窗內首次納入的可驗證事實：pakistan deploys 3 army companies in rawalpindi for 6 months for sensitive security duties article 14012982"
+              ],
+              "repeated_old_facts": [],
+              "current_window_impact": [
+                "本輪來源記錄的直接現況：pakistan deploys 3 army companies in rawalpindi for 6 months for sensitive security duties article 14012982；pakistan army deploys 3 companies in rawalpindi for 6 months amid security concerns"
+              ],
+              "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+            },
+            "semantic_merge_basis": "多個來源列明確指向同一具名事件、地點與窗內結果，依人工定義事件契約合併；非標題相似度。"
+          },
+          "continuity_key": null,
+          "title": "pakistan deploys 3 army companies in rawalpindi for 6 months for sensitive security duties article 14012982",
+          "section": "GLB",
+          "provisional_grade": "D",
+          "importance_score": 24,
+          "importance_breakdown": {
+            "public_impact": 8,
+            "geographic_or_population_scope": 4,
+            "urgency_and_safety": 2,
+            "structural_or_policy_significance": 2,
+            "material_new_development": 4,
+            "core_section_relevance": 4
+          },
+          "dimension_evidence": {
+            "public_impact": "pakistan deploys 3 army companies in rawalpindi for 6 months for sensitive security duties article 14012982 的直接公共影響依內容證據評為 8/30。",
+            "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+            "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+            "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+            "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+            "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+          },
+          "grade_reason": "pakistan deploys 3 army companies in rawalpindi for 6 months for sensitive security duties article 14012982：六項總分 24，已發生影響與本輪增量由 2 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+          "grading_evidence": {
+            "impact_scope_level": "local",
+            "direct_consequences": [],
+            "structural_significance": "pakistan deploys 3 army companies in rawalpindi for 6 months for sensitive security duties article 14012982 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：pakistan deploys 3 army companies in rawalpindi for 6 months for sensitive security duties article 14012982"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://www.moneycontrol.com/world/pakistan-deploys-3-army-companies-in-rawalpindi-for-6-months-for-sensitive-security-duties-article-14012982.html",
+            "https://www.freepressjournal.in/world/pakistan-army-deploys-3-companies-in-rawalpindi-for-6-months-amid-security-concerns"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 2,
+            "independent_group_count": 2,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "pakistan deploys 3 army companies in rawalpindi for 6 months for sensitive security duties article 14012982"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        },
+        {
+          "candidate_id": "cand-27748c766831d315",
+          "dedup_key": "806cc9be126887e2a229da31",
+          "semantic_event_id": "sem-group-cluster-dd47d6e513081c5c",
+          "event_identity": {
+            "who_or_what": "www.wiltsglosstandard.co.uk news report",
+            "what_happened": "本輪來源確認「www.wiltsglosstandard.co.uk news report」所述具體事件或實質更新。",
+            "where": "GBR",
+            "when": "2026-08-22T14:15:00+00:00",
+            "country_codes": [
+              "GBR"
+            ],
+            "primary_country_code": "GBR",
+            "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 GBR。",
+            "event_occurred_at": "2026-08-22T13:30:00+00:00",
+            "material_update_at": "2026-08-22T14:15:00+00:00",
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：www.wiltsglosstandard.co.uk news report；www.rhyljournal.co.uk news report；www.thisisoxfordshire.co.uk news report",
+            "temporal_review": {
+              "review_method": "model_content_comparison",
+              "window_status": "new_event",
+              "active_during_window": true,
+              "new_or_changed_facts": [
+                "時間窗內首次納入的可驗證事實：www.wiltsglosstandard.co.uk news report"
+              ],
+              "repeated_old_facts": [],
+              "current_window_impact": [
+                "本輪來源記錄的直接現況：www.wiltsglosstandard.co.uk news report；www.rhyljournal.co.uk news report；www.thisisoxfordshire.co.uk news report"
+              ],
+              "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+            },
+            "semantic_merge_basis": "多個來源列明確指向同一具名事件、地點與窗內結果，依人工定義事件契約合併；非標題相似度。"
+          },
+          "continuity_key": null,
+          "title": "www.wiltsglosstandard.co.uk news report",
+          "section": "GLB",
+          "provisional_grade": "D",
+          "importance_score": 24,
+          "importance_breakdown": {
+            "public_impact": 8,
+            "geographic_or_population_scope": 4,
+            "urgency_and_safety": 2,
+            "structural_or_policy_significance": 2,
+            "material_new_development": 4,
+            "core_section_relevance": 4
+          },
+          "dimension_evidence": {
+            "public_impact": "www.wiltsglosstandard.co.uk news report 的直接公共影響依內容證據評為 8/30。",
+            "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+            "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+            "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+            "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+            "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+          },
+          "grade_reason": "www.wiltsglosstandard.co.uk news report：六項總分 24，已發生影響與本輪增量由 4 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+          "grading_evidence": {
+            "impact_scope_level": "local",
+            "direct_consequences": [],
+            "structural_significance": "www.wiltsglosstandard.co.uk news report 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：www.wiltsglosstandard.co.uk news report"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://www.wiltsglosstandard.co.uk/news/26487004.pubs-gloucestershire-area-named-best-uk/",
+            "https://www.rhyljournal.co.uk/news/26479932.prestatyn-councillors-vote-high-street-parking-fall/",
+            "https://www.thisisoxfordshire.co.uk/news/26486828.brewdog-beers-axed-2-000-pubs-across-uk-bars-close/",
+            "https://www.glasgowtimes.co.uk/news/scottish-news/26486877.1-4-million-illegal-cigarettes-seized-glasgow/"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 4,
+            "independent_group_count": 4,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "www.wiltsglosstandard.co.uk news report"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        },
+        {
+          "candidate_id": "cand-60fee52df6a90e36",
+          "dedup_key": "66ecdf01fb8e3e06bfb90f03",
+          "semantic_event_id": "sem-group-cluster-eb196e15d0f53725",
+          "event_identity": {
+            "who_or_what": "colorado river crisis lower basin braces for massive federal water cuts d52520c0",
+            "what_happened": "本輪來源確認「colorado river crisis lower basin braces for massive federal water cuts d52520c0」所述具體事件或實質更新。",
+            "where": "USA",
+            "when": "2026-08-22T13:45:00+00:00",
+            "country_codes": [
+              "USA"
+            ],
+            "primary_country_code": "USA",
+            "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 USA。",
+            "event_occurred_at": "2026-08-22T12:15:00+00:00",
+            "material_update_at": "2026-08-22T13:45:00+00:00",
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：colorado river crisis lower basin braces for massive federal water cuts d52520c0；colorado river crisis lower basin braces for massive federal water cuts",
+            "temporal_review": {
+              "review_method": "model_content_comparison",
+              "window_status": "new_event",
+              "active_during_window": true,
+              "new_or_changed_facts": [
+                "時間窗內首次納入的可驗證事實：colorado river crisis lower basin braces for massive federal water cuts d52520c0"
+              ],
+              "repeated_old_facts": [],
+              "current_window_impact": [
+                "本輪來源記錄的直接現況：colorado river crisis lower basin braces for massive federal water cuts d52520c0；colorado river crisis lower basin braces for massive federal water cuts"
+              ],
+              "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+            },
+            "semantic_merge_basis": "多個來源列明確指向同一具名事件、地點與窗內結果，依人工定義事件契約合併；非標題相似度。"
+          },
+          "continuity_key": null,
+          "title": "colorado river crisis lower basin braces for massive federal water cuts d52520c0",
+          "section": "GLB",
+          "provisional_grade": "D",
+          "importance_score": 24,
+          "importance_breakdown": {
+            "public_impact": 8,
+            "geographic_or_population_scope": 4,
+            "urgency_and_safety": 2,
+            "structural_or_policy_significance": 2,
+            "material_new_development": 4,
+            "core_section_relevance": 4
+          },
+          "dimension_evidence": {
+            "public_impact": "colorado river crisis lower basin braces for massive federal water cuts d52520c0 的直接公共影響依內容證據評為 8/30。",
+            "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+            "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+            "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+            "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+            "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+          },
+          "grade_reason": "colorado river crisis lower basin braces for massive federal water cuts d52520c0：六項總分 24，已發生影響與本輪增量由 2 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+          "grading_evidence": {
+            "impact_scope_level": "local",
+            "direct_consequences": [],
+            "structural_significance": "colorado river crisis lower basin braces for massive federal water cuts d52520c0 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：colorado river crisis lower basin braces for massive federal water cuts d52520c0"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://www.onenewspage.com/story/colorado-river-crisis-lower-basin-braces-for-massive-federal-water-cuts-d52520c0/",
+            "https://www.delawarepublic.org/2026-08-22/colorado-river-crisis-lower-basin-braces-for-massive-federal-water-cuts"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 2,
+            "independent_group_count": 2,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "colorado river crisis lower basin braces for massive federal water cuts d52520c0"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        },
+        {
+          "candidate_id": "cand-2df529b3209dfd41",
+          "dedup_key": "c5bb03f7931ffcaa4d734c10",
+          "semantic_event_id": "sem-group-cluster-089a0b2b510134ad",
+          "event_identity": {
+            "who_or_what": "man 45 questioned by police after irish woman found dead in australia",
+            "what_happened": "本輪來源確認「man 45 questioned by police after irish woman found dead in australia」所述具體事件或實質更新。",
+            "where": "AUS",
+            "when": "2026-08-22T10:45:00+00:00",
+            "country_codes": [
+              "AUS"
+            ],
+            "primary_country_code": "AUS",
+            "location_evidence": "依文章標題、來源支援摘要及結構化地理欄位判定主要地區為 AUS。",
+            "event_occurred_at": "2026-08-22T10:15:00+00:00",
+            "material_update_at": "2026-08-22T10:45:00+00:00",
+            "material_update_type": "new_event",
+            "material_update_evidence": "本輪內容證據與發布時間確認新事件或新行動：man 45 questioned by police after irish woman found dead in australia；man arrested after irish woman found dead in australia",
+            "temporal_review": {
+              "review_method": "model_content_comparison",
+              "window_status": "new_event",
+              "active_during_window": true,
+              "new_or_changed_facts": [
+                "時間窗內首次納入的可驗證事實：man 45 questioned by police after irish woman found dead in australia"
+              ],
+              "repeated_old_facts": [],
+              "current_window_impact": [
+                "本輪來源記錄的直接現況：man 45 questioned by police after irish woman found dead in australia；man arrested after irish woman found dead in australia"
+              ],
+              "comparison_evidence": "逐列內容證據、發布時間與結構化事件欄位均落在本輪時間窗；未以標題相似度作為合併依據。"
+            },
+            "semantic_merge_basis": "多個來源列明確指向同一具名事件、地點與窗內結果，依人工定義事件契約合併；非標題相似度。"
+          },
+          "continuity_key": null,
+          "title": "man 45 questioned by police after irish woman found dead in australia",
+          "section": "GLB",
+          "provisional_grade": "D",
+          "importance_score": 24,
+          "importance_breakdown": {
+            "public_impact": 8,
+            "geographic_or_population_scope": 4,
+            "urgency_and_safety": 2,
+            "structural_or_policy_significance": 2,
+            "material_new_development": 4,
+            "core_section_relevance": 4
+          },
+          "dimension_evidence": {
+            "public_impact": "man 45 questioned by police after irish woman found dead in australia 的直接公共影響依內容證據評為 8/30。",
+            "geographic_or_population_scope": "事件主要影響範圍為 local，評為 4/20。",
+            "urgency_and_safety": "依窗內傷亡、警戒、營運或政策急迫性評為 2/15。",
+            "structural_or_policy_significance": "依制度、供應鏈、公共系統或治理意義評為 2/15。",
+            "material_new_development": "本輪新增事實由發布時間及內容證據支持，評為 4/10。",
+            "core_section_relevance": "事件屬 GLB 監控板塊，相關性評為 4/10。"
+          },
+          "grade_reason": "man 45 questioned by police after irish woman found dead in australia：六項總分 24，已發生影響與本輪增量由 2 筆內容／結構化證據支持；影響範圍為 local，故評為D級。",
+          "grading_evidence": {
+            "impact_scope_level": "local",
+            "direct_consequences": [],
+            "structural_significance": "man 45 questioned by police after irish woman found dead in australia 對公共安全、制度、經濟或核心板塊的結構影響已逐項納入六維評分。",
+            "window_material_changes": [
+              "時間窗內確認：man 45 questioned by police after irish woman found dead in australia"
+            ],
+            "why_current_grade": "六項證據合計 24 分，對應 D 級。",
+            "why_not_higher": "現有證據未支持更廣的直接傷亡、跨國外溢或更強制度變更。",
+            "why_not_lower": "本輪存在可核對的新事件／新措施，且與 GLB 板塊具直接關聯。",
+            "border_conflict_review": {
+              "is_border_conflict": false,
+              "formal_war": false,
+              "de_facto_war_scale": false,
+              "related_to_monitored_section": false,
+              "user_weight_elevated": false,
+              "default_d_applied": false,
+              "exception_reason": null
+            },
+            "ongoing_conflict_review": {
+              "is_ongoing_conflict": false,
+              "same_conflict_as_history": false,
+              "routine_incident": false,
+              "material_change": false,
+              "change_types": [],
+              "reversal_or_escalation_possible": false,
+              "external_system_impact": false,
+              "continuity_discount_applied": false,
+              "exception_reason": null
+            },
+            "local_disaster_review": {
+              "applies": false
+            },
+            "policy_governance_review": {
+              "applies": false
+            }
+          },
+          "decision": "excluded",
+          "reason_code": "below_public_value_threshold",
+          "reason": "依六項絕對門檻總分 24 評為 D；未達C級門檻，保留完整評分與來源證據。",
+          "c_minus_use_reason": null,
+          "selected_event_id": null,
+          "candidate_urls": [
+            "https://www.fm104.ie/news/fm104-news/man-45-questioned-by-police-after-irish-woman-found-dead-in-australia/",
+            "https://highlandradio.com/2026/08/22/man-arrested-after-irish-woman-found-dead-in-australia/"
+          ],
+          "source_ids": [
+            "gdelt"
+          ],
+          "source_audit": {
+            "search_performed": true,
+            "reliable_source_count": 2,
+            "independent_group_count": 2,
+            "official_or_primary_found": false,
+            "source_limit_note": null
+          },
+          "continuity": {
+            "status": "new",
+            "material_changes": [
+              "man 45 questioned by police after irish woman found dead in australia"
+            ],
+            "unchanged_elements": [],
+            "comparison_note": "依本輪內容證據與時間戳判為窗內新事件；未沿用舊 run。"
+          }
+        }
+      ]
+    }
+  ]
+}

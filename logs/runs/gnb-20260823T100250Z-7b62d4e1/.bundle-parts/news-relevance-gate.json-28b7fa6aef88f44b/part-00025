@@ -1,0 +1,46 @@
+}
+    },
+    {
+      "candidate_id": "6f6aab9c6bed02fd5ad8",
+      "source_id": "gdelt",
+      "canonical_url": "https://economictimes.indiatimes.com/markets/stocks/news/cas-chaos-triggers-liquidity-spiral-nuvama-says-higher-participation-needed-to-break-cycle/articleshow/133421238.cms",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": null,
+        "event_code": "163",
+        "event_root_code": "16",
+        "quad_class": 4,
+        "goldstein_scale": -8.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": -3.83912248628884
+      }
+    },
+    {
+      "candidate_id": "6417718dfb2d1d43127b",
+      "source_id": "gdelt",
+      "canonical_url": "https://aleteia.org/2026/08/22/how-mary-became-a-queen-at-the-annunciation",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": null,
+        "event_code": "010",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": 2.2
+      }
+    }
+  ]
+}

@@ -1,0 +1,454 @@
+{
+  "events": [
+    {
+      "assets": [
+        {
+          "base_map": "maps/generated/taiwan-counties-yellow-v2.png",
+          "canvas_scope": "full_section",
+          "caption": "高雄、屏東為主要豪雨災區，臺南亦受強降雨與積淹水影響。",
+          "generator": "scripts/render_base_maps.py",
+          "height": 1620,
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/maps/TWN-01-map.png",
+          "place_labels": [
+            "高雄",
+            "屏東",
+            "臺南"
+          ],
+          "source_urls": [
+            "https://www.cna.com.tw/news/aloc/202608230143.aspx",
+            "https://www.mirrormedia.mg/story/20260823-172soc-120812"
+          ],
+          "style_id": "yellow-admin-v2",
+          "style_reference": "maps/style.json",
+          "visual_checked": true,
+          "width": 1260
+        }
+      ],
+      "event_id": "TWN-01",
+      "omission_reason": null,
+      "rationale": "豪雨、淹水與撤離跨越高雄、屏東及臺南，範圍直接影響災害理解。",
+      "required": true,
+      "status": "ready"
+    },
+    {
+      "assets": [],
+      "event_id": "TWN-02",
+      "omission_reason": null,
+      "rationale": "已檢查「影響範圍」與事故位置地理訊號；爆炸影響集中於臺南安南區單一場址，地圖位置不影響理解事故原因與傷亡。",
+      "required": false,
+      "status": "not_required"
+    },
+    {
+      "assets": [
+        {
+          "base_map": "maps/generated/taiwan-counties-yellow-v2.png",
+          "canvas_scope": "full_section",
+          "caption": "金門是八二三戰役紀念與本次演說所在地。",
+          "generator": "scripts/render_base_maps.py",
+          "height": 1620,
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/maps/TWN-03-map.png",
+          "place_labels": [
+            "金門"
+          ],
+          "source_urls": [
+            "https://www.reuters.com/world/china/peace-through-strength-taiwan-president-says-china-battle-anniversary-2026-08-23/",
+            "https://news.ttv.com.tw/news/11508230013900N"
+          ],
+          "style_id": "yellow-admin-v2",
+          "style_reference": "maps/style.json",
+          "visual_checked": true,
+          "width": 1260
+        }
+      ],
+      "event_id": "TWN-03",
+      "omission_reason": null,
+      "rationale": "演說與八二三戰役記憶發生於前線金門，其離島位置會影響讀者對兩岸安全脈絡的理解。",
+      "required": true,
+      "status": "ready"
+    },
+    {
+      "assets": [],
+      "event_id": "TWN-04",
+      "omission_reason": null,
+      "rationale": "已檢查「影響範圍」地理訊號；事件比較的是全國家戶規模而非區域分布，地圖位置不影響理解，沒有空間關係需要呈現。",
+      "required": false,
+      "status": "not_required"
+    },
+    {
+      "assets": [],
+      "event_id": "TWN-05",
+      "omission_reason": null,
+      "rationale": "已檢查「影響範圍」與人體試驗所在機構；核心是藥物試驗階段與療效，地圖位置不影響理解風險與進展。",
+      "required": false,
+      "status": "not_required"
+    },
+    {
+      "assets": [
+        {
+          "base_map": "maps/generated/china-provinces-yellow-v2.png",
+          "canvas_scope": "full_section",
+          "caption": "廣西為紫檀颱風洪水主要災區，廣東沿岸亦需防範。",
+          "generator": "scripts/render_base_maps.py",
+          "height": 1512,
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/maps/CHN-01-map.png",
+          "place_labels": [
+            "廣西",
+            "廣東"
+          ],
+          "source_urls": [
+            "https://www.chinanews.com.cn/sh/2026/08-23/10682729.shtml"
+          ],
+          "style_id": "yellow-admin-v2",
+          "style_reference": "maps/style.json",
+          "visual_checked": true,
+          "width": 1800
+        }
+      ],
+      "event_id": "CHN-01",
+      "omission_reason": null,
+      "rationale": "颱風與洪水主要影響廣西並接近廣東沿岸，空間範圍是防災風險核心。",
+      "required": true,
+      "status": "ready"
+    },
+    {
+      "assets": [],
+      "event_id": "CHN-02",
+      "omission_reason": null,
+      "rationale": "已檢查「影響範圍」與多城政策訊號；來源未提供可比較的完整城市清單，地圖位置不影響理解，選擇性呈現反而可能誤導。",
+      "required": false,
+      "status": "not_required"
+    },
+    {
+      "assets": [
+        {
+          "base_map": "maps/generated/china-provinces-yellow-v2.png",
+          "canvas_scope": "full_section",
+          "caption": "涉事白菜產自河北，主管單位同步排查是否流入北京。",
+          "generator": "scripts/render_base_maps.py",
+          "height": 1512,
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/maps/CHN-03-map.png",
+          "place_labels": [
+            "河北",
+            "北京"
+          ],
+          "source_urls": [
+            "https://www.chinanews.com.cn/sh/2026/08-23/10682711.shtml",
+            "https://www.cna.com.tw/news/acn/202608230111.aspx"
+          ],
+          "style_id": "yellow-admin-v2",
+          "style_reference": "maps/style.json",
+          "visual_checked": true,
+          "width": 1800
+        }
+      ],
+      "event_id": "CHN-03",
+      "omission_reason": null,
+      "rationale": "涉事白菜產自河北並追查是否流入北京，跨地流向有助理解食品安全範圍。",
+      "required": true,
+      "status": "ready"
+    },
+    {
+      "assets": [],
+      "event_id": "CHN-04",
+      "omission_reason": null,
+      "rationale": "已檢查「影響範圍」與上海地名訊號；事件核心是樓市政策生效，單一城市位置不影響理解措施內容。",
+      "required": false,
+      "status": "not_required"
+    },
+    {
+      "assets": [],
+      "event_id": "CHN-05",
+      "omission_reason": null,
+      "rationale": "已檢查「影響範圍」與多領域量產描述；來源重點是材料技術與產能，地圖位置不影響理解，亦不涉及路線。",
+      "required": false,
+      "status": "not_required"
+    },
+    {
+      "assets": [
+        {
+          "base_map": "maps/generated/world-countries-pacific-robinson-yellow-v2.png",
+          "canvas_scope": "full_world",
+          "caption": "美國與加拿大互相加徵關稅，北美跨境供應鏈首當其衝。",
+          "generator": "scripts/render_base_maps.py",
+          "height": 1044,
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/maps/GLB-01-map.png",
+          "place_labels": [
+            "加拿大",
+            "美國"
+          ],
+          "source_urls": [
+            "https://www.reuters.com/business/carney-says-new-canadian-tariffs-us-goods-will-come-into-effect-september-8-2026-08-22/",
+            "https://apnews.com/article/4d18583fe52134ca8550652ad9772d2c"
+          ],
+          "style_id": "yellow-admin-v2",
+          "style_reference": "maps/style.json",
+          "visual_checked": true,
+          "width": 1800
+        }
+      ],
+      "event_id": "GLB-01",
+      "omission_reason": null,
+      "rationale": "關稅互相施加於美加兩國，跨境供應鏈關係是事件核心。",
+      "required": true,
+      "status": "ready"
+    },
+    {
+      "assets": [
+        {
+          "base_map": "maps/generated/world-countries-pacific-robinson-yellow-v2.png",
+          "canvas_scope": "full_world",
+          "caption": "地震發生於日本關東地區並波及東京周邊多縣。",
+          "generator": "scripts/render_base_maps.py",
+          "height": 1044,
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/maps/GLB-02-map.png",
+          "place_labels": [
+            "日本關東"
+          ],
+          "source_urls": [
+            "https://apnews.com/article/3b39d6dc29cb5ad1bada31a524b6e0c6",
+            "https://www.nippon.com/en/news/yjj2026082300142/quake-rocks-tokyo-nearby-areas-37-injured.html"
+          ],
+          "style_id": "yellow-admin-v2",
+          "style_reference": "maps/style.json",
+          "visual_checked": true,
+          "width": 1800
+        }
+      ],
+      "event_id": "GLB-02",
+      "omission_reason": null,
+      "rationale": "地震發生於日本關東並影響多個都會縣市，定位有助理解受震範圍。",
+      "required": true,
+      "status": "ready"
+    },
+    {
+      "assets": [
+        {
+          "base_map": "maps/generated/world-countries-pacific-robinson-yellow-v2.png",
+          "canvas_scope": "full_world",
+          "caption": "寺廟空襲發生於緬甸中部實皆省。",
+          "generator": "scripts/render_base_maps.py",
+          "height": 1044,
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/maps/GLB-03-map.png",
+          "place_labels": [
+            "緬甸實皆省"
+          ],
+          "source_urls": [
+            "https://timesofoman.com/article/175932-myanmar-airstrike-kills-14-at-buddhist-monastery-reports",
+            "https://www.scmp.com/news/asia/southeast-asia/article/3364928/myanmar-air-strike-kills-14-praying-monastery-rebel-witnesses-say"
+          ],
+          "style_id": "yellow-admin-v2",
+          "style_reference": "maps/style.json",
+          "visual_checked": true,
+          "width": 1800
+        }
+      ],
+      "event_id": "GLB-03",
+      "omission_reason": null,
+      "rationale": "空襲發生於緬甸中部實皆省，衝突區位置會影響人道風險理解。",
+      "required": true,
+      "status": "ready"
+    },
+    {
+      "assets": [
+        {
+          "base_map": "maps/generated/world-countries-pacific-robinson-yellow-v2.png",
+          "canvas_scope": "full_world",
+          "caption": "貨船在印度東部孟加拉灣外海沉沒，搜救仍在進行。",
+          "generator": "scripts/render_base_maps.py",
+          "height": 1044,
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/maps/GLB-04-map.png",
+          "place_labels": [
+            "印度東部外海"
+          ],
+          "source_urls": [
+            "https://www.reuters.com/world/americas/panamaflagged-cargo-ship-sinks-off-eastern-india-coast-guard-says-2026-08-22/",
+            "https://apnews.com/article/9299f36df9604d21fe7c7f8328ac5153"
+          ],
+          "style_id": "yellow-admin-v2",
+          "style_reference": "maps/style.json",
+          "visual_checked": true,
+          "width": 1800
+        }
+      ],
+      "event_id": "GLB-04",
+      "omission_reason": null,
+      "rationale": "貨船在印度東部孟加拉灣遠海沉沒，海域定位是搜救與航運風險核心。",
+      "required": true,
+      "status": "ready"
+    },
+    {
+      "assets": [
+        {
+          "base_map": "maps/generated/world-countries-pacific-robinson-yellow-v2.png",
+          "canvas_scope": "full_world",
+          "caption": "首宗哺乳類H5N1個案發現於澳洲南部沿岸。",
+          "generator": "scripts/render_base_maps.py",
+          "height": 1044,
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/maps/GLB-05-map.png",
+          "place_labels": [
+            "澳洲南部"
+          ],
+          "source_urls": [
+            "https://www.reuters.com/business/healthcare-pharmaceuticals/australia-confirms-first-h5n1-bird-flu-case-local-mammal-2026-08-23/",
+            "https://www.theguardian.com/world/2026/aug/23/fur-seal-death-first-australian-mainland-mammal-h5-bird-flu"
+          ],
+          "style_id": "yellow-admin-v2",
+          "style_reference": "maps/style.json",
+          "visual_checked": true,
+          "width": 1800
+        }
+      ],
+      "event_id": "GLB-05",
+      "omission_reason": null,
+      "rationale": "H5N1首次於澳洲本土哺乳類檢出，南澳沿岸與野生動物分布位置有助理解擴散風險。",
+      "required": true,
+      "status": "ready"
+    },
+    {
+      "assets": [],
+      "event_id": "GLB-06",
+      "omission_reason": null,
+      "rationale": "已檢查「影響範圍」與全國供氣訊號；核心是供需缺口與產業衝擊，來源未支持跨區輸氣路線，地圖位置不影響理解。",
+      "required": false,
+      "status": "not_required"
+    },
+    {
+      "assets": [
+        {
+          "base_map": "maps/generated/world-countries-pacific-robinson-yellow-v2.png",
+          "canvas_scope": "full_world",
+          "caption": "切爾納沃德核電廠依賴羅馬尼亞境內多瑙河水冷卻。",
+          "generator": "scripts/render_base_maps.py",
+          "height": 1044,
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/maps/GLB-07-map.png",
+          "place_labels": [
+            "羅馬尼亞多瑙河"
+          ],
+          "source_urls": [
+            "https://www.reuters.com/business/energy/romania-adopts-new-measures-boost-danube-waters-cool-cernavoda-nuclear-plant-2026-08-22/",
+            "https://www.theguardian.com/world/2026/aug/03/romania-blasts-divert-danube-water-nuclear-reactor-energy-crisis-hungary"
+          ],
+          "style_id": "yellow-admin-v2",
+          "style_reference": "maps/style.json",
+          "visual_checked": true,
+          "width": 1800
+        }
+      ],
+      "event_id": "GLB-07",
+      "omission_reason": null,
+      "rationale": "多瑙河水位與切爾納沃德核電廠冷卻的空間依存是事件核心。",
+      "required": true,
+      "status": "ready"
+    },
+    {
+      "assets": [],
+      "event_id": "GLB-08",
+      "omission_reason": null,
+      "rationale": "已檢查「多國」與「影響範圍」地理訊號；事件核心是法院對行政權限的裁判，來源未列完整七十五國清單，地圖位置不影響理解且可能誤導。",
+      "required": false,
+      "status": "not_required"
+    },
+    {
+      "assets": [
+        {
+          "base_map": "maps/generated/world-countries-pacific-robinson-yellow-v2.png",
+          "canvas_scope": "full_world",
+          "caption": "疫情主要集中於印度古吉拉特邦。",
+          "generator": "scripts/render_base_maps.py",
+          "height": 1044,
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/maps/GLB-09-map.png",
+          "place_labels": [
+            "印度古吉拉特邦"
+          ],
+          "source_urls": [
+            "https://www.mid-day.com/mumbai/mumbai-news/article/mumbai-remains-on-alert-as-gujarat-reports-nearly-30-deaths-after-chandipura-virus-outbreak-23646134",
+            "https://www.gov.uk/government/publications/outbreaks-under-monitoring-in-2026/outbreaks-under-monitoring-week-32-week-ending-9-august-2026"
+          ],
+          "style_id": "yellow-admin-v2",
+          "style_reference": "maps/style.json",
+          "visual_checked": true,
+          "width": 1800
+        }
+      ],
+      "event_id": "GLB-09",
+      "omission_reason": null,
+      "rationale": "疫情集中於印度古吉拉特邦並引發其他城市警戒，地理定位有助理解傳播範圍。",
+      "required": true,
+      "status": "ready"
+    },
+    {
+      "assets": [
+        {
+          "base_map": "maps/generated/world-countries-pacific-robinson-yellow-v2.png",
+          "canvas_scope": "full_world",
+          "caption": "多村與清真寺綁架發生於奈及利亞中北部尼日州。",
+          "generator": "scripts/render_base_maps.py",
+          "height": 1044,
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/maps/GLB-10-map.png",
+          "place_labels": [
+            "奈及利亞尼日州"
+          ],
+          "source_urls": [
+            "https://apnews.com/article/df9678a01c1e096404964496d5e6f905",
+            "https://trusttv.com/terrorists-break-into-niger-mosque-abduct-worshippers/"
+          ],
+          "style_id": "yellow-admin-v2",
+          "style_reference": "maps/style.json",
+          "visual_checked": true,
+          "width": 1800
+        }
+      ],
+      "event_id": "GLB-10",
+      "omission_reason": null,
+      "rationale": "綁架發生於奈及利亞中北部尼日州多個村莊，位置影響治安風險判斷。",
+      "required": true,
+      "status": "ready"
+    },
+    {
+      "assets": [
+        {
+          "base_map": "maps/generated/world-countries-pacific-robinson-yellow-v2.png",
+          "canvas_scope": "full_world",
+          "caption": "兩起學童綁架案發生於奈及利亞東北部博爾諾州。",
+          "generator": "scripts/render_base_maps.py",
+          "height": 1044,
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/maps/GLB-13-map.png",
+          "place_labels": [
+            "奈及利亞博爾諾州"
+          ],
+          "source_urls": [
+            "https://www.thisdaylive.com/2026/08/22/ndume-to-military-rescue-78-school-children-abducted-by-bandits-in-two-borno-communities/",
+            "https://guardian.ng/news/ndume-tasks-military-to-rescue-79-abducted-schoolchildren-in-southern-borno/"
+          ],
+          "style_id": "yellow-admin-v2",
+          "style_reference": "maps/style.json",
+          "visual_checked": true,
+          "width": 1800
+        }
+      ],
+      "event_id": "GLB-13",
+      "omission_reason": null,
+      "rationale": "兩起綁架發生於奈及利亞東北部博爾諾州，位置影響救援與衝突脈絡理解。",
+      "required": true,
+      "status": "ready"
+    },
+    {
+      "assets": [],
+      "event_id": "GLB-11",
+      "omission_reason": null,
+      "rationale": "已檢查「跨境」與「影響範圍」地理訊號；政府因安全理由未公開英國設施場址，沒有可稽核的定位點，地圖位置不影響理解。",
+      "required": false,
+      "status": "not_required"
+    },
+    {
+      "assets": [],
+      "event_id": "GLB-12",
+      "omission_reason": null,
+      "rationale": "已檢查「影響範圍」與跨國制裁訊號；尚未公布完整參與國清單與措施範圍，地圖位置不影響理解且可能誤示確定覆蓋。",
+      "required": false,
+      "status": "not_required"
+    }
+  ],
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "schema_version": "1.0.0"
+}

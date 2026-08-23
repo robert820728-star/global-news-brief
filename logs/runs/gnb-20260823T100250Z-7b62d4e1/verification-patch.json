@@ -1,0 +1,1334 @@
+{
+  "stage": "verify-news-events",
+  "events": [
+    {
+      "event_id": "TWN-01",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "TWN-01-S1",
+            "name": "中央社",
+            "url": "https://www.cna.com.tw/news/aloc/202608230143.aspx",
+            "role": "區域通訊社",
+            "producer": "中央社",
+            "independence_group": "cna",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "TWN-01-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "TWN-01-S2",
+            "name": "鏡週刊",
+            "url": "https://www.mirrormedia.mg/story/20260823-172soc-120812",
+            "role": "現場與水利署資料整理",
+            "producer": "鏡週刊",
+            "independence_group": "mirror",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "TWN-01-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "TWN-01-C1",
+            "text": "西南風與低壓帶帶來強降雨，高雄、屏東多處積淹水，高屏撤離逾二千人；土石流警戒、道路與交通中斷風險持續。",
+            "status": "supported",
+            "source_ids": [
+              "TWN-01-S1",
+              "TWN-01-S2"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "西南風與低壓帶帶來強降雨，高雄、屏東多處積淹水，高屏撤離逾二千人；土石流警戒、道路與交通中斷風險持續。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "TWN-02",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "TWN-02-S1",
+            "name": "中央社",
+            "url": "https://www.cna.com.tw/news/asoc/202608220214.aspx",
+            "role": "區域通訊社",
+            "producer": "中央社",
+            "independence_group": "cna",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "TWN-02-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "TWN-02-S2",
+            "name": "聯合報",
+            "url": "https://udn.com/news/story/124990/9708445",
+            "role": "地方現場報導",
+            "producer": "聯合報",
+            "independence_group": "udn",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "TWN-02-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "TWN-02-C1",
+            "text": "台南安南區廢棄物起火爆炸造成十五人受傷，市府啟動受災戶訪查並研議協助集體求償。",
+            "status": "supported",
+            "source_ids": [
+              "TWN-02-S1",
+              "TWN-02-S2"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "台南安南區廢棄物起火爆炸造成十五人受傷，市府啟動受災戶訪查並研議協助集體求償。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "TWN-03",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "TWN-03-S1",
+            "name": "路透社",
+            "url": "https://www.reuters.com/world/china/peace-through-strength-taiwan-president-says-china-battle-anniversary-2026-08-23/",
+            "role": "國際通訊社",
+            "producer": "路透社",
+            "independence_group": "reuters",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "TWN-03-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "TWN-03-S2",
+            "name": "台視新聞",
+            "url": "https://news.ttv.com.tw/news/11508230013900N",
+            "role": "台灣電視新聞",
+            "producer": "台視新聞",
+            "independence_group": "ttv",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "TWN-03-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "TWN-03-C1",
+            "text": "總統在八二三戰役紀念演說中提出以實力確保和平、強化國防預算與反共保台等主軸。",
+            "status": "supported",
+            "source_ids": [
+              "TWN-03-S1",
+              "TWN-03-S2"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "總統在八二三戰役紀念演說中提出以實力確保和平、強化國防預算與反共保台等主軸。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "TWN-04",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "TWN-04-S1",
+            "name": "中央社",
+            "url": "https://www.cna.com.tw/news/afe/202608220195.aspx",
+            "role": "區域通訊社",
+            "producer": "中央社",
+            "independence_group": "cna",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "TWN-04-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "TWN-04-S2",
+            "name": "經濟日報／聯合新聞網",
+            "url": "https://udn.com/news/story/7266/9708232",
+            "role": "財經媒體與統計資料整理",
+            "producer": "經濟日報／聯合新聞網",
+            "independence_group": "udn",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "TWN-04-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "TWN-04-C1",
+            "text": "台灣一至二人家庭占比首度超過半數，其中一人家庭數已超越四人家庭，反映人口與居住結構轉變。",
+            "status": "supported",
+            "source_ids": [
+              "TWN-04-S1",
+              "TWN-04-S2"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "台灣一至二人家庭占比首度超過半數，其中一人家庭數已超越四人家庭，反映人口與居住結構轉變。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "TWN-05",
+      "verification": {
+        "status": "completed",
+        "finding": "single_reliable_source",
+        "search_performed": true,
+        "independent_source_count": 1,
+        "sources": [
+          {
+            "source_id": "TWN-05-S1",
+            "name": "中央社",
+            "url": "https://www.cna.com.tw/news/ahel/202608230072.aspx",
+            "role": "區域通訊社",
+            "producer": "中央社",
+            "independence_group": "cna",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "TWN-05-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "TWN-05-C1",
+            "text": "台灣啟動胰臟癌新標靶人體試驗，初步研究指向延長生存期的可能性。",
+            "status": "supported",
+            "source_ids": [
+              "TWN-05-S1"
+            ]
+          }
+        ],
+        "uncertainties": [
+          "目前僅找到一個可靠來源，尚無其他獨立來源交叉確認。"
+        ],
+        "source_limit_note": "目前僅找到一個可靠來源，尚無其他獨立來源交叉確認。",
+        "positions": [],
+        "reader_wording": "台灣啟動胰臟癌新標靶人體試驗，初步研究指向延長生存期的可能性。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "CHN-01",
+      "verification": {
+        "status": "completed",
+        "finding": "single_reliable_source",
+        "search_performed": true,
+        "independent_source_count": 1,
+        "sources": [
+          {
+            "source_id": "CHN-01-S1",
+            "name": "中新網",
+            "url": "https://www.chinanews.com.cn/sh/2026/08-23/10682729.shtml",
+            "role": "中國通訊社",
+            "producer": "中新網",
+            "independence_group": "chinanews",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "CHN-01-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "CHN-01-C1",
+            "text": "颱風紫檀帶來廣西強降雨與洪水，多地內澇、河川超警，防城港上思已轉移三千多人，中央物資投入救災。",
+            "status": "supported",
+            "source_ids": [
+              "CHN-01-S1"
+            ]
+          }
+        ],
+        "uncertainties": [
+          "目前僅找到一個可靠來源，尚無其他獨立來源交叉確認。"
+        ],
+        "source_limit_note": "目前僅找到一個可靠來源，尚無其他獨立來源交叉確認。",
+        "positions": [],
+        "reader_wording": "颱風紫檀帶來廣西強降雨與洪水，多地內澇、河川超警，防城港上思已轉移三千多人，中央物資投入救災。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "CHN-02",
+      "verification": {
+        "status": "completed",
+        "finding": "single_reliable_source",
+        "search_performed": true,
+        "independent_source_count": 1,
+        "sources": [
+          {
+            "source_id": "CHN-02-S1",
+            "name": "中新網",
+            "url": "https://www.chinanews.com.cn/gn/2026/08-23/10682538.shtml",
+            "role": "中國通訊社",
+            "producer": "中新網",
+            "independence_group": "chinanews",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "CHN-02-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "CHN-02-C1",
+            "text": "中國多個城市密集調整住房公積金用途，擴大提取或使用場景。",
+            "status": "supported",
+            "source_ids": [
+              "CHN-02-S1"
+            ]
+          }
+        ],
+        "uncertainties": [
+          "目前僅找到一個可靠來源，尚無其他獨立來源交叉確認。"
+        ],
+        "source_limit_note": "目前僅找到一個可靠來源，尚無其他獨立來源交叉確認。",
+        "positions": [],
+        "reader_wording": "中國多個城市密集調整住房公積金用途，擴大提取或使用場景。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "CHN-03",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "CHN-03-S1",
+            "name": "中新網",
+            "url": "https://www.chinanews.com.cn/sh/2026/08-23/10682711.shtml",
+            "role": "中國通訊社",
+            "producer": "中新網",
+            "independence_group": "chinanews",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "CHN-03-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "CHN-03-S2",
+            "name": "中央社",
+            "url": "https://www.cna.com.tw/news/acn/202608230111.aspx",
+            "role": "區域通訊社",
+            "producer": "中央社",
+            "independence_group": "cna",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "CHN-03-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "CHN-03-C1",
+            "text": "河北出現涉嫌使用甲醛處理白菜的案件，警方與市場端追查運送流向，北京新發地表示涉事產品未流入。",
+            "status": "supported",
+            "source_ids": [
+              "CHN-03-S1",
+              "CHN-03-S2"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "河北出現涉嫌使用甲醛處理白菜的案件，警方與市場端追查運送流向，北京新發地表示涉事產品未流入。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "CHN-04",
+      "verification": {
+        "status": "completed",
+        "finding": "single_reliable_source",
+        "search_performed": true,
+        "independent_source_count": 1,
+        "sources": [
+          {
+            "source_id": "CHN-04-S1",
+            "name": "中新網",
+            "url": "https://www.chinanews.com.cn/cj/2026/08-23/10682703.shtml",
+            "role": "中國通訊社",
+            "producer": "中新網",
+            "independence_group": "chinanews",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "CHN-04-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "CHN-04-C1",
+            "text": "上海樓市「滬八條」開始施行，以多項措施支撐住房需求與消費。",
+            "status": "supported",
+            "source_ids": [
+              "CHN-04-S1"
+            ]
+          }
+        ],
+        "uncertainties": [
+          "目前僅找到一個可靠來源，尚無其他獨立來源交叉確認。"
+        ],
+        "source_limit_note": "目前僅找到一個可靠來源，尚無其他獨立來源交叉確認。",
+        "positions": [],
+        "reader_wording": "上海樓市「滬八條」開始施行，以多項措施支撐住房需求與消費。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "CHN-05",
+      "verification": {
+        "status": "completed",
+        "finding": "single_reliable_source",
+        "search_performed": true,
+        "independent_source_count": 1,
+        "sources": [
+          {
+            "source_id": "CHN-05-S1",
+            "name": "中新網",
+            "url": "https://www.chinanews.com.cn/cj/2026/08-23/10682562.shtml",
+            "role": "中國通訊社",
+            "producer": "中新網",
+            "independence_group": "chinanews",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "CHN-05-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "CHN-05-C1",
+            "text": "中國宣布多領域高端鋼材已實現自主量產。",
+            "status": "supported",
+            "source_ids": [
+              "CHN-05-S1"
+            ]
+          }
+        ],
+        "uncertainties": [
+          "目前僅找到一個可靠來源，尚無其他獨立來源交叉確認。"
+        ],
+        "source_limit_note": "目前僅找到一個可靠來源，尚無其他獨立來源交叉確認。",
+        "positions": [],
+        "reader_wording": "中國宣布多領域高端鋼材已實現自主量產。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "GLB-01",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "GLB-01-S1",
+            "name": "路透社",
+            "url": "https://www.reuters.com/business/carney-says-new-canadian-tariffs-us-goods-will-come-into-effect-september-8-2026-08-22/",
+            "role": "國際通訊社",
+            "producer": "路透社",
+            "independence_group": "reuters",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-01-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "GLB-01-S2",
+            "name": "美聯社",
+            "url": "https://apnews.com/article/4d18583fe52134ca8550652ad9772d2c",
+            "role": "國際通訊社",
+            "producer": "美聯社",
+            "independence_group": "ap",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-01-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "GLB-01-C1",
+            "text": "美加貿易談判破裂後，美國對加拿大商品加徵50%關稅，加拿大宣布等額報復措施。",
+            "status": "supported",
+            "source_ids": [
+              "GLB-01-S1",
+              "GLB-01-S2"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "美加貿易談判破裂後，美國對加拿大商品加徵50%關稅，加拿大宣布等額報復措施。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "GLB-02",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "GLB-02-S1",
+            "name": "美聯社",
+            "url": "https://apnews.com/article/3b39d6dc29cb5ad1bada31a524b6e0c6",
+            "role": "國際通訊社",
+            "producer": "美聯社",
+            "independence_group": "ap",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-02-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "GLB-02-S2",
+            "name": "時事通信／Nippon.com",
+            "url": "https://www.nippon.com/en/news/yjj2026082300142/quake-rocks-tokyo-nearby-areas-37-injured.html",
+            "role": "日本通訊社",
+            "producer": "時事通信／Nippon.com",
+            "independence_group": "jiji",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-02-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "GLB-02-C1",
+            "text": "日本關東發生規模5.9地震，傷者增至37人，東京等地有設施受損但新幹線與核電廠未見重大異常。",
+            "status": "supported",
+            "source_ids": [
+              "GLB-02-S1",
+              "GLB-02-S2"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "日本關東發生規模5.9地震，傷者增至37人，東京等地有設施受損但新幹線與核電廠未見重大異常。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "GLB-03",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "GLB-03-S1",
+            "name": "Times of Oman",
+            "url": "https://timesofoman.com/article/175932-myanmar-airstrike-kills-14-at-buddhist-monastery-reports",
+            "role": "區域媒體",
+            "producer": "Times of Oman",
+            "independence_group": "timesoman",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-03-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "GLB-03-S2",
+            "name": "南華早報",
+            "url": "https://www.scmp.com/news/asia/southeast-asia/article/3364928/myanmar-air-strike-kills-14-praying-monastery-rebel-witnesses-say",
+            "role": "區域媒體",
+            "producer": "南華早報",
+            "independence_group": "scmp",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-03-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "GLB-03-C1",
+            "text": "緬甸軍方空襲一座佛教寺廟，目擊者稱造成十四人死亡。",
+            "status": "supported",
+            "source_ids": [
+              "GLB-03-S1",
+              "GLB-03-S2"
+            ]
+          }
+        ],
+        "uncertainties": [
+          "死傷與責任歸因來自反對團體、居民與媒體查證，緬甸軍方未就該案提供可核對說法。"
+        ],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "緬甸軍方空襲一座佛教寺廟，目擊者稱造成十四人死亡。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "GLB-04",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "GLB-04-S1",
+            "name": "路透社",
+            "url": "https://www.reuters.com/world/americas/panamaflagged-cargo-ship-sinks-off-eastern-india-coast-guard-says-2026-08-22/",
+            "role": "國際通訊社",
+            "producer": "路透社",
+            "independence_group": "reuters",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-04-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "GLB-04-S2",
+            "name": "美聯社",
+            "url": "https://apnews.com/article/9299f36df9604d21fe7c7f8328ac5153",
+            "role": "國際通訊社",
+            "producer": "美聯社",
+            "independence_group": "ap",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-04-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "GLB-04-C1",
+            "text": "印度東部外海一艘貨船沉沒，二十二人失蹤，搜救仍在持續。",
+            "status": "supported",
+            "source_ids": [
+              "GLB-04-S1",
+              "GLB-04-S2"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "印度東部外海一艘貨船沉沒，二十二人失蹤，搜救仍在持續。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "GLB-05",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "GLB-05-S1",
+            "name": "路透社",
+            "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/australia-confirms-first-h5n1-bird-flu-case-local-mammal-2026-08-23/",
+            "role": "國際通訊社",
+            "producer": "路透社",
+            "independence_group": "reuters",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-05-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "GLB-05-S2",
+            "name": "衛報",
+            "url": "https://www.theguardian.com/world/2026/aug/23/fur-seal-death-first-australian-mainland-mammal-h5-bird-flu",
+            "role": "國際媒體",
+            "producer": "衛報",
+            "independence_group": "guardian",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-05-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "GLB-05-C1",
+            "text": "澳洲首次發現哺乳類動物感染H5N1，南澳海獅死亡個案引發跨物種傳播警戒。",
+            "status": "supported",
+            "source_ids": [
+              "GLB-05-S1",
+              "GLB-05-S2"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "澳洲首次發現哺乳類動物感染H5N1，南澳海獅死亡個案引發跨物種傳播警戒。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "GLB-06",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "GLB-06-S1",
+            "name": "中央社",
+            "url": "https://www.cna.com.tw/news/aopl/202608230093.aspx",
+            "role": "區域通訊社",
+            "producer": "中央社",
+            "independence_group": "cna",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-06-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "GLB-06-S2",
+            "name": "The Business Standard",
+            "url": "https://www.tbsnews.net/bangladesh/energy/lng-terminal-glitch-cuts-gas-supply-450-mmcfd-nationwide-energy-division-1495201",
+            "role": "孟加拉當地媒體",
+            "producer": "The Business Standard",
+            "independence_group": "tbs",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-06-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "GLB-06-C1",
+            "text": "孟加拉天然氣供應短缺衝擊工業與民生，停電及抗議增加。",
+            "status": "supported",
+            "source_ids": [
+              "GLB-06-S1",
+              "GLB-06-S2"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "孟加拉天然氣供應短缺衝擊工業與民生，停電及抗議增加。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "GLB-07",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "GLB-07-S1",
+            "name": "路透社",
+            "url": "https://www.reuters.com/business/energy/romania-adopts-new-measures-boost-danube-waters-cool-cernavoda-nuclear-plant-2026-08-22/",
+            "role": "國際通訊社",
+            "producer": "路透社",
+            "independence_group": "reuters",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-07-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "GLB-07-S2",
+            "name": "衛報",
+            "url": "https://www.theguardian.com/world/2026/aug/03/romania-blasts-divert-danube-water-nuclear-reactor-energy-crisis-hungary",
+            "role": "國際媒體",
+            "producer": "衛報",
+            "independence_group": "guardian",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-07-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "GLB-07-C1",
+            "text": "羅馬尼亞設法提高多瑙河水位，以確保核電廠冷卻系統運作。",
+            "status": "supported",
+            "source_ids": [
+              "GLB-07-S1",
+              "GLB-07-S2"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "羅馬尼亞設法提高多瑙河水位，以確保核電廠冷卻系統運作。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "GLB-08",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "GLB-08-S1",
+            "name": "美聯社",
+            "url": "https://apnews.com/article/64feb19b54d1bce50891437a5ba25d50",
+            "role": "國際通訊社",
+            "producer": "美聯社",
+            "independence_group": "ap",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-08-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "GLB-08-S2",
+            "name": "路透社",
+            "url": "https://www.reuters.com/legal/government/us-judge-strikes-down-policy-suspending-immigrant-visa-processing-75-nations-2026-08-22/",
+            "role": "國際通訊社",
+            "producer": "路透社",
+            "independence_group": "reuters",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-08-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "GLB-08-C1",
+            "text": "美國聯邦法院推翻政府暫停向七十五國發放移民簽證的政策。",
+            "status": "supported",
+            "source_ids": [
+              "GLB-08-S1",
+              "GLB-08-S2"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "美國聯邦法院推翻政府暫停向七十五國發放移民簽證的政策。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "GLB-09",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "GLB-09-S1",
+            "name": "Mid-Day",
+            "url": "https://www.mid-day.com/mumbai/mumbai-news/article/mumbai-remains-on-alert-as-gujarat-reports-nearly-30-deaths-after-chandipura-virus-outbreak-23646134",
+            "role": "印度當地媒體",
+            "producer": "Mid-Day",
+            "independence_group": "midday",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-09-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "GLB-09-S2",
+            "name": "英國衛生安全局",
+            "url": "https://www.gov.uk/government/publications/outbreaks-under-monitoring-in-2026/outbreaks-under-monitoring-week-32-week-ending-9-august-2026",
+            "role": "官方公衛監測",
+            "producer": "英國衛生安全局",
+            "independence_group": "ukhsa",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-09-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "GLB-09-C1",
+            "text": "印度古吉拉特邦錢迪普拉病毒疫情死亡接近三十人，孟買等地提高警戒。",
+            "status": "supported",
+            "source_ids": [
+              "GLB-09-S1",
+              "GLB-09-S2"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "印度古吉拉特邦錢迪普拉病毒疫情死亡接近三十人，孟買等地提高警戒。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "GLB-10",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "GLB-10-S1",
+            "name": "美聯社",
+            "url": "https://apnews.com/article/df9678a01c1e096404964496d5e6f905",
+            "role": "國際通訊社",
+            "producer": "美聯社",
+            "independence_group": "ap",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-10-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "GLB-10-S2",
+            "name": "Daily Trust／Trust TV",
+            "url": "https://trusttv.com/terrorists-break-into-niger-mosque-abduct-worshippers/",
+            "role": "奈及利亞當地媒體",
+            "producer": "Daily Trust／Trust TV",
+            "independence_group": "dailytrust",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-10-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "GLB-10-C1",
+            "text": "奈及利亞尼日州多個村莊遭武裝團體攻擊，清真寺等地有約六十至八十人被綁架。",
+            "status": "supported",
+            "source_ids": [
+              "GLB-10-S1",
+              "GLB-10-S2"
+            ]
+          }
+        ],
+        "uncertainties": [
+          "警方未確認精確人數；地方人士估計約六十至八十人。"
+        ],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "奈及利亞尼日州多個村莊遭武裝團體攻擊，清真寺等地有約六十至八十人被綁架。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "GLB-13",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "GLB-13-S1",
+            "name": "ThisDay",
+            "url": "https://www.thisdaylive.com/2026/08/22/ndume-to-military-rescue-78-school-children-abducted-by-bandits-in-two-borno-communities/",
+            "role": "奈及利亞當地媒體",
+            "producer": "ThisDay",
+            "independence_group": "thisday",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-13-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "GLB-13-S2",
+            "name": "The Guardian Nigeria",
+            "url": "https://guardian.ng/news/ndume-tasks-military-to-rescue-79-abducted-schoolchildren-in-southern-borno/",
+            "role": "奈及利亞當地媒體",
+            "producer": "The Guardian Nigeria",
+            "independence_group": "guardianng",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-13-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "GLB-13-C1",
+            "text": "奈及利亞參議員恩杜梅赴東北戰區司令部，要求軍方加速營救五月與六月在博爾諾州兩個社區遭綁架、至今仍未獲救的七十九名學童與一名教師。",
+            "status": "supported",
+            "source_ids": [
+              "GLB-13-S1",
+              "GLB-13-S2"
+            ]
+          }
+        ],
+        "uncertainties": [
+          "七十九名學童及一名教師分屬五月、六月兩起舊案；本輪實質更新是新的營救要求。"
+        ],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "奈及利亞參議員恩杜梅赴東北戰區司令部，要求軍方加速營救五月與六月在博爾諾州兩個社區遭綁架、至今仍未獲救的七十九名學童與一名教師。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "GLB-11",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "GLB-11-S1",
+            "name": "The Times",
+            "url": "https://www.thetimes.com/uk/defence/article/iranian-hackers-forced-uk-energy-facility-to-shut-for-four-days-q7tdg8dct",
+            "role": "英國媒體",
+            "producer": "The Times",
+            "independence_group": "timesuk",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-11-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "GLB-11-S2",
+            "name": "Financial Times",
+            "url": "https://www.ft.com/content/bae67bb7-ebf8-44fc-8d55-bbfaada47eb7",
+            "role": "英國財經媒體",
+            "producer": "Financial Times",
+            "independence_group": "ft",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-11-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "GLB-11-C1",
+            "text": "英國一座發電設施據報遭伊朗相關網路攻擊後被迫停機四日。",
+            "status": "supported",
+            "source_ids": [
+              "GLB-11-S1",
+              "GLB-11-S2"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "英國一座發電設施據報遭伊朗相關網路攻擊後被迫停機四日。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    },
+    {
+      "event_id": "GLB-12",
+      "verification": {
+        "status": "completed",
+        "finding": "corroborated",
+        "search_performed": true,
+        "independent_source_count": 2,
+        "sources": [
+          {
+            "source_id": "GLB-12-S1",
+            "name": "路透社",
+            "url": "https://www.reuters.com/world/middle-east/iran-says-tehran-must-overcome-unjust-sanctions-us-ramps-up-economic-pressure-2026-08-21/",
+            "role": "國際通訊社",
+            "producer": "路透社",
+            "independence_group": "reuters",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-12-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          },
+          {
+            "source_id": "GLB-12-S2",
+            "name": "海峽時報",
+            "url": "https://www.straitstimes.com/world/middle-east/iran-warns-any-country-joining-us-sanctions-will-be-considered-an-enemy",
+            "role": "法新社報導轉載",
+            "producer": "海峽時報",
+            "independence_group": "afp",
+            "published_at": null,
+            "accessed_at": "2026-08-23T19:35:00+08:00",
+            "evidence_type": "supports",
+            "claim_ids": [
+              "GLB-12-C1"
+            ],
+            "limitations": [
+              "數字與狀態可能隨後續官方更新而修正。"
+            ]
+          }
+        ],
+        "claims": [
+          {
+            "claim_id": "GLB-12-C1",
+            "text": "美國準備擴大對伊朗制裁，伊朗官員警告參與經濟限制的國家將被視為敵對方。",
+            "status": "supported",
+            "source_ids": [
+              "GLB-12-S1",
+              "GLB-12-S2"
+            ]
+          }
+        ],
+        "uncertainties": [],
+        "source_limit_note": null,
+        "positions": [],
+        "reader_wording": "美國準備擴大對伊朗制裁，伊朗官員警告參與經濟限制的國家將被視為敵對方。",
+        "verified_at": "2026-08-23T19:35:00+08:00"
+      }
+    }
+  ]
+}
