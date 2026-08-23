@@ -1,7 +1,7 @@
 {
   "schema_version": "2.0.0",
   "status": "ready",
-  "canonical_delivery": false,
+  "canonical_delivery": true,
   "run_id": "gnb-20260823T100250Z-7b62d4e1",
   "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
   "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
@@ -12,8 +12,10 @@
   "bundle_manifest_path": "logs/runs/gnb-20260823T100250Z-7b62d4e1/bundle-manifest.json",
   "reader_path": "logs/runs/gnb-20260823T100250Z-7b62d4e1/reader.md",
   "release_receipt_path": "logs/runs/gnb-20260823T100250Z-7b62d4e1/release-receipt.json",
+  "rule_matrix_path": "logs/runs/gnb-20260823T100250Z-7b62d4e1/s5-rule-matrix.json",
   "checkpoint_path": "logs/runs/gnb-20260823T100250Z-7b62d4e1/checkpoint.json",
   "bundle_manifest_sha256": "5dad8c33bf5adc425f67a5c0c76cadb9224ca372827e75e2231f33f2de117b5d",
   "reader_sha256": "7485e395b22df9d70d087ffe4de57c59c311531a9a8a0da89c5cbe26db0d0eae",
-  "release_receipt_sha256": "1aa0222b197f56ce788bcf3260337b8620d2338f7160af4a05590e1ea8ebabf8"
+  "release_receipt_sha256": "1aa0222b197f56ce788bcf3260337b8620d2338f7160af4a05590e1ea8ebabf8",
+  "rule_matrix_sha256": "e85fcf7b928f4d4bcb3a796725e823ad7ab3682dfa2d5a1e93a8d468e0df39bb"
 }

@@ -1,0 +1,98 @@
+{
+  "conversation_delivery": "passed",
+  "counts": {
+    "c_or_higher_scored_event_count": 23,
+    "canonical_url_count": 9524,
+    "event_evidence_article_row_count": 2260,
+    "in_window_article_row_count": 9525,
+    "merged_article_row_count": 9525,
+    "non_news_article_row_count": 7265,
+    "provisional_title_cluster_count": 2163,
+    "scored_event_count": 2150,
+    "selected_event_count": 23,
+    "semantic_event_count": 2150,
+    "unresolved_article_row_count": 0
+  },
+  "errors": [],
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "rule_matrix_source_blob_sha": "79df322887e2cba839a19331dcf492fa6bc6845f",
+  "rules": [
+    {
+      "authority": [
+        "news-brief-template.md#固定骨架",
+        "news-brief-settings.md#輸出規格"
+      ],
+      "evidence": {
+        "region_positions": [
+          137,
+          369,
+          594
+        ],
+        "story_count": 23,
+        "today_overview_count": 1
+      },
+      "id": "R1-reader-structure",
+      "legacy_status": "retired: field-based 逐條詳報/後續觀察; retained: per-story title/image/summary/grade/source layout",
+      "status": "passed"
+    },
+    {
+      "authority": [
+        "news-brief-template.md#圖片、地圖與資料圖表"
+      ],
+      "evidence": {
+        "no_overlap": true,
+        "outside_story_images": 0,
+        "unique_hashes": 31,
+        "visible_assets": 31
+      },
+      "id": "R2-story-asset-stream",
+      "legacy_status": "current",
+      "status": "passed"
+    },
+    {
+      "authority": [
+        ".agents/skills/collect-news-images/SKILL.md",
+        "schemas/news-event-manifest.schema.json"
+      ],
+      "evidence": {
+        "image_evidence_files": 60,
+        "materialized_ready_records": 17
+      },
+      "id": "R3-source-image-evidence",
+      "legacy_status": "retired: self-made text card as source image",
+      "status": "passed"
+    },
+    {
+      "authority": [
+        "daily-schedule-prompt.md#collect-news-images"
+      ],
+      "evidence": {
+        "attachment_index_sha256": "bd7573e953458813c49b89ca15473718d1e3b20c244cd5b76c05e9c7938fa7d5",
+        "publisher_receipt_sha256": "1aa0222b197f56ce788bcf3260337b8620d2338f7160af4a05590e1ea8ebabf8"
+      },
+      "id": "R4-publisher-attachment-recompute",
+      "legacy_status": "current",
+      "status": "passed"
+    },
+    {
+      "authority": [
+        "daily-schedule-prompt.md#CANONICAL_RUN_BUNDLE_GATE"
+      ],
+      "evidence": {
+        "atomic_commit": "f5ef9e5c04c3c3926631c35df286865fc765b952",
+        "bundle_manifest_blob_sha": "57001b91f425b8411121e1dbb9dbfd2835888d5c",
+        "logs_current_blob_sha": "0620930d2f099de8dceba08dc29e259f8957eed1",
+        "remote_blob_closure": 431,
+        "restored_artifacts": 110,
+        "tree_sha": "66f5262db26e1809f5c82650ce17f8d56d135f30"
+      },
+      "id": "R5-canonical-run-bundle",
+      "legacy_status": "retired: chat/local-path-only evidence",
+      "status": "passed"
+    }
+  ],
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "schema_version": "1.0.0",
+  "source_commit": "573be9f342ef2f30d4d25877e14b21f8255e08a9",
+  "status": "passed"
+}
