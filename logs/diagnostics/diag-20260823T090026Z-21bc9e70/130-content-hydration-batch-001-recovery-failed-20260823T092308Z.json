@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_type": "append_only_recovery_receipt",
+  "run_id": "gnb-20260823T085530Z-7f3c9a12",
+  "diag_run_id": "diag-20260823T090026Z-21bc9e70",
+  "resolved_main_sha": "3bf79207ab008e0172056917f4a295967812a166",
+  "observed_at": "2026-08-23T09:23:08.515Z",
+  "sequence": 130,
+  "step": "select-news-events.content-hydration.batch-001",
+  "status": "failed",
+  "same_run": true,
+  "last_completed_stage": "preprocess-news-candidates",
+  "first_incomplete_step": "select-news-events.content-hydration.batch-001",
+  "previous_receipt_path": "logs/diagnostics/diag-20260823T090026Z-21bc9e70/130-content-hydration-batch-001-recovery-running-20260823T092158Z.json",
+  "previous_receipt_blob_sha": "8dc24872aa150e9c4f7119d72af4a8f920331377",
+  "elapsed_ms": 70273,
+  "retry_count": 1,
+  "retry_limit": 3,
+  "retry_signature": "recovery_artifact_missing:checkpoint_and_batch_input_not_persisted",
+  "error": {
+    "classification": "recovery_artifact_missing",
+    "message": "The same-run workspace is not present in the accessible filesystem and run-logs contains no checkpoint.json, model-source-candidates.json, preprocessed-candidates.json, or batch-001 input. Without the admitted row identities and URLs, executing hydration would require reconstructing or modifying canonical artifacts, which is forbidden.",
+    "tool_or_endpoint": "GitHub connector github_fetch_file GET contents/logs/runs/gnb-20260823T085530Z-7f3c9a12/checkpoint.json?ref=run-logs",
+    "http_status": 404,
+    "request_id": "unavailable",
+    "connector_output": "GitHub API error 404: {\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/repos/contents#get-repository-content\",\"status\":\"404\"}",
+    "local_workspace_search": "rg --files /workspace/scratch/e71b6149f33b /workspace | rg run_id/diag_run_id returned no paths"
+  },
+  "evidence": {
+    "run_logs_branch_sha": "c07fbc5637c48b55113411b180ee33a88c8a68f0",
+    "available_same_run_paths": [
+      "logs/runs/gnb-20260823T085530Z-7f3c9a12/990-terminal.json",
+      "logs/runs/gnb-20260823T085530Z-7f3c9a12/authoritative-failed-receipt.json"
+    ],
+    "checkpoint_sha256_claim_only": "d3491d2566c22110aba17fad2ba397cffbdba66e4c1d0a7b3d2baaed39acb1c8",
+    "completed_content_hydration_batches": 0
+  }
+}
