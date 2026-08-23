@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_type": "authoritative_failed_receipt",
+  "authority": "supersedes prior run-local failure classification",
+  "classification": "duplicate_recovery_run",
+  "run_id": "gnb-20260823T092132Z-6a4d1e90",
+  "diag_run_id": "diag-20260823T092132Z-c3517b24",
+  "resolved_main_sha": "3bf79207ab008e0172056917f4a295967812a166",
+  "status": "failed",
+  "observed_at": "2026-08-23T09:26:53.657Z",
+  "canonical_delivery": false,
+  "duplicate_of_authorized_recovery": {
+    "run_id": "gnb-20260823T085530Z-7f3c9a12",
+    "diag_run_id": "diag-20260823T090026Z-21bc9e70"
+  },
+  "last_completed_stage": "preprocess-news-candidates",
+  "exact_first_incomplete_step": "select-news-events.content-hydration.batch-001",
+  "stop_boundary": "No hydration, semantic ledger, scoring, publisher, S5, or canonical delivery may proceed.",
+  "exact_error": "Unauthorized split-brain run created by the earlier scheduler wake. It advanced before the duplicate-stop signal was processed and is now authoritatively terminated.",
+  "normalized_recovery_artifact_missing_count_increment": false,
+  "canonical_delivery_claim_forbidden": true,
+  "running": false,
+  "stalled": false,
+  "superseded_receipt": {
+    "path": "logs/runs/gnb-20260823T092132Z-6a4d1e90/authoritative-failed-receipt.json",
+    "blob_sha": "ffceaf0911bf6e7983646bf919cfede9ad4374ff"
+  }
+}
