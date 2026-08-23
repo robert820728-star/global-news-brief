@@ -1,0 +1,45 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "task_name": "新聞管線最終驗收重測",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T18:00:00+08:00",
+  "observed_at": "2026-08-23T12:39:18.810Z",
+  "sequence": 900,
+  "step": "validators",
+  "status": "passed",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/900-validators-running.json",
+  "previous_receipt_blob_sha": "4d9683d51023fb94a65e3dfad60a19fb74c68e94",
+  "evidence_paths": [
+    "logs/runs/gnb-20260823T100250Z-7b62d4e1/s5-rule-matrix.json"
+  ],
+  "evidence_sha256": {
+    "logs/runs/gnb-20260823T100250Z-7b62d4e1/s5-rule-matrix.json": "e85fcf7b928f4d4bcb3a796725e823ad7ab3682dfa2d5a1e93a8d468e0df39bb"
+  },
+  "elapsed_ms": 721,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "validator_results": {
+    "canonical_publisher": "passed",
+    "unique_delivery": "passed",
+    "candidate_audit": "passed",
+    "semantic_event_ledger": "passed",
+    "source_scan": "passed",
+    "manifest": "passed",
+    "brief": "passed",
+    "map_decisions": "passed",
+    "attachments": "passed",
+    "bundle_verify_restore": "passed",
+    "rule_matrix": "5/5 passed",
+    "conversation_transport": "passed"
+  }
+}
