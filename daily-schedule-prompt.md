@@ -247,6 +247,8 @@ Repository 內只有 canonical publisher 可以建立 reader-facing release。�
 
 `CANONICAL_RUN_BUNDLE_GATE`：canonical publisher 成功後，run-logs 的同一 `logs/runs/<run_id>/` 必須持久化可獨立重算的 `candidate-audit.json`（含完整 `article_dispositions`）、`image-evidence/`、`materialized-images.json`、map decisions、checkpoint、counts、event manifest、reader、attachments index、release receipt 與 bundle manifest；每項保存 path、size、SHA-256 與 Git blob SHA。只有上述 bundle 與 canonical release 具有 byte identity，且 `logs/current.json` 原子指向本輪 completed run 後，才可宣稱 GitHub canonical delivery 完成。缺少證據時不得用本機路徑、聊天文字或舊 artifact 代替。
 
+Bundle persistence is executable, not a prose-only obligation. First run `scripts/manage_canonical_run_bundle.py pack` over every required artifact, then run its `verify` command before upload. An artifact larger than the connector-safe limit must use `storage.mode=chunked`; every upload record uses `encoding=base64` and binds raw size, SHA-256, target path, and the expected Git blob SHA. The uploader creates each small blob from its transport file, rejects any returned blob SHA mismatch, and publishes all bundle paths together with `logs/current.json` in one atomic tree/commit. S5 must download and reconstruct chunked artifacts through the same script and prove byte identity before accepting the bundle. Truncation, summaries, placeholder files, and omission of binary evidence are forbidden.
+
 發布前必須：
 
 - 所有 checkpoint required stages = completed；

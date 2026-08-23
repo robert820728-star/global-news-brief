@@ -559,6 +559,7 @@ class PipelineContractTests(unittest.TestCase):
 
     def test_canonical_run_bundle_persists_recomputable_audit_and_image_evidence(self):
         scheduled = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        matrix = (ROOT / "docs/news-rule-matrix.json").read_text(encoding="utf-8")
         for requirement in (
             "CANONICAL_RUN_BUNDLE_GATE",
             "candidate-audit.json",
@@ -569,6 +570,14 @@ class PipelineContractTests(unittest.TestCase):
             "byte identity",
         ):
             self.assertIn(requirement, scheduled)
+        for requirement in (
+            "scripts/manage_canonical_run_bundle.py",
+            "storage.mode=chunked",
+            "encoding=base64",
+            "atomic tree/commit",
+        ):
+            self.assertIn(requirement, scheduled)
+            self.assertIn(requirement, matrix)
 
     def test_mobile_increment_recovers_without_blocking_daily_reader(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")

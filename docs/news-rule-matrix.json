@@ -48,9 +48,9 @@
       "requirement_zh_tw": "GitHub run bundle 必須保存可重算候選稽核、逐列 dispositions、圖片證據與 materializer manifest，並原子更新 current.json。",
       "requirement_en": "The GitHub run bundle preserves recomputable candidate audit, row dispositions, image evidence, and materializer manifest, then atomically updates current.json.",
       "authority": ["daily-schedule-prompt.md#CANONICAL_RUN_BUNDLE_GATE"],
-      "producer": "canonical publisher and run-logs persistence step",
-      "validator": "scheduled S5 artifact audit",
-      "test": "tests/test_pipeline_contract.py::test_canonical_run_bundle_persists_recomputable_audit_and_image_evidence",
+      "producer": "scripts/manage_canonical_run_bundle.py pack; connector uploads encoding=base64 records and publishes one atomic tree/commit",
+      "validator": "scripts/manage_canonical_run_bundle.py verify/restore; S5 requires storage.mode=chunked reconstruction and byte identity",
+      "test": "tests/test_manage_canonical_run_bundle.py; tests/test_pipeline_contract.py::test_canonical_run_bundle_persists_recomputable_audit_and_image_evidence",
       "legacy_status": "retired: chat/local-path-only evidence",
       "status": "enforced"
     }
