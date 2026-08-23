@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "step": "pre-manifest-recovery-bundle-restore",
+  "status": "running",
+  "observed_at": "2026-08-23T20:30:40+10:00",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "recovery_commit_sha": "33d024b048566058ce2ffb99383c12f5750fb980",
+  "previous_receipt_path": null,
+  "previous_receipt_blob_sha": null,
+  "first_incomplete_step": "pre-manifest-recovery-bundle-restore",
+  "expected_artifacts": 6,
+  "expected_uploads": 160,
+  "retry_count": 1,
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  }
+}
