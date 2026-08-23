@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "step": "select-news-events.content-hydration.batch-113",
+  "status": "passed",
+  "observed_at": "2026-08-23T19:00:01+08:00",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-113-running.json",
+  "previous_receipt_blob_sha": "38c35537b9b2350c2a5720d61e221df08b3175d3",
+  "batch_id": "batch-113",
+  "article_row_count": 20,
+  "evidence_path": "logs/runs/gnb-20260823T100250Z-7b62d4e1/work/content-evidence/batch-113.jsonl",
+  "retry_count": 0,
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "ready_row_count": 20,
+  "failed_row_count": 0,
+  "evidence_blob_sha": "6faa2126609b73660d7db556df52d5120fa0df4e",
+  "evidence_sha256": "8ed74de41122a174f769111653908f414f51bc0c3d384c748f72eec9c969735b",
+  "evidence_size": 19430,
+  "elapsed_ms": 0
+}
