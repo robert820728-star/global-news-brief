@@ -67,3 +67,29 @@ python3 scripts/recover_news_run.py record \
 ## 4. 發布前條件
 
 只有所有 required stages 都為 `completed`、candidate audit 與 manifest selected ids 一一對應、讀者版與 manifest 一致、附件存在且視覺驗證通過、沒有 unresolved recovery target 時，才可交給 `scripts/publish_news_brief.py`。恢復工具本身永遠不直接對使用者輸出草稿或 release。
+
+
+## Durable pre-manifest recovery boundary
+
+`PRE_MANIFEST_RECOVERY_BUNDLE_GATE`
+
+After `preprocess-news-candidates` is completed and before selection can become running, execute:
+
+```powershell
+python scripts/manage_canonical_run_bundle.py pack-recovery --run-id <run-id> --checkpoint <checkpoint> --source-candidates <source-candidates> --relevance-gate <relevance-gate> --admitted-candidates <model-source-candidates> --preprocessed-candidates <preprocessed-candidates> --batch-index <content-hydration-batches> --transport-dir <transport-dir> --manifest <recovery-bundle-manifest>
+python scripts/manage_canonical_run_bundle.py verify --manifest <recovery-bundle-manifest> --transport-dir <transport-dir>
+python scripts/manage_canonical_run_bundle.py restore --manifest <recovery-bundle-manifest> --transport-dir <transport-dir> --output-dir <restore-proof-dir>
+```
+
+Publish the following six logical artifacts in one `atomic tree/commit`, read the commit back, and prove restored byte identity before selection starts:
+
+- `recovery/checkpoint.json`
+- `recovery/source-candidates.json`
+- `recovery/news-relevance-gate.json`
+- `recovery/model-source-candidates.json`
+- `recovery/preprocessed-candidates.json`
+- `recovery/content-hydration-batches.json`
+
+If the live workspace disappears, restore these artifacts from the same run's verified recovery bundle and resume only the first incomplete batch. Never create a replacement run to conceal missing recovery inputs.
+
+`FIRST_SELECT_NEWS_EVENTS_EXECUTION`: only after this gate passes may `select-news-events` be marked running or content hydration begin.

@@ -273,3 +273,12 @@
 - 目前結果 / Current result: Focused red-to-green behaviors pass 3/3 and the related regression set passes 52/52; main push, capsule rebuild, and fresh acceptance remain pending. / 定向紅綠燈行為 3/3、相關回歸 52/52 通過；推送 main、capsule 重建與 fresh acceptance 尚待完成。
 - 下一決定 / Next decision: Run the frozen verification set, push the minimal fix to main, verify the rebuilt capsule source/hash closure, then create exactly one fresh final acceptance run. / 執行固定驗證集、將最小修正推至 main、核對重建 capsule 的 source／hash closure，再建立且僅建立一次 fresh 最終驗收。
 
+## v0.4.7-child — 2026-08-23
+
+- 建立原因 / Reason: 終止後的 canonical run 因 ephemeral workspace 消失，run-logs 未保存 checkpoint、admitted candidates 與 deterministic hydration batches，導致同 run 最小恢復不可能。 / After termination, the canonical run lost its ephemeral workspace and run-logs had not persisted the checkpoint, admitted candidates, or deterministic hydration batches, making same-run minimal recovery impossible.
+- 回復來源 / Rollback source: `3bf79207ab008e0172056917f4a295967812a166`, the verified main at the authoritative recovery failure. / 權威恢復失敗邊界的 verified main `3bf79207ab008e0172056917f4a295967812a166`。
+- 實作方式 / Approach: Extend the existing lossless canonical bundle transport with a `pre-manifest-recovery` profile, deterministic batches of at most 20 admitted rows, six durable inputs, and a verify/restore gate before selection. / 擴充既有無損 canonical bundle transport，加入 `pre-manifest-recovery` profile、每批至多 20 筆 admitted rows、六項 durable inputs，以及 selection 前的 verify／restore gate。
+- 變更入口 / Changed entry points: `scripts/manage_canonical_run_bundle.py`, `scripts/news_run_checkpoint.py`, `daily-schedule-prompt.md`, `.agents/skills/daily-news-brief/SKILL.md`, `.agents/skills/recover-news-run/SKILL.md`, and focused tests.
+- 驗證方式 / Validation: RED→GREEN tests cover 43-row conservation into 20/20/3 batches, byte-identical six-artifact restore, duplicate-id rejection, run/window mismatch rejection, and workflow ordering. / RED→GREEN 測試涵蓋 43 筆守恆分成 20／20／3、六項 artifact byte-identical restore、重複 ID 拒絕、run／window mismatch 拒絕與 workflow 順序。
+- 目前結果 / Current result: Focused bundle tests pass 5/5; workflow contract and regression verification are in progress. / 定向 bundle 測試 5/5 通過；workflow contract 與 regression 驗證進行中。
+- 下一決定 / Next decision: Pass the frozen related suite, push main, verify the rebuilt capsule source/hash closure, and then create exactly one fresh final-acceptance retest. / 通過固定相關測試後推送 main、核對重建 capsule 的 source／hash closure，再建立且僅建立一次 fresh 最終驗收重測。

@@ -17,6 +17,59 @@ def load_module():
 
 
 class CanonicalRunBundleTests(unittest.TestCase):
+    def _write_recovery_inputs(self, root, *, run_id, candidate_count=43):
+        window_start = "2026-08-22T08:55:30Z"
+        window_end = "2026-08-23T08:55:30Z"
+        paths = {
+            "checkpoint": root / "checkpoint.json",
+            "source": root / "source-candidates.json",
+            "gate": root / "news-relevance-gate.json",
+            "admitted": root / "model-source-candidates.json",
+            "preprocessed": root / "preprocessed-candidates.json",
+            "batch_index": root / "content-hydration-batches.json",
+        }
+        candidates = [
+            {
+                "candidate_id": f"candidate-{index:03d}",
+                "source_id": "source-a",
+                "canonical_url": f"https://example.test/news/{index}",
+                "summary_quality": "full",
+            }
+            for index in range(candidate_count)
+        ]
+        payloads = {
+            "checkpoint": {
+                "run_id": run_id,
+                "window_start": window_start,
+                "window_end": window_end,
+            },
+            "source": {
+                "run_id": run_id,
+                "window_start": window_start,
+                "window_end": window_end,
+                "items": candidates,
+            },
+            "gate": {"run_id": run_id, "items": []},
+            "admitted": {
+                "run_id": run_id,
+                "window_start": window_start,
+                "window_end": window_end,
+                "items": candidates,
+            },
+            "preprocessed": {
+                "run_id": run_id,
+                "window_start": window_start,
+                "window_end": window_end,
+                "normalized_articles": candidates,
+            },
+        }
+        for name, payload in payloads.items():
+            paths[name].write_text(
+                json.dumps(payload, ensure_ascii=False, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+        return paths
+
     def test_large_json_and_binary_attachment_round_trip_losslessly(self):
         module = load_module()
         with tempfile.TemporaryDirectory() as tmp:
@@ -87,6 +140,96 @@ class CanonicalRunBundleTests(unittest.TestCase):
 
             with self.assertRaisesRegex(ValueError, "upload sha256 mismatch"):
                 module.verify_bundle(manifest_path=manifest_path, transport_dir=transport)
+
+    def test_pre_manifest_recovery_bundle_conserves_and_restores_all_inputs(self):
+        module = load_module()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run_id = "gnb-20260823T085530Z-7f3c9a12"
+            paths = self._write_recovery_inputs(root, run_id=run_id)
+            transport = root / "transport"
+            manifest_path = root / "recovery-bundle-manifest.json"
+
+            manifest = module.pack_pre_manifest_recovery_bundle(
+                run_id=run_id,
+                checkpoint_path=paths["checkpoint"],
+                source_candidates_path=paths["source"],
+                relevance_gate_path=paths["gate"],
+                admitted_candidates_path=paths["admitted"],
+                preprocessed_candidates_path=paths["preprocessed"],
+                batch_index_path=paths["batch_index"],
+                transport_dir=transport,
+                manifest_path=manifest_path,
+                max_batch_rows=20,
+                max_blob_bytes=256,
+            )
+
+            self.assertEqual("pre-manifest-recovery", manifest["profile"])
+            batch_data = json.loads(paths["batch_index"].read_text(encoding="utf-8"))
+            self.assertEqual([20, 20, 3], [item["article_row_count"] for item in batch_data["batches"]])
+            self.assertEqual(43, batch_data["candidate_count"])
+            originals = {
+                artifact["logical_path"]: (root / Path(artifact["logical_path"]).name).read_bytes()
+                for artifact in manifest["artifacts"]
+            }
+            for path in paths.values():
+                path.unlink()
+
+            module.verify_bundle(manifest_path=manifest_path, transport_dir=transport)
+            restored = root / "restored"
+            module.restore_bundle(
+                manifest_path=manifest_path,
+                transport_dir=transport,
+                output_dir=restored,
+            )
+            for logical_path, original in originals.items():
+                self.assertEqual(original, (restored / logical_path).read_bytes())
+
+    def test_pre_manifest_recovery_bundle_rejects_duplicate_candidate_ids(self):
+        module = load_module()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run_id = "gnb-20260823T085530Z-7f3c9a12"
+            paths = self._write_recovery_inputs(root, run_id=run_id, candidate_count=2)
+            admitted = json.loads(paths["admitted"].read_text(encoding="utf-8"))
+            admitted["items"][1]["candidate_id"] = admitted["items"][0]["candidate_id"]
+            paths["admitted"].write_text(json.dumps(admitted), encoding="utf-8")
+
+            with self.assertRaisesRegex(ValueError, "non-empty and unique"):
+                module.pack_pre_manifest_recovery_bundle(
+                    run_id=run_id,
+                    checkpoint_path=paths["checkpoint"],
+                    source_candidates_path=paths["source"],
+                    relevance_gate_path=paths["gate"],
+                    admitted_candidates_path=paths["admitted"],
+                    preprocessed_candidates_path=paths["preprocessed"],
+                    batch_index_path=paths["batch_index"],
+                    transport_dir=root / "transport",
+                    manifest_path=root / "manifest.json",
+                )
+
+    def test_pre_manifest_recovery_bundle_rejects_run_or_window_mismatch(self):
+        module = load_module()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run_id = "gnb-20260823T085530Z-7f3c9a12"
+            paths = self._write_recovery_inputs(root, run_id=run_id, candidate_count=2)
+            admitted = json.loads(paths["admitted"].read_text(encoding="utf-8"))
+            admitted["window_end"] = "2026-08-23T09:00:00Z"
+            paths["admitted"].write_text(json.dumps(admitted), encoding="utf-8")
+
+            with self.assertRaisesRegex(ValueError, "run/window mismatch"):
+                module.pack_pre_manifest_recovery_bundle(
+                    run_id=run_id,
+                    checkpoint_path=paths["checkpoint"],
+                    source_candidates_path=paths["source"],
+                    relevance_gate_path=paths["gate"],
+                    admitted_candidates_path=paths["admitted"],
+                    preprocessed_candidates_path=paths["preprocessed"],
+                    batch_index_path=paths["batch_index"],
+                    transport_dir=root / "transport",
+                    manifest_path=root / "manifest.json",
+                )
 
 
 if __name__ == "__main__":

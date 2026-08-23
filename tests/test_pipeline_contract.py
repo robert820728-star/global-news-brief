@@ -7,6 +7,40 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PipelineContractTests(unittest.TestCase):
+    def test_pre_manifest_recovery_bundle_gate_precedes_selection(self):
+        required_artifacts = (
+            "recovery/checkpoint.json",
+            "recovery/source-candidates.json",
+            "recovery/news-relevance-gate.json",
+            "recovery/model-source-candidates.json",
+            "recovery/preprocessed-candidates.json",
+            "recovery/content-hydration-batches.json",
+        )
+        documents = (
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / ".agents/skills/daily-news-brief/SKILL.md",
+            ROOT / ".agents/skills/recover-news-run/SKILL.md",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            for marker in (
+                "PRE_MANIFEST_RECOVERY_BUNDLE_GATE",
+                "pack-recovery",
+                "atomic tree/commit",
+                "restore",
+                "FIRST_SELECT_NEWS_EVENTS_EXECUTION",
+                *required_artifacts,
+            ):
+                self.assertIn(marker, text, path.name)
+            self.assertLess(
+                text.index("PRE_MANIFEST_RECOVERY_BUNDLE_GATE"),
+                text.index("FIRST_SELECT_NEWS_EVENTS_EXECUTION"),
+                path.name,
+            )
+
+        checkpoint = (ROOT / "scripts/news_run_checkpoint.py").read_text(encoding="utf-8")
+        self.assertIn('"scripts/manage_canonical_run_bundle.py"', checkpoint)
+
     def test_regional_supplements_have_complete_model_admission_gate(self):
         pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
         policy = pool["model_admission_policy"]

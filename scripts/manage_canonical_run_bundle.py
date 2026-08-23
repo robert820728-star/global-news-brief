@@ -47,6 +47,7 @@ def pack_bundle(
     transport_dir: Path,
     manifest_path: Path,
     max_blob_bytes: int = 4 * 1024 * 1024,
+    profile: str = "canonical-delivery",
 ) -> dict:
     """Pack artifacts into deterministic base64 transport files and a manifest."""
     if max_blob_bytes <= 0:
@@ -111,11 +112,126 @@ def pack_bundle(
         "bundle_root": bundle_root,
         "format": "canonical-run-bundle-v1",
         "max_blob_bytes": max_blob_bytes,
+        "profile": profile,
         "run_id": run_id,
         "uploads": uploads,
     }
     _write_json(manifest_path, manifest)
     return manifest
+
+
+def build_hydration_batch_index(*, run_id: str, admitted: dict, max_batch_rows: int = 20) -> dict:
+    """Materialize every admitted candidate exactly once into stable hydration batches."""
+    if not 1 <= max_batch_rows <= 20:
+        raise ValueError("max_batch_rows must be between 1 and 20")
+    items = admitted.get("items")
+    if not isinstance(items, list):
+        raise ValueError("admitted candidate items must be an array")
+    seen: set[str] = set()
+    rows: list[dict] = []
+    for item in items:
+        if not isinstance(item, dict):
+            raise ValueError("admitted candidate items must be objects")
+        candidate_id = str(item.get("candidate_id", ""))
+        if not candidate_id or candidate_id in seen:
+            raise ValueError("admitted candidate ids must be non-empty and unique")
+        seen.add(candidate_id)
+        rows.append(
+            {
+                "candidate_id": candidate_id,
+                "source_id": str(item.get("source_id", "")),
+                "canonical_url": str(item.get("canonical_url") or item.get("url") or ""),
+                "summary_quality": str(item.get("summary_quality", "")),
+            }
+        )
+    batches = []
+    for offset in range(0, len(rows), max_batch_rows):
+        batch_rows = rows[offset : offset + max_batch_rows]
+        batches.append(
+            {
+                "batch_id": f"batch-{len(batches) + 1:03d}",
+                "article_row_count": len(batch_rows),
+                "items": batch_rows,
+            }
+        )
+    return {
+        "schema_version": "1.0.0",
+        "run_id": run_id,
+        "candidate_count": len(rows),
+        "max_batch_rows": max_batch_rows,
+        "batches": batches,
+    }
+
+
+def _read_json_object(path: Path, label: str) -> dict:
+    value = json.loads(Path(path).read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"{label} must be a JSON object")
+    return value
+
+
+def pack_pre_manifest_recovery_bundle(
+    *,
+    run_id: str,
+    checkpoint_path: Path,
+    source_candidates_path: Path,
+    relevance_gate_path: Path,
+    admitted_candidates_path: Path,
+    preprocessed_candidates_path: Path,
+    batch_index_path: Path,
+    transport_dir: Path,
+    manifest_path: Path,
+    max_batch_rows: int = 20,
+    max_blob_bytes: int = 4 * 1024 * 1024,
+) -> dict:
+    """Persist all inputs needed to resume selection after workspace loss."""
+    inputs = {
+        "checkpoint": _read_json_object(checkpoint_path, "checkpoint"),
+        "source candidates": _read_json_object(source_candidates_path, "source candidates"),
+        "relevance gate": _read_json_object(relevance_gate_path, "relevance gate"),
+        "admitted candidates": _read_json_object(admitted_candidates_path, "admitted candidates"),
+        "preprocessed candidates": _read_json_object(preprocessed_candidates_path, "preprocessed candidates"),
+    }
+    checkpoint = inputs["checkpoint"]
+    expected_identity = (
+        str(checkpoint.get("run_id", "")),
+        str(checkpoint.get("window_start", "")),
+        str(checkpoint.get("window_end", "")),
+    )
+    if expected_identity[0] != run_id or not expected_identity[1] or not expected_identity[2]:
+        raise ValueError("checkpoint run/window mismatch")
+    for label, value in inputs.items():
+        observed = (
+            str(value.get("run_id", "")),
+            str(value.get("window_start", "")),
+            str(value.get("window_end", "")),
+        )
+        if observed[0] and observed[0] != run_id:
+            raise ValueError(f"{label} run/window mismatch")
+        if observed[1] and observed[1:] != expected_identity[1:]:
+            raise ValueError(f"{label} run/window mismatch")
+
+    batch_index = build_hydration_batch_index(
+        run_id=run_id,
+        admitted=inputs["admitted candidates"],
+        max_batch_rows=max_batch_rows,
+    )
+    _write_json(Path(batch_index_path), batch_index)
+    return pack_bundle(
+        run_id=run_id,
+        artifacts=[
+            ("recovery/checkpoint.json", Path(checkpoint_path)),
+            ("recovery/source-candidates.json", Path(source_candidates_path)),
+            ("recovery/news-relevance-gate.json", Path(relevance_gate_path)),
+            ("recovery/model-source-candidates.json", Path(admitted_candidates_path)),
+            ("recovery/preprocessed-candidates.json", Path(preprocessed_candidates_path)),
+            ("recovery/content-hydration-batches.json", Path(batch_index_path)),
+        ],
+        transport_dir=Path(transport_dir),
+        manifest_path=Path(manifest_path),
+        max_blob_bytes=max_blob_bytes,
+        profile="pre-manifest-recovery",
+    )
 
 
 def _load_verified(manifest_path: Path, transport_dir: Path) -> tuple[dict, dict[str, bytes]]:
@@ -188,6 +304,18 @@ def _parser() -> argparse.ArgumentParser:
     pack.add_argument("--manifest", type=Path, required=True)
     pack.add_argument("--max-blob-bytes", type=int, default=4 * 1024 * 1024)
     pack.add_argument("--artifact", type=_artifact_argument, action="append", required=True)
+    recovery = commands.add_parser("pack-recovery")
+    recovery.add_argument("--run-id", required=True)
+    recovery.add_argument("--checkpoint", type=Path, required=True)
+    recovery.add_argument("--source-candidates", type=Path, required=True)
+    recovery.add_argument("--relevance-gate", type=Path, required=True)
+    recovery.add_argument("--admitted-candidates", type=Path, required=True)
+    recovery.add_argument("--preprocessed-candidates", type=Path, required=True)
+    recovery.add_argument("--batch-index", type=Path, required=True)
+    recovery.add_argument("--transport-dir", type=Path, required=True)
+    recovery.add_argument("--manifest", type=Path, required=True)
+    recovery.add_argument("--max-batch-rows", type=int, default=20)
+    recovery.add_argument("--max-blob-bytes", type=int, default=4 * 1024 * 1024)
     for name in ("verify", "restore"):
         command = commands.add_parser(name)
         command.add_argument("--manifest", type=Path, required=True)
@@ -205,6 +333,20 @@ def main(argv: Sequence[str] | None = None) -> int:
             artifacts=args.artifact,
             transport_dir=args.transport_dir,
             manifest_path=args.manifest,
+            max_blob_bytes=args.max_blob_bytes,
+        )
+    elif args.command == "pack-recovery":
+        manifest = pack_pre_manifest_recovery_bundle(
+            run_id=args.run_id,
+            checkpoint_path=args.checkpoint,
+            source_candidates_path=args.source_candidates,
+            relevance_gate_path=args.relevance_gate,
+            admitted_candidates_path=args.admitted_candidates,
+            preprocessed_candidates_path=args.preprocessed_candidates,
+            batch_index_path=args.batch_index,
+            transport_dir=args.transport_dir,
+            manifest_path=args.manifest,
+            max_batch_rows=args.max_batch_rows,
             max_blob_bytes=args.max_blob_bytes,
         )
     elif args.command == "verify":

@@ -63,3 +63,29 @@ python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 ## 交付不變式
 
 Repository 內只能有一個 canonical publisher：`scripts/publish_news_brief.py`。其他腳本不得建立保留 release 檔名。`daily-schedule-prompt.md` 必須且只能宣告一次 canonical gate 與一次 receipt delivery 命令。最終對話內容只可來自 canonical publisher 的 `--deliver-receipt ... --conversation-transport` stdout；canonical release 與其 SHA-256 保持不變，不得重新讀取 release 後自行轉貼、加前後文、重寫摘要、回退到草稿或舊 release。
+
+
+## Durable pre-manifest recovery boundary
+
+`PRE_MANIFEST_RECOVERY_BUNDLE_GATE`
+
+After `preprocess-news-candidates` is completed and before selection can become running, execute:
+
+```powershell
+python scripts/manage_canonical_run_bundle.py pack-recovery --run-id <run-id> --checkpoint <checkpoint> --source-candidates <source-candidates> --relevance-gate <relevance-gate> --admitted-candidates <model-source-candidates> --preprocessed-candidates <preprocessed-candidates> --batch-index <content-hydration-batches> --transport-dir <transport-dir> --manifest <recovery-bundle-manifest>
+python scripts/manage_canonical_run_bundle.py verify --manifest <recovery-bundle-manifest> --transport-dir <transport-dir>
+python scripts/manage_canonical_run_bundle.py restore --manifest <recovery-bundle-manifest> --transport-dir <transport-dir> --output-dir <restore-proof-dir>
+```
+
+Publish the following six logical artifacts in one `atomic tree/commit`, read the commit back, and prove restored byte identity before selection starts:
+
+- `recovery/checkpoint.json`
+- `recovery/source-candidates.json`
+- `recovery/news-relevance-gate.json`
+- `recovery/model-source-candidates.json`
+- `recovery/preprocessed-candidates.json`
+- `recovery/content-hydration-batches.json`
+
+If the live workspace disappears, restore these artifacts from the same run's verified recovery bundle and resume only the first incomplete batch. Never create a replacement run to conceal missing recovery inputs.
+
+`FIRST_SELECT_NEWS_EVENTS_EXECUTION`: only after this gate passes may `select-news-events` be marked running or content hydration begin.

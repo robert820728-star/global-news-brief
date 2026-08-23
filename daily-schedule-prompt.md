@@ -282,3 +282,29 @@ Bundle persistence is executable, not a prose-only obligation. First run `script
 - pipeline 未跑但模型直接寫出看似完整的新聞簡報。
 
 若停止，必須回報**最早不可恢復 blocker**及已完成到哪個 stage，不得把後續未執行階段誤報成故障來源。
+
+
+## Durable pre-manifest recovery boundary
+
+`PRE_MANIFEST_RECOVERY_BUNDLE_GATE`
+
+After `preprocess-news-candidates` is completed and before selection can become running, execute:
+
+```powershell
+python scripts/manage_canonical_run_bundle.py pack-recovery --run-id <run-id> --checkpoint <checkpoint> --source-candidates <source-candidates> --relevance-gate <relevance-gate> --admitted-candidates <model-source-candidates> --preprocessed-candidates <preprocessed-candidates> --batch-index <content-hydration-batches> --transport-dir <transport-dir> --manifest <recovery-bundle-manifest>
+python scripts/manage_canonical_run_bundle.py verify --manifest <recovery-bundle-manifest> --transport-dir <transport-dir>
+python scripts/manage_canonical_run_bundle.py restore --manifest <recovery-bundle-manifest> --transport-dir <transport-dir> --output-dir <restore-proof-dir>
+```
+
+Publish the following six logical artifacts in one `atomic tree/commit`, read the commit back, and prove restored byte identity before selection starts:
+
+- `recovery/checkpoint.json`
+- `recovery/source-candidates.json`
+- `recovery/news-relevance-gate.json`
+- `recovery/model-source-candidates.json`
+- `recovery/preprocessed-candidates.json`
+- `recovery/content-hydration-batches.json`
+
+If the live workspace disappears, restore these artifacts from the same run's verified recovery bundle and resume only the first incomplete batch. Never create a replacement run to conceal missing recovery inputs.
+
+`FIRST_SELECT_NEWS_EVENTS_EXECUTION`: only after this gate passes may `select-news-events` be marked running or content hydration begin.

@@ -39,6 +39,7 @@ BOOTSTRAP_REQUIRED_PATHS = (
     ".agents/skills/recover-news-run/SKILL.md",
     "scripts/news_run_checkpoint.py",
     "scripts/preprocess_news_candidates.py",
+    "scripts/manage_canonical_run_bundle.py",
     "scripts/manage_candidate_audit.py",
     "scripts/recover_news_run.py",
     "scripts/validate_map_decisions.py",
