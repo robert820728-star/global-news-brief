@@ -1,4 +1,9 @@
-       "num_articles": 2,
+",
+        "quad_class": 1,
+        "goldstein_scale": 1.9,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
         "avg_tone": 5.68181818181818
       },
       "published_at": "2026-08-22T14:30:00+00:00",
@@ -4125,7 +4130,4 @@
         "event_root_code": "02",
         "quad_class": 1,
         "goldstein_scale": 3.0,
-        "num_mentions": 10,
-        "num_sources": 1,
-        "num_articles": 10,
-        "avg_tone": 0.68493150684932
+  

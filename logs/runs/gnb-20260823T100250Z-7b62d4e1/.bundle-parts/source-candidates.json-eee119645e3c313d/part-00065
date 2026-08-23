@@ -1,4 +1,8 @@
- 3,
+nt_code": "020",
+        "event_root_code": "02",
+        "quad_class": 1,
+        "goldstein_scale": 3.0,
+        "num_mentions": 3,
         "num_sources": 1,
         "num_articles": 3,
         "avg_tone": 0.76595744680851
@@ -4205,5 +4209,4 @@
       "categories": [],
       "importance_hint": "322014 erdogan netanyahu trade jabs after turkey seeks arrest warrant for israel pm",
       "acquisition_route": "aggregate_api",
-      "canonical_url": "https://www.naharnet.com:443/stories/en/322014-erdogan-netanyahu-trade-jabs-after-turkey-seeks-arrest-warrant-for-israel-pm",
-      "normalized_title": "322014erdogan
+      "canonical_url": "https://www.naharnet.com:443/stori

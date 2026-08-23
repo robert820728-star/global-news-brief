@@ -1,4 +1,6 @@
-y_code": "CA",
+ {
+        "actor_country_codes": [],
+        "action_geo_country_code": "CA",
         "event_code": "084",
         "event_root_code": "08",
         "quad_class": 2,
@@ -6216,5 +6218,4 @@ y_code": "CA",
           "CAN",
           "USA"
         ],
-        "action_geo_country_code": "CA",
-        "event_code": "0334",
+     

@@ -1,4 +1,7 @@
- "goldstein_scale": -4.4,
+        "event_code": "130",
+        "event_root_code": "13",
+        "quad_class": 3,
+        "goldstein_scale": -4.4,
         "num_mentions": 4,
         "num_sources": 2,
         "num_articles": 4,
@@ -4225,6 +4228,4 @@
       "published_at": "2026-08-22T17:00:00+00:00",
       "url": "https://www.moroccoworldnews.com/2026/08/335685/israel-opens-tenders-for-e1-west-bank-settlement-drawing-international-outrage/",
       "categories": [],
-      "importance_hint": "israel opens tenders for e1 west bank settlement drawing international outrage",
-      "acquisition_route": "aggregate_api",
-      "canonical_url": "htt
+      "importance_hint": "israel opens tenders for e1 west bank settlement drawing

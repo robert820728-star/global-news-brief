@@ -1,4 +1,6 @@
-
+index": 1
+    },
+    {
       "candidate_id": "3f1b24fc1e1a4f0aea8a",
       "source_id": "gdelt",
       "source_name": "GDELT DOC 2.0",
@@ -4119,5 +4121,4 @@
         "goldstein_scale": 1.0,
         "num_mentions": 10,
         "num_sources": 1,
-        "num_articles": 10,
-        "avg_tone"
+        "num_articles"

@@ -1,4 +1,8 @@
-   },
+num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": -2.21402214022141
+      },
       "published_at": "2026-08-22T14:45:00+00:00",
       "url": "https://www.newsbiscuit.com/post/mystery-of-half-billion-year-old-creature-with-no-anus-solved-1",
       "categories": [],
@@ -4200,9 +4204,4 @@
         "actor_country_codes": [],
         "action_geo_country_code": "US",
         "event_code": "042",
-        "event_root_code": "04",
-        "quad_class": 1,
-        "goldstein_scale": 1.9,
-        "num_mentions": 2,
-        "num_sources": 1,
- 
+        "event_root_code": "04

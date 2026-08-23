@@ -1,4 +1,6 @@
-geo_country_code": "US",
+ignals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "US",
         "event_code": "040",
         "event_root_code": "04",
         "quad_class": 1,
@@ -6196,6 +6198,4 @@ geo_country_code": "US",
       "reasons": [
         "compound_goldstein_and_corroboration"
       ],
-      "matched_discovery_signals": {
-        "actor_country_codes": [],
-        "action_geo_countr
+      "matched_discovery_signals":

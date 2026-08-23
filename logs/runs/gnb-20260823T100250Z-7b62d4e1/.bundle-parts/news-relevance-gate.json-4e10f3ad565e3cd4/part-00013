@@ -1,4 +1,5 @@
-nt_root_code": "05",
+code": "050",
+        "event_root_code": "05",
         "quad_class": 1,
         "goldstein_scale": 3.5,
         "num_mentions": 10,
@@ -6277,6 +6278,4 @@ nt_root_code": "05",
       ],
       "matched_discovery_signals": {
         "actor_country_codes": [
-          "USA"
-        ],
-        "ac
+          

@@ -1,4 +1,5 @@
-bc.net.au news report",
+    "title": "www.abc.net.au news report",
+      "summary": "www.abc.net.au news report",
       "summary_quality": "structured_event_context",
       "discovery_signals": {
         "actor_country_codes": [
@@ -4357,5 +4358,4 @@ bc.net.au news report",
       "published_at": "2026-08-22T22:00:00+00:00",
       "url": "https://www.latimes.com/socal/daily-pilot/entertainment/story/2026-08-22/fullerton-adopts-belated-balanced-budget-with-service-cuts-jobs-freeze",
       "categories": [],
-      "importance_hint": "fullerton adopts belated balanced budget with service cuts jobs freeze",
-      "acquisition_route": "aggregate_a
+      "importance_hint": "fullerton adopts belated balanced budget wit

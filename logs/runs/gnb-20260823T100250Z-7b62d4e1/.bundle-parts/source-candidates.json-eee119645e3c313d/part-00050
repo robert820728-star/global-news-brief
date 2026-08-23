@@ -1,4 +1,8 @@
-eo_country_code": "US",
+"discovery_signals": {
+        "actor_country_codes": [
+          "USA"
+        ],
+        "action_geo_country_code": "US",
         "event_code": "010",
         "event_root_code": "01",
         "quad_class": 1,
@@ -4346,8 +4350,4 @@ eo_country_code": "US",
         "quad_class": 1,
         "goldstein_scale": 4.0,
         "num_mentions": 8,
-        "num_sources": 1,
-        "num_articles": 8,
-        "avg_tone": -4.93617021276596
-      },
-      "publish
+        "num

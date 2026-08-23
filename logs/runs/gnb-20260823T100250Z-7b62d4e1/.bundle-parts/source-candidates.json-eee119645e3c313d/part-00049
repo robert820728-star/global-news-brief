@@ -1,4 +1,8 @@
-andidate_id": "3ff5c519ead0da5151a2",
+4e1/work/routes/route-snapshots/gdelt.discovery.json",
+      "page_index": 1
+    },
+    {
+      "candidate_id": "3ff5c519ead0da5151a2",
       "source_id": "gdelt",
       "source_name": "GDELT DOC 2.0",
       "section": "GLB",
@@ -4158,8 +4162,4 @@ andidate_id": "3ff5c519ead0da5151a2",
       "title": "california professor cited irony removing act sat didnt help disadvantaged groups intended",
       "summary": "california professor cited irony removing act sat didnt help disadvantaged groups intended",
       "summary_quality": "structured_event_context",
-      "discovery_signals": {
-        "actor_country_codes": [
-          "USA"
-        ],
-        "action_g
+      

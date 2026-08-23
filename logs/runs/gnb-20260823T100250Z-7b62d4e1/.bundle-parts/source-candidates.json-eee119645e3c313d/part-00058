@@ -1,4 +1,7 @@
-
+      "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": 0.68493150684932
       },
       "published_at": "2026-08-22T14:15:00+00:00",
       "url": "https://www.thehindu.com/news/cities/Coimbatore/three-packages-of-sanganoor-canal-revamp-await-state-government-approval/article71377680.ece",
@@ -4228,5 +4231,4 @@
       "source_id": "gdelt",
       "source_name": "GDELT DOC 2.0",
       "section": "GLB",
-      "title": "opinion sullivan trump and the price of political loyalty",
-      "summary": "opinion sullivan trump and th
+     

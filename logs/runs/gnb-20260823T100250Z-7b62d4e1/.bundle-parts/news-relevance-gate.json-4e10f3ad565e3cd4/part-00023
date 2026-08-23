@@ -1,4 +1,5 @@
-10,
+    "num_sources": 1,
+        "num_articles": 10,
         "avg_tone": -5.59006211180124
       }
     },
@@ -6317,5 +6318,4 @@
         "actor_country_codes": [],
         "action_geo_country_code": "IN",
         "event_code": "110",
-        "event_root_code": "11",
-        "quad_class": 
+       

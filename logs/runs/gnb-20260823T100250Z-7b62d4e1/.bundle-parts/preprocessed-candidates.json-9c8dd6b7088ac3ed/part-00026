@@ -1,4 +1,6 @@
-   },
+cores": [],
+      "requires_semantic_review": true
+    },
     {
       "cluster_id": "cluster-fea626f5523124bd",
       "section": "GLB",
@@ -8143,6 +8145,4 @@
     {
       "cluster_id": "cluster-0915a6aec6d40da5",
       "section": "GLB",
-      "candidate_ids": [
-        "5d0d711a169ea947d321"
-      ]
+      "ca

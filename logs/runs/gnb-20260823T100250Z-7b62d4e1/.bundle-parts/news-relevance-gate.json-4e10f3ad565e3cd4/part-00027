@@ -1,4 +1,6 @@
-      "quad_class": 1,
+vent_code": "010",
+        "event_root_code": "01",
+        "quad_class": 1,
         "goldstein_scale": 0.0,
         "num_mentions": 10,
         "num_sources": 1,
@@ -6215,6 +6217,4 @@
         "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {
-        "actor_country_codes": [],
-        "action_geo_country_code": "IN",
-     
+        "actor_country_co

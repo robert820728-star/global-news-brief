@@ -1,4 +1,5 @@
-      "actor_country_codes": [
+ "matched_discovery_signals": {
+        "actor_country_codes": [
           "CAN"
         ],
         "action_geo_country_code": "CA",
@@ -6280,5 +6281,4 @@
         "action_geo_country_code": "IN",
         "event_code": "051",
         "event_root_code": "05",
-        "quad_class": 1,
-        "golds
+   

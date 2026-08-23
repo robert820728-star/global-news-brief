@@ -1,4 +1,6 @@
-ignals": {
+ens health",
+      "summary_quality": "structured_event_context",
+      "discovery_signals": {
         "actor_country_codes": [],
         "action_geo_country_code": "US",
         "event_code": "042",
@@ -4133,5 +4135,4 @@ ignals": {
       "acquisition_route": "aggregate_api",
       "canonical_url": "https://www.walesonline.co.uk/lifestyle/tv/emma-willis-matt-willis-marriage-34496820",
       "normalized_title": "emmawillismattwillismarriage34496820",
-      "dedup_seed": "da6b749ce19e084045bedf6d",
-      "snapshot_path": "/workspace/scratch/105ae
+      "ded

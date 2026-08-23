@@ -1,4 +1,6 @@
-ein_scale": 3.0,
+_code": "02",
+        "quad_class": 1,
+        "goldstein_scale": 3.0,
         "num_mentions": 5,
         "num_sources": 1,
         "num_articles": 5,
@@ -4017,6 +4019,3 @@ ein_scale": 3.0,
       "summary_quality": "structured_event_context",
       "discovery_signals": {
         "actor_country_codes": [
-          "USA"
-        ],
-        "action_geo_country_

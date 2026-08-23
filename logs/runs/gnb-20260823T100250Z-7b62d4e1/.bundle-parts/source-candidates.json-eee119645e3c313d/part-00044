@@ -1,4 +1,5 @@
--20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/routes/route-snapshots/gdelt.discovery.json",
+71688188b64fa2b14930",
+      "snapshot_path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/routes/route-snapshots/gdelt.discovery.json",
       "page_index": 1
     },
     {
@@ -4174,7 +4175,4 @@
       "section": "GLB",
       "title": "mayor scott hosts annual back to school rally in downtown baltimore",
       "summary": "mayor scott hosts annual back to school rally in downtown baltimore",
-      "summary_quality": "structured_event_context",
-      "discovery_signals": {
-        "actor_country_codes": [],
-        "action_geo_coun
+      "summary_quality": "structured_event_context"

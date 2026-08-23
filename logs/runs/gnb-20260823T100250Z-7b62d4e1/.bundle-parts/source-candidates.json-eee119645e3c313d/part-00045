@@ -1,4 +1,7 @@
-try_code": null,
+,
+      "discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": null,
         "event_code": "042",
         "event_root_code": "04",
         "quad_class": 1,
@@ -4086,4 +4089,4 @@ try_code": null,
       "canonical_url": "https://insideevs.com:443/news/805750/lges-solid-state-battery-evs-uncomfortable-truth",
       "normalized_title": "lgessolidstatebatteryevsuncomfortabletruth",
       "dedup_seed": "4b0e63c5910772e9c878bb39",
-      "snapshot_path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/wo
+      "snapshot_path": "/workspace/

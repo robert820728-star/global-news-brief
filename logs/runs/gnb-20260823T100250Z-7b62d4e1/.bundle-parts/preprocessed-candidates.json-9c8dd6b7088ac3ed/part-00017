@@ -1,4 +1,4 @@
-/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/routes/route-snapshots/gdelt.discovery.json",
+      "snapshot_path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/routes/route-snapshots/gdelt.discovery.json",
       "page_index": 1,
       "within_window": true,
       "title_tokens": [
@@ -4926,5 +4926,4 @@
       "discovery_signals": {
         "actor_country_codes": [],
         "action_geo_country_code": "CA",
-        "event_code": "080",
-        "event_root_code": 
+        "event_code"

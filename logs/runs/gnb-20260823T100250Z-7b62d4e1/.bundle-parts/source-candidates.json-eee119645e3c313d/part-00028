@@ -1,4 +1,7 @@
-code": "US",
+
+          "USA"
+        ],
+        "action_geo_country_code": "US",
         "event_code": "173",
         "event_root_code": "17",
         "quad_class": 4,
@@ -4145,5 +4148,4 @@ code": "US",
       "acquisition_route": "aggregate_api",
       "canonical_url": "https://www.techradar.com/pro/the-us-air-force-wants-its-next-generation-of-target-drones-to-mimic-stealth-jets",
       "normalized_title": "theusairforcewantsitsnextgenerationoftargetdronestomimicstealthjets",
-      "dedup_seed": "a8611bde6f5daef530034846",
-      "snapshot_pat
+      "de
