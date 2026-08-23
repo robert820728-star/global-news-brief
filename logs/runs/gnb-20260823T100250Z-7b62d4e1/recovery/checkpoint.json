@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.1.0",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "window_start": "2026-08-22T18:02:50+08:00",
+  "window_end": "2026-08-23T18:02:50+08:00",
+  "created_at": "2026-08-23T20:07:59+10:00",
+  "updated_at": "2026-08-23T20:13:01+10:00",
+  "bootstrap": {
+    "repository": "robert820728-star/global-news-brief",
+    "commit_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+    "materialization_method": "github-connector-capsule",
+    "receipt": {
+      "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/bootstrap-workspace.json",
+      "sha256": "4df44f2e2aa50d879a0a29139316f7451abf65c36d0ec3aeec036133eeb061d3",
+      "size": 83322
+    }
+  },
+  "bootstrap_required": true,
+  "stage_status": {
+    "source-scan": "completed",
+    "preprocess-news-candidates": "completed",
+    "select-news-events": "pending",
+    "audit-news-candidates": "pending",
+    "materialize-manifest": "pending",
+    "verify-news-events": "pending",
+    "build-news-maps": "pending",
+    "build-news-charts": "pending",
+    "collect-news-images": "pending",
+    "render": "pending"
+  },
+  "stage_evidence": {
+    "source-scan": {
+      "recorded_at": "2026-08-23T20:12:45+10:00",
+      "status": "completed",
+      "message": "GDELT archive-first 97/97; CNA/CNS ready; source evidence and lossless relevance gate validated",
+      "artifacts": {
+        "source_candidates": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/source-candidates.json",
+          "sha256": "561ea547c0cb6f4e43938a9030baac562449e963800a46143734047e918f8298",
+          "size": 14346320
+        },
+        "relevance_gate": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/news-relevance-gate.json",
+          "sha256": "b4f39955b733f13d37dad042915cf2a33e418f9cf05a2bccc4f07c34b658b096",
+          "size": 6555007
+        },
+        "model_source_candidates": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/model-source-candidates.json",
+          "sha256": "5e9b3e73a920b9a6af34c03fbfe86ee7efcee6e4a1a5d47951aee1a4345a2bce",
+          "size": 3674832
+        }
+      }
+    },
+    "preprocess-news-candidates": {
+      "recorded_at": "2026-08-23T20:13:01+10:00",
+      "status": "completed",
+      "message": "canonical preprocess completed; output is candidate index only",
+      "artifacts": {
+        "preprocessed_candidates": {
+          "path": "/workspace/scratch/105ae76b07a9/gnb-final-20260823/workspace/work/runs/gnb-20260823T100250Z-7b62d4e1/work/preprocessed-candidates.json",
+          "sha256": "b887f65351509e44e037d312b4a8658b1c58f6dce3857c4dcbd8fa1299d585e6",
+          "size": 5587006
+        }
+      }
+    }
+  },
+  "recovery": {
+    "status": "pending",
+    "max_attempts_per_target": 3,
+    "attempts": [],
+    "unresolved_targets": []
+  }
+}

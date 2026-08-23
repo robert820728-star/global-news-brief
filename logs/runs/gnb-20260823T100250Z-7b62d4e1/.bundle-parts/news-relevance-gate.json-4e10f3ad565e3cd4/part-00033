@@ -1,0 +1,2142 @@
+        "event_root_code": "03",
+        "quad_class": 1,
+        "goldstein_scale": 6.0,
+        "num_mentions": 1,
+        "num_sources": 1,
+        "num_articles": 1,
+        "avg_tone": -1.30353817504656
+      }
+    },
+    {
+      "candidate_id": "016c86c0171cbc1108b9",
+      "source_id": "gdelt",
+      "canonical_url": "http://www.philippinetimes.com/news/279257702/exporting-filipina-mothers-to-pay-the-nations-debt",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "ITA"
+        ],
+        "action_geo_country_code": "IT",
+        "event_code": "043",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 2.8,
+        "num_mentions": 1,
+        "num_sources": 1,
+        "num_articles": 1,
+        "avg_tone": -1.13864701942398
+      }
+    },
+    {
+      "candidate_id": "9ef7766ba8ff0c0cdd7c",
+      "source_id": "gdelt",
+      "canonical_url": "http://www.bignewsnetwork.com/news/279257785/15-policemen-standing-outside-volunteer-house-enquiring-about-my-family-cjp-ashutosh-ranka-accuses-rajasthan-police-of-scare-tactics",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "IND"
+        ],
+        "action_geo_country_code": "IN",
+        "event_code": "051",
+        "event_root_code": "05",
+        "quad_class": 1,
+        "goldstein_scale": 3.4,
+        "num_mentions": 3,
+        "num_sources": 1,
+        "num_articles": 3,
+        "avg_tone": -6.18181818181818
+      }
+    },
+    {
+      "candidate_id": "0a3859fad581ad6d8df0",
+      "source_id": "gdelt",
+      "canonical_url": "http://www.bignewsnetwork.com/news/279257773/remained-disconnected-from-freedom-movement-now-questioning-our-patriotism-uttarakhand-congress-slams-state-bjp-chief-bhatt",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "IN",
+        "event_code": "111",
+        "event_root_code": "11",
+        "quad_class": 3,
+        "goldstein_scale": -2.0,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
+        "avg_tone": -7.33496332518336
+      }
+    },
+    {
+      "candidate_id": "20d038a3673bd1aa2514",
+      "source_id": "gdelt",
+      "canonical_url": "http://www.bignewsnetwork.com/news/279257769/france-fontainebleau-forest-reopens-to-public-after-wildfires",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "FRA"
+        ],
+        "action_geo_country_code": "FR",
+        "event_code": "042",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 1.9,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": 0.22371364653244
+      }
+    },
+    {
+      "candidate_id": "7cab53f18fc0ae90d553",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.wenatcheeworld.com/news/old-news-plans-underway-to-build-a-hotel-in-entiat-bridgeport-man-receives-performance-award/article_9a0f73a8-9c1a-45b8-aa1c-93b93045acae.html",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "USA"
+        ],
+        "action_geo_country_code": "US",
+        "event_code": "031",
+        "event_root_code": "03",
+        "quad_class": 1,
+        "goldstein_scale": 5.2,
+        "num_mentions": 6,
+        "num_sources": 1,
+        "num_articles": 6,
+        "avg_tone": 1.01596516690856
+      }
+    },
+    {
+      "candidate_id": "2261e23918126fbe8d82",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.tickerreport.com/banking-finance/13554017/stantec-inc-tsestn-receives-consensus-recommendation-of-buy-from-analysts.html",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "CA",
+        "event_code": "020",
+        "event_root_code": "02",
+        "quad_class": 1,
+        "goldstein_scale": 3.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": 1.9704433497537
+      }
+    },
+    {
+      "candidate_id": "386d258aaa3b0491cd16",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.tickerreport.com/banking-finance/13554014/chatham-lodging-trust-reit-nysecldt-receives-13-00-average-pt-from-brokerages.html",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "CAN"
+        ],
+        "action_geo_country_code": "CA",
+        "event_code": "010",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 8,
+        "num_sources": 1,
+        "num_articles": 8,
+        "avg_tone": 5.63758389261745
+      }
+    },
+    {
+      "candidate_id": "ee427852527a8e7e61af",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.thenews.com.pk/latest/1413183-now-is-the-time-to-resist-ai-rights-says-sapiens-author",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "GBR"
+        ],
+        "action_geo_country_code": "UK",
+        "event_code": "130",
+        "event_root_code": "13",
+        "quad_class": 3,
+        "goldstein_scale": -4.4,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
+        "avg_tone": -2.20750551876379
+      }
+    },
+    {
+      "candidate_id": "807d1e8a5e0499ce02b4",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.themarketsdaily.com/2026/08/22/wealthfront-advisers-llc-takes-position-in-emcor-group-inc-eme.html",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "US",
+        "event_code": "071",
+        "event_root_code": "07",
+        "quad_class": 2,
+        "goldstein_scale": 7.4,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": 2.86054827175209
+      }
+    },
+    {
+      "candidate_id": "b51e378bc8f2c98fe8cd",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.themarketsdaily.com/2026/08/22/patron-partners-llc-takes-1-09-million-position-in-realty-income-corporation-o.html",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "USA"
+        ],
+        "action_geo_country_code": null,
+        "event_code": "010",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": 2.53317249698431
+      }
+    },
+    {
+      "candidate_id": "501b9b361ac8eacbe722",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.thehindu.com/news/national/judges-are-not-gods-wont-get-every-judgment-right-outgoing-sc-judge-sanjay-karol/article71377123.ece",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "IN",
+        "event_code": "017",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 6,
+        "num_sources": 1,
+        "num_articles": 6,
+        "avg_tone": 3.57142857142857
+      }
+    },
+    {
+      "candidate_id": "dc192f2e2067057e3e89",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.thehindu.com/news/national/andhra-pradesh/ongc-promises-366-crore-aid-for-cancer-treatment-equipment-in-kakinada-government-hospital/article71376980.ece",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "IN",
+        "event_code": "033",
+        "event_root_code": "03",
+        "quad_class": 1,
+        "goldstein_scale": 5.2,
+        "num_mentions": 7,
+        "num_sources": 1,
+        "num_articles": 7,
+        "avg_tone": -0.75757575757576
+      }
+    },
+    {
+      "candidate_id": "8e37c68c0b89c45a01b0",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.theepochtimes.com/us/more-states-put-strong-math-students-on-a-path-to-advanced-courses-6071771",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "US",
+        "event_code": "036",
+        "event_root_code": "03",
+        "quad_class": 1,
+        "goldstein_scale": 4.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": 2.42763772175537
+      }
+    },
+    {
+      "candidate_id": "1db387fe58760dbc71bb",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.scmp.com/lifestyle/food-drink/article/3364803/japans-marugame-udon-biting-more-it-can-chew-us-noodle-push",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "US",
+        "event_code": "111",
+        "event_root_code": "11",
+        "quad_class": 3,
+        "goldstein_scale": -2.0,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
+        "avg_tone": -1.07913669064748
+      }
+    },
+    {
+      "candidate_id": "2697a8a7b108068d11f6",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.sanews.gov.za/south-africa/us-investors-pledge-over-1-billion-sa",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "SF",
+        "event_code": "020",
+        "event_root_code": "02",
+        "quad_class": 1,
+        "goldstein_scale": 3.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": -1.35922330097087
+      }
+    },
+    {
+      "candidate_id": "afab742ecbfc2f6c8554",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.sanews.gov.za/south-africa/sanral-clarifies-cape-town-toll-roads-reports",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "SF",
+        "event_code": "036",
+        "event_root_code": "03",
+        "quad_class": 1,
+        "goldstein_scale": 4.0,
+        "num_mentions": 6,
+        "num_sources": 1,
+        "num_articles": 6,
+        "avg_tone": -2.12765957446808
+      }
+    },
+    {
+      "candidate_id": "f619abdae836a63a1d55",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.sanews.gov.za/south-africa/immunisation-catch-campaign-launched",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "SF",
+        "event_code": "012",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": -0.4,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": -1.82481751824817
+      }
+    },
+    {
+      "candidate_id": "da1c7987863bbd12ee57",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.sanews.gov.za/south-africa/govt-beefs-access-correctional-centres",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "SF",
+        "event_code": "128",
+        "event_root_code": "12",
+        "quad_class": 3,
+        "goldstein_scale": -5.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": 1.14942528735632
+      }
+    },
+    {
+      "candidate_id": "39c108096e06a93d0ef4",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.sanews.gov.za/south-africa/government-welcomes-fitch-rating",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_relevance_and_heat:government"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "SF",
+        "event_code": "051",
+        "event_root_code": "05",
+        "quad_class": 1,
+        "goldstein_scale": 3.4,
+        "num_mentions": 20,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": 2.60223048327137
+      }
+    },
+    {
+      "candidate_id": "8eee2706fbfe08074e44",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.sanews.gov.za/south-africa/fet-turnaround-strategy-track-says-nzimande",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "SF",
+        "event_code": "057",
+        "event_root_code": "05",
+        "quad_class": 1,
+        "goldstein_scale": 8.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": 2.80528052805281
+      }
+    },
+    {
+      "candidate_id": "889995ce83bd82f1d054",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.sanews.gov.za/south-africa/digital-migration-well-track",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "SF",
+        "event_code": "040",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 1.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": 0.30959752321982
+      }
+    },
+    {
+      "candidate_id": "d462fe951c08356e9af0",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.sanews.gov.za/features/anc-veteran-bertha-gxowa-dies",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "AFR"
+        ],
+        "action_geo_country_code": "SF",
+        "event_code": "010",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 4,
+        "num_sources": 1,
+        "num_articles": 4,
+        "avg_tone": -2.17917675544794
+      }
+    },
+    {
+      "candidate_id": "61d4b7d4441165de619d",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.prokerala.com/news/articles/a1803395.html",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "IN",
+        "event_code": "020",
+        "event_root_code": "02",
+        "quad_class": 1,
+        "goldstein_scale": 3.0,
+        "num_mentions": 4,
+        "num_sources": 1,
+        "num_articles": 4,
+        "avg_tone": 2.57611241217799
+      }
+    },
+    {
+      "candidate_id": "ba8c4cc28b56e005ecb3",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.prokerala.com/news/articles/a1803393.html",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "IN",
+        "event_code": "130",
+        "event_root_code": "13",
+        "quad_class": 3,
+        "goldstein_scale": -4.4,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
+        "avg_tone": -6.62251655629139
+      }
+    },
+    {
+      "candidate_id": "a1bb5ae0527c3aea02a2",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.prokerala.com/news/articles/a1803391.html",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "IN",
+        "event_code": "020",
+        "event_root_code": "02",
+        "quad_class": 1,
+        "goldstein_scale": 3.0,
+        "num_mentions": 6,
+        "num_sources": 1,
+        "num_articles": 6,
+        "avg_tone": -4.39121756487026
+      }
+    },
+    {
+      "candidate_id": "90d65421f8b1badc3cdd",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.prokerala.com/news/articles/a1803390.html",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_high_impact_event_and_corroboration",
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "IN",
+        "event_code": "182",
+        "event_root_code": "18",
+        "quad_class": 4,
+        "goldstein_scale": -9.5,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": -7.39549839228296
+      }
+    },
+    {
+      "candidate_id": "e4f9de034ed642265a9f",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.prokerala.com/news/articles/a1803389.html",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "RP",
+        "event_code": "020",
+        "event_root_code": "02",
+        "quad_class": 1,
+        "goldstein_scale": 3.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": -8.58085808580858
+      }
+    },
+    {
+      "candidate_id": "2f8f59b54cd4b7ec0b38",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.prokerala.com/news/articles/a1803386.html",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "IN",
+        "event_code": "010",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 4,
+        "num_sources": 1,
+        "num_articles": 4,
+        "avg_tone": 6.38297872340425
+      }
+    },
+    {
+      "candidate_id": "47f2852b81975784284a",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.prokerala.com/news/articles/a1803384.html",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "IND"
+        ],
+        "action_geo_country_code": null,
+        "event_code": "100",
+        "event_root_code": "10",
+        "quad_class": 3,
+        "goldstein_scale": -5.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": -3.26409495548961
+      }
+    },
+    {
+      "candidate_id": "7df6180bd700917d4e32",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.prokerala.com/news/articles/a1803382.html",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "CAN",
+          "USA"
+        ],
+        "action_geo_country_code": "CA",
+        "event_code": "014",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
+        "avg_tone": 1.1461318051576
+      }
+    },
+    {
+      "candidate_id": "06f2b3768f2a4f65e092",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.outdoornews.com/2026/08/22/burr-oak-lake-waterfowl-production-area-near-willmar-minn-adds-197-acres",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "USA"
+        ],
+        "action_geo_country_code": "US",
+        "event_code": "051",
+        "event_root_code": "05",
+        "quad_class": 1,
+        "goldstein_scale": 3.4,
+        "num_mentions": 4,
+        "num_sources": 1,
+        "num_articles": 4,
+        "avg_tone": 4.4921875
+      }
+    },
+    {
+      "candidate_id": "ed70c23565d33e40c9db",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.mirror.co.uk/news/us-news/cruise-ship-arrests-boston-police-37581005",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "USA"
+        ],
+        "action_geo_country_code": "NO",
+        "event_code": "042",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 1.9,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
+        "avg_tone": -6.8
+      }
+    },
+    {
+      "candidate_id": "2376a6ff9b65bf4e7624",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.magnoliareporter.com/news_and_business/regional_news/article_39dfa512-a21b-41bf-ab7b-e328e81ce649.html",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "USA"
+        ],
+        "action_geo_country_code": "US",
+        "event_code": "013",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.4,
+        "num_mentions": 4,
+        "num_sources": 1,
+        "num_articles": 4,
+        "avg_tone": 1.3595166163142
+      }
+    },
+    {
+      "candidate_id": "3f8b838c062e565d9b7c",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.juneesoutherncross.com.au/story/9335342/somali-pirates-hijack-oil-tanker-off-yemen",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "SOM",
+          "USA"
+        ],
+        "action_geo_country_code": "SO",
+        "event_code": "010",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": -6.33484162895928
+      }
+    },
+    {
+      "candidate_id": "67d4288a53671f5f9c42",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.ironmountaindailynews.com/opinion/editorials/2026/08/let-voters-decide-cambensys-candidacy",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "USA"
+        ],
+        "action_geo_country_code": "US",
+        "event_code": "114",
+        "event_root_code": "11",
+        "quad_class": 3,
+        "goldstein_scale": -2.0,
+        "num_mentions": 8,
+        "num_sources": 1,
+        "num_articles": 8,
+        "avg_tone": 0.28490028490029
+      }
+    },
+    {
+      "candidate_id": "336320a29ed8715576ff",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.ironmountaindailynews.com/news/local-news/2026/08/kind-decision-to-end-flock-cameras-driven-by-cost-community-concerns",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "USA"
+        ],
+        "action_geo_country_code": "NO",
+        "event_code": "046",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 7.0,
+        "num_mentions": 4,
+        "num_sources": 1,
+        "num_articles": 4,
+        "avg_tone": -2.13776722090262
+      }
+    },
+    {
+      "candidate_id": "a8ce35b16c3e7ab062fc",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.ironmountaindailynews.com/news/local-news/2026/08/goodwill-store-reopens-in-im",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "US",
+        "event_code": "0874",
+        "event_root_code": "08",
+        "quad_class": 2,
+        "goldstein_scale": 10.0,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
+        "avg_tone": 3.18791946308725
+      }
+    },
+    {
+      "candidate_id": "fedef4b4d7cf8ba1d21b",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.ironmountaindailynews.com/news/local-news/2026/08/alfalfa-sprouts-linked-to-illnesses-in-two-states",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "USA"
+        ],
+        "action_geo_country_code": "US",
+        "event_code": "110",
+        "event_root_code": "11",
+        "quad_class": 3,
+        "goldstein_scale": -2.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": -8.58895705521475
+      }
+    },
+    {
+      "candidate_id": "3b9dcbfe1eb13e2a6731",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.ironmountaindailynews.com/news/business/2026/08/trump-announces-plan-to-lower-beef-prices-by-allowing-more-imports",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "CAN"
+        ],
+        "action_geo_country_code": "AR",
+        "event_code": "012",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": -0.4,
+        "num_mentions": 3,
+        "num_sources": 1,
+        "num_articles": 3,
+        "avg_tone": -0.73313782991202
+      }
+    },
+    {
+      "candidate_id": "0b51a72b1801e86b3ec6",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.ironmountaindailynews.com/lifestyles/life/2026/08/cousins-raise-1428-for-dickinson-foster-children",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "JO",
+        "event_code": "070",
+        "event_root_code": "07",
+        "quad_class": 2,
+        "goldstein_scale": 7.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": 9.375
+      }
+    },
+    {
+      "candidate_id": "a54a2fccd930fb51d341",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.ironmountaindailynews.com/lifestyles/2026/08/senior-news-2",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "US",
+        "event_code": "043",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 2.8,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": 1.84426229508197
+      }
+    },
+    {
+      "candidate_id": "e38c25800b692db10e9d",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.inverness-courier.co.uk/news/highland-stroke-treatment-falls-far-below-national-target-443108",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "GBR"
+        ],
+        "action_geo_country_code": "UK",
+        "event_code": "020",
+        "event_root_code": "02",
+        "quad_class": 1,
+        "goldstein_scale": 3.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": 3.03867403314917
+      }
+    },
+    {
+      "candidate_id": "444523361793a132a7a4",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.indiablooms.com/news/reservation-for-poor-not-caste-why-protesters-flooded-delhis-jantar-mantar/details",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_high_impact_event_and_corroboration",
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "IN",
+        "event_code": "140",
+        "event_root_code": "14",
+        "quad_class": 3,
+        "goldstein_scale": -6.5,
+        "num_mentions": 6,
+        "num_sources": 1,
+        "num_articles": 6,
+        "avg_tone": -7.01754385964912
+      }
+    },
+    {
+      "candidate_id": "c24579f7c66b2a36c053",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.indiablooms.com/news/one-bjp-two-voices-bengal-minister-swapan-dasguptas-jadavpur-remark-clashes-with-surgical-strike-call/details",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "IN",
+        "event_code": "100",
+        "event_root_code": "10",
+        "quad_class": 3,
+        "goldstein_scale": -5.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": -5.32069970845481
+      }
+    },
+    {
+      "candidate_id": "8a62a1429ac1b2958afb",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.indiablooms.com/news/dalit-woman-gangrape-murder-shocker-in-karnataka-4-arrested-after-body-found-in-well/details",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": null,
+        "event_code": "090",
+        "event_root_code": "09",
+        "quad_class": 2,
+        "goldstein_scale": -2.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": -12.5748502994012
+      }
+    },
+    {
+      "candidate_id": "14349bf17413366584b3",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.independent.co.uk/news/uk/politics/burnham-prime-minister-no-10-north-manchesterism-b3027957.html",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "ESP"
+        ],
+        "action_geo_country_code": "SP",
+        "event_code": "010",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
+        "avg_tone": 0.82174462705436
+      }
+    },
+    {
+      "candidate_id": "43fd9b2938162476cda7",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.independent.co.uk/news/uk/home-news/el-nino-weather-forecast-effect-warning-climate-change-b3037451.html",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "UK",
+        "event_code": "100",
+        "event_root_code": "10",
+        "quad_class": 3,
+        "goldstein_scale": -5.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": -2.21606648199446
+      }
+    },
+    {
+      "candidate_id": "f5f015081a235ca0c418",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.independent.co.uk/news/uk/crime/peter-mandelson-jeffrey-epstein-met-police-investigation-b3037464.html",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "GBR"
+        ],
+        "action_geo_country_code": "UK",
+        "event_code": "080",
+        "event_root_code": "08",
+        "quad_class": 2,
+        "goldstein_scale": 5.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": -2.89256198347108
+      }
+    },
+    {
+      "candidate_id": "194dbcfc0ba2c331e943",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.hotelnewsresource.com/article142595.html",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "EUR"
+        ],
+        "action_geo_country_code": "IN",
+        "event_code": "070",
+        "event_root_code": "07",
+        "quad_class": 2,
+        "goldstein_scale": 7.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": 3.77588306942753
+      }
+    },
+    {
+      "candidate_id": "aca18c49ea1640f478c0",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.gulte.com/political-news/427503/politics-will-only-give-cjps-school-thik-karo-more-publicity",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "IN",
+        "event_code": "110",
+        "event_root_code": "11",
+        "quad_class": 3,
+        "goldstein_scale": -2.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": -4.97382198952879
+      }
+    },
+    {
+      "candidate_id": "f40b26e5452bfb9c29b7",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.gulte.com/overseas/427493/indian-arrested-in-7-5-million-fraud-in-us",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "USA"
+        ],
+        "action_geo_country_code": "US",
+        "event_code": "112",
+        "event_root_code": "11",
+        "quad_class": 3,
+        "goldstein_scale": -2.0,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
+        "avg_tone": -11.3564668769716
+      }
+    },
+    {
+      "candidate_id": "62c986cb0a4a83b94048",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.gqindia.com/content/best-suspense-thriller-movies-on-jiohotstar",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "IN",
+        "event_code": "040",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 1.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": -4.27350427350427
+      }
+    },
+    {
+      "candidate_id": "6a0a90a2996ac9ccd0bf",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.gq-magazine.co.uk/article/the-shards-igby-rigney-interview",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_high_impact_event_and_corroboration",
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "UK",
+        "event_code": "173",
+        "event_root_code": "17",
+        "quad_class": 4,
+        "goldstein_scale": -5.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": -1.40350877192983
+      }
+    },
+    {
+      "candidate_id": "09f93bba950b66e9ac1e",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.gq-magazine.co.uk/article/ai-cant-plan-a-cool-holiday",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "NZL"
+        ],
+        "action_geo_country_code": "NZ",
+        "event_code": "036",
+        "event_root_code": "03",
+        "quad_class": 1,
+        "goldstein_scale": 4.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": -0.70721357850071
+      }
+    },
+    {
+      "candidate_id": "a7dfabcc3cf96862465b",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.express.co.uk/news/royal/2241481/prince-harry-meghan-markle-statement",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "GBR"
+        ],
+        "action_geo_country_code": "PO",
+        "event_code": "010",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
+        "avg_tone": -1.15606936416185
+      }
+    },
+    {
+      "candidate_id": "bb59269c96c3ee4e046f",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.express.co.uk/celebrity-news/2241485/bruce-forsyth-widows-life-now",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "BMU"
+        ],
+        "action_geo_country_code": "BD",
+        "event_code": "060",
+        "event_root_code": "06",
+        "quad_class": 2,
+        "goldstein_scale": 6.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": 0.34423407917384
+      }
+    },
+    {
+      "candidate_id": "5fdc2e397924d808481b",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.ecr.co.za/news/news/r2m-illicit-cigarettes-hidden-under-coal-limpopo",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_high_impact_event_and_corroboration",
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "ZAF"
+        ],
+        "action_geo_country_code": "ZI",
+        "event_code": "173",
+        "event_root_code": "17",
+        "quad_class": 4,
+        "goldstein_scale": -5.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": -7.36434108527132
+      }
+    },
+    {
+      "candidate_id": "e509d03b8e9fa161f588",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.dailyrecord.co.uk/scotland-now/scotlands-jewel-highlands-hiring-couple-37574852",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "UK",
+        "event_code": "036",
+        "event_root_code": "03",
+        "quad_class": 1,
+        "goldstein_scale": 4.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": 6.14035087719298
+      }
+    },
+    {
+      "candidate_id": "e95ac245508cc314f0f3",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.dailypost.co.uk/news/north-wales-news/manchester-airport-security-breach-man-34500734",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_relevance_and_heat:security",
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "GBR"
+        ],
+        "action_geo_country_code": "EI",
+        "event_code": "128",
+        "event_root_code": "12",
+        "quad_class": 3,
+        "goldstein_scale": -5.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": -3.04878048780488
+      }
+    },
+    {
+      "candidate_id": "60107493d77a1132ddb7",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.chennaionline.com/news/us-president-pushes-for-voter-id-and-citizenship-proof",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_relevance_and_heat:president"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "US",
+        "event_code": "020",
+        "event_root_code": "02",
+        "quad_class": 1,
+        "goldstein_scale": 3.0,
+        "num_mentions": 8,
+        "num_sources": 1,
+        "num_articles": 8,
+        "avg_tone": -1.85614849187935
+      }
+    },
+    {
+      "candidate_id": "2cacbca1f6dd0f8a7090",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.cambridge-news.co.uk/news/uk-world-news/stop-spiders-getting-house-34500647",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "GBR"
+        ],
+        "action_geo_country_code": "UK",
+        "event_code": "020",
+        "event_root_code": "02",
+        "quad_class": 1,
+        "goldstein_scale": 3.0,
+        "num_mentions": 50,
+        "num_sources": 5,
+        "num_articles": 50,
+        "avg_tone": -6.00701252191896
+      }
+    },
+    {
+      "candidate_id": "bc00c8127d108835ef65",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.cadillacnews.com/news/questions-remain-about-chad-hickman-s-history-one-week-after-missaukee-county-shootings/article_29025774-9309-4685-a80c-07dbd254ce14.html",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_high_impact_event_and_corroboration",
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "US",
+        "event_code": "173",
+        "event_root_code": "17",
+        "quad_class": 4,
+        "goldstein_scale": -5.0,
+        "num_mentions": 6,
+        "num_sources": 1,
+        "num_articles": 6,
+        "avg_tone": -7.91180285343709
+      }
+    },
+    {
+      "candidate_id": "9b83e9c3c333d51276b3",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.cadillacnews.com/news/new-evart-outdoors-store-to-offer-a-little-bit-of-everything/article_b86117de-c07e-4f19-984c-cad7f80027da.html",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "USA"
+        ],
+        "action_geo_country_code": null,
+        "event_code": "043",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 2.8,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": 2.59481037924151
+      }
+    },
+    {
+      "candidate_id": "914f67c73ad19b6a4a01",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.bangkokpost.com/world/3306160/cities-compete-to-be-japans-backup-capital",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "JPN"
+        ],
+        "action_geo_country_code": "JA",
+        "event_code": "040",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 1.0,
+        "num_mentions": 8,
+        "num_sources": 1,
+        "num_articles": 8,
+        "avg_tone": -1.7
+      }
+    },
+    {
+      "candidate_id": "86a9933d1a41bb2239c5",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.bangkokpost.com/thailand/general/3306159/war-weapons-from-cambodia-seized-in-trat",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "TH",
+        "event_code": "0841",
+        "event_root_code": "08",
+        "quad_class": 2,
+        "goldstein_scale": 7.0,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
+        "avg_tone": -8.08625336927224
+      }
+    },
+    {
+      "candidate_id": "acc1c81da363078c9281",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.aspendailynews.com/opinion/grueter-waffling-and-worries-about-the-colorado-river-and-water-politics-ead56994",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "USA"
+        ],
+        "action_geo_country_code": null,
+        "event_code": "046",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 7.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": -3.03797468354431
+      }
+    },
+    {
+      "candidate_id": "340c5a459f150e3f3eb9",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.aol.co.uk/articles/frances-fontainebleau-forest-reopens-public-094536000.html",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "FRA"
+        ],
+        "action_geo_country_code": "FR",
+        "event_code": "010",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 6,
+        "num_sources": 1,
+        "num_articles": 6,
+        "avg_tone": 0.0
+      }
+    },
+    {
+      "candidate_id": "76ffa05fb88de445cd5e",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.advocate-news.com/2026/08/21/trump-beef-prices-plan",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "CAN"
+        ],
+        "action_geo_country_code": "US",
+        "event_code": "012",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": -0.4,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
+        "avg_tone": -1.42118863049096
+      }
+    },
+    {
+      "candidate_id": "695ba485193732f41253",
+      "source_id": "gdelt",
+      "canonical_url": "https://www.adgully.com/post/19615/world-talent-organization-usa-launches-the-brand-bharat-in-the-us",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "IND"
+        ],
+        "action_geo_country_code": "IN",
+        "event_code": "010",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 1,
+        "num_sources": 1,
+        "num_articles": 1,
+        "avg_tone": 4.17536534446764
+      }
+    },
+    {
+      "candidate_id": "db2012b6270607abdc31",
+      "source_id": "gdelt",
+      "canonical_url": "https://observer.ug/business/bukenya-sulaiman-the-entrepreneur-blending-business-culture-and-community-service",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "UGA"
+        ],
+        "action_geo_country_code": "UG",
+        "event_code": "043",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 2.8,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": 2.27272727272728
+      }
+    },
+    {
+      "candidate_id": "26bfd92d902e0d795af0",
+      "source_id": "gdelt",
+      "canonical_url": "https://mb.com.ph/2026/08/22/repeat-offender-nabbed-in-a-talisay-city-drug-bust",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_high_impact_event_and_corroboration",
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "PHL"
+        ],
+        "action_geo_country_code": "RP",
+        "event_code": "173",
+        "event_root_code": "17",
+        "quad_class": 4,
+        "goldstein_scale": -5.0,
+        "num_mentions": 8,
+        "num_sources": 1,
+        "num_articles": 8,
+        "avg_tone": -12.2065727699531
+      }
+    },
+    {
+      "candidate_id": "fb014de1d0363a47e13c",
+      "source_id": "gdelt",
+      "canonical_url": "https://mb.com.ph/2026/08/22/pro-6-ranks-3rd-nationwide-in-arresting-fugitives",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "RP",
+        "event_code": "173",
+        "event_root_code": "17",
+        "quad_class": 4,
+        "goldstein_scale": -5.0,
+        "num_mentions": 4,
+        "num_sources": 1,
+        "num_articles": 4,
+        "avg_tone": 0.49751243781094
+      }
+    },
+    {
+      "candidate_id": "b6308310b26b512b97d6",
+      "source_id": "gdelt",
+      "canonical_url": "https://mb.com.ph/2026/08/22/over-500-areas-remain-flooded-due-to-habagat-cyclones-as-govt-aid-tops-p11b-ocd",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "RP",
+        "event_code": "010",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 4,
+        "num_sources": 1,
+        "num_articles": 4,
+        "avg_tone": -5.67107750472589
+      }
+    },
+    {
+      "candidate_id": "7532b840d20caadb13d7",
+      "source_id": "gdelt",
+      "canonical_url": "https://mb.com.ph/2026/08/22/hungduan-tribes-celebrates-punnuk-festival-in-ifugao",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "RP",
+        "event_code": "017",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
+        "avg_tone": 0.0
+      }
+    },
+    {
+      "candidate_id": "7e0123d05597f8ac4a84",
+      "source_id": "gdelt",
+      "canonical_url": "https://mashable.com/science/nasa-nancy-grace-roman-space-telescope-vs-hubble-webb",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "USA"
+        ],
+        "action_geo_country_code": "CI",
+        "event_code": "013",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.4,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": 0.76726342710998
+      }
+    },
+    {
+      "candidate_id": "cb02e562d0858c21796f",
+      "source_id": "gdelt",
+      "canonical_url": "https://jamaica-gleaner.com/article/commentary/20260822/ronald-sanders-facts-due-process-and-fairness-ccjs-test",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "TD",
+        "event_code": "012",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": -0.4,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": -0.49261083743843
+      }
+    },
+    {
+      "candidate_id": "ad2db68136f13f6811ff",
+      "source_id": "gdelt",
+      "canonical_url": "https://jamaica-gleaner.com/article/commentary/20260822/editorial-strengthening-humanitarian-efforts",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_high_impact_event_and_corroboration",
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "IZ",
+        "event_code": "190",
+        "event_root_code": "19",
+        "quad_class": 4,
+        "goldstein_scale": -10.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": 0.11806375442739
+      }
+    },
+    {
+      "candidate_id": "6f99f871e7f20019c2c8",
+      "source_id": "gdelt",
+      "canonical_url": "https://ipowerrichmond.com/4572493/wondrea-gilmore-dead-dies",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "US",
+        "event_code": "051",
+        "event_root_code": "05",
+        "quad_class": 1,
+        "goldstein_scale": 3.4,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": 8.09682804674458
+      }
+    },
+    {
+      "candidate_id": "4675e0887ca5527ea71b",
+      "source_id": "gdelt",
+      "canonical_url": "https://independentaustralia.net/politics/politics-display/climate-refugees-are-not-protected-under-existing-international-law,21463",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_relevance_and_heat:climate,law"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "GM",
+        "event_code": "042",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 1.9,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": -8.51063829787231
+      }
+    },
+    {
+      "candidate_id": "e53b176702af7e016364",
+      "source_id": "gdelt",
+      "canonical_url": "https://highlandradio.com/2026/08/22/man-arrested-after-irish-woman-found-dead-in-australia",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_high_impact_event_and_corroboration",
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "AUS",
+          "IRL"
+        ],
+        "action_geo_country_code": "EI",
+        "event_code": "182",
+        "event_root_code": "18",
+        "quad_class": 4,
+        "goldstein_scale": -9.5,
+        "num_mentions": 6,
+        "num_sources": 1,
+        "num_articles": 6,
+        "avg_tone": -0.900900900900899
+      }
+    },
+    {
+      "candidate_id": "0ffe15dbc39aefa1ac90",
+      "source_id": "gdelt",
+      "canonical_url": "https://finance.yahoo.com/technology/articles/amazon-uber-doordash-walmart-taking-070300525.html",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "USA"
+        ],
+        "action_geo_country_code": "US",
+        "event_code": "033",
+        "event_root_code": "03",
+        "quad_class": 1,
+        "goldstein_scale": 5.2,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": 1.69491525423729
+      }
+    },
+    {
+      "candidate_id": "7b7b5ef4408f33c34881",
+      "source_id": "gdelt",
+      "canonical_url": "https://finance.yahoo.com/media-advertising/articles/ftc-turning-sights-personalized-pricing-070000466.html",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "NL",
+        "event_code": "020",
+        "event_root_code": "02",
+        "quad_class": 1,
+        "goldstein_scale": 3.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": -0.24213075060533
+      }
+    },
+    {
+      "candidate_id": "c1c1462cd9776cf207e6",
+      "source_id": "gdelt",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/iranian-oil-supply-china-rapidly-091500264.html",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "IRN",
+          "OMN"
+        ],
+        "action_geo_country_code": "IR",
+        "event_code": "164",
+        "event_root_code": "16",
+        "quad_class": 4,
+        "goldstein_scale": -7.0,
+        "num_mentions": 3,
+        "num_sources": 1,
+        "num_articles": 3,
+        "avg_tone": -4.66666666666667
+      }
+    },
+    {
+      "candidate_id": "78e86c06022820a269c5",
+      "source_id": "gdelt",
+      "canonical_url": "https://english.aawsat.com/world/5309795-russian-strikes-kill-least-two-people-ukraine",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "RUS"
+        ],
+        "action_geo_country_code": "RS",
+        "event_code": "180",
+        "event_root_code": "18",
+        "quad_class": 4,
+        "goldstein_scale": -9.0,
+        "num_mentions": 4,
+        "num_sources": 1,
+        "num_articles": 4,
+        "avg_tone": -8.38926174496644
+      }
+    },
+    {
+      "candidate_id": "765db4f9cbfcb3bfa3b8",
+      "source_id": "gdelt",
+      "canonical_url": "https://english.aawsat.com/world/5309777-more-16000-doses-ervebo-vaccine-arrive-ebola-hit-drc",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "COD"
+        ],
+        "action_geo_country_code": "CG",
+        "event_code": "010",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 1,
+        "num_sources": 1,
+        "num_articles": 1,
+        "avg_tone": -3.21782178217822
+      }
+    },
+    {
+      "candidate_id": "e906681326c89ba754f3",
+      "source_id": "gdelt",
+      "canonical_url": "https://english.aawsat.com/technology/5309784-tiktok-reaches-400-million-settlement-us-justice-department-over-childrens",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "US",
+        "event_code": "057",
+        "event_root_code": "05",
+        "quad_class": 1,
+        "goldstein_scale": 8.0,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
+        "avg_tone": -1.58730158730159
+      }
+    },
+    {
+      "candidate_id": "73b6d64675f80dff9cf4",
+      "source_id": "gdelt",
+      "canonical_url": "https://english.aawsat.com/business/5309796-brazil%E2%80%99s-lula-urges-tariffs-resolution-call-trump",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "BRA"
+        ],
+        "action_geo_country_code": "BR",
+        "event_code": "046",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 7.0,
+        "num_mentions": 1,
+        "num_sources": 1,
+        "num_articles": 1,
+        "avg_tone": -5.59322033898305
+      }
+    },
+    {
+      "candidate_id": "d1544175a950d9c71405",
+      "source_id": "gdelt",
+      "canonical_url": "https://english.aawsat.com/business/5309794-arctic-shipping-daunting-prospect-hotly-contested-region",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "YEM"
+        ],
+        "action_geo_country_code": "EG",
+        "event_code": "043",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 2.8,
+        "num_mentions": 6,
+        "num_sources": 1,
+        "num_articles": 6,
+        "avg_tone": -3.36257309941521
+      }
+    },
+    {
+      "candidate_id": "6530725f279b38710cfd",
+      "source_id": "gdelt",
+      "canonical_url": "https://english.aawsat.com/arab-world/5309817-fatah-senior-delegation-heads-cairo-meet-palestinian-factions",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "ISR"
+        ],
+        "action_geo_country_code": "EG",
+        "event_code": "010",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
+        "avg_tone": -1.44356955380577
+      }
+    },
+    {
+      "candidate_id": "b2d23d5a81e9d86ead9b",
+      "source_id": "gdelt",
+      "canonical_url": "https://english.aawsat.com/arab-world/5309807-khaddam-despite-my-warning-hariri-stayed-lebanon-electoral-reasons-he-was-killed",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "LBN"
+        ],
+        "action_geo_country_code": "LE",
+        "event_code": "042",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 1.9,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": -2.4822695035461
+      }
+    },
+    {
+      "candidate_id": "69a31c7120d1179bcabb",
+      "source_id": "gdelt",
+      "canonical_url": "https://english.aawsat.com/arab-world/5309785-least-13-tunisians-missing-after-migrant-boat-sinks-tunisia",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "TUN"
+        ],
+        "action_geo_country_code": "TS",
+        "event_code": "043",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 2.8,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": -4.86111111111111
+      }
+    },
+    {
+      "candidate_id": "c18c5b394f3a4656bf8a",
+      "source_id": "gdelt",
+      "canonical_url": "https://english.aawsat.com/arab-world/5309783-salam-inspects-military-units-south-litani-no-capable-lebanese-state-without-one",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "ISR",
+          "LBN"
+        ],
+        "action_geo_country_code": "IS",
+        "event_code": "0356",
+        "event_root_code": "03",
+        "quad_class": 1,
+        "goldstein_scale": 7.0,
+        "num_mentions": 3,
+        "num_sources": 1,
+        "num_articles": 3,
+        "avg_tone": 2.42537313432836
+      }
+    },
+    {
+      "candidate_id": "e3463a02edf2db9ea33d",
+      "source_id": "gdelt",
+      "canonical_url": "https://english.aawsat.com/arab-world/5309778-syria-cautiously-welcomes-abdi%E2%80%99s-integration-announcement-awaits-implementation",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": "SY",
+        "event_code": "042",
+        "event_root_code": "04",
+        "quad_class": 1,
+        "goldstein_scale": 1.9,
+        "num_mentions": 2,
+        "num_sources": 1,
+        "num_articles": 2,
+        "avg_tone": -0.94674556213017
+      }
+    },
+    {
+      "candidate_id": "a83a4b1bee57a57fd029",
+      "source_id": "gdelt",
+      "canonical_url": "https://english.aawsat.com/arab-world/5309776-houthis-tighten-security-grip-ibb",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_high_impact_event_and_corroboration",
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [
+          "IRN"
+        ],
+        "action_geo_country_code": "YM",
+        "event_code": "190",
+        "event_root_code": "19",
+        "quad_class": 4,
+        "goldstein_scale": -10.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": -3.43878954607978
+      }
+    },
+    {
+      "candidate_id": "6f6aab9c6bed02fd5ad8",
+      "source_id": "gdelt",
+      "canonical_url": "https://economictimes.indiatimes.com/markets/stocks/news/cas-chaos-triggers-liquidity-spiral-nuvama-says-higher-participation-needed-to-break-cycle/articleshow/133421238.cms",
+      "route": "content_hydration",
+      "reasons": [
+        "compound_goldstein_and_corroboration"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": null,
+        "event_code": "163",
+        "event_root_code": "16",
+        "quad_class": 4,
+        "goldstein_scale": -8.0,
+        "num_mentions": 5,
+        "num_sources": 1,
+        "num_articles": 5,
+        "avg_tone": -3.83912248628884
+      }
+    },
+    {
+      "candidate_id": "6417718dfb2d1d43127b",
+      "source_id": "gdelt",
+      "canonical_url": "https://aleteia.org/2026/08/22/how-mary-became-a-queen-at-the-annunciation",
+      "route": "structured_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {
+        "actor_country_codes": [],
+        "action_geo_country_code": null,
+        "event_code": "010",
+        "event_root_code": "01",
+        "quad_class": 1,
+        "goldstein_scale": 0.0,
+        "num_mentions": 10,
+        "num_sources": 1,
+        "num_articles": 10,
+        "avg_tone": 2.2
+      }
+    }
+  ]
+}
