@@ -1,0 +1,36 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "task_name": "新聞管線最終驗收重測",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T18:00:00+08:00",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "external_ledger": "available",
+  "retry_count": 0,
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "sequence": "175",
+  "step": "semantic-event-contradiction-correction",
+  "status": "passed",
+  "observed_at": "2026-08-23T19:29:00+08:00",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/175-semantic-event-contradiction-correction-running.json",
+  "previous_receipt_blob_sha": "95ca397c83625f4019422432da1135ddb2d9e1fd",
+  "evidence_paths": [
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/work/selection-results.json",
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/work/candidate-audit.json",
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/work/counts.json"
+  ],
+  "evidence_sha256": [
+    "3be0dd394a0b5a966a53031b77a0c9b06227f031ab2f9fdd4de504680296a1fc",
+    "2fdb61864f104e3000ac2567e640a4c1a0a770eaa62dcc920199a04f2e8c2d1e",
+    "3c85edd051b43ab354b91cd64feb38aab6af0fddba280c6fa305264ef532d1a9"
+  ],
+  "elapsed_ms": 37000,
+  "message": "Two distinct events preserved; semantic_event_count=2150, selected_event_count=23, unresolved=0; selection and audit validators passed."
+}

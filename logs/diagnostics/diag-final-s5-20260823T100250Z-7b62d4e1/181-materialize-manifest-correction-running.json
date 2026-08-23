@@ -1,0 +1,32 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "task_name": "新聞管線最終驗收重測",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T18:00:00+08:00",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "external_ledger": "available",
+  "retry_count": 0,
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "sequence": "181",
+  "step": "materialize-manifest-correction",
+  "status": "running",
+  "observed_at": "2026-08-23T19:29:00+08:00",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/175-semantic-event-contradiction-correction-passed.json",
+  "previous_receipt_blob_sha": "29be71d691ff70752d7b29c77008c723b80d079d",
+  "evidence_paths": [
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/work/event-manifest.json"
+  ],
+  "evidence_sha256": [
+    "c2d7822e13af665a0b489acf9d86542edfb239049d10d2dfe1f2449683b5fd8c"
+  ],
+  "elapsed_ms": 0,
+  "message": "Rematerializing manifest after semantic identity correction."
+}
