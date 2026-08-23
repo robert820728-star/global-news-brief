@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "terminal_code": 990,
+  "terminal": true,
+  "status": "failed",
+  "overall_status": "failed",
+  "classification": "recovery_artifact_missing",
+  "run_id": "gnb-20260823T085530Z-7f3c9a12",
+  "diag_run_id": "diag-20260823T090026Z-21bc9e70",
+  "resolved_main_sha": "3bf79207ab008e0172056917f4a295967812a166",
+  "observed_at": "2026-08-23T09:23:29.346Z",
+  "same_run": true,
+  "canonical_delivery": false,
+  "last_completed_stage": "preprocess-news-candidates",
+  "last_completed_step": "preprocess-news-candidates",
+  "first_incomplete_step": "select-news-events.content-hydration.batch-001",
+  "earliest_failure": "select-news-events.content-hydration.batch-001",
+  "exact_error": "Same-run recovery cannot identify the first <=20 admitted rows because the workspace is absent and run-logs did not persist checkpoint.json or candidate artifacts. github_fetch_file for the expected checkpoint returned HTTP 404; request_id unavailable. Reconstructing candidates would rerun completed stages or alter canonical artifacts, so recovery stopped.",
+  "tool_or_endpoint": "GitHub connector github_fetch_file GET contents/logs/runs/gnb-20260823T085530Z-7f3c9a12/checkpoint.json?ref=run-logs",
+  "http_status": 404,
+  "request_id": "unavailable",
+  "elapsed_ms": 91104,
+  "retry_count": 1,
+  "retry_signature": "recovery_artifact_missing:checkpoint_and_batch_input_not_persisted",
+  "previous_receipt_path": "logs/diagnostics/diag-20260823T090026Z-21bc9e70/130-content-hydration-batch-001-recovery-failed-20260823T092308Z.json",
+  "previous_receipt_blob_sha": "fc26039e03505a64979332259520cb8f16fc2bed",
+  "receipts": [
+    {
+      "path": "logs/diagnostics/diag-20260823T090026Z-21bc9e70/130-content-hydration-batch-001-recovery-running-20260823T092158Z.json",
+      "blob_sha": "8dc24872aa150e9c4f7119d72af4a8f920331377",
+      "status": "running"
+    },
+    {
+      "path": "logs/diagnostics/diag-20260823T090026Z-21bc9e70/130-content-hydration-batch-001-recovery-failed-20260823T092308Z.json",
+      "blob_sha": "fc26039e03505a64979332259520cb8f16fc2bed",
+      "status": "failed"
+    }
+  ],
+  "running": false,
+  "stalled": false
+}
