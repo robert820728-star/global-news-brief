@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_type": "authoritative_failed_receipt",
+  "run_id": "gnb-20260823T092132Z-6a4d1e90",
+  "diag_run_id": "diag-20260823T092132Z-c3517b24",
+  "resolved_main_sha": "3bf79207ab008e0172056917f4a295967812a166",
+  "window_start": "2026-08-22T09:22:29Z",
+  "window_end": "2026-08-23T09:22:29Z",
+  "status": "failed",
+  "canonical_delivery": false,
+  "last_completed_stage": "preprocess-news-candidates",
+  "exact_first_incomplete_step": "select-news-events.content-hydration.batch-001",
+  "failure_reason": "The fresh relevance gate routes 2452 article rows to required content hydration. No connector hydration batch has a terminal receipt, so semantic event identity, event time and region identity, policy-governance review, six-dimension scoring, article dispositions, and selection cannot be truthfully completed.",
+  "freshness": {
+    "old_run_reused": false,
+    "old_reader_reused": false,
+    "old_counts_reused": false,
+    "old_checkpoint_reused": false,
+    "old_manifest_reused": false,
+    "old_audit_reused": false,
+    "old_images_reused": false,
+    "old_validation_reused": false
+  },
+  "verified_counts": {
+    "discovery_article_rows": 9525,
+    "content_hydration_rows": 2452,
+    "structured_review_rows": 7073,
+    "preprocessed_article_rows": 2452,
+    "provisional_article_groups": 2167,
+    "completed_content_hydration_batches": 0
+  },
+  "artifact_sha256": {
+    "news_run_checkpoint": "c75ee9c4ca4c3a90ed805395571e396f588b4b2109a62fe8a8385047d18d6a28",
+    "source_candidates": "9b3f3ff8791eadc453e16f3c5a8524c5c427f2613d8b510412e4b6aa61cd070d",
+    "news_relevance_gate": "3fd71cae4529caf30659c73b8a198b8e7f8feb79ef64f74a6827668bdaf1c157",
+    "model_source_candidates": "6f495f9e62a5c6b60d212e3ecc6125a53b5f3228db17fafb73710098bf3b4bf0",
+    "preprocessed_candidates": "d72fa67579bfecc5281c92aa8a73242ba89840f7cca7e84986fb056b265a687d"
+  },
+  "terminal_code": 990,
+  "updated_at": "2026-08-23T09:25:18Z"
+}
