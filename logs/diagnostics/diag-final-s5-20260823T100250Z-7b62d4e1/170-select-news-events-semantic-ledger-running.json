@@ -1,0 +1,34 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "task_name": "新聞管線最終驗收重測",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T18:00:00+08:00",
+  "observed_at": "2026-08-23T19:08:00+08:00",
+  "sequence": 170,
+  "step": "select-news-events-semantic-ledger",
+  "status": "running",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-123-passed.json",
+  "previous_receipt_blob_sha": "7b43b77f7ebc8e2821177c0023df6f27a26f280a",
+  "evidence_paths": [
+    "work/content-hydration-batches-utf8.json",
+    "work/content-evidence/batch-001.jsonl",
+    "work/content-evidence/batch-123.jsonl"
+  ],
+  "evidence_sha256": [
+    "6de2548cf247b143fe330ac511a141edc7618fc1d3c81c524115e481868b4b0e",
+    "d2cd7e3bac8f0b276da2daac83b1ded2cfe3018ee297a5759e88352e9ec8f60d"
+  ],
+  "elapsed_ms": 0,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  }
+}
