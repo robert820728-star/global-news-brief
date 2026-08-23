@@ -1,0 +1,1212 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "task_name": "新聞管線最終驗收重測",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T18:00:00+08:00",
+  "observed_at": "2026-08-23T12:39:30.465Z",
+  "sequence": 990,
+  "step": "terminal",
+  "status": "passed",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/910-canonical-publisher-passed.json",
+  "previous_receipt_blob_sha": "d6f74b902b8df4d3e2aae9659fa40fcc676e040b",
+  "evidence_paths": [
+    "logs/runs/gnb-20260823T100250Z-7b62d4e1/reader.md"
+  ],
+  "evidence_sha256": {
+    "logs/runs/gnb-20260823T100250Z-7b62d4e1/reader.md": "7485e395b22df9d70d087ffe4de57c59c311531a9a8a0da89c5cbe26db0d0eae"
+  },
+  "elapsed_ms": 0,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "overall_status": "passed",
+  "last_completed_step": "conversation-delivery",
+  "first_incomplete_step": null,
+  "earliest_failure": null,
+  "exact_error": null,
+  "classification": "canonical_delivery_success",
+  "canonical_delivery": true,
+  "window": {
+    "start": "2026-08-22T18:02:50+08:00",
+    "end": "2026-08-23T18:02:50+08:00",
+    "timezone": "Asia/Taipei"
+  },
+  "gdelt": {
+    "mode": "gdelt_export_24h",
+    "archive_intervals_requested": 97,
+    "archive_intervals_completed": 97,
+    "doc_api_calls": 0
+  },
+  "routes": {
+    "gdelt": {
+      "status": "ready",
+      "rows": 9120
+    },
+    "cna": {
+      "status": "ready",
+      "rows": 191
+    },
+    "chinanews": {
+      "status": "ready",
+      "rows": 214
+    }
+  },
+  "counts": {
+    "merged_article_row_count": 9525,
+    "in_window_article_row_count": 9525,
+    "canonical_url_count": 9524,
+    "provisional_title_cluster_count": 2163,
+    "event_evidence_article_row_count": 2260,
+    "non_news_article_row_count": 7265,
+    "unresolved_article_row_count": 0,
+    "semantic_event_count": 2150,
+    "scored_event_count": 2150,
+    "c_or_higher_scored_event_count": 23,
+    "selected_event_count": 23
+  },
+  "RUN_RECEIPT": {
+    "run_id": "gnb-20260823T100250Z-7b62d4e1",
+    "main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+    "last_completed_stage": "canonical-delivery",
+    "bootstrap_chunks": "0/52",
+    "current_chunk": "none",
+    "current_block": "none",
+    "last_error": "none",
+    "retry_count": 0,
+    "external_ledger": "available",
+    "canonical_delivery": true
+  },
+  "artifacts": {
+    "reader": {
+      "path": "logs/runs/gnb-20260823T100250Z-7b62d4e1/reader.md",
+      "sha256": "7485e395b22df9d70d087ffe4de57c59c311531a9a8a0da89c5cbe26db0d0eae"
+    },
+    "manifest": {
+      "path": "logs/runs/gnb-20260823T100250Z-7b62d4e1/event-manifest.json",
+      "sha256": "8a18329573d94dbdae703ce543a85e70fd50631b0f3e5e1fe53552bf86369445"
+    },
+    "receipt": {
+      "path": "logs/runs/gnb-20260823T100250Z-7b62d4e1/release-receipt.json",
+      "sha256": "1aa0222b197f56ce788bcf3260337b8620d2338f7160af4a05590e1ea8ebabf8"
+    },
+    "checkpoint": {
+      "path": "logs/runs/gnb-20260823T100250Z-7b62d4e1/checkpoint.json",
+      "sha256": "ba8112e7993e006427cd07ae8f740937111f2519c37ff508c7d925938119751d"
+    },
+    "bundle_manifest": {
+      "path": "logs/runs/gnb-20260823T100250Z-7b62d4e1/bundle-manifest.json",
+      "blob_sha": "57001b91f425b8411121e1dbb9dbfd2835888d5c"
+    },
+    "rule_matrix": {
+      "path": "logs/runs/gnb-20260823T100250Z-7b62d4e1/s5-rule-matrix.json",
+      "blob_sha": "df99ab786320c212c84418631e6146a8bf5596c6"
+    },
+    "current": {
+      "path": "logs/current.json",
+      "blob_sha": "e6f2dcb7b75b790e574f6bbd7b122bef437636ff"
+    }
+  },
+  "receipts": [
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/150-pre-manifest-recovery-restore-passed.json",
+      "blob_sha": "9f0e4bd84e6434d339e580748000e757806474fe"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/150-pre-manifest-recovery-restore-running.json",
+      "blob_sha": "2a47f2f2fb75eec77219c8722692ad5f6a53fdb9"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-001-passed.json",
+      "blob_sha": "0ab87ba4244339c8cd797a202690ace8fbd14c35"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-001-running.json",
+      "blob_sha": "8ce053ccd898f6c2d95e9013e87f4c2c1000488c"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-002-passed.json",
+      "blob_sha": "dcdc921d04397ee50f6c32ef9478992cb3adf341"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-002-running.json",
+      "blob_sha": "8d2ddb40393bb64eedaf08f896ac60dd554de201"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-003-passed.json",
+      "blob_sha": "72d08a641e6d1cb97e712667a42bd52c120a76cd"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-003-running.json",
+      "blob_sha": "9a3fcea59a2cfc00175be6e855f93766717b6f8f"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-004-passed.json",
+      "blob_sha": "0b4bae2713c608e0f4168c4a7529b42c45e2d58d"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-004-running.json",
+      "blob_sha": "065994baea053cae38be455c202cf9b69ed80eba"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-005-passed.json",
+      "blob_sha": "491948f0e78fca51da676ffd5a4797beac03fa59"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-005-running.json",
+      "blob_sha": "fde424a0fd06ad32a2e3bb107c414ba0b88e1c04"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-006-passed.json",
+      "blob_sha": "c74232b132e48d4bad72608f5068513d1bd49ec6"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-006-running.json",
+      "blob_sha": "70345c06addecf0a988913f53c57b71f7ac25756"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-007-passed.json",
+      "blob_sha": "8e2c2560a6b6d30ac5dd3ebed61201a65712c047"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-007-running.json",
+      "blob_sha": "287afa6bf736ccaa4deb024c60aad08c5c81a0ea"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-008-passed.json",
+      "blob_sha": "3d6e7a43ef184dfe5e57b183a912031d4321f473"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-008-running.json",
+      "blob_sha": "85a757e1f8de8cfbacdc23686caccb08628e2b84"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-009-passed.json",
+      "blob_sha": "f8e4528751b0f1543d5d6d6e16981d595df27633"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-009-running.json",
+      "blob_sha": "c1be495635eaf2206508b4db2323455a84c76c46"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-010-passed.json",
+      "blob_sha": "665a0090014181a866143177a8e3a1968bd58f1a"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-010-running.json",
+      "blob_sha": "52d0bb7a062bc27fcd8acb34ac4630a7dbbab0b6"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-011-passed.json",
+      "blob_sha": "a7e1d416ca9466f5cc92c5db50c84d3d3e4402ae"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-011-running.json",
+      "blob_sha": "0abaade6709e3dbf81d979f2939db7288bee8c2d"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-012-passed.json",
+      "blob_sha": "f11c09fd704bea32e8c6b8e33e7cdc56fcef2060"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-012-running.json",
+      "blob_sha": "58a202a5704ea16090cc20ad5a1f5ce25d9f5f8d"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-013-passed.json",
+      "blob_sha": "3ee63f56ab54618187f0bbac3a4a8947ade90c79"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-013-running.json",
+      "blob_sha": "e3b293c79da4fdd0f08aa6d9374672d8e21dcf80"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-014-passed.json",
+      "blob_sha": "f57d7ab4a06bad6121a6403fa3f68c8171ccd05f"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-014-running.json",
+      "blob_sha": "ad75499e15da424bcfb8599e0caa301f5787bf3e"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-015-passed.json",
+      "blob_sha": "f070a2ac2b2aac3ae26028aa8ee9d7d1cdc656a4"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-015-running.json",
+      "blob_sha": "c58a6426f180a25717dfa72556c7a71e93f38a7a"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-016-passed.json",
+      "blob_sha": "ea084077ba76406fed13d9137ea7f6849c067638"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-016-running.json",
+      "blob_sha": "56868f778f65011ba338e5a1dcab4459ccb444ea"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-017-passed.json",
+      "blob_sha": "59f0906f6e3e09d5025b5bfd4d3334ad4c151034"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-017-running.json",
+      "blob_sha": "8efb89a8bba16a8044ab02e45c0ecdaf2f4f5559"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-018-passed.json",
+      "blob_sha": "43dae0a5b12500b38cdadf82b0582d067005cc46"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-018-running.json",
+      "blob_sha": "a8ff0e5168b70e2352f9163d892144b842ed3f4b"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-019-passed.json",
+      "blob_sha": "e8e7ec13cbc8e9f5d5c79ae2f5d4b8729a40d9c9"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-019-running.json",
+      "blob_sha": "ef45e759acf2824fe1fe3984f9ab11ca7703d582"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-020-passed.json",
+      "blob_sha": "942421f17fe297f934ce42f783d3b65f2001380c"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-020-running.json",
+      "blob_sha": "4780e2d5903fedfa9fb8bb8bea9ab1760b702a79"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-021-passed.json",
+      "blob_sha": "f2d0f016ae51df61c5da5af8904248779f35ec85"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-021-running.json",
+      "blob_sha": "3582b5a4e965e1b7f3de136b1c7e139d21306e40"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-022-passed.json",
+      "blob_sha": "19469355ed487053ecbf552e9b883bedccadd355"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-022-running.json",
+      "blob_sha": "9ab40b441cdfa32c0e2ad7173b0bb3e2af073846"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-023-passed.json",
+      "blob_sha": "c298bbb188a548ab9d5230649a0cf44063f62abe"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-023-running.json",
+      "blob_sha": "23e05e9f6b6f89a8e645accd487f4d59cb0d888f"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-024-passed.json",
+      "blob_sha": "91eb9a1603cbe8d3524f6ba8f2026f2b6f8666ba"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-024-running.json",
+      "blob_sha": "2a971133fbbc2ebb453cd071ff4581094a72700e"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-025-passed.json",
+      "blob_sha": "bfd1e6050deff405a7f0af80925c82e4696fa4e0"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-025-running.json",
+      "blob_sha": "e43afe7c2ecefdb55b91dc1eabd2b321647b9c06"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-026-passed.json",
+      "blob_sha": "01bc81a70e572ef5d24406e332ddb6565ad12667"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-026-running.json",
+      "blob_sha": "1d22ed9d2de00ecebe7071a1b16a9f4a4de530aa"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-027-passed.json",
+      "blob_sha": "51e7a1108c8f49f28142afef5eb43c809c78355a"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-027-running.json",
+      "blob_sha": "5303b90d8fb233a81abe61bc9f970093d1fbb68e"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-028-passed.json",
+      "blob_sha": "1bca401b83c65be66f0b02e06f086758ad1ed66f"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-028-running.json",
+      "blob_sha": "d56212e8b0294796b173c968011c0ab99ed59c3b"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-029-passed.json",
+      "blob_sha": "7d137747e4b5c789d80a272d3017bcec31e1491c"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-029-running.json",
+      "blob_sha": "40b6b728899d4c2bdebd4994dc62c9902b14fa14"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-030-passed.json",
+      "blob_sha": "d9c7ac49343968e28a6564b4ccb4bd66bb767c13"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-030-running.json",
+      "blob_sha": "bbdd6e1a381a191fefb20ee57f0c6991362fb242"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-031-passed.json",
+      "blob_sha": "6e7c72c6cdcda9e847d4aecfee01b98abd456614"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-031-running.json",
+      "blob_sha": "37b39009543dbd0d9e5aa5b0a794dc067793f190"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-032-passed.json",
+      "blob_sha": "e66291430e16b15cefdd0c039fd1615781ff972c"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-032-running.json",
+      "blob_sha": "23a35a6f8a80c5082dfe7834ad99817711a98af5"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-033-passed.json",
+      "blob_sha": "da56a9d96d80cc6687eeec0c5581ba790f79085b"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-033-running.json",
+      "blob_sha": "ebe4179bd88998df08ba812762442b0309fcaaac"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-034-passed.json",
+      "blob_sha": "2434ffc8e18537bf6fa88e3d8908ca6f7e0302f8"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-034-running.json",
+      "blob_sha": "14aabe20ea56cf3b6aee5e9a4511a898925c01fc"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-035-passed.json",
+      "blob_sha": "190cb9c9c26d73ce160dededf14ca92ff4cfa397"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-035-running.json",
+      "blob_sha": "54b17f54aa9f93b599e9c6cbf0b7083ebe5463b8"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-036-passed.json",
+      "blob_sha": "b8e09b35ca62a91127f006adb9ee3652f623e702"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-036-running.json",
+      "blob_sha": "6050565b9d4b69986595541c62efba6bcfa505be"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-037-passed.json",
+      "blob_sha": "ee07bedc1a8be56a646b7396bf1bd590a3303ce8"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-037-running.json",
+      "blob_sha": "b1e611f3a930d45f3c32349703ce661c8fa33776"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-038-passed.json",
+      "blob_sha": "ad2bd0dda6008b48114d567caa2f0ffa6778c6d7"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-038-running.json",
+      "blob_sha": "2af110dfe7c21678df50d83691a1a4f94b4c1bcf"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-039-passed.json",
+      "blob_sha": "17606ee4a065ad7a1a4508114fa4a00fa6e66c57"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-039-running.json",
+      "blob_sha": "ad060eb2e1e2e69a4b1ce358c9bf8e8281072ced"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-040-passed.json",
+      "blob_sha": "1cf99c76aa7f9b9ef21fb6cfa391dca002327547"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-040-running.json",
+      "blob_sha": "15742eac6f6d8abb551a14912ff924480278a83c"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-041-passed.json",
+      "blob_sha": "148b376c1f2ea41d0096cd0287801898e129f3cb"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-041-running.json",
+      "blob_sha": "d6bde55221b7204b26d49a67f6ed5c9a8e3dfe5c"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-042-passed.json",
+      "blob_sha": "46c0c28d88e93e33a40efe13339c2c76322aa5ad"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-042-running.json",
+      "blob_sha": "2c15cc8b6272e6caa016112e9850b1fc4cdf47c2"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-043-passed.json",
+      "blob_sha": "963764b3ddab682d31dbf5f9ea28ac913cdd26c8"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-043-running.json",
+      "blob_sha": "dbb547966639b53f55ea92e008a0522a02b828b6"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-044-passed.json",
+      "blob_sha": "7cf2a7a08d948bc4de8927846807e267ff8e0c05"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-044-running.json",
+      "blob_sha": "a78057aa6373da39738cf7f9e1ee7e1c34db19b6"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-045-passed.json",
+      "blob_sha": "7d6376a202e7184557d3a28adf9c1c9b2aff5963"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-045-running.json",
+      "blob_sha": "87baed677898d5098db8230cf2e7fb33060c1d35"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-046-passed.json",
+      "blob_sha": "c501edfe01f481f9ddfc549ffc1c514993f22421"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-046-running.json",
+      "blob_sha": "b19ae3834e8bf01e52cf9a895e600ef91a754527"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-047-passed.json",
+      "blob_sha": "9982ea5111552db6533df58ab42268dee25bb2f2"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-047-running.json",
+      "blob_sha": "c078dba04eb36cf807b1124ef190efb9286ecdfc"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-048-passed.json",
+      "blob_sha": "5b6fba8a6576a0cb51ee85356faa6b5cacba0cbe"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-048-running.json",
+      "blob_sha": "9dd0b6c8f7828e6340d8ab689a0c6246b00791d8"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-049-passed.json",
+      "blob_sha": "5ac2d3c9ba48fa5f77957a82ccf563f8ba142957"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-049-running.json",
+      "blob_sha": "c65854490b72545a04b525f5bced745dd94fe74c"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-050-passed.json",
+      "blob_sha": "de2a22ad6cd5c65d8303a8d5c01b16ea345a2def"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-050-running.json",
+      "blob_sha": "2c5e63cadb97df98efdf407cae2849870566790d"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-051-passed.json",
+      "blob_sha": "867ce86ab2152a10738bdf8f99aa3b9f921eccb2"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-051-running.json",
+      "blob_sha": "de36fe3d261cb0f8d5ace0b179d2be87dc9ea3b3"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-052-passed.json",
+      "blob_sha": "b771d2f00dad6bed750d7253bc35d46cdde1e7a7"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-052-running.json",
+      "blob_sha": "630c3806f78c3c417ec4b9161ccc42898d8b9300"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-053-passed.json",
+      "blob_sha": "c12b76326a6896572e165168bdf699e1154b2d6d"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-053-running.json",
+      "blob_sha": "d168926390e17820b2b0a51a5b82c4f1387c3930"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-054-passed.json",
+      "blob_sha": "53115b9ad8f05d1da58389544e9ea2a51ffa32dc"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-054-running.json",
+      "blob_sha": "fc85f83866f28f7614a01670edf6130ce6c3fb9d"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-055-passed.json",
+      "blob_sha": "fb8774137132b2ca880a0c20af4b61c3655b9664"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-055-running.json",
+      "blob_sha": "3349218d0c7d0c281493988ab0dc4b79cc2d6fcd"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-056-passed.json",
+      "blob_sha": "c437235b51b4d7640ce5e085263e9644f875b2a4"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-056-running.json",
+      "blob_sha": "d65f75cdb647ab94f7c65c04e8121a431b5e90ad"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-057-passed.json",
+      "blob_sha": "9518623c6f70b328f4cdf6bff821326f2ef2afef"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-057-running.json",
+      "blob_sha": "b8db09cf3e9c57f5f7144c5b65168b93cbb4d738"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-058-passed.json",
+      "blob_sha": "159293630900931f76a12129e5d78f7270ef7636"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-058-running.json",
+      "blob_sha": "199a0bc44dd50c35b0e1760cf28c9b6521b83bd2"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-059-passed.json",
+      "blob_sha": "25fe9ce69e82cd2e96b34469b1bd47aac7936e07"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-059-running.json",
+      "blob_sha": "706d07214853cedcc4a368839143339744de7e7a"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-060-passed.json",
+      "blob_sha": "366179dc16c99ef11c3dd24bece98e6a838a5cf3"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-060-running.json",
+      "blob_sha": "cb317cfced729b2e610fa83953eea3a437868dd3"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-061-passed.json",
+      "blob_sha": "885a6c630d5a86943329d6c56a246286639e836e"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-061-running.json",
+      "blob_sha": "653b3d4bd6691292835258a8bbe4a60924647b9a"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-062-passed.json",
+      "blob_sha": "235c716b4bef18df7309fbba90d3017cb6c4af3e"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-062-running.json",
+      "blob_sha": "63ead70a0c22548991806b72bc6e937cfe050ac9"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-063-passed.json",
+      "blob_sha": "5262895eb7632adf0fe390a1b7c56821e862c60f"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-063-running.json",
+      "blob_sha": "7b46e64b7be75b70a96205d163d87097dddcc1bc"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-064-passed.json",
+      "blob_sha": "e7f22c66458e56fff56a6b0f745a4423845be9de"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-064-running.json",
+      "blob_sha": "2264b7853ec5e688d1c6d2878ffcf67acb68780d"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-065-passed.json",
+      "blob_sha": "4f2cafbf42af9705f6eb546338c3a24478a659cb"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-065-running.json",
+      "blob_sha": "799c3d5596bd943510d01222f38fbf22b6419ccd"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-066-passed.json",
+      "blob_sha": "581210ccdda87016a1ba6918b72a3f0541251029"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-066-running.json",
+      "blob_sha": "c3618af826e58be970fc8bbce9c81106bdd77be2"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-067-passed.json",
+      "blob_sha": "2b9aa9a081851066c673fd202dd3791a657eb95a"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-067-running.json",
+      "blob_sha": "b9d67125ba32047ade33c5d1a4c83dd816290779"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-068-passed.json",
+      "blob_sha": "bf2e9472e172f83dbc0a5c350df12a79c2448cfd"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-068-running.json",
+      "blob_sha": "a508ff2a2642a183afc1d2f0299c8b12dd1cca6f"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-069-passed.json",
+      "blob_sha": "4b20963b6d6b79555a900216b1b2c0ab98b2d687"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-069-running.json",
+      "blob_sha": "3b6e5c7e6b1c7dc35e51a769009a1d025849adb5"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-070-passed.json",
+      "blob_sha": "9135af9f9405d20c5ec8877252781f28085ae995"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-070-running.json",
+      "blob_sha": "54973e2db40bd65af3f3c4d262136d2394c9a6b7"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-071-passed.json",
+      "blob_sha": "561f9f1e1e4af2f87728c2f4683f083b85da789f"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-071-running.json",
+      "blob_sha": "1c73209e431289bf0213a949e952699a7c9c922b"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-072-passed.json",
+      "blob_sha": "50c149ed5352e95686834f91b87072c36859a020"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-072-running.json",
+      "blob_sha": "1358ab4aded3d0c9a689ee38ca0e4f82ccd81c6c"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-073-passed.json",
+      "blob_sha": "b9439e40af2d9264a581426a746b45e2c127000f"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-073-running.json",
+      "blob_sha": "aee76830c8feedc55bdea4ccc591c3a39bef1cd9"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-074-passed.json",
+      "blob_sha": "9945b53d6b6c50b5689fef035db26439898dcc64"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-074-running.json",
+      "blob_sha": "2dce33809a95865408cb742bf81fc1f1f78b60f5"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-075-passed.json",
+      "blob_sha": "893afbd9f37861edfbeb647f0b9817aaae960b7e"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-075-running.json",
+      "blob_sha": "e9316947829f04e52231ab00ebce2deecaca42bc"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-076-passed.json",
+      "blob_sha": "65c89d015ea346508273a43d826cea4dbd7c6535"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-076-running.json",
+      "blob_sha": "bc9c6ebeeefd3e1e344513b071aba3d112d48c76"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-077-passed.json",
+      "blob_sha": "62c5c25fcfbc4b08960d745e242ceed5d2bd304b"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-077-running.json",
+      "blob_sha": "f1b7816015a2558a6b0dd277fe094b02620c0e57"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-078-passed.json",
+      "blob_sha": "fc24b2bf70842cb78c9feae924379cc0668a5d7c"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-078-running.json",
+      "blob_sha": "bf92395454ba5d2f45a527de8580a82368d12e45"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-079-passed.json",
+      "blob_sha": "2bdaa9d0a62f1ae45da5c69a47b8c8c53a56fbdb"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-079-running.json",
+      "blob_sha": "2a64cdd8c2f6b6a8dd6a86d07f20a381b4720dad"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-080-passed.json",
+      "blob_sha": "d35b292ccc6a416f2152cc4d80d0144ca8e0581e"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-080-running.json",
+      "blob_sha": "9aa9db403a6aefaa5fc55f6d951706bc5a7ad186"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-081-passed.json",
+      "blob_sha": "cb0b5e3fd32c1ae0e60dae396185732dcb3192bc"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-081-running.json",
+      "blob_sha": "e2dc63a4df141439e19f10b67c5e50ab444f4f80"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-082-passed.json",
+      "blob_sha": "3367c3018c1185eb222d0a497f7b8c0f571f266c"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-082-running.json",
+      "blob_sha": "9e6aaee613a1fc66025829eef7f3aa541767c330"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-083-passed.json",
+      "blob_sha": "acee47a6dbd9653dfe046b9c963071984004a913"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-083-running.json",
+      "blob_sha": "bcc92e7b4552f8e01ec3e10a9676c5aeacd18169"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-084-passed.json",
+      "blob_sha": "ef4f94923fd56fd91ee927d54bc358266d19699c"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-084-running.json",
+      "blob_sha": "45f74f447c5a6f8a2e8c494b01e1c3e819df44a4"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-085-passed.json",
+      "blob_sha": "0d2ff53837f726c481a551e320e8516d888258dc"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-085-running.json",
+      "blob_sha": "54bce62283c3f8172c2c365d14dbbfc670d4d234"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-086-passed.json",
+      "blob_sha": "e4d7c5de83c6dce0b15d91c785e3e69ff3e6b487"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-086-running.json",
+      "blob_sha": "6301675bc183e32e998c716d4d14aa9a94a6f5e5"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-087-passed.json",
+      "blob_sha": "207ec6be466ecfbfe290804d84610eb2f58dde2d"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-087-running.json",
+      "blob_sha": "af0ce3844b764555d599079c9f53dbf8a75a50db"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-088-passed.json",
+      "blob_sha": "738a057091e40243553bef7279eda3b0abde8866"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-088-running.json",
+      "blob_sha": "99c82321d0f914c0791d11ba2e31e76e59f590e9"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-089-passed.json",
+      "blob_sha": "13f9d02176bcd0914560b0d8bd63116a0791151c"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-089-running.json",
+      "blob_sha": "f37d163fdd240e69c4f3885a8428d2d7bf0ddc2e"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-090-passed.json",
+      "blob_sha": "5fba17aa968b82b13d43e6075b25ccec207c7948"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-090-running.json",
+      "blob_sha": "abef72095e80dd0cabd033a5e106f3ad6dee842f"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-091-passed.json",
+      "blob_sha": "a025f7b612f21ad0897e2413b6147415e5230cd2"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-091-running.json",
+      "blob_sha": "244753ce163ef70adc83e4e7c75790dbdab56a8f"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-092-passed.json",
+      "blob_sha": "359ddb3a10ecd9ecc6ded9d53f1c2a020383e6e3"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-092-running.json",
+      "blob_sha": "c449ba1aa2eb5875af2fc19921e1f6bd0327acba"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-093-passed.json",
+      "blob_sha": "eb86a4ae53899fa18752fed34078c73ad165b3c2"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-093-running.json",
+      "blob_sha": "98d09915cc825386dfc9d5c7c98e43c37d915329"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-094-passed.json",
+      "blob_sha": "3ea12d7746035b58346d8ecc77fb7e45c34e8191"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-094-running.json",
+      "blob_sha": "eab8fa5caa40f107389f26f566af36f19c936338"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-095-passed.json",
+      "blob_sha": "15bac83d0e399368e088d589652a39bc1bfa570d"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-095-running.json",
+      "blob_sha": "16c8fb9e04442fc87e77a800aa8383681cd44844"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-096-passed.json",
+      "blob_sha": "033182f45a012a59491c32422919341bb5895277"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-096-running.json",
+      "blob_sha": "86c75ca6843cda8137dd74a12c8ee70d13e3d1f2"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-097-passed.json",
+      "blob_sha": "8b147db6d7fa9d08cc3e8fc96bbe063c8e0e668f"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-097-running.json",
+      "blob_sha": "350632fc99f9b762e47f09523c8f4577098b96f1"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-098-passed.json",
+      "blob_sha": "30c2934476616961f287bf7b5fbe699ac69d54f1"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-098-running.json",
+      "blob_sha": "7d564439f4e947e607c6617375b28aa8775f8051"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-099-passed.json",
+      "blob_sha": "f75c9548f25e11137c5f92e77fc1b069db48a7d7"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-099-running.json",
+      "blob_sha": "ffa960e6c356513392457516f761c873d5826119"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-100-passed.json",
+      "blob_sha": "7d69a56099b62400143aaeb5ea996e88d9b38ef8"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-100-running.json",
+      "blob_sha": "5cdd03dfe059c20b22317cdfd071358644de136b"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-101-passed.json",
+      "blob_sha": "4ba3ffc14babf6330dda2f3870796ca6005e14ec"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-101-running.json",
+      "blob_sha": "1a4f8ba4e13e56ccced70a907a0a0754841b8d0a"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-102-passed.json",
+      "blob_sha": "03bae6bc69842125fb5ace5b7dea51106778c4fb"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-102-running.json",
+      "blob_sha": "03ce366934ba2ce82a75a73932d8d454492c6bd8"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-103-passed.json",
+      "blob_sha": "538caca8b2861e6b74bac1c3db69055218a15fe2"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-103-running.json",
+      "blob_sha": "94fe8959b8b3e7837f94ce6af9d294b61539f991"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-104-passed.json",
+      "blob_sha": "1988d80bf5d719e06b0f97a0ad7ae68bcc0e51bc"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-104-running.json",
+      "blob_sha": "c981d609b3053bedd3a25b8c9757a59540b95bb9"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-105-passed.json",
+      "blob_sha": "e5faa905e2b4beb715f025b412962edbd399c8cd"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-105-running.json",
+      "blob_sha": "84afbdd6b52961e064f556cda1645c9aa3ca3c25"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-106-passed.json",
+      "blob_sha": "252db506c8d32fa8ec3878966030a819f59991e9"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-106-running.json",
+      "blob_sha": "2a60ba9907dc9b5f700d645b683115a72ad52388"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-107-passed.json",
+      "blob_sha": "c00fa3837e32d303e9feb02c39ed8dc57157230f"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-107-running.json",
+      "blob_sha": "ba09d224c9a8656192a556daa1de3527ddc7c186"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-108-passed.json",
+      "blob_sha": "6f110614fe7f8d64275475db81e7871fa55d6914"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-108-running.json",
+      "blob_sha": "fa0c9f6b294b47d4842fec74f110edae4699741d"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-109-passed.json",
+      "blob_sha": "18236f69b3b62a006e8483daae75a5abf004686f"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-109-running.json",
+      "blob_sha": "e58df629e6cb9d5296651003582094921f9bc885"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-110-passed.json",
+      "blob_sha": "e0ec1f7a4c82b82ad283890109f904c6298e4766"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-110-running.json",
+      "blob_sha": "47a277c4b723dce9f1fb858f3ce9c18a23be15dc"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-111-passed.json",
+      "blob_sha": "8d95626fc88bebc9ff5768f3e7bfbea7d035beae"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-111-running.json",
+      "blob_sha": "9b89569f422630b0e791cca22b53d852766a7fc0"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-112-passed.json",
+      "blob_sha": "1888a17222b61fd251a361d40256fcdae87ad953"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-112-running.json",
+      "blob_sha": "53159ff23acb61e73c42b641db45d9de4bfccb41"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-113-passed.json",
+      "blob_sha": "785bc8715e247cac1f8ac7787d582b90797b492e"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-113-running.json",
+      "blob_sha": "38c35537b9b2350c2a5720d61e221df08b3175d3"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-114-passed.json",
+      "blob_sha": "131dc58d12e416b3cea9fffe6c35b66670fb2ed3"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-114-running.json",
+      "blob_sha": "816f6f5da0e91985710e3a5c6b4e19b77580cce6"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-115-passed.json",
+      "blob_sha": "220724aef39f6fdfe1187654f69c6f26ba47d8e5"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-115-running.json",
+      "blob_sha": "b5103d60432f0794787def150135ecca6d3feaf5"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-116-passed.json",
+      "blob_sha": "f128ca790e261fe07434c6b89dfd705d40afcbb5"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-116-running.json",
+      "blob_sha": "49b265dd9f4da972aec950a242c4db9ac001c3a1"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-117-passed.json",
+      "blob_sha": "09a90518b368f1b6f5bd7f6d93432772a1306dfe"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-117-running.json",
+      "blob_sha": "6d66d3e4293b15760e03c9ba572fcd40224cc284"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-118-passed.json",
+      "blob_sha": "61bd0acac8b40b9fa7635ce65f3936e43fbc04a9"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-118-running.json",
+      "blob_sha": "4fcb9e348a0efe4cec17ac306f794f56b91596a6"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-119-passed.json",
+      "blob_sha": "4290d4450f5089a1f6eda12dd691b4f7793ebf6c"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-119-running.json",
+      "blob_sha": "f6c5f8bd3817258b84e7ec77bbca74f9ccf77f68"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-120-passed.json",
+      "blob_sha": "c7500b5183aa5e81b2b1aa982fa0faa67525d2fd"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-120-running.json",
+      "blob_sha": "9428565bbba487ffa1e00752947b82b44544b43e"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-121-passed.json",
+      "blob_sha": "49b4a8d0af6f2fbb993e86aff21cf46f3a4978bf"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-121-running.json",
+      "blob_sha": "be14d8e48a1d6605ec2fbbfbdfb56bf31c75d625"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-122-passed.json",
+      "blob_sha": "e070300a1b7cc1f8d9eb29c04a70ab45b4257eb4"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-122-running.json",
+      "blob_sha": "44e50e68a23d17b61e9f6f7655e14494b7f70615"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-123-passed.json",
+      "blob_sha": "7b43b77f7ebc8e2821177c0023df6f27a26f280a"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/160-content-hydration-batch-123-running.json",
+      "blob_sha": "b6133e27c7562b6fd8da32cb423af8dd8b96ed3b"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/170-select-news-events-semantic-ledger-passed.json",
+      "blob_sha": "41eaccfc9382d3ccf42835de8649e844d6518859"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/170-select-news-events-semantic-ledger-running.json",
+      "blob_sha": "3c2ffddf001880a437f5110c5798554f32fd62f0"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/175-semantic-event-contradiction-correction-passed.json",
+      "blob_sha": "29be71d691ff70752d7b29c77008c723b80d079d"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/175-semantic-event-contradiction-correction-running.json",
+      "blob_sha": "95ca397c83625f4019422432da1135ddb2d9e1fd"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/180-materialize-manifest-passed.json",
+      "blob_sha": "1716fcce7ff5e9fe33428f96c43e492e65eec2c2"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/180-materialize-manifest-running.json",
+      "blob_sha": "f3593bf5f17e50fbe7aa480288bcdc2422297c29"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/181-materialize-manifest-correction-passed.json",
+      "blob_sha": "31bb7c37b5556c7344712660024a0aafe661f735"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/181-materialize-manifest-correction-running.json",
+      "blob_sha": "da17f9307d17333772f1cc47e70e603d287f754f"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/182-temporal-review-correction-passed.json",
+      "blob_sha": "64c828035ff65a7417e4f815fc3d18f5ba3deaea"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/182-temporal-review-correction-running.json",
+      "blob_sha": "d42c6f4eb2d32a9fedde29ba236c082f2d2745ad"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/200-verify-news-events-passed.json",
+      "blob_sha": "f712b1a0f00273335a314c7773522dae80d058c4"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/200-verify-news-events-running.json",
+      "blob_sha": "970284be67ad7c0292bda6912ca5b8f1a99fe4fa"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/210-build-news-maps-passed.json",
+      "blob_sha": "32c792dda17540da958dc03652a91fdf837931ee"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/210-build-news-maps-running.json",
+      "blob_sha": "8c05168fcad81dfda55cd6f8f0f38e6872eafc2e"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/220-build-news-charts-passed.json",
+      "blob_sha": "34f92744c12de16c47c4f84a1ba35c1eccdac764"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/220-build-news-charts-running.json",
+      "blob_sha": "8365c524c860f48e0bcd6822d0b0989589b678c3"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/230-collect-news-images-passed.json",
+      "blob_sha": "19a8ec38bc2a49f10ba4b04fbc7222688c9f7001"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/230-collect-news-images-running.json",
+      "blob_sha": "c5d2bb00afd486d4b9c2a36511b3a2b00cc508ec"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/240-render-passed.json",
+      "blob_sha": "7204a18a06537eb23f2a48c2fe885fe50ec07123"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/240-render-running.json",
+      "blob_sha": "891dd6b4effe2d361e7d630a733691bf90367f86"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/900-validators-running.json",
+      "blob_sha": "4d9683d51023fb94a65e3dfad60a19fb74c68e94",
+      "commit_sha": "9303e4724eebe330dc799303dc48ceff4b2a34d6"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/900-validators-passed.json",
+      "blob_sha": "fc1acae8ea38f10f6b63019f9a3a7b089651188e",
+      "commit_sha": "4f0f33a4e47785460000b6931b8e164425041bc6"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/910-canonical-publisher-running.json",
+      "blob_sha": "07e8ec148dc9e1379cf9f21c923bd3251f0982f0",
+      "commit_sha": "d665109314bf40d49063b5ebac293043d2b3eb0a"
+    },
+    {
+      "path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/910-canonical-publisher-passed.json",
+      "blob_sha": "d6f74b902b8df4d3e2aae9659fa40fcc676e040b",
+      "commit_sha": "ff47826c730b78da7bb3d9e8d905b62b6050fc80"
+    }
+  ]
+}
