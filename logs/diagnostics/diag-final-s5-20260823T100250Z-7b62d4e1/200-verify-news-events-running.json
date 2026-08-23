@@ -1,0 +1,32 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "task_name": "新聞管線最終驗收重測",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T18:00:00+08:00",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "external_ledger": "available",
+  "retry_count": 0,
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "sequence": "200",
+  "step": "verify-news-events",
+  "status": "running",
+  "observed_at": "2026-08-23T19:36:00+08:00",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/182-temporal-review-correction-passed.json",
+  "previous_receipt_blob_sha": "64c828035ff65a7417e4f815fc3d18f5ba3deaea",
+  "evidence_paths": [
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/work/event-manifest.before-verify.json"
+  ],
+  "evidence_sha256": [
+    "9571d30a91429d54d02c9f9104f118f7fa2245a8e668513f7e52c49f4249cc23"
+  ],
+  "elapsed_ms": 0,
+  "message": "Independent source verification started for 23 selected events."
+}

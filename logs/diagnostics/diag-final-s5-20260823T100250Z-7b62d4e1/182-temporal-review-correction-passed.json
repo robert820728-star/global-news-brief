@@ -1,0 +1,36 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "task_name": "新聞管線最終驗收重測",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T18:00:00+08:00",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "external_ledger": "available",
+  "retry_count": 0,
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "sequence": "182",
+  "step": "temporal-review-correction",
+  "status": "passed",
+  "observed_at": "2026-08-23T19:36:00+08:00",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/182-temporal-review-correction-running.json",
+  "previous_receipt_blob_sha": "d42c6f4eb2d32a9fedde29ba236c082f2d2745ad",
+  "evidence_paths": [
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/work/selection-results.json",
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/work/candidate-audit.json",
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/work/event-manifest.json"
+  ],
+  "evidence_sha256": [
+    "3cc0d6537d18cd41030305c1191a77bf6e0b3706595e8f0b3ed8f20e0d7f27fd",
+    "4ceaacec06ece6456a2bbe8edb9d391f94505743285652f4e9897f3e5a2b61ce",
+    "9571d30a91429d54d02c9f9104f118f7fa2245a8e668513f7e52c49f4249cc23"
+  ],
+  "elapsed_ms": 3000,
+  "message": "GLB-13 corrected to an ongoing kidnapping case with a new rescue appeal; graded C+; candidate audit validator passed."
+}

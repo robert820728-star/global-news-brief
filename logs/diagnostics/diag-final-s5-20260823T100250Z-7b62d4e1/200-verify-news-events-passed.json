@@ -1,0 +1,36 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "task_name": "新聞管線最終驗收重測",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T18:00:00+08:00",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "external_ledger": "available",
+  "retry_count": 0,
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "sequence": "200",
+  "step": "verify-news-events",
+  "status": "passed",
+  "observed_at": "2026-08-23T19:36:00+08:00",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/200-verify-news-events-running.json",
+  "previous_receipt_blob_sha": "970284be67ad7c0292bda6912ca5b8f1a99fe4fa",
+  "evidence_paths": [
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/work/verification-patch.json",
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/work/event-manifest.json",
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/checkpoint.json"
+  ],
+  "evidence_sha256": [
+    "7845444e8d1e0e88dea3351e7a3c6e86526b3e2ab8aeda63bc72cdf91f96d272",
+    "4f08f647da0d2550c8592cfcdfdbc594a30dda79c4cb28172b96d5aaa899980e",
+    "3f370285a106031d708fd331ce30c2020b7ede0069db99d45dcd46c8f37e53a6"
+  ],
+  "elapsed_ms": 1000,
+  "message": "All 23 selected events searched; 18 corroborated, 5 transparently single-source; stage ownership validator passed."
+}
