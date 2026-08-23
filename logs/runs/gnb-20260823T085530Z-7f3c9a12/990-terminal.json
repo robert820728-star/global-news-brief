@@ -1,0 +1,14 @@
+{
+  "code": 990,
+  "terminal": true,
+  "status": "failed",
+  "run_id": "gnb-20260823T085530Z-7f3c9a12",
+  "diag_run_id": "diag-20260823T090026Z-21bc9e70",
+  "resolved_main_sha": "3bf79207ab008e0172056917f4a295967812a166",
+  "last_completed_stage": "preprocess-news-candidates",
+  "exact_first_incomplete_step": "select-news-events.content-hydration.batch-001",
+  "canonical_delivery": false,
+  "running": false,
+  "stalled": false,
+  "updated_at": "2026-08-23T09:00:26Z"
+}

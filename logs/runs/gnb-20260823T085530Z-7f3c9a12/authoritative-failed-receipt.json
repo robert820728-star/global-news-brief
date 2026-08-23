@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_type": "authoritative_failed_receipt",
+  "run_id": "gnb-20260823T085530Z-7f3c9a12",
+  "diag_run_id": "diag-20260823T090026Z-21bc9e70",
+  "resolved_main_sha": "3bf79207ab008e0172056917f4a295967812a166",
+  "window_start": "2026-08-22T08:56:46Z",
+  "window_end": "2026-08-23T08:56:46Z",
+  "status": "failed",
+  "canonical_delivery": false,
+  "last_completed_stage": "preprocess-news-candidates",
+  "exact_first_incomplete_step": "select-news-events.content-hydration.batch-001",
+  "failure_reason": "The fresh admitted pool contains 2449 article rows. No connector hydration batch reached a terminal receipt, so semantic event identity, time/region identity, policy-governance review, six-dimension scoring, article dispositions, and selection cannot be truthfully completed.",
+  "freshness": {
+    "old_run_reused": false,
+    "old_reader_reused": false,
+    "old_counts_reused": false,
+    "old_checkpoint_reused": false,
+    "old_manifest_reused": false,
+    "old_audit_reused": false,
+    "old_images_reused": false,
+    "old_validation_reused": false
+  },
+  "verified_counts": {
+    "discovery_article_rows": 9587,
+    "admitted_article_rows": 2449,
+    "preprocessed_article_rows": 2449,
+    "provisional_article_groups": 2161,
+    "completed_content_hydration_batches": 0
+  },
+  "artifact_sha256": {
+    "news_run_checkpoint": "d3491d2566c22110aba17fad2ba397cffbdba66e4c1d0a7b3d2baaed39acb1c8",
+    "source_candidates": "7ec517380f159925957afa087256e1ba3d61d1b712f959ca8874b5d490ee729f",
+    "news_relevance_gate": "33d70e0cd9a341b56ff3251e9ce1895733c190f7528b8f67a27881ff9d0b5411",
+    "model_source_candidates": "2c7665e8663bb3f45dcc0fa195f9531bbdb0ecfa89a1aa7163361c78dce9433a",
+    "preprocessed_candidates": "2d59ca1ca196ab1e70bc1c5e0f5574125551d697e8a32e76062cd6f1f6efe2ab"
+  },
+  "terminal_code": 990,
+  "updated_at": "2026-08-23T09:00:26Z"
+}
