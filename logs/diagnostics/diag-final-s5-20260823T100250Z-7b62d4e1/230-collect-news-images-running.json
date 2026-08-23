@@ -1,0 +1,32 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "task_name": "新聞管線最終驗收重測",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T18:00:00+08:00",
+  "observed_at": "2026-08-23T12:04:51.053Z",
+  "sequence": 230,
+  "step": "collect-news-images",
+  "status": "running",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/220-build-news-charts-passed.json",
+  "previous_receipt_blob_sha": "34f92744c12de16c47c4f84a1ba35c1eccdac764",
+  "evidence_paths": [
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/checkpoint.json",
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/work/event-manifest.before-images.json"
+  ],
+  "evidence_sha256": [
+    "e73740b399caa9c6f106fbd03f795e770673c7bf2a1328125e7d9476d0995cce"
+  ],
+  "elapsed_ms": 0,
+  "retry_count": 0,
+  "external_ledger": "available",
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  }
+}
