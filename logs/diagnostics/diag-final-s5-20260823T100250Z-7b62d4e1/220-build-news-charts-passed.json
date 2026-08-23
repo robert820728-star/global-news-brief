@@ -1,0 +1,36 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "task_name": "新聞管線最終驗收重測",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T18:00:00+08:00",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "external_ledger": "available",
+  "retry_count": 0,
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "sequence": "220",
+  "step": "build-news-charts",
+  "status": "passed",
+  "observed_at": "2026-08-23T19:41:00+08:00",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/220-build-news-charts-running.json",
+  "previous_receipt_blob_sha": "8365c524c860f48e0bcd6822d0b0989589b678c3",
+  "evidence_paths": [
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/work/event-manifest.json",
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/checkpoint.json",
+    "work/runs/gnb-20260823T100250Z-7b62d4e1/charts/TWN-04-chart-01.png"
+  ],
+  "evidence_sha256": [
+    "8794d8464506069c3b5994afb527c94b712d27110382cc511095f46ea75fbeb4",
+    "e263096f19190b3d604384fb981dda4dd1026a775921c7e019f6345fe4e2290b",
+    "9e5d36daa32999d6010a00569c4b647933f378a92e1d0f90f754ebd4807ba340"
+  ],
+  "elapsed_ms": 120000,
+  "message": "One verified four-point household-structure comparison chart rendered and visually checked; 22 events explicitly reviewed as not requiring charts; stage validator passed."
+}

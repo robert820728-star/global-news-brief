@@ -1,0 +1,28 @@
+{
+  "schema_version": "FORENSIC_RECEIPT_CHAIN_V1",
+  "diag_run_id": "diag-final-s5-20260823T100250Z-7b62d4e1",
+  "run_id": "gnb-20260823T100250Z-7b62d4e1",
+  "task_name": "新聞管線最終驗收重測",
+  "attempt": 1,
+  "scheduled_for": "2026-08-23T18:00:00+08:00",
+  "resolved_main_sha": "232cc2cdff6310aca30e242538ab137ae0528f8a",
+  "external_ledger": "available",
+  "retry_count": 0,
+  "error": {
+    "classification": null,
+    "message": null,
+    "tool_or_endpoint": null,
+    "http_status": null,
+    "request_id": null
+  },
+  "sequence": "220",
+  "step": "build-news-charts",
+  "status": "running",
+  "observed_at": "2026-08-23T19:39:00+08:00",
+  "previous_receipt_path": "logs/diagnostics/diag-final-s5-20260823T100250Z-7b62d4e1/210-build-news-maps-passed.json",
+  "previous_receipt_blob_sha": "32c792dda17540da958dc03652a91fdf837931ee",
+  "evidence_paths": [],
+  "evidence_sha256": [],
+  "elapsed_ms": 0,
+  "message": "Canonical numeric-relationship review started for all 23 selected events."
+}
