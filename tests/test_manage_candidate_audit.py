@@ -245,6 +245,20 @@ def valid_audit(candidates=None, per_source_count=1):
 
 
 class CandidateAuditTests(unittest.TestCase):
+    def test_fourteen_day_completeness_rejects_an_empty_audit_baseline(self):
+        audit = {
+            "schema_version": "1.1.0",
+            "retention_days": 14,
+            "updated_at": "2026-08-22T06:00:00+08:00",
+            "runs": [],
+        }
+
+        errors = MODULE.validate(
+            audit, source_pool(), require_fourteen_day_complete=True
+        )
+
+        self.assertTrue(any("十四天" in error and "空" in error for error in errors))
+
     @staticmethod
     def add_structured_identity(audit, *, country="CHN", occurred=None,
                                 updated=None, update_type="new_event"):

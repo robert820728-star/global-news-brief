@@ -114,6 +114,7 @@ The required order for every configured source is: `canonical route -> same-site
 - `ROUTINE_DIPLOMATIC_VISIT_LOW`：只有宣布訪問行程、會面安排或一般禮節性出訪，若尚未簽署協議、改變制裁／安全安排、處理危機、形成政策轉向或造成可驗證的雙邊／區域後果，預設 D；官員層級與媒體關注本身不能升到 C。例如只有宣布王毅訪韓而沒有實質成果時，不進讀者版。
 5. 維護此排程對話內的十四天滾動海選清單。新增本輪候選、合併同事件更新，並移除超過十四天的項目；每筆仍須保留六項大評分、總分、等級、決定與理由。
    - `FIRST_RUN_14_DAY_AUDIT_BOOTSTRAP`：若 `run-logs/logs/latest-candidate-audit.json` 尚不存在，這是持久化格式第一次啟用，不得要求復原從未保存的前輪淘汰候選，也不得因此直接失敗。只在這一次，使用既有來源路由做一輪純文字十四天回填：按日期取得候選、同事件去重、完成六項評分，並把完整結果建立為第一份 `latest-candidate-audit.json`。圖片仍只在 C 級以上選稿完成後處理；瀏覽器仍是最後備援。
+   - `FOURTEEN_DAY_AUDIT_COMPLETENESS_GATE`：空的 `runs` 陣列、只有當日 24 小時資料，或未涵蓋滾動視窗最早日期的資料，都只能標示 `audit_bootstrap_incomplete`；不得宣告十四天清單已完成，也不得把本輪入選數當成十四天候選總數。繼續首次回填或後續可恢復的滾動合併；這個稽核完整性狀態不得刪除或降級已驗證的本日讀者版事件。
    - 首次回填若有必要來源確實無法覆蓋，才以具體來源與日期範圍失敗；完成第一份 audit 後，後續每日只合併新 24 小時候選並移除超過十四天項目，不得每天重跑十四天。
    - `DISCOVERY_COVERAGE_RECORD`：首次回填與每日增量只需如實記錄 GDELT、中央社與中新社三個 discovery route 的成功或失敗；不再要求所有驗證來源逐站完成才開始評分。候選仍必須保留實際文章網址與發現來源。
    - `TYPE_CONSISTENT_COVERAGE_SANITY`：不得拿前輪來源掃描的 `raw_item_count` 與本輪去重評分後的 `deduplicated_candidate_count` 互相比較；只有同欄位、同口徑、同時間窗的數量才可作完整性警示，數量本身不得取代逐站證據。
@@ -133,11 +134,11 @@ The required order for every configured source is: `canonical route -> same-site
    - 不使用需要登入、限制外站引用、防盜連、含短效簽名或到期 token 的圖片網址，也不使用 `data:` 或 `blob:` 網址。
    - `MOBILE_PER_STORY_VISIBLE_IMAGE_GATE`（取代整份層級的 `MOBILE_B_OR_HIGHER_VISIBLE_IMAGE_GATE`）：每一則本輪入選新聞都必須逐則執行圖片搜尋與顯示驗收，一則新聞的圖片不得替其他新聞通過。逐則先檢查已引用來源頁的內文圖片、`og:image`／`srcset`、縮圖欄位與官方圖資；仍無結果時，再檢查一個已加入來源欄且可靠的同事件來源。圖片必須在本對話實際可見、可確認與該事件相關，且不得用無關示意圖、人物舊照或來源標誌湊數。舊規則「C 級新聞可使用圖片說明」不代表可跳過逐則找圖；若讀者版含 B 以上事件，仍不得整份零張可見圖片。找到可用圖片卻無法顯示時，只重做圖片階段且限於該則，不重跑 discovery、評分、驗證或 reader 文字。
    - 只有同一張原圖也不適合公開內嵌時，才不換圖、不留下破圖，也不輸出圖片網址；直接以 `**圖片說明：**` 說明該圖內容與未內嵌原因。完全沒有可確認圖片時，也只列 `**圖片說明：**`，用一句非技術性文字說明未找到可確認且適合刊載的圖片。
-   - `IMAGE_READER_VISIBLE_DELIVERY_GATE`：圖片只有在本輪排程對話的最終訊息中實際顯示為可見圖片或圖片卡，才算交付成功。Markdown 圖片語法、本機絕對路徑、`sandbox:` 路徑、外部圖片網址、空白方框或破圖圖示都不算可見圖片。
-   - `NATIVE_MEDIA_BLOCK_DELIVERY_GATE`：最終交付必須是 ChatGPT 原生 `image/media content block` 或原生圖片卡，不得把外部 HTTPS 圖片寫進 `agentMessage text` 後期待 Markdown 自動渲染。圖片先保存為實體 JPEG／WebP 位元組，完成 MIME、解碼、尺寸與內容驗收後，再以上傳附件或原生媒體工具送入本對話；穩定網址、HTTP 200 與 Markdown 語法都不能取代上傳。
+   - `IMAGE_READER_VISIBLE_DELIVERY_GATE`：宿主宣告具備原生媒體能力時，圖片只有在本輪排程對話的最終訊息中實際顯示為可見圖片或圖片卡，才算圖片交付成功。Markdown 圖片語法、本機絕對路徑、`sandbox:` 路徑、外部圖片網址、空白方框或破圖圖示都不算可見圖片。
+   - `NATIVE_MEDIA_BLOCK_DELIVERY_GATE`：宿主具備原生媒體能力時，最終交付必須是 ChatGPT 原生 `image/media content block` 或原生圖片卡，不得把外部 HTTPS 圖片寫進 `agentMessage text` 後期待 Markdown 自動渲染。圖片先保存為實體 JPEG／WebP 位元組，完成 MIME、解碼、尺寸與內容驗收後，再以上傳附件或原生媒體工具送入本對話；穩定網址、HTTP 200 與 Markdown 語法都不能取代上傳。
    - `NATIVE_IMAGE_SEARCH_CARD_ROUTE`：mobile-native 對每則既有選圖使用 ChatGPT 原生圖片搜尋／媒體工具，查詢必須同時包含事件、發布者與日期，交付原生圖片卡；不得在 reader 內產生 `![alt](https://...)`。`read_thread` 可把這類原生卡表示為 `async_image_group`，但該標記本身仍不是像素驗收。
    - 外部驗收器必須用結構化 `read_thread` 讀取本輪最終回覆，確認存在非文字的 `image/media content block` 或原生 `async_image_group`，再以唯讀畫面擷取確認實際 `rendered pixel` 圖片區域寬高非零。若只有一般 `agentMessage text`、圖片網址、Markdown、圖說，或畫面仍空白，立即判定圖片交付失敗，不得要求使用者目視補驗。
-   - mobile-native 若沒有可產生原生媒體區塊的工具，必須回報 `NATIVE_MEDIA_UNAVAILABLE`，保留本輪 discovery、評分、驗證與 reader checkpoint，只把圖片交付切換到既有 full-runtime：由 full-runtime 執行 `<bundled-python> scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>`，使用 manifest 中 `status=ready` 的本機 JPEG 實體檔以上傳附件方式交付；不得建立新 run、重跑新聞流程或只改成另一個外部圖片網址。
+   - `NATIVE_MEDIA_CAPABILITY_FALLBACK`：若宿主沒有可產生原生媒體區塊的工具，記錄 `NATIVE_MEDIA_UNAVAILABLE` 與宿主能力，不得建立新 run、重跑 discovery／評分／驗證或把外部圖片網址偽裝為圖片交付。能執行 runtime 時仍先以 `scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>` 建立可驗證資產；每則圖片仍必須保存 verified image evidence（來源頁或同事件可靠來源的 URL、檢查時間、內容／視覺檢查結果與可用時的 SHA-256），並在 manifest 使用 `images.status=omitted`、明確的 `reader_omission_note`。這是原生媒體交付的能力降級，不是新聞、驗證或文字 reader 的失敗；不得因宿主缺少原生媒體能力阻擋正式文字交付，也不得宣稱已做原生像素驗收。
    - 若無法在送出前確認圖片可見，必須移除該圖片標記，改成一句非技術性的 `**圖片說明：**`；不得寫「沿用前輪選圖」、「前輪同圖」、「不重新驗收」或「圖片待補」。
 8. reader 只使用 `news-brief-template.md` 的「今日總覽＋分區單項新聞」版型；不得另建 `逐條詳報`、`後續觀察` 或欄位式事件卡。
 9. 每則新聞的地圖、資料圖表與來源圖片依序直向排列；每張附件的下一個非空白行必須是對應的地圖一／資料圖表一／圖一／圖二圖說。禁止圖廊、輪播、同列圖片、疊圖、manifest 外圖片及新聞區塊外圖片。

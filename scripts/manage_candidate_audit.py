@@ -294,7 +294,26 @@ def public_impact_floor_from_confirmed_deaths(confirmed_deaths):
     return 30
 
 
-def validate(data, source_pool=None):
+def fourteen_day_completeness_errors(data):
+    """Report whether a durable audit actually covers its rolling 14-day window."""
+    runs = data.get("runs")
+    if not isinstance(runs, list) or not runs:
+        return ["十四天稽核為空，不能宣告十四天清單已完成"]
+    try:
+        latest_end = max(parse_datetime(item["window_end"]) for item in runs)
+        earliest_start = min(parse_datetime(item["window_start"]) for item in runs)
+    except (KeyError, TypeError, ValueError):
+        return ["十四天稽核缺少可解析的 window_start 或 window_end"]
+    required_start = latest_end - timedelta(days=14)
+    if earliest_start > required_start:
+        return [
+            "十四天稽核未覆蓋完整滾動視窗："
+            f"最早 {earliest_start.isoformat()}，應不晚於 {required_start.isoformat()}"
+        ]
+    return []
+
+
+def validate(data, source_pool=None, require_fourteen_day_complete=False):
     errors = []
     if data.get("schema_version") != "1.1.0":
         errors.append("schema_version 必須是 1.1.0")
@@ -1034,6 +1053,8 @@ def validate(data, source_pool=None):
                 errors.append(run_label + " candidate_urls 必須精確等於 event_evidence 網址")
         elif set(candidate_url_list) != set(pool_urls):
             errors.append(run_label + " 每個核心來源入池網址都必須歸屬一個去重候選，禁止候選無聲消失")
+    if require_fourteen_day_complete:
+        errors += fourteen_day_completeness_errors(data)
     return errors
 
 
@@ -1049,11 +1070,15 @@ def main():
     validate_parser = subparsers.add_parser("validate")
     validate_parser.add_argument("--input", required=True)
     validate_parser.add_argument("--source-pool", required=True)
+    validate_parser.add_argument("--require-fourteen-day-complete", action="store_true")
     args = parser.parse_args()
     try:
         source_pool = load(args.source_pool)
         if args.cmd == "validate":
-            errors = validate(load(args.input), source_pool)
+            errors = validate(
+                load(args.input), source_pool,
+                require_fourteen_day_complete=args.require_fourteen_day_complete,
+            )
             for error in errors:
                 print("FAIL:", error)
             if not errors:

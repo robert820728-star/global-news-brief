@@ -365,6 +365,24 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("scripts/materialize_news_images.py", document)
             self.assertIn("--manifest <materialized-images.json>", document)
 
+    def test_native_media_unavailable_uses_verified_omission_without_blocking_release(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        bootstrap = (ROOT / "bootstrap-workspace.md").read_text(encoding="utf-8")
+
+        for document in (daily, bootstrap):
+            self.assertIn("NATIVE_MEDIA_CAPABILITY_FALLBACK", document)
+            self.assertIn("verified image evidence", document)
+            self.assertIn("reader_omission_note", document)
+        self.assertIn("不得因宿主缺少原生媒體能力阻擋正式文字交付", daily)
+        self.assertNotIn("只把圖片交付切換到既有 full-runtime", daily)
+
+    def test_empty_audit_baseline_is_not_claimed_as_fourteen_day_complete(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        self.assertIn("FOURTEEN_DAY_AUDIT_COMPLETENESS_GATE", daily)
+        self.assertIn("空的 `runs` 陣列", daily)
+        self.assertIn("不得宣告十四天清單已完成", daily)
+
     def test_mobile_b_or_higher_requires_a_visible_source_image(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
