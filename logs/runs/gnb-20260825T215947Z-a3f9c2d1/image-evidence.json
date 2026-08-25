@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260825T215947Z-a3f9c2d1",
+  "execution_mode": "mobile-native",
+  "attempted_at": "2026-08-25T22:28:00Z",
+  "native_image_search_attempted": true,
+  "binary_materialization_attempted": false,
+  "binary_materialization_reason": "Per-story native image searches were executed with event, publisher and date terms. The host did not expose a current, event/date-verified source image URL for safe repository-grade download/materialization for the selected stories; returned visible image candidates were stale or mismatched where image refs were available. Without a verified original image URL, download or source-page screenshot cannot be truthfully claimed.",
+  "attachment_delivery_attempted": false,
+  "attachment_delivery_reason": "No repository-validated JPEG/WebP was materialized, so no attachment delivery was claimed.",
+  "status": "capability_degraded",
+  "capability_limitation": "NATIVE_MEDIA_UNAVAILABLE",
+  "events": [
+    {"event_id":"TWN-01","search":"Taiwan heavy rain Typhoon Saudel August 25 2026 Reuters MOEA","outcome":"no_verified_current_asset","reader_omission_note":"本則未附可確認且適合刊載的事件圖片。"},
+    {"event_id":"TWN-02","search":"Taiwan Medical Act third reading August 25 2026 Ministry Health Welfare","outcome":"no_verified_current_asset","reader_omission_note":"本則未附可確認且適合刊載的事件圖片。"},
+    {"event_id":"TWN-03","search":"Taiwan Ministry Health Welfare organization law third reading August 25 2026","outcome":"no_verified_current_asset","reader_omission_note":"本則未附可確認且適合刊載的事件圖片。"},
+    {"event_id":"TWN-04","search":"Taiwan 2026 autumn winter public vaccine August 25 CDC","outcome":"no_verified_current_asset","reader_omission_note":"本則未附可確認且適合刊載的事件圖片。"},
+    {"event_id":"TWN-05","search":"Taiwan July industrial production statistics August 25 2026 MOEA","outcome":"no_verified_current_asset","reader_omission_note":"本則未附可確認且適合刊載的事件圖片。"},
+    {"event_id":"TWN-06","search":"Taiwan anti fraud command center two year August 25 2026 Executive Yuan","outcome":"no_verified_current_asset","reader_omission_note":"本則未附可確認且適合刊載的事件圖片。"},
+    {"event_id":"CHN-01","search":"Guangxi flood August 25 2026 Xinhua","outcome":"no_verified_current_asset","reader_omission_note":"本則未附可確認且適合刊載的事件圖片。"},
+    {"event_id":"CHN-02","search":"Yagong Island new installations August 25 2026 Reuters","outcome":"no_verified_current_asset","reader_omission_note":"本則未附可確認且適合刊載的事件圖片。"},
+    {"event_id":"CHN-03","search":"China road traffic safety law autonomous driving August 25 2026 Xinhua","outcome":"no_verified_current_asset","reader_omission_note":"本則未附可確認且適合刊載的事件圖片。"},
+    {"event_id":"CHN-04","search":"China India 25th border talks August 25 2026 Reuters Wang Yi Ajit Doval","outcome":"no_verified_current_asset","reader_omission_note":"本則未附可確認且適合刊載的事件圖片。"},
+    {"event_id":"GLB-01","search":"Syria SDF dissolves August 25 2026 Reuters AP Mazloum Abdi","outcome":"no_verified_current_asset","reader_omission_note":"本則未附可確認且適合刊載的事件圖片。"},
+    {"event_id":"GLB-02","search":"Canada retaliatory tariffs August 25 2026 Reuters Carney tariffs","outcome":"no_verified_current_asset","reader_omission_note":"本則未附可確認且適合刊載的事件圖片。"},
+    {"event_id":"GLB-03","search":"US cyclosporiasis 17180 August 25 2026 CDC","outcome":"no_verified_current_asset","reader_omission_note":"本則未附可確認且適合刊載的事件圖片。"},
+    {"event_id":"GLB-04","search":"IMF Georgieva energy shock August 25 2026 Reuters","outcome":"no_verified_current_asset","reader_omission_note":"本則未附可確認且適合刊載的事件圖片。"},
+    {"event_id":"GLB-05","search":"Ukraine ceasefire proposal August 25 2026 Reuters Zelenskiy","outcome":"no_verified_current_asset","reader_omission_note":"本則未附可確認且適合刊載的事件圖片。"},
+    {"event_id":"GLB-06","search":"Wellbred Iran sanctions August 25 2026 Reuters","outcome":"no_verified_current_asset","reader_omission_note":"本則未附可確認且適合刊載的事件圖片。"}
+  ]
+}
