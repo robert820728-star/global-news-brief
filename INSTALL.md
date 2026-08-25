@@ -159,6 +159,8 @@
 
 ### Candidate audit counts
 
+`PIPELINE_COUNT_RECEIPT`：以下欄位一律由本輪 artifact 重算；文章列、canonical URL、標題分群與語意事件是不同層級，不得互相冒充。
+
 本輪必須從 artifact 重算並保存：
 
 - `merged_article_row_count`

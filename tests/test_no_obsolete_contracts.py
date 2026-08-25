@@ -35,6 +35,21 @@ class NoObsoleteContractsTests(unittest.TestCase):
             "legacy" + "_completed",
             "validate_" + "legacy_sectioned_layout",
             "_legacy" + "_section_title",
+            "PIPELINE_COUNT_RECEIPT_" + "V1",
+            "apply_bootstrap_capsule_" + "migration.py",
+            "50–99 人評為 " + "C",
+            "100 人為 " + "B",
+            "50–99 confirmed deaths: " + "C",
+            "50–99 confirmed deaths is " + "C",
+            "canonical completion requires " + "full-runtime",
+            "Existing fourteen-day history " + "remains readable",
+            "仍足以列 " + "A-",
+            "進入 " + "A 候選",
+            "衝擊足以列 " + "A",
+            "九一一攻擊應列 " + "S",
+            "單一國家地方型" + "重大事故通則",
+            "1-9 deaths require at least " + "8 points",
+            "higher score within the " + "30-point limit",
         )
         hits = []
         for path in ROOT.rglob("*"):
@@ -61,6 +76,7 @@ class NoObsoleteContractsTests(unittest.TestCase):
     def test_install_names_the_uncapped_discovery_contract(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         self.assertIn("FULL_DISCOVERY_POOL_UNCAPPED", install)
+        self.assertIn("PIPELINE_COUNT_RECEIPT", install)
 
     def test_install_names_the_native_media_capability_fallback(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
@@ -74,6 +90,14 @@ class NoObsoleteContractsTests(unittest.TestCase):
         self.assertIn("canonical-sectioned", install)
         self.assertIn("logs/current.json", install)
         self.assertIn("NATIVE_MEDIA_CAPABILITY_FALLBACK", image_skill)
+
+    def test_capsule_workflow_builds_current_source_without_migration_step(self):
+        workflow = (
+            ROOT / ".github" / "workflows" / "build-bootstrap-capsule.yml"
+        ).read_text(encoding="utf-8")
+        self.assertNotIn("migration", workflow.casefold())
+        retired_script = "apply_bootstrap_capsule_" + "migration.py"
+        self.assertFalse((ROOT / "scripts" / retired_script).exists())
 
     def test_candidate_audit_schema_has_only_current_v2_shapes(self):
         schema = json.loads(

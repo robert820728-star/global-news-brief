@@ -870,7 +870,8 @@ class PipelineContractTests(unittest.TestCase):
             ROOT / ".agents/skills/audit-news-candidates/SKILL.md",
         ):
             document = document_path.read_text(encoding="utf-8")
-            self.assertIn("PIPELINE_COUNT_RECEIPT_V1", document)
+            self.assertIn("PIPELINE_COUNT_RECEIPT", document)
+            self.assertNotIn("PIPELINE_COUNT_RECEIPT_" + "V1", document)
             self.assertIn("文章列數不得稱為語意事件數", document)
             for field in required:
                 self.assertIn(f"`{field}`", document)

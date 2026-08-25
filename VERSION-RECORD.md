@@ -4,6 +4,16 @@ This file records the current installable contract. Earlier implementation attem
 
 本檔只記錄目前可安裝契約；較早的實作嘗試由 Git history 保存，避免退役行為繼續留在執行中的 repository 表面。
 
+## v0.5.5 — Migration and hard-grade residue removal / 遷移與硬式等級殘留清除
+
+- Reason / 建立原因：A new independent version-marker and semantic-scale audit found an active V1-named count receipt, a CI migration script already superseded by the checked-in checkpoint contract, and examples/design files that still mapped casualty bands directly to final grades. / 全新版本標記與語義尺度稽核發現，正式 count receipt 仍帶 V1 名稱、CI 仍執行已被現行 checkpoint 契約取代的 migration script，且範例／設計檔仍把傷亡區間直接映射成最終等級。
+- Approach / 作法：Use the versionless current marker `PIPELINE_COUNT_RECEIPT`; build the capsule directly from checked-in source; remove the obsolete migration program and stale design surfaces; rewrite disaster examples so casualties set only the `public_impact` floor and every final grade comes from the six weighted dimensions. / 使用無版本的現行標記 `PIPELINE_COUNT_RECEIPT`；直接由已提交 source 建立 capsule；移除過期 migration 程式與設計表面；重寫災害範例，使傷亡只設定 `public_impact` floor，最終等級一律來自六項加權。
+- Entry points / 入口：`INSTALL.md`, both execution prompts, audit skill, `news-brief-examples.md`, capsule workflow, obsolete-contract tests, and pipeline-contract tests. / `INSTALL.md`、兩份執行 prompt、audit skill、新聞範例、capsule workflow、淘汰契約測試與 pipeline 契約測試。
+- Important configuration / 重要設定：`canonical-run-bundle-v1` remains the current validated wire-format identifier; it is not a fallback branch. Checkpoint bootstrap schema remains `1.1.0`; CI may verify it but no longer rewrites it. / `canonical-run-bundle-v1` 保留為目前受驗證的 wire-format 識別值，並非 fallback 分支；checkpoint bootstrap schema 維持 `1.1.0`，CI 只驗證而不再重寫。
+- Validation / 驗證：The new guards must fail on the old marker, migration path, direct casualty-to-grade prose, and full-runtime-only mobile completion claim, then pass after removal; complete clean-export regression and remote capsule binding remain required. / 新 guard 必須先因舊標記、migration 路徑、傷亡直接映射總等級及 full-runtime-only mobile completion 敘述而失敗，清除後再通過；仍須完成乾淨匯出完整回歸與遠端 capsule 綁定。
+- Result / 結果：Candidate prepared for fresh verification; no promotion claim is made until the new source tree and generated capsule pass. / 候選版本已準備重新驗證；新 source tree 與產生的 capsule 通過前不宣告晉升。
+- Rollback / 回復：Use the immediately preceding Git commit. / 使用前一個 Git commit。
+
 ## v0.5.4 — Current names and current-only run logs / 現行命名與僅接受現行 run log
 
 - Reason / 建立原因：A fresh semantic inventory found that the only canonical reader layout still used retired identifiers and the mobile ledger still migrated retired schemas through an obsolete completion state. / 全新語義盤點發現，唯一正式 reader 版型仍使用退役識別字，mobile ledger 仍透過過期的完成狀態遷移已退役 schema。

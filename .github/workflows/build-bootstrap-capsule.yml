@@ -31,9 +31,6 @@ jobs:
           sudo apt-get install -y --no-install-recommends fonts-noto-cjk
           python3 -m pip install --disable-pip-version-check pillow
 
-      - name: Apply checkpoint capsule migration
-        run: python3 scripts/apply_bootstrap_capsule_migration.py
-
       - name: Compile bootstrap programs
         run: |
           python3 -m py_compile \
@@ -41,7 +38,6 @@ jobs:
             bootstrap/bootstrap_progress.py \
             scripts/build_bootstrap_capsule.py \
             scripts/verify_bootstrap_capsule.py \
-            scripts/apply_bootstrap_capsule_migration.py \
             scripts/news_run_checkpoint.py \
             scripts/resolve_bundled_python.py \
             scripts/fetch_source_routes.py
@@ -71,7 +67,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add scripts/news_run_checkpoint.py
           git add bootstrap/capsule-manifest.json
           git add bootstrap/capsule-payload.tar.xz
           git add bootstrap/capsule.part*.txt
