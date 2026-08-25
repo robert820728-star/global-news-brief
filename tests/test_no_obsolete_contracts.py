@@ -66,6 +66,15 @@ class NoObsoleteContractsTests(unittest.TestCase):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         self.assertIn("NATIVE_MEDIA_CAPABILITY_FALLBACK", install)
 
+    def test_install_and_image_skill_name_current_delivery_contracts(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        image_skill = (
+            ROOT / ".agents" / "skills" / "collect-news-images" / "SKILL.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn("canonical-sectioned", install)
+        self.assertIn("logs/current.json", install)
+        self.assertIn("NATIVE_MEDIA_CAPABILITY_FALLBACK", image_skill)
+
     def test_candidate_audit_schema_has_only_current_v2_shapes(self):
         schema = json.loads(
             (ROOT / "schemas/news-candidate-audit.schema.json").read_text(

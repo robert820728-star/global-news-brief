@@ -151,8 +151,8 @@
 | 8 build-news-maps | 已驗證事件、map policy | map decision、必要 overlay、canonical basemap、PNG／SVG | `validate_map_decisions.py`；只修失敗事件地圖 |
 | 9 build-news-charts | 已驗證數據與 chart policy | 只有在比較、趨勢、比例、分布或查表有增量時建立 chart assets | 圖表不能替代地圖或來源圖片；只修失敗圖表 |
 | 10 collect-news-images | 已驗證來源頁與官方產品頁 | 每則 source checks、download／screenshot attempts、`materialized-images.json`、MIME、尺寸、SHA-256、visual check、附件或 omission note | 先下載原圖，下載失敗才截圖；已有本機檔先實際交付。full-runtime 未完成保持 pending；mobile-native 最後一哩失敗可 capability-degraded completed |
-| 11 final manifest 與 render | collect stage 已 completed／依 profile 合法 omission | 首次執行 `validate_news_brief.py manifest` 到 `OK`；由 manifest 渲染 reader，綁定 `render.manifest` 與 `render.brief` | 提前呼叫 manifest validator 回 `DEFERRED` 不算通過也不算失敗；繼續原 stage 後重跑 |
-| 12 publish 與 bundle | final checkpoint、manifest、audit、source pool、reader、map decisions、宣稱交付的附件 | `publish_news_brief.py` release／receipt；`manage_canonical_run_bundle.py pack`、atomic bundle＋current log、`verify`／`restore` byte identity | full-runtime 由 canonical publisher fail-closed；mobile-native 依 mobile ledger schema 保存 reader/audit 與 delivery profile |
+| 11 final manifest 與 render | collect stage 已 completed／依 profile 合法 omission | 首次執行 `validate_news_brief.py manifest` 到 `OK`；由 manifest 渲染 reader，綁定 `render.manifest` 與 `render.brief`；reader 以 `validate_news_brief.py brief --reader-layout canonical-sectioned` 驗證 | 提前呼叫 manifest validator 回 `DEFERRED` 不算通過也不算失敗；繼續原 stage 後重跑 |
+| 12 publish 與 bundle | final checkpoint、manifest、audit、source pool、reader、map decisions、宣稱交付的附件 | `publish_news_brief.py` release／receipt；`manage_canonical_run_bundle.py pack`、atomic bundle＋`logs/current.json`、`verify`／`restore` byte identity | full-runtime 由 canonical publisher fail-closed；mobile-native 依 mobile ledger schema 保存 reader/audit 與 delivery profile |
 | 13 conversation delivery | release receipt 或 mobile saved reader | 完整 reader bytes、附件／能力限制 receipt、`delivery-handoff` | 不能只交摘要或驗收報告；`client_confirmed` 只有外部明確回執才可使用 |
 
 ## 六、必填產物與驗證
