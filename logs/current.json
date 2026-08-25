@@ -6,7 +6,7 @@
   },
   "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
   "client_confirmation_supported": false,
-  "current_stage": "visuals-completed",
+  "current_stage": "reader-rendered",
   "delivery_profile": "reader-canonical-capability-degraded",
   "delivery_status": "not_ready",
   "durable_audit_artifact": {
@@ -16,15 +16,19 @@
   },
   "durable_audit_status": "preserved_merge_deferred",
   "execution_mode": "mobile-native",
-  "last_completed_stage": "selection-verified",
+  "last_completed_stage": "visuals-completed",
   "last_error": null,
   "main_sha": "e1e0336aa6f5fcf0b4260c699c693159847e2948",
   "native_media_status": "unavailable",
-  "reader_artifact": null,
+  "reader_artifact": {
+    "branch": "run-logs",
+    "path": "logs/latest-reader.md",
+    "blob_sha": "7fa81285fa6f13fe1076b09c2206cb58c74081c1"
+  },
   "run_id": "gnb-20260825T225406Z-8f3a1c72",
   "scheduled_for": "2026-08-26T06:54:06+08:00",
   "schema_version": "1.3.0",
-  "stage_index": 7,
+  "stage_index": 8,
   "status": "running",
-  "updated_at": "2026-08-25T23:22:00Z"
+  "updated_at": "2026-08-25T23:25:00Z"
 }
