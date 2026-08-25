@@ -116,10 +116,12 @@ The required order for every configured discovery route is: `canonical route -> 
 ## 候選海選
 
 - 前期候選可由任何目前可用的新聞清單或網頁搜尋入口取得。`GDELT` 是主要彙整入口；中央社與中新社是台灣、中國的區域補充，但都不是完成門檻。任一入口失敗時記錄 coverage 降級並換用其他入口；只要仍有可核實的精確 24 小時候選就繼續，只有完全沒有可核實候選才停止。
-- `GDELT_RESILIENT_ACQUISITION`：GDELT 官方 15 分鐘 export archives 是主要 discovery。只有 archive 不可用時才允許一次不阻塞的 DOC API 補充請求；不得為 429 等待或重試，DOC API 成功也必須標為非完整補充。兩者都不可用才採最近一次有效快取並明確標示 degraded。不得把中央社或中新社冒充為 GDELT，但 GDELT 單一路徑故障不得停止發佈。
+- `GDELT_RESILIENT_ACQUISITION`：GDELT 官方 15 分鐘 export archives 是主要 discovery。只有預期分片全部成功才可標 `coverage_complete`；部分分片成功必須標 `degraded_partial`，不得冒充 ready/full coverage。只有 archive 不可用時才允許一次不阻塞的 DOC API 補充請求；不得為 429 等待或重試，DOC API 成功也必須標為非完整補充。兩者都不可用才採最近一次有效快取並明確標示 degraded。
+- 中新社日索引固定取得執行日與前一日後再套精確 24 小時窗；中央社依 `NextPageIdx` 連續翻頁，直到跨過窗起點或來源明確耗盡。固定只抓當日頁或第一頁 500 筆都不得宣稱完整 coverage。
 - `FULL_DISCOVERY_POOL_UNCAPPED`：每個成功取得的 discovery route 保存時間窗內數量、完整排序數量、實際入池數量及全部入池網址；精確 24 小時窗內已驗證的清單條目全部進入去重與評分，不設前 30、前 100 或其他預設名額。
 - `TAIWAN_DOMESTIC_COVERAGE_GUARD`：中央社另對經濟／貿易／產業、食藥／消費安全、中央預算／立法／憲政三個領域各執行一次同一 24 小時窗搜尋，每個領域最多 `5 results`。中央社不可用或明顯過舊時才使用網頁搜尋補候選；線索不得繞過去重或六項評分，也不得直接觸發圖片流程。
-- 每個可用 discovery route 與去重後語意事件都使用 `public_value_v2`：六項各自按 0–100 給分，再依 `news-source-pool.json` 的 30%／20%／15%／15%／10%／10% 權重計算 `weighted_score`；`importance_score` 必須與加權結果完全一致。標準分使用 0、10、20…100；只有證據確實介於相鄰錨點時才可使用 5、15…95，並填 `midpoint_rationales`。等級級距維持不變。`PUBLIC_VALUE_V2_NORMALIZED_WEIGHTED_SCORING`
+- Discovery route 條目只產生 `discovery_priority_score`、`discovery_signals` 與 `discovery_priority_reason`，用於抓取／hydration 排序，不得稱為 importance 或 `public_value_v2`。只有完成語意去重、事件身分與證據分類後的語意事件才使用 `public_value_v2`：六項各自按 0–100 給分，再依 `news-source-pool.json` 權重計算 `weighted_score`；`importance_score` 必須與加權結果完全一致。`PUBLIC_VALUE_V2_NORMALIZED_WEIGHTED_SCORING`
+- Regional supplements 全數進模型；GDELT 強 signal 直接 hydration，弱 signal 進 `lightweight_semantic_review` 並仍保留在模型輸入。關鍵字與 heat 只能安排處理順序，不得在模型判讀前刪除科學、科技、資安、醫學或文化事件。
 - `CURRENT_SCHEMA_ONLY_DURABLE_AUDIT`：canonical durable audit 只保留符合目前 schema 與 `public_value_v2` 的 run。不相容物件不得合併；追溯資訊由 Git history 保存。最新 run、首次出現及發生實質更新的事件都必須重新取證、評分並取得 validated status。
 - `EVIDENCE_BEFORE_SCORE_GATE`：先建立唯一 `evidence_facts.fact_id`，再以 `consequence_evidence` 分成 `realized`、`ongoing`、`potential`、`speculative`，最後由六項 `dimension_evidence` 引用 fact ID。`public_impact`、直接範圍與急迫性只能引用 realized／ongoing；結構意義可引用高可信且列明制度機制的 potential；speculative 不得支撐任何分數。政策的理論覆蓋人口不得冒充已受影響人口，預期後果也不得冒充現況後果。`ACTUAL_POTENTIAL_SEPARATION_GATE`
 - `material_new_development >= 70` 必須提供相對十四天 continuity 的 `delta_facts`（previous state、current state、why material）。同一 fact 支撐三個以上維度必須填 `cross_dimension_rationales`；任何單項達 70 必須有 `high_score_challenges` 且結果為 sustained；總分達 70 另須 `overall_high_score_challenge` 說明為何不能降到 B+。`HIGH_SCORE_CHALLENGE_GATE`
@@ -196,9 +198,8 @@ The required order for every configured discovery route is: `canonical route -> 
 ### 評級證據與衝突降權
 
 - 最終等級同時評估事件整體嚴重度、精確 24 小時的實質增量、板塊相關性與結構影響，再扣除常態事件及重複更新折扣。死亡、戰爭、災害或疫情關鍵字不得單獨決定等級。
-- 每個候選必須提交結構化 `grading_evidence`，包含影響範圍、直接後果、結構意義、本期新增、上下級比較及衝突判定；模板化 `grade_reason` 不得通過發布閘門。
-- 非監控板塊的國際邊境小衝突，只要未達正式／事實戰爭，且使用者未提高戰爭或邊境權重，一律為 `D`。
-- 長期戰爭中的日常同類小衝突與例行傷亡更新一律為 `D`。只有可能造成戰局反轉／實質升級、停火或和平進程變化、新國家／新戰線，或油價、航運、能源、糧食、金融、難民、供應鏈等外部系統出現可驗證實質影響時，才解除折扣重新評級。
+- 每個候選必須提交 fact-ID `dimension_evidence`、當輪 `delta_facts` 及適用的政策／衝突／continuity review；高分或級距邊界事件才額外要求反向 challenge。不得用模板化 `grade_reason` 或重複的上下級敘述代替證據。
+- 邊境或長期衝突不得依事件類型固定為任何等級。例行小衝突通常因已實現後果、直接範圍、急迫性、制度意義與本期增量都低而自然得到低分；若實際造成重大傷亡、領土／戰線改變或外部系統中斷，必須依證據重評。
 - 母事件的嚴重度不得直接繼承給本期更新；來源數量也不得升降事件等級。
 
 ### 災害、疫情與公共安全量化證據
@@ -237,10 +238,11 @@ The required order for every configured discovery route is: `canonical route -> 
 - 資料圖表技能只擁有 `charts`；不得製作純文字摘要卡，也不得修改或取代來源圖片。
 - 圖片技能只擁有 `images`；不得修改來源、等級、地圖或詳報內容。
 - 所有入選事件均固定執行來源頁圖片檢查並保存本地證據；評級只影響新聞重要度，不影響是否查圖。
+- 圖片與地圖都必須另填 `claim_critical`。只有視覺本身直接支撐核心新聞主張時才可設為 `true`；一般配圖與定位輔助失敗時可標記 `omitted`，留下後台原因與讀者說明，文字 reader 繼續發布。
 - 地震、疫情、氣象、災害、戰爭、航運、漏油與海洋污染等類型固定啟用官方專業圖資要求；判定依事件內容，不得硬編碼事件編號。
 - 地圖、資料圖表與來源圖片三組附件路徑必須兩兩獨立，任一組不得替代另一組。
 - 地圖標籤必須符合輸出語言；繁體中文輸出時不得只有英文地名。
-- 地圖、自製資料圖表與官方／媒體來源圖片互相獨立。任一類成功都不得讓其他類跳過；自製圖表尤其不得滿足 B 以上來源圖片硬閘門。
+- 地圖、自製資料圖表與官方／媒體來源圖片互相獨立。任一類成功都不得讓其他類跳過檢查；自製圖表不得冒充來源圖片。非主張關鍵的圖片或地圖取得失敗可降級省略。
 - 恢復技能只擁有 `recovery`、階段狀態與最終狀態；不得直接修改其他技能的事件欄位。
 - 後段技能發現上游錯誤時，回報主控技能處理，不得自行重建整個事件物件。
 - 單一來源限制不得導致自動降級或刪除；只有證據顯示事件內容錯誤、互相矛盾或來源本身不可靠時，才由主控重新判斷表述或收納。
@@ -264,7 +266,7 @@ The required order for every configured discovery route is: `canonical route -> 
 - 單一可靠來源事件已顯示來源限制，但沒有因此自動降級。
 - 地圖、資料圖表與圖片各自保留；前兩者不計入圖片張數，三者不得互相取代。
 - 事件資料中已驗收的每張地圖、資料圖表與圖片，都按 manifest 順序實際出現在所屬新聞內，並由緊接附件的編號圖說逐一說明。
-- 必要地圖不得省略；`map.required=true` 時必須為 `ready` 且至少有一張附件。
+- `claim_critical=true` 的必要地圖或圖片不得省略，必須為 `ready` 且至少有一張附件；非關鍵視覺可在取得或產生失敗時降級為 `omitted`。
 - reader 不得包含 manifest 以外或新聞區塊以外的圖片。
 - 不存在只有圖說沒有附件、空白圖、破圖、錯誤頁、過期圖資或與事件不符的圖片。
 - 板塊順序、表格、空行、分隔線與繁體中文格式正確。

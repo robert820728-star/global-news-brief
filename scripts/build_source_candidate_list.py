@@ -71,7 +71,7 @@ def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
                     continue
                 title = str(raw.get("title", "")).strip()
                 summary = str(raw.get("summary", "")).strip()
-                hint = str(raw.get("importance_hint", "")).strip()
+                hint = str(raw.get("discovery_priority_reason", "")).strip()
                 url = str(raw.get("url", "")).strip()
                 if not all((title, summary, hint, url)):
                     raise ValueError(f"{source_id} 第{page_index}頁候選缺少標題、摘要、重要性提示或網址")
@@ -101,7 +101,7 @@ def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
                     "published_at": published.isoformat(),
                     "url": url,
                     "categories": raw.get("categories") or source.get("categories", []),
-                    "importance_hint": hint,
+                    "discovery_priority_reason": hint,
                     "acquisition_route": raw.get("acquisition_route") or scan.get("collector"),
                     "canonical_url": canon,
                     "normalized_title": norm,

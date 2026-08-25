@@ -163,7 +163,13 @@ def recovery_plan(
 
         map_result = event.get("map", {})
         if isinstance(map_result, dict) and map_result.get("required") is True:
-            if map_result.get("status") in {"pending", "omitted"}:
+            if (
+                map_result.get("status") == "pending"
+                or (
+                    map_result.get("status") == "omitted"
+                    and map_result.get("claim_critical") is True
+                )
+            ):
                 add("build-news-maps", event_id, "必要定位地圖未完成")
             else:
                 expected_scope = "full_world" if str(event_id).startswith("GLB-") else "full_section"
@@ -193,6 +199,7 @@ def recovery_plan(
         images = event.get("images", {})
         if not isinstance(images, dict):
             continue
+        claim_critical = images.get("claim_critical") is True
         checks = images.get("source_checks", [])
         sources = verification.get("sources", []) if isinstance(verification, dict) else []
         checked_urls = {
@@ -222,9 +229,11 @@ def recovery_plan(
         elif any(
             isinstance(item, dict) and item.get("outcome") == "acquisition_failed"
             for item in checks
-        ):
+        ) and (claim_critical or images.get("status") != "omitted"):
             add("collect-news-images", event_id, "來源圖片取得失敗，必須切換策略後重做")
-        elif usable_found and (images.get("status") != "ready" or not images.get("assets")):
+        elif usable_found and claim_critical and (
+            images.get("status") != "ready" or not images.get("assets")
+        ):
             add("collect-news-images", event_id, "已找到可用圖片但尚無合格附件")
 
         professional_required = images.get("professional_visual_required") is True
@@ -243,7 +252,7 @@ def recovery_plan(
         elif professional_required and any(
             isinstance(item, dict) and item.get("outcome") == "acquisition_failed"
             for item in professional_checks
-        ):
+        ) and (claim_critical or images.get("status") != "omitted"):
             add("collect-news-images", event_id, "官方專業圖資取得失敗，必須切換策略後重做")
         elif professional_required and any(
             not isinstance(item, dict)
@@ -253,7 +262,7 @@ def recovery_plan(
             for item in professional_checks
         ):
             add("collect-news-images", event_id, "官方專業圖資檢查缺少可驗證證據")
-        elif professional_required and professional_found and (
+        elif professional_required and professional_found and claim_critical and (
             images.get("professional_visual_status") != "ready" or not professional_assets
         ):
             add("collect-news-images", event_id, "已找到官方專業圖資但尚無合格附件")

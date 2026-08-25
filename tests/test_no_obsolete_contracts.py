@@ -61,6 +61,10 @@ class NoObsoleteContractsTests(unittest.TestCase):
             "mandatory" + "_overflow",
             "fixed" + "_top_n",
             "public" + "_value" + "_v1",
+            "importance" + "_hint",
+            "why_current" + "_grade",
+            "why_not" + "_higher",
+            "why_not" + "_lower",
             "legacy" + "ImportanceBreakdown",
             "legacy" + "Candidate",
             "V1" + "_HISTORY",
@@ -121,6 +125,14 @@ class NoObsoleteContractsTests(unittest.TestCase):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         self.assertIn("FULL_DISCOVERY_POOL_UNCAPPED", install)
         self.assertIn("PIPELINE_COUNT_RECEIPT", install)
+
+    def test_source_candidate_schema_uses_discovery_priority_language_only(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-source-candidate-list.schema.json").read_text(encoding="utf-8")
+        )
+        properties = schema["properties"]["items"]["items"]["properties"]
+        self.assertIn("discovery_priority_reason", properties)
+        self.assertNotIn("importance" + "_hint", properties)
 
     def test_install_names_the_native_media_capability_fallback(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")

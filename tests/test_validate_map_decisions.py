@@ -24,6 +24,7 @@ def event(title, category, impact_scope, reason, required, status, rationale):
         "detail": {"event_details": "", "analysis": ""},
         "map": {
             "required": required,
+            "claim_critical": False,
             "status": status,
             "rationale": rationale,
             "assets": [],
@@ -85,6 +86,25 @@ class MapDecisionValidatorTests(unittest.TestCase):
         errors = VALIDATOR.validate(manifest(item))
         self.assertTrue(any("仍為 pending" in error for error in errors))
         self.assertTrue(any("不得 completed" in error for error in errors))
+
+    def test_noncritical_required_map_may_be_omitted_with_reason(self):
+        item = event(
+            "海地城市災情", "天然災害", "海地", "位置有助理解", True,
+            "omitted", "位置有助理解，但定位圖不是正文主張的證據。",
+        )
+        item["map"]["omission_reason"] = "renderer unavailable"
+        item["map"]["reader_omission_note"] = "定位圖暫缺，正文仍可獨立驗證。"
+        self.assertEqual([], VALIDATOR.validate(manifest(item)))
+
+    def test_claim_critical_required_map_cannot_be_omitted(self):
+        item = event(
+            "衛星圖確認攻擊位置", "軍事", "邊境", "影像位置是核心證據", True,
+            "omitted", "位置是主張的一部分。",
+        )
+        item["map"]["claim_critical"] = True
+        item["map"]["omission_reason"] = "renderer unavailable"
+        errors = VALIDATOR.validate(manifest(item))
+        self.assertTrue(any("主張關鍵" in error for error in errors), errors)
 
 
 if __name__ == "__main__":

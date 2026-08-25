@@ -151,7 +151,9 @@ def candidate_errors(audit: dict, manifest: dict, source_pool: dict) -> list[str
     selected_candidates = {
         c.get("selected_event_id"): c
         for c in runs[-1].get("candidates", [])
-        if c.get("provisional_grade") in manage_candidate_audit.AUTO_SELECT
+        if manage_candidate_audit.grade_meets_threshold(
+            c.get("provisional_grade"), "C", source_pool.get("ranking")
+        )
         and c.get("decision") in {"selected", "merged"}
         and c.get("selected_event_id") is not None
     }

@@ -16,7 +16,7 @@ description: Maintain a rolling fourteen-day audit of all news candidates, inclu
 只有下列工作需要模型：判斷持續事件是否有實質轉折、檢查暫定 B 以上事件是否被錯誤排除、辨認不同標題是否其實是同一底層事件。可選小模型只能提出標籤或合併建議；最終排除、降為 D／E 或重大事件合併須由高階模型確認。
 
 
-1. 讀取本輪全部聚類候選、`news-source-pool.json`、每站來源掃描證據與最近十四天 `state/candidate-audit.json`。先由 `scripts/validate_source_scan_evidence.py` 驗證快照雜湊、翻頁鏈與停止證據並重算時間窗清單；不得採信自行填寫的來源筆數。`FULL_DISCOVERY_POOL_UNCAPPED` 要求每個成功來源的 `selected_item_urls` 精確等於完整 `ranked_items`，不得截斷。每筆 `ranked_items` 必須保存 `public_value_v2` 六項 0–100 `importance_breakdown`、設定權重算出的總分與理由。
+1. 讀取本輪全部聚類候選、`news-source-pool.json`、每站來源掃描證據與最近十四天 `state/candidate-audit.json`。先由 `scripts/validate_source_scan_evidence.py` 驗證快照雜湊、翻頁鏈與停止證據並重算時間窗清單；不得採信自行填寫的來源筆數。`FULL_DISCOVERY_POOL_UNCAPPED` 要求每個成功來源的 `selected_item_urls` 精確等於完整 `ranked_items`，不得截斷。每筆 `ranked_items` 只保存 `discovery_priority_score`、`discovery_signals` 與 `discovery_priority_reason`；不得包含正式 V2 importance 欄位。
    - `PIPELINE_COUNT_RECEIPT`：最新一輪保存 `merged_article_row_count`、`in_window_article_row_count`、`canonical_url_count`、`provisional_title_cluster_count`、`semantic_event_count`、`scored_event_count`、`c_or_higher_scored_event_count`、`selected_event_count`，以及 `event_evidence_article_row_count`、`non_news_article_row_count`、`unresolved_article_row_count`。全部由當輪 artifact 重算，且前四層至語意事件數不得增加。文章列數不得稱為語意事件數；網址正規化或標題分群不得稱為語意去重。`COUNT_RECEIPT_REPAIR_ONCE` 要求事件小計與 `events` 陣列不符時先依陣列重算並覆寫一次；可修復的 32/33 差額不得升級為整輪失敗或觸發 discovery 重跑。文章列層無法驗證時如實標記，不捏造數字。
    - `SEMANTIC_EVENT_LEDGER_GATE`：只有語意事件才算新聞、才可進入六項評分。每個真正事件必須有唯一 `semantic_event_id` 與完整 `event_identity`；每個窗內文章列都必須記入 `article_dispositions`，且只能是 `event_evidence`、`non_news` 或 `unresolved`。`event_evidence` 必須指向事件，`non_news` 必須保存具體理由，任何 `unresolved` 都阻擋 audit 完成。文章列數、網址數與標題群組數不得稱為新聞數或完成評分數。
    - `EVENT_REGION_AND_TIME_IDENTITY_GATE`：最新一輪每個語意事件都必須保存 `event_identity.country_codes`、`primary_country_code`、`location_evidence`、`event_occurred_at`、`material_update_at`、`material_update_type`、`material_update_evidence` 與模型產生的 `temporal_review`。來源分桶不是事件地區；模型逐事件比較文章內容與十四天時間線，分列新增／變更事實、重複舊事實及窗內當下影響；程式只驗證結論一致性。已結束的舊事件若只是重複舊傷亡、重新整理、回顧、週年、換標題或重刊，文章處置只能是 `non_news`；開始較早但確實仍持續跨越精確時間窗並造成影響，可列 `ongoing_current_impact`。任何缺漏或矛盾必須是 `unresolved` 且阻止 audit 完成。
@@ -27,7 +27,7 @@ description: Maintain a rolling fourteen-day audit of all news candidates, inclu
    - 最新一輪每個候選都必須先保存 `evidence_facts` 與 realized／ongoing／potential／speculative `consequence_evidence`，再由六項 `dimension_evidence` 引用 fact ID，保存 0–100 `importance_breakdown`、`weighted_score` 與相同的 `importance_score`。依 `SCORE_TO_GRADE_BANDS_V2` 換算等級；5 分中點、14 天 delta、跨維重用與高分反查均須有對應 rationale／challenge，任何單項都不得成為地域硬上限或例外補丁。
    - 政策事件保存 `policy_stage`，不得把提案的理論效果寫成已發生 Impact；`evidence_confidence`／`confidence_band` 與 importance 分離。只有事件身分、時序、continuity、證據、政策審查、算式、challenge 與級距全部通過才能寫 `grade_status=validated`；provisional 可留候選池但不得進 Reader。
    - 來源清單的站內分數只用於 discovery 排序，不得複製成最終候選分數；最終六項必須在去重後按事件本身後果重新評估。
-   - 同步驗證 `grading_evidence`：影響範圍、直接後果、本期實質增量、上下級比較、邊境衝突與長期戰爭連續性判定不得缺漏。
+   - 同步驗證 `grading_evidence` 的影響範圍、直接後果、本期實質增量，以及適用時的政策、邊境衝突與長期戰爭連續性判定。不得再要求三段重複的目前級距／上級／下級說明欄；高分反查由條件式 challenge 負責。
    - 最新一輪每個候選都要有 `local_disaster_review`；普通地方災害記錄保守確認死亡數、特殊意義觸發與調整理由作為六項證據索引，軍事／衝突事件則標記 `applies: false` 並沿用既有衝突判定。
 6. 附加本輪並刪除十四天前紀錄。
 7. 暫定 B 以上未入選卻沒有理由時，回到海選補查。

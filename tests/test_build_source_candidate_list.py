@@ -23,7 +23,7 @@ class CandidateListTests(unittest.TestCase):
                     "extracted_items": [{
                         "title": "Major international event",
                         "summary": "Material policy change affecting the public.",
-                        "importance_hint": "May change policy across a broad population.",
+                        "discovery_priority_reason": "May change policy across a broad population.",
                         "published_at": "2026-08-16T01:00:00+00:00",
                         "url": "https://example.com/world-event?utm_source=gdelt",
                         "section": "GLB",
@@ -58,7 +58,7 @@ class CandidateListTests(unittest.TestCase):
                         "extracted_items": [{
                             "title": f"{source_id} major event",
                             "summary": "Material policy change affecting the public.",
-                            "importance_hint": "May change public policy and affect a broad population.",
+                            "discovery_priority_reason": "May change public policy and affect a broad population.",
                             "published_at": "2026-08-16T01:00:00+00:00",
                             "url": f"https://example.com/{source_id}?utm_source=test",
                             "section": source.get("default_section") or source["sections"][0],
@@ -70,7 +70,7 @@ class CandidateListTests(unittest.TestCase):
                         "extracted_items": [{
                             "title": "cna recovered policy event",
                             "summary": "Recovered through verified same-source evidence.",
-                            "importance_hint": "Central policy changed public services.",
+                            "discovery_priority_reason": "Central policy changed public services.",
                             "published_at": "2026-08-16T01:30:00+00:00",
                             "url": "https://example.com/cna-recovered",
                             "acquisition_route": "same_source_direct",
@@ -81,7 +81,7 @@ class CandidateListTests(unittest.TestCase):
         self.assertEqual(result["source_count"], 3)
         self.assertEqual(len(result["items"]), 4)
         self.assertTrue(any(item["url"] == "https://example.com/cna-recovered" for item in result["items"]))
-        self.assertTrue(all(item["summary"] and item["importance_hint"] for item in result["items"]))
+        self.assertTrue(all(item["summary"] and item["discovery_priority_reason"] for item in result["items"]))
         self.assertTrue(all("utm_source" not in item["canonical_url"] for item in result["items"]))
 
     def test_no_available_discovery_list_fails_closed(self):

@@ -48,7 +48,7 @@ class SameSourceRecoveryTests(unittest.TestCase):
             "published_at": "2026-08-16T00:00:00+08:00",
             "url_evidence": "https://example.com/news/old",
             "published_evidence": "2026-08-16T00:00:00+08:00",
-            "importance_hint": "Old", "acquisition_route": "html_direct", "categories": [],
+            "discovery_priority_reason": "Old", "acquisition_route": "html_direct", "categories": [],
         }
         scan = {
             "schema_version": "1.0.0", "source_id": "wire", "collector": "html_direct",

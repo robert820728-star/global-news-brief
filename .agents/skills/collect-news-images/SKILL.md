@@ -16,10 +16,11 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 所有入選事件（SS 至 C-）：`images.required` 固定為 `true`，逐一開啟 `verification.sources` 的來源頁檢查圖片；評級不得作為跳過圖片流程的條件。
 - 每個引用來源都必須寫入 `images.source_checks`；除是否找到可用圖片、嘗試次數與結果外，必須保存 `checked_at`、`inspection_method`、本地 `evidence_path`、`detected_image_urls` 與 `failure_detail`。
 - `evidence_path` 必須是頁面截圖、保存頁面或可重現檢查結果的本地證據；發布器會確認檔案實際存在。宣告 `no_usable_image` 時不得只填布林值，必須有頁面證據與具體理由。
-- 偵測到官方或媒體圖片時，必須下載來源頁中的實際媒體檔。`images.assets[].source_url` 保存文章頁，`images.assets[].source_image_url` 保存實際圖片網址；後者必須出現在同一文章頁檢查的 `detected_image_urls`，且不得等於文章頁網址。找到圖片卻沒有對應附件時維持 `pending` 並恢復。
+- 偵測到官方或媒體圖片時，必須先嘗試下載來源頁中的實際媒體檔。`images.assets[].source_url` 保存文章頁，`images.assets[].source_image_url` 保存實際圖片網址；後者必須出現在同一文章頁檢查的 `detected_image_urls`，且不得等於文章頁網址。
 - 每張來源圖片必須由 `scripts/materialize_news_images.py` 對 `source_image_url` 下載、解碼與寫檔，並保存 `materialized-images.json`；不得手工產生同名檔或只憑 manifest 宣告來源。
 - 任一來源找到可信且相關圖片後，`images.status` 只能在至少一張附件通過驗收後改為 `ready`。
-- `NATIVE_MEDIA_CAPABILITY_FALLBACK`：已找到可用圖片時，先下載原始媒體檔；下載失敗才依圖片政策截圖並驗證。`full-runtime` 兩者都失敗時 `images.status` 維持 `pending` 並只重試圖片階段。`mobile-native` 只有在實際取得與本機／原生附件交付都已嘗試且最後一哩仍失敗時，才可用 `reader-canonical-capability-degraded` 記錄非阻塞的 `NATIVE_MEDIA_UNAVAILABLE`；不得在未嘗試前預判。
+- 每則事件必須明確設定 `images.claim_critical`。只有圖片本身是核心主張證據（例如唯一影像證據、衛星圖直接證明攻擊或官方圖是數據主張本體）才設為 `true`；一般新聞配圖、人物照或輔助專業圖設為 `false`。
+- `NATIVE_MEDIA_CAPABILITY_FALLBACK`：已找到可用圖片時，先下載原始媒體檔；下載失敗才依圖片政策截圖並驗證。兩者都失敗時，`claim_critical=true` 才維持 `pending` 並只重試圖片階段；非關鍵圖片改為 `images.status=omitted`，保存取得證據、`omission_reason` 與非技術性的 `reader_omission_note`，文字 reader 仍可完成。不得在未嘗試前預判。
 - 只有全部引用來源都已檢查且均無可用圖片，才可使用 `omitted`，並保存具體後台原因；同時填寫繁體中文、非技術性的 `reader_omission_note`，供讀者版說明為何本則沒有圖片。
 - 圖片取得失敗不改變事件等級。
 - 原引用來源沒有可取得圖片時，依序搜尋官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導；可檢查多個來源，不限一個，也不要求找到完全相同像素。新來源必須加入事件的圖片證據與來源追溯，並核對發布日期、人物／地點與事件關聯；搜尋縮圖、無法追溯的搬運站、舊照或無關示意圖不得入選。
@@ -28,13 +29,13 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - `map.assets`、`charts.assets`、`images.assets` 三組附件路徑必須兩兩不重複；任何一種視覺完成都不能改變另外兩種的需求、狀態、檢查紀錄或附件。同一張合格官方／專業來源圖片可以同時滿足來源圖片與專業圖資兩組檢查，但兩組檢查紀錄都必須保留。`IMAGE_ONE_ASSET_MAY_SATISFY_BOTH_SOURCE_AND_PROFESSIONAL`
 - `map.status` 或 `charts.status` 已是 `ready`，不代表圖片階段完成；仍須逐一檢查來源頁並取得官方或媒體實際發布的合格圖片。
 
-## 官方專業圖資硬閘門
+## 官方專業圖資搜尋與關鍵證據閘門
 
 - 任何入選事件若屬氣象、災害、疫情、公共衛生、地震、海嘯、火山、野火、洪水、乾旱、熱浪、戰爭、軍事、航運、海峽／航道、漏油、油污、海洋污染、化學或核事故，`images.professional_visual_required` 固定為 `true`；此判定必須依事件內容完成，禁止使用評級門檻或事件編號白名單。
 - 先依事件類型與主要影響地區，主動搜尋主管機關、監測機構、地方政府或專業組織的圖資；不得只檢查新聞來源頁後就宣告沒有專業圖。
 - 每個查過的官方或專業頁面都寫入 `images.professional_source_checks`。至少涵蓋中央主管機關與主要受影響地區主管單位；跨國事件再查國際組織或受影響國官方來源。
-- 官方專業圖資檢查同樣必須保存檢查時間、方法、本地頁面證據、檢出的圖片網址與判定理由；取得失敗必須進入恢復流程，不能改寫成 `not_available`。
-- 找到與事件時間、地區及主張相符的專業圖時，至少一張 `kind` 為 `official_information` 或 `professional_information` 的本地附件通過視覺與時間驗收前，`images.professional_visual_status` 不得設為 `ready`，整則事件也不得交付。
+- 官方專業圖資檢查同樣必須保存檢查時間、方法、本地頁面證據、檢出的圖片網址與判定理由。取得失敗時，只有 `claim_critical=true` 才必須進入恢復流程；否則記為 `not_available` 並繼續文字交付。
+- 找到與事件時間、地區及主張相符的專業圖時，至少一張 `kind` 為 `official_information` 或 `professional_information` 的本地附件通過視覺與時間驗收前，不得把 `images.professional_visual_status` 宣稱為 `ready`。只有該圖同時是主張關鍵證據時才阻擋整則事件交付。
 - 專業圖下載或截圖失敗時，依「原始下載資產 → 官方產品頁截圖 → 官方歷史／存檔頁 → 地方主管機關 → 主要媒體引用的同一官方圖」重試；不得因第一次取得失敗就改用現場照結案。
 - 只有完成上述搜尋且確實沒有符合事件階段的專業圖，才可把 `images.professional_visual_status` 設為 `not_available`，並在 `images.professional_omission_reason` 保存具體後台原因。
 - 自製定位地圖、自製資料圖表、普通新聞照片與頁首圖均不能滿足專業圖資硬閘門。若同一張 `official_information`／`professional_information` 圖確實出現在已引用來源或本身就是已引用官方來源，且通過時間與內容驗收，可同時滿足來源頁附件與專業圖資硬閘門；不得為形式另附重複照片。
@@ -76,7 +77,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 不得把「俄羅斯／烏克蘭及盟友」、「安全評估／全面否認」等純文字對照卡當成新聞圖片。
 - 自製圖表只限至少兩個可比較的數值、時間序列、比例或分布；必須寫入獨立 `charts` 欄位。
 - 自製圖表的圖說須標示「本簡報依○○資料製作」，不得宣稱為該媒體或官方發布的圖片。
-- 即使已有合格自製圖表，所有入選事件的來源圖片硬閘門仍照常生效；自製圖表不得計入來源圖片最多 2 張，也不得滿足「至少一張來源圖片附件」要求。
+- 即使已有合格自製圖表，所有入選事件的來源圖片檢查仍照常執行；自製圖表不得計入來源圖片最多 2 張，也不得冒充來源圖片。非主張關鍵的來源圖片可在取得失敗時省略。
 
 ## 數量與順序
 
@@ -118,11 +119,11 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 影像沒有誤導性裁切，文字可辨識。
 - 不是無關舊照、資料庫示意照或被錯誤歸屬的畫面。
 
-失敗時依取得順序重試。若來源已確認有可用圖片，重試仍失敗也不得省略後交付；維持未完成狀態，讓主控只重跑圖片模組。不得只留下「圖一」文字。
+失敗時依取得順序重試。若來源已確認有可用圖片但重試仍失敗，`claim_critical=true` 才維持未完成狀態並只重跑圖片模組；非關鍵圖片改為 `omitted`，保存原因與讀者說明後交付文字版。不得只留下「圖一」文字。
 
 ## 與候選來源確認共同發布
 
-圖片驗收與候選稽核確認在 `publish_news_brief.py` 同一個 fail-closed 閘門執行。發布時必須同時提供候選稽核檔；只有完全沒有可核實候選、候選缺少 SS–E 評級理由、達標事件漏入 manifest，或圖片附件／來源頁確認失敗，才不得產生 release。單一 discovery route 缺失或不完整只記 coverage 降級，不得阻擋其他可用候選。圖片技能不修改候選稽核；候選問題仍回到 `select-news-events`／`audit-news-candidates` 修復。
+圖片驗收與候選稽核確認在 `publish_news_brief.py` 同一個閘門執行。發布時必須同時提供候選稽核檔；完全沒有可核實候選、候選缺少 SS–E 評級理由、達標事件漏入 manifest、主張關鍵圖片缺失或來源頁檢查未完成時，不得產生 release。非關鍵圖片取得失敗只形成 visual degradation。單一 discovery route 缺失或不完整只記 coverage 降級，不得阻擋其他可用候選。
 
 ## 時間與區域
 
@@ -147,6 +148,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 只寫入：
 
 - `images.required`
+- `images.claim_critical`
 - `images.status`
 - `images.source_checks[].source_url`
 - `images.source_checks[].checked`

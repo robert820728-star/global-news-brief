@@ -45,6 +45,8 @@ description: Decide whether a selected news event needs geographic context and c
 - 震央、火場、洪水範圍、警戒區、污染範圍、事故位置、救援區域；
 - 物種分布、繁殖地、覓食區、遷徙帶、人獸衝突熱點。
 
+每則事件另須設定 `map.claim_critical`。只有地圖或空間圖層本身直接證明核心主張時才為 `true`；一般定位輔助為 `false`。`required=true` 但非主張關鍵的地圖若 renderer 失敗，可改為 `omitted`，保存 `omission_reason` 與讀者可見的 `reader_omission_note` 後繼續文字 reader；`claim_critical=true` 仍必須 `ready`。
+
 只要命中且位置有助理解，就必須 `required: true`。例如「大堡礁鯨豚互動增加」即使主要呈現的是通報統計，事件仍涉及明確海洋保護區與座頭鯨遷徙帶，應建立區域定位圖，而不是因為它是統計／保育新聞而省略。
 
 ## 選擇尺度
@@ -98,6 +100,7 @@ description: Decide whether a selected news event needs geographic context and c
 只寫入：
 
 - `map.required`
+- `map.claim_critical`
 - `map.status`
 - `map.rationale`
 - `map.assets[].path`

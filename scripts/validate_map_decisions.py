@@ -111,10 +111,14 @@ def validate(data: dict[str, Any]) -> list[str]:
             errors.append(f"{event_id}.map 缺少地圖需求判定")
             continue
         required = map_result.get("required")
+        claim_critical = map_result.get("claim_critical")
         status = map_result.get("status")
         rationale = map_result.get("rationale")
         if not isinstance(required, bool):
             errors.append(f"{event_id}.map.required 尚未完成布林判定")
+            continue
+        if not isinstance(claim_critical, bool):
+            errors.append(f"{event_id}.map.claim_critical 尚未完成布林判定")
             continue
         if status == "pending":
             errors.append(f"{event_id}.map 仍為 pending，不得視為 build-news-maps 完成")
@@ -136,6 +140,13 @@ def validate(data: dict[str, Any]) -> list[str]:
 
         if required and status == "not_required":
             errors.append(f"{event_id}.map required=true 不得標記 not_required")
+        if required and status == "omitted":
+            if not map_result.get("omission_reason"):
+                errors.append(f"{event_id}.map omitted 必須保存後台原因")
+            if not map_result.get("reader_omission_note"):
+                errors.append(f"{event_id}.map omitted 必須提供讀者可見說明")
+            if claim_critical:
+                errors.append(f"{event_id}.map 主張關鍵地圖不得省略")
 
     stage = data.get("stage_status")
     if isinstance(stage, dict) and stage.get("build-news-maps") == "completed" and errors:

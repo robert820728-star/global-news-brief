@@ -160,15 +160,7 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("30%／20%／15%／15%／10%／10%", install)
         self.assertIn("Reader、manifest 與 publisher 只接受 validated", install)
 
-    def test_pre_manifest_recovery_bundle_gate_precedes_selection(self):
-        required_artifacts = (
-            "recovery/checkpoint.json",
-            "recovery/source-candidates.json",
-            "recovery/news-relevance-gate.json",
-            "recovery/model-source-candidates.json",
-            "recovery/preprocessed-candidates.json",
-            "recovery/content-hydration-batches.json",
-        )
+    def test_pre_manifest_recovery_bundle_is_conditional_not_a_selection_gate(self):
         documents = (
             ROOT / "daily-schedule-prompt.md",
             ROOT / ".agents/skills/daily-news-brief/SKILL.md",
@@ -177,19 +169,17 @@ class PipelineContractTests(unittest.TestCase):
         for path in documents:
             text = path.read_text(encoding="utf-8")
             for marker in (
-                "PRE_MANIFEST_RECOVERY_BUNDLE_GATE",
+                "CONDITIONAL_RECOVERY_BUNDLE_POLICY",
                 "pack-recovery",
-                "atomic tree/commit",
                 "restore",
                 "FIRST_SELECT_NEWS_EVENTS_EXECUTION",
-                *required_artifacts,
+                "cross-host handoff",
+                "ephemeral workspace",
+                "warning or timeout boundary",
             ):
                 self.assertIn(marker, text, path.name)
-            self.assertLess(
-                text.index("PRE_MANIFEST_RECOVERY_BUNDLE_GATE"),
-                text.index("FIRST_SELECT_NEWS_EVENTS_EXECUTION"),
-                path.name,
-            )
+            self.assertNotIn("PRE_MANIFEST_RECOVERY_BUNDLE_GATE", text, path.name)
+            self.assertIn("local hash", text, path.name)
 
         checkpoint = (ROOT / "scripts/news_run_checkpoint.py").read_text(encoding="utf-8")
         self.assertIn('"scripts/manage_canonical_run_bundle.py"', checkpoint)
@@ -671,7 +661,7 @@ class PipelineContractTests(unittest.TestCase):
             "NATIVE_MEDIA_UNAVAILABLE",
             "reader-canonical-capability-degraded",
             "# 每日新聞讀者版",
-            "PRE_MANIFEST_RECOVERY_BUNDLE_GATE",
+            "CONDITIONAL_RECOVERY_BUNDLE_POLICY",
             "recover_news_run.py plan",
             "--bootstrap-receipt",
         ):

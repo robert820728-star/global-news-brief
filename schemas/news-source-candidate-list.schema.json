@@ -19,7 +19,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["candidate_id", "source_id", "source_name", "section", "title", "summary", "summary_quality", "discovery_signals", "published_at", "url", "categories", "importance_hint", "acquisition_route", "canonical_url", "normalized_title", "dedup_seed", "snapshot_path", "page_index"],
+        "required": ["candidate_id", "source_id", "source_name", "section", "title", "summary", "summary_quality", "discovery_signals", "published_at", "url", "categories", "discovery_priority_reason", "acquisition_route", "canonical_url", "normalized_title", "dedup_seed", "snapshot_path", "page_index"],
         "properties": {
           "candidate_id": {"type": "string", "minLength": 12},
           "source_id": {"type": "string", "minLength": 1},
@@ -32,7 +32,7 @@
           "published_at": {"type": "string", "format": "date-time"},
           "url": {"type": "string", "format": "uri"},
           "categories": {"type": "array", "items": {"type": "string"}},
-          "importance_hint": {"type": "string", "minLength": 1},
+          "discovery_priority_reason": {"type": "string", "minLength": 1},
           "acquisition_route": {"enum": ["aggregate_api", "structured_direct", "html_direct", "browser_rendered", "same_source_alternate"]},
           "canonical_url": {"type": "string", "format": "uri"},
           "normalized_title": {"type": "string", "minLength": 1},

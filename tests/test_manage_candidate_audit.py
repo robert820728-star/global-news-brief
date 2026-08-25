@@ -94,9 +94,6 @@ def grading_evidence(grade="C"):
         "direct_consequences": ["已造成可驗證的公共服務變化"] if grade not in {"C", "C-", "D", "E"} else [],
         "structural_significance": "形成可追蹤的制度或公共風險訊號",
         "window_material_changes": ["本期首次正式確認事件"],
-        "why_current_grade": "影響範圍與本期增量符合目前級距",
-        "why_not_higher": "尚未造成更廣泛的跨國或系統性影響",
-        "why_not_lower": "存在具體且可驗證的新進展",
         "policy_governance_review": policy_governance_review(),
         "local_disaster_review": {"applies": False},
         "border_conflict_review": {

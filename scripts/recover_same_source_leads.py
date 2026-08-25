@@ -87,7 +87,7 @@ def rank_scan(scan: dict, source: dict, coverage: dict) -> dict:
             "published_at": item["published_at"],
             "discovery_priority_score": materializer.discovery_priority_score(signals),
             "discovery_signals": signals,
-            "discovery_priority_reason": item.get("importance_hint") or item["title"],
+            "discovery_priority_reason": item.get("discovery_priority_reason") or item["title"],
         })
     ranked.sort(
         key=lambda item: (item["discovery_priority_score"], item["published_at"], item["url"]),

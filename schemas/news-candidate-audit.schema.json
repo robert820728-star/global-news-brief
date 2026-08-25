@@ -414,9 +414,6 @@
             "direct_consequences": {"type": "array", "items": {"type": "string", "minLength": 1}},
             "structural_significance": {"type": "string", "minLength": 1},
             "window_material_changes": {"type": "array", "items": {"type": "string", "minLength": 1}},
-            "why_current_grade": {"type": "string", "minLength": 1},
-            "why_not_higher": {"type": "string", "minLength": 1},
-            "why_not_lower": {"type": "string", "minLength": 1},
             "policy_governance_review": {"$ref": "#/$defs/policyGovernanceReview"},
             "local_disaster_review": {"$ref": "#/$defs/localDisasterReview"},
             "border_conflict_review": {

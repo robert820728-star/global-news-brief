@@ -33,12 +33,12 @@ python3 scripts/news_run_checkpoint.py init --output <checkpoint> --run-id <run-
    - `EVENT_REGION_AND_TIME_IDENTITY_GATE`：要求 `select-news-events` 在六項評分前從內容填妥 `event_identity.country_codes`、`primary_country_code`、`location_evidence`、`event_occurred_at`、`material_update_at`、`material_update_type`、`material_update_evidence` 與 `temporal_review`。來源分桶不是事件地區；時間資格由模型比較文章內容與十四天時間線，區分新事件、持續跨窗的當下影響、實質更新及舊事重述；程式只驗證證據一致性。已結束舊事件只是重複舊傷亡、重新整理、回顧、週年、換標題或重刊時為 `non_news`；開始較早但仍在窗內持續造成可驗證影響的事件可保留。缺漏或矛盾維持 `unresolved`，不得進評分、選入或 reader。
 4. `select-news-events`：依設定評級與門檻挑選事件；每筆保存 `grading_evidence`。事件與 URL 映射只能由本輪 fresh pool 建立，禁止匯入舊 `work/validation-run-*` 的 driver、事件常數或 URL 映射。輸出後執行 `scripts/validate_selection_freshness.py --selection <selection-results> --source-candidates <source-candidates>`；C 以上不得無故消失，且每個 `selected_event_id` 都必須存在於本輪事件。邊境衝突與長期戰爭例行更新依既定 continuity 規則處理。
    - 內容補齊遵守 `CONTENT_HYDRATION_BATCH_RECEIPT_GATE`：只能對 admitted rows 以最多 20 列的可恢復 connector 批次執行；不得用單一 shell 多網域抓取。每批 append-only 留下 running/terminal receipt、逐 URL 狀態與內容 hash，中斷只續第一個未完成批次。
-5. `audit-news-candidates`：所有候選都留下 selected/excluded/merged/deferred 與明確理由，十四天稽核保存三個 discovery routes 的完整海選清單、GDELT acquisition mode、每筆 `public_value_v2` 六項 0–100 分數、加權總分、fact 證據、Actual／Potential 分類、delta、challenge、confidence 與 `grade_status`，並完成 source-scan 證據驗證。本輪所有 C 級以上且 `grade_status=validated` 的候選（含合併項）都以 `selected_event_id` 一對一對應 manifest／讀者版事件，再把 candidate audit 綁定 checkpoint。
+5. `audit-news-candidates`：source-scan 列只保存 discovery priority；語意事件才保存 `public_value_v2` 六項 0–100 分數、加權總分、fact 證據、Actual／Potential 分類、delta、challenge、confidence 與 `grade_status`。所有候選留下 selected/excluded/merged/deferred 與明確理由，並完成 source-scan 證據驗證。本輪所有 C 級以上且 `grade_status=validated` 的候選（含合併項）都以 `selected_event_id` 一對一對應 manifest／讀者版事件，再把 candidate audit 綁定 checkpoint。
 6. `materialize-manifest`：只能把 audit 中 selected event ids 物化為 manifest，兩者必須一一對應；完成後綁定 manifest。從這一步起，事件內容只由 manifest 驅動。
 7. `verify-news-events` → `build-news-maps` → `build-news-charts` → `collect-news-images`：各技能只改自己的欄位。驗證結果必須先寫成 stage patch JSON，再用 `scripts/apply_event_stage_patch.py --stage verify-news-events` 合併；禁止用 jq 或 shell 字串插值直接改寫 manifest。`verify-news-events` 完成時只執行 `scripts/validate_news_brief.py stage --stage verify-news-events --before <before-manifest> --after <after-manifest>`；map、chart、image 階段同樣只執行自己的 stage ownership 檢查。地圖、圖表、圖片互相獨立，不得互相替代。來源圖有合格圖片時必須取得並視覺驗收；需要專業官方資訊圖的事件不能用一般照片取代。地圖使用完整 canonical basemap、繁體中文地名、既定 yellow-admin-v2 規格。capsule 不搬運可重建的 generated PNG/SVG；需要時由 capsule 內的 canonical map source/style 與 renderer 在本地重建。
 8. 每個 post-manifest stage 結束後使用 `recover_news_run.py plan --input <manifest> --brief <brief>` 檢查事件級失敗；同時更新同一 checkpoint。不得對 `recover_news_run.py` 虛構 `--checkpoint` 參數。
 9. 只有 checkpoint 的 `collect-news-images` completed 後，才第一次執行 `scripts/validate_news_brief.py manifest --input <final-manifest>`。它是 final-manifest validator，不得提前到 verify、map 或 chart 階段。若意外提前執行，script 只會輸出 `DEFERRED`；這是可恢復的無副作用誤呼叫，不代表驗證通過，也不得標記整輪失敗。繼續圖片階段並在其 completed 後重跑到輸出 `OK`。通過後從 manifest 渲染讀者版，綁定 `render` 的 `brief` artifact，再跑 `validate_map_decisions.py`、`validate_news_brief.py brief` 與 unique-delivery-gate 檢查。失敗只局部恢復，不直接輸出草稿。
-10. 發布只能由 `scripts/publish_news_brief.py` 建立 release 與 receipt。publisher 成功後，先以 `scripts/manage_canonical_run_bundle.py pack` 將本輪所有必要 run artifacts 建立為 connector-safe transport；大檔必須是 `storage.mode=chunked`，每個 upload 必須是 `encoding=base64` 並綁定原始 SHA-256 與預期 Git blob SHA。上傳後以單一 atomic tree/commit 同時發布 bundle 與 `logs/current.json`，再用 `verify`／`restore` 重組並核對 byte identity。最終交付只能執行 `--deliver-receipt ... --checkpoint <checkpoint> --conversation-transport`；receipt 不是通行證本身，canonical publisher 在真正輸出前會再次驗證目前 bootstrap binding、checkpoint、candidate audit/source scan、manifest、讀者版、附件與 map decisions。`NATIVE_MEDIA_CAPABILITY_FALLBACK` 只適用於宿主明確無法產生原生媒體時：保留 verified image evidence 與每則 `reader_omission_note`，允許文字 reader 交付，但不得宣稱原生像素驗收；缺少圖片證據或所需地圖仍須恢復。conversation transport 只能把 Markdown 本機圖片路徑轉成 `sandbox:` URI，不得修改 canonical release 或文字。任何其他失敗 stdout 必須為空並返回恢復流程。
+10. 發布只能由 `scripts/publish_news_brief.py` 建立 release 與 receipt。publisher 成功後，先以 `scripts/manage_canonical_run_bundle.py pack` 將本輪所有必要 run artifacts 建立為 connector-safe transport；大檔必須是 `storage.mode=chunked`，每個 upload 必須是 `encoding=base64` 並綁定原始 SHA-256 與預期 Git blob SHA。上傳後以單一 atomic tree/commit 同時發布 bundle 與 `logs/current.json`，再用 `verify`／`restore` 重組並核對 byte identity。最終交付只能執行 `--deliver-receipt ... --checkpoint <checkpoint> --conversation-transport`；canonical publisher 在輸出前會再次驗證 bootstrap binding、checkpoint、candidate audit/source scan、manifest、讀者版、附件與 map decisions。`NATIVE_MEDIA_CAPABILITY_FALLBACK` 保留 verified image evidence 與每則 `reader_omission_note`，允許非關鍵視覺省略後交付文字 reader；只有 `claim_critical=true` 的視覺缺失必須恢復。conversation transport 只能把 Markdown 本機圖片路徑轉成 `sandbox:` URI，不得修改 canonical release 或文字。
 
 每個 stage 都必須依序經過 `pending → running → completed`；只有 `running` 可轉為 `failed`。下一 stage 只能在前一 stage 已完成後開始。`completed` 必須綁定 `scripts/news_run_checkpoint.py` 內 `REQUIRED_STAGE_ARTIFACTS` 宣告的具名產物；空 evidence、缺少具名產物或直接填寫 completed 均視為跳關並由 checkpoint／publisher 阻擋。
 
@@ -65,11 +65,13 @@ python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 Repository 內只能有一個 canonical publisher：`scripts/publish_news_brief.py`。其他腳本不得建立保留 release 檔名。`daily-schedule-prompt.md` 必須且只能宣告一次 canonical gate 與一次 receipt delivery 命令。最終對話內容只可來自 canonical publisher 的 `--deliver-receipt ... --conversation-transport` stdout；canonical release 與其 SHA-256 保持不變，不得重新讀取 release 後自行轉貼、加前後文、重寫摘要、回退到草稿或舊 release。
 
 
-## Durable pre-manifest recovery boundary
+## Conditional pre-manifest recovery boundary
 
-`PRE_MANIFEST_RECOVERY_BUNDLE_GATE`
+`CONDITIONAL_RECOVERY_BUNDLE_POLICY`
 
-After `preprocess-news-candidates` is completed and before selection can become running, execute:
+After `preprocess-news-candidates` completes, record each artifact's local hash in the checkpoint. `FIRST_SELECT_NEWS_EVENTS_EXECUTION` may start immediately when the workspace is durable and the local hash/checkpoint binding validates. Do not make a remote recovery bundle a routine selection gate.
+
+Create and verify the recovery bundle only for a real `cross-host handoff`, an `ephemeral workspace`, or an approaching `warning or timeout boundary`:
 
 ```powershell
 python scripts/manage_canonical_run_bundle.py pack-recovery --run-id <run-id> --checkpoint <checkpoint> --source-candidates <source-candidates> --relevance-gate <relevance-gate> --admitted-candidates <model-source-candidates> --preprocessed-candidates <preprocessed-candidates> --batch-index <content-hydration-batches> --transport-dir <transport-dir> --manifest <recovery-bundle-manifest>
@@ -77,7 +79,7 @@ python scripts/manage_canonical_run_bundle.py verify --manifest <recovery-bundle
 python scripts/manage_canonical_run_bundle.py restore --manifest <recovery-bundle-manifest> --transport-dir <transport-dir> --output-dir <restore-proof-dir>
 ```
 
-Publish the following six logical artifacts in one `atomic tree/commit`, read the commit back, and prove restored byte identity before selection starts:
+The optional bundle contains these six logical artifacts:
 
 - `recovery/checkpoint.json`
 - `recovery/source-candidates.json`
@@ -86,6 +88,4 @@ Publish the following six logical artifacts in one `atomic tree/commit`, read th
 - `recovery/preprocessed-candidates.json`
 - `recovery/content-hydration-batches.json`
 
-If the live workspace disappears, restore these artifacts from the same run's verified recovery bundle and resume only the first incomplete batch. Never create a replacement run to conceal missing recovery inputs.
-
-`FIRST_SELECT_NEWS_EVENTS_EXECUTION`: only after this gate passes may `select-news-events` be marked running or content hydration begin.
+If a handoff or workspace loss occurs, `restore` these artifacts from the same run's verified bundle and resume only the first incomplete batch. Never create a replacement run to conceal missing recovery inputs. Bundle creation failure is blocking only when the declared handoff or workspace-risk condition makes that bundle necessary.

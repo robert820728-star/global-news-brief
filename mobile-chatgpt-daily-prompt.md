@@ -88,7 +88,7 @@ The required order for every configured discovery route is: `canonical route -> 
 1. 使用網頁搜尋及已連接 app 搜尋監控區域最近 24 小時的新聞。優先採用官方機關、原始資料、通訊社與可靠媒體；不得用模型記憶補新聞。
    - `TAIWAN_DOMESTIC_COVERAGE_GUARD`：中央社清單另補查經濟產業、食藥消費安全、中央政策制度三個領域，每個領域最多 `5 results`。只有中央社清單不可用或明顯過舊時，才使用網頁搜尋補候選；命中仍須先查重與評分，不得因搜尋命中就直接入選或抓圖片。
 2. 將找到的新聞按底層事件合併，保留本輪完整海選清單。不同來源報導同一事件可合併，但每個來源網址都要保留。
-3. 海選清單每一筆都使用 `public_value_v2`。先建立唯一 `evidence_facts`，分入 realized／ongoing／potential／speculative `consequence_evidence`，再由六項 `dimension_evidence` 引用 fact ID；六項各以 0–100 評分，依 Impact 30%、Scope 20%、Urgency 15%、Structural 15%、Update 10%、Relevance 10% 計算 `weighted_score`，且 `importance_score` 必須相同。標準分以 10 分為主，使用 5 分中點時必填 `midpoint_rationales`。任何單一項都不是最終等級硬上限，也不得另建地域例外補丁。`PUBLIC_VALUE_V2_NORMALIZED_WEIGHTED_SCORING` `EVIDENCE_BEFORE_SCORE_GATE`
+3. 來源海選列只保存 `discovery_priority_score`、`discovery_signals` 與 `discovery_priority_reason`，不得產生正式 importance 或等級。完成文章 hydration、語意去重與事件身分後，才對每個語意事件使用 `public_value_v2`：先建立唯一 `evidence_facts`，分入 realized／ongoing／potential／speculative `consequence_evidence`，再由六項 `dimension_evidence` 引用 fact ID；六項各以 0–100 評分並依設定權重計算。任何單一項都不是最終等級硬上限。`PUBLIC_VALUE_V2_NORMALIZED_WEIGHTED_SCORING` `EVIDENCE_BEFORE_SCORE_GATE`
    - Impact／Scope／Urgency 只能引用 realized／ongoing；Structural 才可引用高可信且有制度機制的 potential；speculative 不得支撐任何分數。
    - Update 70 以上必填相對十四天 continuity 的 `delta_facts`；同一 fact 支撐三項以上必填 `cross_dimension_rationales`；任何單項 70 以上與總分 70 以上都須完成 sustained `high_score_challenges`。`HIGH_SCORE_CHALLENGE_GATE`
    - 政策事件填 `policy_stage`，不得把 proposal 的理論覆蓋人口當成已受影響人口；`evidence_confidence`／`confidence_band` 不乘進總分。只有全部 gate 通過才能標 `grade_status=validated`，Reader 禁止 provisional。
@@ -103,7 +103,7 @@ The required order for every configured discovery route is: `canonical route -> 
    - 大量傷亡會使重要性／嚴重程度接近高分，但醫療崩潰、治理失能、流離失所、跨境衝擊與長期結構改變仍須分別放入相應項目，再由總分得出等級。`MASS_CASUALTY_REQUIRES_INTEGRATED_SCORING`
    - 軍事／衝突事件先判斷是否為長期戰爭的同戰線、同型態、例行傷亡更新；這類更新因本期新進展與新增後果低而通常落到 D。若有戰局反轉、停火變化、新國家／新戰線或外部系統衝擊，按新證據重算六項，不直接繼承或套用母事件等級。
    - `MATERIAL_UPDATE_48_HOUR_REENTRY_GATE`（延伸原 `MATERIAL_UPDATE_REENTRY_GATE`）：以同一事件上次進入讀者版的交付時間起算 48 小時冷卻期；不得只因仍在十四天內每天重刊。48 小時內，只有本輪新增的數字、正式決策、執行結果、制度改變、衝突升降級或其他實質進展，而且本日新增部分必須獨立達到 C 級門檻，才重新進入讀者版；但颱風、地震、疾病、戰爭、公共安全、政策或市場事件若發生死傷、範圍、傳播、戰線、關鍵系統或制度後果的實質惡化，必須立即依新增事實重新評級，不得等滿 48 小時。滿 48 小時後，必須按當下可驗證影響重新完成六項評分；仍獨立達到 C 級才可再次刊登，低於 C 則只留十四天稽核或依既有規則退場。時間經過本身不得自動重刊，也不得繼承上次或母事件等級；紀念日、重述背景或媒體回顧不算更新。
-   - `IMPACT_DELTA_CONTINUITY_SCORING`：用十四天清單對照同一 `continuity_key`，本輪評級基準是本日可驗證的影響力變化，不是照抄事件最初或歷史最高等級。無新增公共影響的名人死亡、喪禮或重複報導隨時效衰退，當日本身應下調到 D／E 並只留稽核；原始事件的歷史評級仍保留。颱風、地震、疾病與戰爭若出現死傷增加、影響範圍擴大、傳播／戰線擴張、關鍵系統中斷或制度後果，依新增事實重新評級，可高於前輪；反之受控、停火、疫情消退或官方下修數字時可下降。不得因事件較舊而自動降級，亦不得因新聞重複刊登而維持高級，必須說明本輪影響力相對十四天基準上升、持平或下降。
+   - `IMPACT_DELTA_CONTINUITY_SCORING`：用十四天清單對照同一 `continuity_key`，本輪評級基準是本日可驗證的影響力變化，不是照抄事件最初或歷史最高等級。無新增公共影響的名人死亡、喪禮或重複報導，應因本期增量、急迫性及其他當輪證據自然下降並只留稽核，不得直接指定 D／E；原始事件的歷史評級仍保留。颱風、地震、疾病與戰爭若出現死傷增加、影響範圍擴大、傳播／戰線擴張、關鍵系統中斷或制度後果，依新增事實重新評級；反之受控、停火、疫情消退或官方下修數字時可下降。不得因事件較舊而自動降級，亦不得因新聞重複刊登而維持高級。
    - 事件年齡本身不得設定日數等級上限。一次性事件若沒有新增後果，應由 `material_new_development`、急迫性及其他六項證據自然降低；只要仍有當下影響或實質變化，就依 `IMPACT_DELTA_CONTINUITY_SCORING` 重新計分。
    - `NO_PARENT_GRADE_INHERITANCE`：合併到舊事件的新消息必須先獨立完成六項評分，不得繼承母事件的歷史最高等級。例如「中國 7 月整體經濟轉弱」可依宏觀數據評 B／B+，但後續一般縣域消費措施不得繼承母事件的 B 或 B+；若措施本身沒有明確預算、強制力、廣泛制度改變或可量化效果，預設低於 C。
    - `CEREMONIAL_AND_SINGLE_COMPANY_ROUTINE_LOW`：喪禮、降半旗、紀念活動、例行訪問及一般人事禮儀，若沒有可驗證的權力重組、政策轉向、重大外交或社會後果，預設 D。單一公司上市、一般募資、例行財報或產品發布，若沒有系統性市場影響、產業控制、重大監管、國安、關鍵供應鏈或使用者指定加重關聯，也預設 D；公司知名度本身不能升到 C。

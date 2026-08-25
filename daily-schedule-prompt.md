@@ -157,10 +157,10 @@ Stage -1 完成後，至少讀取並遵守：
 1. `source-scan`
    - 必須先調用 `acquire-news-candidates`，依 `news-source-pool.json.discovery_sources` 取得 GDELT、中央社與中新社候選並產生 `work/source-candidates.json`；其餘來源只在評分後作事件驗證。
    - 來源擷取必須以 Stage -1 回傳的 `<bundled-python> scripts/fetch_source_routes.py --route-config source-route-config.json --output-dir <run-work-dir> --window-start <window-start>` 執行；此跨平台 canonical fetcher 保存逐站及已設定分頁的原始 bytes、SHA-256、page chain 與 `source-route-coverage.json`。不得改用 PowerShell web cmdlet、Node `fetch` 或臨時 helper 重試同一批路由。
-   - `source-route-config.json` 只定義 GDELT、中央社與中新社三個 discovery routes；`minimum_ready_routes=1`。`GDELT_RESILIENT_ACQUISITION` 必須直接讀 GDELT 官方 15 分鐘 export archives；只有 archive 不可用時才可發送一次不阻塞的 DOC API 補充請求，且不得因 429 等待或重試，最後才使用有時效標記的有效快取。任何降級都要記錄 acquisition mode，但不得停止發佈。`FULL_DISCOVERY_POOL_UNCAPPED` 要求每個成功 route 的精確 24 小時完整清單全部進入去重與評分，不得截斷為前 30 或其他預設數量。`REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE` 另要求中央社／中新社等 regional supplements 的全部窗內 provisional groups 保留到模型 `candidate_groups`；GDELT heat、搜尋熱度與關鍵字只能增加召回或排序，不能排除本地群組。模型輸入建立後、語意合併與六項評分前執行 `python3 scripts/validate_local_source_admission.py --preprocessed <preprocessed-candidates.json> --selection <selection-results.json> --source-pool news-source-pool.json`，失敗不得繼續。
-   - route fetch 完成後必須執行 `scripts/materialize_source_scans.py --checkpoint <checkpoint> --source-pool news-source-pool.json --route-coverage <route-coverage> --output-dir <source-scans-dir> --coverage-output <source-coverage.json>`；只有此 canonical materializer 產生的逐站 scans、terminal proof、完整 ranked_items 與六項分數可進入 candidate audit。不得改用 run 目錄內的臨時 helper。
+   - `source-route-config.json` 只定義 GDELT、中央社與中新社三個 discovery routes；`minimum_ready_routes=1`。中新社抓執行日與前一日日索引；中央社依 `NextPageIdx` 翻頁至跨過窗起點或耗盡。GDELT 只有預期 archive 分片全部成功才是 `coverage_complete`，部分成功必須標 `degraded_partial`；archive 不可用時才可發送一次不阻塞的 DOC API 補充請求，最後才使用有效快取。`FULL_DISCOVERY_POOL_UNCAPPED` 要求每個成功 route 的完整窗內清單全部進入去重；`REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE` 要求 regional supplements 全數進模型，GDELT 弱 signal 進 `lightweight_semantic_review` 後仍保留於模型輸入，heat 與關鍵字不得在模型前排除事件。語意合併與六項評分前執行 `validate_local_source_admission.py`，失敗不得繼續。
+   - route fetch 完成後必須執行 `scripts/materialize_source_scans.py --checkpoint <checkpoint> --source-pool news-source-pool.json --route-coverage <route-coverage> --output-dir <source-scans-dir> --coverage-output <source-coverage.json>`；只有此 canonical materializer 產生的逐站 scans、terminal proof、完整 ranked_items 與 discovery priority 可進入 candidate audit。不得改用 run 目錄內的臨時 helper。
    - materializer 完成後只驗證實際成功的 discovery scans；失敗路由保留在 route coverage 中供診斷，不得把驗證來源清單誤當 discovery completeness gate。
-   - 每個站內海選條目必須保存 `public_value_v2` 六項 0–100 `importance_breakdown`、依 `news-source-pool.json` 權重計算的 `importance_score` 與理由，並隨十四天候選稽核保存。
+   - 每個站內海選條目只保存 `discovery_priority_score`、`discovery_signals` 與 `discovery_priority_reason`；這是 discovery 排序提示，不是 `public_value_v2`、`importance_score` 或正式等級。正式 V2 只在語意事件階段產生。
    - 直接 API／RSS／HTML 失敗時先切同站替代入口；只有目前工具契約明確允許時才可用完整瀏覽器渲染並保存 DOM。瀏覽器不得是完成排程的必要依賴，不得用別站冒充該站本輪掃描完成。
    - `TAIWAN_DOMESTIC_COVERAGE_GUARD`：中央社 discovery 另按 `taiwan_coverage_sweeps` 對經濟產業、食藥消費安全、中央政策制度各做最多 `5 results` 的補漏；中央社不可用或明顯過舊時才用網頁搜尋作最後候選備援。任何補漏仍先查重與評分，只有完成獨立驗證且達 C 級才進 selection，之後才開始圖片工作。
 2. `preprocess-news-candidates`
@@ -177,7 +177,7 @@ Stage -1 完成後，至少讀取並遵守：
    - 此階段只能用 `scripts/validate_news_brief.py stage --stage verify-news-events --before <before-manifest> --after <after-manifest>` 檢查欄位所有權；不得在此時執行 final-manifest validator，因地圖、圖表與圖片欄位尚未完成。
 7. `build-news-maps`
    - 必須以 Stage -1 已解析、確認含 Pillow 的 bundled Python 執行 `scripts/render_base_maps.py`；不得回退到 PATH Python、不得安裝 matplotlib。執行前後都必須重驗 bootstrap integrity，若任何 receipt 綁定檔改變，該 stage 不得完成。
-   - 先執行一次無參數 renderer，確認三個 canonical 底圖 `taiwan-counties-yellow-v2.png`、`china-provinces-yellow-v2.png`、`world-countries-pacific-robinson-yellow-v2.png` 都由本輪 workspace 產生。每個 `map.required=true` 事件再建立 overlay JSON，依行政區精確鍵值著色並提供繁中 `label`，以 `<bundled-python> scripts/render_base_maps.py --overlay-spec <file>` 產生事件圖；不得直接引用 workspace 外殘留的舊 PNG。
+   - 先執行一次無參數 renderer，確認三個 canonical 底圖 `taiwan-counties-yellow-v2.png`、`china-provinces-yellow-v2.png`、`world-countries-pacific-robinson-yellow-v2.png` 都由本輪 workspace 產生。每個事件先判定 `map.required` 與 `map.claim_critical`；需要地圖時建立 overlay JSON，依行政區精確鍵值著色並提供繁中 `label`，以 `<bundled-python> scripts/render_base_maps.py --overlay-spec <file>` 產生事件圖。非主張關鍵地圖產生失敗時可記為 `omitted` 並繼續文字 reader；主張關鍵地圖仍須 `ready`。
 8. `build-news-charts`
 9. `collect-news-images`
     - 對已選取且有候選來源圖片的事件，先建立只含 `event_id`、`source_page_url`、`source_image_url`、`alt`、`credit` 的 JSON 陣列；`source_image_url` 必須是來源頁實際檢出的 og:image、src/srcset 或官方媒體檔，不得等於文章頁網址。先下載原始媒體檔；下載失敗時才以同一來源頁或官方產品頁截圖補救，再執行 `<bundled-python> scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>` 驗證可取得的實體檔。已有 `status=ready`、可解碼且含 `local_path`、MIME、尺寸與 SHA-256 的 JPEG／WebP 時，必須先實際嘗試宿主支援的本機附件或本機媒體呈現方式；不得只因工具名稱中沒有特定 media API 就預判不可交付。只有實際交付嘗試失敗後才可套用 `NATIVE_MEDIA_CAPABILITY_FALLBACK`，保存嘗試證據與 `reader_omission_note`；它不阻擋已驗證 reader 或 `status=completed`，也不得冒稱原生附件已交付。
@@ -255,7 +255,7 @@ Bundle persistence is executable, not a prose-only obligation. First run `script
 - candidate audit 與 source-scan 證據有效；
 - manifest/schema 有效；
 - map decisions、reader brief 與附件 validators 通過；
-- 每個 `map.required=true` 的事件皆為 `map.status=ready` 且至少有一張地圖附件；
+- 每個 `map.claim_critical=true` 的事件皆為 `map.status=ready` 且至少有一張地圖附件；非關鍵地圖或圖片若省略，已保存後台原因與讀者說明；
 - reader 中所有 Markdown 圖片都逐一對應 manifest，位於所屬新聞內，依地圖、資料圖表、來源圖片排序，並由緊接附件的地圖一／資料圖表一／圖一／圖二圖說識別；reader 其他位置不得有圖片；
 - unique delivery gate 通過；
 - publisher 建立 `release-receipt.json`；
@@ -284,11 +284,13 @@ Bundle persistence is executable, not a prose-only obligation. First run `script
 若停止，必須回報**最早不可恢復 blocker**及已完成到哪個 stage，不得把後續未執行階段誤報成故障來源。
 
 
-## Durable pre-manifest recovery boundary
+## Conditional pre-manifest recovery boundary
 
-`PRE_MANIFEST_RECOVERY_BUNDLE_GATE`
+`CONDITIONAL_RECOVERY_BUNDLE_POLICY`
 
-After `preprocess-news-candidates` is completed and before selection can become running, execute:
+After `preprocess-news-candidates` completes, record each artifact's local hash in the checkpoint. `FIRST_SELECT_NEWS_EVENTS_EXECUTION` may start immediately when the workspace is durable and the local hash/checkpoint binding validates. Do not make a remote recovery bundle a routine selection gate.
+
+Create and verify the recovery bundle only for a real `cross-host handoff`, an `ephemeral workspace`, or an approaching `warning or timeout boundary`:
 
 ```powershell
 python scripts/manage_canonical_run_bundle.py pack-recovery --run-id <run-id> --checkpoint <checkpoint> --source-candidates <source-candidates> --relevance-gate <relevance-gate> --admitted-candidates <model-source-candidates> --preprocessed-candidates <preprocessed-candidates> --batch-index <content-hydration-batches> --transport-dir <transport-dir> --manifest <recovery-bundle-manifest>
@@ -296,7 +298,7 @@ python scripts/manage_canonical_run_bundle.py verify --manifest <recovery-bundle
 python scripts/manage_canonical_run_bundle.py restore --manifest <recovery-bundle-manifest> --transport-dir <transport-dir> --output-dir <restore-proof-dir>
 ```
 
-Publish the following six logical artifacts in one `atomic tree/commit`, read the commit back, and prove restored byte identity before selection starts:
+The optional bundle contains these six logical artifacts:
 
 - `recovery/checkpoint.json`
 - `recovery/source-candidates.json`
@@ -305,6 +307,4 @@ Publish the following six logical artifacts in one `atomic tree/commit`, read th
 - `recovery/preprocessed-candidates.json`
 - `recovery/content-hydration-batches.json`
 
-If the live workspace disappears, restore these artifacts from the same run's verified recovery bundle and resume only the first incomplete batch. Never create a replacement run to conceal missing recovery inputs.
-
-`FIRST_SELECT_NEWS_EVENTS_EXECUTION`: only after this gate passes may `select-news-events` be marked running or content hydration begin.
+If a handoff or workspace loss occurs, `restore` these artifacts from the same run's verified bundle and resume only the first incomplete batch. Never create a replacement run to conceal missing recovery inputs. Bundle creation failure is blocking only when the declared handoff or workspace-risk condition makes that bundle necessary.

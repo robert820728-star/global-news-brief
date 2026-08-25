@@ -152,9 +152,6 @@ def write_valid_audit(root: Path):
             "direct_consequences": ["全國公共服務規則正式改變"],
             "structural_significance": "政策正式生效",
             "window_material_changes": ["本期完成法定程序"],
-            "why_current_grade": "具全國性實質政策影響",
-            "why_not_higher": "沒有跨國或重大系統危機",
-            "why_not_lower": "政策已正式生效而非僅為表態",
             "policy_governance_review": {"applies": False},
             "local_disaster_review": {"applies": False},
             "border_conflict_review": {

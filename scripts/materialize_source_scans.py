@@ -158,7 +158,7 @@ def add_item(items: dict, *, request_url: str, homepage: str, route: str, url_ev
         "summary_quality": summary_quality,
         "published_at": published.isoformat(), "url_evidence": url_evidence,
         "published_evidence": published_evidence, "categories": [],
-        "importance_hint": title[:160], "acquisition_route": route,
+        "discovery_priority_reason": title[:160], "acquisition_route": route,
         "discovery_signals": signals,
     }
     if isinstance(image_url_hint, str) and image_url_hint.startswith(("http://", "https://")):

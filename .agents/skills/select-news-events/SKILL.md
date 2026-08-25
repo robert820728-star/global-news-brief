@@ -47,7 +47,7 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 
 不得在本技能臨時重新抓新聞。先調用 `acquire-news-candidates` 執行三條 discovery routes，保存原始快照、SHA-256、連續翻頁鏈及時間邊界或來源耗盡證據，再讀取候選清單。驗證器必須從快照重算清單，禁止模型自行宣告筆數。直接連結遇到403、robots、不支援 MIME、逾時、解析失敗或動態內容未載入時，依 `canonical route → same-site direct fetch → same-site alternate non-browser route → browser-rendered snapshot` 恢復；瀏覽器只可作最後備援。不得以總候選數或任何等級數量作為成功門檻。
 
-每條成功 route 確認完整抵達精確 24 小時邊界後，再按公共價值排序；每筆都依 `public_value_v2` 保存六項 0–100 `importance_breakdown`、依設定權重計算的 `importance_score` 與事件特有理由。`FULL_DISCOVERY_POOL_UNCAPPED` 要求成功 route 的全部已驗證窗內條目入池，不設前 30 或其他預設名額。不得把其他來源冒充為某 route 覆蓋；文化產業、創作者生態或平台制度轉折仍依六項指標正常評分，不得因娛樂新聞整體降權而漏掉。保存 route 確認紀錄後才可跨來源去重。
+每條成功 route 確認完整抵達精確 24 小時邊界後，再按 `discovery_priority_score` 排序；每筆保存 `discovery_signals` 與事件特有的 `discovery_priority_reason`。這些欄位只是 hydration 次序，不是 `public_value_v2`、`importance_score` 或正式等級。`FULL_DISCOVERY_POOL_UNCAPPED` 要求成功 route 的全部已驗證窗內條目入池，不設前 30 或其他預設名額。不得把其他來源冒充為某 route 覆蓋；保存 route 確認紀錄後才可跨來源去重。
 
 搜尋各設定板塊及公共政策、經濟、科技、資安、國際關係、災害、公衛、公共安全、科學、自然史、文化與產業。
 
@@ -103,9 +103,8 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 - 不得把一般受傷等同重傷，不得把警報覆蓋人口等同直接受影響人口，也不得由單張震撼圖片推高評級。
 - 所有事件都以六項證據綜合評分；死亡數、地域數、國家大小或任何單一項都不得直接指定最終等級，也不得建立地域硬上限或例外補丁。重要性／嚴重程度放入 `public_impact`，直接人口／行政區／國家／公共系統範圍放入 `geographic_or_population_scope`，其餘四項各自獨立給分，最後依固定總分級距換算 `SS` 至 `E`。
 - 每個候選先填唯一 `evidence_facts`，以 `consequence_evidence` 分開 realized／ongoing／potential／speculative，再由逐項 `dimension_evidence` 引用 fact ID；之後才填 0–100 `importance_breakdown`、加權 `importance_score` 與 `grading_evidence`。5 分中點需 `midpoint_rationales`；三項以上重用同一 fact 需 `cross_dimension_rationales`；單項或總分達 70 需完成 `high_score_challenges`。政策事件填 `policy_stage`，證據成熟度另填 `evidence_confidence`／`confidence_band`。只有所有 gate 通過才能標 `grade_status=validated`；只有 `grade_reason`、模板句、關鍵字或未來可能性不得完成評級。
-- 來源清單的站內 `importance_score` 只供 discovery 排序；去重後的最終候選必須從零依事件證據重評，禁止複製來源排序分數或把「政府／全國／重大」等字詞本身當成公共後果。
+- 來源清單的 `discovery_priority_score` 只供 discovery 排序；去重後的最終候選必須從零依事件證據評分，禁止把 discovery signals 轉抄成 importance，或把「政府／全國／重大」等字詞本身當成公共後果。
 - 邊境或長期衝突事件不得依類型固定等級，也不得繼承母事件等級。每次只以本輪已實現／持續後果、直接範圍、急迫性、制度意義與十四天增量計算六項；例行事件通常自然得到低分，重大實際後果則依證據提高。
-- 長期戰爭中的同戰線、同攻擊型態、相近規模交火與例行傷亡更新，固定評為 `D`；不得繼承母事件的高等級。只有可能改變戰局、造成實質升級、改變停火／和平進程、開啟新戰線／新國家介入，或造成可驗證的油價、航運、能源、糧食、金融、供應鏈等外部系統影響，才能解除折扣並依實際影響重評。
 - 油價或其他市場反應必須記錄幅度、期間、是否超出正常波動及與衝突的直接因果證據；只有方向性上漲不得自動升級。
 
 ### 六、編號

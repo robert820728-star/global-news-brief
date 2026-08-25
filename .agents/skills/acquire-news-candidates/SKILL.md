@@ -50,6 +50,8 @@ GDELT 固定先讀官方 15 分鐘 export archives，依精確時間窗下載完
 
 - `discovery_sources` 設定為 GDELT、中央社與中新社；GDELT 覆蓋三個板塊，兩個區域來源補台灣與中國盲區。評分後依事件與主張角色動態選取原始、官方／主要與真正獨立的驗證證據。
 - 連續翻頁直到跨過精確24小時起點或來源明確耗盡。
+- 中新社日索引至少抓執行日與前一日，再由精確時間窗篩選；不得只抓執行日頁面。中央社 POST API 必須依 `NextPageIdx` 實際翻頁，直到穿過 `window_start` 或明確耗盡，不得停在固定 500 筆第一頁。
+- GDELT 只有預期的全部 15 分鐘 archive 分片都完成時才可標 `coverage_complete=true`。部分分片有資料只能標 `degraded_partial`，不得冒充 ready/full coverage；可在清楚降級後繼續其他候選流程。
 - `GDELT_RESILIENT_ACQUISITION`：先讀 GDELT 官方 15 分鐘 export archives。只有 archives 不可用時才發送一次不阻塞的 DOC API 補充請求；遇到 429 不等待、不重試，並把 DOC 結果標為 incomplete supplemental coverage。兩者都不可用才讀取具時效標記的有效快取；不得因單一介面失敗停止發佈。
 - `FULL_DISCOVERY_POOL_UNCAPPED`：每個成功來源在精確 24 小時窗內的已驗證條目全部入池，不得設前 30 或其他預設名額。
 - 類別專用的官方、原始或專業來源只在相應事件評分後按需選取，不計入 discovery readiness，也不形成固定清單。
@@ -63,7 +65,7 @@ GDELT 固定先讀官方 15 分鐘 export archives，依精確時間窗下載完
 - `discovery_signals`：GDELT event code、country、heat 等結構化欄位；非 GDELT 來源可為空物件
 - `published_at`、`url`
 - `categories`
-- `importance_hint`：只寫可能重要的具體原因，不做最終評級
+- `discovery_priority_reason`：只寫安排 hydration 次序的具體原因，不做最終評級
 - `acquisition_route`：實際成功的 `structured_direct`、`html_direct`、`same_source_alternate` 或在允許時使用的 `browser_rendered`
 - `snapshot_path`、`page_index`
 

@@ -110,6 +110,7 @@ def valid_manifest():
                 },
                 "map": {
                     "required": True,
+                    "claim_critical": False,
                     "status": "ready",
                     "rationale": "位置有助理解",
                     "assets": [
@@ -139,6 +140,7 @@ def valid_manifest():
                 },
                 "images": {
                     "required": True,
+                    "claim_critical": False,
                     "status": "ready",
                     "source_checks": [
                         {
@@ -383,15 +385,28 @@ class ValidatorTests(unittest.TestCase):
         errors = VALIDATOR.validate_canonical_sectioned_layout(valid_manifest(), text)
         self.assertTrue(any("新聞區塊之外" in error for error in errors), errors)
 
-    def test_ready_manifest_blocks_required_omitted_map(self):
+    def test_ready_manifest_allows_noncritical_omitted_map(self):
         manifest = valid_manifest()
         manifest["events"][0]["map"].update({
             "status": "omitted",
             "assets": [],
             "omission_reason": "renderer failed",
+            "reader_omission_note": "定位圖暫時無法產生；正文與來源驗證不受影響。",
         })
         errors = VALIDATOR.validate_manifest_data(manifest)
-        self.assertTrue(any("必要地圖" in error and "ready" in error for error in errors), errors)
+        self.assertFalse(any("必要地圖" in error and "ready" in error for error in errors), errors)
+
+    def test_ready_manifest_blocks_claim_critical_omitted_map(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["map"].update({
+            "claim_critical": True,
+            "status": "omitted",
+            "assets": [],
+            "omission_reason": "renderer failed",
+            "reader_omission_note": "核心定位證據尚未產生。",
+        })
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("主張關鍵地圖" in error and "ready" in error for error in errors), errors)
 
     def test_reader_rejects_generic_follow_up_placeholder(self):
         manifest = valid_manifest()
@@ -598,14 +613,33 @@ class ValidatorTests(unittest.TestCase):
         errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
         self.assertTrue(any("漏放圖片附件" in error for error in errors))
 
-    def test_ready_manifest_blocks_omitted_image_when_source_has_one(self):
+    def test_ready_manifest_allows_noncritical_omitted_image_when_acquisition_fails(self):
         manifest = valid_manifest()
-        manifest["events"][0]["images"]["status"] = "omitted"
-        manifest["events"][0]["images"]["assets"] = []
-        manifest["events"][0]["images"]["omission_reason"] = "取得失敗"
-        manifest["events"][0]["images"]["source_checks"][0]["outcome"] = "acquisition_failed"
+        images = manifest["events"][0]["images"]
+        images["status"] = "omitted"
+        images["assets"] = []
+        images["omission_reason"] = "取得失敗"
+        images["reader_omission_note"] = "圖片無法取得；正文與來源驗證不受影響。"
+        images["source_checks"][0]["outcome"] = "acquisition_failed"
+        images["professional_visual_status"] = "not_available"
+        images["professional_omission_reason"] = "專業圖資取得失敗。"
+        images["professional_source_checks"][0]["outcome"] = "acquisition_failed"
         errors = VALIDATOR.validate_manifest_data(manifest)
-        self.assertTrue(any("未附上合格附件前不得完成簡報" in error for error in errors))
+        self.assertFalse(any("未附上合格附件前不得完成簡報" in error for error in errors), errors)
+        self.assertFalse(any("取得失敗尚未恢復" in error for error in errors), errors)
+
+    def test_ready_manifest_blocks_claim_critical_omitted_image(self):
+        manifest = valid_manifest()
+        images = manifest["events"][0]["images"]
+        images.update({
+            "claim_critical": True,
+            "status": "omitted",
+            "assets": [],
+            "omission_reason": "取得失敗",
+            "reader_omission_note": "核心影像證據尚未取得。",
+        })
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("主張關鍵圖片" in error for error in errors), errors)
 
     def test_images_reject_more_than_two_assets(self):
         manifest = valid_manifest()
@@ -659,7 +693,7 @@ class ValidatorTests(unittest.TestCase):
 
         self.assertTrue(any("第二張圖片必須說明新增資訊" in error for error in errors), errors)
 
-    def test_ready_chart_does_not_replace_required_source_image(self):
+    def test_ready_chart_coexists_with_noncritical_omitted_source_image(self):
         manifest = valid_manifest()
         manifest["events"][0]["charts"] = {
             "required": True,
@@ -689,8 +723,11 @@ class ValidatorTests(unittest.TestCase):
         manifest["events"][0]["images"]["status"] = "omitted"
         manifest["events"][0]["images"]["assets"] = []
         manifest["events"][0]["images"]["omission_reason"] = "取得失敗"
+        manifest["events"][0]["images"]["reader_omission_note"] = "圖片取得失敗；正文仍可獨立驗證。"
+        manifest["events"][0]["images"]["professional_visual_status"] = "not_available"
+        manifest["events"][0]["images"]["professional_omission_reason"] = "專業圖資取得失敗。"
         errors = VALIDATOR.validate_manifest_data(manifest)
-        self.assertTrue(any("未附上合格附件前不得完成簡報" in error for error in errors))
+        self.assertFalse(any("未附上合格附件前不得完成簡報" in error for error in errors), errors)
 
     def test_text_card_cannot_pass_as_chart(self):
         manifest = valid_manifest()

@@ -338,9 +338,10 @@
     },
     "mapResult": {
       "type": "object",
-      "required": ["required", "status", "rationale", "assets", "omission_reason"],
+      "required": ["required", "claim_critical", "status", "rationale", "assets", "omission_reason"],
       "properties": {
         "required": { "type": "boolean" },
+        "claim_critical": { "type": "boolean" },
         "status": { "enum": ["pending", "ready", "not_required", "omitted"] },
         "rationale": { "type": "string" },
         "assets": {
@@ -397,13 +398,14 @@
     "imageResult": {
       "type": "object",
       "required": [
-        "required", "status", "source_checks",
+        "required", "claim_critical", "status", "source_checks",
         "professional_visual_required", "professional_visual_status",
         "professional_source_checks", "professional_omission_reason",
         "assets", "omission_reason"
       ],
       "properties": {
         "required": { "const": true },
+        "claim_critical": { "type": "boolean" },
         "status": { "enum": ["pending", "ready", "not_required", "omitted"] },
         "source_checks": {
           "type": "array",

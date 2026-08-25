@@ -20,8 +20,8 @@ class RecoveryControllerTests(unittest.TestCase):
             "events": [{
                 "event_id": "TWN-01",
                 "verification": {"status": "completed", "sources": []},
-                "map": {"required": False, "status": "not_required"},
-                "images": {"status": "ready", "source_checks": [], "assets": []},
+                "map": {"required": False, "claim_critical": False, "status": "not_required"},
+                "images": {"claim_critical": False, "status": "ready", "source_checks": [], "assets": []},
             }],
             "final_status": "draft",
         }
@@ -31,6 +31,7 @@ class RecoveryControllerTests(unittest.TestCase):
         manifest["run"] = {"language": "繁體中文"}
         manifest["events"][0]["map"] = {
             "required": True,
+            "claim_critical": False,
             "status": "ready",
             "assets": [{
                 "place_labels": ["Venezuela"],
@@ -74,8 +75,8 @@ class RecoveryControllerTests(unittest.TestCase):
                     "event_id": "GLB-01",
                     "grade": "A",
                     "verification": {"status": "completed", "sources": [{"url": "https://example.com/news"}]},
-                    "map": {"required": False, "status": "not_required"},
-                    "images": {"status": "pending", "source_checks": [], "assets": []},
+                    "map": {"required": False, "claim_critical": False, "status": "not_required"},
+                    "images": {"claim_critical": False, "status": "pending", "source_checks": [], "assets": []},
                 }
             ],
         }

@@ -115,7 +115,7 @@
 |---|---|---|
 | 適用環境 | 可執行 bundled Python、物化檔案與 canonical publisher | Scheduled Task／無本機 runtime 的一般 ChatGPT 宿主 |
 | 新聞流程 | 完整執行 | 完整執行；不得因缺少本機工具省略 discovery、語意評分、驗證或 reader |
-| 地圖／圖表／圖片 | required 資產必須物化、檔案與像素驗證 | 先執行宿主可用的原生／本機媒體路徑；不支援的視覺以 capability omission 記錄 |
+| 地圖／圖表／圖片 | `claim_critical=true` 的視覺必須物化並完成檔案／像素驗證；非關鍵視覺失敗可 omitted | 同一規則；先執行宿主可用的原生／本機媒體路徑，不支援的非關鍵視覺以 capability omission 記錄 |
 | canonical 完成 | `full-assets`，所有宣稱的附件通過 | `full-assets` 或 `reader-canonical-capability-degraded` 均可 `status=completed` |
 | `NATIVE_MEDIA_UNAVAILABLE` | 若必要附件仍缺少，屬未完成的視覺 stage | 只能在「原圖下載 → 下載失敗才截圖 → 已取得檔案後實際附件交付」均有證據且最後一哩仍失敗時記錄；它是 `capability_limitations`，不是 `last_error` |
 | 後續補圖 | 局部恢復該視覺 stage | 可由 full-runtime 只補缺少視覺；不得建立新 run 或重跑新聞、評分與驗證 |
@@ -141,16 +141,16 @@
 |---|---|---|---|
 | -1 fresh main 與 bootstrap | `bootstrap-workspace.md`、雙端點 current main、fresh nonce、capsule manifest／payload | 經 blob SHA、payload SHA-256、runtime fingerprint 驗證的 workspace 與 `bootstrap-receipt.json` | receipt 未通過前不得建立 news checkpoint；修 bootstrap 本身，不得開始新聞搜尋 |
 | 0 checkpoint init | run id、精確 24 小時窗、bootstrap receipt | `python3 scripts/news_run_checkpoint.py init --output <checkpoint> --run-id <run-id> --window-start <start> --window-end <end> --bootstrap-receipt <bootstrap-receipt>` | checkpoint 綁定本輪 main 與窗；用 `news_run_checkpoint.py plan` 找最早未完成 stage |
-| 1 source-scan | `news-source-pool.json`、`source-route-config.json` | 三條 discovery route 的 route snapshots、scan evidence、coverage、`source-candidates.json`、`news-relevance-gate.json`、`model-source-candidates.json` | `FULL_DISCOVERY_POOL_UNCAPPED`：每個成功 route 的全部已驗證窗內條目都進入去重與評分；GDELT archive-first → archive 不可用才一次 non-blocking DOC → cache；同來源恢復最後才 browser；至少一條 route 或最終 web fallback 有可驗證當輪候選即可繼續 |
+| 1 source-scan | `news-source-pool.json`、`source-route-config.json` | 三條 discovery route 的 snapshots、scan evidence、truthful coverage、`source-candidates.json`、`news-relevance-gate.json`、`model-source-candidates.json` | `FULL_DISCOVERY_POOL_UNCAPPED`：中新社抓當日＋前一日日索引；CNA 依 `NextPageIdx` 翻頁至穿過窗起點或耗盡；GDELT 全部分片才 `coverage_complete`，部分成功標 `degraded_partial`；全部已驗證窗內列保留並以 discovery priority 排序，弱 signal 進 `lightweight_semantic_review`，不在模型前消失 |
 | 2 preprocess | model-admitted rows | `preprocessed-candidates.json`；時間窗、canonical URL、provisional article groups | 這些群組不是語意事件；失敗只重跑 preprocess |
-| 3 pre-manifest recovery bundle | source、gate、preprocess、content hydration receipts | `PRE_MANIFEST_RECOVERY_BUNDLE_GATE`：`recovery/checkpoint.json`、`source-candidates.json`、`news-relevance-gate.json`、`model-source-candidates.json`、`preprocessed-candidates.json`、`content-hydration-batches.json`；以 `manage_canonical_run_bundle.py pack-recovery` 建立 connector-safe bundle 並 atomic tree/commit | 必須在 `FIRST_SELECT_NEWS_EVENTS_EXECUTION` 前完成；中斷以 bundle `restore` 從最早缺失 artifact 繼續 |
+| 3 conditional recovery | source、gate、preprocess、content hydration receipts | 預設只保存 local hash 與 checkpoint binding；`CONDITIONAL_RECOVERY_BUNDLE_POLICY` 僅在 cross-host handoff、ephemeral workspace 或 warning/timeout boundary 時，以 `manage_canonical_run_bundle.py pack-recovery` 建立六份 artifact bundle | durable workspace 可直接進入 `FIRST_SELECT_NEWS_EVENTS_EXECUTION`；必要時用 bundle `restore` 從最早缺失 artifact 繼續 |
 | 4 select-news-events | hydrated rows、偏好、十四天 timeline | `selection-results.json`、唯一 `semantic_event_id`／`event_identity`、每列 `article_dispositions` | `event_evidence`、`non_news`、`unresolved` 逐列守恆；unresolved 歸零才可完成；執行 `validate_local_source_admission.py` |
 | 5 audit-news-candidates | selection、上一份 durable audit（若有）、`news-source-pool.json.ranking` | 本輪 run-scoped candidate audit、十四天 merge status、`public_value_v2` 的 facts／Actual-Potential 分類／六項 0–100 分數／加權總分／delta／challenge／confidence／`grade_status`／決定／`selected_event_id` | 依下方 V2 順序逐 gate 驗證；先修正可重算 counts。十四天歷史無法合併時保留舊 blob 並延後維護，但不得把 provisional 冒充 validated |
 | 6 materialize-manifest | audit 中 selected C 以上且 `grade_status=validated` 的事件 | `news-event-manifest.json`，事件集合精確等於 selected ids；保存 validated score、grade、status、confidence | 只能一對一物化，不得另加／漏掉新聞；manifest 值必須精確等於 candidate audit 並綁定 checkpoint |
 | 7 verify-news-events | 事件與主張類型 | stage patch、原始報導、官方／主要記錄、獨立證據鏈、claim status、source limits | 只合併 verify 欄位並執行 stage ownership validator；證據依事件與主張角色動態選取 |
 | 8 build-news-maps | 已驗證事件、map policy | map decision、必要 overlay、canonical basemap、PNG／SVG | `validate_map_decisions.py`；只修失敗事件地圖 |
 | 9 build-news-charts | 已驗證數據與 chart policy | 只有在比較、趨勢、比例、分布或查表有增量時建立 chart assets | 圖表不能替代地圖或來源圖片；只修失敗圖表 |
-| 10 collect-news-images | 已驗證來源頁與官方產品頁 | 每則 source checks、download／screenshot attempts、`materialized-images.json`、MIME、尺寸、SHA-256、visual check、附件或 omission note | 先下載原圖，下載失敗才截圖；已有本機檔先實際交付。full-runtime 未完成保持 pending；mobile-native 最後一哩失敗可 capability-degraded completed |
+| 10 collect-news-images | 已驗證來源頁與官方產品頁 | 每則 source checks、`claim_critical`、download／screenshot attempts、`materialized-images.json`、MIME、尺寸、SHA-256、visual check、附件或 omission note | 先下載原圖，下載失敗才截圖；主張關鍵視覺未完成保持 pending，非關鍵視覺兩種方式都失敗則 omitted；兩種 runtime 都可交付已驗證文字 reader |
 | 11 final manifest 與 render | collect stage 已 completed／依 profile 合法 omission | 首次執行 `validate_news_brief.py manifest` 到 `OK`；由 manifest 渲染 reader，綁定 `render.manifest` 與 `render.brief`；reader 以 `validate_news_brief.py brief --reader-layout canonical-sectioned` 驗證 | 提前呼叫 manifest validator 回 `DEFERRED` 不算通過也不算失敗；繼續原 stage 後重跑 |
 | 12 publish 與 bundle | final checkpoint、manifest、audit、source pool、reader、map decisions、宣稱交付的附件 | 依下方實際 CLI 由 `publish_news_brief.py` 建立 release／receipt；再以 `manage_canonical_run_bundle.py pack` 建立 transport，與 `logs/current.json` 一次 atomic 發布後執行 `verify`／`restore` 核對 byte identity | full-runtime 由 canonical publisher fail-closed；mobile-native 依 mobile ledger schema 保存 reader/audit 與 delivery profile |
 | 13 conversation delivery | release receipt 或 mobile saved reader | 完整 reader bytes、附件／能力限制 receipt、`delivery-handoff` | 不能只交摘要或驗收報告；`client_confirmed` 只有外部明確回執才可使用 |
@@ -198,6 +198,8 @@ python3 scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-re
 `MOBILE_COMPACT_HISTORY_SCHEMA_RULE`：mobile-native durable audit 的精簡 V2 candidate 是歷史 continuity cache profile，可省略 verbose `grading_evidence`、逐頁 `source_audit`、`candidate_urls`、`reason_code` 與 `grade_reason`；full-runtime 載入時仍重驗保留的六項分數、fact-ID 證據、加權總分、grade status、來源 ID 與 selected mapping。此精簡 profile 永遠不得作為最新 run；最新 run 必須保存完整 run-scoped candidate audit，缺少上述完整證據即驗證失敗。歷史 source coverage 的 scan 檔案路徑可隨宿主消失，因此 schema 不強制舊 run 保存本機路徑；validator 仍對最新 run 強制 `scan_window_start`、`scan_window_end` 與可讀的 `scan_evidence_path`。
 
 ### Public Value V2 填寫與驗證順序
+
+`PUBLIC_VALUE_V2_NORMALIZED_WEIGHTED_SCORING`
 
 `news-source-pool.json.ranking` 是唯一評分設定來源；程式不得另外寫死權重。每個去重後語意事件依下列順序填寫，順序不可倒置：
 
@@ -252,6 +254,7 @@ reader 不顯示 run id、commit、後台 counts、十四天 audit、修復紀�
 - 取得的本機檔必須通過 MIME、解碼、尺寸、SHA-256、時間與內容相關性檢查。
 - 通過後先實際使用宿主支援的本機附件／本機媒體／原生媒體路徑；不能僅因未看到特定工具名稱就判 `NATIVE_MEDIA_UNAVAILABLE`。
 - capability-degraded mobile completion 必須保存逐則取得與交付嘗試，`last_error=null`，並清楚表示未完成附件／像素驗收。
+- manifest 對 `map` 與 `images` 都必須保存 `claim_critical`。只有視覺本身直接支撐核心主張時，缺少附件才阻擋；一般配圖／定位圖取得失敗改為 `omitted`，保存後台原因及讀者說明，文字 reader 繼續完成。
 
 ## 七、局部恢復指令
 

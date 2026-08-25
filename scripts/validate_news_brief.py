@@ -134,6 +134,8 @@ def _validate_media_result(
         return set()
 
     required_keys = ["required", "status", "assets", "omission_reason"]
+    if field in {"map", "images"}:
+        required_keys.append("claim_critical")
     if field in {"map", "charts"}:
         required_keys.append("rationale")
     _need(result, required_keys, label, errors)
@@ -149,6 +151,8 @@ def _validate_media_result(
         errors.append(f"{label} 已判定需要，status 不得是 {status}")
     elif not required and status not in {"pending", "not_required"}:
         errors.append(f"{label} 已判定不需要，status 不得是 {status}")
+    if field in {"map", "images"} and not isinstance(result.get("claim_critical"), bool):
+        errors.append(f"{label}.claim_critical 必須是布林值")
 
     assets = result.get("assets", [])
     if not isinstance(assets, list):
@@ -350,6 +354,7 @@ def _validate_image_gate(
         return
     if images.get("required") is not True:
         errors.append(f"{event_id}.images：所有入選事件都必須啟用來源圖片檢查")
+    claim_critical = images.get("claim_critical") is True
 
     checks = images.get("source_checks")
     if not isinstance(checks, list) or not checks:
@@ -413,13 +418,17 @@ def _validate_image_gate(
                 usable_source_urls.add(source_url)
             if not detected_urls:
                 errors.append(f"{label} 宣告找到圖片但沒有保存檢出的圖片網址")
-            if check.get("outcome") != "attached":
-                errors.append(f"{label} 找到可用圖片時 outcome 必須是 attached")
+            if check.get("outcome") not in {"attached", "acquisition_failed"}:
+                errors.append(f"{label} 找到可用圖片時 outcome 必須是 attached 或 acquisition_failed")
         elif check.get("outcome") == "no_usable_image" and not check.get("failure_detail"):
             errors.append(f"{label} 宣告來源無可用圖片時必須保存具體判定理由")
         if check.get("usable_image_found") is False and check.get("outcome") == "attached":
             errors.append(f"{label} 未找到可用圖片時 outcome 不得是 attached")
-        if check.get("outcome") == "acquisition_failed" and final_status == "ready":
+        if (
+            check.get("outcome") == "acquisition_failed"
+            and final_status == "ready"
+            and claim_critical
+        ):
             errors.append(f"{label} 圖片取得失敗尚未恢復，必須送回 collect-news-images 重做")
 
     missing_urls = expected_urls - checked_urls
@@ -444,7 +453,11 @@ def _validate_image_gate(
     asset_source_urls = {
         asset.get("source_url") for asset in assets if isinstance(asset, dict)
     }
-    missing_attachments = usable_source_urls - asset_source_urls
+    missing_attachments = (
+        usable_source_urls - asset_source_urls
+        if images.get("status") == "ready" or claim_critical
+        else set()
+    )
     if missing_attachments:
         errors.append(
             f"{event_id}.images 找到來源圖片但缺少對應附件：{', '.join(sorted(missing_attachments))}"
@@ -463,10 +476,16 @@ def _validate_image_gate(
         if not isinstance(source_url, str) or source_image_url not in detected_by_source.get(source_url, set()):
             errors.append(f"{label}.source_image_url 必須出現在同一來源頁的 detected_image_urls")
     if usable_found:
-        if images.get("status") != "ready" or not images.get("assets"):
+        if images.get("status") == "ready" and not images.get("assets"):
             errors.append(
-                f"{event_id}.images 已找到可用來源圖片，未附上合格附件前不得完成簡報"
+                f"{event_id}.images 已標記 ready，但未附上合格附件前不得完成簡報"
             )
+        elif claim_critical and images.get("status") != "ready":
+            errors.append(
+                f"{event_id}.images 主張關鍵圖片已找到，未附上合格附件前不得完成簡報"
+            )
+        elif images.get("status") not in {"ready", "omitted"}:
+            errors.append(f"{event_id}.images 圖片決定尚未完成")
     elif images.get("status") != "omitted":
         errors.append(
             f"{event_id}.images 未找到可用來源圖片時，必須以 omitted 保存後台原因"
@@ -535,19 +554,29 @@ def _validate_image_gate(
                 errors.append(f"{label}.outcome 無效")
             if check.get("usable_image_found") is True and not detected_urls:
                 errors.append(f"{label} 宣告找到官方圖資但沒有保存圖片網址")
-            if check.get("usable_image_found") is True and check.get("outcome") != "attached":
-                errors.append(f"{label} 找到官方圖資時 outcome 必須是 attached")
+            if check.get("usable_image_found") is True and check.get("outcome") not in {"attached", "acquisition_failed"}:
+                errors.append(f"{label} 找到官方圖資時 outcome 必須是 attached 或 acquisition_failed")
             if check.get("usable_image_found") is False and check.get("outcome") == "attached":
                 errors.append(f"{label} 未找到官方圖資時 outcome 不得是 attached")
             if check.get("outcome") == "no_usable_image" and not check.get("failure_detail"):
                 errors.append(f"{label} 宣告無官方圖資時必須保存具體判定理由")
-            if check.get("outcome") == "acquisition_failed" and final_status == "ready":
+            if (
+                check.get("outcome") == "acquisition_failed"
+                and final_status == "ready"
+                and claim_critical
+            ):
                 errors.append(f"{label} 官方圖資取得失敗尚未恢復，必須送回 collect-news-images 重做")
         if final_status == "ready" and professional_found:
-            if professional_status != "ready" or not professional_assets:
+            if professional_status == "ready" and not professional_assets:
                 errors.append(
-                    f"{event_id}.images 已找到官方專業圖資，未附上合格專業資訊圖前不得完成簡報"
+                    f"{event_id}.images 已標記專業圖資 ready，但缺少合格專業資訊圖"
                 )
+            elif claim_critical and professional_status != "ready":
+                errors.append(
+                    f"{event_id}.images 主張關鍵的官方專業圖資已找到，未附上合格專業資訊圖前不得完成簡報"
+                )
+            elif not claim_critical and professional_status not in {"ready", "not_available"}:
+                errors.append(f"{event_id}.images 官方專業圖資決定尚未完成")
         elif final_status == "ready" and professional_status != "not_available":
             errors.append(
                 f"{event_id}.images 未找到官方專業圖資時，必須記錄 not_available"
@@ -894,14 +923,27 @@ def validate_manifest_data(data: dict[str, Any]) -> list[str]:
             if (
                 isinstance(map_value, dict)
                 and map_value.get("required") is True
+                and map_value.get("claim_critical") is True
                 and (
                     map_value.get("status") != "ready"
                     or not map_value.get("assets")
                 )
             ):
                 errors.append(
-                    f"{label}.map 必要地圖必須為 ready 且至少包含一張附件，"
+                    f"{label}.map 主張關鍵地圖必須為 ready 且至少包含一張附件，"
                     "不得以 omitted 完成發布"
+                )
+            images_value = event.get("images")
+            if (
+                isinstance(images_value, dict)
+                and images_value.get("claim_critical") is True
+                and (
+                    images_value.get("status") != "ready"
+                    or not images_value.get("assets")
+                )
+            ):
+                errors.append(
+                    f"{label}.images 主張關鍵圖片必須為 ready 且至少包含一張附件"
                 )
         for left_name, left_paths, right_name, right_paths in (
             ("地圖", map_paths, "資料圖表", chart_paths),
