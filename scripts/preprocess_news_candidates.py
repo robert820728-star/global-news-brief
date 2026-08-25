@@ -54,9 +54,9 @@ def parse_time(value: str) -> datetime:
 def preprocess(data: dict, threshold: float) -> dict:
     window_start = parse_time(data["window_start"])
     window_end = parse_time(data["window_end"])
-    raw_candidates = data["items"] if "items" in data else data.get("candidates", [])
+    raw_candidates = data.get("items")
     if not isinstance(raw_candidates, list):
-        raise ValueError("source candidate list items/candidates 必須是陣列")
+        raise ValueError("source candidate list items 必須是陣列")
     prepared = []
     outside = []
     seen_urls: dict[str, str] = {}

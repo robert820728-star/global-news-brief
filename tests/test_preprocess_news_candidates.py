@@ -34,13 +34,13 @@ class PreprocessNewsCandidatesTests(unittest.TestCase):
         self.assertNotIn("clusters", result)
         self.assertFalse(result["semantic_event_creation_performed"])
 
-    def test_legacy_candidates_key_remains_supported(self):
-        result = MODULE.preprocess({
-            "window_start": "2026-08-15T12:00:00+08:00",
-            "window_end": "2026-08-16T12:00:00+08:00",
-            "candidates": [self.candidate()],
-        }, 0.55)
-        self.assertEqual(1, result["article_row_count"])
+    def test_rejects_noncanonical_candidates_alias(self):
+        with self.assertRaisesRegex(ValueError, "items"):
+            MODULE.preprocess({
+                "window_start": "2026-08-15T12:00:00+08:00",
+                "window_end": "2026-08-16T12:00:00+08:00",
+                "candidates": [self.candidate()],
+            }, 0.55)
 
     def test_article_count_receipt_conserves_each_preprocessing_stage(self):
         exact_duplicate = dict(self.candidate())

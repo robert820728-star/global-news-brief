@@ -24,6 +24,11 @@ class NoObsoleteContractsTests(unittest.TestCase):
             "legacy" + "ImportanceBreakdown",
             "legacy" + "Candidate",
             "V1" + "_HISTORY",
+            "Dual " + "V1/V2 runtime",
+            "Compatibility adapter around " + "V1 scores",
+            "Historical " + "V1 runs",
+            "schema accepts " + "legacy identity fields",
+            "legacy" + "_identity_fields",
         )
         hits = []
         for path in ROOT.rglob("*"):
@@ -46,6 +51,10 @@ class NoObsoleteContractsTests(unittest.TestCase):
             [item["source_id"] for item in pool["discovery_sources"]],
         )
         self.assertEqual("public_value_v2", pool["ranking"]["method"])
+
+    def test_install_names_the_uncapped_discovery_contract(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        self.assertIn("FULL_DISCOVERY_POOL_UNCAPPED", install)
 
     def test_candidate_audit_schema_has_only_current_v2_shapes(self):
         schema = json.loads(

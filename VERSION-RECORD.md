@@ -4,6 +4,14 @@ This file records the current installable contract. Earlier implementation attem
 
 本檔只記錄目前可安裝契約；較早的實作嘗試由 Git history 保存，避免退役行為繼續留在執行中的 repository 表面。
 
+## v0.5.3 — Semantic compatibility hardening / 語義相容殘留強化清除
+
+- Reason / 建立原因：A fresh semantic audit found that exact-token scans could miss abbreviated migration prose, a noncanonical preprocessing alias, and a rule marker omitted from the installation entry. / 全新語義稽核發現，精確字串掃描可能漏掉縮寫的遷移敘述、非 canonical 的 preprocess 輸入別名，以及安裝入口遺漏的規則標記。
+- Approach / 作法：Require canonical `items` input, name the uncapped discovery contract in `INSTALL.md`, remove obsolete migration design surfaces, and use neutral current-contract identifiers in the audit validator. / 強制使用 canonical `items` 輸入、在 `INSTALL.md` 明列完整入池契約、移除過期遷移設計表面，並在 audit validator 使用中性的現行契約識別名稱。
+- Validation / 驗證：Four independent post-change checks are mandatory: semantic residue inventory, authority-document crosswalk, white-box adversarial data flow, and remote clean-room regression with capsule binding. / 修改後必須通過四種獨立檢查：語義殘留盤點、權威文件交叉對表、白箱對抗資料流，以及含 capsule 綁定的遠端乾淨環境回歸。
+- Result / 結果：Promoted only when all four checks pass consecutively on the same final source state. / 僅在同一最終 source 狀態連續通過四種檢查後晉升。
+- Rollback / 回復：Use the immediately preceding Git commit. / 使用前一個 Git commit。
+
 ## v0.5.2 — Current-contract residue removal / 現行契約殘留清除
 
 - Reason / 建立原因：Disabled compatibility fields and historical runtime branches could still preserve retired behavior even when ordinary happy-path tests passed. / 停用的相容欄位與歷史執行分支，即使一般成功路徑測試通過，仍可能保留退役行為。

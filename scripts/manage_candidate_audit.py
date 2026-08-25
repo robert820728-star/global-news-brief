@@ -913,7 +913,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
         semantic_event_ids = []
         candidate_by_event_id = {}
         if run_index == len(runs):
-            legacy_identity_fields = {
+            narrative_identity_fields = {
                 "who_or_what", "what_happened", "where", "when", "semantic_merge_basis"
             }
             structured_identity_fields = {
@@ -921,7 +921,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                 "event_occurred_at", "material_update_at", "material_update_type",
                 "material_update_evidence",
             }
-            identity_fields = legacy_identity_fields | structured_identity_fields
+            identity_fields = narrative_identity_fields | structured_identity_fields
             try:
                 run_window_start = parse_datetime(run.get("window_start", ""))
                 run_window_end = parse_datetime(run.get("window_end", ""))
