@@ -64,7 +64,7 @@ def atomic_write_json(path: Path, value) -> None:
             os.unlink(temporary)
 
 
-def rank_scan(scan: dict, source: dict, coverage: dict) -> dict:
+def rank_scan(scan: dict, source: dict, coverage: dict, ranking: dict) -> dict:
     start = datetime.fromisoformat(scan["window_start"])
     end = datetime.fromisoformat(scan["window_end"])
     pages = list(scan.get("pages", [])) + list(scan.get("supplemental_pages", []))
@@ -79,13 +79,13 @@ def rank_scan(scan: dict, source: dict, coverage: dict) -> dict:
     ranked = []
     for item in within:
         breakdown = materializer.score_breakdown(
-            item["title"], item.get("summary", ""), source.get("section", "")
+            item["title"], item.get("summary", ""), source.get("section", ""), ranking
         )
         ranked.append({
             "url": item["url"],
             "title": item["title"],
             "published_at": item["published_at"],
-            "importance_score": sum(breakdown.values()),
+            "importance_score": materializer.weighted_score(breakdown, ranking),
             "importance_breakdown": breakdown,
             "importance_reason": item.get("importance_hint") or item["title"],
         })
@@ -104,6 +104,7 @@ def rank_scan(scan: dict, source: dict, coverage: dict) -> dict:
         "selected_item_urls": selected,
         "mandatory_overflow_items": [],
         "ranking_completed": True,
+        "ranking_method": ranking["method"],
         "failure_reason": None,
     })
     return updated
@@ -111,6 +112,8 @@ def rank_scan(scan: dict, source: dict, coverage: dict) -> dict:
 
 def recover(pool: dict, scan_dir: Path, coverage: list[dict], leads: list[dict],
             snapshot_dir: Path, *, fetcher=fetch_direct, timeout_seconds: int = 20) -> dict:
+    ranking = pool.get("ranking")
+    materializer.ranking_dimensions(ranking)
     sources = {item["source_id"]: item for item in pool.get("discovery_sources", [])}
     coverage_by_id = {item["source_id"]: item for item in coverage}
     scans = {}
@@ -205,7 +208,9 @@ def recover(pool: dict, scan_dir: Path, coverage: list[dict], leads: list[dict],
         })
 
     coverage_updates = {
-        source_id: rank_scan(scan, sources[source_id], coverage_by_id[source_id])
+        source_id: rank_scan(
+            scan, sources[source_id], coverage_by_id[source_id], ranking
+        )
         for source_id, scan in scans.items()
     }
     for source_id, scan in scans.items():

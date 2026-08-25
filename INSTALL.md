@@ -38,7 +38,7 @@
 | 8 | `schemas/*.json` 與 `scripts/*.py` | 可機器檢查的資料契約與 validator；與 prose 衝突時必須修正衝突，不能繞過 validator |
 | 9 | `news-brief-template.md` | 唯一讀者版骨架 |
 | 10 | `news-brief-examples.md` | 只在格式驗證失敗或維護規則時查正反例，不是每日必讀 |
-| 11 | `VERSION-RECORD.md`、`docs/superpowers/**` | 歷史與設計紀錄；不覆寫現行契約，歷史中的舊 15 來源敘述不代表現行規則 |
+| 11 | `VERSION-RECORD.md`、`docs/superpowers/**` | 歷史與設計紀錄；只供追溯，不覆寫現行契約 |
 
 ## 一、安裝前驗證
 
@@ -145,8 +145,8 @@
 | 2 preprocess | model-admitted rows | `preprocessed-candidates.json`；時間窗、canonical URL、provisional article groups | 這些群組不是語意事件；失敗只重跑 preprocess |
 | 3 pre-manifest recovery bundle | source、gate、preprocess、content hydration receipts | `PRE_MANIFEST_RECOVERY_BUNDLE_GATE`：`recovery/checkpoint.json`、`source-candidates.json`、`news-relevance-gate.json`、`model-source-candidates.json`、`preprocessed-candidates.json`、`content-hydration-batches.json`；以 `manage_canonical_run_bundle.py pack-recovery` 建立 connector-safe bundle 並 atomic tree/commit | 必須在 `FIRST_SELECT_NEWS_EVENTS_EXECUTION` 前完成；中斷以 bundle `restore` 從最早缺失 artifact 繼續 |
 | 4 select-news-events | hydrated rows、偏好、十四天 timeline | `selection-results.json`、唯一 `semantic_event_id`／`event_identity`、每列 `article_dispositions` | `event_evidence`、`non_news`、`unresolved` 逐列守恆；unresolved 歸零才可完成；執行 `validate_local_source_admission.py` |
-| 5 audit-news-candidates | selection、上一份 durable audit（若有） | 本輪 run-scoped candidate audit、十四天 merge status、所有六項分數／理由／等級／決定／`selected_event_id` | 先依本輪事件陣列修正可重算 counts；十四天歷史不完整或無法合併時保留舊 blob 並延後維護，但不得刪除或阻擋有效 24 小時 reader |
-| 6 materialize-manifest | audit 中 selected C 以上事件 | `news-event-manifest.json`，事件集合精確等於 selected ids | 只能物化，不得另加／漏掉新聞；綁定 checkpoint |
+| 5 audit-news-candidates | selection、上一份 durable audit（若有）、`news-source-pool.json.ranking` | 本輪 run-scoped candidate audit、十四天 merge status、`public_value_v2` 的 facts／Actual-Potential 分類／六項 0–100 分數／加權總分／delta／challenge／confidence／`grade_status`／決定／`selected_event_id` | 依下方 V2 順序逐 gate 驗證；先修正可重算 counts。十四天歷史無法合併時保留舊 blob 並延後維護，但不得把 provisional 冒充 validated |
+| 6 materialize-manifest | audit 中 selected C 以上且 `grade_status=validated` 的事件 | `news-event-manifest.json`，事件集合精確等於 selected ids；保存 validated score、grade、status、confidence | 只能一對一物化，不得另加／漏掉新聞；manifest 值必須精確等於 candidate audit 並綁定 checkpoint |
 | 7 verify-news-events | 事件與主張類型 | stage patch、原始報導、官方／主要記錄、獨立證據鏈、claim status、source limits | 只合併 verify 欄位並執行 stage ownership validator；驗證來源無固定數或名單 |
 | 8 build-news-maps | 已驗證事件、map policy | map decision、必要 overlay、canonical basemap、PNG／SVG | `validate_map_decisions.py`；只修失敗事件地圖 |
 | 9 build-news-charts | 已驗證數據與 chart policy | 只有在比較、趨勢、比例、分布或查表有增量時建立 chart assets | 圖表不能替代地圖或來源圖片；只修失敗圖表 |
@@ -178,6 +178,36 @@
 `COUNT_RECEIPT_REPAIR_ONCE`：事件小計與同一 run-scoped candidate audit 的 `events` 陣列不符時，直接依陣列重算並覆寫一次，再驗證 selected mapping。像 32/33 這類純小計差額不是 fatal blocker；只有事件本體、評分或 mapping 仍矛盾時，才把受影響項目退回 unresolved。
 
 `FOURTEEN_DAY_AUDIT_MERGE_UNAVAILABLE`：`logs/runs/<run_id>/candidate-audit.json` 是本輪 24 小時 run-scoped candidate audit，也是完成門檻；`logs/latest-candidate-audit.json` 只是十四天 continuity cache。宿主無法安全 materialize／merge 後者時，保留原 blob、記錄 `durable_audit_status=preserved_merge_deferred`，繼續當輪驗證與 reader。這個狀態不得設為 `last_error`、不得標 failed，也不得重跑 discovery、評分或驗證。
+
+`V1_HISTORY_CONTINUITY_ONLY`：升級當下仍在十四天內的 `public_value_v1` run 與來源排序原樣保留，只用於事件 continuity／delta 比較，不要求以不存在的舊證據回填 V2，也不得沿用為 validated grade。最新一輪與任何本輪新增或實質更新事件一律重走 `public_value_v2`；validator 只對歷史 run 接受可重算的 V1 來源排序，對最新 run 強制 V2。
+
+### Public Value V2 填寫與驗證順序
+
+`news-source-pool.json.ranking` 是唯一評分設定來源；程式不得另外寫死權重。每個去重後語意事件依下列順序填寫，順序不可倒置：
+
+1. 完成 `semantic_event_id`、`event_identity` 與 `temporal_review`，確認事件是本輪新事件、持續現況或實質更新。
+2. 對照十四天 `continuity`，先寫出可核實 facts；每筆指定唯一 `fact_id`、fact type、來源、信心與 consequence class。
+3. 將 fact ID 完整且互斥地放入 `consequence_evidence.realized`、`ongoing`、`potential`、`speculative`。預期／推測不可改寫成現況。
+4. 六項 `dimension_evidence` 只能引用 fact ID：Impact／Scope／Urgency 只接受 realized 或 ongoing；Structural 才可接受高可信且列明制度機制的 potential；speculative 一律不可計分。
+5. 六項各填 0–100，標準使用 10 分錨點；使用 5 分中點時填 `midpoint_rationales`。以 30%／20%／15%／15%／10%／10% 計算 `weighted_score`，並令 `importance_score` 完全相同。
+6. Update 達 70 時填 `delta_facts` 的 previous state、current state、why material；同一 fact 支撐三項以上時填 `cross_dimension_rationales`。
+7. 任一單項達 70，為該項填 `high_score_challenges`；總分達 70，另填 `overall_high_score_challenge`，具體回答相較 B+ 多出的已發生後果。只能以 `outcome=sustained` 保留高分；`rescore_required` 必須先重評。
+8. 政策事件填 `policy_stage` 與既有 `policy_governance_review`。proposal 沒有硬上限，但高 Impact 必須有已發生後果，不能以「若通過」或理論全國覆蓋代替。
+9. 另填 `evidence_confidence` 0–100 與 high 80–100／medium 60–79／low 0–59 `confidence_band`；信心不得乘進 importance。
+10. event identity、temporal review、十四天 continuity、dimension evidence、政策審查（適用時）、高分反查、算式與 grade mapping 全部通過後，才可寫 `grade_status=validated`。degraded run 可保留 provisional candidate pool，但 Reader、manifest 與 publisher 只接受 validated。
+
+六項加權後仍使用既有級距：E 0、D 20、C- 40、C 45、C+ 50、B- 55、B 60、B+ 65、A- 70、A 75、A+ 80、S- 85、S 90、S+ 94、SS 97。災害死亡只設定 Impact floor：1–9／10–49／50–99／100–249／250–2,499／2,500+ 分別為 30／45／60／75／90／100，不直接指定總等級。
+
+正式 manifest 的每個事件必須保存並與 audit 一致：`scoring_method=public_value_v2`、`validated_importance_score`、`validated_grade`、`grade_status=validated`、`evidence_confidence`、`confidence_band`。`scripts/manage_candidate_audit.py` 驗證證據與計分，`scripts/validate_news_brief.py` 拒絕非 validated Reader 事件，`scripts/publish_news_brief.py` 驗證 audit／manifest 完全相等。
+
+先建立只含本輪 selected event skeleton 的 manifest，再以唯一 canonical binder 寫入正式分數；不得手抄或由後段 stage 重算：
+
+```bash
+python3 scripts/materialize_event_manifest.py \
+  --audit <run-scoped-candidate-audit.json> \
+  --manifest <event-manifest-skeleton.json> \
+  --output <news-event-manifest.json>
+```
 
 ### Source and verification evidence
 

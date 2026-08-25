@@ -28,7 +28,11 @@ def load_module():
 
 class SameSourceRecoveryTests(unittest.TestCase):
     def fixture(self, root: Path):
+        ranking = json.loads(
+            (ROOT / "news-source-pool.json").read_text(encoding="utf-8")
+        )["ranking"]
         pool = {
+            "ranking": ranking,
             "discovery_sources": [{
                 "source_id": "wire", "name": "Wire", "homepage": "https://example.com/",
                 "section": "TWN", "categories": ["politics"],
@@ -65,7 +69,7 @@ class SameSourceRecoveryTests(unittest.TestCase):
             "source_id": "wire", "status": "completed", "within_window_count": 0,
             "ranked_count": 0, "ranked_items": [], "selected_for_pool_count": 0,
             "selected_item_urls": [], "mandatory_overflow_items": [], "ranking_completed": True,
-            "ranking_method": "public_value_v1", "failure_reason": None,
+            "ranking_method": "public_value_v2", "failure_reason": None,
             "scan_window_start": scan["window_start"], "scan_window_end": scan["window_end"],
             "scan_evidence_path": str(scan_dir / "wire.json"),
         }]

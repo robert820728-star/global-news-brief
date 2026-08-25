@@ -7,6 +7,97 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PipelineContractTests(unittest.TestCase):
+    def test_public_value_v2_uses_normalized_weighted_dimensions(self):
+        pool = json.loads(
+            (ROOT / "news-source-pool.json").read_text(encoding="utf-8")
+        )
+        ranking = pool["ranking"]
+
+        self.assertEqual("public_value_v2", ranking["method"])
+        self.assertEqual(5, ranking["allowed_score_step"])
+        self.assertEqual(
+            100,
+            sum(item["weight_percent"] for item in ranking["dimensions"].values()),
+        )
+        self.assertTrue(
+            all(item["maximum"] == 100 for item in ranking["dimensions"].values())
+        )
+
+    def test_candidate_schema_requires_public_value_v2_evidence(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-candidate-audit.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        candidate = schema["$defs"]["v2Candidate"]
+        required = {
+            "scoring_method",
+            "weighted_score",
+            "consequence_evidence",
+            "evidence_facts",
+            "policy_stage",
+            "delta_facts",
+            "high_score_challenges",
+            "overall_high_score_challenge",
+            "cross_dimension_rationales",
+            "midpoint_rationales",
+            "evidence_confidence",
+            "confidence_band",
+            "grade_status",
+        }
+
+        self.assertTrue(required.issubset(candidate["required"]))
+        for dimension in schema["$defs"]["importanceBreakdown"]["properties"].values():
+            self.assertEqual(100, dimension["maximum"])
+
+        self.assertEqual(
+            ["public_value_v1", "public_value_v2"],
+            schema["$defs"]["sourceCoverage"]["properties"]["ranking_method"]["enum"],
+        )
+        self.assertIn(
+            {"$ref": "#/$defs/legacyCandidate"},
+            schema["$defs"]["candidate"]["anyOf"],
+        )
+
+    def test_manifest_schema_requires_validated_public_value_v2_fields(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-event-manifest.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        event = schema["$defs"]["event"]
+        self.assertTrue(
+            {
+                "scoring_method",
+                "validated_importance_score",
+                "validated_grade",
+                "grade_status",
+                "evidence_confidence",
+                "confidence_band",
+            }.issubset(event["required"])
+        )
+
+    def test_install_is_complete_public_value_v2_entrypoint(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        contract = install[install.index("### Public Value V2 填寫與驗證順序"):]
+        ordered_requirements = (
+            "semantic_event_id",
+            "consequence_evidence.realized",
+            "dimension_evidence",
+            "midpoint_rationales",
+            "delta_facts",
+            "cross_dimension_rationales",
+            "high_score_challenges",
+            "policy_stage",
+            "evidence_confidence",
+            "grade_status=validated",
+            "validated_importance_score",
+        )
+        positions = [contract.index(requirement) for requirement in ordered_requirements]
+        self.assertEqual(sorted(positions), positions)
+        self.assertIn("30%／20%／15%／15%／10%／10%", install)
+        self.assertIn("Reader、manifest 與 publisher 只接受 validated", install)
+
     def test_pre_manifest_recovery_bundle_gate_precedes_selection(self):
         required_artifacts = (
             "recovery/checkpoint.json",
@@ -750,11 +841,11 @@ class PipelineContractTests(unittest.TestCase):
             ["event_evidence", "non_news", "unresolved"],
             schema["$defs"]["articleDisposition"]["properties"]["disposition"]["enum"],
         )
-        candidate_required = set(schema["$defs"]["candidate"]["required"])
+        candidate_required = set(schema["$defs"]["v2Candidate"]["required"])
         self.assertNotIn("semantic_event_id", candidate_required)
         self.assertNotIn("event_identity", candidate_required)
-        self.assertIn("semantic_event_id", schema["$defs"]["candidate"]["properties"])
-        self.assertIn("event_identity", schema["$defs"]["candidate"]["properties"])
+        self.assertIn("semantic_event_id", schema["$defs"]["v2Candidate"]["properties"])
+        self.assertIn("event_identity", schema["$defs"]["v2Candidate"]["properties"])
         self.assertEqual({
             "who_or_what", "what_happened", "where", "when", "semantic_merge_basis"
         }, set(schema["$defs"]["eventIdentity"]["required"]))
@@ -819,7 +910,7 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("score_consistency_review", review["properties"])
         self.assertIn(
             "policy_governance_review",
-            schema["$defs"]["candidate"]["properties"]["grading_evidence"]["properties"],
+            schema["$defs"]["v2Candidate"]["properties"]["grading_evidence"]["properties"],
         )
         documents = (
             ROOT / "news-brief-settings.md",

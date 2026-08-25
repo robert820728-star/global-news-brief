@@ -118,15 +118,19 @@
     }
   ],
   "ranking": {
-    "method": "public_value_v1",
+    "method": "public_value_v2",
     "score_range": [0, 100],
+    "allowed_score_step": 5,
+    "high_score_threshold": 70,
+    "material_delta_threshold": 70,
+    "cross_dimension_reuse_threshold": 3,
     "dimensions": {
-      "public_impact": 30,
-      "geographic_or_population_scope": 20,
-      "urgency_and_safety": 15,
-      "structural_or_policy_significance": 15,
-      "material_new_development": 10,
-      "core_section_relevance": 10
+      "public_impact": {"minimum": 0, "maximum": 100, "weight_percent": 30},
+      "geographic_or_population_scope": {"minimum": 0, "maximum": 100, "weight_percent": 20},
+      "urgency_and_safety": {"minimum": 0, "maximum": 100, "weight_percent": 15},
+      "structural_or_policy_significance": {"minimum": 0, "maximum": 100, "weight_percent": 15},
+      "material_new_development": {"minimum": 0, "maximum": 100, "weight_percent": 10},
+      "core_section_relevance": {"minimum": 0, "maximum": 100, "weight_percent": 10}
     },
     "grade_minimum_scores": {
       "E": 0,
@@ -151,36 +155,77 @@
       "scope_is_one_weighted_dimension": true
     },
     "casualty_public_impact_floors": {
-      "1-9": 8,
-      "10-49": 14,
-      "50-99": 18,
-      "100-249": 23,
-      "250-2499": 27,
-      "2500+": 30
+      "1-9": 30,
+      "10-49": 45,
+      "50-99": 60,
+      "100-249": 75,
+      "250-2499": 90,
+      "2500+": 100
     },
     "dimension_anchors": {
       "public_impact": [
-        {"score_range": [0, 5], "meaning": "ceremonial, symbolic, or no demonstrated public consequence"},
-        {"score_range": [6, 11], "meaning": "limited and reversible consequence"},
-        {"score_range": [12, 17], "meaning": "material but bounded public consequence"},
-        {"score_range": [18, 23], "meaning": "major harm, rights, livelihood, or public-system consequence"},
-        {"score_range": [24, 27], "meaning": "severe casualties, nationwide dysfunction, or irreversible loss"},
-        {"score_range": [28, 30], "meaning": "catastrophic, existential, or state-survival consequence"}
+        {"score": 0, "meaning": "no demonstrated public consequence"},
+        {"score": 20, "meaning": "symbolic, administrative, or extremely small consequence"},
+        {"score": 40, "meaning": "limited, local, and reversible consequence"},
+        {"score": 60, "meaning": "clear and material but bounded consequence"},
+        {"score": 80, "meaning": "major consequence to life, rights, livelihood, industry, or public systems"},
+        {"score": 90, "meaning": "severe casualties, broad dysfunction, or major irreversible loss"},
+        {"score": 100, "meaning": "catastrophic, state-survival, or civilization-scale consequence"}
       ],
       "geographic_or_population_scope": [
-        {"score_range": [0, 3], "meaning": "individual, facility, ceremony, or no demonstrated direct public reach"},
-        {"score_range": [4, 7], "meaning": "one locality or otherwise limited directly affected population"},
-        {"score_range": [8, 11], "meaning": "substantial first-level region, entire small sovereign state, or 2-3 first-level regions/countries"},
-        {"score_range": [12, 15], "meaning": "4+ first-level regions/countries or material national public-system reach"},
-        {"score_range": [16, 18], "meaning": "many first-level regions/countries across multiple regions"},
-        {"score_range": [19, 20], "meaning": "global or civilization-wide direct reach"}
+        {"score": 0, "meaning": "no demonstrated direct public reach"},
+        {"score": 20, "meaning": "individual or single facility"},
+        {"score": 40, "meaning": "locality or one city"},
+        {"score": 60, "meaning": "one important first-level region or several localities"},
+        {"score": 80, "meaning": "multiple first-level regions or a major national public system"},
+        {"score": 90, "meaning": "multiple countries or regions"},
+        {"score": 100, "meaning": "global direct impact"}
       ],
       "urgency_and_safety": [
-        {"score_range": [0, 3], "meaning": "danger ended or no immediate public action required"},
-        {"score_range": [4, 7], "meaning": "active local response or bounded safety concern"},
-        {"score_range": [8, 11], "meaning": "continuing major danger, rescue window, or stressed essential services"},
-        {"score_range": [12, 15], "meaning": "expanding or uncontrolled threat requiring immediate broad action"}
+        {"score": 0, "meaning": "event ended or no immediate risk"},
+        {"score": 20, "meaning": "limited precaution"},
+        {"score": 40, "meaning": "local response required"},
+        {"score": 60, "meaning": "major danger remains active"},
+        {"score": 80, "meaning": "rescue window, essential-service stress, or expanding risk"},
+        {"score": 100, "meaning": "uncontrolled threat requiring broad immediate action"}
+      ],
+      "structural_or_policy_significance": [
+        {"score": 0, "meaning": "no institutional significance"},
+        {"score": 20, "meaning": "one-off administrative measure"},
+        {"score": 40, "meaning": "material organizational or industry rule change"},
+        {"score": 60, "meaning": "major regulatory, governance, or business-model change"},
+        {"score": 80, "meaning": "national institution, core industry, or major diplomatic-security architecture change"},
+        {"score": 100, "meaning": "fundamental regime, institutional, or global-order change"}
+      ],
+      "material_new_development": [
+        {"score": 0, "meaning": "republication or background only"},
+        {"score": 20, "meaning": "wording or minor numerical update"},
+        {"score": 40, "meaning": "new reliable confirmation"},
+        {"score": 60, "meaning": "new policy, operational, or disaster milestone"},
+        {"score": 80, "meaning": "formal effect, major expansion, or measurable effect"},
+        {"score": 100, "meaning": "irreversible major turning point"}
+      ],
+      "core_section_relevance": [
+        {"score": 0, "meaning": "only categorically belongs in the section"},
+        {"score": 30, "meaning": "weak section relevance"},
+        {"score": 50, "meaning": "normally important section news"},
+        {"score": 70, "meaning": "directly concerns a major public, economic, or security issue"},
+        {"score": 90, "meaning": "core major event for the section"},
+        {"score": 100, "meaning": "fundamental event for the section"}
       ]
+    },
+    "dimension_fact_eligibility": {
+      "public_impact": ["realized", "ongoing"],
+      "geographic_or_population_scope": ["realized", "ongoing"],
+      "urgency_and_safety": ["realized", "ongoing"],
+      "structural_or_policy_significance": ["realized", "ongoing", "potential"],
+      "material_new_development": ["realized", "ongoing"],
+      "core_section_relevance": ["realized", "ongoing"]
+    },
+    "confidence_bands": {
+      "high": [80, 100],
+      "medium": [60, 79],
+      "low": [0, 59]
     },
     "tie_breakers": ["newer_published_at", "more_direct_primary_evidence", "stable_url"]
   },

@@ -59,6 +59,12 @@ def valid_manifest():
                 "primary_section": "TWN",
                 "title": "測試地震事件",
                 "grade": "B",
+                "scoring_method": "public_value_v2",
+                "validated_importance_score": 60,
+                "validated_grade": "B",
+                "grade_status": "validated",
+                "evidence_confidence": 85,
+                "confidence_band": "high",
                 "selection": {
                     "dedup_key": "test-event",
                     "category": "地震與海嘯",
@@ -282,6 +288,22 @@ def legacy_sectioned_brief():
 
 
 class ValidatorTests(unittest.TestCase):
+    def test_reader_manifest_rejects_nonvalidated_grade(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["grade_status"] = "provisional"
+
+        errors = VALIDATOR.validate_manifest_data(manifest)
+
+        self.assertTrue(any("grade_status" in error and "validated" in error for error in errors))
+
+    def test_reader_manifest_rejects_grade_alias_mismatch(self):
+        manifest = valid_manifest()
+        manifest["events"][0]["validated_grade"] = "B+"
+
+        errors = VALIDATOR.validate_manifest_data(manifest)
+
+        self.assertTrue(any("validated_grade" in error for error in errors))
+
     def test_canonical_reader_requires_a_front_today_overview(self):
         text = legacy_sectioned_brief().replace(
             "## 今日總覽\n\n### 🇹🇼 台灣新聞\n\n"

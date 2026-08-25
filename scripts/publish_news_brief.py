@@ -148,16 +148,41 @@ def candidate_errors(audit: dict, manifest: dict, source_pool: dict) -> list[str
     errors = manage_candidate_audit.validate(audit, source_pool)
     runs = audit.get("runs", [])
     if not runs: return errors + ["候選稽核沒有本輪紀錄"]
-    selected = {
-        c.get("selected_event_id")
+    selected_candidates = {
+        c.get("selected_event_id"): c
         for c in runs[-1].get("candidates", [])
         if c.get("provisional_grade") in manage_candidate_audit.AUTO_SELECT
         and c.get("decision") in {"selected", "merged"}
+        and c.get("selected_event_id") is not None
     }
-    selected.discard(None)
-    ids = {e.get("event_id") for e in manifest.get("events", []) if isinstance(e, dict)}
-    if selected != ids:
+    manifest_events = {
+        e.get("event_id"): e
+        for e in manifest.get("events", []) if isinstance(e, dict)
+    }
+    if set(selected_candidates) != set(manifest_events):
         errors.append("十四天候選稽核本輪 C 級以上入選事件與 manifest 不一致；禁止漏放達標事件或額外補新聞")
+    bindings = (
+        ("scoring_method", "scoring_method"),
+        ("importance_score", "validated_importance_score"),
+        ("provisional_grade", "validated_grade"),
+        ("grade_status", "grade_status"),
+        ("evidence_confidence", "evidence_confidence"),
+        ("confidence_band", "confidence_band"),
+    )
+    for event_id in set(selected_candidates) & set(manifest_events):
+        candidate = selected_candidates[event_id]
+        event = manifest_events[event_id]
+        if candidate.get("grade_status") != "validated":
+            errors.append(f"{event_id} 候選 grade_status 必須是 validated")
+        if event.get("grade_status") != "validated":
+            errors.append(f"{event_id} manifest.grade_status 必須是 validated")
+        for candidate_field, manifest_field in bindings:
+            if candidate.get(candidate_field) != event.get(manifest_field):
+                errors.append(
+                    f"{event_id} manifest.{manifest_field} 必須精確等於候選稽核的 {candidate_field}"
+                )
+        if event.get("grade") != candidate.get("provisional_grade"):
+            errors.append(f"{event_id} manifest.grade 必須等於 validated_grade")
     return errors
 
 

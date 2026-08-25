@@ -47,7 +47,7 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 
 不得在本技能臨時重新抓新聞。先調用 `acquire-news-candidates` 執行三條 discovery routes，保存原始快照、SHA-256、連續翻頁鏈及時間邊界或來源耗盡證據，再讀取候選清單。驗證器必須從快照重算清單，禁止模型自行宣告筆數。直接連結遇到403、robots、不支援 MIME、逾時、解析失敗或動態內容未載入時，依 `canonical route → same-site direct fetch → same-site alternate non-browser route → browser-rendered snapshot` 恢復；瀏覽器只可作最後備援。不得以總候選數或任何等級數量作為成功門檻。
 
-每條成功 route 確認完整抵達精確 24 小時邊界後，再按公共價值排序；每筆都依 `public_value_v1` 保存六項 `importance_breakdown`、`importance_score` 與事件特有理由，各項不得超過設定權重且六項總和必須等於總分。`FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` 要求成功 route 的全部已驗證窗內條目入池，不設前 30 或其他固定名額。不得把其他來源冒充為某 route 覆蓋；文化產業、創作者生態或平台制度轉折仍依六項指標正常評分，不得因娛樂新聞整體降權而漏掉。保存 route 確認紀錄後才可跨來源去重。
+每條成功 route 確認完整抵達精確 24 小時邊界後，再按公共價值排序；每筆都依 `public_value_v2` 保存六項 0–100 `importance_breakdown`、依設定權重計算的 `importance_score` 與事件特有理由。`FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` 要求成功 route 的全部已驗證窗內條目入池，不設前 30 或其他固定名額。不得把其他來源冒充為某 route 覆蓋；文化產業、創作者生態或平台制度轉折仍依六項指標正常評分，不得因娛樂新聞整體降權而漏掉。保存 route 確認紀錄後才可跨來源去重。
 
 搜尋各設定板塊及公共政策、經濟、科技、資安、國際關係、災害、公衛、公共安全、科學、自然史、文化與產業。
 
@@ -102,7 +102,7 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 - 災害、疫情與公共安全事件列為 `A-` 以上時，`selection.reason` 必須明列死亡／重傷、直接受影響人口、地理範圍與關鍵系統中實際觸發的項目。
 - 不得把一般受傷等同重傷，不得把警報覆蓋人口等同直接受影響人口，也不得由單張震撼圖片推高評級。
 - 所有事件都以六項證據綜合評分；死亡數、地域數、國家大小或任何單一項都不得直接指定最終等級，也不得建立地域硬上限或例外補丁。重要性／嚴重程度放入 `public_impact`，直接人口／行政區／國家／公共系統範圍放入 `geographic_or_population_scope`，其餘四項各自獨立給分，最後依固定總分級距換算 `SS` 至 `E`。
-- 每個候選必須填寫 `importance_breakdown`、`importance_score`、逐項 `dimension_evidence` 與 `grading_evidence`，保存重要性／嚴重程度、直接影響範圍、急迫性、結構意義、精確 24 小時的新進展、板塊關聯、上下級比較、邊境衝突判定及長期衝突連續性判定。只有 `grade_reason`、模板句或關鍵字對分不得完成評級。
+- 每個候選先填唯一 `evidence_facts`，以 `consequence_evidence` 分開 realized／ongoing／potential／speculative，再由逐項 `dimension_evidence` 引用 fact ID；之後才填 0–100 `importance_breakdown`、加權 `importance_score` 與 `grading_evidence`。5 分中點需 `midpoint_rationales`；三項以上重用同一 fact 需 `cross_dimension_rationales`；單項或總分達 70 需完成 `high_score_challenges`。政策事件填 `policy_stage`，證據成熟度另填 `evidence_confidence`／`confidence_band`。只有所有 gate 通過才能標 `grade_status=validated`；只有 `grade_reason`、模板句、關鍵字或未來可能性不得完成評級。
 - 來源清單的站內 `importance_score` 只供 discovery 排序；去重後的最終候選必須從零依事件證據重評，禁止複製來源排序分數或把「政府／全國／重大」等字詞本身當成公共後果。
 - 國與國之間尚未升級為正式戰爭或事實戰爭規模的邊境小衝突，若與使用者監控板塊無直接關係，且使用者沒有提高戰爭／邊境權重，固定評為 `D`。少量死傷、增兵、軍演、警告、單次砲擊或空襲都不能自行解除此規則。
 - 長期戰爭中的同戰線、同攻擊型態、相近規模交火與例行傷亡更新，固定評為 `D`；不得繼承母事件的高等級。只有可能改變戰局、造成實質升級、改變停火／和平進程、開啟新戰線／新國家介入，或造成可驗證的油價、航運、能源、糧食、金融、供應鏈等外部系統影響，才能解除折扣並依實際影響重評。

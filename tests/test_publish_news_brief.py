@@ -64,12 +64,12 @@ def write_valid_audit(root: Path):
             "url": article_url, "title": source_id, "published_at": article_time,
             "importance_score": 80, "importance_reason": "具有公共影響",
             "importance_breakdown": {
-                "public_impact": 24,
-                "geographic_or_population_scope": 16,
-                "urgency_and_safety": 12,
-                "structural_or_policy_significance": 12,
-                "material_new_development": 8,
-                "core_section_relevance": 8,
+                "public_impact": 80,
+                "geographic_or_population_scope": 80,
+                "urgency_and_safety": 80,
+                "structural_or_policy_significance": 80,
+                "material_new_development": 80,
+                "core_section_relevance": 80,
             },
         }]
         coverage.append({
@@ -77,7 +77,7 @@ def write_valid_audit(root: Path):
             "within_window_count": 1, "ranked_count": 1,
             "ranked_items": ranked_items, "selected_for_pool_count": 1,
             "selected_item_urls": [article_url], "mandatory_overflow_items": [],
-            "ranking_completed": True, "ranking_method": "public_value_v1",
+            "ranking_completed": True, "ranking_method": "public_value_v2",
             "failure_reason": None,
             "scan_window_start": "2026-08-13T06:00:00+08:00",
             "scan_window_end": "2026-08-14T06:00:00+08:00",
@@ -109,24 +109,48 @@ def write_valid_audit(root: Path):
             },
             "semantic_merge_basis": "所有文章描述同一主體、行動、地點與時間",
         },
-        "section": "TWN", "provisional_grade": "B",
-        "importance_score": 62,
+        "section": "TWN", "scoring_method": "public_value_v2",
+        "weighted_score": 60, "provisional_grade": "B",
+        "importance_score": 60,
         "importance_breakdown": {
-            "public_impact": 18,
-            "geographic_or_population_scope": 12,
-            "urgency_and_safety": 8,
-            "structural_or_policy_significance": 10,
-            "material_new_development": 7,
-            "core_section_relevance": 7,
+            "public_impact": 60,
+            "geographic_or_population_scope": 60,
+            "urgency_and_safety": 60,
+            "structural_or_policy_significance": 60,
+            "material_new_development": 60,
+            "core_section_relevance": 60,
         },
         "dimension_evidence": {
-            "public_impact": "全國公共服務規則正式改變。",
-            "geographic_or_population_scope": "政策直接適用全國公共服務系統。",
-            "urgency_and_safety": "本期生效，需要即時調整服務。",
-            "structural_or_policy_significance": "法定程序完成並形成拘束規則。",
-            "material_new_development": "本期完成法定程序。",
-            "core_section_relevance": "直接涉及台灣中央公共制度。",
+            "public_impact": ["F01"],
+            "geographic_or_population_scope": ["F02"],
+            "urgency_and_safety": ["F03"],
+            "structural_or_policy_significance": ["F04"],
+            "material_new_development": ["F05"],
+            "core_section_relevance": ["F06"],
         },
+        "consequence_evidence": {
+            "realized": ["F01", "F05", "F06"],
+            "ongoing": ["F02", "F03"],
+            "potential": ["F04"],
+            "speculative": [],
+        },
+        "evidence_facts": [
+            {"fact_id": "F01", "fact": "公共服務規則已正式改變", "fact_type": "public_consequence", "consequence_class": "realized", "confidence": 90, "source_urls": ["https://example.com/f01"], "institutional_mechanism": None},
+            {"fact_id": "F02", "fact": "全國服務系統持續受影響", "fact_type": "directly_affected_scope", "consequence_class": "ongoing", "confidence": 90, "source_urls": ["https://example.com/f02"], "institutional_mechanism": None},
+            {"fact_id": "F03", "fact": "服務提供者需立即調整", "fact_type": "safety_condition", "consequence_class": "ongoing", "confidence": 90, "source_urls": ["https://example.com/f03"], "institutional_mechanism": None},
+            {"fact_id": "F04", "fact": "法定程序形成拘束規則", "fact_type": "institutional_change", "consequence_class": "potential", "confidence": 90, "source_urls": ["https://example.com/f04"], "institutional_mechanism": "正式法定程序"},
+            {"fact_id": "F05", "fact": "本期完成法定程序", "fact_type": "material_delta", "consequence_class": "realized", "confidence": 90, "source_urls": ["https://example.com/f05"], "institutional_mechanism": None},
+            {"fact_id": "F06", "fact": "直接涉及台灣中央制度", "fact_type": "section_centrality", "consequence_class": "realized", "confidence": 90, "source_urls": ["https://example.com/f06"], "institutional_mechanism": None},
+        ],
+        "policy_stage": "not_applicable",
+        "delta_facts": [{"fact_id": "F05", "previous_state": "程序尚未完成", "current_state": "程序已完成", "why_material": "規則開始具拘束力"}],
+        "high_score_challenges": [],
+        "overall_high_score_challenge": None,
+        "cross_dimension_rationales": [],
+        "midpoint_rationales": [],
+        "evidence_confidence": 85,
+        "confidence_band": "high",
+        "grade_status": "validated",
         "grade_reason": "本期政策正式生效並造成可驗證的全國公共服務影響，因此評為 B。",
         "grading_evidence": {
             "impact_scope_level": "national",
@@ -281,6 +305,36 @@ def publish_command(checkpoint, manifest, audit, brief, release_dir):
 
 
 class PublisherTests(unittest.TestCase):
+    def test_candidate_mapping_rejects_nonvalidated_manifest_grade(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            audit = json.loads(write_valid_audit(root).read_text(encoding="utf-8"))
+            manifest = valid_manifest()
+            manifest["events"][0]["grade_status"] = "provisional"
+
+            errors = publish_news_brief.candidate_errors(
+                audit,
+                manifest,
+                json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8")),
+            )
+
+            self.assertTrue(any("grade_status" in error and "validated" in error for error in errors))
+
+    def test_candidate_mapping_rejects_manifest_score_different_from_audit(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            audit = json.loads(write_valid_audit(root).read_text(encoding="utf-8"))
+            manifest = valid_manifest()
+            manifest["events"][0]["validated_importance_score"] = 65
+
+            errors = publish_news_brief.candidate_errors(
+                audit,
+                manifest,
+                json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8")),
+            )
+
+            self.assertTrue(any("validated_importance_score" in error for error in errors))
+
     def test_checkpoint_rejects_manifest_from_another_run(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

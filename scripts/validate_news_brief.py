@@ -729,7 +729,9 @@ def validate_manifest_data(data: dict[str, Any]) -> list[str]:
         _need(
             event,
             [
-                "event_id", "primary_section", "title", "grade", "selection",
+                "event_id", "primary_section", "title", "grade", "scoring_method",
+                "validated_importance_score", "validated_grade", "grade_status",
+                "evidence_confidence", "confidence_band", "selection",
                 "verification", "map", "charts", "images", "detail",
             ],
             label,
@@ -750,6 +752,30 @@ def validate_manifest_data(data: dict[str, Any]) -> list[str]:
             errors.append(f"{label} 缺少標題")
         if event.get("grade") not in ALLOWED_GRADES:
             errors.append(f"{label} 等級無效：{event.get('grade')}")
+        if event.get("scoring_method") != "public_value_v2":
+            errors.append(f"{label}.scoring_method 必須是 public_value_v2")
+        validated_score = event.get("validated_importance_score")
+        if (
+            not isinstance(validated_score, (int, float))
+            or isinstance(validated_score, bool)
+            or not 0 <= validated_score <= 100
+        ):
+            errors.append(f"{label}.validated_importance_score 必須介於 0–100")
+        if event.get("validated_grade") != event.get("grade"):
+            errors.append(f"{label}.validated_grade 必須等於 grade")
+        if event.get("grade_status") != "validated":
+            errors.append(f"{label}.grade_status 必須是 validated，Reader 不接受 provisional")
+        evidence_confidence = event.get("evidence_confidence")
+        if (
+            not isinstance(evidence_confidence, int)
+            or isinstance(evidence_confidence, bool)
+            or not 0 <= evidence_confidence <= 100
+        ):
+            errors.append(f"{label}.evidence_confidence 必須是 0–100 整數")
+        else:
+            expected_band = "high" if evidence_confidence >= 80 else "medium" if evidence_confidence >= 60 else "low"
+            if event.get("confidence_band") != expected_band:
+                errors.append(f"{label}.confidence_band 必須是 {expected_band}")
 
         selection = event.get("selection")
         if not isinstance(selection, dict):

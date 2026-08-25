@@ -10,6 +10,8 @@
 
 完整 capsule 工作流的 canonical runtime 與來源擷取已使用跨平台 Python；手機／Linux 排程不需要 PowerShell。宿主提供的 bundled-runtime Python 會先經 Pillow 實際匯入驗證，通過後才執行 checkpoint 與後續 pipeline。
 
+目前評分契約為 `public_value_v2`：六項各以 0–100 表示，再按 30%／20%／15%／15%／10%／10% 加權。模型必須先列 fact 並區分 Actual／Potential，程式才接受分數；高分需要反向審查，本期增量 70 以上需要十四天 delta。證據信心與事件重要性分開，只有 `grade_status=validated` 可進 manifest 與讀者版。完整欄位、填寫順序與故障處理以 [INSTALL.md](INSTALL.md) 為準。
+
 ## 快速安裝
 
 在新的 ChatGPT 對話貼上本 repo 網址，並輸入：

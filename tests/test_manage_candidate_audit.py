@@ -1,6 +1,7 @@
 import importlib.util
 import hashlib
 import json
+import copy
 import subprocess
 import sys
 import tempfile
@@ -22,18 +23,13 @@ def source_pool():
 
 
 def importance_breakdown(score=100):
-    weights = source_pool()["ranking"]["dimensions"]
-    ratio = score / 100
-    values = {key: round(weight * ratio, 2) for key, weight in weights.items()}
-    difference = round(score - sum(values.values()), 2)
-    values[next(iter(values))] = round(values[next(iter(values))] + difference, 2)
-    return values
+    return {key: score for key in source_pool()["ranking"]["dimensions"]}
 
 
 REPRESENTATIVE_GRADE_SCORES = {
-    "E": 10, "D": 30, "C-": 42, "C": 47, "C+": 52,
-    "B-": 57, "B": 62, "B+": 67, "A-": 72, "A": 77,
-    "A+": 82, "S-": 87, "S": 91, "S+": 95, "SS": 99,
+    "E": 10, "D": 30, "C-": 40, "C": 45, "C+": 50,
+    "B-": 55, "B": 60, "B+": 65, "A-": 70, "A": 75,
+    "A+": 80, "S-": 85, "S": 90, "S+": 95, "SS": 100,
 }
 
 
@@ -42,12 +38,46 @@ def candidate(grade="C", decision="selected", reason_code="selected_threshold_me
     breakdown = importance_breakdown(score)
     return {
         "candidate_id": "c", "dedup_key": "c", "title": "測試", "section": "GLB",
+        "scoring_method": "public_value_v2",
+        "weighted_score": score,
         "provisional_grade": grade,
         "importance_score": score,
         "importance_breakdown": breakdown,
         "dimension_evidence": {
-            key: f"{key} 具有候選事件的可核實證據。" for key in breakdown
+            key: [f"F{index:02d}"]
+            for index, key in enumerate(breakdown, 1)
         },
+        "consequence_evidence": {
+            "realized": ["F01", "F05", "F06"],
+            "ongoing": ["F02", "F03"],
+            "potential": ["F04"],
+            "speculative": [],
+        },
+        "evidence_facts": [
+            {"fact_id": "F01", "fact": "已發生可驗證的公共後果", "fact_type": "public_consequence", "consequence_class": "realized", "confidence": 90, "source_urls": ["https://example.com/f01"], "institutional_mechanism": None},
+            {"fact_id": "F02", "fact": "直接影響範圍仍在持續", "fact_type": "directly_affected_scope", "consequence_class": "ongoing", "confidence": 90, "source_urls": ["https://example.com/f02"], "institutional_mechanism": None},
+            {"fact_id": "F03", "fact": "目前仍需採取安全行動", "fact_type": "safety_condition", "consequence_class": "ongoing", "confidence": 90, "source_urls": ["https://example.com/f03"], "institutional_mechanism": None},
+            {"fact_id": "F04", "fact": "存在具體且高可信的制度機制", "fact_type": "institutional_change", "consequence_class": "potential", "confidence": 90, "source_urls": ["https://example.com/f04"], "institutional_mechanism": "正式制度程序已啟動"},
+            {"fact_id": "F05", "fact": "相較十四天紀錄出現新節點", "fact_type": "material_delta", "consequence_class": "realized", "confidence": 90, "source_urls": ["https://example.com/f05"], "institutional_mechanism": None},
+            {"fact_id": "F06", "fact": "事件直接涉及板塊核心公共議題", "fact_type": "section_centrality", "consequence_class": "realized", "confidence": 90, "source_urls": ["https://example.com/f06"], "institutional_mechanism": None},
+        ],
+        "policy_stage": "not_applicable",
+        "delta_facts": [{"fact_id": "F05", "previous_state": "尚未出現此節點", "current_state": "本輪正式出現此節點", "why_material": "狀態已實質改變"}],
+        "high_score_challenges": [
+            {"dimension": key, "claim": f"{key} 達到高分", "counter_question": "哪些已發生事實足以支持此分數？", "supporting_facts": [f"F{index:02d}"], "outcome": "sustained", "rationale": "引用的合格事實足以維持此分數"}
+            for index, key in enumerate(breakdown, 1)
+        ] if score >= 70 else [],
+        "overall_high_score_challenge": {
+            "dimension": "overall", "claim": "總分達到 A- 或以上", "counter_question": "相較 B+ 多出哪些具體後果？", "supporting_facts": ["F01", "F05"], "outcome": "sustained", "rationale": "已發生後果與本期增量共同支持 A-"
+        } if score >= 70 else None,
+        "cross_dimension_rationales": [],
+        "midpoint_rationales": [
+            {"dimension": key, "lower_anchor": score - 5, "upper_anchor": score + 5, "supporting_facts": [f"F{index:02d}"], "rationale": "證據強度確實介於相鄰十分錨點之間"}
+            for index, key in enumerate(breakdown, 1)
+        ] if score % 10 == 5 else [],
+        "evidence_confidence": 85,
+        "confidence_band": "high",
+        "grade_status": "validated",
         "grade_reason": "本期出現可驗證的新制度變化，影響範圍與直接後果符合目前級距。",
         "grading_evidence": grading_evidence(grade),
         "decision": decision, "reason_code": reason_code, "reason": "決定理由",
@@ -128,8 +158,8 @@ def valid_audit(candidates=None, per_source_count=1):
         source_id = item["source_id"]
         ranked_items = [
             {"url": f"https://example.com/{source_id}/{index}", "title": f"{source_id}-{index}",
-             "published_at": "2026-08-13T05:00:00+00:00", "importance_score": 100 - index / 10,
-             "importance_breakdown": importance_breakdown(100 - index / 10),
+             "published_at": "2026-08-13T05:00:00+00:00", "importance_score": 50,
+             "importance_breakdown": importance_breakdown(50),
              "importance_reason": "依公共影響、範圍與結構意義排序"}
             for index in range(per_source_count)
         ]
@@ -160,7 +190,7 @@ def valid_audit(candidates=None, per_source_count=1):
             "selected_for_pool_count": per_source_count,
             "selected_item_urls": [item["url"] for item in ranked_items],
             "mandatory_overflow_items": [],
-            "ranking_completed": True, "ranking_method": "public_value_v1", "failure_reason": None,
+            "ranking_completed": True, "ranking_method": "public_value_v2", "failure_reason": None,
             "scan_window_start": window_start, "scan_window_end": window_end,
             "scan_evidence_path": str(scan_path),
         })
@@ -245,6 +275,182 @@ def valid_audit(candidates=None, per_source_count=1):
 
 
 class CandidateAuditTests(unittest.TestCase):
+    def test_historical_v1_source_ranking_is_preserved_but_latest_run_requires_v2(self):
+        audit = valid_audit()
+        historical = copy.deepcopy(audit["runs"][0])
+        historical["run_id"] = "historical-v1"
+        historical["generated_at"] = "2026-08-13T06:00:00+08:00"
+        for coverage in historical["source_coverage"]:
+            coverage["ranking_method"] = "public_value_v1"
+            coverage.pop("scan_window_start", None)
+            coverage.pop("scan_window_end", None)
+            coverage.pop("scan_evidence_path", None)
+            for ranked_item in coverage["ranked_items"]:
+                ranked_item["importance_breakdown"] = {
+                    "public_impact": 15,
+                    "geographic_or_population_scope": 10,
+                    "urgency_and_safety": 8,
+                    "structural_or_policy_significance": 7,
+                    "material_new_development": 5,
+                    "core_section_relevance": 5,
+                }
+                ranked_item["importance_score"] = 50
+        audit["runs"].insert(0, historical)
+
+        self.assertEqual([], MODULE.validate(audit, source_pool()))
+
+        audit["runs"][-1]["source_coverage"][0]["ranking_method"] = "public_value_v1"
+        errors = MODULE.validate(audit, source_pool())
+        self.assertTrue(any("最新一輪" in error and "public_value_v2" in error for error in errors))
+
+    def test_grading_regression_cases_stay_in_calibrated_ranges(self):
+        fixture = json.loads(
+            (ROOT / "tests/fixtures/grading-cases.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual("public_value_v2", fixture["scoring_method"])
+        self.assertEqual(6, len(fixture["cases"]))
+        for case in fixture["cases"]:
+            with self.subTest(case_id=case["case_id"]):
+                score = MODULE.weighted_score(
+                    case["importance_breakdown"], source_pool()["ranking"]
+                )
+                self.assertGreaterEqual(score, case["expected_score_range"][0])
+                self.assertLessEqual(score, case["expected_score_range"][1])
+                self.assertIn(
+                    MODULE.grade_from_importance_score(score),
+                    case["expected_grades"],
+                )
+
+    def test_v2_weighted_score_uses_configured_weights(self):
+        scores = {
+            "public_impact": 30,
+            "geographic_or_population_scope": 30,
+            "urgency_and_safety": 20,
+            "structural_or_policy_significance": 80,
+            "material_new_development": 60,
+            "core_section_relevance": 50,
+        }
+
+        self.assertEqual(
+            41.0,
+            MODULE.weighted_score(scores, source_pool()["ranking"]),
+        )
+
+    @staticmethod
+    def sync_score(item):
+        score = MODULE.weighted_score(
+            item["importance_breakdown"], source_pool()["ranking"]
+        )
+        item["weighted_score"] = score
+        item["importance_score"] = score
+        item["provisional_grade"] = MODULE.grade_from_importance_score(score)
+
+    def test_v2_scores_must_use_five_point_steps(self):
+        item = candidate("C")
+        item["importance_breakdown"]["public_impact"] = 43
+        item["weighted_score"] = 44.4
+        item["importance_score"] = 44.4
+        item["provisional_grade"] = "C-"
+
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+
+        self.assertTrue(any("5" in error and "public_impact" in error for error in errors))
+
+    def test_five_point_midpoint_requires_between_anchor_rationale(self):
+        item = candidate("C")
+        item["midpoint_rationales"] = []
+
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+
+        self.assertTrue(any("midpoint_rationale" in error for error in errors))
+
+    def test_potential_fact_cannot_support_actual_impact_scope_or_urgency(self):
+        item = candidate("C")
+        item["evidence_facts"][0]["consequence_class"] = "potential"
+        item["consequence_evidence"]["realized"].remove("F01")
+        item["consequence_evidence"]["potential"].append("F01")
+
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+
+        self.assertTrue(
+            any("potential" in error and "public_impact" in error for error in errors)
+        )
+
+    def test_speculative_fact_cannot_support_any_dimension(self):
+        item = candidate("C")
+        item["evidence_facts"][3]["consequence_class"] = "speculative"
+        item["consequence_evidence"]["potential"].remove("F04")
+        item["consequence_evidence"]["speculative"].append("F04")
+
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+
+        self.assertTrue(any("speculative" in error for error in errors))
+
+    def test_material_update_at_seventy_requires_delta_fact(self):
+        item = candidate("C")
+        item["importance_breakdown"]["material_new_development"] = 70
+        item["delta_facts"] = []
+        self.sync_score(item)
+
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+
+        self.assertTrue(any("delta_fact" in error for error in errors))
+
+    def test_fact_reused_by_three_dimensions_requires_rationale(self):
+        item = candidate("C")
+        for dimension in (
+            "public_impact",
+            "geographic_or_population_scope",
+            "urgency_and_safety",
+        ):
+            item["dimension_evidence"][dimension] = ["F01"]
+
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+
+        self.assertTrue(any("cross_dimension" in error for error in errors))
+
+    def test_dimension_at_seventy_requires_sustained_challenge(self):
+        item = candidate("C")
+        item["importance_breakdown"]["public_impact"] = 70
+        self.sync_score(item)
+
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+
+        self.assertTrue(any("high_score_challenge" in error for error in errors))
+
+    def test_total_at_seventy_requires_overall_challenge(self):
+        item = candidate("A-")
+        item["overall_high_score_challenge"] = None
+
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+
+        self.assertTrue(any("overall_high_score_challenge" in error for error in errors))
+
+    def test_confidence_band_mismatch_does_not_change_importance(self):
+        item = candidate("C")
+        original_score = item["importance_score"]
+        item["evidence_confidence"] = 79
+
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+
+        self.assertTrue(any("confidence_band" in error for error in errors))
+        self.assertEqual(original_score, item["importance_score"])
+
+    def test_selected_provisional_candidate_is_rejected(self):
+        item = candidate("C")
+        item["grade_status"] = "provisional"
+
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+
+        self.assertTrue(any("grade_status=validated" in error for error in errors))
+
+    def test_policy_proposal_can_keep_high_impact_with_realized_evidence(self):
+        item = candidate("A-")
+        item["policy_stage"] = "proposal"
+        item["grading_evidence"]["policy_governance_review"] = policy_governance_review(True)
+
+        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
+
     def test_fourteen_day_completeness_rejects_an_empty_audit_baseline(self):
         audit = {
             "schema_version": "1.1.0",
@@ -478,43 +684,43 @@ class CandidateAuditTests(unittest.TestCase):
 
     def test_chongqing_mayor_scores_d_from_all_six_dimensions(self):
         breakdown = {
-            "public_impact": 4,
-            "geographic_or_population_scope": 3,
-            "urgency_and_safety": 1,
-            "structural_or_policy_significance": 3,
-            "material_new_development": 8,
-            "core_section_relevance": 6,
+            "public_impact": 20,
+            "geographic_or_population_scope": 20,
+            "urgency_and_safety": 0,
+            "structural_or_policy_significance": 20,
+            "material_new_development": 60,
+            "core_section_relevance": 40,
         }
         self.assertEqual("D", MODULE.grade_from_importance_breakdown(breakdown))
 
     def test_taiwan_three_county_event_can_score_c_without_a_hard_gate(self):
         breakdown = {
-            "public_impact": 12,
-            "geographic_or_population_scope": 9,
-            "urgency_and_safety": 5,
-            "structural_or_policy_significance": 7,
-            "material_new_development": 8,
-            "core_section_relevance": 6,
+            "public_impact": 45,
+            "geographic_or_population_scope": 50,
+            "urgency_and_safety": 30,
+            "structural_or_policy_significance": 45,
+            "material_new_development": 65,
+            "core_section_relevance": 50,
         }
         self.assertEqual("C", MODULE.grade_from_importance_breakdown(breakdown))
 
     def test_four_country_event_can_score_b_from_combined_evidence(self):
         breakdown = {
-            "public_impact": 15,
-            "geographic_or_population_scope": 13,
-            "urgency_and_safety": 8,
-            "structural_or_policy_significance": 10,
-            "material_new_development": 9,
-            "core_section_relevance": 7,
+            "public_impact": 55,
+            "geographic_or_population_scope": 70,
+            "urgency_and_safety": 50,
+            "structural_or_policy_significance": 65,
+            "material_new_development": 75,
+            "core_section_relevance": 65,
         }
         self.assertEqual("B", MODULE.grade_from_importance_breakdown(breakdown))
 
     def test_severe_single_area_events_rise_by_total_score_not_exceptions(self):
         scenarios = (
-            ("C", {"public_impact": 19, "geographic_or_population_scope": 7, "urgency_and_safety": 9, "structural_or_policy_significance": 3, "material_new_development": 7, "core_section_relevance": 3}),
-            ("B", {"public_impact": 24, "geographic_or_population_scope": 9, "urgency_and_safety": 11, "structural_or_policy_significance": 10, "material_new_development": 6, "core_section_relevance": 2}),
-            ("A", {"public_impact": 27, "geographic_or_population_scope": 8, "urgency_and_safety": 10, "structural_or_policy_significance": 15, "material_new_development": 9, "core_section_relevance": 8}),
-            ("S-", {"public_impact": 30, "geographic_or_population_scope": 10, "urgency_and_safety": 15, "structural_or_policy_significance": 14, "material_new_development": 10, "core_section_relevance": 8}),
+            ("C", {"public_impact": 60, "geographic_or_population_scope": 35, "urgency_and_safety": 55, "structural_or_policy_significance": 25, "material_new_development": 50, "core_section_relevance": 30}),
+            ("B", {"public_impact": 80, "geographic_or_population_scope": 45, "urgency_and_safety": 75, "structural_or_policy_significance": 55, "material_new_development": 55, "core_section_relevance": 35}),
+            ("A", {"public_impact": 90, "geographic_or_population_scope": 40, "urgency_and_safety": 70, "structural_or_policy_significance": 100, "material_new_development": 80, "core_section_relevance": 65}),
+            ("S-", {"public_impact": 100, "geographic_or_population_scope": 50, "urgency_and_safety": 100, "structural_or_policy_significance": 95, "material_new_development": 100, "core_section_relevance": 80}),
         )
         for expected_grade, breakdown in scenarios:
             with self.subTest(expected_grade=expected_grade):
@@ -564,11 +770,11 @@ class CandidateAuditTests(unittest.TestCase):
 
     def test_casualty_bands_integrate_with_urgency_and_other_dimensions(self):
         scenarios = (
-            (49, 14, "D", {"public_impact": 14, "geographic_or_population_scope": 5, "urgency_and_safety": 5, "structural_or_policy_significance": 2, "material_new_development": 8, "core_section_relevance": 4}),
-            (50, 18, "C", {"public_impact": 18, "geographic_or_population_scope": 6, "urgency_and_safety": 8, "structural_or_policy_significance": 3, "material_new_development": 8, "core_section_relevance": 4}),
-            (100, 23, "B", {"public_impact": 23, "geographic_or_population_scope": 7, "urgency_and_safety": 11, "structural_or_policy_significance": 5, "material_new_development": 9, "core_section_relevance": 5}),
-            (250, 27, "A-", {"public_impact": 27, "geographic_or_population_scope": 10, "urgency_and_safety": 13, "structural_or_policy_significance": 8, "material_new_development": 9, "core_section_relevance": 5}),
-            (2500, 30, "A", {"public_impact": 30, "geographic_or_population_scope": 11, "urgency_and_safety": 14, "structural_or_policy_significance": 8, "material_new_development": 9, "core_section_relevance": 5}),
+            (49, 45, "D", {"public_impact": 45, "geographic_or_population_scope": 20, "urgency_and_safety": 20, "structural_or_policy_significance": 20, "material_new_development": 40, "core_section_relevance": 30}),
+            (50, 60, "C", {"public_impact": 60, "geographic_or_population_scope": 40, "urgency_and_safety": 50, "structural_or_policy_significance": 30, "material_new_development": 60, "core_section_relevance": 40}),
+            (100, 75, "B", {"public_impact": 75, "geographic_or_population_scope": 45, "urgency_and_safety": 70, "structural_or_policy_significance": 40, "material_new_development": 70, "core_section_relevance": 50}),
+            (250, 90, "A-", {"public_impact": 90, "geographic_or_population_scope": 55, "urgency_and_safety": 80, "structural_or_policy_significance": 55, "material_new_development": 75, "core_section_relevance": 55}),
+            (2500, 100, "A", {"public_impact": 100, "geographic_or_population_scope": 60, "urgency_and_safety": 90, "structural_or_policy_significance": 60, "material_new_development": 80, "core_section_relevance": 60}),
         )
         for deaths, expected_floor, expected_grade, breakdown in scenarios:
             with self.subTest(deaths=deaths):
@@ -594,13 +800,34 @@ class CandidateAuditTests(unittest.TestCase):
     def test_verified_special_meaning_can_raise_grade_with_reason(self):
         item = candidate("B+", "selected")
         item["importance_breakdown"] = {
-            "public_impact": 23,
-            "geographic_or_population_scope": 12,
-            "urgency_and_safety": 10,
-            "structural_or_policy_significance": 10,
-            "material_new_development": 7,
-            "core_section_relevance": 5,
+            "public_impact": 75,
+            "geographic_or_population_scope": 65,
+            "urgency_and_safety": 65,
+            "structural_or_policy_significance": 65,
+            "material_new_development": 55,
+            "core_section_relevance": 55,
         }
+        self.sync_score(item)
+        item["midpoint_rationales"] = [
+            {
+                "dimension": dimension,
+                "lower_anchor": score - 5,
+                "upper_anchor": score + 5,
+                "supporting_facts": [f"F{index:02d}"],
+                "rationale": "證據強度介於相鄰十分 anchor 之間。",
+            }
+            for index, (dimension, score) in enumerate(
+                item["importance_breakdown"].items(), start=1
+            )
+        ]
+        item["high_score_challenges"] = [{
+            "dimension": "public_impact",
+            "claim": "百人死亡已造成重大公共後果",
+            "counter_question": "目前已實際發生什麼公共後果足以達到 70？",
+            "supporting_facts": ["F01"],
+            "outcome": "sustained",
+            "rationale": "保守確認死亡與直接公共後果足以支持",
+        }]
         item["grading_evidence"]["impact_scope_level"] = "national"
         item["grading_evidence"]["local_disaster_review"] = {
             "applies": True,
@@ -671,10 +898,9 @@ class CandidateAuditTests(unittest.TestCase):
         self.assertTrue(any("importance_score" in error for error in errors))
 
         item = candidate("D", "excluded", "below_public_value_threshold")
-        item["importance_score"] = 97
-        item["importance_breakdown"] = importance_breakdown(97)
+        item["importance_score"] = 95
         errors = MODULE.validate(valid_audit([item]), source_pool())
-        self.assertTrue(any("六項總分" in error for error in errors))
+        self.assertTrue(any("加權分數" in error for error in errors))
 
     def test_integrated_grade_bands_and_no_hard_cap_policy_are_locked(self):
         pool = source_pool()
@@ -696,15 +922,17 @@ class CandidateAuditTests(unittest.TestCase):
             ranking.get("grading_principles"),
         )
         self.assertEqual(
-            {"1-9": 8, "10-49": 14, "50-99": 18, "100-249": 23, "250-2499": 27, "2500+": 30},
+            {"1-9": 30, "10-49": 45, "50-99": 60, "100-249": 75, "250-2499": 90, "2500+": 100},
             ranking.get("casualty_public_impact_floors"),
         )
         self.assertEqual(
             [
-                {"score_range": [0, 3], "meaning": "danger ended or no immediate public action required"},
-                {"score_range": [4, 7], "meaning": "active local response or bounded safety concern"},
-                {"score_range": [8, 11], "meaning": "continuing major danger, rescue window, or stressed essential services"},
-                {"score_range": [12, 15], "meaning": "expanding or uncontrolled threat requiring immediate broad action"},
+                {"score": 0, "meaning": "event ended or no immediate risk"},
+                {"score": 20, "meaning": "limited precaution"},
+                {"score": 40, "meaning": "local response required"},
+                {"score": 60, "meaning": "major danger remains active"},
+                {"score": 80, "meaning": "rescue window, essential-service stress, or expanding risk"},
+                {"score": 100, "meaning": "uncontrolled threat requiring broad immediate action"},
             ],
             ranking.get("dimension_anchors", {}).get("urgency_and_safety"),
         )
@@ -714,7 +942,7 @@ class CandidateAuditTests(unittest.TestCase):
         self.assertTrue(any("grade_minimum_scores" in error for error in errors))
 
         schema = MODULE.load(ROOT / "schemas" / "news-candidate-audit.schema.json")
-        candidate_properties = schema["$defs"]["candidate"]["properties"]
+        candidate_properties = schema["$defs"]["v2Candidate"]["properties"]
         self.assertIn("importance_score", candidate_properties)
         self.assertIn("importance_breakdown", candidate_properties)
         self.assertIn("dimension_evidence", candidate_properties)

@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "scoring_method": "public_value_v2",
+  "cases": [
+    {
+      "case_id": "policy-proposal-no-operational-effect",
+      "summary": "A nationwide bill is formally proposed but has not taken effect and has no demonstrated broad operational consequence.",
+      "policy_stage": "proposal",
+      "consequence_profile": {"realized": ["formal proposal entered procedure"], "ongoing": [], "potential": ["nationwide rule change if passed"], "speculative": []},
+      "importance_breakdown": {"public_impact": 40, "geographic_or_population_scope": 40, "urgency_and_safety": 20, "structural_or_policy_significance": 90, "material_new_development": 60, "core_section_relevance": 80},
+      "expected_score_range": [50, 54.99],
+      "expected_grades": ["C+"],
+      "expected_validation_result": "validated_when_actual_and_potential_are_separated"
+    },
+    {
+      "case_id": "law-effective-many-firms",
+      "summary": "A law takes effect and measurably changes operations for a large national group of firms.",
+      "policy_stage": "measurable_effect",
+      "consequence_profile": {"realized": ["law is effective", "firms changed operations"], "ongoing": ["compliance costs continue"], "potential": [], "speculative": []},
+      "importance_breakdown": {"public_impact": 80, "geographic_or_population_scope": 80, "urgency_and_safety": 40, "structural_or_policy_significance": 90, "material_new_development": 80, "core_section_relevance": 90},
+      "expected_score_range": [75, 79.99],
+      "expected_grades": ["A"],
+      "expected_validation_result": "validated"
+    },
+    {
+      "case_id": "shipping-warning-no-interruption",
+      "summary": "Iran warns it may seize vessels, but shipping has not been interrupted.",
+      "policy_stage": "not_applicable",
+      "consequence_profile": {"realized": ["official warning issued"], "ongoing": ["operators are monitoring risk"], "potential": ["vessel seizure", "shipping disruption"], "speculative": ["full regional trade shutdown"]},
+      "importance_breakdown": {"public_impact": 45, "geographic_or_population_scope": 45, "urgency_and_safety": 60, "structural_or_policy_significance": 85, "material_new_development": 60, "core_section_relevance": 80},
+      "expected_score_range": [55, 59.99],
+      "expected_grades": ["B-"],
+      "expected_validation_result": "validated_without_treating_warning_as_disruption"
+    },
+    {
+      "case_id": "vessel-seized-oil-disrupted",
+      "summary": "A vessel is seized, oil shipping is disrupted, and prices move abnormally.",
+      "policy_stage": "not_applicable",
+      "consequence_profile": {"realized": ["vessel seized", "oil shipping disrupted", "abnormal oil-price movement"], "ongoing": ["shipping interruption continues"], "potential": ["wider energy shortage"], "speculative": []},
+      "importance_breakdown": {"public_impact": 85, "geographic_or_population_scope": 80, "urgency_and_safety": 85, "structural_or_policy_significance": 85, "material_new_development": 80, "core_section_relevance": 90},
+      "expected_score_range": [80, 84.99],
+      "expected_grades": ["A+"],
+      "expected_validation_result": "validated"
+    },
+    {
+      "case_id": "routine-seven-warships",
+      "summary": "Seven warships conduct a routine, non-escalatory operation with no material new consequence.",
+      "policy_stage": "not_applicable",
+      "consequence_profile": {"realized": ["seven vessels observed"], "ongoing": [], "potential": [], "speculative": []},
+      "importance_breakdown": {"public_impact": 20, "geographic_or_population_scope": 20, "urgency_and_safety": 20, "structural_or_policy_significance": 20, "material_new_development": 20, "core_section_relevance": 50},
+      "expected_score_range": [20, 39.99],
+      "expected_grades": ["D"],
+      "expected_validation_result": "audit_only"
+    },
+    {
+      "case_id": "hundred-deaths-mass-evacuation",
+      "summary": "One hundred people are confirmed dead, 180,000 are evacuated, and rescue remains active.",
+      "policy_stage": "not_applicable",
+      "consequence_profile": {"realized": ["100 confirmed deaths", "180000 evacuated"], "ongoing": ["rescue operations continue"], "potential": ["further casualties"], "speculative": []},
+      "importance_breakdown": {"public_impact": 80, "geographic_or_population_scope": 75, "urgency_and_safety": 85, "structural_or_policy_significance": 60, "material_new_development": 80, "core_section_relevance": 90},
+      "expected_score_range": [75, 79.99],
+      "expected_grades": ["A"],
+      "expected_validation_result": "validated"
+    }
+  ]
+}

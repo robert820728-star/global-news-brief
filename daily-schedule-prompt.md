@@ -160,7 +160,7 @@ Stage -1 完成後，至少讀取並遵守：
    - `source-route-config.json` 只定義 GDELT、中央社與中新社三個 discovery routes；`minimum_ready_routes=1`。`GDELT_RESILIENT_ACQUISITION` 必須直接讀 GDELT 官方 15 分鐘 export archives；只有 archive 不可用時才可發送一次不阻塞的 DOC API 補充請求，且不得因 429 等待或重試，最後才使用有時效標記的有效快取。任何降級都要記錄 acquisition mode，但不得停止發佈。`FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` 要求每個成功 route 的精確 24 小時完整清單全部進入去重與評分，不得截斷為前 30 或其他固定數量。`REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE` 另要求中央社／中新社等 regional supplements 的全部窗內 provisional groups 保留到模型 `candidate_groups`；GDELT heat、搜尋熱度與關鍵字只能增加召回或排序，不能排除本地群組。模型輸入建立後、語意合併與六項評分前執行 `python3 scripts/validate_local_source_admission.py --preprocessed <preprocessed-candidates.json> --selection <selection-results.json> --source-pool news-source-pool.json`，失敗不得繼續。
    - route fetch 完成後必須執行 `scripts/materialize_source_scans.py --checkpoint <checkpoint> --source-pool news-source-pool.json --route-coverage <route-coverage> --output-dir <source-scans-dir> --coverage-output <source-coverage.json>`；只有此 canonical materializer 產生的逐站 scans、terminal proof、完整 ranked_items 與六項分數可進入 candidate audit。不得改用 run 目錄內的臨時 helper。
    - materializer 完成後只驗證實際成功的 discovery scans；失敗路由保留在 route coverage 中供診斷，不得把驗證來源清單誤當 discovery completeness gate。
-   - 每個站內海選條目必須保存 `public_value_v1` 六項 `importance_breakdown`、總分與理由；六項總和必須等於 `importance_score`，並隨十四天候選稽核保存。
+   - 每個站內海選條目必須保存 `public_value_v2` 六項 0–100 `importance_breakdown`、依 `news-source-pool.json` 權重計算的 `importance_score` 與理由，並隨十四天候選稽核保存。
    - 直接 API／RSS／HTML 失敗時先切同站替代入口；只有目前工具契約明確允許時才可用完整瀏覽器渲染並保存 DOM。瀏覽器不得是完成排程的必要依賴，不得用別站冒充該站本輪掃描完成。
    - `TAIWAN_DOMESTIC_COVERAGE_GUARD`：中央社 discovery 另按 `taiwan_coverage_sweeps` 對經濟產業、食藥消費安全、中央政策制度各做最多 `5 results` 的補漏；中央社不可用或明顯過舊時才用網頁搜尋作最後候選備援。任何補漏仍先查重與評分，只有完成獨立驗證且達 C 級才進 selection，之後才開始圖片工作。
 2. `preprocess-news-candidates`
@@ -169,7 +169,7 @@ Stage -1 完成後，至少讀取並遵守：
    - 產生 `selection-results.json` 後，必須先執行 `scripts/validate_selection_freshness.py --selection <selection-results> --source-candidates <source-candidates>`。此 gate 必須確認每個事件 URL 都在本輪 fresh pool、所有 C 級以上候選都有有效 `selected_event_id`，且映射事件實際存在；首次失敗即停止，不能刪單筆後重跑掩蓋。
 4. `audit-news-candidates`
    - 十四天稽核必須保留完整海選清單及每筆六項大分數；本輪所有 C 級以上候選（含合併項）都必須以 `selected_event_id` 對應到 manifest 與讀者版，不得無聲消失。
-   - 最新一輪每個候選必須保存最終 `importance_breakdown`、`importance_score`、逐項 `dimension_evidence` 與 `local_disaster_review`。死亡、地域或任何單項都不直接指定最終等級；六項總分必須依 `SCORE_TO_GRADE_BANDS_V1` 換算。軍事／衝突事件先做分類與連續性判定，再用本輪新增後果重算六項，不得繼承母事件等級。
+   - 最新一輪每個候選必須依 `EVIDENCE_BEFORE_SCORE_GATE` 先建 `evidence_facts` 與 `consequence_evidence`，再以 `dimension_evidence` 引用 fact ID，保存最終 0–100 `importance_breakdown`、`weighted_score`／`importance_score`、`policy_stage`、`delta_facts`、中點／跨維理由、單項及整體 `high_score_challenges`、`evidence_confidence`／`confidence_band`、`grade_status` 與 `local_disaster_review`。死亡、地域或任何單項都不直接指定最終等級；加權總分必須依 `SCORE_TO_GRADE_BANDS_V2` 換算。軍事／衝突事件先做分類與連續性判定，再用本輪新增後果重算六項，不得繼承母事件等級；只有 validated grade 可物化進 manifest／Reader。
 5. `materialize-manifest`
    - 完成條件是將本輪 audit 選中事件一對一物化並綁定 checkpoint 的 `manifest` artifact；此處不需要執行 final-manifest validator。
 6. `verify-news-events`

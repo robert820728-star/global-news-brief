@@ -88,19 +88,15 @@ The required order for every configured discovery route is: `canonical route -> 
 1. 使用網頁搜尋及已連接 app 搜尋監控區域最近 24 小時的新聞。優先採用官方機關、原始資料、通訊社與可靠媒體；不得用模型記憶補新聞。
    - `TAIWAN_DOMESTIC_COVERAGE_GUARD`：中央社清單另補查經濟產業、食藥消費安全、中央政策制度三個領域，每個領域最多 `5 results`。只有中央社清單不可用或明顯過舊時，才使用網頁搜尋補候選；命中仍須先查重與評分，不得因搜尋命中就直接入選或抓圖片。
 2. 將找到的新聞按底層事件合併，保留本輪完整海選清單。不同來源報導同一事件可合併，但每個來源網址都要保留。
-3. 海選清單每一筆都要列出六項大評分、總分及一句具體理由：
-   - 重要性／嚴重程度（`public_impact`）：0–30
-   - 地理／人口／公共系統直接範圍：0–20
-   - 急迫與安全：0–15
-   - 結構／政策意義：0–15
-   - 本期實質新進展：0–10
-   - 核心板塊關聯：0–10
-   六項總和必須等於 0–100 的總分，且每項都要有 `dimension_evidence`。任何單一項都不是最終等級硬上限，也不得另建地域例外補丁。
+3. 海選清單每一筆都使用 `public_value_v2`。先建立唯一 `evidence_facts`，分入 realized／ongoing／potential／speculative `consequence_evidence`，再由六項 `dimension_evidence` 引用 fact ID；六項各以 0–100 評分，依 Impact 30%、Scope 20%、Urgency 15%、Structural 15%、Update 10%、Relevance 10% 計算 `weighted_score`，且 `importance_score` 必須相同。標準分以 10 分為主，使用 5 分中點時必填 `midpoint_rationales`。任何單一項都不是最終等級硬上限，也不得另建地域例外補丁。`PUBLIC_VALUE_V2_NORMALIZED_WEIGHTED_SCORING` `EVIDENCE_BEFORE_SCORE_GATE`
+   - Impact／Scope／Urgency 只能引用 realized／ongoing；Structural 才可引用高可信且有制度機制的 potential；speculative 不得支撐任何分數。
+   - Update 70 以上必填相對十四天 continuity 的 `delta_facts`；同一 fact 支撐三項以上必填 `cross_dimension_rationales`；任何單項 70 以上與總分 70 以上都須完成 sustained `high_score_challenges`。`HIGH_SCORE_CHALLENGE_GATE`
+   - 政策事件填 `policy_stage`，不得把 proposal 的理論覆蓋人口當成已受影響人口；`evidence_confidence`／`confidence_band` 不乘進總分。只有全部 gate 通過才能標 `grade_status=validated`，Reader 禁止 provisional。
    - Discovery 清單原有分數只用於候選排序；跨來源去重後必須從零按事件具體後果重評六項，禁止複製清單分數或靠「政府／全國／重大」等關鍵字給分。
-4. 依總分分級：`SS` 97–100、`S+` 94–96、`S` 90–93、`S-` 85–89、`A+` 80–84、`A` 75–79、`A-` 70–74、`B+` 65–69、`B` 60–64、`B-` 55–59、`C+` 50–54、`C` 45–49、`C-` 40–44、`D` 20–39、`E` 0–19。`SCORE_TO_GRADE_BANDS_V1`
+4. 依加權總分分級：`SS` 97–100、`S+` 94–96、`S` 90–93、`S-` 85–89、`A+` 80–84、`A` 75–79、`A-` 70–74、`B+` 65–69、`B` 60–64、`B-` 55–59、`C+` 50–54、`C` 45–49、`C-` 40–44、`D` 20–39、`E` 0–19。`SCORE_TO_GRADE_BANDS_V2`
    - 死亡、重傷、撤離、公共系統中斷、國家機能喪失、滅國／除名／失去可居住性等後果，要分別進入相應的六項分數，不得由死亡或地域直接指定等級。`INTEGRATED_SIX_DIMENSION_NO_HARD_CAP`
-   - 保守確認死亡數只設定 `public_impact` 的最低證據分：1–9 人至少 8、10–49 人至少 14、50–99 人至少 18、100–249 人至少 23、250–2,499 人至少 27、2,500 人以上為 30；這不是最終等級，也不直接設定其他五項。`CASUALTY_PUBLIC_IMPACT_FLOORS_V1`
-   - 急迫與安全另按當前危險評分：0–3 危險已結束／無立即行動需求；4–7 地方應變進行中但風險受限；8–11 重大危險持續、仍在救援窗口或必要服務承壓；12–15 威脅擴大／失控且需要廣泛立即行動。死亡數不自動決定急迫性。`URGENCY_SAFETY_ANCHORS_V1`
+   - 保守確認死亡數只設定 `public_impact` 的最低證據分：1–9 人至少 30、10–49 人至少 45、50–99 人至少 60、100–249 人至少 75、250–2,499 人至少 90、2,500 人以上為 100；這不是最終等級，也不直接設定其他五項。`CASUALTY_PUBLIC_IMPACT_FLOORS_V2`
+   - 急迫與安全另按當前危險評分：0 無立即風險、20 有限注意、40 地方應變、60 重大危險持續、80 救援窗口／必要服務承壓／風險擴張、100 失控且需廣泛立即行動。死亡數不自動決定急迫性。`URGENCY_SAFETY_ANCHORS_V2`
    - 重慶市長例行更替會因重要性、範圍、急迫性與結構後果低而自然落到 D；重慶遭隕石摧毀即使只命中一個行政區，也會因大量傷亡、城市毀滅、系統崩潰與不可逆損失自然升到高等級，不需要特例。
    - 小國嚴重災難可綜合達 C；國家機能喪失可達 C+／B；滅國、除名或失去可居住性可達 A。國家大小不作降分理由，以實際人口、公共系統與存續後果給分。
    - Risk Group 4／四級病毒不能自動升 A+，須同時評估傳播途徑、實際擴散與系統後果。`RISK_GROUP_4_NOT_AUTOMATIC_A_PLUS`
@@ -120,9 +116,9 @@ The required order for every configured discovery route is: `canonical route -> 
    - `DISCOVERY_COVERAGE_RECORD`：首次回填與每日增量只需如實記錄 GDELT、中央社與中新社三個 discovery route 的成功或失敗；不再要求所有驗證來源逐站完成才開始評分。候選仍必須保留實際文章網址與發現來源。
    - `TYPE_CONSISTENT_COVERAGE_SANITY`：不得拿前輪來源掃描的 `raw_item_count` 與本輪去重評分後的 `deduplicated_candidate_count` 互相比較；只有同欄位、同口徑、同時間窗的數量才可作完整性警示，數量本身不得取代逐站證據。
    - `RECOVERABLE_14_DAY_BASELINE_WITHOUT_READER_BLOCK`：若舊資料沒有完整十四天 provenance，不得宣稱來源絕對窮盡，但也不得因此阻止本日讀者版。能安全合併時，保留仍在十四天內、可核對來源且已有六項評分的候選，合併本輪 24 小時 discovery 候選、去重與評分，並移除逾期項目；歷史候選只作 continuity 基準，只有本輪有實質更新且本輪評分達 C 級以上者才進本輪讀者版。
-   - `MOBILE_NATIVE_AUDIT_ROLLING_MERGE`：`latest-candidate-audit.json` 已存在時，mobile-native 直接以該檔為滾動基底。若六項欄位、各欄範圍與總分算法未變，舊候選不得只因 main SHA、來源發現方式或驗證政策更新就被視為評分格式失效，也不得重算未發生實質更新的歷史候選。只重評本輪新增或發生實質更新的候選；移除超過十四天項目、按 `dedup_key`／`continuity_key` 合併本輪增量，並保留其餘歷史物件的既有分數、理由與來源。需要更新 durable audit 時，允許使用 GitHub contents API 整檔 replacement 寫回語意等同的合併結果，不要求本機程式；C 級以上事件仍須依本輪證據政策獨立驗證。這項 mobile-native 合併不得冒充 script validation，但也不得因此阻止本日讀者版。
+   - `MOBILE_NATIVE_AUDIT_ROLLING_MERGE`：`latest-candidate-audit.json` 已存在時，mobile-native 直接以該檔為滾動基底。若六項欄位、各欄範圍與總分算法未變，舊候選不得只因 main SHA、來源發現方式或驗證政策更新就被視為評分格式失效，也不得重算未發生實質更新的歷史候選。`V1_HISTORY_CONTINUITY_ONLY`：V1 run 在十四天內原樣保留作 continuity／delta 對照，但不能沿用為本輪 validated grade；只重評本輪新增或發生實質更新的候選，並一律依 V2 重取證與重評。移除超過十四天項目、按 `dedup_key`／`continuity_key` 合併本輪增量，並保留其餘歷史物件。需要更新 durable audit 時，允許使用 GitHub contents API 整檔 replacement 寫回語意等同的合併結果，不要求本機程式；C 級以上事件仍須依本輪證據政策獨立驗證。這項 mobile-native 合併不得冒充 script validation，但也不得因此阻止本日讀者版。
    - `FOURTEEN_DAY_AUDIT_MERGE_UNAVAILABLE`：若宿主無法安全 materialize 或合併既有 durable audit，保留其原 blob，不得覆寫、不建立新 run、不重跑 discovery／評分／驗證。把本輪 24 小時 run-scoped candidate audit 獨立保存，將 `durable_audit_status=preserved_merge_deferred` 與舊 blob 記入 `durable_audit_artifact`，繼續本輪 manifest、驗證與 reader。這是歷史維護延後，不得設為 `last_error`，也不得把 `status` 改成 failed。
-   - `MOBILE_NATIVE_COMPACT_DURABLE_AUDIT`：mobile-native 的 durable 十四天清單只保存每日合併必需欄位：`candidate_id`、`dedup_key`、可用時的 `continuity_key`、`event_date`、`section`、`title`、`importance_breakdown`、`importance_score`、逐項 `dimension_evidence`、`provisional_grade`、`decision`、`reason`、`source_ids`、`selected_event_id`，以及精簡的 `continuity` 狀態與本輪影響變化。`MUST_OMIT_VERBOSE_GRADING_EVIDENCE`：此 mobile artifact 不得重複保存 verbose `grading_evidence`、逐頁 `source_audit`、文章全文或重複的驗證敘述；這些證據仍用於本輪 C 級以上獨立驗證，full-runtime 的詳細驗證與稽核規則保持不變。壓縮既有檔案時不得改變候選集合、六項分數、總分或 C 級以上 `selected_event_id` 映射。
+   - `MOBILE_NATIVE_COMPACT_DURABLE_AUDIT`：mobile-native 的 durable 十四天清單保存每日合併與 V2 重驗必要欄位：`candidate_id`、`dedup_key`、可用時的 `continuity_key`、`event_date`、`section`、`title`、`scoring_method`、`importance_breakdown`、`weighted_score`、`importance_score`、fact-ID 形式的 `dimension_evidence`、`consequence_evidence`、`evidence_facts`、`policy_stage`、`delta_facts`、challenge／rationale、`evidence_confidence`、`confidence_band`、`grade_status`、`provisional_grade`、`decision`、`reason`、`source_ids`、`selected_event_id`，以及精簡的 `continuity` 狀態與本輪影響變化。`MUST_OMIT_VERBOSE_GRADING_EVIDENCE`：此 mobile artifact 不得重複保存 verbose `grading_evidence`、逐頁 `source_audit`、文章全文或無助重驗的敘述；C 級以上仍須完成類別相稱的獨立驗證。只有既有 full-runtime 接續需要完整證據時才讀取對應 checkpoint。壓縮既有檔案時不得改變候選集合、六項分數、總分、grade status 或 C 級以上映射。
    - `DAILY_COVERAGE_IS_NOT_HISTORICAL_PROOF`：本日 24 小時 source coverage 只能證明本日掃描，不得冒充過去十四天逐站掃描；內部 audit 必須如實保留 `bootstrap_mode` 與各 run 的時間窗。這項限制只禁止誇大證據，不得把可用、來源可核對且符合模板的每日讀者版改判失敗。
 6. 本輪 run-scoped candidate audit 內所有 C 級以上新聞都必須出現在本輪讀者版；同事件可合併成一則，但不得漏掉本輪重要更新與來源。十四天 durable history 只供 continuity 比較，沒有本輪實質更新的歷史 C 級以上事件不得被迫每日重刊。
 7. 圖片內容沿用原先為該則新聞選定的圖片，不得為了縮小檔案改換另一張圖。`IMAGE_DEFAULT_ONE_ASSET`：每則預設一張內嵌圖片；`IMAGE_SECOND_ASSET_REQUIRES_INCREMENTAL_INFORMATION`：只有第二張能補充第一張未呈現的範圍、數字、現場或時間變化時才追加，並記錄新增資訊理由，每則最多兩張：

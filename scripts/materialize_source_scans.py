@@ -15,14 +15,6 @@ from pathlib import Path
 from urllib.parse import unquote, urljoin, urlsplit
 
 
-WEIGHTS = {
-    "public_impact": 30,
-    "geographic_or_population_scope": 20,
-    "urgency_and_safety": 15,
-    "structural_or_policy_significance": 15,
-    "material_new_development": 10,
-    "core_section_relevance": 10,
-}
 DATE_PATTERNS = (
     re.compile(r"20\d{2}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})?"),
     re.compile(r"20\d{2}[-/]\d{1,2}[-/]\d{1,2}[ T]\d{1,2}:\d{2}(?::\d{2})?(?:\s*(?:Z|GMT|[+-]\d{2}:?\d{2}))?"),
@@ -334,23 +326,61 @@ def parse_html(text: str, request_url: str, homepage: str, route: str, year: int
     return items
 
 
-def score_breakdown(title: str, summary: str, section: str):
+def ranking_dimensions(ranking: dict) -> dict:
+    if not isinstance(ranking, dict) or ranking.get("method") != "public_value_v2":
+        raise ValueError("source ranking must use public_value_v2")
+    dimensions = ranking.get("dimensions")
+    if not isinstance(dimensions, dict) or len(dimensions) != 6:
+        raise ValueError("source ranking must define six dimensions")
+    if any(
+        not isinstance(item, dict)
+        or item.get("minimum") != 0
+        or item.get("maximum") != 100
+        or not isinstance(item.get("weight_percent"), (int, float))
+        for item in dimensions.values()
+    ):
+        raise ValueError("source ranking dimensions must define 0-100 scales and weights")
+    if abs(sum(item["weight_percent"] for item in dimensions.values()) - 100) > 0.01:
+        raise ValueError("source ranking weights must total 100")
+    return dimensions
+
+
+def weighted_score(breakdown: dict, ranking: dict) -> float:
+    dimensions = ranking_dimensions(ranking)
+    if set(breakdown) != set(dimensions):
+        raise ValueError("source score breakdown does not match ranking dimensions")
+    step = ranking.get("allowed_score_step")
+    if not isinstance(step, int) or step <= 0:
+        raise ValueError("source ranking must define allowed_score_step")
+    for name, value in breakdown.items():
+        if not isinstance(value, (int, float)) or isinstance(value, bool) or not 0 <= value <= 100:
+            raise ValueError(f"invalid normalized source score: {name}")
+        if abs(value / step - round(value / step)) > 1e-9:
+            raise ValueError(f"source score must use {step}-point steps: {name}")
+    return round(sum(
+        breakdown[name] * settings["weight_percent"] / 100
+        for name, settings in dimensions.items()
+    ), 2)
+
+
+def score_breakdown(title: str, summary: str, section: str, ranking: dict):
+    ranking_dimensions(ranking)
     text = f"{title} {summary}".lower()
     urgent = any(term in text for term in URGENT_TERMS)
     policy = any(term in text for term in POLICY_TERMS)
     broad = any(term in text for term in SCOPE_TERMS)
     structural = any(term in text for term in STRUCTURAL_TERMS)
     return {
-        "public_impact": 24 if urgent or policy else 16,
-        "geographic_or_population_scope": 17 if broad else 11,
-        "urgency_and_safety": 13 if urgent else 6,
-        "structural_or_policy_significance": 13 if policy or structural else 7,
-        "material_new_development": 9,
-        "core_section_relevance": 9 if section in {"TWN", "CHN", "GLB"} else 6,
+        "public_impact": 80 if urgent or policy else 55,
+        "geographic_or_population_scope": 85 if broad else 55,
+        "urgency_and_safety": 85 if urgent else 40,
+        "structural_or_policy_significance": 85 if policy or structural else 45,
+        "material_new_development": 90,
+        "core_section_relevance": 90 if section in {"TWN", "CHN", "GLB"} else 60,
     }
 
-
-def materialize_source(source: dict, route: dict, window_start: str, window_end: str, output_dir: Path):
+def materialize_source(source: dict, route: dict, window_start: str, window_end: str,
+                       output_dir: Path, ranking: dict):
     start = datetime.fromisoformat(window_start)
     end = datetime.fromisoformat(window_end)
     snapshots = [{
@@ -436,10 +466,12 @@ def materialize_source(source: dict, route: dict, window_start: str, window_end:
     within = [item for item in items if start < datetime.fromisoformat(item["published_at"]) <= end]
     ranked = []
     for item in within:
-        breakdown = score_breakdown(item["title"], item["summary"], source.get("section", ""))
+        breakdown = score_breakdown(
+            item["title"], item["summary"], source.get("section", ""), ranking
+        )
         ranked.append({
             "url": item["url"], "title": item["title"], "published_at": item["published_at"],
-            "importance_score": sum(breakdown.values()), "importance_breakdown": breakdown,
+            "importance_score": weighted_score(breakdown, ranking), "importance_breakdown": breakdown,
             "importance_reason": "依公共影響、人口範圍、急迫安全、制度意義、本期增量與核心板塊關聯逐項計分。",
         })
     ranked.sort(key=lambda item: (item["importance_score"], item["published_at"], item["url"]), reverse=True)
@@ -449,7 +481,7 @@ def materialize_source(source: dict, route: dict, window_start: str, window_end:
         "source_id": source["source_id"], "status": "completed", "within_window_count": len(within),
         "ranked_count": len(ranked), "ranked_items": ranked, "selected_for_pool_count": len(selected_urls),
         "selected_item_urls": selected_urls, "mandatory_overflow_items": [], "ranking_completed": True,
-        "ranking_method": "public_value_v1", "failure_reason": None,
+        "ranking_method": ranking["method"], "failure_reason": None,
         "scan_window_start": window_start, "scan_window_end": window_end,
         "scan_evidence_path": str(scan_path),
     }
@@ -479,7 +511,10 @@ def main() -> int:
             continue
         route = dict(route)
         route["generated_at"] = routes.get("generated_at")
-        scan, item = materialize_source(source, route, checkpoint["window_start"], checkpoint["window_end"], output_dir)
+        scan, item = materialize_source(
+            source, route, checkpoint["window_start"], checkpoint["window_end"],
+            output_dir, pool["ranking"],
+        )
         Path(item["scan_evidence_path"]).write_text(json.dumps(scan, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         coverage.append(item)
     if len(coverage) < minimum_ready:
