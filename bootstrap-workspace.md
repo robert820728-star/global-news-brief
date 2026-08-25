@@ -89,7 +89,7 @@ Never use shell `git clone`, `curl`, `wget`, an unpinned URL, or arbitrary raw G
 
 Repository changes are followed by `.github/workflows/build-bootstrap-capsule.yml`. The workflow builds the capsule, verifies it against the checked-out runtime closure, runs focused bootstrap/checkpoint tests, and commits only the generated payload, manifest, and chunks back to `main`. Python bytecode and cache directories must never be committed.
 
-The capsule is intentionally runtime-only. It includes settings, schemas, skills, cross-platform Python scripts, map source/style/reference inputs, state seed, and bootstrap loader. It excludes tests, PowerShell legacy scripts, documentation not needed at runtime, old releases, and derived map PNG/SVG outputs.
+The capsule is intentionally runtime-only. It includes settings, schemas, skills, cross-platform Python scripts, map source/style/reference inputs, state seed, and bootstrap loader. It excludes tests, retired PowerShell scripts, documentation not needed at runtime, old releases, and derived map PNG/SVG outputs.
 
 ## Reuse rule
 

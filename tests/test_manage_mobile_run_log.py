@@ -92,6 +92,12 @@ class MobileRunLogTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "canonical format"):
             self.prepare(run_id="run-001")
 
+    def test_read_rejects_retired_schema_instead_of_migrating_it(self):
+        retired = self.ledger_dir / "retired.json"
+        retired.write_text(json.dumps({"schema_version": "1.2.0"}), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "unsupported run-log schema version"):
+            self.module._read_json(retired)
+
     def test_next_prepare_rotates_completed_current_to_previous(self):
         self.prepare()
         artifact = {

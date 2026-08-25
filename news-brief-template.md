@@ -80,7 +80,7 @@
 python3 scripts/validate_news_brief.py brief \
   --manifest /path/to/news-event-manifest.json \
   --input /path/to/news-brief.md \
-  --reader-layout legacy-sectioned
+  --reader-layout canonical-sectioned
 ```
 
 驗證失敗時只修正 reader render，不得重跑 discovery、去重、評分、驗證或圖片收集。

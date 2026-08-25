@@ -4,6 +4,17 @@ This file records the current installable contract. Earlier implementation attem
 
 本檔只記錄目前可安裝契約；較早的實作嘗試由 Git history 保存，避免退役行為繼續留在執行中的 repository 表面。
 
+## v0.5.4 — Current names and current-only run logs / 現行命名與僅接受現行 run log
+
+- Reason / 建立原因：A fresh semantic inventory found that the only canonical reader layout still used `legacy-*` identifiers and the mobile ledger still migrated retired schemas through `legacy_completed`. / 全新語義盤點發現，唯一正式 reader 版型仍使用 `legacy-*` 識別字，mobile ledger 仍透過 `legacy_completed` 遷移已退役 schema。
+- Approach / 作法：Rename the reader gate, validator, test fixture, and CLI choice to `canonical-sectioned`; reject non-current mobile run-log schemas; remove the retired durable-audit state and stale compatibility plans. / 將 reader gate、validator、測試 fixture 與 CLI 選項改為 `canonical-sectioned`；拒絕非現行 mobile run-log schema；移除退役的 durable-audit 狀態與過期相容計畫。
+- Entry points / 入口：`daily-schedule-prompt.md`, `mobile-chatgpt-daily-prompt.md`, `news-brief-template.md`, `scripts/validate_news_brief.py`, `scripts/manage_mobile_run_log.py`, `schemas/mobile-run-log.schema.json`, and regression tests. / `daily-schedule-prompt.md`、`mobile-chatgpt-daily-prompt.md`、`news-brief-template.md`、兩個執行 script、mobile schema 與回歸測試。
+- Important configuration / 重要設定：The sole reader layout identifier is `canonical-sectioned`; accepted durable-audit statuses are `not_started`, `updated`, `preserved_merge_deferred`, and `current_run_only`; run-log schema remains `1.3.0`. / 唯一 reader 版型識別字為 `canonical-sectioned`；durable-audit 僅接受四個現行狀態；run-log schema 維持 `1.3.0`。
+- Validation / 驗證：Focused tests must first fail on the retired identifiers and schema migration, then pass after removal. Promotion additionally requires four consecutive independent checks from the same final tree. / 針對性測試必須先因退役識別字與 schema 遷移而失敗，移除後才通過；晉升另須同一最終檔案樹連續通過四種獨立檢查。
+- Result / 結果：The candidate now uses current-only executable names and rejects retired run-log shapes; it is not promoted until all four independent checks pass without another finding. / 候選版本已只使用現行可執行名稱並拒絕退役 run-log 形狀；四種獨立檢查未連續全數通過前不晉升。
+- Next decision / 下一步：Any new finding resets the counter to 0/4; otherwise publish the verified tree and its rebuilt capsule to `main`. / 任一新發現即歸零為 0/4；否則將已驗證檔案樹與重建 capsule 發布至 `main`。
+- Rollback / 回復：Use the immediately preceding Git commit. / 使用前一個 Git commit。
+
 ## v0.5.3 — Semantic compatibility hardening / 語義相容殘留強化清除
 
 - Reason / 建立原因：A fresh semantic audit found that exact-token scans could miss abbreviated migration prose, a noncanonical preprocessing alias, and a rule marker omitted from the installation entry. / 全新語義稽核發現，精確字串掃描可能漏掉縮寫的遷移敘述、非 canonical 的 preprocess 輸入別名，以及安裝入口遺漏的規則標記。

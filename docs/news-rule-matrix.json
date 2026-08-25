@@ -15,7 +15,7 @@
       "producer": "canonical reader renderer",
       "validator": "scripts/validate_news_brief.py::validate_canonical_reader",
       "test": "tests/test_validate_news_brief.py::test_canonical_reader_requires_a_front_today_overview",
-      "legacy_status": "retired: field-based 逐條詳報/後續觀察; retained: per-story title/image/summary/grade/source layout",
+      "prior_rule_disposition": "retired: field-based 逐條詳報/後續觀察; retained: per-story title/image/summary/grade/source layout",
       "status": "enforced"
     },
     {
@@ -25,7 +25,7 @@
       "producer": "reader renderer",
       "validator": "scripts/validate_news_brief.py::_validate_story_asset_stream",
       "test": "tests/test_validate_news_brief.py::test_sectioned_reader_rejects_image_outside_story",
-      "legacy_status": "current",
+      "prior_rule_disposition": "current",
       "status": "enforced"
     },
     {
@@ -35,7 +35,7 @@
       "producer": "scripts/materialize_news_images.py",
       "validator": "scripts/validate_news_brief.py::_validate_image_gate",
       "test": "tests/test_validate_news_brief.py::test_article_page_url_cannot_masquerade_as_detected_image_url",
-      "legacy_status": "retired: self-made text card as source image",
+      "prior_rule_disposition": "retired: self-made text card as source image",
       "status": "enforced"
     },
     {
@@ -45,7 +45,7 @@
       "producer": "scripts/materialize_news_images.py",
       "validator": "scripts/publish_news_brief.py::attachment_errors",
       "test": "tests/test_publish_news_brief.py::test_publisher_rejects_image_without_matching_materializer_record",
-      "legacy_status": "current",
+      "prior_rule_disposition": "current",
       "status": "enforced"
     },
     {
@@ -55,7 +55,7 @@
       "producer": "scripts/manage_canonical_run_bundle.py pack; connector uploads encoding=base64 records and publishes one atomic tree/commit",
       "validator": "scripts/manage_canonical_run_bundle.py verify/restore; S5 requires storage.mode=chunked reconstruction and byte identity",
       "test": "tests/test_manage_canonical_run_bundle.py; tests/test_pipeline_contract.py::test_canonical_run_bundle_persists_recomputable_audit_and_image_evidence",
-      "legacy_status": "retired: chat/local-path-only evidence",
+      "prior_rule_disposition": "retired: chat/local-path-only evidence",
       "status": "enforced"
     }
   ]

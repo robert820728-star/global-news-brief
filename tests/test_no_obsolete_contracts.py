@@ -29,6 +29,12 @@ class NoObsoleteContractsTests(unittest.TestCase):
             "Historical " + "V1 runs",
             "schema accepts " + "legacy identity fields",
             "legacy" + "_identity_fields",
+            "legacy" + "-sectioned",
+            "LEGACY" + "_SECTIONED_READER_LAYOUT_GATE",
+            "LEGACY" + "_TODAY_OVERVIEW_NO_OMISSION_GATE",
+            "legacy" + "_completed",
+            "validate_" + "legacy_sectioned_layout",
+            "_legacy" + "_section_title",
         )
         hits = []
         for path in ROOT.rglob("*"):

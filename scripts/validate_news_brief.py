@@ -1227,7 +1227,7 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
     return errors
 
 
-def _legacy_section_title(section: dict[str, Any]) -> str:
+def _canonical_section_title(section: dict[str, Any]) -> str:
     code = section.get("code")
     if code == "TWN":
         return "🇹🇼 台灣新聞"
@@ -1309,20 +1309,20 @@ def _validate_story_asset_stream(
             )
 
 
-def validate_legacy_sectioned_layout(data: dict[str, Any], text: str) -> list[str]:
+def validate_canonical_sectioned_layout(data: dict[str, Any], text: str) -> list[str]:
     """Validate the reader-visible section/table/story layout used by ChatGPT."""
     errors = validate_manifest_data(data)
     nonempty = [line.strip() for line in text.splitlines() if line.strip()]
     if not nonempty or nonempty[0] != "# 每日新聞讀者版":
-        errors.append("讀者版必須使用既有分區格式，第一行為 # 每日新聞讀者版")
+        errors.append("讀者版必須使用 canonical 分區格式，第一行為 # 每日新聞讀者版")
     if len(nonempty) < 2 or not nonempty[1].startswith("統計期間："):
-        errors.append("既有分區格式缺少統計期間")
+        errors.append("canonical 分區格式缺少統計期間")
     expected_rubric = (
         "評級綜合考量：重要性／嚴重程度、影響範圍、急迫與安全、"
         "結構／政策意義、本期實質新進展、核心板塊關聯。"
     )
     if len(nonempty) < 3 or nonempty[2] != expected_rubric:
-        errors.append("既有分區格式缺少六項評級說明")
+        errors.append("canonical 分區格式缺少六項評級說明")
 
     forbidden = (
         "## 逐條詳報", "## 後續觀察",
@@ -1331,7 +1331,7 @@ def validate_legacy_sectioned_layout(data: dict[str, Any], text: str) -> list[st
     )
     for phrase in (*BACKEND_PHRASES, *forbidden):
         if phrase in text:
-            errors.append(f"既有分區格式含有禁止內容：{phrase}")
+            errors.append(f"canonical 分區格式含有禁止內容：{phrase}")
     for token in FORBIDDEN_RENDER_TOKENS:
         if token in text:
             errors.append(f"讀者版使用禁止的圖廊、疊圖或動態元件：{token}")
@@ -1373,7 +1373,7 @@ def validate_legacy_sectioned_layout(data: dict[str, Any], text: str) -> list[st
         if section_events:
             populated_sections.append((section, section_events))
 
-    expected_section_h2 = [_legacy_section_title(section) for section, _ in populated_sections]
+    expected_section_h2 = [_canonical_section_title(section) for section, _ in populated_sections]
     expected_h2 = ["今日總覽", *expected_section_h2]
     actual_h2 = re.findall(r"(?m)^## ([^\r\n]+)\r?$", text)
     if actual_h2 != expected_h2:
@@ -1399,7 +1399,7 @@ def validate_legacy_sectioned_layout(data: dict[str, Any], text: str) -> list[st
         r"\b(?:Africa|America|Antarctica|Asia|Atlantic|Australia|Europe|Indian|Pacific)/[A-Za-z_+-]+\b)"
     )
     for section, section_events in populated_sections:
-        section_title = _legacy_section_title(section)
+        section_title = _canonical_section_title(section)
         body = sections_by_title.get(section_title)
         if body is None:
             continue
@@ -1468,7 +1468,7 @@ def validate_legacy_sectioned_layout(data: dict[str, Any], text: str) -> list[st
 
 def validate_canonical_reader(data: dict[str, Any], text: str) -> list[str]:
     """Validate the only reader layout accepted by canonical publication."""
-    return validate_legacy_sectioned_layout(data, text)
+    return validate_canonical_sectioned_layout(data, text)
 
 
 def print_result(errors: list[str]) -> int:
@@ -1497,8 +1497,8 @@ def build_parser() -> argparse.ArgumentParser:
     brief.add_argument("--input", required=True)
     brief.add_argument(
         "--reader-layout",
-        choices=("legacy-sectioned",),
-        default="legacy-sectioned",
+        choices=("canonical-sectioned",),
+        default="canonical-sectioned",
     )
     return parser
 

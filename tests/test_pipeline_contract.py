@@ -729,13 +729,13 @@ class PipelineContractTests(unittest.TestCase):
 
         for requirement in (
             "READER_TEMPLATE_STRUCTURE_GATE",
-            "LEGACY_TODAY_OVERVIEW_NO_OMISSION_GATE",
-            "LEGACY_SECTIONED_READER_LAYOUT_GATE",
+            "CANONICAL_TODAY_OVERVIEW_NO_OMISSION_GATE",
+            "CANONICAL_SECTIONED_READER_LAYOUT_GATE",
             "news-brief-template.md",
             "每日新聞讀者版",
             "時間｜事件｜評級",
             "不得省略、跨區集中或重新設計",
-            "--reader-layout legacy-sectioned",
+            "--reader-layout canonical-sectioned",
         ):
             self.assertIn(requirement, daily)
 
@@ -748,13 +748,13 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("修復紀錄", document)
             self.assertIn("不得出現在讀者版", document)
 
-    def test_reader_preserves_legacy_sectioned_story_layout(self):
+    def test_reader_preserves_canonical_sectioned_story_layout(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         scheduled = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         template = (ROOT / "news-brief-template.md").read_text(encoding="utf-8")
 
         for document in (daily, scheduled):
-            self.assertIn("LEGACY_SECTIONED_READER_LAYOUT_GATE", document)
+            self.assertIn("CANONICAL_SECTIONED_READER_LAYOUT_GATE", document)
             self.assertIn("不得改成欄位式逐條詳報", document)
         for requirement in (
             "# 每日新聞讀者版",

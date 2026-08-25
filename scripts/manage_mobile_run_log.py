@@ -23,7 +23,6 @@ DURABLE_AUDIT_STATUSES = {
     "updated",
     "preserved_merge_deferred",
     "current_run_only",
-    "legacy_completed",
 }
 STAGES = (
     "schedule-prepared",
@@ -56,27 +55,8 @@ DELIVERY_STATUSES = {
 
 def _read_json(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
-    prior_schema = value.get("schema_version")
-    if prior_schema in {"1.0.0", "1.1.0", "1.2.0"}:
-        value["schema_version"] = SCHEMA_VERSION
-        value.setdefault("execution_mode", "full-runtime")
-        value.setdefault("candidate_audit_artifact", None)
-        value.setdefault("reader_artifact", None)
-        value.setdefault("delivery_status", "not_ready")
-        value.setdefault("client_confirmation_supported", False)
-        value.setdefault("delivery_profile", "full-assets")
-        value.setdefault("native_media_status", "available")
-        value.setdefault("capability_limitations", [])
-        prior_audit = value.get("candidate_audit_artifact")
-        if isinstance(prior_audit, dict) and prior_audit.get("path") == "logs/latest-candidate-audit.json":
-            value.setdefault("durable_audit_artifact", prior_audit)
-            value.setdefault(
-                "durable_audit_status",
-                "legacy_completed" if value.get("status") == "completed" else "preserved_merge_deferred",
-            )
-        else:
-            value.setdefault("durable_audit_artifact", None)
-            value.setdefault("durable_audit_status", "not_started")
+    if value.get("schema_version") != SCHEMA_VERSION:
+        raise ValueError("unsupported run-log schema version")
     return value
 
 
@@ -169,15 +149,12 @@ def validate_record(record: dict[str, Any]) -> None:
             raise ValueError("completed requires saved reader and candidate-audit artifacts")
         expected_audit_path = f"logs/runs/{record['run_id']}/candidate-audit.json"
         actual_audit_path = record["candidate_audit_artifact"].get("path")
-        if (
-            actual_audit_path != expected_audit_path
-            and record["durable_audit_status"] != "legacy_completed"
-        ):
+        if actual_audit_path != expected_audit_path:
             raise ValueError("completed requires a run-scoped candidate audit")
         if degraded and record.get("last_error") is not None:
             raise ValueError("a capability limitation is not a last_error")
     durable_artifact = record.get("durable_audit_artifact")
-    if record["durable_audit_status"] in {"updated", "preserved_merge_deferred", "legacy_completed"}:
+    if record["durable_audit_status"] in {"updated", "preserved_merge_deferred"}:
         if not isinstance(durable_artifact, dict) or durable_artifact.get("path") != "logs/latest-candidate-audit.json":
             raise ValueError("durable audit status requires logs/latest-candidate-audit.json evidence")
 

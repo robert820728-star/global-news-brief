@@ -253,7 +253,7 @@ def valid_brief():
 """
 
 
-def legacy_sectioned_brief():
+def canonical_sectioned_brief():
     note = VALIDATOR.SINGLE_SOURCE_NOTE
     return f"""# 每日新聞讀者版
 
@@ -305,7 +305,7 @@ class ValidatorTests(unittest.TestCase):
         self.assertTrue(any("validated_grade" in error for error in errors))
 
     def test_canonical_reader_requires_a_front_today_overview(self):
-        text = legacy_sectioned_brief().replace(
+        text = canonical_sectioned_brief().replace(
             "## 今日總覽\n\n### 🇹🇼 台灣新聞\n\n"
             "| 時間 | 事件 | 評級 |\n|---|---|---:|\n"
             "| 8/14 05:30 | 測試地震事件 | B |\n\n",
@@ -331,20 +331,20 @@ class ValidatorTests(unittest.TestCase):
         errors = VALIDATOR.validate_manifest_data(manifest)
         self.assertTrue(any("source_image_url" in error for error in errors), errors)
 
-    def test_legacy_sectioned_reader_layout_passes(self):
+    def test_canonical_sectioned_reader_layout_passes(self):
         self.assertEqual(
             [],
-            VALIDATOR.validate_legacy_sectioned_layout(
-                valid_manifest(), legacy_sectioned_brief()
+            VALIDATOR.validate_canonical_sectioned_layout(
+                valid_manifest(), canonical_sectioned_brief()
             ),
         )
 
-    def test_field_based_reader_fails_legacy_layout_gate(self):
-        errors = VALIDATOR.validate_legacy_sectioned_layout(valid_manifest(), valid_brief())
-        self.assertTrue(any("既有分區格式" in error for error in errors), errors)
+    def test_field_based_reader_fails_canonical_layout_gate(self):
+        errors = VALIDATOR.validate_canonical_sectioned_layout(valid_manifest(), valid_brief())
+        self.assertTrue(any("canonical 分區格式" in error for error in errors), errors)
 
     def test_sectioned_reader_rejects_reversed_attachment_order(self):
-        text = legacy_sectioned_brief()
+        text = canonical_sectioned_brief()
         map_block = """![地圖一](sandbox:/tmp/map.png)
 
 地圖一：事件位置，依來源資料整理。"""
@@ -355,32 +355,32 @@ class ValidatorTests(unittest.TestCase):
             map_block + "\n\n" + image_block,
             image_block + "\n\n" + map_block,
         )
-        errors = VALIDATOR.validate_legacy_sectioned_layout(valid_manifest(), text)
+        errors = VALIDATOR.validate_canonical_sectioned_layout(valid_manifest(), text)
         self.assertTrue(any("附件順序" in error for error in errors), errors)
 
     def test_sectioned_reader_requires_caption_immediately_after_attachment(self):
-        text = legacy_sectioned_brief().replace(
+        text = canonical_sectioned_brief().replace(
             "![圖一](sandbox:/tmp/image.png)\n\n圖一：",
             "![圖一](sandbox:/tmp/image.png)\n\n插入了不屬於圖說的文字。\n\n圖一：",
         )
-        errors = VALIDATOR.validate_legacy_sectioned_layout(valid_manifest(), text)
+        errors = VALIDATOR.validate_canonical_sectioned_layout(valid_manifest(), text)
         self.assertTrue(any("圖說必須緊接" in error for error in errors), errors)
 
     def test_sectioned_reader_rejects_unmanifested_story_image(self):
-        text = legacy_sectioned_brief().replace(
+        text = canonical_sectioned_brief().replace(
             "據官方來源指出，地震事件已發生。",
             "![額外圖片](sandbox:/tmp/extra.png)\n\n額外圖片說明。\n\n"
             "據官方來源指出，地震事件已發生。",
         )
-        errors = VALIDATOR.validate_legacy_sectioned_layout(valid_manifest(), text)
+        errors = VALIDATOR.validate_canonical_sectioned_layout(valid_manifest(), text)
         self.assertTrue(any("未列入 manifest" in error for error in errors), errors)
 
     def test_sectioned_reader_rejects_image_outside_story(self):
-        text = legacy_sectioned_brief().replace(
+        text = canonical_sectioned_brief().replace(
             "## 🇹🇼 台灣新聞",
             "![頁首圖片](sandbox:/tmp/header.png)\n\n## 🇹🇼 台灣新聞",
         )
-        errors = VALIDATOR.validate_legacy_sectioned_layout(valid_manifest(), text)
+        errors = VALIDATOR.validate_canonical_sectioned_layout(valid_manifest(), text)
         self.assertTrue(any("新聞區塊之外" in error for error in errors), errors)
 
     def test_ready_manifest_blocks_required_omitted_map(self):

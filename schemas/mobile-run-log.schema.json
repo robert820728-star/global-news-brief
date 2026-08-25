@@ -117,8 +117,7 @@
         "not_started",
         "updated",
         "preserved_merge_deferred",
-        "current_run_only",
-        "legacy_completed"
+        "current_run_only"
       ]
     },
     "durable_audit_artifact": {
