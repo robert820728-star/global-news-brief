@@ -75,9 +75,9 @@
     }
   },
   "acquisition_policy": {
-    "route_order": ["aggregate_api", "structured_direct", "html_direct", "browser_or_web_search_final_fallback"],
+    "route_order": ["aggregate_api", "structured_direct", "html_direct", "browser_rendered_final_fallback"],
     "browser_fallback_triggers": ["dynamic_content_missing", "parse_failure"],
-    "cross_source_fallback_may_add_candidates": true,
+    "cross_source_fallback_may_add_candidates": false,
     "cross_source_fallback_may_satisfy_source_completeness": false,
     "browser_snapshot_required_when_used": true,
     "browser_must_not_be_a_runtime_dependency": true,

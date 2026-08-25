@@ -17,11 +17,10 @@ Rollback source: `e1e0336aa6f5fcf0b4260c699c693159847e2948`.
 1. Extend candidate-audit fixtures with default section scopes and exhausted-hydration counts.
 2. Add JPN scope, selected C-, and `unresolved_exhausted` tests.
 3. Add failed-source scan-directory CLI test.
-4. Add insufficient-verification and checkpoint-rewind tests.
+4. Add insufficient-verification, checkpoint-rewind, and same-occurrence run-resume tests.
 5. Add rumor/consideration policy-stage tests.
 6. Extend obsolete-contract and mobile parity tests.
 7. Run the new tests and confirm they fail for the intended reasons.
 8. Patch schemas, scripts, settings, skills, prompts, and examples.
 9. Run targeted tests, then the frozen full suite.
 10. Run the project-final-state audit methods and reset the streak after any formal artifact change.
-

@@ -83,7 +83,7 @@ def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
                     or source.get("default_section")
                     or (source.get("sections") or [""])[0]
                 ).strip()
-                if section not in {"TWN", "CHN", "GLB"}:
+                if re.fullmatch(r"[A-Z]{3}", section) is None:
                     raise ValueError(f"{source_id} 候選缺少有效板塊：{title}")
                 seed = hashlib.sha256(f"{norm}|{published.date().isoformat()}".encode()).hexdigest()[:24]
                 cid = hashlib.sha256(f"{source_id}|{canon}|{published.isoformat()}".encode()).hexdigest()[:20]

@@ -198,6 +198,9 @@ def write_valid_audit(root: Path):
             "run_id": RUN_ID, "generated_at": "2026-08-14T06:00:00+08:00",
             "window_start": "2026-08-13T06:00:00+08:00",
             "window_end": "2026-08-14T06:00:00+08:00",
+            "section_scopes": [
+                {"code": "TWN", "member_country_codes": [], "fallback": True},
+            ],
             "source_coverage": coverage, "raw_item_count": len(coverage),
             "processing_counts": {
                 "merged_article_row_count": len(coverage),
@@ -211,6 +214,7 @@ def write_valid_audit(root: Path):
                 "event_evidence_article_row_count": len(coverage),
                 "non_news_article_row_count": 0,
                 "unresolved_article_row_count": 0,
+                "unresolved_exhausted_article_row_count": 0,
             },
             "article_dispositions": [{
                 "source_id": item["source_id"],

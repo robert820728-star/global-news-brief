@@ -24,7 +24,7 @@
           "candidate_id": {"type": "string", "minLength": 12},
           "source_id": {"type": "string", "minLength": 1},
           "source_name": {"type": "string", "minLength": 1},
-          "section": {"enum": ["TWN", "CHN", "GLB"]},
+          "section": {"type": "string", "pattern": "^[A-Z]{3}$"},
           "title": {"type": "string", "minLength": 1},
           "summary": {"type": "string", "minLength": 1},
           "summary_quality": {"enum": ["source_summary", "listing_context", "structured_event_context", "title_only"]},

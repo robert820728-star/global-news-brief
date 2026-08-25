@@ -881,6 +881,7 @@ class PipelineContractTests(unittest.TestCase):
             "event_evidence_article_row_count",
             "non_news_article_row_count",
             "unresolved_article_row_count",
+            "unresolved_exhausted_article_row_count",
         }, required)
         for document_path in (
             ROOT / "daily-schedule-prompt.md",
@@ -902,7 +903,7 @@ class PipelineContractTests(unittest.TestCase):
         dispositions = run["properties"]["article_dispositions"]
         self.assertEqual("#/$defs/articleDisposition", dispositions["items"]["$ref"])
         self.assertEqual(
-            ["event_evidence", "non_news", "unresolved"],
+            ["event_evidence", "non_news", "unresolved", "unresolved_exhausted"],
             schema["$defs"]["articleDisposition"]["properties"]["disposition"]["enum"],
         )
         candidate_required = set(schema["$defs"]["v2Candidate"]["required"])
@@ -918,6 +919,7 @@ class PipelineContractTests(unittest.TestCase):
             "event_evidence_article_row_count",
             "non_news_article_row_count",
             "unresolved_article_row_count",
+            "unresolved_exhausted_article_row_count",
         }.issubset(count_fields))
         for document_path in (
             ROOT / "daily-schedule-prompt.md",
@@ -1021,34 +1023,11 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("`source_audit`", document)
             self.assertIn("full-runtime", document)
 
-    def test_old_event_requires_independently_material_update_to_reenter_reader(self):
+    def test_old_event_reentry_uses_current_v2_evidence_without_a_parallel_timer(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
-
-        for requirement in (
-            "MATERIAL_UPDATE_REENTRY_GATE",
-            "不得只因仍在十四天內每天重刊",
-            "本日新增部分必須獨立達到 C 級門檻",
-        ):
-            self.assertIn(requirement, daily)
-
-    def test_mobile_reentry_uses_48_hour_cooldown_and_current_impact(self):
-        documents = (
-            ROOT / "mobile-chatgpt-daily-prompt.md",
-            ROOT / "news-brief-settings.md",
-        )
-        for path in documents:
-            text = path.read_text(encoding="utf-8")
-            for requirement in (
-                "MATERIAL_UPDATE_48_HOUR_REENTRY_GATE",
-                "48 小時內",
-                "滿 48 小時",
-                "不得自動重刊",
-                "獨立達到 C 級",
-            ):
-                self.assertIn(requirement, text, f"{path} missing {requirement}")
-
-        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
-        self.assertIn("實質惡化", daily)
+        self.assertIn("IMPACT_DELTA_CONTINUITY_SCORING", daily)
+        self.assertIn("本日可驗證的影響力變化", daily)
+        self.assertNotIn("48_HOUR_REENTRY", daily)
 
     def test_continuing_events_are_scored_by_verified_impact_delta(self):
         documents = (
@@ -1079,36 +1058,35 @@ class PipelineContractTests(unittest.TestCase):
         ):
             self.assertIn(requirement, daily)
 
-    def test_ceremonial_and_single_company_routine_events_default_below_reader(self):
+    def test_ceremonial_and_single_company_routine_events_score_below_reader(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "CEREMONIAL_AND_SINGLE_COMPANY_ROUTINE_LOW",
             "喪禮、降半旗、紀念活動、例行訪問",
             "單一公司上市",
-            "預設 D",
+            "禁止依事件類型直接指定等級",
         ):
             self.assertIn(requirement, daily)
 
-    def test_symbolic_cultural_name_dispute_defaults_below_reader(self):
+    def test_symbolic_cultural_name_dispute_scores_below_reader(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "SYMBOLIC_CULTURAL_DISPUTE_LOW",
             "展覽名稱、館名、標示或稱謂爭議",
             "主管機關口頭抗議",
-            "預設 D",
+            "禁止依事件類型直接指定等級",
         ):
             self.assertIn(requirement, daily)
 
-    def test_announced_diplomatic_visit_without_outcome_defaults_below_reader(self):
+    def test_announced_diplomatic_visit_without_outcome_scores_below_reader(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "ROUTINE_DIPLOMATIC_VISIT_LOW",
             "只有宣布訪問行程",
-            "王毅訪韓",
-            "預設 D",
+            "禁止依事件類型直接指定等級",
         ):
             self.assertIn(requirement, daily)
 

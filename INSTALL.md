@@ -107,7 +107,7 @@
 2. 主題偏好：是否提高或降低特定主題權重？未指定沿用 repository 預設，偏好不能降低證據、安全或驗證門檻。
 3. 執行時間：每天幾點？優先使用帳號／裝置時區；無法判斷才追問時區，預設每日 06:00。
 
-輸出語言沿用使用者已設定語言，否則使用安裝對話主要語言。國家板塊使用 ISO 3166-1 alpha-3；區域使用穩定不衝突的三碼。取得建立排程的授權後，直接完成安裝與首次測試，不再分階段重複詢問同一決定。
+輸出語言沿用使用者已設定語言，否則使用安裝對話主要語言。國家板塊使用 ISO 3166-1 alpha-3；區域使用穩定不衝突的三碼。本輪 normalized audit 以有序 `section_scopes` 保存每個板塊的 `code`、`member_country_codes` 與唯一 `fallback`；事件板塊只能由其內容確認的 `country_codes` 對照這份權威決定，不得硬編碼成 TWN／CHN／其他皆 GLB。取得建立排程的授權後，直接完成安裝與首次測試，不再分階段重複詢問同一決定。
 
 ## 三、執行模式與完成條件
 
@@ -144,7 +144,7 @@
 | 1 source-scan | `news-source-pool.json`、`source-route-config.json` | 三條 discovery route 的 snapshots、scan evidence、truthful coverage、`source-candidates.json`、`news-relevance-gate.json`、`model-source-candidates.json` | `SOURCE_SCAN_COVERAGE_SEPARATION`：`scan_status` 只表示掃描程序是否完成，`coverage_status`／`coverage_complete` 另表示來源覆蓋是否完整；每條 configured route 都留在 audit。`FULL_DISCOVERY_POOL_UNCAPPED`：中新社抓當日＋前一日日索引；CNA 依 `NextPageIdx` 翻頁；GDELT 全部分片才 `complete`，部分成功標 `degraded_partial`。已取得列完整入池，弱 signal 仍進模型 |
 | 2 preprocess | model-admitted rows | `preprocessed-candidates.json`；時間窗、canonical URL、provisional article groups | 這些群組不是語意事件；失敗只重跑 preprocess |
 | 3 conditional recovery | source、gate、preprocess、content hydration receipts | 預設只保存 local hash 與 checkpoint binding；`CONDITIONAL_RECOVERY_BUNDLE_POLICY` 僅在 cross-host handoff、ephemeral workspace 或 warning/timeout boundary 時，以 `manage_canonical_run_bundle.py pack-recovery` 建立六份 artifact bundle | durable workspace 可直接進入 `FIRST_SELECT_NEWS_EVENTS_EXECUTION`；必要時用 bundle `restore` 從最早缺失 artifact 繼續 |
-| 4 select-news-events | hydrated rows、偏好、十四天 timeline | `selection-results.json`、唯一 `semantic_event_id`／`event_identity`、每列 `article_dispositions` | `event_evidence`、`non_news`、`unresolved` 逐列守恆；unresolved 歸零才可完成；執行 `validate_local_source_admission.py` |
+| 4 select-news-events | hydrated rows、偏好、十四天 timeline | `selection-results.json`、唯一 `semantic_event_id`／`event_identity`、每列 `article_dispositions` | `event_evidence`、`non_news`、`unresolved`、`unresolved_exhausted` 逐列守恆；仍在恢復的 unresolved 歸零才可完成，已窮盡列保留降級證據但不阻塞其他事件；執行 `validate_local_source_admission.py` |
 | 5 audit-news-candidates | selection、上一份 durable audit（若有）、`news-source-pool.json.ranking` | 本輪 run-scoped candidate audit、十四天 merge status、`public_value_v2` 的 facts／Actual-Potential 分類／六項 0–100 分數／加權總分／delta／challenge／confidence／`grade_status`／決定／`selected_event_id` | 依下方 V2 順序逐 gate 驗證；先修正可重算 counts。十四天歷史無法合併時保留舊 blob 並延後維護，但不得把 provisional 冒充 validated |
 | 6 materialize-manifest | audit 中 selected C 以上且 `grade_status=validated` 的事件 | `news-event-manifest.json`，事件集合精確等於 selected ids；保存 validated score、grade、status、confidence | 只能一對一物化，不得另加／漏掉新聞；manifest 值必須精確等於 candidate audit 並綁定 checkpoint |
 | 7 verify-news-events | 事件與主張類型 | stage patch、原始報導、官方／主要記錄、獨立證據鏈、claim status、source limits | 只合併 verify 欄位並執行 stage ownership validator；證據依事件與主張角色動態選取 |
@@ -154,6 +154,10 @@
 | 11 final manifest 與 render | collect stage 已 completed／依 profile 合法 omission | 首次執行 `validate_news_brief.py manifest` 到 `OK`；由 manifest 渲染 reader，綁定 `render.manifest` 與 `render.brief`；reader 以 `validate_news_brief.py brief --reader-layout canonical-sectioned` 驗證 | 提前呼叫 manifest validator 回 `DEFERRED` 不算通過也不算失敗；繼續原 stage 後重跑 |
 | 12 publish 與 bundle | final checkpoint、manifest、audit、source pool、reader、map decisions、宣稱交付的附件 | 依下方實際 CLI 由 `publish_news_brief.py` 建立 release／receipt；再以 `manage_canonical_run_bundle.py pack` 建立 transport，與 `logs/current.json` 一次 atomic 發布後執行 `verify`／`restore` 核對 byte identity | full-runtime 由 canonical publisher fail-closed；mobile-native 依 mobile ledger schema 保存 reader/audit 與 delivery profile |
 | 13 conversation delivery | release receipt 或 mobile saved reader | 完整 reader bytes、附件／能力限制 receipt、`delivery-handoff` | 不能只交摘要或驗收報告；`client_confirmed` 只有外部明確回執才可使用 |
+
+`SCHEDULED_OCCURRENCE_SINGLE_RUN_GATE`：mobile ledger 以 `scheduled_for` 作 occurrence key。同一 occurrence 的 `current.json` 只要存在，就沿用原 `run_id` 並從 first incomplete stage 接續；即使 reader 已保存但尚未 `delivery-handoff`，也不得 rotate、建立 replacement run 或重跑新聞階段。只有 `scheduled_for` 嚴格較晚的下一個真實每日 occurrence 才可把仍非 terminal 的前輪標為 `interrupted_by_next_run`。
+
+`VERIFICATION_FEEDBACK_REWIND_GATE`：核心主張 `finding=insufficient` 時，verification 必須 `status=failed`，不得進 ready reader。完成既定驗證恢復後仍不足，執行 `python3 scripts/news_run_checkpoint.py rewind --input <checkpoint> --output <checkpoint> --stage audit-news-candidates --reason "<evidence failure>"`；只清除 audit 與其後 stage bindings，保留 source-scan、preprocess 與 semantic selection，將受影響候選重評或排除後重新物化 manifest。不得建立新 run 或重跑 discovery。
 
 Stage 12 與 13 的 full-runtime 指令介面如下；`--artifact` 對每個必要 run artifact 重複一次。`release` 是 publisher 產物，不是子命令：
 
@@ -186,6 +190,7 @@ python3 scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-re
 - `event_evidence_article_row_count`
 - `non_news_article_row_count`
 - `unresolved_article_row_count`
+- `unresolved_exhausted_article_row_count`
 
 文章列、canonical URL、標題群組與語意事件是不同口徑，不能互相冒充。所有 C 級以上事件都必須映射到 reader；不設篇數上限。
 
@@ -210,7 +215,7 @@ python3 scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-re
 5. 六項各填 0–100，標準使用 10 分錨點；使用 5 分中點時填 `midpoint_rationales`。以 30%／20%／15%／15%／10%／10% 計算 `weighted_score`，並令 `importance_score` 完全相同。
 6. Update 達 70 時填 `delta_facts` 的 previous state、current state、why material；同一 fact 支撐三項以上時填 `cross_dimension_rationales`。
 7. 任一單項達 70，為該項填 `high_score_challenges`；總分達 70，另填 `overall_high_score_challenge`，具體回答相較 B+ 多出的已發生後果。只能以 `outcome=sustained` 保留高分；`rescore_required` 必須先重評。
-8. 政策事件填 `policy_stage` 與既有 `policy_governance_review`。proposal 沒有硬上限，但高 Impact 必須有已發生後果；尚無操作效果時 `direct_operational_effects=[]`，潛在效果只放在 `consequence_evidence.potential`，不能為過 schema 編造 actual effect。
+8. 政策事件填 `policy_stage` 與既有 `policy_governance_review`。證據按階段要求：rumor 只需可歸屬報導與來源限制，不得編法律依據或官方行動；consideration 必須有官方正在評估的證據，但可無法律文本；proposal 及後續階段才要求相應法律／正式程序證據。proposal 沒有硬上限，但高 Impact 必須有已發生後果；尚無操作效果時 `direct_operational_effects=[]`，潛在效果只放在 `consequence_evidence.potential`，不能為過 schema 編造 actual effect。
 9. `border_conflict_review` 與 `ongoing_conflict_review` 各自保留語義但只在適用時填詳細欄位；不適用事件只填 `{"applies": false}`。
 10. 另填 `evidence_confidence` 0–100 與 high 80–100／medium 60–79／low 0–59 `confidence_band`；信心不得乘進 importance。
 11. event identity、temporal review、十四天 continuity、dimension evidence、政策審查（適用時）、高分反查、算式與 grade mapping 全部通過後，才可寫 `grade_status=validated`。degraded run 可保留 provisional candidate pool，但 Reader、manifest 與 publisher 只接受 validated。

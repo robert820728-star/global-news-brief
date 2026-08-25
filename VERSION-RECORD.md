@@ -4,6 +4,16 @@ This file records the current installable contract. Earlier implementation attem
 
 本檔只記錄目前可安裝契約；較早的實作嘗試由 Git history 保存，避免退役行為繼續留在執行中的 repository 表面。
 
+## v0.6.0-rc.3 — Cross-stage convergence and scheduled-run ownership / 跨階段收斂與排程 run 所有權
+
+- Reason / 建立原因：Independent cross-module review found custom sections collapsing to `GLB`, a selected-`C-` path that could not publish, completed verification with insufficient evidence, failed source rows rejected by the standalone validator, one inaccessible article blocking a usable Reader, non-executable cross-source fallback promises, and same-occurrence scheduled runs being rotated after Reader creation. / 獨立跨模組檢查發現自訂板塊被壓成 `GLB`、可選取但無法發布的 `C-` 路徑、證據不足仍可標示查證完成、standalone validator 拒絕真實失敗來源、單篇不可讀文章阻擋可用 Reader、不可執行的跨來源 fallback 承諾，以及同一排程 occurrence 在 Reader 產生後仍被旋轉。
+- Approach / 作法：Use run-scoped section scopes end to end, reserve `C-` for audit only, fail and rewind insufficient verification to candidate audit without rediscovery, conserve exhausted hydration as degraded evidence, forbid cross-source candidate injection, apply policy evidence by stage, and resume the canonical run whenever `scheduled_for` identifies the same occurrence. / 以 run-scoped section scopes 貫穿全流程、將 `C-` 僅保留於 audit、證據不足時 fail 並在不重跑 discovery 下回退 candidate audit、將 hydration 耗盡列為可追蹤的降級證據、禁止跨來源候選注入、依政策階段要求證據，並在 `scheduled_for` 屬同一 occurrence 時續跑 canonical run。
+- Entry points / 入口：Candidate audit/schema, manifest/schema, source-scan validator, checkpoint recovery, mobile run ledger, publisher, active Skills, both scheduling prompts, settings, `INSTALL.md`, generated capsule, and regression tests. / Candidate audit／schema、manifest／schema、來源掃描 validator、checkpoint recovery、mobile run ledger、publisher、正式 Skills、兩份排程 prompt、設定、`INSTALL.md`、生成 capsule 與回歸測試。
+- Important configuration / 重要設定：Reader publication begins at `C`; `unresolved_exhausted` is conserved but nonblocking; web search cannot create a canonical discovery candidate; an occurrence key may rotate only to a strictly later `scheduled_for`; `insufficient` verification is never publication-ready. / Reader 發布門檻為 `C`；`unresolved_exhausted` 必須守恆但不阻塞；Web search 不得建立 canonical discovery candidate；occurrence key 只能旋轉至嚴格較新的 `scheduled_for`；`insufficient` 查證永遠不可發布。
+- Validation / 驗證：Targeted TDD, full bundled-Python suite, rebuilt capsule verification, structural residue scans, adversarial negative paths, and consecutive unchanged-fingerprint final-state audit cycles. / 目標 TDD、bundled Python 全庫測試、重建 capsule 驗證、結構化殘留掃描、對抗負向路徑，以及連續且版本指紋不變的 final-state audit。
+- Result / 結果：Candidate prepared for fixed-fingerprint final verification and GitHub promotion. / 候選版本已準備固定指紋最終驗收與 GitHub 晉升。
+- Rollback / 回復：Revert the rc.3 source and generated-capsule commits together. / 一併回復 rc.3 source 與 generated-capsule commits。
+
 ## v0.6.0-rc.2 — End-to-end coverage truth and conditional reviews / 端到端 coverage 真實性與條件式審查
 
 - Reason / 建立原因：A fresh audit found that route-level degraded coverage was discarded during source-scan materialization, policy proposals were forced to invent operational effects, retired relevance prose remained active, and CI did not run the full suite. / 全新稽核發現 route 層的降級 coverage 在 source-scan 物化時被丟失、政策提案被迫編造操作效果、退役 relevance 敘述仍在 active skill，且 CI 未執行完整測試。

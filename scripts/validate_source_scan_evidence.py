@@ -285,10 +285,14 @@ def main():
         minimum_ready = int(source.get("discovery_policy", {}).get(
             "minimum_ready_sources", len(sources)
         ))
-        if len(coverage_items) < minimum_ready:
+        completed_items = [
+            item for item in coverage_items
+            if isinstance(item, dict) and item.get("scan_status") == "completed"
+        ]
+        if len(completed_items) < minimum_ready:
             print(
                 "FAIL: discovery source coverage below minimum: "
-                f"{len(coverage_items)}/{minimum_ready}"
+                f"{len(completed_items)}/{minimum_ready}"
             )
             return 1
         errors = []
@@ -296,6 +300,16 @@ def main():
         for coverage_item in coverage_items:
             source_id = coverage_item.get("source_id") if isinstance(coverage_item, dict) else None
             scan_path = scan_dir / f"{source_id}.json"
+            if isinstance(coverage_item, dict) and coverage_item.get("scan_status") == "failed":
+                if scan_path.is_file():
+                    errors.append(f"source_scan[{source_id}] failed row 不得保存成功 scan 檔")
+                if coverage_item.get("coverage_complete") is not False:
+                    errors.append(f"source_scan[{source_id}] failed row 必須 coverage_complete=false")
+                if coverage_item.get("coverage_status") != "unavailable":
+                    errors.append(f"source_scan[{source_id}] failed row 必須 coverage_status=unavailable")
+                if coverage_item.get("scan_window_start") is not None or coverage_item.get("scan_window_end") is not None:
+                    errors.append(f"source_scan[{source_id}] failed row 不得宣告 scan window")
+                continue
             if not source_id or not scan_path.is_file():
                 errors.append(f"source_scan[{source_id or 'unknown'}] 缺少 scan：{scan_path}")
                 continue
@@ -308,7 +322,7 @@ def main():
             errors.extend(validate_scan(
                 scan, coverage_item, resolved_source, f"source_scan[{source_id}]"
             ))
-        source_count = len(coverage_items)
+        source_count = len(completed_items)
     for error in errors:
         print("FAIL:", error)
     if not errors:

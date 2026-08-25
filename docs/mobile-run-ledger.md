@@ -9,7 +9,7 @@ The mobile ChatGPT task remains the news executor. GitHub stores a compact, dura
 - `logs/runs/<run_id>/candidate-audit.json` is the run-scoped candidate audit for the current 24-hour window and is the completion artifact.
 - `logs/latest-candidate-audit.json` is the optional rolling fourteen-day continuity cache. It is replaced only after a safe merge; an unavailable merge preserves the prior blob and does not block the current reader.
 - `logs/latest-reader.md` is replaced only after a new reader edition has been rendered successfully.
-- Starting a new scheduled run replaces the older `previous.json`. If the former `current.json` was still awaiting or running, it is preserved as `interrupted_by_next_run` before rotation.
+- `scheduled_for` is the occurrence key. Re-entering the same occurrence returns the existing `current.json` and resumes its first incomplete stage, including when a reader is already saved but handoff is incomplete. Only a strictly later scheduled occurrence rotates `current.json`; a non-terminal older occurrence is then preserved as `interrupted_by_next_run` in `previous.json`.
 
 The branch tip exposes only two run records. Git commit history is not rewritten and must never contain credentials, connector diagnostics, private source content, or binary images.
 

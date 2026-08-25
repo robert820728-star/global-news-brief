@@ -17,10 +17,10 @@ import run_identity
 
 EVENT_ID_RE = re.compile(r"^[A-Z]{3}-\d{2,3}$")
 DATE_LINE_RE = re.compile(r"^\d{4}/\d{2}/\d{2} 每日新聞$")
-DETAIL_HEADING_RE = re.compile(r"^### ([A-Z]{3}-\d{2,3})\. (.+) - (SS|[SABC][+-]?)$")
+DETAIL_HEADING_RE = re.compile(r"^### ([A-Z]{3}-\d{2,3})\. (.+) - (SS|[SAB][+-]?|C[+]?)$")
 ALLOWED_GRADES = {
     "SS", "S+", "S", "S-", "A+", "A", "A-",
-    "B+", "B", "B-", "C+", "C", "C-",
+    "B+", "B", "B-", "C+", "C",
 }
 GRADE_BASE_RANK = {"C": 1, "B": 2, "A": 3, "S": 4}
 SINGLE_SOURCE_NOTE = "目前僅找到一個可靠來源，尚無其他獨立來源交叉確認。"
@@ -881,6 +881,8 @@ def validate_manifest_data(data: dict[str, Any]) -> list[str]:
                     f"{label} 獨立來源數量不一致：宣告 {declared_count}，實際群組 {len(groups)}"
                 )
             finding = verification.get("finding")
+            if finding == "insufficient" and verification.get("status") != "failed":
+                errors.append(f"{label} finding=insufficient 時 verification.status 必須為 failed")
             if declared_count == 1:
                 if finding != "single_reliable_source":
                     errors.append(f"{label} 只有一個獨立來源時 finding 必須是 single_reliable_source")
@@ -1379,7 +1381,7 @@ def validate_canonical_sectioned_layout(data: dict[str, Any], text: str) -> list
             errors.append(f"讀者版使用禁止的圖廊、疊圖或動態元件：{token}")
 
     story_heading_matches = list(
-        re.finditer(r"(?m)^### (.+)｜(SS|[SABC][+-]?)\r?$", text)
+        re.finditer(r"(?m)^### (.+)｜(SS|[SAB][+-]?|C[+]?)\r?$", text)
     )
     story_spans: list[tuple[int, int]] = []
     for index, match in enumerate(story_heading_matches):
@@ -1471,7 +1473,7 @@ def validate_canonical_sectioned_layout(data: dict[str, Any], text: str) -> list
         if any(visible_timezone_re.search(row[0]) for row in rows):
             errors.append("讀者可見時間不得顯示 UTC、GMT、數字偏移或時區標記")
 
-        heading_matches = list(re.finditer(r"(?m)^### (.+)｜(SS|[SABC][+-]?)\r?$", body))
+        heading_matches = list(re.finditer(r"(?m)^### (.+)｜(SS|[SAB][+-]?|C[+]?)\r?$", body))
         actual_headings = [(match.group(1), match.group(2)) for match in heading_matches]
         expected_headings = [
             (str(event.get("title", "")), str(event.get("grade", "")))

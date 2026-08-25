@@ -13,7 +13,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 
 ## 適用門檻
 
-- 所有入選事件（SS 至 C-）：`images.required` 固定為 `true`，逐一開啟 `verification.sources` 的來源頁檢查圖片；評級不得作為跳過圖片流程的條件。
+- 所有入選事件（SS 至 C）：`images.required` 固定為 `true`，逐一開啟 `verification.sources` 的來源頁檢查圖片；評級不得作為跳過圖片流程的條件。
 - 每個引用來源都必須寫入 `images.source_checks`；除是否找到可用圖片、嘗試次數與結果外，必須保存 `checked_at`、`inspection_method`、本地 `evidence_path`、`detected_image_urls` 與 `failure_detail`。
 - `evidence_path` 必須是頁面截圖、保存頁面或可重現檢查結果的本地證據；發布器會確認檔案實際存在。宣告 `no_usable_image` 時不得只填布林值，必須有頁面證據與具體理由。
 - 偵測到官方或媒體圖片時，必須先嘗試下載來源頁中的實際媒體檔。`images.assets[].source_url` 保存文章頁，`images.assets[].source_image_url` 保存實際圖片網址；後者必須出現在同一文章頁檢查的 `detected_image_urls`，且不得等於文章頁網址。

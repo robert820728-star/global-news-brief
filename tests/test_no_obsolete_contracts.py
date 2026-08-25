@@ -48,6 +48,39 @@ class NoObsoleteContractsTests(unittest.TestCase):
             if "PASSIVE_ONE_OFF_FIVE_DAY_DECAY" in text or "default_d_applied" in text:
                 hits.append(str(path.relative_to(ROOT)))
         self.assertEqual([], hits)
+
+    def test_active_contracts_have_no_hard_reentry_or_event_type_grade(self):
+        paths = [
+            ROOT / "news-brief-settings.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents" / "skills" / "select-news-events" / "SKILL.md",
+            ROOT / ".agents" / "skills" / "select-news-events" / "references" / "severity-rubric.md",
+        ]
+        forbidden = (
+            "MATERIAL_UPDATE_48_HOUR_" + "REENTRY_GATE",
+            "預設 " + "D",
+            "c_minus_" + "selected_need",
+        )
+        hits = []
+        for path in paths:
+            text = path.read_text(encoding="utf-8")
+            for phrase in forbidden:
+                if phrase in text:
+                    hits.append(f"{path.relative_to(ROOT)}: {phrase}")
+        self.assertEqual([], hits)
+
+    def test_reader_and_image_execution_surfaces_exclude_c_minus(self):
+        validator = (ROOT / "scripts" / "validate_news_brief.py").read_text(encoding="utf-8")
+        image_policy = (
+            ROOT / ".agents" / "skills" / "collect-news-images" / "references" / "image-policy.md"
+        ).read_text(encoding="utf-8")
+        self.assertNotIn('"C"' + ', "C-"', validator)
+        self.assertNotIn("[SABC][+-]?", validator)
+        self.assertNotIn("SS 至 C" + "-", image_policy)
+
+    def test_web_search_cannot_add_canonical_discovery_candidates(self):
+        pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
+        self.assertFalse(pool["acquisition_policy"]["cross_source_fallback_may_add_candidates"])
     def test_repository_contains_no_retired_source_or_scoring_contract(self):
         forbidden = (
             "fixed" + "_source",

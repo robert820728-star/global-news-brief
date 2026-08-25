@@ -290,6 +290,18 @@ def canonical_sectioned_brief():
 
 
 class ValidatorTests(unittest.TestCase):
+    def test_insufficient_finding_cannot_be_completed_or_ready(self):
+        manifest = valid_manifest()
+        verification = manifest["events"][0]["verification"]
+        verification["finding"] = "insufficient"
+        verification["independent_source_count"] = 0
+        verification["sources"] = []
+        verification["claims"][0]["status"] = "unverified"
+        verification["claims"][0]["source_ids"] = []
+        verification["source_limit_note"] = "核心主張缺乏可用證據。"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("insufficient" in error and "failed" in error for error in errors))
+
     def test_reader_manifest_rejects_nonvalidated_grade(self):
         manifest = valid_manifest()
         manifest["events"][0]["grade_status"] = "provisional"
@@ -340,6 +352,16 @@ class ValidatorTests(unittest.TestCase):
                 valid_manifest(), canonical_sectioned_brief()
             ),
         )
+
+    def test_custom_jpn_section_passes_manifest_and_reader_layout(self):
+        manifest = valid_manifest()
+        manifest["sections"] = [{"code": "JPN", "name": "日本", "order": 1}]
+        event = manifest["events"][0]
+        event["event_id"] = "JPN-01"
+        event["primary_section"] = "JPN"
+        reader = canonical_sectioned_brief().replace("🇹🇼 台灣新聞", "日本新聞")
+        self.assertEqual([], VALIDATOR.validate_manifest_data(manifest))
+        self.assertEqual([], VALIDATOR.validate_canonical_sectioned_layout(manifest, reader))
 
     def test_field_based_reader_fails_canonical_layout_gate(self):
         errors = VALIDATOR.validate_canonical_sectioned_layout(valid_manifest(), valid_brief())
@@ -549,7 +571,7 @@ class ValidatorTests(unittest.TestCase):
 
     def test_glb_map_requires_complete_world_basemap(self):
         manifest = valid_manifest()
-        manifest["sections"][0] = {"code": "GLB", "name": "世界", "order": 1}
+        manifest["sections"] = [{"code": "GLB", "name": "世界", "order": 1}]
         event = manifest["events"][0]
         event["event_id"] = "GLB-01"
         event["primary_section"] = "GLB"

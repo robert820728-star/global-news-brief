@@ -79,6 +79,11 @@
         "generated_at": {"type": "string", "format": "date-time"},
         "window_start": {"type": "string", "format": "date-time"},
         "window_end": {"type": "string", "format": "date-time"},
+        "section_scopes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/sectionScope"}
+        },
         "source_coverage": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/sourceCoverage"}},
         "raw_item_count": {"type": "integer", "minimum": 0},
         "article_dispositions": {
@@ -87,7 +92,7 @@
         },
         "processing_counts": {
           "type": "object",
-          "required": ["merged_article_row_count", "in_window_article_row_count", "canonical_url_count", "provisional_title_cluster_count", "semantic_event_count", "scored_event_count", "event_evidence_article_row_count", "non_news_article_row_count", "unresolved_article_row_count", "c_or_higher_scored_event_count", "selected_event_count"],
+          "required": ["merged_article_row_count", "in_window_article_row_count", "canonical_url_count", "provisional_title_cluster_count", "semantic_event_count", "scored_event_count", "event_evidence_article_row_count", "non_news_article_row_count", "unresolved_article_row_count", "unresolved_exhausted_article_row_count", "c_or_higher_scored_event_count", "selected_event_count"],
           "properties": {
             "merged_article_row_count": {"type": "integer", "minimum": 0},
             "in_window_article_row_count": {"type": "integer", "minimum": 0},
@@ -98,6 +103,7 @@
             "event_evidence_article_row_count": {"type": "integer", "minimum": 0},
             "non_news_article_row_count": {"type": "integer", "minimum": 0},
             "unresolved_article_row_count": {"type": "integer", "minimum": 0},
+            "unresolved_exhausted_article_row_count": {"type": "integer", "minimum": 0},
             "c_or_higher_scored_event_count": {"type": "integer", "minimum": 0},
             "selected_event_count": {"type": "integer", "minimum": 0}
           },
@@ -114,9 +120,23 @@
       "properties": {
         "source_id": {"type": "string", "minLength": 1},
         "url": {"type": "string", "format": "uri"},
-        "disposition": {"enum": ["event_evidence", "non_news", "unresolved"]},
+        "disposition": {"enum": ["event_evidence", "non_news", "unresolved", "unresolved_exhausted"]},
         "semantic_event_id": {"type": ["string", "null"]},
         "reason": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "sectionScope": {
+      "type": "object",
+      "required": ["code", "member_country_codes", "fallback"],
+      "properties": {
+        "code": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "member_country_codes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[A-Z]{3}$"}
+        },
+        "fallback": {"type": "boolean"}
       },
       "additionalProperties": false
     },
@@ -314,6 +334,8 @@
           "items": {
             "enum": [
               "official_legal_interpretation",
+              "attributable_policy_report",
+              "official_consideration",
               "investigation_or_enforcement_referral",
               "binding_or_operational_compliance_request",
               "platform_or_operator_action",
@@ -323,13 +345,13 @@
             ]
           }
         },
-        "legal_basis": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
-        "official_actions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "legal_basis": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "official_actions": {"type": "array", "items": {"type": "string", "minLength": 1}},
         "direct_operational_effects": {"type": "array", "items": {"type": "string", "minLength": 1}},
-        "affected_actor_classes": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "affected_actor_classes": {"type": "array", "items": {"type": "string", "minLength": 1}},
         "cross_agency_effects": {"type": "array", "items": {"type": "string", "minLength": 1}},
         "precedent_or_spillover_scope": {"type": "array", "items": {"type": "string", "minLength": 1}},
-        "window_material_effects": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "window_material_effects": {"type": "array", "items": {"type": "string", "minLength": 1}},
         "evidence_urls": {"type": "array", "minItems": 1, "items": {"type": "string", "format": "uri"}},
         "unverified_allegations": {"type": "array", "items": {"type": "string", "minLength": 1}},
         "unverified_allegations_separated": {"type": "boolean"},
@@ -486,9 +508,8 @@
           "additionalProperties": false
         },
         "decision": {"enum": ["selected", "excluded", "merged", "deferred"]},
-        "reason_code": {"enum": ["selected_threshold_met", "c_minus_selected_need", "c_minus_reserve", "outside_time_window", "duplicate_merged", "continuation_no_material_change", "below_public_value_threshold", "unreliable_or_unverified", "superseded_by_later_update", "wrong_scope", "processing_failure", "search_recall_failure"]},
+        "reason_code": {"enum": ["selected_threshold_met", "c_minus_reserve", "outside_time_window", "duplicate_merged", "continuation_no_material_change", "below_public_value_threshold", "unreliable_or_unverified", "superseded_by_later_update", "wrong_scope", "processing_failure", "search_recall_failure"]},
         "reason": {"type": "string", "minLength": 1},
-        "c_minus_use_reason": {"type": ["string", "null"]},
         "selected_event_id": {"type": ["string", "null"]},
         "candidate_urls": {"type": "array", "minItems": 1, "items": {"type": "string", "format": "uri"}},
         "source_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},

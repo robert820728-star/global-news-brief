@@ -42,6 +42,10 @@ Policy evidence requirements are stage-specific. Rumor permits empty legal basis
 
 Mobile-native instructions preserve the same scan-status versus coverage-status separation and the same degraded metadata as full-runtime.
 
+### 9. Scheduled occurrence ownership
+
+`scheduled_for` is the sole occurrence key. Re-entering the same occurrence returns and resumes the existing current record, preserving its run ID, reader artifact, delivery status, and last stage. Only a strictly later scheduled occurrence may rotate current to previous; an older occurrence is rejected. This closes the executable path where a reader-rendered run was marked interrupted and replaced before delivery handoff.
+
 ## Explicit non-goals
 
 - No new scoring dimension or grade band.
@@ -60,4 +64,4 @@ Mobile-native instructions preserve the same scan-status versus coverage-status 
 7. Cross-source web candidates remain forbidden in canonical discovery provenance.
 8. Mobile and full-runtime contracts contain no event-type hard grade or fixed 48-hour gate and share the coverage fields.
 9. Rumor and consideration candidates do not fabricate legal text; later policy stages retain stronger gates.
-
+10. Re-preparing the same scheduled occurrence after `reader-rendered` resumes the existing run and does not create `previous.json`.

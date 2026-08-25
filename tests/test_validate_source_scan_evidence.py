@@ -44,7 +44,7 @@ class SourceScanEvidenceTests(unittest.TestCase):
             coverage_path = root / "coverage.json"
             pool_path = root / "pool.json"
             scan_path.write_text(json.dumps(scan), encoding="utf-8")
-            coverage_path.write_text(json.dumps([{"source_id": "wire", **self.coverage()}]), encoding="utf-8")
+            coverage_path.write_text(json.dumps([{"source_id": "wire", "scan_status": "completed", **self.coverage()}]), encoding="utf-8")
             pool_path.write_text(json.dumps({"discovery_sources": [self.source()]}), encoding="utf-8")
             result = subprocess.run(
                 [sys.executable, str(ROOT / "scripts" / "validate_source_scan_evidence.py"),
@@ -72,8 +72,56 @@ class SourceScanEvidenceTests(unittest.TestCase):
             (scans / "wire.json").write_text(json.dumps(scan), encoding="utf-8")
             coverage_path = root / "coverage.json"
             pool_path = root / "pool.json"
-            coverage_path.write_text(json.dumps([{"source_id": "wire", **self.coverage()}]), encoding="utf-8")
+            coverage_path.write_text(json.dumps([{"source_id": "wire", "scan_status": "completed", **self.coverage()}]), encoding="utf-8")
             pool_path.write_text(json.dumps({"discovery_sources": [self.source()]}), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(ROOT / "scripts" / "validate_source_scan_evidence.py"),
+                 "--scan-dir", str(scans), "--coverage", str(coverage_path),
+                 "--source", str(pool_path)],
+                capture_output=True, text=True, check=False,
+            )
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            self.assertIn("sources=1", result.stdout)
+
+    def test_scan_dir_accepts_one_completed_and_two_truthful_failed_sources(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            scans = root / "scans"
+            scans.mkdir()
+            path, digest = self.make_snapshot(directory, "NO_MORE_RESULTS")
+            scan = {
+                "schema_version": "1.0.0", "source_id": "ready",
+                "collector": "fixture", "generated_at": "2026-08-15T06:00:00+08:00",
+                "window_start": "2026-08-14T06:00:00+08:00",
+                "window_end": "2026-08-15T06:00:00+08:00",
+                "pages": [{"request_url": "https://ready.example/feed", "fetched_at": "2026-08-15T06:00:00+08:00", "http_status": 200, "snapshot_path": path, "sha256": digest, "next_url": None, "extracted_items": []}],
+                "terminal_proof": {"type": "source_exhausted", "page_index": 1, "terminal_marker": "NO_MORE_RESULTS"},
+                **self.coverage_metadata(),
+            }
+            (scans / "ready.json").write_text(json.dumps(scan), encoding="utf-8")
+            ready = {"source_id": "ready", "scan_status": "completed", **self.coverage()}
+
+            def failed(source_id):
+                return {
+                    "source_id": source_id, "scan_status": "failed",
+                    "coverage_complete": False, "coverage_status": "unavailable",
+                    "coverage_reason": "route failed", "missing_segments": ["primary"],
+                    "missing_date_variants": [], "scan_window_start": None,
+                    "scan_window_end": None, "within_window_count": 0,
+                    "ranked_items": [],
+                }
+
+            coverage_path = root / "coverage.json"
+            pool_path = root / "pool.json"
+            coverage_path.write_text(json.dumps([ready, failed("failed-a"), failed("failed-b")]), encoding="utf-8")
+            pool_path.write_text(json.dumps({
+                "discovery_policy": {"minimum_ready_sources": 1},
+                "discovery_sources": [
+                    {"source_id": "ready", "homepage": "https://ready.example/"},
+                    {"source_id": "failed-a", "homepage": "https://a.example/"},
+                    {"source_id": "failed-b", "homepage": "https://b.example/"},
+                ],
+            }), encoding="utf-8")
             result = subprocess.run(
                 [sys.executable, str(ROOT / "scripts" / "validate_source_scan_evidence.py"),
                  "--scan-dir", str(scans), "--coverage", str(coverage_path),

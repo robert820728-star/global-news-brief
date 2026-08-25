@@ -7,6 +7,7 @@ import argparse
 import json
 import os
 import tempfile
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -177,6 +178,15 @@ def prepare_run(
     if current_path.exists():
         previous = _read_json(current_path)
         validate_record(previous)
+        try:
+            incoming_occurrence = datetime.fromisoformat(scheduled_for)
+            current_occurrence = datetime.fromisoformat(previous["scheduled_for"])
+            if incoming_occurrence == current_occurrence:
+                return previous
+            if incoming_occurrence < current_occurrence:
+                raise ValueError("cannot replace current.json with an older scheduled occurrence")
+        except TypeError as error:
+            raise ValueError("scheduled_for values must use comparable ISO timestamps") from error
         if previous["status"] in {"awaiting_executor", "running"}:
             previous["status"] = "interrupted_by_next_run"
             previous["last_error"] = {

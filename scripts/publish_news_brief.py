@@ -148,6 +148,16 @@ def candidate_errors(audit: dict, manifest: dict, source_pool: dict) -> list[str
     errors = manage_candidate_audit.validate(audit, source_pool)
     runs = audit.get("runs", [])
     if not runs: return errors + ["候選稽核沒有本輪紀錄"]
+    scope_codes = [
+        item.get("code") for item in runs[-1].get("section_scopes", [])
+        if isinstance(item, dict)
+    ]
+    manifest_section_codes = [
+        item.get("code") for item in manifest.get("sections", [])
+        if isinstance(item, dict)
+    ]
+    if scope_codes != manifest_section_codes:
+        errors.append("candidate audit section_scopes 必須與 manifest sections 同序一致")
     selected_candidates = {
         c.get("selected_event_id"): c
         for c in runs[-1].get("candidates", [])

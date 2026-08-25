@@ -9,7 +9,7 @@ description: Use when a daily-news run needs a fresh, auditable rolling-window c
 
 `DISCOVERY_THEN_VERIFY`
 
-Use `news-source-pool.json.discovery_sources` for the initial list: GDELT plus CNA and China News Service. A failed discovery feed is recorded as degraded and does not block the brief when another feed or the final web-search fallback yields current verifiable candidates. Deduplicate and score before any C-or-higher event is independently verified; collect images only after verification.
+Use `news-source-pool.json.discovery_sources` for the canonical list: GDELT plus CNA and China News Service. A failed discovery feed is recorded as degraded and does not block the brief when another configured feed yields current verifiable candidates. Cross-source web results cannot enter the canonical candidate pool or satisfy coverage; they may only identify a same-source recovery lead that is materialized through the configured route, or support later verification. Deduplicate and score before any C-or-higher event is independently verified; collect images only after verification.
 
 ## Same-source recovery order
 

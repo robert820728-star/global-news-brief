@@ -182,6 +182,22 @@ class NewsRunCheckpointTests(unittest.TestCase):
                     checkpoint, "render", "completed", [f"brief={brief}"]
                 )
 
+    def test_rewind_to_audit_preserves_discovery_and_clears_downstream(self):
+        checkpoint = MODULE.create_checkpoint("run", "a", "b")
+        for stage in MODULE.RELEASE_REQUIRED_STAGES:
+            checkpoint["stage_status"][stage] = "completed"
+            checkpoint["stage_evidence"][stage] = {"status": "completed", "artifacts": {}}
+        MODULE.rewind_from_stage(
+            checkpoint,
+            "audit-news-candidates",
+            "verification insufficient for a core claim",
+        )
+        self.assertEqual("completed", checkpoint["stage_status"]["select-news-events"])
+        for stage in MODULE.RELEASE_REQUIRED_STAGES[3:]:
+            self.assertEqual("pending", checkpoint["stage_status"][stage])
+            self.assertNotIn(stage, checkpoint["stage_evidence"])
+        self.assertEqual("audit-news-candidates", checkpoint["recovery"]["rewinds"][-1]["stage"])
+
 
 if __name__ == "__main__":
     unittest.main()

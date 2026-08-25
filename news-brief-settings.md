@@ -115,12 +115,12 @@ The required order for every configured discovery route is: `canonical route -> 
 
 ## 候選海選
 
-- 前期候選可由任何目前可用的新聞清單或網頁搜尋入口取得。`GDELT` 是主要彙整入口；中央社與中新社是台灣、中國的區域補充，但都不是完成門檻。任一入口失敗時記錄 coverage 降級並換用其他入口；只要仍有可核實的精確 24 小時候選就繼續，只有完全沒有可核實候選才停止。
+- 前期 canonical 候選只由設定中的 discovery routes 及其同站恢復路徑取得。`GDELT` 是主要彙整入口；中央社與中新社是台灣、中國的區域補充，但都不是單獨完成門檻。跨來源網頁搜尋只能找回指向 configured source 的同站線索，或供後段獨立驗證使用；未經 source-scan materialize 的搜尋結果不得直接加入 canonical pool，也不得補足失敗 route 的 coverage。只要仍有 configured route 提供可核實的精確 24 小時候選就繼續，只有完全沒有可核實候選才停止。
 - `GDELT_RESILIENT_ACQUISITION`：GDELT 官方 15 分鐘 export archives 是主要 discovery。只有預期分片全部成功才可標 `coverage_complete`；部分分片成功必須標 `degraded_partial`，不得冒充 ready/full coverage。只有 archive 不可用時才允許一次不阻塞的 DOC API 補充請求；不得為 429 等待或重試，DOC API 成功也必須標為非完整補充。兩者都不可用才採最近一次有效快取並明確標示 degraded。
 - `SOURCE_SCAN_COVERAGE_SEPARATION`：`scan_status=completed` 只表示既有頁面已成功物化與驗證，不代表 coverage 完整。每條 configured discovery route 都必須保留在 candidate audit；另以 `coverage_complete`、`coverage_status`、`coverage_reason`、`missing_segments` 與 `missing_date_variants` 保存完整、部分降級、快取降級或不可用狀態。部分來源仍可貢獻已驗證候選，但不得在下游洗成 full coverage；release receipt 必須保存摘要。
 - 中新社日索引固定取得執行日與前一日後再套精確 24 小時窗；中央社依 `NextPageIdx` 連續翻頁，直到跨過窗起點或來源明確耗盡。固定只抓當日頁或第一頁 500 筆都不得宣稱完整 coverage。
 - `FULL_DISCOVERY_POOL_UNCAPPED`：每個成功取得的 discovery route 保存時間窗內數量、完整排序數量、實際入池數量及全部入池網址；精確 24 小時窗內已驗證的清單條目全部進入去重與評分，不設前 30、前 100 或其他預設名額。
-- `TAIWAN_DOMESTIC_COVERAGE_GUARD`：中央社另對經濟／貿易／產業、食藥／消費安全、中央預算／立法／憲政三個領域各執行一次同一 24 小時窗搜尋，每個領域最多 `5 results`。中央社不可用或明顯過舊時才使用網頁搜尋補候選；線索不得繞過去重或六項評分，也不得直接觸發圖片流程。
+- `TAIWAN_DOMESTIC_COVERAGE_GUARD`：中央社另對經濟／貿易／產業、食藥／消費安全、中央預算／立法／憲政三個領域各執行一次同一 24 小時窗搜尋，每個領域最多 `5 results`。中央社不可用或明顯過舊時，網頁搜尋只可尋找中央社同站文章並經同一 source-scan 證據路徑恢復，或留作後段驗證線索；不得把其他站結果直接加入 canonical 候選、繞過去重／六項評分或觸發圖片流程。
 - Discovery route 條目只產生 `discovery_priority_score`、`discovery_signals` 與 `discovery_priority_reason`，用於抓取／hydration 排序，不得稱為 importance 或 `public_value_v2`。只有完成語意去重、事件身分與證據分類後的語意事件才使用 `public_value_v2`：六項各自按 0–100 給分，再依 `news-source-pool.json` 權重計算 `weighted_score`；`importance_score` 必須與加權結果完全一致。`PUBLIC_VALUE_V2_NORMALIZED_WEIGHTED_SCORING`
 - Regional supplements 全數進模型；GDELT 強 signal 直接 hydration，弱 signal 進 `lightweight_semantic_review` 並仍保留在模型輸入。關鍵字與 heat 只能安排處理順序，不得在模型判讀前刪除科學、科技、資安、醫學或文化事件。
 - `CURRENT_SCHEMA_ONLY_DURABLE_AUDIT`：canonical durable audit 只保留符合目前 schema 與 `public_value_v2` 的 run。不相容物件不得合併；追溯資訊由 Git history 保存。最新 run、首次出現及發生實質更新的事件都必須重新取證、評分並取得 validated status。
@@ -148,14 +148,13 @@ The required order for every configured discovery route is: `canonical route -> 
 - 每輪海選後使用 `audit-news-candidates` 保存全部聚類候選，滾動保留十四天。
 - 每筆至少記錄暫定等級、選入／排除／合併決定、明確理由、來源覆蓋、去重關係及持續事件比較；每個 C 級以上候選（包含合併項）都必須用 `selected_event_id` 映射到本輪讀者版事件。
 - `D` 是有資訊但未達簡報門檻；`E` 是低價值、舊聞、宣傳、未查證或不適合。D／E 僅供內部稽核，不得出現在讀者版。
-- 讀者版自動接受 `SS` 至 `C`；`C-` 預設進候補池，只有使用者明確關注、持續事件實質小幅更新、近期升級預警或核心板塊直接實用價值等明確需求時才可取用並保存理由。D／E 僅供稽核。
+- 讀者版自動接受 `SS` 至 `C`；`C-` 固定進候補池，不得進入 manifest 或讀者版。D／E 僅供稽核。
 - 不設各等級配額，不得以同級太多、版面不足或固定篇數排除通過門檻的事件。
 - 入選是逐事件絕對判定，不是候選之間的相對排名：達到板塊最低等級者全部入選，無論有 1 則或 30 則；低於最低等級者全部排除，無論當日是否沒有其他新聞。
 - 單一可靠來源只記來源限制，不得單獨造成排除或降級。
 - 暫定 B 以上但未入選者必須有可機讀理由；缺少理由即局部重跑海選與稽核。
 - 持續事件以 `continuity_key` 比較最近十四天，記錄新增、未變、狀態轉折及本輪是否入選。
 - `IMPACT_DELTA_CONTINUITY_SCORING`：持續事件的本輪評級看本日可驗證的影響力變化，不沿用最初或歷史最高等級。無新增公共影響的名人死亡、喪禮或重複報導應隨時效下降並只留稽核；颱風、地震、疾病或戰爭若有死傷增加、影響範圍擴大、傳播／戰線擴張、系統中斷或制度後果，則按新增事實上調。受控、停火、消退或數字下修可降級。不得因事件較舊而自動降級，也不得因重複刊登而維持高級；理由必須標示相對十四天基準為上升、持平或下降。
-- `MATERIAL_UPDATE_48_HOUR_REENTRY_GATE`：以同一事件上次進入讀者版的交付時間起算 48 小時冷卻期。48 小時內只有本輪新增且獨立達到 C 級的實質變化才重刊；持續事件若出現死傷、範圍、傳播、戰線、關鍵系統或制度後果的實質惡化，立即按新增事實重新評級，不得等滿 48 小時。滿 48 小時後按當下可驗證影響重新完成六項評分；仍獨立達到 C 級才再次刊登，低於 C 只留十四天稽核或依既有規則退場。時間經過本身不得自動重刊，也不得繼承上次或母事件等級。
 - 事件年齡本身不得設定日數等級上限。一次性事件若沒有新增後果，應由 `material_new_development`、急迫性及其他六項證據自然降低；只要仍有當下影響或實質變化，就依 `IMPACT_DELTA_CONTINUITY_SCORING` 重新計分。
 - 事後發現本輪漏搜的重大事件，記為 `search_recall_failure`，供後續調整搜尋覆蓋。
 - 十四天歷史是增強功能，不是執行門檻。優先讀取目前可用歷史，並保存至可持久工作區；工作區不可用但有 repository 寫入權限時才回寫 repository。

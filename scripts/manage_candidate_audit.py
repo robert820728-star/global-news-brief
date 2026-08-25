@@ -57,6 +57,8 @@ LOCAL_DISASTER_SPECIAL_TRIGGERS = {
     "other_verified_special_significance",
 }
 POLICY_GOVERNANCE_TRIGGERS = {
+    "attributable_policy_report",
+    "official_consideration",
     "official_legal_interpretation",
     "investigation_or_enforcement_referral",
     "binding_or_operational_compliance_request",
@@ -89,7 +91,7 @@ TEMPLATE_GRADE_REASONS = {
     "事件明確影響公共安全、治理、經濟或區域關係，但範圍仍有限。",
 }
 REASON_CODES = {
-    "selected_threshold_met", "c_minus_selected_need", "c_minus_reserve",
+    "selected_threshold_met", "c_minus_reserve",
     "outside_time_window", "duplicate_merged", "continuation_no_material_change",
     "below_public_value_threshold", "unreliable_or_unverified",
     "superseded_by_later_update", "wrong_scope", "processing_failure",
@@ -511,14 +513,16 @@ def validate_compact_historical_candidate(candidate, ranking, valid_source_ids, 
         or not candidate["selected_event_id"].strip()
     ):
         errors.append(label + " C 以上歷史候選必須保留 selected_event_id")
-    if not grade_meets_threshold(grade, "C-", ranking) and decision == "selected":
-        errors.append(label + " D/E 不得入選")
+    if not grade_meets_threshold(grade, "C", ranking) and decision == "selected":
+        errors.append(label + " C-／D／E 不得入選")
     if not isinstance(candidate.get("continuity"), dict):
         errors.append(label + ".continuity 必須是物件")
     return errors
 
 
-def validate_policy_governance_review(review, importance_score, label, ranking=None):
+def validate_policy_governance_review(
+    review, importance_score, label, policy_stage="not_applicable", ranking=None
+):
     """Require event identity and institutional evidence to agree with scoring."""
     errors = []
     if not isinstance(review, dict):
@@ -558,10 +562,13 @@ def validate_policy_governance_review(review, importance_score, label, ranking=N
         if all(isinstance(trigger, str) for trigger in triggered_by) and len(triggered_by) != len(set(triggered_by)):
             errors.append(label + " policy_governance_review.triggered_by 不得重複")
 
-    required_nonempty_lists = (
-        "legal_basis", "official_actions",
-        "affected_actor_classes", "window_material_effects", "evidence_urls",
-    )
+    required_nonempty_lists = ["evidence_urls"]
+    if policy_stage == "consideration":
+        required_nonempty_lists.append("official_actions")
+    elif policy_stage not in {"rumor", "not_applicable"}:
+        required_nonempty_lists.extend(
+            ["legal_basis", "official_actions", "affected_actor_classes", "window_material_effects"]
+        )
     for field in required_nonempty_lists:
         value = review.get(field)
         if not isinstance(value, list) or not value or any(
@@ -569,7 +576,8 @@ def validate_policy_governance_review(review, importance_score, label, ranking=N
         ):
             errors.append(label + f" policy_governance_review.{field} 必須是非空具體文字陣列")
     for field in (
-        "direct_operational_effects", "cross_agency_effects",
+        "legal_basis", "official_actions", "affected_actor_classes",
+        "window_material_effects", "direct_operational_effects", "cross_agency_effects",
         "precedent_or_spillover_scope", "unverified_allegations",
     ):
         value = review.get(field)
@@ -763,6 +771,44 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                 + " source coverage 必須逐一保留全部 configured discovery sources、不得重複，且達到最低可用數"
             )
 
+        section_scopes = run.get("section_scopes")
+        if is_latest_run:
+            if not isinstance(section_scopes, list) or not section_scopes:
+                errors.append(run_label + ".section_scopes 必須保存本輪板塊範圍")
+                section_scopes = []
+            scope_codes = []
+            fallback_count = 0
+            for scope_index, scope in enumerate(section_scopes, 1):
+                scope_label = f"{run_label}.section_scopes[{scope_index}]"
+                if not isinstance(scope, dict):
+                    errors.append(scope_label + " 必須是物件")
+                    continue
+                code = scope.get("code")
+                members = scope.get("member_country_codes")
+                fallback = scope.get("fallback")
+                if not isinstance(code, str) or len(code) != 3 or not code.isupper():
+                    errors.append(scope_label + ".code 必須是三碼大寫代碼")
+                else:
+                    scope_codes.append(code)
+                if (
+                    not isinstance(members, list)
+                    or any(not isinstance(member, str) or len(member) != 3 or not member.isupper() for member in members)
+                    or len(members) != len(set(members))
+                ):
+                    errors.append(scope_label + ".member_country_codes 必須是唯一三碼代碼陣列")
+                if not isinstance(fallback, bool):
+                    errors.append(scope_label + ".fallback 必須是布林值")
+                elif fallback:
+                    fallback_count += 1
+                    if members:
+                        errors.append(scope_label + " fallback 板塊不得設定成員國")
+                elif not members:
+                    errors.append(scope_label + " 非 fallback 板塊必須設定成員國")
+            if len(scope_codes) != len(set(scope_codes)):
+                errors.append(run_label + ".section_scopes 板塊代碼不得重複")
+            if fallback_count != 1:
+                errors.append(run_label + ".section_scopes 必須恰有一個 fallback 板塊")
+
         raw_total = 0
         for source_index, item in enumerate(coverage, 1):
             label = f"{run_label}.source_coverage[{source_index}]"
@@ -882,7 +928,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                 "canonical_url_count", "provisional_title_cluster_count",
                 "semantic_event_count", "scored_event_count",
                 "event_evidence_article_row_count", "non_news_article_row_count",
-                "unresolved_article_row_count",
+                "unresolved_article_row_count", "unresolved_exhausted_article_row_count",
                 "c_or_higher_scored_event_count", "selected_event_count",
             }
             if not isinstance(processing_counts, dict) or set(processing_counts) != count_fields:
@@ -910,6 +956,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                     "event_evidence_article_row_count": disposition_counts["event_evidence"],
                     "non_news_article_row_count": disposition_counts["non_news"],
                     "unresolved_article_row_count": disposition_counts["unresolved"],
+                    "unresolved_exhausted_article_row_count": disposition_counts["unresolved_exhausted"],
                     "c_or_higher_scored_event_count": sum(
                         isinstance(item, dict)
                         and grade_meets_threshold(item.get("provisional_grade"), "C", ranking)
@@ -940,6 +987,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                     processing_counts["event_evidence_article_row_count"]
                     + processing_counts["non_news_article_row_count"]
                     + processing_counts["unresolved_article_row_count"]
+                    + processing_counts["unresolved_exhausted_article_row_count"]
                     != processing_counts["in_window_article_row_count"]
                 ):
                     errors.append(
@@ -1002,11 +1050,30 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                 elif primary_country not in country_codes:
                     errors.append(label + ".event_identity.primary_country_code 必須列在 country_codes")
 
-                expected_section = (
-                    "TWN" if primary_country == "TWN"
-                    else "CHN" if primary_country == "CHN"
-                    else "GLB"
-                )
+                expected_section = None
+                fallback_codes = []
+                for scope in section_scopes if isinstance(section_scopes, list) else []:
+                    if not isinstance(scope, dict):
+                        continue
+                    if scope.get("fallback") is True:
+                        fallback_codes.append(scope.get("code"))
+                        continue
+                    members = scope.get("member_country_codes")
+                    if (
+                        expected_section is None
+                        and isinstance(members, list)
+                        and isinstance(country_codes, list)
+                        and set(country_codes) & set(members)
+                    ):
+                        expected_section = scope.get("code")
+                if expected_section is None and len(fallback_codes) == 1:
+                    expected_section = fallback_codes[0]
+                if expected_section is None:
+                    expected_section = (
+                        "TWN" if primary_country == "TWN"
+                        else "CHN" if primary_country == "CHN"
+                        else "GLB"
+                    )
                 if candidate.get("section") != expected_section:
                     errors.append(
                         label + f".section 必須由 event_identity.primary_country_code "
@@ -1130,6 +1197,9 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                         errors.append(label + " non_news 不得指向語意事件")
                 elif outcome == "unresolved":
                     errors.append(label + " unresolved 文章不得通過完成驗收")
+                elif outcome == "unresolved_exhausted":
+                    if semantic_event_id is not None:
+                        errors.append(label + " unresolved_exhausted 不得指向語意事件")
                 else:
                     errors.append(label + ".disposition 無效")
             if actual_rows != expected_rows:
@@ -1186,7 +1256,8 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                 importance_score = candidate.get("importance_score")
                 errors.extend(validate_v2_candidate(candidate, ranking, label))
                 errors.extend(validate_policy_governance_review(
-                    grading.get("policy_governance_review"), importance_score, label, ranking
+                    grading.get("policy_governance_review"), importance_score, label,
+                    candidate.get("policy_stage"), ranking
                 ))
 
             border = grading.get("border_conflict_review")
@@ -1299,13 +1370,10 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             ):
                 errors.append(label + " C 以上候選必須以 selected_event_id 映射至讀者版事件")
             if grade == "C-":
-                if decision == "selected":
-                    if reason_code != "c_minus_selected_need" or not candidate.get("c_minus_use_reason"):
-                        errors.append(label + " C- 取用必須有明確需求理由")
-                elif decision not in {"deferred", "merged"} or reason_code not in {"c_minus_reserve", "duplicate_merged"}:
-                    errors.append(label + " C- 預設只能進候補池")
-            if not grade_meets_threshold(grade, "C-", ranking) and decision == "selected":
-                errors.append(label + " D/E 不得入選")
+                if decision not in {"deferred", "merged"} or reason_code not in {"c_minus_reserve", "duplicate_merged"}:
+                    errors.append(label + " C- 只能進候補池，不得入選")
+            if not grade_meets_threshold(grade, "C", ranking) and decision == "selected":
+                errors.append(label + " C-／D／E 不得入選")
             if candidate.get("source_audit", {}).get("reliable_source_count") == 1 and reason_code == "unreliable_or_unverified":
                 errors.append(label + " 已有一個可靠來源，不得僅以來源不足排除")
         pool_urls = [

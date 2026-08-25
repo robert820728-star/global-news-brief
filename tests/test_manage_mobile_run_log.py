@@ -35,11 +35,16 @@ class MobileRunLogTests(unittest.TestCase):
     def read(self, name):
         return json.loads((self.ledger_dir / name).read_text(encoding="utf-8"))
 
-    def prepare(self, run_id=RUN_1, at="2026-08-17T21:58:00Z"):
+    def prepare(
+        self,
+        run_id=RUN_1,
+        at="2026-08-17T21:58:00Z",
+        scheduled_for="2026-08-18T06:00:00+08:00",
+    ):
         return self.module.prepare_run(
             self.ledger_dir,
             run_id=run_id,
-            scheduled_for="2026-08-18T06:00:00+08:00",
+            scheduled_for=scheduled_for,
             updated_at=at,
         )
 
@@ -120,7 +125,7 @@ class MobileRunLogTests(unittest.TestCase):
             candidate_audit_artifact=artifact,
             reader_artifact=reader,
         )
-        self.prepare(run_id=RUN_2, at="2026-08-18T21:58:00Z")
+        self.prepare(run_id=RUN_2, at="2026-08-18T21:58:00Z", scheduled_for="2026-08-19T06:00:00+08:00")
         self.assertEqual(self.read("previous.json")["run_id"], RUN_1)
         self.assertEqual(self.read("previous.json")["status"], "completed")
         self.assertEqual(self.read("current.json")["run_id"], RUN_2)
@@ -195,7 +200,7 @@ class MobileRunLogTests(unittest.TestCase):
             stage="source-scan",
             updated_at="2026-08-17T22:10:00Z",
         )
-        self.prepare(run_id=RUN_2, at="2026-08-18T21:58:00Z")
+        self.prepare(run_id=RUN_2, at="2026-08-18T21:58:00Z", scheduled_for="2026-08-19T06:00:00+08:00")
         previous = self.read("previous.json")
         self.assertEqual(previous["status"], "interrupted_by_next_run")
         self.assertEqual(previous["current_stage"], "source-scan")
@@ -203,14 +208,42 @@ class MobileRunLogTests(unittest.TestCase):
 
     def test_rotation_replaces_the_older_previous_record(self):
         self.prepare(RUN_1)
-        self.prepare(RUN_2, "2026-08-18T21:58:00Z")
-        self.prepare(RUN_3, "2026-08-19T21:58:00Z")
+        self.prepare(RUN_2, "2026-08-18T21:58:00Z", "2026-08-19T06:00:00+08:00")
+        self.prepare(RUN_3, "2026-08-19T21:58:00Z", "2026-08-20T06:00:00+08:00")
         self.assertEqual(self.read("previous.json")["run_id"], RUN_2)
         self.assertNotIn(RUN_1, (self.ledger_dir / "previous.json").read_text(encoding="utf-8"))
         workflow = (ROOT / ".github" / "workflows" / "prepare-mobile-run-ledger.yml").read_text(
             encoding="utf-8"
         )
         self.assertNotIn("HEAD:main", workflow)
+
+    def test_same_occurrence_resumes_existing_reader_run_without_rotation(self):
+        self.prepare()
+        reader = {"branch": "run-logs", "path": "logs/latest-reader.md", "blob_sha": "b" * 40}
+        self.module.advance_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            stage="reader-rendered",
+            updated_at="2026-08-17T22:30:00Z",
+            delivery_status="reader_saved",
+            reader_artifact=reader,
+        )
+        resumed = self.prepare(run_id=RUN_2, at="2026-08-17T22:54:00Z")
+        self.assertEqual(RUN_1, resumed["run_id"])
+        self.assertEqual("reader-rendered", resumed["current_stage"])
+        self.assertEqual("reader_saved", resumed["delivery_status"])
+        self.assertEqual(reader, resumed["reader_artifact"])
+        self.assertFalse((self.ledger_dir / "previous.json").exists())
+
+    def test_equivalent_timezone_timestamp_resumes_same_occurrence(self):
+        self.prepare()
+        resumed = self.prepare(
+            run_id=RUN_2,
+            at="2026-08-17T22:54:00Z",
+            scheduled_for="2026-08-17T22:00:00+00:00",
+        )
+        self.assertEqual(RUN_1, resumed["run_id"])
+        self.assertFalse((self.ledger_dir / "previous.json").exists())
 
     def test_stage_transition_rejects_regression(self):
         self.prepare()

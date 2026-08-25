@@ -325,6 +325,30 @@ def mark_stage(
     return data
 
 
+def rewind_from_stage(data: dict[str, Any], stage: str, reason: str) -> dict[str, Any]:
+    """Reopen an existing run from one pre-manifest stage without rediscovery."""
+    if stage != "audit-news-candidates":
+        raise ValueError("verification feedback may rewind only to audit-news-candidates")
+    if not isinstance(reason, str) or not reason.strip():
+        raise ValueError("rewind reason must be non-empty")
+    start = RELEASE_REQUIRED_STAGES.index(stage)
+    statuses = data.setdefault("stage_status", {})
+    evidence = data.setdefault("stage_evidence", {})
+    for affected in RELEASE_REQUIRED_STAGES[start:]:
+        statuses[affected] = "pending"
+        evidence.pop(affected, None)
+    recovery = data.setdefault("recovery", {})
+    recovery.setdefault("rewinds", []).append({
+        "stage": stage,
+        "reason": reason.strip(),
+        "recorded_at": now_iso(),
+    })
+    recovery["status"] = "pending"
+    recovery["unresolved_targets"] = []
+    data["updated_at"] = now_iso()
+    return data
+
+
 def _validate_bootstrap_binding(data: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     binding = data.get("bootstrap")
@@ -479,6 +503,12 @@ def main() -> int:
     plan = subs.add_parser("plan")
     plan.add_argument("--input", required=True)
 
+    rewind = subs.add_parser("rewind")
+    rewind.add_argument("--input", required=True)
+    rewind.add_argument("--output", required=True)
+    rewind.add_argument("--stage", required=True, choices=("audit-news-candidates",))
+    rewind.add_argument("--reason", required=True)
+
     args = parser.parse_args()
     if args.command == "init":
         receipt_path = Path(args.bootstrap_receipt)
@@ -505,6 +535,12 @@ def main() -> int:
     if args.command == "mark":
         data = load(args.input)
         mark_stage(data, args.stage, args.status, args.artifact, args.message)
+        save(args.output, data)
+        print(args.output)
+        return 0
+    if args.command == "rewind":
+        data = load(args.input)
+        rewind_from_stage(data, args.stage, args.reason)
         save(args.output, data)
         print(args.output)
         return 0

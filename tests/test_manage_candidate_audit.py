@@ -253,6 +253,11 @@ def valid_audit(candidates=None, per_source_count=1):
     return {
         "schema_version": "1.2.0", "retention_days": 14, "updated_at": now,
         "runs": [{"run_id": "r", "generated_at": now, "window_start": window_start, "window_end": window_end,
+                  "section_scopes": [
+                      {"code": "TWN", "member_country_codes": ["TWN"], "fallback": False},
+                      {"code": "CHN", "member_country_codes": ["CHN"], "fallback": False},
+                      {"code": "GLB", "member_country_codes": [], "fallback": True},
+                  ],
                   "source_coverage": coverage,
                   "raw_item_count": raw_count,
                   "processing_counts": {
@@ -265,6 +270,7 @@ def valid_audit(candidates=None, per_source_count=1):
                       "event_evidence_article_row_count": raw_count,
                       "non_news_article_row_count": 0,
                       "unresolved_article_row_count": 0,
+                      "unresolved_exhausted_article_row_count": 0,
                       "c_or_higher_scored_event_count": sum(
                           item["provisional_grade"] in c_or_higher for item in items
                       ),
@@ -278,6 +284,67 @@ def valid_audit(candidates=None, per_source_count=1):
 
 
 class CandidateAuditTests(unittest.TestCase):
+    def test_custom_jpn_section_uses_run_scope_instead_of_else_glb(self):
+        audit = valid_audit()
+        run = audit["runs"][0]
+        run["section_scopes"] = [
+            {"code": "JPN", "member_country_codes": ["JPN"], "fallback": False},
+            {"code": "GLB", "member_country_codes": [], "fallback": True},
+        ]
+        item = run["candidates"][0]
+        item["section"] = "JPN"
+        item["selected_event_id"] = "JPN-01"
+        item["event_identity"]["country_codes"] = ["JPN"]
+        item["event_identity"]["primary_country_code"] = "JPN"
+        self.assertEqual([], MODULE.validate(audit, source_pool()))
+
+    def test_selected_c_minus_is_rejected_instead_of_soft_reserved(self):
+        audit = valid_audit([candidate("C-", "selected", "selected_threshold_met")])
+        errors = MODULE.validate(audit, source_pool())
+        self.assertTrue(any("C-" in error and "候補" in error for error in errors))
+
+    def test_exhausted_hydration_row_is_conserved_but_does_not_block(self):
+        audit = valid_audit()
+        run = audit["runs"][0]
+        row = run["article_dispositions"][-1]
+        row.update({
+            "disposition": "unresolved_exhausted",
+            "semantic_event_id": None,
+            "reason": "原網址、同站替代路徑與瀏覽器證據均已失敗",
+        })
+        run["candidates"][0]["candidate_urls"].remove(row["url"])
+        run["candidates"][0]["source_ids"] = sorted({
+            entry["source_id"] for entry in run["article_dispositions"]
+            if entry["disposition"] == "event_evidence"
+        })
+        run["processing_counts"]["event_evidence_article_row_count"] -= 1
+        run["processing_counts"]["unresolved_exhausted_article_row_count"] = 1
+        self.assertEqual([], MODULE.validate(audit, source_pool()))
+
+    def test_rumor_policy_stage_does_not_require_fabricated_legal_action(self):
+        audit = valid_audit()
+        item = audit["runs"][0]["candidates"][0]
+        item["policy_stage"] = "rumor"
+        review = policy_governance_review(True)
+        review["triggered_by"] = ["attributable_policy_report"]
+        review["legal_basis"] = []
+        review["official_actions"] = []
+        review["affected_actor_classes"] = []
+        review["window_material_effects"] = []
+        item["grading_evidence"]["policy_governance_review"] = review
+        self.assertEqual([], MODULE.validate(audit, source_pool()))
+
+    def test_consideration_requires_official_consideration_not_legal_text(self):
+        audit = valid_audit()
+        item = audit["runs"][0]["candidates"][0]
+        item["policy_stage"] = "consideration"
+        review = policy_governance_review(True)
+        review["triggered_by"] = ["official_consideration"]
+        review["legal_basis"] = []
+        review["official_actions"] = ["主管機關公開確認正在評估方案。"]
+        item["grading_evidence"]["policy_governance_review"] = review
+        self.assertEqual([], MODULE.validate(audit, source_pool()))
+
     def test_historical_mobile_compact_v2_candidate_can_rejoin_full_runtime(self):
         audit = valid_audit()
         historical = copy.deepcopy(audit["runs"][0])
@@ -1103,16 +1170,16 @@ class CandidateAuditTests(unittest.TestCase):
         errors = MODULE.validate(valid_audit(items, per_source_count=10), source_pool())
         self.assertTrue(any("C 以上必須入選" in error for error in errors))
 
-    def test_c_minus_requires_explicit_use_reason(self):
-        item = candidate("C-", "selected", "c_minus_selected_need")
-        errors = MODULE.validate(valid_audit([item]), source_pool())
-        self.assertTrue(any("C- 取用" in error for error in errors))
-        item["c_minus_use_reason"] = "使用者明確追蹤此主題"
-        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
+    def test_c_minus_is_reserve_only(self):
+        selected = candidate("C-", "selected", "selected_threshold_met")
+        errors = MODULE.validate(valid_audit([selected]), source_pool())
+        self.assertTrue(any("C-" in error and "不得入選" in error for error in errors))
+        reserve = candidate("C-", "deferred", "c_minus_reserve")
+        self.assertEqual([], MODULE.validate(valid_audit([reserve]), source_pool()))
 
     def test_d_and_e_are_audit_only(self):
         errors = MODULE.validate(valid_audit([candidate("D")]), source_pool())
-        self.assertTrue(any("D/E 不得入選" in error for error in errors))
+        self.assertTrue(any("D／E 不得入選" in error for error in errors))
 
     def test_grade_reason_template_is_rejected(self):
         item = candidate()

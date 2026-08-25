@@ -97,7 +97,7 @@ description: Verify selected news events through claim decomposition, independen
 
 `目前僅找到一個可靠來源，尚無其他獨立來源交叉確認。`
 
-並採歸屬式語氣。若 `conflicting`，在各方說法與分析中清楚呈現差異。若 `insufficient`，回報主控技能決定是否改寫成「某方聲稱」、轉入後續觀察或移除。
+並採歸屬式語氣。若 `conflicting`，在各方說法與分析中清楚呈現差異。若核心主張為 `insufficient`，必須寫 `status=failed`，不得把 verification 標 completed 或繼續發布。先完成既定的事件級驗證恢復；仍不足時執行 `news_run_checkpoint.py rewind --stage audit-news-candidates`，只退回同一 run 的 audit 與後續階段，將受影響候選重評或以 `unreliable_or_unverified` 排除，再重新物化 manifest；不得重跑 discovery、preprocess 或 semantic selection，也不得建立替代 run。
 
 ## 輸出欄位
 
@@ -116,4 +116,3 @@ description: Verify selected news events through claim decomposition, independen
 - `verified_at`
 
 完成後不得撰寫整份讀者版，也不得取得地圖或圖片。
-

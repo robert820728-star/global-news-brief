@@ -185,7 +185,7 @@
         "validated_grade": {
           "enum": [
             "SS", "S+", "S", "S-", "A+", "A", "A-",
-            "B+", "B", "B-", "C+", "C", "C-"
+            "B+", "B", "B-", "C+", "C"
           ]
         },
         "grade_status": { "const": "validated" },
@@ -194,7 +194,7 @@
         "grade": {
           "enum": [
             "SS", "S+", "S", "S-", "A+", "A", "A-",
-            "B+", "B", "B-", "C+", "C", "C-"
+            "B+", "B", "B-", "C+", "C"
           ]
         },
         "selection": { "$ref": "#/$defs/selection" },
