@@ -4,10 +4,10 @@
     "path": "logs/runs/gnb-20260825T225406Z-8f3a1c72/candidate-audit.json",
     "blob_sha": "c8d3380a916826c8ceb9b2237e252e2f57267384"
   },
-  "capability_limitations": [],
+  "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
   "client_confirmation_supported": false,
-  "current_stage": "selection-verified",
-  "delivery_profile": "full-assets",
+  "current_stage": "visuals-completed",
+  "delivery_profile": "reader-canonical-capability-degraded",
   "delivery_status": "not_ready",
   "durable_audit_artifact": {
     "branch": "run-logs",
@@ -16,15 +16,15 @@
   },
   "durable_audit_status": "preserved_merge_deferred",
   "execution_mode": "mobile-native",
-  "last_completed_stage": "candidate-audit",
+  "last_completed_stage": "selection-verified",
   "last_error": null,
   "main_sha": "e1e0336aa6f5fcf0b4260c699c693159847e2948",
-  "native_media_status": "available",
+  "native_media_status": "unavailable",
   "reader_artifact": null,
   "run_id": "gnb-20260825T225406Z-8f3a1c72",
   "scheduled_for": "2026-08-26T06:54:06+08:00",
   "schema_version": "1.3.0",
-  "stage_index": 6,
+  "stage_index": 7,
   "status": "running",
-  "updated_at": "2026-08-25T23:20:00Z"
+  "updated_at": "2026-08-25T23:22:00Z"
 }
