@@ -231,6 +231,8 @@ reader 不顯示 run id、commit、後台 counts、十四天 audit、修復紀�
 
 ### Media evidence and completion
 
+`NATIVE_MEDIA_CAPABILITY_FALLBACK`：只有在逐則完成來源圖片取得、下載失敗後的同來源截圖備援、檔案驗收與實際附件交付嘗試後，mobile-native 才可把最後一哩宿主限制記為 capability limitation；不得把它寫成 `last_error`，也不得重跑新聞流程。
+
 - 每則先檢查已引用來源的 `og:image`、`src/srcset`、內文圖與官方產品圖；仍無結果時依序查官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導，可查多個來源而不限一個。
 - 先下載實際媒體檔；下載失敗才截取同一來源頁／官方產品頁的合規畫面。
 - 取得的本機檔必須通過 MIME、解碼、尺寸、SHA-256、時間與內容相關性檢查。

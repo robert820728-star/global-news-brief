@@ -56,6 +56,10 @@ class NoObsoleteContractsTests(unittest.TestCase):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         self.assertIn("FULL_DISCOVERY_POOL_UNCAPPED", install)
 
+    def test_install_names_the_native_media_capability_fallback(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        self.assertIn("NATIVE_MEDIA_CAPABILITY_FALLBACK", install)
+
     def test_candidate_audit_schema_has_only_current_v2_shapes(self):
         schema = json.loads(
             (ROOT / "schemas/news-candidate-audit.schema.json").read_text(
