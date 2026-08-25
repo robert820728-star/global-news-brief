@@ -125,7 +125,7 @@ The required order for every configured discovery route is: `canonical route -> 
 - `material_new_development >= 70` 必須提供相對十四天 continuity 的 `delta_facts`（previous state、current state、why material）。同一 fact 支撐三個以上維度必須填 `cross_dimension_rationales`；任何單項達 70 必須有 `high_score_challenges` 且結果為 sustained；總分達 70 另須 `overall_high_score_challenge` 說明為何不能降到 B+。`HIGH_SCORE_CHALLENGE_GATE`
 - 政策事件另填 `policy_stage`：rumor、consideration、proposal、draft、introduced、passed、signed、effective、implemented、measurable_effect。不得設 proposal 硬上限；但 proposal 若要取得高 Impact，仍只能引用已實際發生的後果。`evidence_confidence` 與 importance 分開，僅映射 high／medium／low `confidence_band`，不得乘進總分。只有事件身分、時序、十四天 continuity、六項證據、政策審查（適用時）、高分反查、算式與級距都通過時，`grade_status` 才可為 validated；Reader 不接受 provisional。
 - Discovery route 的站內排序分數只用來維持高召回候選順序，不是最終事件分數。跨來源去重後必須依事件本身的具體後果重新完成六項評分；禁止複製來源排名分數、以「政府／全國／重大」等關鍵字代替證據，或因媒體刊登量提高最終等級。
-- 排名 30 名以後若涉及重大災害、疫情、戰爭、軍事外交、選舉、央行／金融異常、重大資安、關鍵基礎設施、重大科研突破、文化產業／創作者生態／平台制度轉折或官方緊急警報，仍以強制例外入池並保存觸發理由。走鐘獎等單一產業大型評選活動第一次停辦，本身就是異常與制度轉折，最低列 `C`，不以「只停一屆」降為候補；第二、三次延續停辦若沒有新增原因、制度變化或擴散影響，因已成常態且資訊增量低，降為 `C-` 或 `D`。若後續出現新原因或結構變化，仍按新增影響重新評級。
+- 所有窗內已驗證候選都進入去重與六項評分，不存在名次 cutoff、名次外強制例外或事件類型保底。大型評選活動首次停辦可作為 `structural_or_policy_significance` 與 `material_new_development` 的證據；重複停辦若沒有新增原因、制度變化或擴散影響，應依十四天 continuity 降低增量分。最終等級仍只由六項加權總分決定。
 - 所有成功取得的候選清單與台灣 coverage guard 線索合併後，先按底層事件跨站、跨語言去重；去重後每個候選都必須評為 `SS` 至 `E` 並保存獨立的 `grade_reason`。
 - 廣泛搜尋時間窗內的公共政策、經濟、科技、資安、國際關係、災害、公衛、公共安全、科學、自然史、文化與產業事件。
 - 海選階段只建立候選資料，不撰寫讀者版段落。
@@ -223,7 +223,7 @@ The required order for every configured discovery route is: `canonical route -> 
 
 - 普通藝人戀情、粉圈衝突、宣傳活動、新劇、新綜藝、一般票房或收視率原則上不列入。
 - 事件若涉及平台治理、創作者收入、產業制度、勞動壓力、法規、審查、資金模型或廣泛文化影響，可依公共性收錄。
-- 走鐘獎等大型評選活動首次停辦、網文平台收費或分潤改革、遊戲法規與國際電競賽制改革等影響整體產業的事件，最低列 `C`；同一活動第二、三次延續停辦且沒有實質新增訊息時，才降為 `C-` 或 `D`。重大監管或商業模式改變可升至 `B`。
+- 大型評選活動首次停辦、網文平台收費或分潤改革、遊戲法規與國際電競賽制改革等事件，必須把已發生的產業後果、制度機制及本期增量分別放入對應維度；重複事件沒有實質新增訊息時，`material_new_development` 應按十四天 continuity 降低。事件名稱與類型不得直接指定最終等級。
 - 國民級、跨世代人物的重大疾病、死亡或法律事件可以短報；一般單一藝人個案除非具有制度性公共意義，否則降權。
 - 高品質科普、自然史、古生物、演化、地球史與科學紀錄片可作例外短報，重點放在科學可信度與科普價值。
 

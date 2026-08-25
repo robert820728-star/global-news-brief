@@ -50,6 +50,10 @@ class NoObsoleteContractsTests(unittest.TestCase):
             "單一國家地方型" + "重大事故通則",
             "1-9 deaths require at least " + "8 points",
             "higher score within the " + "30-point limit",
+            "排名 " + "30 名以後",
+            "最低" + "列 `C`",
+            "降為 " + "`C-` 或 `D`",
+            "可升至 " + "`B`",
         )
         hits = []
         for path in ROOT.rglob("*"):

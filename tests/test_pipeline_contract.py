@@ -7,6 +7,23 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PipelineContractTests(unittest.TestCase):
+    def test_install_documents_the_actual_publisher_cli(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+
+        self.assertIn(
+            "python3 scripts/publish_news_brief.py --checkpoint <checkpoint> "
+            "--manifest <final-manifest> --audit <candidate-audit> "
+            "--source-pool news-source-pool.json --brief <reader> "
+            "--output-dir <release-dir>",
+            install,
+        )
+        self.assertIn(
+            "python3 scripts/publish_news_brief.py --deliver-receipt "
+            "<release-dir>/release-receipt.json --checkpoint <checkpoint> "
+            "--conversation-transport",
+            install,
+        )
+
     def test_s5_rule_matrix_is_scoped_as_traceability_not_complete_authority(self):
         matrix = json.loads(
             (ROOT / "docs/news-rule-matrix.json").read_text(encoding="utf-8")

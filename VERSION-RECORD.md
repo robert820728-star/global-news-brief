@@ -4,6 +4,16 @@ This file records the current installable contract. Earlier implementation attem
 
 本檔只記錄目前可安裝契約；較早的實作嘗試由 Git history 保存，避免退役行為繼續留在執行中的 repository 表面。
 
+## v0.5.6 — Event-type floor and install CLI removal / 事件類型保底與安裝指令缺口清除
+
+- Reason / 建立原因：A reverse contract audit found active prose that assigned a minimum final grade to named industry events and referred to a rank-30 overflow exception even though the current pool is uncapped. A separate executable-document audit found that `INSTALL.md` described publisher outputs without showing the actual creation and delivery CLI. / 反向契約稽核發現，正式文件仍對具名產業事件指定最低總等級，並在完整不截斷入池規則下提到排名 30 之外的例外；另一項文件可執行性稽核則發現 `INSTALL.md` 只描述 publisher 產物，沒有列出實際建立與交付 CLI。
+- Approach / 作法：Remove rank cutoffs and event-type grade floors from the settings and selection skill; require all such events to use evidence facts, fourteen-day material delta, and the six weighted dimensions. Document the exact publisher, bundle verification/restoration, and conversation-delivery commands. / 從設定與選稿技能移除排名截斷及事件類型保底；所有此類事件一律使用 evidence facts、十四天實質增量及六項加權評分。於 INSTALL 明列 publisher、bundle 驗證／還原與對話交付的實際命令。
+- Entry points / 入口：`news-brief-settings.md`, `.agents/skills/select-news-events/SKILL.md`, `INSTALL.md`, obsolete-contract guards, pipeline-contract tests, and this version record. / 新聞設定、選稿技能、INSTALL、淘汰契約 guard、pipeline 契約測試及本版本紀錄。
+- Important configuration / 重要設定：`news-source-pool.json.ranking` remains the sole scoring authority; no event name, type, discovery rank, or single dimension may set a final grade. `publish_news_brief.py` has flags rather than a `release` subcommand. / `news-source-pool.json.ranking` 仍是唯一評分權威；事件名稱、類型、discovery 名次或單一維度都不得指定最終等級。`publish_news_brief.py` 使用參數，沒有 `release` 子命令。
+- Validation / 驗證：The new guards first failed on seven active hard-grade/rank phrases, and the INSTALL CLI test first failed on the missing command. Promotion requires a fresh complete regression, semantic scan, rebuilt capsule, GitHub workflow, and clean remote export. / 新 guard 先因七處正式硬式等級／名次敘述失敗，INSTALL CLI 測試也先因缺少命令而失敗；晉升仍須重新完成完整回歸、語義掃描、capsule 重建、GitHub workflow 與遠端乾淨匯出。
+- Result / 結果：Candidate prepared for fresh verification; no completion claim is made yet. / 候選版本已準備重新驗證，目前尚未宣告完成。
+- Rollback / 回復：Use the immediately preceding Git commit. / 使用前一個 Git commit。
+
 ## v0.5.5 — Migration and hard-grade residue removal / 遷移與硬式等級殘留清除
 
 - Reason / 建立原因：A new independent version-marker and semantic-scale audit found an active V1-named count receipt, a CI migration script already superseded by the checked-in checkpoint contract, and examples/design files that still mapped casualty bands directly to final grades. / 全新版本標記與語義尺度稽核發現，正式 count receipt 仍帶 V1 名稱、CI 仍執行已被現行 checkpoint 契約取代的 migration script，且範例／設計檔仍把傷亡區間直接映射成最終等級。
