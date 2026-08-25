@@ -328,6 +328,8 @@ def fetch_gdelt_export_fallback(route: Mapping, snapshot_dir: Path,
         "archive_complete": archive_complete,
         "coverage_complete": archive_complete,
         "coverage_status": "complete" if archive_complete else "degraded_partial",
+        "missing_segments": [part["url"] for part in parts if part["error"] is not None],
+        "missing_date_variants": [],
     }
 
 
@@ -364,6 +366,8 @@ def reuse_recent_gdelt_snapshot(route: Mapping, snapshot_dir: Path,
                 "gdelt_live_ready": False, "cache_age_seconds": age_seconds,
                 "coverage_complete": False,
                 "coverage_status": "degraded_cached",
+                "missing_segments": ["live_gdelt_export_archive"],
+                "missing_date_variants": [],
             }
         except (OSError, UnicodeDecodeError, json.JSONDecodeError):
             continue
@@ -376,6 +380,8 @@ def fetch_date_variants(route: Mapping, snapshot_dir: Path, timeout_seconds: int
         result = fetch_one(route, snapshot_dir, timeout_seconds)
         result["coverage_complete"] = bool(result.get("route_ready"))
         result["coverage_status"] = "complete" if result["coverage_complete"] else "unavailable"
+        result["missing_segments"] = [] if result["coverage_complete"] else [str(result.get("request_url") or "primary")]
+        result["missing_date_variants"] = []
         return result
     minimum_ready = int(route.get("minimum_ready_variants", len(offsets)))
     base = Path(str(route["snapshot_name"]))
@@ -401,6 +407,10 @@ def fetch_date_variants(route: Mapping, snapshot_dir: Path, timeout_seconds: int
         failed.update(
             date_variant_attempts=attempts,
             date_variant_ready_count=0,
+            coverage_complete=False,
+            coverage_status="unavailable",
+            missing_segments=[],
+            missing_date_variants=[int(value) for value in offsets],
             error="no dated route variant was available",
         )
         return failed
@@ -419,6 +429,11 @@ def fetch_date_variants(route: Mapping, snapshot_dir: Path, timeout_seconds: int
     primary["coverage_status"] = (
         "complete" if primary["coverage_complete"] else "degraded_partial"
     )
+    primary["missing_segments"] = []
+    primary["missing_date_variants"] = [
+        int(item["date_offset_days"])
+        for item in attempts if item.get("route_ready") is not True
+    ]
     if not primary["coverage_complete"]:
         primary["coverage_warning"] = (
             f"dated route produced {len(ready)} successful variants; "
@@ -538,6 +553,7 @@ def fetch_pagination(route: Mapping, result: dict, snapshot_dir: Path,
                 coverage_complete=False,
                 coverage_status="degraded_partial",
                 coverage_warning="initial pagination cursor could not be read",
+                missing_segments=[str(result.get("request_url") or "initial_page")],
             )
             return result
     fetched_pages = 0
@@ -554,6 +570,7 @@ def fetch_pagination(route: Mapping, result: dict, snapshot_dir: Path,
                 coverage_complete=False,
                 coverage_status="degraded_partial",
                 coverage_warning=page["error"],
+                missing_segments=[request_url],
             )
             return result
         try:
@@ -564,6 +581,7 @@ def fetch_pagination(route: Mapping, result: dict, snapshot_dir: Path,
                 coverage_complete=False,
                 coverage_status="degraded_partial",
                 coverage_warning=str(error),
+                missing_segments=[request_url],
             )
             return result
         items = value_at_path(payload, items_path)
@@ -573,6 +591,7 @@ def fetch_pagination(route: Mapping, result: dict, snapshot_dir: Path,
                 coverage_complete=False,
                 coverage_status="degraded_partial",
                 coverage_warning="pagination items_path did not resolve to an array",
+                missing_segments=[request_url],
             )
             return result
         if not items:
@@ -600,6 +619,7 @@ def fetch_pagination(route: Mapping, result: dict, snapshot_dir: Path,
                     coverage_complete=False,
                     coverage_status="degraded_partial",
                     coverage_warning="pagination next-page cursor is invalid",
+                    missing_segments=[request_url],
                 )
                 return result
         else:
@@ -607,6 +627,7 @@ def fetch_pagination(route: Mapping, result: dict, snapshot_dir: Path,
     result["page_snapshots"] = page_snapshots
     result["coverage_complete"] = complete
     result["coverage_status"] = "complete" if complete else "degraded_partial"
+    result["missing_segments"] = [] if complete else [f"pagination_after_page_{page_index}"]
     if not complete:
         result["coverage_warning"] = (
             f"pagination did not reach window_start within {max_pages} pages"
@@ -665,6 +686,8 @@ def fetch_routes(route_config: Path, output_dir: Path, timeout_seconds: int,
             "coverage_status",
             "complete" if result["coverage_complete"] else "unavailable",
         )
+        result.setdefault("missing_segments", [])
+        result.setdefault("missing_date_variants", [])
         results.append(result)
     ready_count = sum(bool(item["route_ready"]) for item in results)
     minimum_ready = int(config.get("minimum_ready_routes", len(results)))

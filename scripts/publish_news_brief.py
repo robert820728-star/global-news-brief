@@ -217,6 +217,31 @@ def invalidate_release(output_dir: Path) -> None:
         if path.exists(): path.unlink()
 
 
+def discovery_coverage_summary(audit: dict) -> dict:
+    runs = audit.get("runs", [])
+    latest = runs[-1] if runs else {}
+    sources = []
+    for item in latest.get("source_coverage", []):
+        if not isinstance(item, dict):
+            continue
+        sources.append({
+            "source_id": item.get("source_id"),
+            "scan_status": item.get("scan_status"),
+            "coverage_complete": item.get("coverage_complete"),
+            "coverage_status": item.get("coverage_status"),
+            "coverage_reason": item.get("coverage_reason"),
+        })
+    degraded = [
+        item["source_id"] for item in sources
+        if item.get("coverage_complete") is not True
+    ]
+    return {
+        "coverage_complete": bool(sources) and not degraded,
+        "degraded_source_ids": degraded,
+        "sources": sources,
+    }
+
+
 def publish(args) -> int:
     out = Path(args.output_dir); invalidate_release(out)
     paths = {"checkpoint": Path(args.checkpoint), "manifest": Path(args.manifest), "audit": Path(args.audit),
@@ -250,6 +275,7 @@ def publish(args) -> int:
         "schema_version":"2.0.0", "status":"ready", "gate":GATE_ID, "gate_version":GATE_VERSION,
         "run_id":cp.get("run_id"), "main_sha":manifest.get("run", {}).get("main_sha"),
         "published_at":datetime.now().astimezone().isoformat(timespec="seconds"),
+        "discovery_coverage": discovery_coverage_summary(audit),
         "artifacts":artifacts, "authorized_release_sha256":artifacts["release"]["sha256"],
         "validators": {k:"passed" for k in ("unique_delivery_gate","pre_manifest_checkpoint","source_scan_and_candidate_audit","attachment_and_visual_evidence","map_decisions","manifest_and_brief")},
     }
@@ -265,6 +291,13 @@ def validate_receipt(path: Path, expected_cp: Path | None) -> tuple[list[str], d
         errors.append("receipt 不是目前 canonical gate 產生的 ready receipt")
     validators = receipt.get("validators", {})
     if not isinstance(validators, dict) or not validators or any(v != "passed" for v in validators.values()): errors.append("receipt validators 未全部通過")
+    coverage = receipt.get("discovery_coverage")
+    if not isinstance(coverage, dict):
+        errors.append("receipt 缺少 discovery_coverage")
+    else:
+        if not isinstance(coverage.get("coverage_complete"), bool): errors.append("receipt.discovery_coverage.coverage_complete 必須是布林值")
+        if not isinstance(coverage.get("degraded_source_ids"), list): errors.append("receipt.discovery_coverage.degraded_source_ids 必須是陣列")
+        if not isinstance(coverage.get("sources"), list) or not coverage["sources"]: errors.append("receipt.discovery_coverage.sources 必須是非空陣列")
     artifacts = receipt.get("artifacts", {}); release_bytes = None
     required = ("gate","delivery_contract","checkpoint","manifest","audit","source_pool","brief","release")
     for name in required:

@@ -349,6 +349,39 @@ def discovery_priority_score(signals: dict) -> int:
     }
     return sum(weight for name, weight in weights.items() if signals.get(name) is True)
 
+
+def route_coverage_metadata(route: dict) -> dict:
+    complete = route.get("coverage_complete") is not False
+    status = route.get("coverage_status")
+    if status not in {"complete", "degraded_partial", "degraded_cached", "unavailable"}:
+        status = "complete" if complete else "degraded_partial"
+    return {
+        "coverage_complete": complete,
+        "coverage_status": status,
+        "coverage_reason": route.get("coverage_warning") or route.get("coverage_reason") or route.get("error"),
+        "missing_segments": list(route.get("missing_segments") or []),
+        "missing_date_variants": list(route.get("missing_date_variants") or []),
+    }
+
+
+def unavailable_source_coverage(source: dict, route: dict | None) -> dict:
+    route = route or {}
+    metadata = route_coverage_metadata({
+        **route,
+        "coverage_complete": False,
+        "coverage_status": "unavailable",
+    })
+    return {
+        "source_id": source["source_id"], "scan_status": "failed", **metadata,
+        "within_window_count": 0, "ranked_count": 0, "ranked_items": [],
+        "selected_for_pool_count": 0, "selected_item_urls": [],
+        "discovery_ranking_completed": False,
+        "discovery_ranking_method": "discovery_priority_v1",
+        "failure_reason": route.get("error") or "configured discovery route unavailable",
+        "scan_window_start": None, "scan_window_end": None,
+        "scan_evidence_path": None,
+    }
+
 def materialize_source(source: dict, route: dict, window_start: str, window_end: str,
                        output_dir: Path):
     start = datetime.fromisoformat(window_start)
@@ -428,10 +461,11 @@ def materialize_source(source: dict, route: dict, window_start: str, window_end:
                 f"{source['source_id']}: HTML route did not reach window boundary"
             )
         terminal = {"type": "source_exhausted", "page_index": len(pages), "terminal_marker": marker}
+    coverage_metadata = route_coverage_metadata(route)
     scan = {
         "schema_version": "1.0.0", "source_id": source["source_id"], "collector": route["route"],
         "generated_at": page["fetched_at"], "window_start": window_start, "window_end": window_end,
-        "pages": pages, "terminal_proof": terminal,
+        **coverage_metadata, "pages": pages, "terminal_proof": terminal,
     }
     within = [item for item in items if start < datetime.fromisoformat(item["published_at"]) <= end]
     ranked = []
@@ -449,7 +483,8 @@ def materialize_source(source: dict, route: dict, window_start: str, window_end:
     selected_urls = [item["url"] for item in ranked]
     scan_path = (output_dir / f"{source['source_id']}.json").resolve()
     coverage = {
-        "source_id": source["source_id"], "status": "completed", "within_window_count": len(within),
+        "source_id": source["source_id"], "scan_status": "completed", **coverage_metadata,
+        "within_window_count": len(within),
         "ranked_count": len(ranked), "ranked_items": ranked, "selected_for_pool_count": len(selected_urls),
         "selected_item_urls": selected_urls, "discovery_ranking_completed": True,
         "discovery_ranking_method": "discovery_priority_v1", "failure_reason": None,
@@ -479,6 +514,7 @@ def main() -> int:
     for source in discovery_sources:
         route = route_by_id.get(source["source_id"])
         if not route or route.get("route_ready") is not True:
+            coverage.append(unavailable_source_coverage(source, route))
             continue
         route = dict(route)
         route["generated_at"] = routes.get("generated_at")
@@ -488,9 +524,10 @@ def main() -> int:
         )
         Path(item["scan_evidence_path"]).write_text(json.dumps(scan, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         coverage.append(item)
-    if len(coverage) < minimum_ready:
+    ready_count = sum(item["scan_status"] == "completed" for item in coverage)
+    if ready_count < minimum_ready:
         raise ValueError(
-            f"discovery routes ready={len(coverage)}; minimum={minimum_ready}"
+            f"discovery routes ready={ready_count}; minimum={minimum_ready}"
         )
     destination = Path(args.coverage_output)
     destination.parent.mkdir(parents=True, exist_ok=True)

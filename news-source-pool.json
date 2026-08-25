@@ -3,9 +3,10 @@
   "window_hours": 24,
   "candidate_transfer_policy": "all_verified_in_window",
   "model_admission_policy": {
-    "complete_source_roles": ["regional_supplement"],
+    "all_discovery_rows_admitted": true,
+    "routing_only_controls_hydration_depth": true,
     "heat_is_recall_only": true,
-    "absence_from_heat_never_excludes_complete_sources": true,
+    "absence_from_heat_never_excludes_any_discovery_row": true,
     "validator": "scripts/validate_local_source_admission.py"
   },
   "source_scan_evidence_required": true,

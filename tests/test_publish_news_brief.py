@@ -40,6 +40,11 @@ def write_valid_audit(root: Path):
             "generated_at": "2026-08-14T06:00:00+08:00",
             "window_start": "2026-08-13T06:00:00+08:00",
             "window_end": "2026-08-14T06:00:00+08:00",
+            "coverage_complete": True,
+            "coverage_status": "complete",
+            "coverage_reason": None,
+            "missing_segments": [],
+            "missing_date_variants": [],
             "pages": [{
                 "request_url": item["homepage"],
                 "fetched_at": "2026-08-14T06:00:00+08:00",
@@ -67,7 +72,9 @@ def write_valid_audit(root: Path):
             "discovery_priority_reason": "依 discovery 訊號安排補齊順序",
         }]
         coverage.append({
-            "source_id": source_id, "status": "completed",
+            "source_id": source_id, "scan_status": "completed",
+            "coverage_complete": True, "coverage_status": "complete",
+            "coverage_reason": None, "missing_segments": [], "missing_date_variants": [],
             "within_window_count": 1, "ranked_count": 1,
             "ranked_items": ranked_items, "selected_for_pool_count": 1,
             "selected_item_urls": [article_url],
@@ -155,12 +162,14 @@ def write_valid_audit(root: Path):
             "policy_governance_review": {"applies": False},
             "local_disaster_review": {"applies": False},
             "border_conflict_review": {
+                "applies": False,
                 "is_border_conflict": False, "formal_war": False,
                 "de_facto_war_scale": False, "related_to_monitored_section": False,
                 "user_weight_elevated": False,
                 "exception_reason": None,
             },
             "ongoing_conflict_review": {
+                "applies": False,
                 "is_ongoing_conflict": False, "same_conflict_as_history": False,
                 "routine_incident": False, "material_change": False,
                 "change_types": [], "reversal_or_escalation_possible": False,
@@ -183,7 +192,7 @@ def write_valid_audit(root: Path):
         },
     }
     audit = {
-        "schema_version": "1.1.0", "retention_days": 14,
+        "schema_version": "1.2.0", "retention_days": 14,
         "updated_at": "2026-08-14T06:00:00+08:00",
         "runs": [{
             "run_id": RUN_ID, "generated_at": "2026-08-14T06:00:00+08:00",
@@ -354,6 +363,27 @@ class PublisherTests(unittest.TestCase):
             self.assertEqual(0, result.returncode, result.stdout + result.stderr)
             receipt = json.loads((release_dir / "release-receipt.json").read_text(encoding="utf-8"))
             self.assertEqual(MAIN_SHA, receipt["main_sha"])
+
+    def test_publish_receipt_preserves_discovery_coverage_summary(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint, manifest, audit, brief = prepare_inputs(root)
+            release_dir = root / "release"
+
+            result = subprocess.run(
+                publish_command(checkpoint, manifest, audit, brief, release_dir),
+                capture_output=True, text=True, check=False,
+            )
+
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            receipt = json.loads((release_dir / "release-receipt.json").read_text(encoding="utf-8"))
+            summary = receipt["discovery_coverage"]
+            self.assertTrue(summary["coverage_complete"])
+            self.assertEqual([], summary["degraded_source_ids"])
+            self.assertEqual(
+                {"gdelt", "cna", "chinanews"},
+                {item["source_id"] for item in summary["sources"]},
+            )
 
     def test_publisher_rejects_image_without_matching_materializer_record(self):
         with tempfile.TemporaryDirectory() as directory:

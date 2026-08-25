@@ -97,12 +97,14 @@ def grading_evidence(grade="C"):
         "policy_governance_review": policy_governance_review(),
         "local_disaster_review": {"applies": False},
         "border_conflict_review": {
+            "applies": False,
             "is_border_conflict": False, "formal_war": False,
             "de_facto_war_scale": False, "related_to_monitored_section": False,
             "user_weight_elevated": False,
             "exception_reason": None,
         },
         "ongoing_conflict_review": {
+            "applies": False,
             "is_ongoing_conflict": False, "same_conflict_as_history": False,
             "routine_incident": False, "material_change": False,
             "change_types": [], "reversal_or_escalation_possible": False,
@@ -175,13 +177,17 @@ def valid_audit(candidates=None, per_source_count=1):
         scan = {
             "schema_version": "1.0.0", "collector": "candidate-audit-test-fixture", "generated_at": window_end,
             "window_start": window_start, "window_end": window_end,
+            "coverage_complete": True, "coverage_status": "complete",
+            "coverage_reason": None, "missing_segments": [], "missing_date_variants": [],
             "pages": [{"request_url": item["homepage"], "fetched_at": window_end, "http_status": 200, "snapshot_path": str(snapshot_path), "sha256": hashlib.sha256(snapshot_text.encode()).hexdigest(), "next_url": None, "extracted_items": extracted}],
             "terminal_proof": {"type": "crossed_window_start", "page_index": 1, "witness_url": old_url},
         }
         scan_path = evidence_root / f"{source_id}.json"
         scan_path.write_text(json.dumps(scan), encoding="utf-8")
         coverage.append({
-            "source_id": source_id, "status": "completed",
+            "source_id": source_id, "scan_status": "completed",
+            "coverage_complete": True, "coverage_status": "complete",
+            "coverage_reason": None, "missing_segments": [], "missing_date_variants": [],
             "within_window_count": per_source_count, "ranked_count": per_source_count,
             "ranked_items": ranked_items,
             "selected_for_pool_count": per_source_count,
@@ -245,7 +251,7 @@ def valid_audit(candidates=None, per_source_count=1):
         "C", "C+", "B-", "B", "B+", "A-", "A", "A+", "S-", "S", "S+", "SS"
     }
     return {
-        "schema_version": "1.1.0", "retention_days": 14, "updated_at": now,
+        "schema_version": "1.2.0", "retention_days": 14, "updated_at": now,
         "runs": [{"run_id": "r", "generated_at": now, "window_start": window_start, "window_end": window_end,
                   "source_coverage": coverage,
                   "raw_item_count": raw_count,
@@ -342,6 +348,36 @@ class CandidateAuditTests(unittest.TestCase):
                     MODULE.grade_from_importance_score(score),
                     case["expected_grades"],
                 )
+
+    def test_policy_proposal_may_have_no_direct_operational_effect(self):
+        item = candidate("C+")
+        item["policy_stage"] = "proposal"
+        review = policy_governance_review(applies=True)
+        review["direct_operational_effects"] = []
+        review["triggered_by"] = ["official_legal_interpretation"]
+        review["cross_agency_effects"] = []
+        review["precedent_or_spillover_scope"] = []
+        item["grading_evidence"]["policy_governance_review"] = review
+
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+
+        self.assertFalse(any("direct_operational_effects" in error for error in errors))
+
+    def test_non_conflict_candidate_uses_minimal_nonapplicable_reviews(self):
+        item = candidate("C+")
+        item["grading_evidence"]["border_conflict_review"] = {"applies": False}
+        item["grading_evidence"]["ongoing_conflict_review"] = {"applies": False}
+
+        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
+
+    def test_applicable_conflict_review_requires_its_detail_fields(self):
+        item = candidate("B")
+        item["grading_evidence"]["border_conflict_review"]["applies"] = True
+        item["grading_evidence"]["border_conflict_review"].pop("formal_war")
+
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+
+        self.assertTrue(any("border_conflict_review" in error and "不完整" in error for error in errors))
 
     def test_v2_weighted_score_uses_configured_weights(self):
         scores = {
@@ -497,7 +533,7 @@ class CandidateAuditTests(unittest.TestCase):
 
     def test_fourteen_day_completeness_rejects_an_empty_audit_baseline(self):
         audit = {
-            "schema_version": "1.1.0",
+            "schema_version": "1.2.0",
             "retention_days": 14,
             "updated_at": "2026-08-22T06:00:00+08:00",
             "runs": [],
@@ -781,10 +817,22 @@ class CandidateAuditTests(unittest.TestCase):
         }
         audit = valid_audit()
         run = audit["runs"][0]
-        run["source_coverage"] = [
-            item for item in run["source_coverage"] if item["source_id"] == "cna"
-        ]
-        only_url = run["source_coverage"][0]["selected_item_urls"][0]
+        only_url = next(
+            item["selected_item_urls"][0]
+            for item in run["source_coverage"] if item["source_id"] == "cna"
+        )
+        for item in run["source_coverage"]:
+            if item["source_id"] == "cna":
+                continue
+            item.update({
+                "scan_status": "failed", "coverage_complete": False,
+                "coverage_status": "unavailable", "coverage_reason": "route failed",
+                "within_window_count": 0, "ranked_count": 0, "ranked_items": [],
+                "selected_for_pool_count": 0, "selected_item_urls": [],
+                "discovery_ranking_completed": False, "failure_reason": "route failed",
+                "scan_window_start": None, "scan_window_end": None,
+                "scan_evidence_path": None,
+            })
         run["raw_item_count"] = 1
         run["processing_counts"]["merged_article_row_count"] = 1
         run["processing_counts"]["in_window_article_row_count"] = 1
@@ -887,6 +935,7 @@ class CandidateAuditTests(unittest.TestCase):
     def test_conflict_event_cannot_also_use_local_disaster_gate(self):
         item = candidate("C", "selected")
         item["grading_evidence"]["border_conflict_review"].update({
+            "applies": True,
             "is_border_conflict": True,
             "related_to_monitored_section": True,
             "exception_reason": "事件直接涉及監控板塊，依既有軍事衝突規則評級。",
@@ -1074,16 +1123,17 @@ class CandidateAuditTests(unittest.TestCase):
     def test_border_conflict_grade_is_derived_from_dimensions(self):
         item = candidate("B", "selected")
         review = item["grading_evidence"]["border_conflict_review"]
-        review.update({"is_border_conflict": True})
+        review.update({"applies": True, "is_border_conflict": True})
         self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
 
     def test_monitored_border_conflict_can_be_regraded_with_reason(self):
         item = candidate("C", "selected")
         review = item["grading_evidence"]["border_conflict_review"]
         review.update({
+            "applies": True,
             "is_border_conflict": True,
             "related_to_monitored_section": True,
-            "exception_reason": "事件直接涉及使用者監控板塊，解除預設 D 後依實際影響評級。",
+            "exception_reason": "事件直接涉及使用者監控板塊，依本輪實際影響與增量評級。",
         })
         self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
 
@@ -1091,6 +1141,7 @@ class CandidateAuditTests(unittest.TestCase):
         item = candidate("B", "selected")
         review = item["grading_evidence"]["ongoing_conflict_review"]
         review.update({
+            "applies": True,
             "is_ongoing_conflict": True, "same_conflict_as_history": True,
             "routine_incident": True, "continuity_discount_applied": False,
         })
@@ -1100,6 +1151,7 @@ class CandidateAuditTests(unittest.TestCase):
         item = candidate("B+", "selected")
         review = item["grading_evidence"]["ongoing_conflict_review"]
         review.update({
+            "applies": True,
             "is_ongoing_conflict": True, "same_conflict_as_history": True,
             "routine_incident": False, "material_change": True,
             "change_types": ["external_system_impact"],
@@ -1112,6 +1164,7 @@ class CandidateAuditTests(unittest.TestCase):
         item = candidate("B", "selected")
         review = item["grading_evidence"]["ongoing_conflict_review"]
         review.update({
+            "applies": True,
             "is_ongoing_conflict": True, "same_conflict_as_history": True,
             "routine_incident": False, "change_types": ["material_escalation"],
             "exception_reason": "僅宣稱不是例行事件，但沒有任何實質變化證據。",

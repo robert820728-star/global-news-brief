@@ -1,6 +1,6 @@
 ---
 name: daily-news-brief
-description: Orchestrate the complete daily news brief with verified runtime-capsule bootstrap, audited selection, persistent pre-manifest recovery, event-level recovery, visual validation, and one fail-closed delivery gate.
+description: Orchestrate the complete daily news brief with verified runtime-capsule bootstrap, audited selection, conditional pre-manifest recovery, event-level recovery, visual validation, and one fail-closed delivery gate.
 ---
 
 # 每日新聞主控

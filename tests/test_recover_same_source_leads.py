@@ -55,6 +55,8 @@ class SameSourceRecoveryTests(unittest.TestCase):
             "generated_at": "2026-08-17T20:00:00+08:00",
             "window_start": "2026-08-16T20:00:00+08:00",
             "window_end": "2026-08-17T20:00:00+08:00",
+            "coverage_complete": True, "coverage_status": "complete",
+            "coverage_reason": None, "missing_segments": [], "missing_date_variants": [],
             "pages": [{
                 "request_url": "https://example.com/latest", "fetched_at": "2026-08-17T20:00:00+08:00",
                 "http_status": 200, "snapshot_path": str(primary),
@@ -66,7 +68,10 @@ class SameSourceRecoveryTests(unittest.TestCase):
         }
         (scan_dir / "wire.json").write_text(json.dumps(scan), encoding="utf-8")
         coverage = [{
-            "source_id": "wire", "status": "completed", "within_window_count": 0,
+            "source_id": "wire", "scan_status": "completed",
+            "coverage_complete": True, "coverage_status": "complete",
+            "coverage_reason": None, "missing_segments": [], "missing_date_variants": [],
+            "within_window_count": 0,
             "ranked_count": 0, "ranked_items": [], "selected_for_pool_count": 0,
             "selected_item_urls": [], "discovery_ranking_completed": True,
             "discovery_ranking_method": "discovery_priority_v1", "failure_reason": None,

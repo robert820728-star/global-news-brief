@@ -173,6 +173,65 @@ class MaterializeSourceScansTests(unittest.TestCase):
             self.assertEqual("discovery_priority_v1", coverage["discovery_ranking_method"])
             self.assertEqual([], VALIDATOR.validate_scan(scan, coverage, source))
 
+    def test_partial_route_keeps_coverage_metadata_after_materialization(self):
+        rss = """<?xml version="1.0" encoding="utf-8"?>
+<rss><channel>
+<item><title>Current report</title><link>https://example.com/news/current</link>
+<pubDate>Sun, 16 Aug 2026 08:00:00 +0800</pubDate></item>
+<item><title>Boundary report</title><link>https://example.com/news/old</link>
+<pubDate>Sat, 15 Aug 2026 06:00:00 +0800</pubDate></item>
+</channel></rss>"""
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            snapshot = root / "route.bin"
+            raw = rss.encode("utf-8")
+            snapshot.write_bytes(raw)
+            route = {
+                "source_id": "wire", "route": "structured_direct",
+                "request_url": "https://example.com/rss", "http_status": 200,
+                "content_type": "application/xml; charset=utf-8",
+                "snapshot_path": str(snapshot), "sha256": hashlib.sha256(raw).hexdigest(),
+                "route_ready": True, "coverage_complete": False,
+                "coverage_status": "degraded_partial",
+                "coverage_warning": "one required segment failed",
+                "missing_segments": ["https://example.com/rss?segment=2"],
+                "missing_date_variants": [-1],
+            }
+            source = {"source_id": "wire", "homepage": "https://example.com/", "section": "GLB"}
+
+            scan, coverage = MODULE.materialize_source(
+                source, route, "2026-08-15T12:00:00+08:00",
+                "2026-08-16T12:00:00+08:00", root,
+            )
+
+            self.assertEqual("completed", coverage["scan_status"])
+            self.assertFalse(coverage["coverage_complete"])
+            self.assertEqual("degraded_partial", coverage["coverage_status"])
+            self.assertEqual("one required segment failed", coverage["coverage_reason"])
+            self.assertEqual(route["missing_segments"], coverage["missing_segments"])
+            self.assertEqual(route["missing_date_variants"], coverage["missing_date_variants"])
+            self.assertEqual(False, scan["coverage_complete"])
+            self.assertEqual("degraded_partial", scan["coverage_status"])
+            self.assertNotIn("status", coverage)
+
+    def test_unavailable_route_stays_visible_as_failed_scan(self):
+        source = {"source_id": "wire", "homepage": "https://example.com/", "section": "GLB"}
+        route = {
+            "source_id": "wire", "route": "structured_direct", "route_ready": False,
+            "coverage_complete": False, "coverage_status": "unavailable",
+            "error": "connection failed", "missing_segments": ["primary"],
+            "missing_date_variants": [0, -1],
+        }
+
+        coverage = MODULE.unavailable_source_coverage(source, route)
+
+        self.assertEqual("failed", coverage["scan_status"])
+        self.assertFalse(coverage["coverage_complete"])
+        self.assertEqual("unavailable", coverage["coverage_status"])
+        self.assertEqual([], coverage["ranked_items"])
+        self.assertFalse(coverage["discovery_ranking_completed"])
+        self.assertNotIn("status", coverage)
+
     def test_dynamic_html_page_cannot_use_closing_tag_as_exhaustion_proof(self):
         html = """<!doctype html><html><body>
 <a href="/news/current">Current report</a><time>2026-08-16T09:00:00+08:00</time>

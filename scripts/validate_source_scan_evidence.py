@@ -45,13 +45,36 @@ def validate_scan(scan, coverage, source, label="source_scan"):
     errors = []
     if not isinstance(scan, dict):
         return [f"{label} 缺少可重算的來源掃描證據"]
-    required = {"schema_version", "collector", "generated_at", "window_start", "window_end", "pages", "terminal_proof"}
+    coverage_fields = {
+        "coverage_complete", "coverage_status", "coverage_reason",
+        "missing_segments", "missing_date_variants",
+    }
+    required = {
+        "schema_version", "collector", "generated_at", "window_start", "window_end",
+        "pages", "terminal_proof", *coverage_fields,
+    }
     missing = sorted(required - set(scan))
     if missing:
         errors.append(f"{label} 缺少欄位：{', '.join(missing)}")
         return errors
     if scan.get("schema_version") != "1.0.0":
         errors.append(f"{label}.schema_version 必須是 1.0.0")
+    for field in sorted(coverage_fields):
+        if scan.get(field) != coverage.get(field):
+            errors.append(f"{label}.{field} 與 candidate audit source coverage 不一致")
+    if not isinstance(scan.get("coverage_complete"), bool):
+        errors.append(f"{label}.coverage_complete 必須是布林值")
+    if scan.get("coverage_status") not in {
+        "complete", "degraded_partial", "degraded_cached", "unavailable"
+    }:
+        errors.append(f"{label}.coverage_status 無效")
+    if scan.get("coverage_complete") is True and scan.get("coverage_status") != "complete":
+        errors.append(f"{label} 完整 coverage 必須使用 coverage_status=complete")
+    if scan.get("coverage_complete") is False and scan.get("coverage_status") == "complete":
+        errors.append(f"{label} 不完整 coverage 不得使用 coverage_status=complete")
+    for field in ("missing_segments", "missing_date_variants"):
+        if not isinstance(scan.get(field), list):
+            errors.append(f"{label}.{field} 必須是陣列")
     if not str(scan.get("collector", "")).strip():
         errors.append(f"{label}.collector 必須記錄實際抓取器")
     try:

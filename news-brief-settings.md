@@ -117,6 +117,7 @@ The required order for every configured discovery route is: `canonical route -> 
 
 - 前期候選可由任何目前可用的新聞清單或網頁搜尋入口取得。`GDELT` 是主要彙整入口；中央社與中新社是台灣、中國的區域補充，但都不是完成門檻。任一入口失敗時記錄 coverage 降級並換用其他入口；只要仍有可核實的精確 24 小時候選就繼續，只有完全沒有可核實候選才停止。
 - `GDELT_RESILIENT_ACQUISITION`：GDELT 官方 15 分鐘 export archives 是主要 discovery。只有預期分片全部成功才可標 `coverage_complete`；部分分片成功必須標 `degraded_partial`，不得冒充 ready/full coverage。只有 archive 不可用時才允許一次不阻塞的 DOC API 補充請求；不得為 429 等待或重試，DOC API 成功也必須標為非完整補充。兩者都不可用才採最近一次有效快取並明確標示 degraded。
+- `SOURCE_SCAN_COVERAGE_SEPARATION`：`scan_status=completed` 只表示既有頁面已成功物化與驗證，不代表 coverage 完整。每條 configured discovery route 都必須保留在 candidate audit；另以 `coverage_complete`、`coverage_status`、`coverage_reason`、`missing_segments` 與 `missing_date_variants` 保存完整、部分降級、快取降級或不可用狀態。部分來源仍可貢獻已驗證候選，但不得在下游洗成 full coverage；release receipt 必須保存摘要。
 - 中新社日索引固定取得執行日與前一日後再套精確 24 小時窗；中央社依 `NextPageIdx` 連續翻頁，直到跨過窗起點或來源明確耗盡。固定只抓當日頁或第一頁 500 筆都不得宣稱完整 coverage。
 - `FULL_DISCOVERY_POOL_UNCAPPED`：每個成功取得的 discovery route 保存時間窗內數量、完整排序數量、實際入池數量及全部入池網址；精確 24 小時窗內已驗證的清單條目全部進入去重與評分，不設前 30、前 100 或其他預設名額。
 - `TAIWAN_DOMESTIC_COVERAGE_GUARD`：中央社另對經濟／貿易／產業、食藥／消費安全、中央預算／立法／憲政三個領域各執行一次同一 24 小時窗搜尋，每個領域最多 `5 results`。中央社不可用或明顯過舊時才使用網頁搜尋補候選；線索不得繞過去重或六項評分，也不得直接觸發圖片流程。
@@ -125,7 +126,8 @@ The required order for every configured discovery route is: `canonical route -> 
 - `CURRENT_SCHEMA_ONLY_DURABLE_AUDIT`：canonical durable audit 只保留符合目前 schema 與 `public_value_v2` 的 run。不相容物件不得合併；追溯資訊由 Git history 保存。最新 run、首次出現及發生實質更新的事件都必須重新取證、評分並取得 validated status。
 - `EVIDENCE_BEFORE_SCORE_GATE`：先建立唯一 `evidence_facts.fact_id`，再以 `consequence_evidence` 分成 `realized`、`ongoing`、`potential`、`speculative`，最後由六項 `dimension_evidence` 引用 fact ID。`public_impact`、直接範圍與急迫性只能引用 realized／ongoing；結構意義可引用高可信且列明制度機制的 potential；speculative 不得支撐任何分數。政策的理論覆蓋人口不得冒充已受影響人口，預期後果也不得冒充現況後果。`ACTUAL_POTENTIAL_SEPARATION_GATE`
 - `material_new_development >= 70` 必須提供相對十四天 continuity 的 `delta_facts`（previous state、current state、why material）。同一 fact 支撐三個以上維度必須填 `cross_dimension_rationales`；任何單項達 70 必須有 `high_score_challenges` 且結果為 sustained；總分達 70 另須 `overall_high_score_challenge` 說明為何不能降到 B+。`HIGH_SCORE_CHALLENGE_GATE`
-- 政策事件另填 `policy_stage`：rumor、consideration、proposal、draft、introduced、passed、signed、effective、implemented、measurable_effect。不得設 proposal 硬上限；但 proposal 若要取得高 Impact，仍只能引用已實際發生的後果。`evidence_confidence` 與 importance 分開，僅映射 high／medium／low `confidence_band`，不得乘進總分。只有事件身分、時序、十四天 continuity、六項證據、政策審查（適用時）、高分反查、算式與級距都通過時，`grade_status` 才可為 validated；Reader 不接受 provisional。
+- 政策事件另填 `policy_stage`：rumor、consideration、proposal、draft、introduced、passed、signed、effective、implemented、measurable_effect。不得設 proposal 硬上限；但 proposal 若要取得高 Impact，仍只能引用已實際發生的後果。尚無操作效果時 `direct_operational_effects` 必須為空陣列，潛在效果留在 `consequence_evidence.potential`，不得編造 actual effect。`evidence_confidence` 與 importance 分開，僅映射 high／medium／low `confidence_band`，不得乘進總分。只有事件身分、時序、十四天 continuity、六項證據、政策審查（適用時）、高分反查、算式與級距都通過時，`grade_status` 才可為 validated；Reader 不接受 provisional。
+- `border_conflict_review` 與 `ongoing_conflict_review` 各自保留其語義，但改為條件式；不適用事件只填 `{"applies": false}`，只有適用時才要求詳細分類與連續性欄位。
 - Discovery route 的站內排序分數只用來維持高召回候選順序，不是最終事件分數。跨來源去重後必須依事件本身的具體後果重新完成六項評分；禁止複製來源排名分數、以「政府／全國／重大」等關鍵字代替證據，或因媒體刊登量提高最終等級。
 - 所有窗內已驗證候選都進入去重與六項評分，不存在名次 cutoff、名次外強制例外或事件類型保底。大型評選活動首次停辦可作為 `structural_or_policy_significance` 與 `material_new_development` 的證據；重複停辦若沒有新增原因、制度變化或擴散影響，應依十四天 continuity 降低增量分。最終等級仍只由六項加權總分決定。
 - 所有成功取得的候選清單與台灣 coverage guard 線索合併後，先按底層事件跨站、跨語言去重；去重後每個候選都必須評為 `SS` 至 `E` 並保存獨立的 `grade_reason`。

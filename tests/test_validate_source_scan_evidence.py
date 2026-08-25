@@ -18,6 +18,15 @@ SPEC.loader.exec_module(MODULE)
 
 
 class SourceScanEvidenceTests(unittest.TestCase):
+    def coverage_metadata(self):
+        return {
+            "coverage_complete": True,
+            "coverage_status": "complete",
+            "coverage_reason": None,
+            "missing_segments": [],
+            "missing_date_variants": [],
+        }
+
     def test_cli_resolves_source_and_coverage_from_aggregate_files(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -30,6 +39,7 @@ class SourceScanEvidenceTests(unittest.TestCase):
                 "pages": [{"request_url": "https://example.com/feed", "fetched_at": "2026-08-15T06:00:00+08:00", "http_status": 200, "snapshot_path": path, "sha256": digest, "next_url": None, "extracted_items": []}],
                 "terminal_proof": {"type": "source_exhausted", "page_index": 1, "terminal_marker": "NO_MORE_RESULTS"},
             }
+            scan.update(self.coverage_metadata())
             scan_path = root / "scan.json"
             coverage_path = root / "coverage.json"
             pool_path = root / "pool.json"
@@ -58,6 +68,7 @@ class SourceScanEvidenceTests(unittest.TestCase):
                 "pages": [{"request_url": "https://example.com/feed", "fetched_at": "2026-08-15T06:00:00+08:00", "http_status": 200, "snapshot_path": path, "sha256": digest, "next_url": None, "extracted_items": []}],
                 "terminal_proof": {"type": "source_exhausted", "page_index": 1, "terminal_marker": "NO_MORE_RESULTS"},
             }
+            scan.update(self.coverage_metadata())
             (scans / "wire.json").write_text(json.dumps(scan), encoding="utf-8")
             coverage_path = root / "coverage.json"
             pool_path = root / "pool.json"
@@ -82,6 +93,7 @@ class SourceScanEvidenceTests(unittest.TestCase):
 
     def coverage(self, ranked=None, count=0):
         return {
+            **self.coverage_metadata(),
             "scan_window_start": "2026-08-14T06:00:00+08:00",
             "scan_window_end": "2026-08-15T06:00:00+08:00",
             "within_window_count": count,
@@ -97,6 +109,7 @@ class SourceScanEvidenceTests(unittest.TestCase):
                 "pages": [{"request_url": "https://example.com/feed", "fetched_at": "2026-08-15T06:00:00+08:00", "http_status": 200, "snapshot_path": path, "sha256": digest, "next_url": None, "extracted_items": []}],
                 "terminal_proof": {"type": "source_exhausted", "page_index": 1, "terminal_marker": "NO_MORE_RESULTS"},
             }
+            scan.update(self.coverage_metadata())
             self.assertEqual([], MODULE.validate_scan(scan, self.coverage(), self.source()))
 
     def test_crossed_boundary_recomputes_window_items(self):
@@ -113,6 +126,7 @@ class SourceScanEvidenceTests(unittest.TestCase):
                 "pages": [{"request_url": "https://example.com/feed", "fetched_at": "2026-08-15T06:00:00+08:00", "http_status": 200, "snapshot_path": path, "sha256": digest, "next_url": None, "extracted_items": items}],
                 "terminal_proof": {"type": "crossed_window_start", "page_index": 1, "witness_url": "https://example.com/old"},
             }
+            scan.update(self.coverage_metadata())
             ranked = [{"url": "https://example.com/new"}]
             self.assertEqual([], MODULE.validate_scan(scan, self.coverage(ranked, 1), self.source()))
 
@@ -127,6 +141,7 @@ class SourceScanEvidenceTests(unittest.TestCase):
                 "pages": [{"request_url": "https://example.com/feed", "fetched_at": "2026-08-15T06:00:00+08:00", "http_status": 200, "snapshot_path": path, "sha256": digest, "next_url": None, "extracted_items": [item]}],
                 "terminal_proof": {"type": "source_exhausted", "page_index": 1, "terminal_marker": "DONE"},
             }
+            scan.update(self.coverage_metadata())
             errors = MODULE.validate_scan(scan, self.coverage([{"url": "https://example.com/"}], 1), self.source())
             self.assertTrue(any("首頁冒充" in error for error in errors))
 
@@ -139,8 +154,37 @@ class SourceScanEvidenceTests(unittest.TestCase):
                 "pages": [{"request_url": "https://example.com/feed", "fetched_at": "2026-08-15T06:00:00+08:00", "http_status": 200, "snapshot_path": path, "sha256": digest, "next_url": None, "extracted_items": []}],
                 "terminal_proof": {"type": "source_exhausted", "page_index": 1, "terminal_marker": "DONE"},
             }
+            scan.update(self.coverage_metadata())
             errors = MODULE.validate_scan(scan, self.coverage([], 1), self.source())
             self.assertTrue(any("不得自行填寫" in error for error in errors))
+
+    def test_scan_and_audit_coverage_metadata_must_match(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path, digest = self.make_snapshot(directory, "DONE")
+            scan = {
+                "schema_version": "1.0.0", "collector": "fixture",
+                "generated_at": "2026-08-15T06:00:00+08:00",
+                "window_start": "2026-08-14T06:00:00+08:00",
+                "window_end": "2026-08-15T06:00:00+08:00",
+                "coverage_complete": False,
+                "coverage_status": "degraded_partial",
+                "coverage_reason": "one segment failed",
+                "missing_segments": ["segment-2"],
+                "missing_date_variants": [],
+                "pages": [{"request_url": "https://example.com/feed", "fetched_at": "2026-08-15T06:00:00+08:00", "http_status": 200, "snapshot_path": path, "sha256": digest, "next_url": None, "extracted_items": []}],
+                "terminal_proof": {"type": "source_exhausted", "page_index": 1, "terminal_marker": "DONE"},
+            }
+            coverage = self.coverage()
+            coverage.update({
+                "coverage_complete": True, "coverage_status": "complete",
+                "coverage_reason": None, "missing_segments": [],
+                "missing_date_variants": [],
+            })
+
+            errors = MODULE.validate_scan(scan, coverage, self.source())
+
+            self.assertTrue(any("coverage_complete" in error for error in errors))
+            self.assertTrue(any("coverage_status" in error for error in errors))
 
 
 if __name__ == "__main__":

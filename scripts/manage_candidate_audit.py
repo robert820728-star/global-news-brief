@@ -24,7 +24,9 @@ RANKING_DIMENSION_NAMES = (
     "core_section_relevance",
 )
 SOURCE_COVERAGE_FIELDS = {
-    "source_id", "status", "within_window_count", "ranked_count", "ranked_items",
+    "source_id", "scan_status", "coverage_complete", "coverage_status",
+    "coverage_reason", "missing_segments", "missing_date_variants",
+    "within_window_count", "ranked_count", "ranked_items",
     "selected_for_pool_count", "selected_item_urls", "discovery_ranking_completed",
     "discovery_ranking_method", "failure_reason", "scan_window_start", "scan_window_end",
     "scan_evidence_path",
@@ -557,7 +559,7 @@ def validate_policy_governance_review(review, importance_score, label, ranking=N
             errors.append(label + " policy_governance_review.triggered_by 不得重複")
 
     required_nonempty_lists = (
-        "legal_basis", "official_actions", "direct_operational_effects",
+        "legal_basis", "official_actions",
         "affected_actor_classes", "window_material_effects", "evidence_urls",
     )
     for field in required_nonempty_lists:
@@ -566,7 +568,10 @@ def validate_policy_governance_review(review, importance_score, label, ranking=N
             not isinstance(item, str) or not item.strip() for item in value
         ):
             errors.append(label + f" policy_governance_review.{field} 必須是非空具體文字陣列")
-    for field in ("cross_agency_effects", "precedent_or_spillover_scope", "unverified_allegations"):
+    for field in (
+        "direct_operational_effects", "cross_agency_effects",
+        "precedent_or_spillover_scope", "unverified_allegations",
+    ):
         value = review.get(field)
         if not isinstance(value, list) or any(
             not isinstance(item, str) or not item.strip() for item in value
@@ -682,8 +687,8 @@ def fourteen_day_completeness_errors(data):
 
 def validate(data, source_pool=None, require_fourteen_day_complete=False):
     errors = []
-    if data.get("schema_version") != "1.1.0":
-        errors.append("schema_version 必須是 1.1.0")
+    if data.get("schema_version") != "1.2.0":
+        errors.append("schema_version 必須是 1.2.0")
     if data.get("retention_days") != 14:
         errors.append("retention_days 必須固定為 14")
 
@@ -742,16 +747,20 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             errors.append(run_label + ".source_coverage 必須是陣列")
             coverage = []
         coverage_ids = [item.get("source_id") for item in coverage if isinstance(item, dict)]
+        completed_coverage_count = sum(
+            isinstance(item, dict) and item.get("scan_status") == "completed"
+            for item in coverage
+        )
         discovery_coverage = (
             bool(discovery_source_ids)
-            and len(coverage_ids) >= minimum_ready_discovery_sources
+            and set(coverage_ids) == set(discovery_source_ids)
             and len(coverage_ids) == len(set(coverage_ids))
-            and set(coverage_ids).issubset(set(discovery_source_ids))
+            and completed_coverage_count >= minimum_ready_discovery_sources
         )
         if source_pool is not None and is_latest_run and not discovery_coverage:
             errors.append(
                 run_label
-                + " source coverage 必須達到最低可用數、不得重複，且只能引用 configured discovery sources"
+                + " source coverage 必須逐一保留全部 configured discovery sources、不得重複，且達到最低可用數"
             )
 
         raw_total = 0
@@ -768,8 +777,35 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             selected = item.get("selected_for_pool_count")
             urls = item.get("selected_item_urls")
             ranked_items = item.get("ranked_items")
-            if item.get("status") != "completed":
-                errors.append(label + " 來源掃描未完成；禁止與圖片確認一起通過發布閘門")
+            scan_status = item.get("scan_status")
+            coverage_complete = item.get("coverage_complete")
+            coverage_status = item.get("coverage_status")
+            if scan_status not in {"completed", "failed"}:
+                errors.append(label + ".scan_status 必須是 completed 或 failed")
+            if not isinstance(coverage_complete, bool):
+                errors.append(label + ".coverage_complete 必須是布林值")
+            if coverage_status not in {"complete", "degraded_partial", "degraded_cached", "unavailable"}:
+                errors.append(label + ".coverage_status 無效")
+            if coverage_complete is True and coverage_status != "complete":
+                errors.append(label + " 完整 coverage 必須使用 coverage_status=complete")
+            if coverage_complete is False and coverage_status == "complete":
+                errors.append(label + " 不完整 coverage 不得使用 coverage_status=complete")
+            for field in ("missing_segments", "missing_date_variants"):
+                if not isinstance(item.get(field), list):
+                    errors.append(label + f".{field} 必須是陣列")
+            if scan_status == "failed":
+                if coverage_complete is not False or coverage_status != "unavailable":
+                    errors.append(label + " failed scan 必須明確標示 unavailable coverage")
+                if any(item.get(field) not in (0, [], False, None) for field in (
+                    "within_window_count", "ranked_count", "ranked_items",
+                    "selected_for_pool_count", "selected_item_urls",
+                    "discovery_ranking_completed", "scan_window_start",
+                    "scan_window_end", "scan_evidence_path",
+                )):
+                    errors.append(label + " failed scan 不得保存偽造的掃描結果或證據")
+                if not isinstance(item.get("failure_reason"), str) or not item["failure_reason"].strip():
+                    errors.append(label + " failed scan 必須保存 failure_reason")
+                continue
             if source_scan_evidence_required and is_latest_run:
                 for field in ("scan_window_start", "scan_window_end", "scan_evidence_path"):
                     if not item.get(field):
@@ -821,7 +857,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             if len(set(ranked_urls)) != len(ranked_urls):
                 errors.append(label + " ranked_items 含重複網址")
             if all(isinstance(score, (int, float)) for score in scores) and scores != sorted(scores, reverse=True):
-                errors.append(label + " ranked_items 未按重要度由高至低排列")
+                errors.append(label + " ranked_items 未按 discovery priority 由高至低排列")
             expected_urls = ranked_urls
             if selected != len(expected_urls):
                 errors.append(label + " 入池數量必須等於完整排序清單")
@@ -1157,24 +1193,28 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             if not isinstance(border, dict):
                 errors.append(label + " 缺少 border_conflict_review")
                 border = {}
+            if not isinstance(border.get("applies"), bool):
+                errors.append(label + " border_conflict_review.applies 必須是布林值")
             border_keys = {
                 "is_border_conflict", "formal_war", "de_facto_war_scale",
                 "related_to_monitored_section", "user_weight_elevated",
                 "exception_reason",
             }
-            if border_keys - set(border):
+            if border.get("applies") is True and border_keys - set(border):
                 errors.append(label + " border_conflict_review 欄位不完整")
 
             ongoing = grading.get("ongoing_conflict_review")
             if not isinstance(ongoing, dict):
                 errors.append(label + " 缺少 ongoing_conflict_review")
                 ongoing = {}
+            if not isinstance(ongoing.get("applies"), bool):
+                errors.append(label + " ongoing_conflict_review.applies 必須是布林值")
             ongoing_keys = {
                 "is_ongoing_conflict", "same_conflict_as_history", "routine_incident",
                 "material_change", "change_types", "reversal_or_escalation_possible",
                 "external_system_impact", "continuity_discount_applied", "exception_reason",
             }
-            if ongoing_keys - set(ongoing):
+            if ongoing.get("applies") is True and ongoing_keys - set(ongoing):
                 errors.append(label + " ongoing_conflict_review 欄位不完整")
             local_disaster = grading.get("local_disaster_review")
             if run_index == len(runs):
@@ -1325,7 +1365,7 @@ def main():
         ] + [current_run]
         runs.sort(key=lambda item: parse_datetime(item["generated_at"]))
         output = {
-            "schema_version": "1.1.0",
+            "schema_version": "1.2.0",
             "retention_days": args.retention_days,
             "updated_at": parse_datetime(current_run["generated_at"]).isoformat(),
             "runs": runs,

@@ -91,10 +91,13 @@ class PipelineContractTests(unittest.TestCase):
 
         required = set(schema["$defs"]["sourceCoverage"]["required"])
         self.assertTrue(
-            {"scan_window_start", "scan_window_end", "scan_evidence_path"}.isdisjoint(
+            {"scan_window_start", "scan_window_end", "scan_evidence_path"}.issubset(
                 required
             )
         )
+        properties = schema["$defs"]["sourceCoverage"]["properties"]
+        for field in ("scan_window_start", "scan_window_end", "scan_evidence_path"):
+            self.assertIn("null", properties[field]["type"])
 
     def test_candidate_schema_accepts_mobile_compact_history_profile(self):
         schema = json.loads(
@@ -184,12 +187,14 @@ class PipelineContractTests(unittest.TestCase):
         checkpoint = (ROOT / "scripts/news_run_checkpoint.py").read_text(encoding="utf-8")
         self.assertIn('"scripts/manage_canonical_run_bundle.py"', checkpoint)
 
-    def test_regional_supplements_have_complete_model_admission_gate(self):
+    def test_all_discovery_rows_have_complete_model_admission_gate(self):
         pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
         policy = pool["model_admission_policy"]
-        self.assertEqual(["regional_supplement"], policy["complete_source_roles"])
+        self.assertTrue(policy["all_discovery_rows_admitted"])
+        self.assertTrue(policy["routing_only_controls_hydration_depth"])
         self.assertTrue(policy["heat_is_recall_only"])
-        self.assertTrue(policy["absence_from_heat_never_excludes_complete_sources"])
+        self.assertTrue(policy["absence_from_heat_never_excludes_any_discovery_row"])
+        self.assertNotIn("complete_source_roles", policy)
 
         documents = (
             ROOT / "news-brief-settings.md",
@@ -201,6 +206,12 @@ class PipelineContractTests(unittest.TestCase):
             text = path.read_text(encoding="utf-8")
             self.assertIn("REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE", text, path.name)
             self.assertIn("validate_local_source_admission.py", text, path.name)
+
+    def test_capsule_workflow_runs_full_repository_suite(self):
+        workflow = (
+            ROOT / ".github" / "workflows" / "build-bootstrap-capsule.yml"
+        ).read_text(encoding="utf-8")
+        self.assertIn("python3 -m unittest discover -s tests -v", workflow)
 
     def test_short_run_instruction_normalizes_regions_and_monitoring_types(self):
         documents = (

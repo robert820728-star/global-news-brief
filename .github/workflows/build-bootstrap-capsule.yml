@@ -60,6 +60,9 @@ jobs:
             tests/test_render_base_maps.py \
             -v
 
+      - name: Full repository test suite
+        run: python3 -m unittest discover -s tests -v
+
       - name: Remove transient Python caches
         run: find . -type d -name __pycache__ -prune -exec rm -rf {} +
 

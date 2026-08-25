@@ -141,7 +141,7 @@
 |---|---|---|---|
 | -1 fresh main 與 bootstrap | `bootstrap-workspace.md`、雙端點 current main、fresh nonce、capsule manifest／payload | 經 blob SHA、payload SHA-256、runtime fingerprint 驗證的 workspace 與 `bootstrap-receipt.json` | receipt 未通過前不得建立 news checkpoint；修 bootstrap 本身，不得開始新聞搜尋 |
 | 0 checkpoint init | run id、精確 24 小時窗、bootstrap receipt | `python3 scripts/news_run_checkpoint.py init --output <checkpoint> --run-id <run-id> --window-start <start> --window-end <end> --bootstrap-receipt <bootstrap-receipt>` | checkpoint 綁定本輪 main 與窗；用 `news_run_checkpoint.py plan` 找最早未完成 stage |
-| 1 source-scan | `news-source-pool.json`、`source-route-config.json` | 三條 discovery route 的 snapshots、scan evidence、truthful coverage、`source-candidates.json`、`news-relevance-gate.json`、`model-source-candidates.json` | `FULL_DISCOVERY_POOL_UNCAPPED`：中新社抓當日＋前一日日索引；CNA 依 `NextPageIdx` 翻頁至穿過窗起點或耗盡；GDELT 全部分片才 `coverage_complete`，部分成功標 `degraded_partial`；全部已驗證窗內列保留並以 discovery priority 排序，弱 signal 進 `lightweight_semantic_review`，不在模型前消失 |
+| 1 source-scan | `news-source-pool.json`、`source-route-config.json` | 三條 discovery route 的 snapshots、scan evidence、truthful coverage、`source-candidates.json`、`news-relevance-gate.json`、`model-source-candidates.json` | `SOURCE_SCAN_COVERAGE_SEPARATION`：`scan_status` 只表示掃描程序是否完成，`coverage_status`／`coverage_complete` 另表示來源覆蓋是否完整；每條 configured route 都留在 audit。`FULL_DISCOVERY_POOL_UNCAPPED`：中新社抓當日＋前一日日索引；CNA 依 `NextPageIdx` 翻頁；GDELT 全部分片才 `complete`，部分成功標 `degraded_partial`。已取得列完整入池，弱 signal 仍進模型 |
 | 2 preprocess | model-admitted rows | `preprocessed-candidates.json`；時間窗、canonical URL、provisional article groups | 這些群組不是語意事件；失敗只重跑 preprocess |
 | 3 conditional recovery | source、gate、preprocess、content hydration receipts | 預設只保存 local hash 與 checkpoint binding；`CONDITIONAL_RECOVERY_BUNDLE_POLICY` 僅在 cross-host handoff、ephemeral workspace 或 warning/timeout boundary 時，以 `manage_canonical_run_bundle.py pack-recovery` 建立六份 artifact bundle | durable workspace 可直接進入 `FIRST_SELECT_NEWS_EVENTS_EXECUTION`；必要時用 bundle `restore` 從最早缺失 artifact 繼續 |
 | 4 select-news-events | hydrated rows、偏好、十四天 timeline | `selection-results.json`、唯一 `semantic_event_id`／`event_identity`、每列 `article_dispositions` | `event_evidence`、`non_news`、`unresolved` 逐列守恆；unresolved 歸零才可完成；執行 `validate_local_source_admission.py` |
@@ -195,7 +195,7 @@ python3 scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-re
 
 `CURRENT_SCHEMA_ONLY_DURABLE_AUDIT`：canonical durable audit 內每個保留 run 都必須符合目前 schema 與 `public_value_v2`。不相容物件不得合併進 canonical durable audit；其追溯資訊由 Git history 保存。當輪候選仍依目前證據重新評分，不得以不相容歷史資料阻止本日 reader。
 
-`MOBILE_COMPACT_HISTORY_SCHEMA_RULE`：mobile-native durable audit 的精簡 V2 candidate 是歷史 continuity cache profile，可省略 verbose `grading_evidence`、逐頁 `source_audit`、`candidate_urls`、`reason_code` 與 `grade_reason`；full-runtime 載入時仍重驗保留的六項分數、fact-ID 證據、加權總分、grade status、來源 ID 與 selected mapping。此精簡 profile 永遠不得作為最新 run；最新 run 必須保存完整 run-scoped candidate audit，缺少上述完整證據即驗證失敗。歷史 source coverage 的 scan 檔案路徑可隨宿主消失，因此 schema 不強制舊 run 保存本機路徑；validator 仍對最新 run 強制 `scan_window_start`、`scan_window_end` 與可讀的 `scan_evidence_path`。
+`MOBILE_COMPACT_HISTORY_SCHEMA_RULE`：mobile-native durable audit 的精簡 V2 candidate 是歷史 continuity cache profile，可省略 verbose `grading_evidence`、逐頁 `source_audit`、`candidate_urls`、`reason_code` 與 `grade_reason`；full-runtime 載入時仍重驗保留的六項分數、fact-ID 證據、加權總分、grade status、來源 ID 與 selected mapping。此精簡 profile 永遠不得作為最新 run；最新 run 必須保存完整 run-scoped candidate audit，缺少上述完整證據即驗證失敗。每個 source coverage row 都保存 scan／coverage 狀態欄位；歷史本機 scan 路徑可為 `null`，validator 只對最新且 `scan_status=completed` 的 row 強制可讀 evidence path。
 
 ### Public Value V2 填寫與驗證順序
 
@@ -210,9 +210,10 @@ python3 scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-re
 5. 六項各填 0–100，標準使用 10 分錨點；使用 5 分中點時填 `midpoint_rationales`。以 30%／20%／15%／15%／10%／10% 計算 `weighted_score`，並令 `importance_score` 完全相同。
 6. Update 達 70 時填 `delta_facts` 的 previous state、current state、why material；同一 fact 支撐三項以上時填 `cross_dimension_rationales`。
 7. 任一單項達 70，為該項填 `high_score_challenges`；總分達 70，另填 `overall_high_score_challenge`，具體回答相較 B+ 多出的已發生後果。只能以 `outcome=sustained` 保留高分；`rescore_required` 必須先重評。
-8. 政策事件填 `policy_stage` 與既有 `policy_governance_review`。proposal 沒有硬上限，但高 Impact 必須有已發生後果，不能以「若通過」或理論全國覆蓋代替。
-9. 另填 `evidence_confidence` 0–100 與 high 80–100／medium 60–79／low 0–59 `confidence_band`；信心不得乘進 importance。
-10. event identity、temporal review、十四天 continuity、dimension evidence、政策審查（適用時）、高分反查、算式與 grade mapping 全部通過後，才可寫 `grade_status=validated`。degraded run 可保留 provisional candidate pool，但 Reader、manifest 與 publisher 只接受 validated。
+8. 政策事件填 `policy_stage` 與既有 `policy_governance_review`。proposal 沒有硬上限，但高 Impact 必須有已發生後果；尚無操作效果時 `direct_operational_effects=[]`，潛在效果只放在 `consequence_evidence.potential`，不能為過 schema 編造 actual effect。
+9. `border_conflict_review` 與 `ongoing_conflict_review` 各自保留語義但只在適用時填詳細欄位；不適用事件只填 `{"applies": false}`。
+10. 另填 `evidence_confidence` 0–100 與 high 80–100／medium 60–79／low 0–59 `confidence_band`；信心不得乘進 importance。
+11. event identity、temporal review、十四天 continuity、dimension evidence、政策審查（適用時）、高分反查、算式與 grade mapping 全部通過後，才可寫 `grade_status=validated`。degraded run 可保留 provisional candidate pool，但 Reader、manifest 與 publisher 只接受 validated。
 
 六項加權後仍使用既有級距：E 0、D 20、C- 40、C 45、C+ 50、B- 55、B 60、B+ 65、A- 70、A 75、A+ 80、S- 85、S 90、S+ 94、SS 97。災害死亡只設定 Impact floor：1–9／10–49／50–99／100–249／250–2,499／2,500+ 分別為 30／45／60／75／90／100，不直接指定總等級。
 

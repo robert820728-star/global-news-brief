@@ -183,6 +183,21 @@ class NoObsoleteContractsTests(unittest.TestCase):
         self.assertFalse(any(name.casefold().startswith("legacy") for name in defs))
         self.assertTrue(coverage["additionalProperties"] is False)
 
+    def test_active_execution_contracts_have_no_retired_relevance_or_recovery_prose(self):
+        select_skill = (
+            ROOT / ".agents" / "skills" / "select-news-events" / "SKILL.md"
+        ).read_text(encoding="utf-8")
+        daily_skill = (
+            ROOT / ".agents" / "skills" / "daily-news-brief" / "SKILL.md"
+        ).read_text(encoding="utf-8")
+        audit_validator = (
+            ROOT / "scripts" / "manage_candidate_audit.py"
+        ).read_text(encoding="utf-8")
+
+        self.assertNotIn("structured review", select_skill.casefold())
+        self.assertNotIn("persistent pre-manifest recovery", daily_skill.casefold())
+        self.assertNotIn("ranked_items 未按重要度", audit_validator)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -115,6 +115,8 @@ class FetchSourceRoutesTests(unittest.TestCase):
                 "route_ready": True, "acquisition_mode": "gdelt_export_24h",
                 "gdelt_live_ready": True, "archive_complete": False,
                 "archive_requested_count": 97, "archive_ready_count": 96,
+                "missing_segments": ["http://official.test/missing.zip"],
+                "missing_date_variants": [],
             }
             with mock.patch.object(
                 MODULE, "fetch_gdelt_export_fallback", return_value=fallback_result
@@ -129,6 +131,10 @@ class FetchSourceRoutesTests(unittest.TestCase):
             self.assertEqual("degraded", coverage["status"])
             self.assertFalse(coverage["results"][0]["coverage_complete"])
             self.assertEqual("degraded_partial", coverage["results"][0]["coverage_status"])
+            self.assertEqual(
+                ["http://official.test/missing.zip"],
+                coverage["results"][0]["missing_segments"],
+            )
 
     def test_total_gdelt_failure_is_explicit_but_supplement_keeps_publication_running(self):
         class Handler(BaseHTTPRequestHandler):
@@ -223,6 +229,7 @@ class FetchSourceRoutesTests(unittest.TestCase):
                 result = coverage["results"][0]
                 self.assertTrue(result["route_ready"])
                 self.assertEqual(2, result["date_variant_ready_count"])
+                self.assertEqual([0], result["missing_date_variants"])
                 self.assertEqual(1, len(result["page_snapshots"]))
                 self.assertEqual(3, len(result["date_variant_attempts"]))
                 self.assertEqual(

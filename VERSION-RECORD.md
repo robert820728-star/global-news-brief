@@ -4,6 +4,16 @@ This file records the current installable contract. Earlier implementation attem
 
 本檔只記錄目前可安裝契約；較早的實作嘗試由 Git history 保存，避免退役行為繼續留在執行中的 repository 表面。
 
+## v0.6.0-rc.2 — End-to-end coverage truth and conditional reviews / 端到端 coverage 真實性與條件式審查
+
+- Reason / 建立原因：A fresh audit found that route-level degraded coverage was discarded during source-scan materialization, policy proposals were forced to invent operational effects, retired relevance prose remained active, and CI did not run the full suite. / 全新稽核發現 route 層的降級 coverage 在 source-scan 物化時被丟失、政策提案被迫編造操作效果、退役 relevance 敘述仍在 active skill，且 CI 未執行完整測試。
+- Approach / 作法：Separate `scan_status` from coverage completeness, retain every configured route through audit and release receipt, allow empty realized operational effects, make conflict reviews conditional, admit every discovery row to model review, and add the full repository suite to CI. / 分離 `scan_status` 與 coverage 完整性、讓每條 configured route 貫穿 audit 與 release receipt、允許已實現操作效果為空、將衝突審查改為條件式、讓所有 discovery row 進入模型檢閱，並在 CI 加入全庫測試。
+- Entry points / 入口：Route fetcher, source materializer/evidence validator, candidate schema/validator, publisher receipt, selection and orchestration Skills, settings, `INSTALL.md`, CI, and regression fixtures. / Route fetcher、來源 materializer／evidence validator、candidate schema／validator、publisher receipt、選稿與主控 Skills、設定、`INSTALL.md`、CI 與回歸 fixtures。
+- Important configuration / 重要設定：Candidate-audit schema is `1.2.0`; failed sources remain explicit zero-count rows, degraded usable sources still contribute verified candidates, and `direct_operational_effects=[]` means no realized effect rather than missing data. / Candidate-audit schema 為 `1.2.0`；失敗來源保留為明確零筆 row、部分降級來源仍貢獻已驗證候選，且 `direct_operational_effects=[]` 表示尚無已實現效果，不是缺資料。
+- Validation / 驗證：Targeted TDD, full repository suite, capsule rebuild/verification, and two consecutive unchanged-fingerprint final-state audit cycles are required. / 必須完成目標 TDD、全庫測試、capsule 重建／驗證，以及兩輪連續且指紋不變的 final-state audit。
+- Result / 結果：Candidate prepared for final verification and GitHub promotion. / 候選版本已準備最終驗收與 GitHub 晉升。
+- Rollback / 回復：Revert the rc.2 source and generated-capsule commits together. / 一併回復 rc.2 source 與 generated-capsule commits。
+
 ## v0.6.0-rc.1 — Truthful discovery and nonblocking visual delivery / 真實 discovery 與非阻塞視覺交付
 
 - Reason / 建立原因：Repository-wide review found incomplete ChinaNews/CNA windows, partial GDELT coverage presented too strongly, pre-model relevance loss, source-stage fake importance, legacy hard-grade residue, duplicated scoring authority, and noncritical media/recovery gates that could block a verified text Reader. / 全庫審查發現中新社／中央社時間窗不完整、GDELT 部分 coverage 宣稱過強、模型前漏召回、來源階段假 importance、舊式硬等級、重複評分權威，以及會阻擋已驗證文字 Reader 的非關鍵視覺／recovery gate。
