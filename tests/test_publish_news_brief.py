@@ -76,7 +76,7 @@ def write_valid_audit(root: Path):
             "source_id": source_id, "status": "completed",
             "within_window_count": 1, "ranked_count": 1,
             "ranked_items": ranked_items, "selected_for_pool_count": 1,
-            "selected_item_urls": [article_url], "mandatory_overflow_items": [],
+            "selected_item_urls": [article_url],
             "ranking_completed": True, "ranking_method": "public_value_v2",
             "failure_reason": None,
             "scan_window_start": "2026-08-13T06:00:00+08:00",

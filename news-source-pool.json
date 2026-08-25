@@ -228,11 +228,5 @@
       "low": [0, 59]
     },
     "tie_breakers": ["newer_published_at", "more_direct_primary_evidence", "stable_url"]
-  },
-  "verification_source_selection": {
-    "strategy": "event_and_claim_role",
-    "fixed_source_count": null,
-    "fixed_source_list": false,
-    "required_roles_depend_on_claim_category": true
   }
 }

@@ -117,12 +117,12 @@ class MaterializeSourceScansTests(unittest.TestCase):
 </body></html>"""
         items = MODULE.parse_html(
             html,
-            "https://udn.com/news/breaknews/1",
-            "https://udn.com/news/index",
+            "https://regional.example.com/news/latest",
+            "https://regional.example.com/news/index",
             "html_direct",
             2026,
         )
-        article = items["https://udn.com/news/story/1/9695476"]
+        article = items["https://regional.example.com/news/story/1/9695476"]
         self.assertEqual("全國食安回收擴大", article["title"])
 
     def test_descriptive_duplicate_replaces_numeric_equal_time_title(self):
@@ -133,19 +133,19 @@ class MaterializeSourceScansTests(unittest.TestCase):
 </body></html>"""
         items = MODULE.parse_html(
             html,
-            "https://udn.com/news/breaknews/1",
-            "https://udn.com/news/index",
+            "https://regional.example.com/news/latest",
+            "https://regional.example.com/news/index",
             "html_direct",
             2026,
         )
-        article = items["https://udn.com/news/story/1/9695476"]
+        article = items["https://regional.example.com/news/story/1/9695476"]
         self.assertEqual("中央預算解凍案進入實質審查", article["title"])
 
     def test_compact_month_day_time_and_url_date_are_supported(self):
         self.assertEqual("2026-08-15T23:54:00+08:00", MODULE.parse_time("8-15 23:54", 2026).isoformat())
-        html = "<html><body><a href='https://www.news.cn/world/20260816/abc/c.html'>World report</a></body></html>"
-        items = MODULE.parse_html(html, "https://www.news.cn/world/", "https://www.news.cn/", "html_direct", 2026)
-        self.assertEqual("2026-08-16T12:00:00+08:00", items["https://www.news.cn/world/20260816/abc/c.html"]["published_at"])
+        html = "<html><body><a href='https://archive.example.com/world/20260816/abc/c.html'>World report</a></body></html>"
+        items = MODULE.parse_html(html, "https://archive.example.com/world/", "https://archive.example.com/", "html_direct", 2026)
+        self.assertEqual("2026-08-16T12:00:00+08:00", items["https://archive.example.com/world/20260816/abc/c.html"]["published_at"])
 
     def test_rss_materialization_preserves_boundary_and_score_breakdown(self):
         rss = """<?xml version="1.0" encoding="utf-8"?>
@@ -241,7 +241,7 @@ class MaterializeSourceScansTests(unittest.TestCase):
             self.assertIn("NextPageIdx", scan["terminal_proof"]["terminal_marker"])
             self.assertEqual([], VALIDATOR.validate_scan(scan, coverage, source))
 
-    def test_udn_multipage_json_uses_title_link_nested_local_time_and_escaped_evidence(self):
+    def test_multipage_json_uses_title_link_nested_local_time_and_escaped_evidence(self):
         payload = r'''[{"state":true,"page":"2","end":false,"lists":[
           {"titleLink":"\/news\/story\/7266\/9697340","title":"中央政策最新進展",
            "paragraph":"政策說明","time":{"date":"2026-08-17 21:28","dateTime":"2026-08-17T21:28:03Z"}},
@@ -249,22 +249,22 @@ class MaterializeSourceScansTests(unittest.TestCase):
            "paragraph":"邊界證據","time":{"date":"2026-08-16 22:40","dateTime":"2026-08-16T22:40:00Z"}}
         ]}]'''
         parsed = MODULE.parse_json_items(
-            payload, "https://udn.com/api/more", "https://udn.com/", "structured_direct", 2026
+            payload, "https://regional.example.com/api/more", "https://regional.example.com/", "structured_direct", 2026
         )
         self.assertEqual(2, len(parsed))
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            snapshot = root / "udn-pages.json"
+            snapshot = root / "regional-pages.json"
             snapshot.write_bytes(payload.encode("utf-8"))
             route = {
-                "source_id": "udn", "route": "structured_direct",
-                "request_url": "https://udn.com/api/more", "http_status": 200,
+                "source_id": "regional_a", "route": "structured_direct",
+                "request_url": "https://regional.example.com/api/more", "http_status": 200,
                 "content_type": "application/json; charset=utf-8",
                 "bytes": len(payload.encode("utf-8")), "snapshot_path": str(snapshot),
                 "sha256": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
                 "route_ready": True,
             }
-            source = {"source_id": "udn", "homepage": "https://udn.com/", "section": "TWN"}
+            source = {"source_id": "regional_a", "homepage": "https://regional.example.com/", "section": "TWN"}
             scan, coverage = MODULE.materialize_source(
                 source, route, "2026-08-16T22:57:00+08:00", "2026-08-17T22:57:00+08:00", root, ranking()
             )
@@ -309,18 +309,18 @@ class MaterializeSourceScansTests(unittest.TestCase):
                 }
 
             first = snapshot(
-                "primary.html", primary, 1, "https://udn.com/news/breaknews/1",
+                "primary.html", primary, 1, "https://regional.example.com/news/latest",
                 "text/html; charset=utf-8",
             )
             route = {
-                "source_id": "udn", "route": "html_direct", "route_ready": True,
+                "source_id": "regional_a", "route": "html_direct", "route_ready": True,
                 **{key: value for key, value in first.items() if key != "page_index"},
                 "page_snapshots": [
-                    snapshot("page-2.json", page_two, 2, "https://udn.com/api/more?page=2", "application/json; charset=utf-8"),
-                    snapshot("page-3.json", page_three, 3, "https://udn.com/api/more?page=3", "application/json; charset=utf-8"),
+                    snapshot("page-2.json", page_two, 2, "https://regional.example.com/api/more?page=2", "application/json; charset=utf-8"),
+                    snapshot("page-3.json", page_three, 3, "https://regional.example.com/api/more?page=3", "application/json; charset=utf-8"),
                 ],
             }
-            source = {"source_id": "udn", "homepage": "https://udn.com/", "section": "TWN"}
+            source = {"source_id": "regional_a", "homepage": "https://regional.example.com/", "section": "TWN"}
 
             scan, coverage = MODULE.materialize_source(
                 source, route, "2026-08-16T22:00:00+08:00",
@@ -328,37 +328,37 @@ class MaterializeSourceScansTests(unittest.TestCase):
             )
 
             self.assertEqual(3, len(scan["pages"]))
-            self.assertEqual("https://udn.com/api/more?page=2", scan["pages"][0]["next_url"])
-            self.assertEqual("https://udn.com/api/more?page=3", scan["pages"][1]["next_url"])
+            self.assertEqual("https://regional.example.com/api/more?page=2", scan["pages"][0]["next_url"])
+            self.assertEqual("https://regional.example.com/api/more?page=3", scan["pages"][1]["next_url"])
             self.assertIsNone(scan["pages"][2]["next_url"])
             self.assertEqual(
                 {"type": "crossed_window_start", "page_index": 3,
-                 "witness_url": "https://udn.com/news/story/1/1004"},
+                 "witness_url": "https://regional.example.com/news/story/1/1004"},
                 scan["terminal_proof"],
             )
             self.assertEqual(3, coverage["within_window_count"])
             self.assertEqual([], VALIDATOR.validate_scan(scan, coverage, source))
 
-    def test_tvbs_serialized_article_props_are_materialized(self):
-        html = """<html><body><astro-island props="{&quot;article&quot;:[0,{&quot;articleId&quot;:[0,4008088],&quot;title&quot;:[0,&quot;重大政策更新&quot;],&quot;articleUrl&quot;:[0,&quot;https://news.tvbs.com.tw/politics/4008088&quot;],&quot;firstParagraph&quot;:[0,&quot;全國政策今日生效。&quot;],&quot;publishedAt&quot;:[0,1786878175]}]}"></astro-island></body></html>"""
+    def test_serialized_article_props_are_materialized(self):
+        html = """<html><body><astro-island props="{&quot;article&quot;:[0,{&quot;articleId&quot;:[0,4008088],&quot;title&quot;:[0,&quot;重大政策更新&quot;],&quot;articleUrl&quot;:[0,&quot;https://regional.example.com/politics/4008088&quot;],&quot;firstParagraph&quot;:[0,&quot;全國政策今日生效。&quot;],&quot;publishedAt&quot;:[0,1786878175]}]}"></astro-island></body></html>"""
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             snapshot = root / "route.bin"
             snapshot.write_bytes(html.encode("utf-8"))
             route = {
-                "source_id": "tvbs", "route": "html_direct",
+                "source_id": "regional_b", "route": "html_direct",
                 "source_exhaustion_marker": "</html>",
-                "request_url": "https://news.tvbs.com.tw/", "http_status": 200,
+                "request_url": "https://regional.example.com/", "http_status": 200,
                 "content_type": "text/html; charset=utf-8", "bytes": len(html.encode()),
                 "snapshot_path": str(snapshot),
                 "sha256": hashlib.sha256(html.encode()).hexdigest(), "route_ready": True,
             }
-            source = {"source_id": "tvbs", "homepage": "https://news.tvbs.com.tw/", "section": "TWN"}
+            source = {"source_id": "regional_b", "homepage": "https://regional.example.com/", "section": "TWN"}
             scan, coverage = MODULE.materialize_source(
                 source, route, "2026-08-15T12:00:00+08:00", "2026-08-16T20:00:00+08:00", root, ranking()
             )
             self.assertEqual(1, coverage["ranked_count"])
-            self.assertEqual("https://news.tvbs.com.tw/politics/4008088", coverage["ranked_items"][0]["url"])
+            self.assertEqual("https://regional.example.com/politics/4008088", coverage["ranked_items"][0]["url"])
             self.assertEqual([], VALIDATOR.validate_scan(scan, coverage, source))
 
 

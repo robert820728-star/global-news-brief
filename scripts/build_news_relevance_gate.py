@@ -71,7 +71,6 @@ def build_gate(source_candidates: dict) -> dict:
         "input_article_row_count": len(items),
         "content_hydration_count": hydration,
         "structured_review_count": len(items) - hydration,
-        "fixed_top_n_applied": False,
         "decisions": decisions,
     }
 

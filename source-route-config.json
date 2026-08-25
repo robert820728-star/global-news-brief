@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "description": "Discovery routes only. After scoring, verification selects original, official/primary, and genuinely independent evidence appropriate to each event and claim; it has no fixed source pool.",
+  "description": "Discovery routes only. After scoring, verification dynamically selects original, official/primary, and genuinely independent evidence appropriate to each event and claim.",
   "minimum_ready_routes": 1,
   "routes": [
     {

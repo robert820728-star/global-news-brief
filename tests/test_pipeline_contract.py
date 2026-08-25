@@ -60,13 +60,10 @@ class PipelineContractTests(unittest.TestCase):
             self.assertEqual(100, dimension["maximum"])
 
         self.assertEqual(
-            ["public_value_v1", "public_value_v2"],
-            schema["$defs"]["sourceCoverage"]["properties"]["ranking_method"]["enum"],
+            "public_value_v2",
+            schema["$defs"]["sourceCoverage"]["properties"]["ranking_method"]["const"],
         )
-        self.assertIn(
-            {"$ref": "#/$defs/legacyCandidate"},
-            schema["$defs"]["candidate"]["anyOf"],
-        )
+        self.assertEqual(2, len(schema["$defs"]["candidate"]["anyOf"]))
 
     def test_historical_source_scan_receipts_do_not_require_current_run_files(self):
         schema = json.loads(
@@ -644,7 +641,7 @@ class PipelineContractTests(unittest.TestCase):
         self.assertEqual("gdelt_export_24h", gdelt["fallback"]["type"])
         for document in (daily, scheduled):
             self.assertIn("GDELT_RESILIENT_ACQUISITION", document)
-            self.assertIn("FULL_DISCOVERY_POOL_NO_FIXED_LIMIT", document)
+            self.assertIn("FULL_DISCOVERY_POOL_UNCAPPED", document)
             self.assertIn("15-minute", document)
 
     def test_install_is_the_complete_and_consistent_entry_point(self):
@@ -670,7 +667,7 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn(f".agents/skills/{skill}/SKILL.md", install)
         self.assertNotIn("YYYY/MM/DD 每日新聞`；下一行", install)
 
-    def test_candidate_discovery_has_no_fixed_source_completion_gate(self):
+    def test_candidate_discovery_uses_dynamic_verification_selection(self):
         documents = {
             "settings": (ROOT / "news-brief-settings.md").read_text(encoding="utf-8"),
             "acquisition skill": (
@@ -687,7 +684,7 @@ class PipelineContractTests(unittest.TestCase):
         )
         for label, document in documents.items():
             for phrase in forbidden:
-                self.assertNotIn(phrase, document, f"{label} retains fixed-source gate")
+                self.assertNotIn(phrase, document, f"{label} retains a retired gate")
 
         schema = json.loads(
             (ROOT / "schemas" / "news-source-candidate-list.schema.json").read_text(
@@ -827,7 +824,7 @@ class PipelineContractTests(unittest.TestCase):
         self.assertNotIn("本輪完整十四天海選清單寫入", daily)
         self.assertNotIn("本輪及十四天清單內所有 C 級以上新聞", daily)
 
-    def test_mobile_native_can_roll_forward_a_valid_existing_audit_without_rescoring_history(self):
+    def test_mobile_native_rolls_forward_only_current_schema_history(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         skill = (ROOT / ".agents/skills/audit-news-candidates/SKILL.md").read_text(
             encoding="utf-8"
@@ -836,13 +833,13 @@ class PipelineContractTests(unittest.TestCase):
         for document in (daily, skill):
             for requirement in (
                 "MOBILE_NATIVE_AUDIT_ROLLING_MERGE",
-                "不得重算未發生實質更新的歷史候選",
-                "六項欄位、各欄範圍與總分算法未變",
+                "CURRENT_SCHEMA_ONLY_DURABLE_AUDIT",
+                "不相容物件不合併",
                 "GitHub contents API 整檔 replacement",
                 "不得因此阻止本日讀者版",
             ):
                 self.assertIn(requirement, document)
-        self.assertIn("只重評本輪新增或發生實質更新的候選", daily)
+        self.assertIn("只重評本輪新增或有實質更新的候選", daily)
         self.assertIn("full-runtime", skill)
         self.assertIn("mobile-native", skill)
 

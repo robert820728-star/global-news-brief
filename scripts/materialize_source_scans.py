@@ -285,12 +285,12 @@ def parse_html(text: str, request_url: str, homepage: str, route: str, year: int
                          title=title, summary=str(obj.get("description") or title),
                          published_evidence=date_ev, published=parse_time(date_ev, year))
     serialized = html.unescape(text)
-    tvbs_pattern = re.compile(
+    serialized_article_pattern = re.compile(
         r'"title":\[0,"(.*?)"\].*?"articleUrl":\[0,"(https?://[^" ]+)"\].*?'
         r'"firstParagraph":\[0,"(.*?)"\].*?"publishedAt":\[0,(\d{10})\]',
         re.S,
     )
-    for match in tvbs_pattern.finditer(serialized):
+    for match in serialized_article_pattern.finditer(serialized):
         title, url_ev, summary, epoch = match.groups()
         add_item(
             items, request_url=request_url, homepage=homepage, route=route,
@@ -480,7 +480,7 @@ def materialize_source(source: dict, route: dict, window_start: str, window_end:
     coverage = {
         "source_id": source["source_id"], "status": "completed", "within_window_count": len(within),
         "ranked_count": len(ranked), "ranked_items": ranked, "selected_for_pool_count": len(selected_urls),
-        "selected_item_urls": selected_urls, "mandatory_overflow_items": [], "ranking_completed": True,
+        "selected_item_urls": selected_urls, "ranking_completed": True,
         "ranking_method": ranking["method"], "failure_reason": None,
         "scan_window_start": window_start, "scan_window_end": window_end,
         "scan_evidence_path": str(scan_path),

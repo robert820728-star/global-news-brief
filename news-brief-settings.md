@@ -4,7 +4,7 @@
 
 `DISCOVERY_THEN_VERIFY`
 
-The initial list comes from GDELT, CNA, and China News Service. `GDELT_RESILIENT_ACQUISITION` uses GDELT's official 15-minute export archives as primary discovery, permits one non-blocking DOC API request only when the archive is unavailable, and then uses a labeled last-known-good cache. A discovery source failure degrades coverage but does not block the whole brief when another route yields verifiable current candidates. `FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` sends every verified in-window item from a successful route into deduplication and scoring; there is no per-source top-N cutoff.
+The initial list comes from GDELT, CNA, and China News Service. `GDELT_RESILIENT_ACQUISITION` uses GDELT's official 15-minute export archives as primary discovery, permits one non-blocking DOC API request only when the archive is unavailable, and then uses a labeled last-known-good cache. A discovery source failure degrades coverage but does not block the whole brief when another route yields verifiable current candidates. `FULL_DISCOVERY_POOL_UNCAPPED` sends every verified in-window item from a successful route into deduplication and scoring without a preset per-source top-N cutoff.
 
 `REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE`：中央社與中新社等 `regional_supplement` 的所有精確窗內 provisional groups 必須完整出現在模型 `candidate_groups`，不得因沒有 GDELT heat、Google Trends、Google News coverage 或關鍵字命中而省略。熱度只能增加召回或安排處理順序，不能決定重要性或排除；模型輸入建立後、語意合併與六項評分前，必須執行 `python3 scripts/validate_local_source_admission.py --preprocessed <preprocessed-candidates.json> --selection <selection-results.json> --source-pool news-source-pool.json`，失敗時不得繼續。
 
@@ -117,10 +117,10 @@ The required order for every configured discovery route is: `canonical route -> 
 
 - 前期候選可由任何目前可用的新聞清單或網頁搜尋入口取得。`GDELT` 是主要彙整入口；中央社與中新社是台灣、中國的區域補充，但都不是完成門檻。任一入口失敗時記錄 coverage 降級並換用其他入口；只要仍有可核實的精確 24 小時候選就繼續，只有完全沒有可核實候選才停止。
 - `GDELT_RESILIENT_ACQUISITION`：GDELT 官方 15 分鐘 export archives 是主要 discovery。只有 archive 不可用時才允許一次不阻塞的 DOC API 補充請求；不得為 429 等待或重試，DOC API 成功也必須標為非完整補充。兩者都不可用才採最近一次有效快取並明確標示 degraded。不得把中央社或中新社冒充為 GDELT，但 GDELT 單一路徑故障不得停止發佈。
-- `FULL_DISCOVERY_POOL_NO_FIXED_LIMIT`：每個成功取得的 discovery route 保存時間窗內數量、完整排序數量、實際入池數量及全部入池網址；精確 24 小時窗內已驗證的清單條目全部進入去重與評分，不設前 30、前 100 或其他固定名額。
+- `FULL_DISCOVERY_POOL_UNCAPPED`：每個成功取得的 discovery route 保存時間窗內數量、完整排序數量、實際入池數量及全部入池網址；精確 24 小時窗內已驗證的清單條目全部進入去重與評分，不設前 30、前 100 或其他預設名額。
 - `TAIWAN_DOMESTIC_COVERAGE_GUARD`：中央社另對經濟／貿易／產業、食藥／消費安全、中央預算／立法／憲政三個領域各執行一次同一 24 小時窗搜尋，每個領域最多 `5 results`。中央社不可用或明顯過舊時才使用網頁搜尋補候選；線索不得繞過去重或六項評分，也不得直接觸發圖片流程。
 - 每個可用 discovery route 與去重後語意事件都使用 `public_value_v2`：六項各自按 0–100 給分，再依 `news-source-pool.json` 的 30%／20%／15%／15%／10%／10% 權重計算 `weighted_score`；`importance_score` 必須與加權結果完全一致。標準分使用 0、10、20…100；只有證據確實介於相鄰錨點時才可使用 5、15…95，並填 `midpoint_rationales`。等級級距維持不變。`PUBLIC_VALUE_V2_NORMALIZED_WEIGHTED_SCORING`
-- `V1_HISTORY_CONTINUITY_ONLY`：升級時仍在 durable audit 內的 V1 run 原樣保留作 continuity／delta 對照；它不是有效的本輪分數，不能進 Reader 或 manifest。最新 run、首次出現及發生實質更新的事件都必須依 V2 重新取證、評分並取得 validated status；不得為了格式統一捏造舊 evidence facts。
+- `CURRENT_SCHEMA_ONLY_DURABLE_AUDIT`：canonical durable audit 只保留符合目前 schema 與 `public_value_v2` 的 run。不相容物件不得合併；追溯資訊由 Git history 保存。最新 run、首次出現及發生實質更新的事件都必須重新取證、評分並取得 validated status。
 - `EVIDENCE_BEFORE_SCORE_GATE`：先建立唯一 `evidence_facts.fact_id`，再以 `consequence_evidence` 分成 `realized`、`ongoing`、`potential`、`speculative`，最後由六項 `dimension_evidence` 引用 fact ID。`public_impact`、直接範圍與急迫性只能引用 realized／ongoing；結構意義可引用高可信且列明制度機制的 potential；speculative 不得支撐任何分數。政策的理論覆蓋人口不得冒充已受影響人口，預期後果也不得冒充現況後果。`ACTUAL_POTENTIAL_SEPARATION_GATE`
 - `material_new_development >= 70` 必須提供相對十四天 continuity 的 `delta_facts`（previous state、current state、why material）。同一 fact 支撐三個以上維度必須填 `cross_dimension_rationales`；任何單項達 70 必須有 `high_score_challenges` 且結果為 sustained；總分達 70 另須 `overall_high_score_challenge` 說明為何不能降到 B+。`HIGH_SCORE_CHALLENGE_GATE`
 - 政策事件另填 `policy_stage`：rumor、consideration、proposal、draft、introduced、passed、signed、effective、implemented、measurable_effect。不得設 proposal 硬上限；但 proposal 若要取得高 Impact，仍只能引用已實際發生的後果。`evidence_confidence` 與 importance 分開，僅映射 high／medium／low `confidence_band`，不得乘進總分。只有事件身分、時序、十四天 continuity、六項證據、政策審查（適用時）、高分反查、算式與級距都通過時，`grade_status` 才可為 validated；Reader 不接受 provisional。

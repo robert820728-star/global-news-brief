@@ -47,7 +47,7 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 
 不得在本技能臨時重新抓新聞。先調用 `acquire-news-candidates` 執行三條 discovery routes，保存原始快照、SHA-256、連續翻頁鏈及時間邊界或來源耗盡證據，再讀取候選清單。驗證器必須從快照重算清單，禁止模型自行宣告筆數。直接連結遇到403、robots、不支援 MIME、逾時、解析失敗或動態內容未載入時，依 `canonical route → same-site direct fetch → same-site alternate non-browser route → browser-rendered snapshot` 恢復；瀏覽器只可作最後備援。不得以總候選數或任何等級數量作為成功門檻。
 
-每條成功 route 確認完整抵達精確 24 小時邊界後，再按公共價值排序；每筆都依 `public_value_v2` 保存六項 0–100 `importance_breakdown`、依設定權重計算的 `importance_score` 與事件特有理由。`FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` 要求成功 route 的全部已驗證窗內條目入池，不設前 30 或其他固定名額。不得把其他來源冒充為某 route 覆蓋；文化產業、創作者生態或平台制度轉折仍依六項指標正常評分，不得因娛樂新聞整體降權而漏掉。保存 route 確認紀錄後才可跨來源去重。
+每條成功 route 確認完整抵達精確 24 小時邊界後，再按公共價值排序；每筆都依 `public_value_v2` 保存六項 0–100 `importance_breakdown`、依設定權重計算的 `importance_score` 與事件特有理由。`FULL_DISCOVERY_POOL_UNCAPPED` 要求成功 route 的全部已驗證窗內條目入池，不設前 30 或其他預設名額。不得把其他來源冒充為某 route 覆蓋；文化產業、創作者生態或平台制度轉折仍依六項指標正常評分，不得因娛樂新聞整體降權而漏掉。保存 route 確認紀錄後才可跨來源去重。
 
 搜尋各設定板塊及公共政策、經濟、科技、資安、國際關係、災害、公衛、公共安全、科學、自然史、文化與產業。
 

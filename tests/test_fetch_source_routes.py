@@ -260,10 +260,10 @@ class FetchSourceRoutesTests(unittest.TestCase):
                 port = server.server_address[1]
                 config = root / "routes.json"
                 config.write_text(json.dumps({"routes": [{
-                    "source_id": "udn",
+                    "source_id": "regional_a",
                     "route": "html_direct",
                     "request_url_template": f"http://127.0.0.1:{port}/primary",
-                    "snapshot_name": "udn.route-probe.bin",
+                    "snapshot_name": "regional-a.route-probe.bin",
                     "pagination": {
                         "request_url_template": f"http://127.0.0.1:{port}/api/more?page={{page}}",
                         "start_page": 2,

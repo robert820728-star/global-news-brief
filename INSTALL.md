@@ -7,7 +7,7 @@
 1. 只詢問必要偏好，建立名為「每日新聞」的每日獨立排程。
 2. 每輪重新解析最新 `main`，同一輪固定使用一個經雙端點確認的 commit。
 3. 依宿主能力選擇 `full-runtime` 或 `mobile-native`，兩者都必須產生可驗證的 canonical reader。
-4. 新聞發現只使用 GDELT、中央社與中新社三條 discovery routes；事件驗證依主張類型選取原始、官方／主要及真正獨立的證據，不使用固定來源數或固定驗證名單。
+4. 新聞發現使用 GDELT、中央社與中新社三條 discovery routes；事件驗證依事件與主張角色動態選取原始、官方／主要及真正獨立的證據。
 5. 首次安裝後立即執行一次測試，驗證排程、完整讀者版、執行紀錄及目前模式可交付的視覺。
 
 ## 使用者啟動指令
@@ -179,7 +179,7 @@
 
 `FOURTEEN_DAY_AUDIT_MERGE_UNAVAILABLE`：`logs/runs/<run_id>/candidate-audit.json` 是本輪 24 小時 run-scoped candidate audit，也是完成門檻；`logs/latest-candidate-audit.json` 只是十四天 continuity cache。宿主無法安全 materialize／merge 後者時，保留原 blob、記錄 `durable_audit_status=preserved_merge_deferred`，繼續當輪驗證與 reader。這個狀態不得設為 `last_error`、不得標 failed，也不得重跑 discovery、評分或驗證。
 
-`V1_HISTORY_CONTINUITY_ONLY`：升級當下仍在十四天內的 `public_value_v1` run 與來源排序原樣保留，只用於事件 continuity／delta 比較，不要求以不存在的舊證據回填 V2，也不得沿用為 validated grade。最新一輪與任何本輪新增或實質更新事件一律重走 `public_value_v2`；validator 只對歷史 run 接受可重算的 V1 來源排序，對最新 run 強制 V2。
+`CURRENT_SCHEMA_ONLY_DURABLE_AUDIT`：canonical durable audit 內每個保留 run 都必須符合目前 schema 與 `public_value_v2`。不相容物件不得合併進 canonical durable audit；其追溯資訊由 Git history 保存。當輪候選仍依目前證據重新評分，不得以不相容歷史資料阻止本日 reader。
 
 `MOBILE_COMPACT_HISTORY_SCHEMA_RULE`：mobile-native durable audit 的精簡 V2 candidate 是歷史 continuity cache profile，可省略 verbose `grading_evidence`、逐頁 `source_audit`、`candidate_urls`、`reason_code` 與 `grade_reason`；full-runtime 載入時仍重驗保留的六項分數、fact-ID 證據、加權總分、grade status、來源 ID 與 selected mapping。此精簡 profile 永遠不得作為最新 run；最新 run 必須保存完整 run-scoped candidate audit，缺少上述完整證據即驗證失敗。歷史 source coverage 的 scan 檔案路徑可隨宿主消失，因此 schema 不強制舊 run 保存本機路徑；validator 仍對最新 run 強制 `scan_window_start`、`scan_window_end` 與可讀的 `scan_evidence_path`。
 
@@ -213,7 +213,7 @@ python3 scripts/materialize_event_manifest.py \
 
 ### Source and verification evidence
 
-- Discovery coverage 只記 GDELT、CNA、China News Service 的實際成功／失敗與快照，不要求任何固定驗證站點逐站可用。
+- Discovery coverage 只記 GDELT、CNA、China News Service 的實際成功／失敗與快照；事件驗證來源依主張角色動態選取。
 - 每個 selected event 依類型使用原始／官方／專業／獨立證據。多家媒體轉載同一 wire、新聞稿或匿名說法只算一條證據鏈。
 - 一個可靠來源仍可發布，但必須顯示來源限制；缺官方紀錄不自動否決即時事件，爭議數字與歸因保持暫定。
 

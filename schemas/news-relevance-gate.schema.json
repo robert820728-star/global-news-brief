@@ -7,7 +7,6 @@
     "input_article_row_count",
     "content_hydration_count",
     "structured_review_count",
-    "fixed_top_n_applied",
     "decisions"
   ],
   "properties": {
@@ -15,7 +14,6 @@
     "input_article_row_count": {"type": "integer", "minimum": 0},
     "content_hydration_count": {"type": "integer", "minimum": 0},
     "structured_review_count": {"type": "integer", "minimum": 0},
-    "fixed_top_n_applied": {"const": false},
     "decisions": {
       "type": "array",
       "items": {

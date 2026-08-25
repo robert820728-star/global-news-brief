@@ -48,10 +48,10 @@ GDELT 固定先讀官方 15 分鐘 export archives，依精確時間窗下載完
 
 ## 逐站完成條件
 
-- `discovery_sources` 固定為 GDELT、中央社與中新社；GDELT 覆蓋三個板塊，兩個區域來源補台灣與中國盲區。評分後驗證依事件與主張角色選取原始、官方／主要與真正獨立的證據，不使用固定驗證池或數量。
+- `discovery_sources` 設定為 GDELT、中央社與中新社；GDELT 覆蓋三個板塊，兩個區域來源補台灣與中國盲區。評分後依事件與主張角色動態選取原始、官方／主要與真正獨立的驗證證據。
 - 連續翻頁直到跨過精確24小時起點或來源明確耗盡。
 - `GDELT_RESILIENT_ACQUISITION`：先讀 GDELT 官方 15 分鐘 export archives。只有 archives 不可用時才發送一次不阻塞的 DOC API 補充請求；遇到 429 不等待、不重試，並把 DOC 結果標為 incomplete supplemental coverage。兩者都不可用才讀取具時效標記的有效快取；不得因單一介面失敗停止發佈。
-- `FULL_DISCOVERY_POOL_NO_FIXED_LIMIT`：每個成功來源在精確 24 小時窗內的已驗證條目全部入池，不得設前 30 或其他固定名額。
+- `FULL_DISCOVERY_POOL_UNCAPPED`：每個成功來源在精確 24 小時窗內的已驗證條目全部入池，不得設前 30 或其他預設名額。
 - 類別專用的官方、原始或專業來源只在相應事件評分後按需選取，不計入 discovery readiness，也不形成固定清單。
 - `TAIWAN_DOMESTIC_COVERAGE_GUARD` 以中央社補查三個限定領域，每個領域最多 `5 results`；中央社不可用或明顯過舊時才使用最後的網頁搜尋備援。所有線索都先查重與評分，不得在評級前啟動圖片。
 
@@ -87,4 +87,4 @@ python3 scripts/build_news_relevance_gate.py \
   --admitted-output work/model-source-candidates.json
 ```
 
-接著以 `scripts/validate_source_scan_evidence.py` 驗證實際成功的 discovery scans，並以 `news-source-candidate-list.schema.json` 及 `news-relevance-gate.schema.json` 驗證兩份候選清單與 gate。Gate 必須逐列守恆、`fixed_top_n_applied=false`，且所有 regional supplements 都進 admitted output。至少一個 discovery source 或最後搜尋備援取得可核實候選即可交給 `select-news-events`；只有完全沒有可核實候選才停止。
+接著以 `scripts/validate_source_scan_evidence.py` 驗證實際成功的 discovery scans，並以 `news-source-candidate-list.schema.json` 及 `news-relevance-gate.schema.json` 驗證兩份候選清單與 gate。Gate 的 decisions 必須逐列守恆，且所有 regional supplements 都進 admitted output。至少一個 discovery source 或最後搜尋備援取得可核實候選即可交給 `select-news-events`；只有完全沒有可核實候選才停止。

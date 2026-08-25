@@ -13,7 +13,7 @@
   "$defs": {
     "sourceCoverage": {
       "type": "object",
-      "required": ["source_id", "status", "within_window_count", "ranked_count", "ranked_items", "selected_for_pool_count", "selected_item_urls", "mandatory_overflow_items", "ranking_completed", "ranking_method", "failure_reason"],
+      "required": ["source_id", "status", "within_window_count", "ranked_count", "ranked_items", "selected_for_pool_count", "selected_item_urls", "ranking_completed", "ranking_method", "failure_reason"],
       "properties": {
         "source_id": {"type": "string"},
         "status": {"enum": ["completed", "failed"]},
@@ -29,12 +29,7 @@
               "title": {"type": "string", "minLength": 1},
               "published_at": {"type": "string", "format": "date-time"},
               "importance_score": {"type": "number", "minimum": 0, "maximum": 100},
-              "importance_breakdown": {
-                "anyOf": [
-                  {"$ref": "#/$defs/importanceBreakdown"},
-                  {"$ref": "#/$defs/legacyImportanceBreakdown"}
-                ]
-              },
+              "importance_breakdown": {"$ref": "#/$defs/importanceBreakdown"},
               "importance_reason": {"type": "string", "minLength": 1}
             },
             "additionalProperties": true
@@ -42,27 +37,14 @@
         },
         "selected_for_pool_count": {"type": "integer", "minimum": 0},
         "selected_item_urls": {"type": "array", "items": {"type": "string", "format": "uri"}},
-        "mandatory_overflow_items": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": ["url", "trigger", "reason"],
-            "properties": {
-              "url": {"type": "string", "format": "uri"},
-              "trigger": {"type": "string"},
-              "reason": {"type": "string", "minLength": 1}
-            },
-            "additionalProperties": false
-          }
-        },
         "ranking_completed": {"type": "boolean"},
-        "ranking_method": {"enum": ["public_value_v1", "public_value_v2"]},
+        "ranking_method": {"const": "public_value_v2"},
         "failure_reason": {"type": ["string", "null"]}
         ,"scan_window_start": {"type": "string", "format": "date-time"}
         ,"scan_window_end": {"type": "string", "format": "date-time"}
         ,"scan_evidence_path": {"type": "string", "pattern": "^(sandbox:)?/"}
       },
-      "additionalProperties": true
+      "additionalProperties": false
     },
     "run": {
       "type": "object",
@@ -123,20 +105,6 @@
         "structural_or_policy_significance": {"type": "number", "minimum": 0, "maximum": 100, "multipleOf": 5},
         "material_new_development": {"type": "number", "minimum": 0, "maximum": 100, "multipleOf": 5},
         "core_section_relevance": {"type": "number", "minimum": 0, "maximum": 100, "multipleOf": 5}
-      },
-      "additionalProperties": false
-    },
-    "legacyImportanceBreakdown": {
-      "description": "Historical continuity only. The latest run is rejected unless it uses public_value_v2.",
-      "type": "object",
-      "required": ["public_impact", "geographic_or_population_scope", "urgency_and_safety", "structural_or_policy_significance", "material_new_development", "core_section_relevance"],
-      "properties": {
-        "public_impact": {"type": "number", "minimum": 0, "maximum": 30},
-        "geographic_or_population_scope": {"type": "number", "minimum": 0, "maximum": 20},
-        "urgency_and_safety": {"type": "number", "minimum": 0, "maximum": 15},
-        "structural_or_policy_significance": {"type": "number", "minimum": 0, "maximum": 15},
-        "material_new_development": {"type": "number", "minimum": 0, "maximum": 10},
-        "core_section_relevance": {"type": "number", "minimum": 0, "maximum": 10}
       },
       "additionalProperties": false
     },
@@ -368,8 +336,7 @@
     "candidate": {
       "anyOf": [
         {"$ref": "#/$defs/v2Candidate"},
-        {"$ref": "#/$defs/compactHistoricalCandidate"},
-        {"$ref": "#/$defs/legacyCandidate"}
+        {"$ref": "#/$defs/compactHistoricalCandidate"}
       ]
     },
     "compactHistoricalCandidate": {
@@ -408,28 +375,7 @@
         "selected_event_id": {"type": ["string", "null"]},
         "continuity": {"type": "object"}
       },
-      "additionalProperties": true
-    },
-    "legacyCandidate": {
-      "description": "Preserved V1 history for continuity comparison only; never a validated current grade.",
-      "type": "object",
-      "required": ["candidate_id", "dedup_key", "title", "section", "provisional_grade", "importance_score", "importance_breakdown", "grade_reason", "decision", "reason_code", "reason", "source_ids", "continuity"],
-      "properties": {
-        "candidate_id": {"type": "string"},
-        "dedup_key": {"type": "string"},
-        "title": {"type": "string"},
-        "section": {"type": "string", "pattern": "^[A-Z]{3}$"},
-        "provisional_grade": {"enum": ["SS", "S+", "S", "S-", "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "E"]},
-        "importance_score": {"type": "number", "minimum": 0, "maximum": 100},
-        "importance_breakdown": {"$ref": "#/$defs/legacyImportanceBreakdown"},
-        "grade_reason": {"type": "string", "minLength": 1},
-        "decision": {"enum": ["selected", "excluded", "merged", "deferred"]},
-        "reason_code": {"type": "string", "minLength": 1},
-        "reason": {"type": "string", "minLength": 1},
-        "source_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
-        "continuity": {"type": "object"}
-      },
-      "additionalProperties": true
+      "additionalProperties": false
     },
     "v2Candidate": {
       "type": "object",

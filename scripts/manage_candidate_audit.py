@@ -25,13 +25,11 @@ RANKING_DIMENSION_NAMES = (
     "material_new_development",
     "core_section_relevance",
 )
-LEGACY_RANKING_DIMENSION_MAXIMUMS = {
-    "public_impact": 30,
-    "geographic_or_population_scope": 20,
-    "urgency_and_safety": 15,
-    "structural_or_policy_significance": 15,
-    "material_new_development": 10,
-    "core_section_relevance": 10,
+SOURCE_COVERAGE_FIELDS = {
+    "source_id", "status", "within_window_count", "ranked_count", "ranked_items",
+    "selected_for_pool_count", "selected_item_urls", "ranking_completed",
+    "ranking_method", "failure_reason", "scan_window_start", "scan_window_end",
+    "scan_evidence_path",
 }
 GRADE_SCORE_BANDS = (
     (97, "SS"),
@@ -205,21 +203,6 @@ def weighted_score(breakdown, ranking):
 def repository_ranking():
     """Load the sole active scoring contract from news-source-pool.json."""
     return load(Path(__file__).resolve().parents[1] / "news-source-pool.json")["ranking"]
-
-
-def legacy_score(breakdown):
-    """Recompute a preserved V1 source rank without treating it as a V2 grade."""
-    if not isinstance(breakdown, dict) or set(breakdown) != set(LEGACY_RANKING_DIMENSION_MAXIMUMS):
-        raise ValueError("legacy importance breakdown must contain the six dimensions")
-    total = 0.0
-    for name, maximum in LEGACY_RANKING_DIMENSION_MAXIMUMS.items():
-        value = breakdown[name]
-        if not isinstance(value, (int, float)) or isinstance(value, bool):
-            raise ValueError(f"legacy {name} must be numeric")
-        if not 0 <= value <= maximum:
-            raise ValueError(f"legacy {name} must be between 0 and {maximum}")
-        total += value
-    return round(total, 2)
 
 
 def confidence_band(score):
@@ -764,12 +747,14 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             if not isinstance(item, dict):
                 errors.append(label + " 必須是物件")
                 continue
+            unknown_fields = sorted(set(item) - SOURCE_COVERAGE_FIELDS)
+            if unknown_fields:
+                errors.append(label + " 含未知欄位：" + ", ".join(unknown_fields))
             within = item.get("within_window_count")
             ranked = item.get("ranked_count")
             selected = item.get("selected_for_pool_count")
             urls = item.get("selected_item_urls")
             ranked_items = item.get("ranked_items")
-            overflow_items = item.get("mandatory_overflow_items")
             if item.get("status") != "completed":
                 errors.append(label + " 來源掃描未完成；禁止與圖片確認一起通過發布閘門")
             if source_scan_evidence_required and is_latest_run:
@@ -794,10 +779,8 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             if item.get("ranking_completed") is not True:
                 errors.append(label + " 尚未完成站內重要度排序")
             ranking_method = item.get("ranking_method")
-            if is_latest_run and ranking_method != "public_value_v2":
-                errors.append(label + " 最新一輪未使用固定 public_value_v2 加權重要度排序")
-            elif not is_latest_run and ranking_method not in {"public_value_v1", "public_value_v2"}:
-                errors.append(label + " 歷史來源排序方法必須是可辨識的 public_value_v1 或 public_value_v2")
+            if ranking_method != "public_value_v2":
+                errors.append(label + ".ranking_method 必須是 public_value_v2")
             if not all(isinstance(value, int) and value >= 0 for value in (within, ranked, selected)):
                 errors.append(label + " 來源數量欄位無效")
                 continue
@@ -825,11 +808,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                     )
                 else:
                     try:
-                        calculated_score = (
-                            weighted_score(breakdown, ranking)
-                            if ranking_method == "public_value_v2"
-                            else legacy_score(breakdown)
-                        )
+                        calculated_score = weighted_score(breakdown, ranking)
                     except ValueError as error:
                         errors.append(ranked_label + f" 大項分數無效：{error}")
                         errors.append(ranked_label + " importance_score 無法由無效 importance_breakdown 重算")
@@ -844,11 +823,6 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                 errors.append(label + " ranked_items 含重複網址")
             if all(isinstance(score, (int, float)) for score in scores) and scores != sorted(scores, reverse=True):
                 errors.append(label + " ranked_items 未按重要度由高至低排列")
-            if not isinstance(overflow_items, list):
-                errors.append(label + ".mandatory_overflow_items 必須是陣列")
-                overflow_items = []
-            if overflow_items:
-                errors.append(label + " 已取消固定入池上限，不得再使用強制溢位例外")
             expected_urls = ranked_urls
             if selected != len(expected_urls):
                 errors.append(label + " 入池數量必須等於完整排序清單")

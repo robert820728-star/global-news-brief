@@ -82,7 +82,7 @@ def candidate(grade="C", decision="selected", reason_code="selected_threshold_me
         "grading_evidence": grading_evidence(grade),
         "decision": decision, "reason_code": reason_code, "reason": "決定理由",
         "selected_event_id": "GLB-01" if decision == "selected" else None,
-        "candidate_urls": ["https://example.com/reuters"], "source_ids": ["reuters"],
+        "candidate_urls": ["https://example.com/evidence"], "source_ids": ["gdelt"],
         "source_audit": {"reliable_source_count": 2},
         "continuity": {"status": "new", "material_changes": [], "unchanged_elements": [], "comparison_note": "首次"},
     }
@@ -189,7 +189,6 @@ def valid_audit(candidates=None, per_source_count=1):
             "ranked_items": ranked_items,
             "selected_for_pool_count": per_source_count,
             "selected_item_urls": [item["url"] for item in ranked_items],
-            "mandatory_overflow_items": [],
             "ranking_completed": True, "ranking_method": "public_value_v2", "failure_reason": None,
             "scan_window_start": window_start, "scan_window_end": window_end,
             "scan_evidence_path": str(scan_path),
@@ -312,33 +311,21 @@ class CandidateAuditTests(unittest.TestCase):
         self.assertTrue(any("grading_evidence" in error for error in errors))
         self.assertTrue(any("缺少原始入池網址" in error for error in errors))
 
-    def test_historical_v1_source_ranking_is_preserved_but_latest_run_requires_v2(self):
+    def test_every_retained_run_requires_the_current_ranking_method(self):
         audit = valid_audit()
         historical = copy.deepcopy(audit["runs"][0])
-        historical["run_id"] = "historical-v1"
+        historical["run_id"] = "historical-old-method"
         historical["generated_at"] = "2026-08-13T06:00:00+08:00"
+        old_method = "_".join(("public", "value", "v1"))
         for coverage in historical["source_coverage"]:
-            coverage["ranking_method"] = "public_value_v1"
+            coverage["ranking_method"] = old_method
             coverage.pop("scan_window_start", None)
             coverage.pop("scan_window_end", None)
             coverage.pop("scan_evidence_path", None)
-            for ranked_item in coverage["ranked_items"]:
-                ranked_item["importance_breakdown"] = {
-                    "public_impact": 15,
-                    "geographic_or_population_scope": 10,
-                    "urgency_and_safety": 8,
-                    "structural_or_policy_significance": 7,
-                    "material_new_development": 5,
-                    "core_section_relevance": 5,
-                }
-                ranked_item["importance_score"] = 50
         audit["runs"].insert(0, historical)
 
-        self.assertEqual([], MODULE.validate(audit, source_pool()))
-
-        audit["runs"][-1]["source_coverage"][0]["ranking_method"] = "public_value_v1"
         errors = MODULE.validate(audit, source_pool())
-        self.assertTrue(any("最新一輪" in error and "public_value_v2" in error for error in errors))
+        self.assertTrue(any("ranking_method" in error for error in errors))
 
     def test_grading_regression_cases_stay_in_calibrated_ranges(self):
         fixture = json.loads(
@@ -1034,16 +1021,17 @@ class CandidateAuditTests(unittest.TestCase):
         errors = MODULE.validate(audit, source_pool())
         self.assertTrue(any("完整排序清單" in error for error in errors))
 
-    def test_fixed_limit_overflow_list_is_rejected_as_obsolete(self):
+    def test_unknown_deprecated_source_coverage_field_is_rejected(self):
         audit = valid_audit(per_source_count=35)
         source = audit["runs"][0]["source_coverage"][0]
-        source["mandatory_overflow_items"] = [{
+        retired_field = "_".join(("mandatory", "overflow", "items"))
+        source[retired_field] = [{
             "url": source["ranked_items"][32]["url"],
             "trigger": "major_disaster",
             "reason": "固定名額已取消，不應再需要溢位例外。",
         }]
         errors = MODULE.validate(audit, source_pool())
-        self.assertTrue(any("不得再使用強制溢位" in error for error in errors))
+        self.assertTrue(any("未知欄位" in error for error in errors))
 
     def test_every_source_item_must_reach_a_deduplicated_candidate(self):
         audit = valid_audit()

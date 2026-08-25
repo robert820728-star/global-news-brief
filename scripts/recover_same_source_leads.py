@@ -102,7 +102,6 @@ def rank_scan(scan: dict, source: dict, coverage: dict, ranking: dict) -> dict:
         "ranked_items": ranked,
         "selected_for_pool_count": len(selected),
         "selected_item_urls": selected,
-        "mandatory_overflow_items": [],
         "ranking_completed": True,
         "ranking_method": ranking["method"],
         "failure_reason": None,
