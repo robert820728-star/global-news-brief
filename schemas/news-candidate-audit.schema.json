@@ -13,7 +13,7 @@
   "$defs": {
     "sourceCoverage": {
       "type": "object",
-      "required": ["source_id", "status", "within_window_count", "ranked_count", "ranked_items", "selected_for_pool_count", "selected_item_urls", "mandatory_overflow_items", "ranking_completed", "ranking_method", "failure_reason", "scan_window_start", "scan_window_end", "scan_evidence_path"],
+      "required": ["source_id", "status", "within_window_count", "ranked_count", "ranked_items", "selected_for_pool_count", "selected_item_urls", "mandatory_overflow_items", "ranking_completed", "ranking_method", "failure_reason"],
       "properties": {
         "source_id": {"type": "string"},
         "status": {"enum": ["completed", "failed"]},
@@ -368,8 +368,47 @@
     "candidate": {
       "anyOf": [
         {"$ref": "#/$defs/v2Candidate"},
+        {"$ref": "#/$defs/compactHistoricalCandidate"},
         {"$ref": "#/$defs/legacyCandidate"}
       ]
+    },
+    "compactHistoricalCandidate": {
+      "description": "Mobile-native V2 continuity cache profile. It is valid only in a historical run; the latest run remains subject to the full runtime validator.",
+      "type": "object",
+      "required": ["candidate_id", "dedup_key", "event_date", "title", "section", "scoring_method", "weighted_score", "importance_score", "importance_breakdown", "dimension_evidence", "consequence_evidence", "evidence_facts", "policy_stage", "delta_facts", "high_score_challenges", "overall_high_score_challenge", "cross_dimension_rationales", "midpoint_rationales", "evidence_confidence", "confidence_band", "grade_status", "provisional_grade", "decision", "reason", "source_ids", "selected_event_id", "continuity"],
+      "properties": {
+        "candidate_id": {"type": "string", "minLength": 1},
+        "dedup_key": {"type": "string", "minLength": 1},
+        "continuity_key": {"type": ["string", "null"]},
+        "event_date": {"type": "string", "format": "date"},
+        "semantic_event_id": {"type": "string", "minLength": 1},
+        "event_identity": {"$ref": "#/$defs/eventIdentity"},
+        "title": {"type": "string", "minLength": 1},
+        "section": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "scoring_method": {"const": "public_value_v2"},
+        "weighted_score": {"type": "number", "minimum": 0, "maximum": 100},
+        "importance_score": {"type": "number", "minimum": 0, "maximum": 100},
+        "importance_breakdown": {"$ref": "#/$defs/importanceBreakdown"},
+        "dimension_evidence": {"$ref": "#/$defs/dimensionEvidence"},
+        "consequence_evidence": {"$ref": "#/$defs/consequenceEvidence"},
+        "evidence_facts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidenceFact"}},
+        "policy_stage": {"enum": ["not_applicable", "rumor", "consideration", "proposal", "draft", "introduced", "passed", "signed", "effective", "implemented", "measurable_effect"]},
+        "delta_facts": {"type": "array", "items": {"$ref": "#/$defs/deltaFact"}},
+        "high_score_challenges": {"type": "array", "items": {"$ref": "#/$defs/highScoreChallenge"}},
+        "overall_high_score_challenge": {"oneOf": [{"$ref": "#/$defs/highScoreChallenge"}, {"type": "null"}]},
+        "cross_dimension_rationales": {"type": "array", "items": {"$ref": "#/$defs/crossDimensionRationale"}},
+        "midpoint_rationales": {"type": "array", "items": {"$ref": "#/$defs/midpointRationale"}},
+        "evidence_confidence": {"type": "integer", "minimum": 0, "maximum": 100},
+        "confidence_band": {"enum": ["high", "medium", "low"]},
+        "grade_status": {"enum": ["unscored", "provisional", "validated"]},
+        "provisional_grade": {"enum": ["SS", "S+", "S", "S-", "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "E"]},
+        "decision": {"enum": ["selected", "excluded", "merged", "deferred"]},
+        "reason": {"type": "string", "minLength": 1},
+        "source_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "selected_event_id": {"type": ["string", "null"]},
+        "continuity": {"type": "object"}
+      },
+      "additionalProperties": true
     },
     "legacyCandidate": {
       "description": "Preserved V1 history for continuity comparison only; never a validated current grade.",

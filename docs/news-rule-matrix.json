@@ -1,8 +1,12 @@
 {
   "schema_version": "1.0.0",
-  "title_zh_tw": "每日新聞現行規則矩陣",
-  "title_en": "Current Daily News Rule Matrix",
+  "title_zh_tw": "S5 發布規則追溯矩陣",
+  "title_en": "S5 Release Rule Traceability Matrix",
   "generated_for": "S5 repository-wide rule integration",
+  "authority_status": "traceability_snapshot",
+  "exhaustive": false,
+  "scope_zh_tw": "本檔只追溯 S5 發布整合的五項驗收規則，不是全部現行規則清單；現行入口、順序與權威層級以 INSTALL.md 為準。",
+  "scope_en": "This file traces five S5 release-integration checks only; it is not an exhaustive active-rule catalog. INSTALL.md governs the current entrypoint, sequence, and authority order.",
   "rules": [
     {
       "requirement_zh_tw": "讀者版先有唯一今日總覽，再依台灣、中國、世界順序輸出單項新聞。",

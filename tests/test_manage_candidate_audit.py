@@ -275,6 +275,43 @@ def valid_audit(candidates=None, per_source_count=1):
 
 
 class CandidateAuditTests(unittest.TestCase):
+    def test_historical_mobile_compact_v2_candidate_can_rejoin_full_runtime(self):
+        audit = valid_audit()
+        historical = copy.deepcopy(audit["runs"][0])
+        historical["run_id"] = "historical-mobile-compact"
+        historical["generated_at"] = "2026-08-13T06:00:00+08:00"
+        for item in historical["candidates"]:
+            item["event_date"] = "2026-08-13"
+            for field in (
+                "grading_evidence",
+                "source_audit",
+                "candidate_urls",
+                "reason_code",
+                "grade_reason",
+            ):
+                item.pop(field, None)
+        audit["runs"].insert(0, historical)
+
+        self.assertEqual([], MODULE.validate(audit, source_pool()))
+
+    def test_latest_run_cannot_use_mobile_compact_history_profile(self):
+        audit = valid_audit()
+        item = audit["runs"][-1]["candidates"][0]
+        item["event_date"] = "2026-08-14"
+        for field in (
+            "grading_evidence",
+            "source_audit",
+            "candidate_urls",
+            "reason_code",
+            "grade_reason",
+        ):
+            item.pop(field, None)
+
+        errors = MODULE.validate(audit, source_pool())
+
+        self.assertTrue(any("grading_evidence" in error for error in errors))
+        self.assertTrue(any("缺少原始入池網址" in error for error in errors))
+
     def test_historical_v1_source_ranking_is_preserved_but_latest_run_requires_v2(self):
         audit = valid_audit()
         historical = copy.deepcopy(audit["runs"][0])

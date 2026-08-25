@@ -196,7 +196,7 @@ Stage -1 完成後，至少讀取並遵守：
 
 | Stage | completed 必要 artifact 名稱 |
 |---|---|
-| `source-scan` | `source_candidates` |
+| `source-scan` | `source_candidates`, `relevance_gate`, `model_source_candidates` |
 | `preprocess-news-candidates` | `preprocessed_candidates` |
 | `select-news-events` | `selection_results` |
 | `audit-news-candidates` | `candidate_audit` |

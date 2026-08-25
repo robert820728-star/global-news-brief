@@ -441,6 +441,71 @@ def validate_v2_candidate(candidate, ranking, label):
     return errors
 
 
+COMPACT_HISTORICAL_REQUIRED_FIELDS = {
+    "candidate_id", "dedup_key", "event_date", "section", "title",
+    "scoring_method", "importance_breakdown", "weighted_score",
+    "importance_score", "dimension_evidence", "consequence_evidence",
+    "evidence_facts", "policy_stage", "delta_facts",
+    "high_score_challenges", "overall_high_score_challenge",
+    "cross_dimension_rationales", "midpoint_rationales",
+    "evidence_confidence", "confidence_band", "grade_status",
+    "provisional_grade", "decision", "reason", "source_ids",
+    "selected_event_id", "continuity",
+}
+
+
+def is_compact_historical_candidate(candidate):
+    """Recognize the documented mobile continuity-cache profile, never a latest run."""
+    return (
+        isinstance(candidate, dict)
+        and candidate.get("scoring_method") == "public_value_v2"
+        and "event_date" in candidate
+        and all(
+            field not in candidate
+            for field in (
+                "grading_evidence", "source_audit", "candidate_urls",
+                "reason_code", "grade_reason",
+            )
+        )
+    )
+
+
+def validate_compact_historical_candidate(candidate, ranking, valid_source_ids, label):
+    """Validate compact history without inventing evidence omitted by mobile-native."""
+    errors = []
+    missing = sorted(COMPACT_HISTORICAL_REQUIRED_FIELDS - set(candidate))
+    if missing:
+        errors.append(label + " compact historical candidate 缺少：" + ", ".join(missing))
+        return errors
+    for field in ("candidate_id", "dedup_key", "title", "section", "reason"):
+        if not isinstance(candidate.get(field), str) or not candidate[field].strip():
+            errors.append(label + f".{field} 不得為空")
+    try:
+        datetime.strptime(candidate["event_date"], "%Y-%m-%d")
+    except (TypeError, ValueError):
+        errors.append(label + ".event_date 必須是 ISO 日期")
+    errors.extend(validate_v2_candidate(candidate, ranking, label))
+    source_ids = candidate.get("source_ids")
+    if not isinstance(source_ids, list) or not source_ids:
+        errors.append(label + " 缺少來源池追溯")
+    elif any(source_id not in valid_source_ids for source_id in source_ids):
+        errors.append(label + " 引用未定義的 discovery 來源")
+    grade = candidate.get("provisional_grade")
+    decision = candidate.get("decision")
+    if grade in AUTO_SELECT and decision not in {"selected", "merged"}:
+        errors.append(label + " C 以上歷史候選必須保留其 selected／merged 映射")
+    if grade in AUTO_SELECT and (
+        not isinstance(candidate.get("selected_event_id"), str)
+        or not candidate["selected_event_id"].strip()
+    ):
+        errors.append(label + " C 以上歷史候選必須保留 selected_event_id")
+    if grade in LOW_GRADES and decision == "selected":
+        errors.append(label + " D/E 不得入選")
+    if not isinstance(candidate.get("continuity"), dict):
+        errors.append(label + ".continuity 必須是物件")
+    return errors
+
+
 def validate_policy_governance_review(review, importance_score, label):
     """Require event identity and institutional evidence to agree with scoring."""
     errors = []
@@ -1064,8 +1129,15 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
 
         valid_source_ids = all_configured_source_ids or set(coverage_ids)
         candidate_url_list = []
+        historical_compact_run = False
         for candidate_index, candidate in enumerate(candidates, 1):
             label = f"{run_label}.candidates[{candidate_index}]"
+            if not is_latest_run and is_compact_historical_candidate(candidate):
+                historical_compact_run = True
+                errors.extend(validate_compact_historical_candidate(
+                    candidate, ranking, valid_source_ids, label
+                ))
+                continue
             grade = candidate.get("provisional_grade")
             decision = candidate.get("decision")
             reason_code = candidate.get("reason_code")
@@ -1278,7 +1350,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             }
             if set(candidate_url_list) != event_urls:
                 errors.append(run_label + " candidate_urls 必須精確等於 event_evidence 網址")
-        elif set(candidate_url_list) != set(pool_urls):
+        elif not historical_compact_run and set(candidate_url_list) != set(pool_urls):
             errors.append(run_label + " 每個 discovery 來源入池網址都必須歸屬一個去重候選，禁止候選無聲消失")
     if require_fourteen_day_complete:
         errors += fourteen_day_completeness_errors(data)

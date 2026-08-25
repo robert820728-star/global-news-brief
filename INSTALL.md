@@ -38,7 +38,7 @@
 | 8 | `schemas/*.json` 與 `scripts/*.py` | 可機器檢查的資料契約與 validator；與 prose 衝突時必須修正衝突，不能繞過 validator |
 | 9 | `news-brief-template.md` | 唯一讀者版骨架 |
 | 10 | `news-brief-examples.md` | 只在格式驗證失敗或維護規則時查正反例，不是每日必讀 |
-| 11 | `VERSION-RECORD.md`、`docs/superpowers/**` | 歷史與設計紀錄；只供追溯，不覆寫現行契約 |
+| 11 | `VERSION-RECORD.md`、`docs/news-rule-matrix.json`、`docs/superpowers/**` | 版本、S5 局部驗收與設計紀錄；只供追溯，不是完整現行規則清單，也不覆寫現行契約 |
 
 ## 一、安裝前驗證
 
@@ -180,6 +180,8 @@
 `FOURTEEN_DAY_AUDIT_MERGE_UNAVAILABLE`：`logs/runs/<run_id>/candidate-audit.json` 是本輪 24 小時 run-scoped candidate audit，也是完成門檻；`logs/latest-candidate-audit.json` 只是十四天 continuity cache。宿主無法安全 materialize／merge 後者時，保留原 blob、記錄 `durable_audit_status=preserved_merge_deferred`，繼續當輪驗證與 reader。這個狀態不得設為 `last_error`、不得標 failed，也不得重跑 discovery、評分或驗證。
 
 `V1_HISTORY_CONTINUITY_ONLY`：升級當下仍在十四天內的 `public_value_v1` run 與來源排序原樣保留，只用於事件 continuity／delta 比較，不要求以不存在的舊證據回填 V2，也不得沿用為 validated grade。最新一輪與任何本輪新增或實質更新事件一律重走 `public_value_v2`；validator 只對歷史 run 接受可重算的 V1 來源排序，對最新 run 強制 V2。
+
+`MOBILE_COMPACT_HISTORY_SCHEMA_RULE`：mobile-native durable audit 的精簡 V2 candidate 是歷史 continuity cache profile，可省略 verbose `grading_evidence`、逐頁 `source_audit`、`candidate_urls`、`reason_code` 與 `grade_reason`；full-runtime 載入時仍重驗保留的六項分數、fact-ID 證據、加權總分、grade status、來源 ID 與 selected mapping。此精簡 profile 永遠不得作為最新 run；最新 run 必須保存完整 run-scoped candidate audit，缺少上述完整證據即驗證失敗。歷史 source coverage 的 scan 檔案路徑可隨宿主消失，因此 schema 不強制舊 run 保存本機路徑；validator 仍對最新 run 強制 `scan_window_start`、`scan_window_end` 與可讀的 `scan_evidence_path`。
 
 ### Public Value V2 填寫與驗證順序
 

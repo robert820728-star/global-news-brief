@@ -7,6 +7,15 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PipelineContractTests(unittest.TestCase):
+    def test_s5_rule_matrix_is_scoped_as_traceability_not_complete_authority(self):
+        matrix = json.loads(
+            (ROOT / "docs/news-rule-matrix.json").read_text(encoding="utf-8")
+        )
+
+        self.assertEqual("traceability_snapshot", matrix["authority_status"])
+        self.assertFalse(matrix["exhaustive"])
+        self.assertIn("INSTALL.md", matrix["scope_en"])
+
     def test_public_value_v2_uses_normalized_weighted_dimensions(self):
         pool = json.loads(
             (ROOT / "news-source-pool.json").read_text(encoding="utf-8")
@@ -57,6 +66,45 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn(
             {"$ref": "#/$defs/legacyCandidate"},
             schema["$defs"]["candidate"]["anyOf"],
+        )
+
+    def test_historical_source_scan_receipts_do_not_require_current_run_files(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-candidate-audit.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+        required = set(schema["$defs"]["sourceCoverage"]["required"])
+        self.assertTrue(
+            {"scan_window_start", "scan_window_end", "scan_evidence_path"}.isdisjoint(
+                required
+            )
+        )
+
+    def test_candidate_schema_accepts_mobile_compact_history_profile(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-candidate-audit.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+        self.assertIn(
+            {"$ref": "#/$defs/compactHistoricalCandidate"},
+            schema["$defs"]["candidate"]["anyOf"],
+        )
+        compact = schema["$defs"]["compactHistoricalCandidate"]
+        self.assertNotIn("grading_evidence", compact["required"])
+        self.assertNotIn("source_audit", compact["required"])
+        self.assertNotIn("candidate_urls", compact["required"])
+
+    def test_prompt_source_scan_checkpoint_matches_runtime_contract(self):
+        prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+
+        self.assertIn(
+            "| `source-scan` | `source_candidates`, `relevance_gate`, "
+            "`model_source_candidates` |",
+            prompt,
         )
 
     def test_manifest_schema_requires_validated_public_value_v2_fields(self):

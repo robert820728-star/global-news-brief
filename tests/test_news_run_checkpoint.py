@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -51,6 +52,22 @@ def make_bootstrap(root: Path):
 
 
 class NewsRunCheckpointTests(unittest.TestCase):
+    def test_bootstrap_receipt_requires_every_install_runtime_entrypoint(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        preflight = install.split("## 一、安裝前驗證", 1)[1].split("## 二、", 1)[0]
+        expected = set(re.findall(
+            r"`((?:\.agents|bootstrap|scripts|schemas|maps)/[^`]+|[^`/]+\.(?:md|json|yaml))`",
+            preflight,
+        ))
+
+        self.assertTrue(expected.issubset(set(MODULE.BOOTSTRAP_REQUIRED_PATHS)))
+
+    def test_source_scan_completion_requires_all_canonical_artifacts(self):
+        self.assertEqual(
+            ("source_candidates", "relevance_gate", "model_source_candidates"),
+            MODULE.REQUIRED_STAGE_ARTIFACTS["source-scan"],
+        )
+
     def test_stage_cannot_start_before_predecessor_completes(self):
         checkpoint = MODULE.create_checkpoint("run-1", "a", "b")
         with self.assertRaisesRegex(ValueError, "前一階段未完成"):
