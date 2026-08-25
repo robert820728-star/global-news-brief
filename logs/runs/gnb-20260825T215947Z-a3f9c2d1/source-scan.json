@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260825T215947Z-a3f9c2d1",
+  "window_start": "2026-08-25T05:59:47+08:00",
+  "window_end": "2026-08-26T05:59:47+08:00",
+  "execution_mode": "mobile-native",
+  "configured_routes": [
+    {
+      "source_id": "gdelt",
+      "scan_status": "failed",
+      "coverage_complete": false,
+      "coverage_status": "unavailable",
+      "coverage_reason": "Scheduled-task host could not execute the repository GDELT archive/DOC transport with persistent raw snapshots; no route completion is claimed.",
+      "selected_item_urls": []
+    },
+    {
+      "source_id": "cna",
+      "scan_status": "failed",
+      "coverage_complete": false,
+      "coverage_status": "unavailable",
+      "coverage_reason": "Scheduled-task host lacks the canonical CNA POST pagination transport required to prove full window coverage; no route completion is claimed.",
+      "selected_item_urls": []
+    },
+    {
+      "source_id": "chinanews",
+      "scan_status": "failed",
+      "coverage_complete": false,
+      "coverage_status": "unavailable",
+      "coverage_reason": "Scheduled-task host could not materialize both required China News daily index snapshots with repository-grade scan evidence; no route completion is claimed.",
+      "selected_item_urls": []
+    }
+  ],
+  "fallback_discovery": {
+    "used": true,
+    "mode": "web_search_final_fallback",
+    "coverage_complete": false,
+    "article_row_count_verified": false,
+    "note": "Fallback search produced current verifiable candidates and is permitted by the pinned mobile contract when configured feeds are unavailable. It does not satisfy configured-route completeness and no exhaustive article count is claimed.",
+    "candidate_urls": [
+      "https://www.reuters.com/business/environment/heavy-rain-forecast-typhoon-saudel-girds-towards-japan-taiwan-2026-08-25/",
+      "https://www.moea.gov.tw/MNS/Populace/news/News.aspx?kind=1&menu_id=40&news_id=123738",
+      "https://www.mohw.gov.tw/cp-16-87578-1.html",
+      "https://www.mohw.gov.tw/cp-7402-87579-1.html",
+      "https://www.cdc.gov.tw/Category/ListContent/EmXemht4IT-IRAPrAnyG9A?uaid=PdJqXvsZjg1Q5TA301JYpg",
+      "https://www.moea.gov.tw/MNS/populace/news/News.aspx?kind=1&menu_id=40&news_id=123724",
+      "https://www.moea.gov.tw/MNS/POPULACE/news/News.aspx?kind=1&menu_id=40&news_id=123727",
+      "https://www.ey.gov.tw/Page/9277F759E41CCD91/50f8490b-d308-4ad1-8961-a1666b04e698",
+      "https://www.reuters.com/world/china/new-installations-emerge-islet-china-accelerates-south-china-sea-build-up-2026-08-25/",
+      "https://legalinfo.moj.gov.cn/zhfxfzzx/fzzxyw/202608/t20260825_538857.html",
+      "https://www.reuters.com/world/china/china-india-hold-border-talks-agree-continue-search-boundary-settlement-2026-08-25/",
+      "https://www.reuters.com/world/middle-east/syrias-kurdish-led-sdf-dissolves-part-integration-with-damascus-2026-08-25/",
+      "https://apnews.com/article/1b7d210c96d2c608007b0411db25f453",
+      "https://sana.sy/en/syria/2338549/",
+      "https://www.canada.ca/en/department-finance/news/2026/08/canada-announces-targeted-countermeasures-and-substantive-support-for-workers-and-businesses-in-response-to-us-tariffs.html",
+      "https://www.reuters.com/business/canada-announces-20-bln-retaliatory-tariffs-us-goods-unveils-support-measures-2026-08-25/",
+      "https://currently.att.yahoo.com/att/cyclosporiasis-cases-us-climb-17-211812921.html",
+      "https://www.reuters.com/business/imfs-georgieva-says-global-economy-weathering-energy-shock-sees-fiscal-concerns-2026-08-25/",
+      "https://www.reuters.com/world/europe/ukraines-zelenskiy-sees-window-us-mediation-until-summer-2027-2026-08-25/",
+      "https://www.reuters.com/business/energy/united-states-sanctions-oil-trader-wellbred-over-iran-links-2026-08-25/"
+    ]
+  }
+}
