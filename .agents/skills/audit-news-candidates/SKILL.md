@@ -17,7 +17,7 @@ description: Maintain a rolling fourteen-day audit of all news candidates, inclu
 
 
 1. 讀取本輪全部聚類候選、`news-source-pool.json`、每站來源掃描證據與最近十四天 `state/candidate-audit.json`。先由 `scripts/validate_source_scan_evidence.py` 驗證快照雜湊、翻頁鏈與停止證據並重算時間窗清單；不得採信自行填寫的來源筆數。`FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` 要求每個成功來源的 `selected_item_urls` 精確等於完整 `ranked_items`，不得截斷或使用溢位例外。每筆 `ranked_items` 必須保存 `public_value_v1` 六項 `importance_breakdown`、總分與理由；每項不超過權重且六項總和等於 `importance_score`。
-   - `PIPELINE_COUNT_RECEIPT_V1`：最新一輪保存 `merged_article_row_count`、`in_window_article_row_count`、`canonical_url_count`、`provisional_title_cluster_count`、`semantic_event_count`、`scored_event_count`、`c_or_higher_scored_event_count`、`selected_event_count`，以及 `event_evidence_article_row_count`、`non_news_article_row_count`、`unresolved_article_row_count`。全部由當輪 artifact 重算，且前四層至語意事件數不得增加。文章列數不得稱為語意事件數；網址正規化或標題分群不得稱為語意去重。小計不守恆時必須回報差額並撤回未證實的數量宣稱，但不得因此停止發布仍可核實的新聞。
+   - `PIPELINE_COUNT_RECEIPT_V1`：最新一輪保存 `merged_article_row_count`、`in_window_article_row_count`、`canonical_url_count`、`provisional_title_cluster_count`、`semantic_event_count`、`scored_event_count`、`c_or_higher_scored_event_count`、`selected_event_count`，以及 `event_evidence_article_row_count`、`non_news_article_row_count`、`unresolved_article_row_count`。全部由當輪 artifact 重算，且前四層至語意事件數不得增加。文章列數不得稱為語意事件數；網址正規化或標題分群不得稱為語意去重。`COUNT_RECEIPT_REPAIR_ONCE` 要求事件小計與 `events` 陣列不符時先依陣列重算並覆寫一次；可修復的 32/33 差額不得升級為整輪失敗或觸發 discovery 重跑。文章列層無法驗證時如實標記，不捏造數字。
    - `SEMANTIC_EVENT_LEDGER_GATE`：只有語意事件才算新聞、才可進入六項評分。每個真正事件必須有唯一 `semantic_event_id` 與完整 `event_identity`；每個窗內文章列都必須記入 `article_dispositions`，且只能是 `event_evidence`、`non_news` 或 `unresolved`。`event_evidence` 必須指向事件，`non_news` 必須保存具體理由，任何 `unresolved` 都阻擋 audit 完成。文章列數、網址數與標題群組數不得稱為新聞數或完成評分數。
    - `EVENT_REGION_AND_TIME_IDENTITY_GATE`：最新一輪每個語意事件都必須保存 `event_identity.country_codes`、`primary_country_code`、`location_evidence`、`event_occurred_at`、`material_update_at`、`material_update_type`、`material_update_evidence` 與模型產生的 `temporal_review`。來源分桶不是事件地區；模型逐事件比較文章內容與十四天時間線，分列新增／變更事實、重複舊事實及窗內當下影響；程式只驗證結論一致性。已結束的舊事件若只是重複舊傷亡、重新整理、回顧、週年、換標題或重刊，文章處置只能是 `non_news`；開始較早但確實仍持續跨越精確時間窗並造成影響，可列 `ongoing_current_impact`。任何缺漏或矛盾必須是 `unresolved` 且阻止 audit 完成。
 2. 以 `dedup_key` 去重，以 `continuity_key` 連接跨日事件。
@@ -36,6 +36,8 @@ description: Maintain a rolling fourteen-day audit of all news candidates, inclu
 `MOBILE_NATIVE_AUDIT_ROLLING_MERGE`
 
 下方 `manage_candidate_audit.py` 命令是 full-runtime 的首選路徑；它不是 mobile-native 的必要前提。當排程宿主沒有可執行 runtime、但 GitHub 已存在 durable audit 時，可直接讀取該 JSON 做受限的結構化合併：若六項欄位、各欄範圍與總分算法未變，保留仍在十四天內的既有候選，不得重算未發生實質更新的歷史候選；只評分本輪新增或有實質更新的候選，移除逾期項目並依既有 key 去重。可用 GitHub contents API 整檔 replacement 保存合併結果，同時如實記錄 `execution_mode=mobile-native`，不得宣稱已執行 script validation。C 級以上仍依當輪規則另做來源驗證；缺少本機 runtime 不得因此阻止本日讀者版。
+
+`FOURTEEN_DAY_AUDIT_MERGE_UNAVAILABLE`：若 mobile-native 宿主無法安全 materialize 或合併既有 durable audit，保留其原 blob，另存 `logs/runs/<run_id>/candidate-audit.json` 作為當輪 24 小時 run-scoped candidate audit，並記錄 `durable_audit_status=preserved_merge_deferred`。這是歷史維護延後，不是 `last_error`；不得標記整輪 failed、建立新 run 或重跑 discovery／評分／驗證。只有本輪 run-scoped audit 的 C 級以上事件需要映射到本輪 reader；沒有本輪實質更新的歷史事件不重刊。
 
 `MOBILE_NATIVE_COMPACT_DURABLE_AUDIT`
 

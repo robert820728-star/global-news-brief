@@ -13,11 +13,18 @@ from typing import Any
 import run_identity
 
 
-SCHEMA_VERSION = "1.2.0"
+SCHEMA_VERSION = "1.3.0"
 EXECUTION_MODES = {"full-runtime", "mobile-native"}
 DELIVERY_PROFILES = {"full-assets", "reader-canonical-capability-degraded"}
 NATIVE_MEDIA_STATUSES = {"available", "unavailable"}
 KNOWN_CAPABILITY_LIMITATIONS = {"NATIVE_MEDIA_UNAVAILABLE"}
+DURABLE_AUDIT_STATUSES = {
+    "not_started",
+    "updated",
+    "preserved_merge_deferred",
+    "current_run_only",
+    "legacy_completed",
+}
 STAGES = (
     "schedule-prepared",
     "executor-started",
@@ -49,7 +56,8 @@ DELIVERY_STATUSES = {
 
 def _read_json(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
-    if value.get("schema_version") in {"1.0.0", "1.1.0"}:
+    prior_schema = value.get("schema_version")
+    if prior_schema in {"1.0.0", "1.1.0", "1.2.0"}:
         value["schema_version"] = SCHEMA_VERSION
         value.setdefault("execution_mode", "full-runtime")
         value.setdefault("candidate_audit_artifact", None)
@@ -59,6 +67,16 @@ def _read_json(path: Path) -> dict[str, Any]:
         value.setdefault("delivery_profile", "full-assets")
         value.setdefault("native_media_status", "available")
         value.setdefault("capability_limitations", [])
+        prior_audit = value.get("candidate_audit_artifact")
+        if isinstance(prior_audit, dict) and prior_audit.get("path") == "logs/latest-candidate-audit.json":
+            value.setdefault("durable_audit_artifact", prior_audit)
+            value.setdefault(
+                "durable_audit_status",
+                "legacy_completed" if value.get("status") == "completed" else "preserved_merge_deferred",
+            )
+        else:
+            value.setdefault("durable_audit_artifact", None)
+            value.setdefault("durable_audit_status", "not_started")
     return value
 
 
@@ -99,6 +117,8 @@ def validate_record(record: dict[str, Any]) -> None:
         "client_confirmation_supported",
         "reader_artifact",
         "candidate_audit_artifact",
+        "durable_audit_status",
+        "durable_audit_artifact",
     }
     missing = required.difference(record)
     if missing:
@@ -111,6 +131,8 @@ def validate_record(record: dict[str, Any]) -> None:
         raise ValueError("invalid delivery_profile")
     if record["native_media_status"] not in NATIVE_MEDIA_STATUSES:
         raise ValueError("invalid native_media_status")
+    if record["durable_audit_status"] not in DURABLE_AUDIT_STATUSES:
+        raise ValueError("invalid durable_audit_status")
     limitations = record["capability_limitations"]
     if (
         not isinstance(limitations, list)
@@ -145,8 +167,19 @@ def validate_record(record: dict[str, Any]) -> None:
     if record["status"] == "completed":
         if record.get("reader_artifact") is None or record.get("candidate_audit_artifact") is None:
             raise ValueError("completed requires saved reader and candidate-audit artifacts")
+        expected_audit_path = f"logs/runs/{record['run_id']}/candidate-audit.json"
+        actual_audit_path = record["candidate_audit_artifact"].get("path")
+        if (
+            actual_audit_path != expected_audit_path
+            and record["durable_audit_status"] != "legacy_completed"
+        ):
+            raise ValueError("completed requires a run-scoped candidate audit")
         if degraded and record.get("last_error") is not None:
             raise ValueError("a capability limitation is not a last_error")
+    durable_artifact = record.get("durable_audit_artifact")
+    if record["durable_audit_status"] in {"updated", "preserved_merge_deferred", "legacy_completed"}:
+        if not isinstance(durable_artifact, dict) or durable_artifact.get("path") != "logs/latest-candidate-audit.json":
+            raise ValueError("durable audit status requires logs/latest-candidate-audit.json evidence")
 
 
 def prepare_run(
@@ -195,6 +228,8 @@ def prepare_run(
         "client_confirmation_supported": False,
         "reader_artifact": None,
         "candidate_audit_artifact": None,
+        "durable_audit_status": "not_started",
+        "durable_audit_artifact": None,
     }
     validate_record(current)
     _atomic_write(current_path, current)
@@ -218,6 +253,8 @@ def advance_run(
     native_media_status: str | None = None,
     capability_limitations: list[str] | None = None,
     candidate_audit_artifact: dict[str, str] | None = None,
+    durable_audit_status: str | None = None,
+    durable_audit_artifact: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     ledger_dir = Path(ledger_dir)
     current_path = ledger_dir / "current.json"
@@ -265,6 +302,10 @@ def advance_run(
         current["capability_limitations"] = list(capability_limitations)
     if candidate_audit_artifact is not None:
         current["candidate_audit_artifact"] = candidate_audit_artifact
+    if durable_audit_status is not None:
+        current["durable_audit_status"] = durable_audit_status
+    if durable_audit_artifact is not None:
+        current["durable_audit_artifact"] = durable_audit_artifact
     current["last_error"] = last_error
     validate_record(current)
     _atomic_write(current_path, current)
@@ -299,6 +340,8 @@ def build_parser() -> argparse.ArgumentParser:
     advance.add_argument("--native-media-status", choices=sorted(NATIVE_MEDIA_STATUSES))
     advance.add_argument("--capability-limitation", action="append", choices=sorted(KNOWN_CAPABILITY_LIMITATIONS))
     advance.add_argument("--candidate-audit-artifact", type=Path)
+    advance.add_argument("--durable-audit-status", choices=sorted(DURABLE_AUDIT_STATUSES))
+    advance.add_argument("--durable-audit-artifact", type=Path)
 
     validate = subparsers.add_parser("validate")
     validate.add_argument("--input", type=Path, required=True)
@@ -335,6 +378,11 @@ def main() -> int:
             candidate_audit_artifact=(
                 _read_json(args.candidate_audit_artifact)
                 if args.candidate_audit_artifact else None
+            ),
+            durable_audit_status=args.durable_audit_status,
+            durable_audit_artifact=(
+                _read_json(args.durable_audit_artifact)
+                if args.durable_audit_artifact else None
             ),
         )
     else:

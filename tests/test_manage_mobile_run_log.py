@@ -54,6 +54,8 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertEqual(current["native_media_status"], "available")
         self.assertEqual(current["capability_limitations"], [])
         self.assertIsNone(current["candidate_audit_artifact"])
+        self.assertEqual(current["durable_audit_status"], "not_started")
+        self.assertIsNone(current["durable_audit_artifact"])
         self.assertEqual(current["delivery_status"], "not_ready")
         workflow = (ROOT / ".github" / "workflows" / "prepare-mobile-run-ledger.yml").read_text(
             encoding="utf-8"
@@ -71,7 +73,7 @@ class MobileRunLogTests(unittest.TestCase):
         )
         artifact = {
             "branch": "run-logs",
-            "path": "logs/latest-candidate-audit.json",
+            "path": f"logs/runs/{RUN_1}/candidate-audit.json",
             "blob_sha": "a" * 40,
         }
         self.module.advance_run(
@@ -94,7 +96,7 @@ class MobileRunLogTests(unittest.TestCase):
         self.prepare()
         artifact = {
             "branch": "run-logs",
-            "path": "logs/latest-candidate-audit.json",
+            "path": f"logs/runs/{RUN_1}/candidate-audit.json",
             "blob_sha": "a" * 40,
         }
         reader = {
@@ -139,14 +141,45 @@ class MobileRunLogTests(unittest.TestCase):
                 "branch": "run-logs", "path": "logs/latest-reader.md", "blob_sha": "b" * 40,
             },
             candidate_audit_artifact={
-                "branch": "run-logs", "path": "logs/latest-candidate-audit.json", "blob_sha": "a" * 40,
+                "branch": "run-logs",
+                "path": f"logs/runs/{RUN_1}/candidate-audit.json",
+                "blob_sha": "a" * 40,
+            },
+            durable_audit_status="preserved_merge_deferred",
+            durable_audit_artifact={
+                "branch": "run-logs",
+                "path": "logs/latest-candidate-audit.json",
+                "blob_sha": "c" * 40,
             },
         )
         current = self.read("current.json")
         self.assertEqual(current["status"], "completed")
         self.assertEqual(current["delivery_profile"], "reader-canonical-capability-degraded")
         self.assertEqual(current["capability_limitations"], ["NATIVE_MEDIA_UNAVAILABLE"])
+        self.assertEqual(current["durable_audit_status"], "preserved_merge_deferred")
         self.assertIsNone(current["last_error"])
+
+    def test_completed_run_requires_run_scoped_candidate_audit_not_durable_history(self):
+        self.prepare()
+        with self.assertRaisesRegex(ValueError, "run-scoped candidate audit"):
+            self.module.advance_run(
+                self.ledger_dir,
+                run_id=RUN_1,
+                stage="delivery-handoff",
+                updated_at="2026-08-18T00:15:00Z",
+                status="completed",
+                delivery_status="handoff_started",
+                reader_artifact={
+                    "branch": "run-logs",
+                    "path": "logs/latest-reader.md",
+                    "blob_sha": "b" * 40,
+                },
+                candidate_audit_artifact={
+                    "branch": "run-logs",
+                    "path": "logs/latest-candidate-audit.json",
+                    "blob_sha": "a" * 40,
+                },
+            )
 
     def test_next_prepare_marks_running_current_interrupted(self):
         self.prepare()

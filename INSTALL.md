@@ -145,7 +145,7 @@
 | 2 preprocess | model-admitted rows | `preprocessed-candidates.json`；時間窗、canonical URL、provisional article groups | 這些群組不是語意事件；失敗只重跑 preprocess |
 | 3 pre-manifest recovery bundle | source、gate、preprocess、content hydration receipts | `PRE_MANIFEST_RECOVERY_BUNDLE_GATE`：`recovery/checkpoint.json`、`source-candidates.json`、`news-relevance-gate.json`、`model-source-candidates.json`、`preprocessed-candidates.json`、`content-hydration-batches.json`；以 `manage_canonical_run_bundle.py pack-recovery` 建立 connector-safe bundle 並 atomic tree/commit | 必須在 `FIRST_SELECT_NEWS_EVENTS_EXECUTION` 前完成；中斷以 bundle `restore` 從最早缺失 artifact 繼續 |
 | 4 select-news-events | hydrated rows、偏好、十四天 timeline | `selection-results.json`、唯一 `semantic_event_id`／`event_identity`、每列 `article_dispositions` | `event_evidence`、`non_news`、`unresolved` 逐列守恆；unresolved 歸零才可完成；執行 `validate_local_source_admission.py` |
-| 5 audit-news-candidates | selection、上一份 durable audit（若有） | 本輪 candidate audit、十四天 merge status、所有六項分數／理由／等級／決定／`selected_event_id` | 保存 processing counts；十四天歷史不完整標 `audit_bootstrap_incomplete`，但不得刪除或阻擋有效 24 小時 reader |
+| 5 audit-news-candidates | selection、上一份 durable audit（若有） | 本輪 run-scoped candidate audit、十四天 merge status、所有六項分數／理由／等級／決定／`selected_event_id` | 先依本輪事件陣列修正可重算 counts；十四天歷史不完整或無法合併時保留舊 blob 並延後維護，但不得刪除或阻擋有效 24 小時 reader |
 | 6 materialize-manifest | audit 中 selected C 以上事件 | `news-event-manifest.json`，事件集合精確等於 selected ids | 只能物化，不得另加／漏掉新聞；綁定 checkpoint |
 | 7 verify-news-events | 事件與主張類型 | stage patch、原始報導、官方／主要記錄、獨立證據鏈、claim status、source limits | 只合併 verify 欄位並執行 stage ownership validator；驗證來源無固定數或名單 |
 | 8 build-news-maps | 已驗證事件、map policy | map decision、必要 overlay、canonical basemap、PNG／SVG | `validate_map_decisions.py`；只修失敗事件地圖 |
@@ -174,6 +174,10 @@
 - `unresolved_article_row_count`
 
 文章列、canonical URL、標題群組與語意事件是不同口徑，不能互相冒充。所有 C 級以上事件都必須映射到 reader；不設篇數上限。
+
+`COUNT_RECEIPT_REPAIR_ONCE`：事件小計與同一 run-scoped candidate audit 的 `events` 陣列不符時，直接依陣列重算並覆寫一次，再驗證 selected mapping。像 32/33 這類純小計差額不是 fatal blocker；只有事件本體、評分或 mapping 仍矛盾時，才把受影響項目退回 unresolved。
+
+`FOURTEEN_DAY_AUDIT_MERGE_UNAVAILABLE`：`logs/runs/<run_id>/candidate-audit.json` 是本輪 24 小時 run-scoped candidate audit，也是完成門檻；`logs/latest-candidate-audit.json` 只是十四天 continuity cache。宿主無法安全 materialize／merge 後者時，保留原 blob、記錄 `durable_audit_status=preserved_merge_deferred`，繼續當輪驗證與 reader。這個狀態不得設為 `last_error`、不得標 failed，也不得重跑 discovery、評分或驗證。
 
 ### Source and verification evidence
 
@@ -221,6 +225,8 @@ python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 
 `NATIVE_MEDIA_UNAVAILABLE` 在 mobile-native 是非阻塞 capability limitation，不是 recovery target；補圖時沿用同一 run 與既有 checkpoint，只續做視覺交付。
 
+`FOURTEEN_DAY_AUDIT_MERGE_UNAVAILABLE` 同樣不是新聞 recovery target。保留既有 `logs/latest-candidate-audit.json`，保存本輪 run-scoped candidate audit，將 durable merge 交給日後具備適合 runtime 的維護步驟；當輪仍從 manifest／驗證繼續。
+
 ## 八、首次測試
 
 排程建立後立即手動執行一次，至少檢查：
@@ -228,7 +234,8 @@ python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 - fresh main 經雙端點與 fresh nonce 解析，同輪沒有混用 SHA。
 - bootstrap receipt 在 checkpoint 前通過；checkpoint init 含 `--bootstrap-receipt`。
 - 三條 discovery routes 如實記錄，沒有另一組預先固定的驗證來源池要求。
-- source rows、語意事件、scored／selected counts 口徑守恆，unresolved 為零。
+- 語意事件、scored／selected counts 已由本輪事件陣列重算；可取得文章列層證據時再檢查 source-row 守恆，無法取得時明確標未驗證而不捏造。
+- run-scoped candidate audit 與 durable 十四天 cache 分開記錄；durable merge 延後不會進入 `last_error`。
 - 所有 C 級以上事件都在 canonical reader，且第一行為 `# 每日新聞讀者版`。
 - reader 只有一個 `## 今日總覽`，沒有日期前綴、手填數量摘要、事件 ID 或後台修復文字。
 - map decision、chart decision 與每則 image check 均已執行；下載失敗有截圖備援證據。

@@ -663,6 +663,8 @@ class PipelineContractTests(unittest.TestCase):
 
     def test_mobile_increment_recovers_without_blocking_daily_reader(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        ledger = (ROOT / "docs/mobile-run-ledger.md").read_text(encoding="utf-8")
 
         for requirement in (
             "TYPE_CONSISTENT_COVERAGE_SANITY",
@@ -673,6 +675,18 @@ class PipelineContractTests(unittest.TestCase):
             "不得把可用、來源可核對且符合模板的每日讀者版改判失敗",
         ):
             self.assertIn(requirement, daily)
+
+        for document in (daily, install, ledger):
+            self.assertIn("FOURTEEN_DAY_AUDIT_MERGE_UNAVAILABLE", document)
+            self.assertIn("run-scoped candidate audit", document)
+        for document in (daily, install):
+            self.assertIn("不得設為 `last_error`", document)
+        self.assertIn("must not be set as `last_error`", ledger)
+        self.assertIn("COUNT_RECEIPT_REPAIR_ONCE", daily)
+        self.assertIn("直接依 `events` 陣列重算並覆寫", daily)
+        self.assertIn("不得把 32/33 這類可重算差額升級為整輪失敗", daily)
+        self.assertNotIn("本輪完整十四天海選清單寫入", daily)
+        self.assertNotIn("本輪及十四天清單內所有 C 級以上新聞", daily)
 
     def test_mobile_native_can_roll_forward_a_valid_existing_audit_without_rescoring_history(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
