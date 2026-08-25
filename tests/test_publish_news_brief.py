@@ -457,8 +457,12 @@ class PublisherTests(unittest.TestCase):
 
             self.assertEqual(delivered.returncode, 0, delivered.stderr.decode())
             conversation = delivered.stdout.decode("utf-8")
-            map_uri = "sandbox:/" + str(root / "map.png").replace("\\", "/")
-            image_uri = "sandbox:/" + str(root / "image.png").replace("\\", "/")
+            def conversation_uri(path: Path) -> str:
+                normalized = str(path).replace("\\", "/")
+                return "sandbox:" + normalized if normalized.startswith("/") else "sandbox:/" + normalized
+
+            map_uri = conversation_uri(root / "map.png")
+            image_uri = conversation_uri(root / "image.png")
             self.assertIn(f"]({map_uri})", conversation)
             self.assertIn(f"]({image_uri})", conversation)
             self.assertNotEqual(delivered.stdout, canonical_bytes)
