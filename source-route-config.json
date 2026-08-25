@@ -26,13 +26,23 @@
       "request_json": {"action": "0", "category": "aall", "pagesize": 500, "pageidx": 1},
       "request_headers": {"Referer": "https://www.cna.com.tw/list/aall.aspx"},
       "json_exhaustion_path": ["ResultData", "NextPageIdx"],
+      "pagination": {
+        "request_method": "POST",
+        "page_field": "pageidx",
+        "start_page": 2,
+        "max_pages": 60,
+        "items_path": ["ResultData", "Items"],
+        "published_path": ["CreateTime"],
+        "next_page_path": ["ResultData", "NextPageIdx"]
+      },
       "snapshot_name": "cna.discovery.json"
     },
     {
       "source_id": "chinanews",
       "route": "html_direct",
       "request_url_template": "https://www.chinanews.com.cn/scroll-news/{yyyy}/{MMdd}/news.shtml",
-      "date_offset_days": 0,
+      "date_offsets_days": [0, -1],
+      "minimum_ready_variants": 2,
       "snapshot_name": "chinanews.discovery.html",
       "source_exhaustion_marker": "</html>"
     }

@@ -6,14 +6,14 @@
     "schema_version",
     "input_article_row_count",
     "content_hydration_count",
-    "structured_review_count",
+    "lightweight_semantic_review_count",
     "decisions"
   ],
   "properties": {
     "schema_version": {"const": "1.0.0"},
     "input_article_row_count": {"type": "integer", "minimum": 0},
     "content_hydration_count": {"type": "integer", "minimum": 0},
-    "structured_review_count": {"type": "integer", "minimum": 0},
+    "lightweight_semantic_review_count": {"type": "integer", "minimum": 0},
     "decisions": {
       "type": "array",
       "items": {
@@ -26,7 +26,7 @@
           "candidate_id": {"type": "string", "minLength": 1},
           "source_id": {"type": "string", "minLength": 1},
           "canonical_url": {"type": "string", "format": "uri"},
-          "route": {"enum": ["content_hydration", "structured_review"]},
+          "route": {"enum": ["content_hydration", "lightweight_semantic_review"]},
           "reasons": {
             "type": "array", "minItems": 1,
             "items": {"type": "string", "minLength": 1}

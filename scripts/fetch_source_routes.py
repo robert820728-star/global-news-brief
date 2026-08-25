@@ -86,7 +86,9 @@ def value_at_path(value, path):
 
 def parse_page_time(value: str, boundary: datetime) -> datetime | None:
     try:
-        parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+        parsed = datetime.fromisoformat(
+            str(value).replace("/", "-").replace("Z", "+00:00")
+        )
     except (TypeError, ValueError):
         return None
     return parsed if parsed.tzinfo else parsed.replace(tzinfo=boundary.tzinfo)
@@ -310,6 +312,7 @@ def fetch_gdelt_export_fallback(route: Mapping, snapshot_dir: Path,
     }, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
     snapshot_path = safe_snapshot_path(snapshot_dir, str(route["snapshot_name"]))
     snapshot_path.write_bytes(payload)
+    archive_complete = len(successful) == len(parts)
     return {
         "source_id": "gdelt", "route": str(route["route"]),
         "request_method": "GET", "request_url": template,
@@ -319,10 +322,12 @@ def fetch_gdelt_export_fallback(route: Mapping, snapshot_dir: Path,
         "json_exhaustion_path": route.get("json_exhaustion_path"),
         "source_exhaustion_marker": route.get("source_exhaustion_marker"),
         "retry_count": 0, "error": None, "acquisition_mode": "gdelt_export_24h",
-        "gdelt_live_ready": True,
+        "gdelt_live_ready": archive_complete,
         "archive_requested_count": len(parts),
         "archive_ready_count": len(successful),
-        "archive_complete": len(successful) == len(parts),
+        "archive_complete": archive_complete,
+        "coverage_complete": archive_complete,
+        "coverage_status": "complete" if archive_complete else "degraded_partial",
     }
 
 
@@ -357,6 +362,8 @@ def reuse_recent_gdelt_snapshot(route: Mapping, snapshot_dir: Path,
                 "retry_count": 0, "error": None,
                 "acquisition_mode": "last_known_good_cache",
                 "gdelt_live_ready": False, "cache_age_seconds": age_seconds,
+                "coverage_complete": False,
+                "coverage_status": "degraded_cached",
             }
         except (OSError, UnicodeDecodeError, json.JSONDecodeError):
             continue
@@ -366,7 +373,10 @@ def reuse_recent_gdelt_snapshot(route: Mapping, snapshot_dir: Path,
 def fetch_date_variants(route: Mapping, snapshot_dir: Path, timeout_seconds: int) -> dict:
     offsets = route.get("date_offsets_days")
     if not isinstance(offsets, list) or not offsets:
-        return fetch_one(route, snapshot_dir, timeout_seconds)
+        result = fetch_one(route, snapshot_dir, timeout_seconds)
+        result["coverage_complete"] = bool(result.get("route_ready"))
+        result["coverage_status"] = "complete" if result["coverage_complete"] else "unavailable"
+        return result
     minimum_ready = int(route.get("minimum_ready_variants", len(offsets)))
     base = Path(str(route["snapshot_name"]))
     attempts = []
@@ -405,13 +415,14 @@ def fetch_date_variants(route: Mapping, snapshot_dir: Path, timeout_seconds: int
     ]
     primary["date_variant_attempts"] = attempts
     primary["date_variant_ready_count"] = len(ready)
-    if len(ready) < minimum_ready:
-        primary.update(
-            route_ready=False,
-            error=(
-                f"dated route produced {len(ready)} successful variants; "
-                f"requires {minimum_ready}"
-            ),
+    primary["coverage_complete"] = len(ready) >= minimum_ready
+    primary["coverage_status"] = (
+        "complete" if primary["coverage_complete"] else "degraded_partial"
+    )
+    if not primary["coverage_complete"]:
+        primary["coverage_warning"] = (
+            f"dated route produced {len(ready)} successful variants; "
+            f"requires {minimum_ready} for complete coverage"
         )
     return primary
 
@@ -424,6 +435,18 @@ def fetch_page(route: Mapping, request_url: str, snapshot_path: Path,
         str(key): str(value)
         for key, value in route.get("pagination", {}).get("request_headers", {}).items()
     })
+    pagination = route.get("pagination", {})
+    method = str(pagination.get("request_method", "GET")).upper()
+    request_body = None
+    if method != "GET" or route.get("request_json"):
+        request_json = dict(route.get("request_json") or {})
+        page_field = pagination.get("page_field")
+        if page_field:
+            request_json[str(page_field)] = page_index
+        request_body = json.dumps(
+            request_json, ensure_ascii=False, separators=(",", ":")
+        ).encode("utf-8")
+        headers.setdefault("Content-Type", "application/json")
     last_error = None
     last_status = None
     last_content_type = None
@@ -432,7 +455,9 @@ def fetch_page(route: Mapping, request_url: str, snapshot_path: Path,
     for attempt in range(max_attempts):
         response = None
         try:
-            request = urllib.request.Request(request_url, headers=headers, method="GET")
+            request = urllib.request.Request(
+                request_url, data=request_body, headers=headers, method=method
+            )
             try:
                 response = urllib.request.urlopen(request, timeout=timeout_seconds)
             except urllib.error.HTTPError as error:
@@ -485,29 +510,69 @@ def fetch_pagination(route: Mapping, result: dict, snapshot_dir: Path,
     published_path = pagination.get("published_path", [])
     start_page = int(pagination.get("start_page", 2))
     max_pages = int(pagination.get("max_pages", 60))
-    template = resolve_route_url({"request_url_template": pagination["request_url_template"]})
+    template = resolve_route_url({
+        "request_url_template": pagination.get("request_url_template")
+        or route["request_url_template"]
+    })
     base = Path(str(route["snapshot_name"]))
-    page_snapshots = []
+    page_snapshots = list(result.get("page_snapshots") or [])
     complete = False
-    for page_index in range(start_page, start_page + max_pages):
+    next_page_path = pagination.get("next_page_path")
+    page_index = start_page
+    if isinstance(next_page_path, list) and result.get("snapshot_path"):
+        try:
+            initial_payload = json.loads(
+                Path(result["snapshot_path"]).read_text(encoding="utf-8-sig")
+            )
+            initial_next = value_at_path(initial_payload, next_page_path)
+            if initial_next in (None, ""):
+                result.update(
+                    pagination_exhausted=True,
+                    coverage_complete=True,
+                    coverage_status="complete",
+                )
+                return result
+            page_index = int(initial_next)
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError, TypeError, ValueError):
+            result.update(
+                coverage_complete=False,
+                coverage_status="degraded_partial",
+                coverage_warning="initial pagination cursor could not be read",
+            )
+            return result
+    fetched_pages = 0
+    while fetched_pages < max_pages:
         request_url = template.replace("{page}", str(page_index))
         snapshot_name = f"{base.stem}.page-{page_index:04d}.json"
         snapshot_path = safe_snapshot_path(snapshot_dir, snapshot_name)
         page, raw = fetch_page(route, request_url, snapshot_path, timeout_seconds, page_index)
         page_snapshots.append(page)
+        fetched_pages += 1
         if raw is None:
-            result.update(route_ready=False, page_snapshots=page_snapshots, error=page["error"])
+            result.update(
+                page_snapshots=page_snapshots,
+                coverage_complete=False,
+                coverage_status="degraded_partial",
+                coverage_warning=page["error"],
+            )
             return result
         try:
             payload = json.loads(raw.decode("utf-8-sig"))
         except (UnicodeDecodeError, json.JSONDecodeError) as error:
-            result.update(route_ready=False, page_snapshots=page_snapshots, error=str(error))
+            result.update(
+                page_snapshots=page_snapshots,
+                coverage_complete=False,
+                coverage_status="degraded_partial",
+                coverage_warning=str(error),
+            )
             return result
         items = value_at_path(payload, items_path)
         if not isinstance(items, list):
             result.update(
-                route_ready=False, page_snapshots=page_snapshots,
-                error="pagination items_path did not resolve to an array",
+                page_snapshots=page_snapshots,
+                coverage_complete=False,
+                coverage_status="degraded_partial",
+                coverage_warning="pagination items_path did not resolve to an array",
             )
             return result
         if not items:
@@ -521,11 +586,30 @@ def fetch_pagination(route: Mapping, result: dict, snapshot_dir: Path,
         if any(value is not None and value <= boundary for value in published):
             complete = True
             break
+        if isinstance(next_page_path, list):
+            next_page = value_at_path(payload, next_page_path)
+            if next_page in (None, ""):
+                result["pagination_exhausted"] = True
+                complete = True
+                break
+            try:
+                page_index = int(next_page)
+            except (TypeError, ValueError):
+                result.update(
+                    page_snapshots=page_snapshots,
+                    coverage_complete=False,
+                    coverage_status="degraded_partial",
+                    coverage_warning="pagination next-page cursor is invalid",
+                )
+                return result
+        else:
+            page_index += 1
     result["page_snapshots"] = page_snapshots
+    result["coverage_complete"] = complete
+    result["coverage_status"] = "complete" if complete else "degraded_partial"
     if not complete:
-        result.update(
-            route_ready=False,
-            error=f"pagination did not reach window_start within {max_pages} pages",
+        result["coverage_warning"] = (
+            f"pagination did not reach window_start within {max_pages} pages"
         )
     return result
 
@@ -546,6 +630,11 @@ def fetch_routes(route_config: Path, output_dir: Path, timeout_seconds: int,
             if archive_result and archive_result.get("route_ready"):
                 result = archive_result
                 result["optional_doc_api_attempted"] = False
+                result["coverage_complete"] = bool(result.get("archive_complete"))
+                result["coverage_status"] = (
+                    "complete" if result["coverage_complete"] else "degraded_partial"
+                )
+                result["gdelt_live_ready"] = result["coverage_complete"]
             else:
                 doc_result = fetch_date_variants(route, snapshot_dir, timeout_seconds)
                 if doc_result.get("route_ready"):
@@ -571,17 +660,25 @@ def fetch_routes(route_config: Path, output_dir: Path, timeout_seconds: int,
             result = fetch_pagination(
                 route, result, snapshot_dir, timeout_seconds, window_start
             )
+        result.setdefault("coverage_complete", bool(result.get("route_ready")))
+        result.setdefault(
+            "coverage_status",
+            "complete" if result["coverage_complete"] else "unavailable",
+        )
         results.append(result)
     ready_count = sum(bool(item["route_ready"]) for item in results)
     minimum_ready = int(config.get("minimum_ready_routes", len(results)))
     gdelt_result = next((item for item in results if item.get("source_id") == "gdelt"), None)
     gdelt_live_ready = bool(gdelt_result and gdelt_result.get("gdelt_live_ready"))
     publication_ready = ready_count >= minimum_ready
+    complete_count = sum(bool(item.get("coverage_complete")) for item in results)
+    gdelt_configured = gdelt_result is not None
     coverage = {
         "schema_version": "1.0.0",
         "generated_at": datetime.now().astimezone().isoformat(),
         "route_ready_count": ready_count,
         "route_total_count": len(results),
+        "coverage_complete_count": complete_count,
         "minimum_ready_routes": minimum_ready,
         "publication_ready": publication_ready,
         "gdelt_live_ready": gdelt_live_ready,
@@ -589,7 +686,11 @@ def fetch_routes(route_config: Path, output_dir: Path, timeout_seconds: int,
             gdelt_result.get("acquisition_mode") if gdelt_result else "not_configured"
         ),
         "status": (
-            "ready" if ready_count == len(results) and gdelt_live_ready
+            "ready" if (
+                ready_count == len(results)
+                and complete_count == len(results)
+                and (not gdelt_configured or gdelt_live_ready)
+            )
             else "degraded" if publication_ready
             else "failed"
         ),

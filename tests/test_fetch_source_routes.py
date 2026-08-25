@@ -76,7 +76,7 @@ class FetchSourceRoutesTests(unittest.TestCase):
                 "source_id": "gdelt", "route": "aggregate_api",
                 "request_url": "http://official.test/archive", "http_status": 200,
                 "route_ready": True, "acquisition_mode": "gdelt_export_24h",
-                "gdelt_live_ready": True,
+                "gdelt_live_ready": True, "archive_complete": True,
             }
             with mock.patch.object(
                 MODULE, "fetch_gdelt_export_fallback", return_value=fallback_result
@@ -92,6 +92,43 @@ class FetchSourceRoutesTests(unittest.TestCase):
             self.assertTrue(coverage["publication_ready"])
             self.assertEqual("gdelt_export_24h", coverage["gdelt_acquisition_mode"])
             self.assertEqual("ready", coverage["status"])
+
+    def test_partial_gdelt_archive_is_usable_but_never_live_or_complete(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            config = root / "routes.json"
+            config.write_text(json.dumps({
+                "minimum_ready_routes": 1,
+                "routes": [{
+                    "source_id": "gdelt", "route": "aggregate_api",
+                    "request_url_template": "http://127.0.0.1:1/unavailable",
+                    "snapshot_name": "gdelt.json", "max_attempts": 1,
+                    "fallback": {
+                        "type": "gdelt_export_24h",
+                        "request_url_template": "http://official.test/{yyyyMMddHHmm}.zip",
+                    },
+                }],
+            }), encoding="utf-8")
+            fallback_result = {
+                "source_id": "gdelt", "route": "aggregate_api",
+                "request_url": "http://official.test/archive", "http_status": 200,
+                "route_ready": True, "acquisition_mode": "gdelt_export_24h",
+                "gdelt_live_ready": True, "archive_complete": False,
+                "archive_requested_count": 97, "archive_ready_count": 96,
+            }
+            with mock.patch.object(
+                MODULE, "fetch_gdelt_export_fallback", return_value=fallback_result
+            ), mock.patch.object(MODULE, "fetch_date_variants") as doc_api:
+                coverage = MODULE.fetch_routes(
+                    config, root / "out", 1,
+                    "2026-08-19T03:00:00+00:00", "2026-08-20T03:00:00+00:00",
+                )
+            doc_api.assert_not_called()
+            self.assertTrue(coverage["publication_ready"])
+            self.assertFalse(coverage["gdelt_live_ready"])
+            self.assertEqual("degraded", coverage["status"])
+            self.assertFalse(coverage["results"][0]["coverage_complete"])
+            self.assertEqual("degraded_partial", coverage["results"][0]["coverage_status"])
 
     def test_total_gdelt_failure_is_explicit_but_supplement_keeps_publication_running(self):
         class Handler(BaseHTTPRequestHandler):
@@ -215,6 +252,80 @@ class FetchSourceRoutesTests(unittest.TestCase):
             gdelt["acquisition_order"],
         )
         self.assertEqual(1, gdelt["max_attempts"])
+        routes = {item["source_id"]: item for item in config["routes"]}
+        self.assertEqual([0, -1], routes["chinanews"]["date_offsets_days"])
+        self.assertEqual(2, routes["chinanews"]["minimum_ready_variants"])
+        self.assertEqual("POST", routes["cna"]["pagination"]["request_method"])
+        self.assertEqual("pageidx", routes["cna"]["pagination"]["page_field"])
+
+    def test_post_pagination_updates_page_index_and_crosses_window_start(self):
+        requested_pages = []
+
+        class Handler(BaseHTTPRequestHandler):
+            def do_POST(self):
+                length = int(self.headers.get("Content-Length", "0"))
+                request_json = json.loads(self.rfile.read(length).decode("utf-8"))
+                page_index = int(request_json["pageidx"])
+                requested_pages.append(page_index)
+                payloads = {
+                    1: {
+                        "Items": [{"CreateTime": "2026/08/17 20:00"}],
+                        "NextPageIdx": "2",
+                    },
+                    2: {
+                        "Items": [
+                            {"CreateTime": "2026/08/17 19:00"},
+                            {"CreateTime": "2026/08/16 21:30"},
+                        ],
+                        "NextPageIdx": "3",
+                    },
+                }
+                body = json.dumps({"ResultData": payloads[page_index]}).encode("utf-8")
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+
+            def log_message(self, format, *args):
+                return
+
+        server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                config = root / "routes.json"
+                config.write_text(json.dumps({"routes": [{
+                    "source_id": "cna", "route": "structured_direct",
+                    "request_url_template": f"http://127.0.0.1:{server.server_port}/api",
+                    "request_method": "POST",
+                    "request_json": {"pageidx": 1, "pagesize": 500},
+                    "snapshot_name": "cna.json",
+                    "pagination": {
+                        "request_method": "POST", "page_field": "pageidx",
+                        "start_page": 2, "max_pages": 5,
+                        "items_path": ["ResultData", "Items"],
+                        "published_path": ["CreateTime"],
+                        "next_page_path": ["ResultData", "NextPageIdx"],
+                    },
+                }]}), encoding="utf-8")
+
+                coverage = MODULE.fetch_routes(
+                    config, root / "out", 5, "2026-08-16T22:00:00+08:00"
+                )
+
+                result = coverage["results"][0]
+                self.assertEqual([1, 2], requested_pages)
+                self.assertTrue(result["route_ready"])
+                self.assertTrue(result["coverage_complete"])
+                self.assertEqual("complete", result["coverage_status"])
+                self.assertEqual([2], [page["page_index"] for page in result["page_snapshots"]])
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=2)
 
     def test_configured_json_pagination_stops_after_crossing_window_start(self):
         requested_pages = []

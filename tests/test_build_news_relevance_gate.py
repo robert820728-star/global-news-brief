@@ -71,7 +71,7 @@ class BuildNewsRelevanceGateTests(unittest.TestCase):
         )
         self.assertEqual(
             len(decisions),
-            result["content_hydration_count"] + result["structured_review_count"],
+            result["content_hydration_count"] + result["lightweight_semantic_review_count"],
         )
         self.assertEqual(1502, result["content_hydration_count"])
         admitted = {
@@ -82,13 +82,13 @@ class BuildNewsRelevanceGateTests(unittest.TestCase):
         self.assertIn("cns-1", admitted)
         self.assertTrue(all(item["reasons"] for item in decisions))
         filtered = MODULE.build_admitted_candidates(source_candidates, result)
-        self.assertEqual(1502, len(filtered["items"]))
+        self.assertEqual(len(decisions), len(filtered["items"]))
         self.assertEqual(
-            admitted,
+            {item["candidate_id"] for item in decisions},
             {item["candidate_id"] for item in filtered["items"]},
         )
         self.assertEqual(len(decisions), filtered["discovery_article_row_count"])
-        self.assertEqual(1502, filtered["admitted_article_row_count"])
+        self.assertEqual(len(decisions), filtered["admitted_article_row_count"])
 
     def test_gate_requires_compound_evidence_instead_of_keyword_or_heat_alone(self):
         rows = [
@@ -129,10 +129,34 @@ class BuildNewsRelevanceGateTests(unittest.TestCase):
             item["candidate_id"]: item for item in MODULE.build_gate({"items": rows})["decisions"]
         }
 
-        self.assertEqual("structured_review", decisions["keyword-only"]["route"])
-        self.assertEqual("structured_review", decisions["heat-only"]["route"])
+        self.assertEqual("lightweight_semantic_review", decisions["keyword-only"]["route"])
+        self.assertEqual("lightweight_semantic_review", decisions["heat-only"]["route"])
         self.assertEqual("content_hydration", decisions["compound"]["route"])
         self.assertEqual("content_hydration", decisions["high-impact"]["route"])
+
+    def test_weak_global_science_row_reaches_lightweight_semantic_review(self):
+        source_candidates = {
+            "schema_version": "1.0.0",
+            "window_start": "2026-08-24T00:00:00+00:00",
+            "window_end": "2026-08-25T00:00:00+00:00",
+            "source_count": 1,
+            "sources": ["gdelt"],
+            "items": [{
+                "candidate_id": "science-weak",
+                "source_id": "gdelt",
+                "canonical_url": "https://example.test/novel-protein-folding-result",
+                "title": "Researchers report a novel protein-folding result",
+                "summary": "A peer-reviewed study describes the measured result.",
+                "discovery_signals": {"num_articles": 1, "num_sources": 1},
+            }],
+        }
+
+        gate = MODULE.build_gate(source_candidates)
+        admitted = MODULE.build_admitted_candidates(source_candidates, gate)
+
+        self.assertEqual("lightweight_semantic_review", gate["decisions"][0]["route"])
+        self.assertEqual(1, admitted["admitted_article_row_count"])
+        self.assertEqual(source_candidates["items"], admitted["items"])
 
 
 if __name__ == "__main__":

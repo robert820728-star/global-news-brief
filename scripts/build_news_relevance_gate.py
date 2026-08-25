@@ -54,7 +54,7 @@ def route_item(item: dict) -> dict:
         "candidate_id": item["candidate_id"],
         "source_id": source_id,
         "canonical_url": item["canonical_url"],
-        "route": "content_hydration" if admitted else "structured_review",
+        "route": "content_hydration" if admitted else "lightweight_semantic_review",
         "reasons": reasons or ["no_relevance_or_heat_signal"],
         "matched_discovery_signals": signals,
     }
@@ -70,17 +70,13 @@ def build_gate(source_candidates: dict) -> dict:
         "schema_version": "1.0.0",
         "input_article_row_count": len(items),
         "content_hydration_count": hydration,
-        "structured_review_count": len(items) - hydration,
+        "lightweight_semantic_review_count": len(items) - hydration,
         "decisions": decisions,
     }
 
 
 def build_admitted_candidates(source_candidates: dict, gate: dict) -> dict:
-    admitted_ids = {
-        item["candidate_id"]
-        for item in gate["decisions"]
-        if item["route"] == "content_hydration"
-    }
+    admitted_ids = {item["candidate_id"] for item in gate["decisions"]}
     items = source_candidates.get("items", [])
     filtered = [item for item in items if item.get("candidate_id") in admitted_ids]
     if len(filtered) != len(admitted_ids):
@@ -115,7 +111,7 @@ def main() -> int:
     print(json.dumps({
         "input": result["input_article_row_count"],
         "hydrate": result["content_hydration_count"],
-        "structured_review": result["structured_review_count"],
+        "lightweight_semantic_review": result["lightweight_semantic_review_count"],
     }, ensure_ascii=False))
     return 0
 
