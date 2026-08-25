@@ -1,14 +1,22 @@
 {
-  "candidate_audit_artifact": null,
+  "candidate_audit_artifact": {
+    "branch": "run-logs",
+    "path": "logs/runs/gnb-20260825T225406Z-8f3a1c72/candidate-audit.json",
+    "blob_sha": "c8d3380a916826c8ceb9b2237e252e2f57267384"
+  },
   "capability_limitations": [],
   "client_confirmation_supported": false,
-  "current_stage": "source-scan",
+  "current_stage": "candidate-audit",
   "delivery_profile": "full-assets",
   "delivery_status": "not_ready",
-  "durable_audit_artifact": "logs/latest-candidate-audit.json",
+  "durable_audit_artifact": {
+    "branch": "run-logs",
+    "path": "logs/latest-candidate-audit.json",
+    "blob_sha": "e80c53052c727d634b8a6127b67bd96efc13b009"
+  },
   "durable_audit_status": "preserved_merge_deferred",
   "execution_mode": "mobile-native",
-  "last_completed_stage": "workspace-ready",
+  "last_completed_stage": "source-scan",
   "last_error": null,
   "main_sha": "e1e0336aa6f5fcf0b4260c699c693159847e2948",
   "native_media_status": "available",
@@ -16,7 +24,7 @@
   "run_id": "gnb-20260825T225406Z-8f3a1c72",
   "scheduled_for": "2026-08-26T06:54:06+08:00",
   "schema_version": "1.3.0",
-  "stage_index": 4,
+  "stage_index": 5,
   "status": "running",
-  "updated_at": "2026-08-25T23:00:00Z"
+  "updated_at": "2026-08-25T23:18:00Z"
 }
