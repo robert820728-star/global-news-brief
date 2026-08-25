@@ -7,16 +7,24 @@
   "run_id": "gnb-20260825T215947Z-a3f9c2d1",
   "scheduled_for": "2026-08-26T06:00:00+08:00",
   "status": "running",
-  "current_stage": "source-scan",
-  "stage_index": 4,
-  "last_completed_stage": "workspace-ready",
+  "current_stage": "candidate-audit",
+  "stage_index": 5,
+  "last_completed_stage": "source-scan",
   "main_sha": "e1e0336aa6f5fcf0b4260c699c693159847e2948",
-  "updated_at": "2026-08-25T22:10:00Z",
+  "updated_at": "2026-08-25T22:20:30Z",
   "last_error": null,
   "delivery_status": "not_ready",
   "client_confirmation_supported": false,
   "reader_artifact": null,
-  "candidate_audit_artifact": null,
-  "durable_audit_status": "not_started",
-  "durable_audit_artifact": null
+  "candidate_audit_artifact": {
+    "branch": "run-logs",
+    "path": "logs/runs/gnb-20260825T215947Z-a3f9c2d1/candidate-audit.json",
+    "blob_sha": "756245bbad6410daca3f9f3bc0381cfd483d8e53"
+  },
+  "durable_audit_status": "preserved_merge_deferred",
+  "durable_audit_artifact": {
+    "branch": "run-logs",
+    "path": "logs/latest-candidate-audit.json",
+    "blob_sha": "e80c53052c727d634b8a6127b67bd96efc13b009"
+  }
 }
