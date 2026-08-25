@@ -107,11 +107,11 @@ topic_weights:
   border_conflict: normal
 
 conflict_grading:
-  border_skirmish_default_grade: D
+  border_conflict_requires_fresh_scoring: true
   monitored_section_exception: true
   elevated_weight_exception: true
   de_facto_war_exception: true
-  ongoing_conflict_routine_update_default_grade: D
+  ongoing_conflict_requires_current_consequence_review: true
   require_material_change_to_remove_discount: true
 
 deduplication:

@@ -76,21 +76,15 @@
   "acquisition_policy": {
     "route_order": ["aggregate_api", "structured_direct", "html_direct", "browser_or_web_search_final_fallback"],
     "browser_fallback_triggers": ["dynamic_content_missing", "parse_failure"],
-    "cross_source_substitution_forbidden": false,
+    "cross_source_fallback_may_add_candidates": true,
+    "cross_source_fallback_may_satisfy_source_completeness": false,
     "browser_snapshot_required_when_used": true,
     "browser_must_not_be_a_runtime_dependency": true,
     "configured_discovery_routes_must_record_health": true
   },
-  "cultural_industry_event_rule": {
-    "first_large_award_suspension_min_grade": "C",
-    "repeat_without_material_change_allowed_grades": ["C-", "D"],
-    "material_change_requires_regrading": true
-  },
-  "conflict_grading_policy": {
-    "border_skirmish_default_grade": "D",
-    "border_exceptions": ["monitored_section", "elevated_war_or_border_weight", "formal_war", "de_facto_war_scale"],
-    "ongoing_conflict_routine_update_default_grade": "D",
-    "ongoing_conflict_exceptions": ["battlefield_reversal_or_material_escalation", "peace_or_ceasefire_material_change", "new_country_or_theatre", "external_system_impact"],
+  "conflict_evidence_policy": {
+    "routine_incident_requires_current_consequence_review": true,
+    "material_change_requires_regrading": true,
     "parent_conflict_grade_inheritance_forbidden": true,
     "source_count_must_not_change_grade": true
   },

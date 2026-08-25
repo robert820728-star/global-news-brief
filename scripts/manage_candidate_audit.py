@@ -10,8 +10,6 @@ from pathlib import Path
 
 import validate_source_scan_evidence
 
-AUTO_SELECT = {"SS", "S+", "S", "S-", "A+", "A", "A-", "B+", "B", "B-", "C+", "C"}
-LOW_GRADES = {"D", "E"}
 GRADE_ORDER = {
     "E": 0, "D": 1, "C-": 2, "C": 3, "C+": 4,
     "B-": 5, "B": 6, "B+": 7, "A-": 8, "A": 9, "A+": 10,
@@ -27,49 +25,15 @@ RANKING_DIMENSION_NAMES = (
 )
 SOURCE_COVERAGE_FIELDS = {
     "source_id", "status", "within_window_count", "ranked_count", "ranked_items",
-    "selected_for_pool_count", "selected_item_urls", "ranking_completed",
-    "ranking_method", "failure_reason", "scan_window_start", "scan_window_end",
+    "selected_for_pool_count", "selected_item_urls", "discovery_ranking_completed",
+    "discovery_ranking_method", "failure_reason", "scan_window_start", "scan_window_end",
     "scan_evidence_path",
 }
-GRADE_SCORE_BANDS = (
-    (97, "SS"),
-    (94, "S+"),
-    (90, "S"),
-    (85, "S-"),
-    (80, "A+"),
-    (75, "A"),
-    (70, "A-"),
-    (65, "B+"),
-    (60, "B"),
-    (55, "B-"),
-    (50, "C+"),
-    (45, "C"),
-    (40, "C-"),
-    (20, "D"),
-    (0, "E"),
-)
-GRADE_MINIMUM_SCORES = {grade: minimum for minimum, grade in GRADE_SCORE_BANDS}
 INTEGRATED_GRADING_PRINCIPLES = {
     "combined_evidence_no_single_dimension_hard_cap": True,
     "importance_severity_is_public_impact": True,
     "scope_is_one_weighted_dimension": True,
 }
-CASUALTY_PUBLIC_IMPACT_FLOORS = {
-    "1-9": 30,
-    "10-49": 45,
-    "50-99": 60,
-    "100-249": 75,
-    "250-2499": 90,
-    "2500+": 100,
-}
-URGENCY_AND_SAFETY_ANCHORS = [
-    {"score": 0, "meaning": "event ended or no immediate risk"},
-    {"score": 20, "meaning": "limited precaution"},
-    {"score": 40, "meaning": "local response required"},
-    {"score": 60, "meaning": "major danger remains active"},
-    {"score": 80, "meaning": "rescue window, essential-service stress, or expanding risk"},
-    {"score": 100, "meaning": "uncontrolled threat requiring broad immediate action"},
-]
 POLICY_STAGES = {
     "not_applicable", "rumor", "consideration", "proposal", "draft",
     "introduced", "passed", "signed", "effective", "implemented",
@@ -147,14 +111,29 @@ def parse_datetime(value):
     return parsed if parsed.tzinfo else parsed.replace(tzinfo=timezone.utc)
 
 
-def grade_from_importance_score(score):
+def grade_from_importance_score(score, ranking=None):
     """Map a verified six-dimension total to the final SS-E grade."""
     if not isinstance(score, (int, float)) or isinstance(score, bool) or not 0 <= score <= 100:
         raise ValueError("importance score must be a number from 0 through 100")
-    for minimum, grade in GRADE_SCORE_BANDS:
+    contract = ranking or repository_ranking()
+    bands = contract.get("grade_minimum_scores", {})
+    if set(bands) != set(GRADE_ORDER):
+        raise ValueError("grade_minimum_scores must define every SS-E grade")
+    for grade, minimum in sorted(
+        bands.items(), key=lambda item: item[1], reverse=True
+    ):
         if score >= minimum:
             return grade
     raise AssertionError("unreachable score band")
+
+
+def grade_meets_threshold(grade, threshold, ranking=None):
+    """Compare grade labels using the configured score-band authority."""
+    contract = ranking or repository_ranking()
+    bands = contract.get("grade_minimum_scores", {})
+    if grade not in bands or threshold not in bands:
+        return False
+    return bands[grade] >= bands[threshold]
 
 
 def ranking_contract(ranking):
@@ -177,6 +156,49 @@ def ranking_contract(ranking):
     step = ranking.get("allowed_score_step")
     if not isinstance(step, int) or isinstance(step, bool) or step <= 0:
         raise ValueError("allowed_score_step must be a positive integer")
+    grade_bands = ranking.get("grade_minimum_scores")
+    if not isinstance(grade_bands, dict) or set(grade_bands) != set(GRADE_ORDER):
+        raise ValueError("grade_minimum_scores must define every SS-E grade")
+    ordered_minimums = [grade_bands[grade] for grade in GRADE_ORDER]
+    if (
+        any(not isinstance(value, (int, float)) or isinstance(value, bool) or not 0 <= value <= 100
+            for value in ordered_minimums)
+        or ordered_minimums != sorted(ordered_minimums)
+    ):
+        raise ValueError("grade_minimum_scores must increase from E through SS")
+    casualty_floors = ranking.get("casualty_public_impact_floors")
+    if not isinstance(casualty_floors, dict) or not casualty_floors:
+        raise ValueError("casualty_public_impact_floors must be configured")
+    if any(
+        not isinstance(value, (int, float)) or isinstance(value, bool) or not 0 <= value <= 100
+        for value in casualty_floors.values()
+    ):
+        raise ValueError("casualty public-impact floors must be 0-100 numbers")
+    urgency_anchors = ranking.get("dimension_anchors", {}).get("urgency_and_safety")
+    if not isinstance(urgency_anchors, list) or not urgency_anchors:
+        raise ValueError("urgency_and_safety anchors must be configured")
+    urgency_scores = [item.get("score") for item in urgency_anchors if isinstance(item, dict)]
+    if (
+        len(urgency_scores) != len(urgency_anchors)
+        or urgency_scores != sorted(set(urgency_scores))
+        or urgency_scores[0] != 0
+        or urgency_scores[-1] != 100
+    ):
+        raise ValueError("urgency_and_safety anchors must uniquely span 0 through 100")
+    confidence = ranking.get("confidence_bands")
+    if not isinstance(confidence, dict) or set(confidence) != {"high", "medium", "low"}:
+        raise ValueError("confidence_bands must define high, medium, and low")
+    ranges = sorted((bounds[0], bounds[1], name) for name, bounds in confidence.items())
+    if (
+        any(
+            not isinstance(low, int) or not isinstance(high, int) or low > high
+            for low, high, _name in ranges
+        )
+        or ranges[0][0] != 0
+        or ranges[-1][1] != 100
+        or any(left[1] + 1 != right[0] for left, right in zip(ranges, ranges[1:]))
+    ):
+        raise ValueError("confidence_bands must continuously cover 0 through 100")
     return ranking
 
 
@@ -205,15 +227,15 @@ def repository_ranking():
     return load(Path(__file__).resolve().parents[1] / "news-source-pool.json")["ranking"]
 
 
-def confidence_band(score):
+def confidence_band(score, ranking=None):
     """Map evidence maturity independently from public-value importance."""
     if not isinstance(score, int) or isinstance(score, bool) or not 0 <= score <= 100:
         raise ValueError("evidence confidence must be an integer from 0 through 100")
-    if score >= 80:
-        return "high"
-    if score >= 60:
-        return "medium"
-    return "low"
+    contract = ranking_contract(ranking or repository_ranking())
+    for band, (minimum, maximum) in contract["confidence_bands"].items():
+        if minimum <= score <= maximum:
+            return band
+    raise AssertionError("unreachable confidence band")
 
 
 def validate_v2_candidate(candidate, ranking, label):
@@ -245,7 +267,7 @@ def validate_v2_candidate(candidate, ranking, label):
             errors.append(label + f" {field} 必須等於加權分數 {calculated:g}")
     score = candidate.get("importance_score")
     if isinstance(score, (int, float)) and not isinstance(score, bool):
-        if candidate.get("provisional_grade") != grade_from_importance_score(score):
+        if candidate.get("provisional_grade") != grade_from_importance_score(score, contract):
             errors.append(label + " provisional_grade 必須由 importance_score 的固定級距換算")
 
     facts = candidate.get("evidence_facts")
@@ -302,8 +324,13 @@ def validate_v2_candidate(candidate, ranking, label):
     eligibility = contract.get("dimension_fact_eligibility", {})
     for dimension in dimensions:
         fact_ids = evidence.get(dimension)
-        if not isinstance(fact_ids, list) or not fact_ids or len(fact_ids) != len(set(fact_ids)):
-            errors.append(label + f".dimension_evidence.{dimension} 必須是非空唯一 fact_id 陣列")
+        score_value = breakdown.get(dimension) if isinstance(breakdown, dict) else None
+        if (
+            not isinstance(fact_ids, list)
+            or len(fact_ids) != len(set(fact_ids))
+            or (isinstance(score_value, (int, float)) and score_value > 0 and not fact_ids)
+        ):
+            errors.append(label + f".dimension_evidence.{dimension} 正分必須引用唯一 fact_id 陣列")
             continue
         allowed_classes = set(eligibility.get(dimension, ("realized", "ongoing")))
         for fact_id in fact_ids:
@@ -409,7 +436,7 @@ def validate_v2_candidate(candidate, ranking, label):
 
     confidence = candidate.get("evidence_confidence")
     try:
-        expected_band = confidence_band(confidence)
+        expected_band = confidence_band(confidence, contract)
     except ValueError as error:
         errors.append(label + f".evidence_confidence 無效：{error}")
     else:
@@ -475,21 +502,21 @@ def validate_compact_historical_candidate(candidate, ranking, valid_source_ids, 
         errors.append(label + " 引用未定義的 discovery 來源")
     grade = candidate.get("provisional_grade")
     decision = candidate.get("decision")
-    if grade in AUTO_SELECT and decision not in {"selected", "merged"}:
+    if grade_meets_threshold(grade, "C", ranking) and decision not in {"selected", "merged"}:
         errors.append(label + " C 以上歷史候選必須保留其 selected／merged 映射")
-    if grade in AUTO_SELECT and (
+    if grade_meets_threshold(grade, "C", ranking) and (
         not isinstance(candidate.get("selected_event_id"), str)
         or not candidate["selected_event_id"].strip()
     ):
         errors.append(label + " C 以上歷史候選必須保留 selected_event_id")
-    if grade in LOW_GRADES and decision == "selected":
+    if not grade_meets_threshold(grade, "C-", ranking) and decision == "selected":
         errors.append(label + " D/E 不得入選")
     if not isinstance(candidate.get("continuity"), dict):
         errors.append(label + ".continuity 必須是物件")
     return errors
 
 
-def validate_policy_governance_review(review, importance_score, label):
+def validate_policy_governance_review(review, importance_score, label, ranking=None):
     """Require event identity and institutional evidence to agree with scoring."""
     errors = []
     if not isinstance(review, dict):
@@ -600,7 +627,7 @@ def validate_policy_governance_review(review, importance_score, label):
         strong_profile
         and isinstance(importance_score, (int, float))
         and not isinstance(importance_score, bool)
-        and importance_score < GRADE_MINIMUM_SCORES["B"]
+        and importance_score < (ranking or repository_ranking())["grade_minimum_scores"]["B"]
         and (
             not isinstance(consistency.get("why_not_b"), str)
             or not consistency["why_not_b"].strip()
@@ -613,26 +640,25 @@ def validate_policy_governance_review(review, importance_score, label):
 def grade_from_importance_breakdown(breakdown, ranking=None):
     """Derive a grade from the combined six-dimension evidence score."""
     contract = ranking or repository_ranking()
-    return grade_from_importance_score(weighted_score(breakdown, contract))
+    return grade_from_importance_score(weighted_score(breakdown, contract), contract)
 
 
-def public_impact_floor_from_confirmed_deaths(confirmed_deaths):
+def public_impact_floor_from_confirmed_deaths(confirmed_deaths, ranking=None):
     """Return the public-impact floor contributed by conservative confirmed deaths."""
     if not isinstance(confirmed_deaths, int) or isinstance(confirmed_deaths, bool) or confirmed_deaths < 0:
         raise ValueError("confirmed deaths must be a nonnegative integer")
     if confirmed_deaths == 0:
         return 0
-    if confirmed_deaths < 10:
-        return 30
-    if confirmed_deaths < 50:
-        return 45
-    if confirmed_deaths < 100:
-        return 60
-    if confirmed_deaths < 250:
-        return 75
-    if confirmed_deaths < 2500:
-        return 90
-    return 100
+    floors = (ranking or repository_ranking())["casualty_public_impact_floors"]
+    for label, floor in floors.items():
+        if label.endswith("+"):
+            if confirmed_deaths >= int(label[:-1]):
+                return floor
+            continue
+        lower_text, upper_text = label.split("-", 1)
+        if int(lower_text) <= confirmed_deaths <= int(upper_text):
+            return floor
+    raise ValueError("confirmed deaths are not covered by configured casualty bands")
 
 
 def fourteen_day_completeness_errors(data):
@@ -691,18 +717,11 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             errors.append("news-source-pool.json 必須鎖定 source_scan_evidence_required=true")
         ranking = source_pool.get("ranking", {})
         ranking_dimensions = ranking.get("dimensions", {})
-        cultural_rule = source_pool.get("cultural_industry_event_rule", {})
-        if cultural_rule.get("first_large_award_suspension_min_grade") != "C":
-            errors.append("news-source-pool.json 必須固定大型評選活動首次停辦最低為 C")
-        if cultural_rule.get("repeat_without_material_change_allowed_grades") != ["C-", "D"]:
-            errors.append("news-source-pool.json 必須將無實質新增的重複停辦降為 C- 或 D")
-        if cultural_rule.get("material_change_requires_regrading") is not True:
-            errors.append("news-source-pool.json 必須要求出現實質變化時重新評級")
-        conflict_rule = source_pool.get("conflict_grading_policy", {})
-        if conflict_rule.get("border_skirmish_default_grade") != "D":
-            errors.append("news-source-pool.json 必須將非例外邊境小衝突固定為 D")
-        if conflict_rule.get("ongoing_conflict_routine_update_default_grade") != "D":
-            errors.append("news-source-pool.json 必須將長期戰爭常態更新固定為 D")
+        conflict_rule = source_pool.get("conflict_evidence_policy", {})
+        if conflict_rule.get("routine_incident_requires_current_consequence_review") is not True:
+            errors.append("news-source-pool.json 必須要求衝突事件依本輪後果重新審查")
+        if conflict_rule.get("material_change_requires_regrading") is not True:
+            errors.append("news-source-pool.json 必須要求衝突出現實質變化時重新評級")
         if conflict_rule.get("parent_conflict_grade_inheritance_forbidden") is not True:
             errors.append("news-source-pool.json 必須禁止沿用母衝突等級")
         if conflict_rule.get("source_count_must_not_change_grade") is not True:
@@ -711,14 +730,8 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             ranking_contract(ranking)
         except ValueError as error:
             errors.append(f"news-source-pool.json 的 public_value_v2 設定無效：{error}")
-        if ranking.get("grade_minimum_scores") != GRADE_MINIMUM_SCORES:
-            errors.append("news-source-pool.json 的 grade_minimum_scores 必須與六項綜合評級級距一致")
         if ranking.get("grading_principles") != INTEGRATED_GRADING_PRINCIPLES:
             errors.append("news-source-pool.json 必須鎖定六項綜合評級且不得設單項硬上限")
-        if ranking.get("casualty_public_impact_floors") != CASUALTY_PUBLIC_IMPACT_FLOORS:
-            errors.append("news-source-pool.json 必須鎖定死亡人數對 public_impact 的最低證據分數")
-        if ranking.get("dimension_anchors", {}).get("urgency_and_safety") != URGENCY_AND_SAFETY_ANCHORS:
-            errors.append("news-source-pool.json 必須鎖定 urgency_and_safety 的立即風險錨點")
 
     runs = data.get("runs", [])
     for run_index, run in enumerate(runs, 1):
@@ -776,11 +789,11 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                             ))
                         except (OSError, ValueError, json.JSONDecodeError) as error:
                             errors.append(label + f" 掃描證據無法讀取：{error}")
-            if item.get("ranking_completed") is not True:
-                errors.append(label + " 尚未完成站內重要度排序")
-            ranking_method = item.get("ranking_method")
-            if ranking_method != "public_value_v2":
-                errors.append(label + ".ranking_method 必須是 public_value_v2")
+            if item.get("discovery_ranking_completed") is not True:
+                errors.append(label + " 尚未完成 discovery priority 排序")
+            ranking_method = item.get("discovery_ranking_method")
+            if ranking_method != "discovery_priority_v1":
+                errors.append(label + ".discovery_ranking_method 必須是 discovery_priority_v1")
             if not all(isinstance(value, int) and value >= 0 for value in (within, ranked, selected)):
                 errors.append(label + " 來源數量欄位無效")
                 continue
@@ -797,28 +810,14 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                     errors.append(ranked_label + " 必須是物件")
                     continue
                 ranked_urls.append(ranked_item.get("url"))
-                score = ranked_item.get("importance_score")
+                score = ranked_item.get("discovery_priority_score")
                 scores.append(score)
                 if not isinstance(score, (int, float)) or not 0 <= score <= 100:
-                    errors.append(ranked_label + " importance_score 必須介於 0–100")
-                breakdown = ranked_item.get("importance_breakdown")
-                if not isinstance(breakdown, dict) or set(breakdown) != set(ranking_dimensions):
-                    errors.append(
-                        ranked_label + " importance_breakdown 必須包含全部六項分數"
-                    )
-                else:
-                    try:
-                        calculated_score = weighted_score(breakdown, ranking)
-                    except ValueError as error:
-                        errors.append(ranked_label + f" 大項分數無效：{error}")
-                        errors.append(ranked_label + " importance_score 無法由無效 importance_breakdown 重算")
-                        calculated_score = None
-                    if calculated_score is not None and isinstance(score, (int, float)) and abs(calculated_score - score) > 0.01:
-                        errors.append(
-                            ranked_label + " importance_breakdown 重算分數必須等於 importance_score"
-                        )
-                if not isinstance(ranked_item.get("importance_reason"), str) or not ranked_item["importance_reason"].strip():
-                    errors.append(ranked_label + " 缺少重要度理由")
+                    errors.append(ranked_label + " discovery_priority_score 必須介於 0–100")
+                if not isinstance(ranked_item.get("discovery_signals"), dict):
+                    errors.append(ranked_label + " discovery_signals 必須是物件")
+                if not isinstance(ranked_item.get("discovery_priority_reason"), str) or not ranked_item["discovery_priority_reason"].strip():
+                    errors.append(ranked_label + " 缺少 discovery priority 理由")
             if len(set(ranked_urls)) != len(ranked_urls):
                 errors.append(label + " ranked_items 含重複網址")
             if all(isinstance(score, (int, float)) for score in scores) and scores != sorted(scores, reverse=True):
@@ -876,7 +875,8 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                     "non_news_article_row_count": disposition_counts["non_news"],
                     "unresolved_article_row_count": disposition_counts["unresolved"],
                     "c_or_higher_scored_event_count": sum(
-                        isinstance(item, dict) and item.get("provisional_grade") in AUTO_SELECT
+                        isinstance(item, dict)
+                        and grade_meets_threshold(item.get("provisional_grade"), "C", ranking)
                         for item in candidates
                     ),
                     "selected_event_count": sum(
@@ -1127,8 +1127,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                 grading = {}
             required_grading = {
                 "impact_scope_level", "direct_consequences", "structural_significance",
-                "window_material_changes", "why_current_grade", "why_not_higher",
-                "why_not_lower", "border_conflict_review", "ongoing_conflict_review",
+                "window_material_changes", "border_conflict_review", "ongoing_conflict_review",
             }
             if run_index == len(runs):
                 required_grading.update({"local_disaster_review", "policy_governance_review"})
@@ -1143,7 +1142,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                 value = grading.get(field)
                 if not isinstance(value, list) or any(not isinstance(item, str) or not item.strip() for item in value):
                     errors.append(label + f" {field} 必須是具體文字陣列")
-            for field in ("structural_significance", "why_current_grade", "why_not_higher", "why_not_lower"):
+            for field in ("structural_significance",):
                 if not isinstance(grading.get(field), str) or not grading[field].strip():
                     errors.append(label + f" {field} 不得為空")
 
@@ -1151,7 +1150,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                 importance_score = candidate.get("importance_score")
                 errors.extend(validate_v2_candidate(candidate, ranking, label))
                 errors.extend(validate_policy_governance_review(
-                    grading.get("policy_governance_review"), importance_score, label
+                    grading.get("policy_governance_review"), importance_score, label, ranking
                 ))
 
             border = grading.get("border_conflict_review")
@@ -1161,25 +1160,10 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             border_keys = {
                 "is_border_conflict", "formal_war", "de_facto_war_scale",
                 "related_to_monitored_section", "user_weight_elevated",
-                "default_d_applied", "exception_reason",
+                "exception_reason",
             }
             if border_keys - set(border):
                 errors.append(label + " border_conflict_review 欄位不完整")
-            border_default_d = (
-                border.get("is_border_conflict") is True
-                and border.get("formal_war") is not True
-                and border.get("de_facto_war_scale") is not True
-                and border.get("related_to_monitored_section") is not True
-                and border.get("user_weight_elevated") is not True
-            )
-            if border_default_d:
-                if grade != "D":
-                    errors.append(label + " 非監控板塊且未加權的邊境小衝突必須評為 D，不得升至 C 以上")
-                if border.get("default_d_applied") is not True:
-                    errors.append(label + " 邊境小衝突必須記錄 default_d_applied=true")
-            elif border.get("is_border_conflict") is True and grade not in LOW_GRADES:
-                if not isinstance(border.get("exception_reason"), str) or not border["exception_reason"].strip():
-                    errors.append(label + " 邊境衝突解除 D 級預設時必須保存具體例外理由")
 
             ongoing = grading.get("ongoing_conflict_review")
             if not isinstance(ongoing, dict):
@@ -1192,33 +1176,6 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             }
             if ongoing_keys - set(ongoing):
                 errors.append(label + " ongoing_conflict_review 欄位不完整")
-            routine_conflict = (
-                ongoing.get("is_ongoing_conflict") is True
-                and ongoing.get("same_conflict_as_history") is True
-                and ongoing.get("routine_incident") is True
-                and ongoing.get("material_change") is not True
-                and ongoing.get("reversal_or_escalation_possible") is not True
-                and ongoing.get("external_system_impact") is not True
-            )
-            if routine_conflict:
-                if grade != "D":
-                    errors.append(label + " 長期戰爭的常態小衝突／例行更新必須評為 D，不得繼承母事件等級")
-                if ongoing.get("continuity_discount_applied") is not True:
-                    errors.append(label + " 長期戰爭常態事件必須套用 continuity_discount_applied=true")
-            elif ongoing.get("is_ongoing_conflict") is True and grade not in LOW_GRADES:
-                change_types = ongoing.get("change_types")
-                exception_triggered = (
-                    ongoing.get("material_change") is True
-                    or ongoing.get("reversal_or_escalation_possible") is True
-                    or ongoing.get("external_system_impact") is True
-                )
-                if not exception_triggered:
-                    errors.append(label + " 長期戰爭未證明戰局／和平進程／外部系統的實質變化，不得解除 D 級折扣")
-                if not isinstance(change_types, list) or not change_types:
-                    errors.append(label + " 長期戰爭解除 D 級折扣時必須列出 change_types")
-                if not isinstance(ongoing.get("exception_reason"), str) or not ongoing["exception_reason"].strip():
-                    errors.append(label + " 長期戰爭解除 D 級折扣時必須保存具體新進展")
-
             local_disaster = grading.get("local_disaster_review")
             if run_index == len(runs):
                 if not isinstance(local_disaster, dict):
@@ -1245,7 +1202,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                     elif isinstance(candidate.get("importance_breakdown"), dict):
                         importance = candidate["importance_breakdown"]
                         public_impact = importance.get("public_impact")
-                        death_floor = public_impact_floor_from_confirmed_deaths(deaths)
+                        death_floor = public_impact_floor_from_confirmed_deaths(deaths, ranking)
                         if (
                             isinstance(public_impact, (int, float))
                             and not isinstance(public_impact, bool)
@@ -1294,9 +1251,9 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             elif any(source_id not in valid_source_ids for source_id in source_ids):
                 errors.append(label + " 引用未定義的 discovery 來源")
 
-            if grade in AUTO_SELECT and decision not in {"selected", "merged"}:
+            if grade_meets_threshold(grade, "C", ranking) and decision not in {"selected", "merged"}:
                 errors.append(label + " C 以上必須入選；禁止篇數上限、相對淘汰或延後")
-            if grade in AUTO_SELECT and (
+            if grade_meets_threshold(grade, "C", ranking) and (
                 not isinstance(candidate.get("selected_event_id"), str)
                 or not candidate["selected_event_id"].strip()
             ):
@@ -1307,7 +1264,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                         errors.append(label + " C- 取用必須有明確需求理由")
                 elif decision not in {"deferred", "merged"} or reason_code not in {"c_minus_reserve", "duplicate_merged"}:
                     errors.append(label + " C- 預設只能進候補池")
-            if grade in LOW_GRADES and decision == "selected":
+            if not grade_meets_threshold(grade, "C-", ranking) and decision == "selected":
                 errors.append(label + " D/E 不得入選")
             if candidate.get("source_audit", {}).get("reliable_source_count") == 1 and reason_code == "unreliable_or_unverified":
                 errors.append(label + " 已有一個可靠來源，不得僅以來源不足排除")

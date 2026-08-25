@@ -62,22 +62,17 @@ def write_valid_audit(root: Path):
         scan_path.write_text(json.dumps(scan), encoding="utf-8")
         ranked_items = [{
             "url": article_url, "title": source_id, "published_at": article_time,
-            "importance_score": 80, "importance_reason": "具有公共影響",
-            "importance_breakdown": {
-                "public_impact": 80,
-                "geographic_or_population_scope": 80,
-                "urgency_and_safety": 80,
-                "structural_or_policy_significance": 80,
-                "material_new_development": 80,
-                "core_section_relevance": 80,
-            },
+            "discovery_priority_score": 80,
+            "discovery_signals": {"urgent": True, "policy": True},
+            "discovery_priority_reason": "依 discovery 訊號安排補齊順序",
         }]
         coverage.append({
             "source_id": source_id, "status": "completed",
             "within_window_count": 1, "ranked_count": 1,
             "ranked_items": ranked_items, "selected_for_pool_count": 1,
             "selected_item_urls": [article_url],
-            "ranking_completed": True, "ranking_method": "public_value_v2",
+            "discovery_ranking_completed": True,
+            "discovery_ranking_method": "discovery_priority_v1",
             "failure_reason": None,
             "scan_window_start": "2026-08-13T06:00:00+08:00",
             "scan_window_end": "2026-08-14T06:00:00+08:00",
@@ -165,7 +160,7 @@ def write_valid_audit(root: Path):
             "border_conflict_review": {
                 "is_border_conflict": False, "formal_war": False,
                 "de_facto_war_scale": False, "related_to_monitored_section": False,
-                "user_weight_elevated": False, "default_d_applied": False,
+                "user_weight_elevated": False,
                 "exception_reason": None,
             },
             "ongoing_conflict_review": {

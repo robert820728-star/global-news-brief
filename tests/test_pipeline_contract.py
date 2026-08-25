@@ -77,8 +77,8 @@ class PipelineContractTests(unittest.TestCase):
             self.assertEqual(100, dimension["maximum"])
 
         self.assertEqual(
-            "public_value_v2",
-            schema["$defs"]["sourceCoverage"]["properties"]["ranking_method"]["const"],
+            "discovery_priority_v1",
+            schema["$defs"]["sourceCoverage"]["properties"]["discovery_ranking_method"]["const"],
         )
         self.assertEqual(2, len(schema["$defs"]["candidate"]["anyOf"]))
 
@@ -1064,12 +1064,7 @@ class PipelineContractTests(unittest.TestCase):
                 "無新增公共影響的名人死亡",
                 "死傷增加、影響範圍擴大",
                 "不得因事件較舊而自動降級",
-                "PASSIVE_ONE_OFF_FIVE_DAY_DECAY",
-                "次日最高 B",
-                "第三日最高 C",
-                "第四日 D",
-                "第五日 E",
-                "五個日曆日後",
+                "事件年齡本身不得設定日數等級上限",
             ):
                 self.assertIn(requirement, text, f"{path} missing {requirement}")
 

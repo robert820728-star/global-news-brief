@@ -68,8 +68,8 @@ class SameSourceRecoveryTests(unittest.TestCase):
         coverage = [{
             "source_id": "wire", "status": "completed", "within_window_count": 0,
             "ranked_count": 0, "ranked_items": [], "selected_for_pool_count": 0,
-            "selected_item_urls": [], "ranking_completed": True,
-            "ranking_method": "public_value_v2", "failure_reason": None,
+            "selected_item_urls": [], "discovery_ranking_completed": True,
+            "discovery_ranking_method": "discovery_priority_v1", "failure_reason": None,
             "scan_window_start": scan["window_start"], "scan_window_end": scan["window_end"],
             "scan_evidence_path": str(scan_dir / "wire.json"),
         }]

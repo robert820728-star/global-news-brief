@@ -1,4 +1,5 @@
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -8,6 +9,45 @@ TEXT_SUFFIXES = {".json", ".md", ".py", ".yaml", ".yml"}
 
 
 class NoObsoleteContractsTests(unittest.TestCase):
+    def test_active_structures_have_no_grade_floor_default_or_ceiling_keys(self):
+        forbidden = re.compile(
+            r"(?:_min_grade|_default_grade)$|default_d_applied",
+            re.IGNORECASE,
+        )
+        hits = []
+        for relative in (
+            "news-source-pool.json",
+            "schemas/news-candidate-audit.schema.json",
+        ):
+            value = json.loads((ROOT / relative).read_text(encoding="utf-8"))
+
+            def walk(node, path=""):
+                if isinstance(node, dict):
+                    for key, child in node.items():
+                        current = f"{path}.{key}" if path else key
+                        if forbidden.search(key):
+                            hits.append(f"{relative}:{current}")
+                        walk(child, current)
+                elif isinstance(node, list):
+                    for index, child in enumerate(node):
+                        walk(child, f"{path}[{index}]")
+
+            walk(value)
+        self.assertEqual([], hits)
+
+    def test_active_execution_text_has_no_five_day_grade_ceiling(self):
+        paths = [
+            ROOT / "news-brief-settings.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents" / "skills" / "audit-news-candidates" / "SKILL.md",
+            ROOT / ".agents" / "skills" / "select-news-events" / "SKILL.md",
+        ]
+        hits = []
+        for path in paths:
+            text = path.read_text(encoding="utf-8")
+            if "PASSIVE_ONE_OFF_FIVE_DAY_DECAY" in text or "default_d_applied" in text:
+                hits.append(str(path.relative_to(ROOT)))
+        self.assertEqual([], hits)
     def test_repository_contains_no_retired_source_or_scoring_contract(self):
         forbidden = (
             "fixed" + "_source",
@@ -112,11 +152,15 @@ class NoObsoleteContractsTests(unittest.TestCase):
         defs = schema["$defs"]
         coverage = defs["sourceCoverage"]
 
-        self.assertEqual({"const": "public_value_v2"}, coverage["properties"]["ranking_method"])
         self.assertEqual(
-            {"$ref": "#/$defs/importanceBreakdown"},
-            coverage["properties"]["ranked_items"]["items"]["properties"]["importance_breakdown"],
+            {"const": "discovery_priority_v1"},
+            coverage["properties"]["discovery_ranking_method"],
         )
+        ranked_properties = coverage["properties"]["ranked_items"]["items"]["properties"]
+        self.assertIn("discovery_priority_score", ranked_properties)
+        self.assertIn("discovery_signals", ranked_properties)
+        self.assertNotIn("importance_score", ranked_properties)
+        self.assertNotIn("importance_breakdown", ranked_properties)
         self.assertEqual(
             [
                 {"$ref": "#/$defs/v2Candidate"},

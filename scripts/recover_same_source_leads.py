@@ -64,7 +64,7 @@ def atomic_write_json(path: Path, value) -> None:
             os.unlink(temporary)
 
 
-def rank_scan(scan: dict, source: dict, coverage: dict, ranking: dict) -> dict:
+def rank_scan(scan: dict, source: dict, coverage: dict) -> dict:
     start = datetime.fromisoformat(scan["window_start"])
     end = datetime.fromisoformat(scan["window_end"])
     pages = list(scan.get("pages", [])) + list(scan.get("supplemental_pages", []))
@@ -78,19 +78,19 @@ def rank_scan(scan: dict, source: dict, coverage: dict, ranking: dict) -> dict:
     ]
     ranked = []
     for item in within:
-        breakdown = materializer.score_breakdown(
-            item["title"], item.get("summary", ""), source.get("section", ""), ranking
+        signals = materializer.discovery_signals(
+            item["title"], item.get("summary", ""), source.get("section", "")
         )
         ranked.append({
             "url": item["url"],
             "title": item["title"],
             "published_at": item["published_at"],
-            "importance_score": materializer.weighted_score(breakdown, ranking),
-            "importance_breakdown": breakdown,
-            "importance_reason": item.get("importance_hint") or item["title"],
+            "discovery_priority_score": materializer.discovery_priority_score(signals),
+            "discovery_signals": signals,
+            "discovery_priority_reason": item.get("importance_hint") or item["title"],
         })
     ranked.sort(
-        key=lambda item: (item["importance_score"], item["published_at"], item["url"]),
+        key=lambda item: (item["discovery_priority_score"], item["published_at"], item["url"]),
         reverse=True,
     )
     base_selected = [item["url"] for item in ranked]
@@ -102,8 +102,8 @@ def rank_scan(scan: dict, source: dict, coverage: dict, ranking: dict) -> dict:
         "ranked_items": ranked,
         "selected_for_pool_count": len(selected),
         "selected_item_urls": selected,
-        "ranking_completed": True,
-        "ranking_method": ranking["method"],
+        "discovery_ranking_completed": True,
+        "discovery_ranking_method": "discovery_priority_v1",
         "failure_reason": None,
     })
     return updated
@@ -111,8 +111,6 @@ def rank_scan(scan: dict, source: dict, coverage: dict, ranking: dict) -> dict:
 
 def recover(pool: dict, scan_dir: Path, coverage: list[dict], leads: list[dict],
             snapshot_dir: Path, *, fetcher=fetch_direct, timeout_seconds: int = 20) -> dict:
-    ranking = pool.get("ranking")
-    materializer.ranking_dimensions(ranking)
     sources = {item["source_id"]: item for item in pool.get("discovery_sources", [])}
     coverage_by_id = {item["source_id"]: item for item in coverage}
     scans = {}
@@ -207,9 +205,7 @@ def recover(pool: dict, scan_dir: Path, coverage: list[dict], leads: list[dict],
         })
 
     coverage_updates = {
-        source_id: rank_scan(
-            scan, sources[source_id], coverage_by_id[source_id], ranking
-        )
+        source_id: rank_scan(scan, sources[source_id], coverage_by_id[source_id])
         for source_id, scan in scans.items()
     }
     for source_id, scan in scans.items():

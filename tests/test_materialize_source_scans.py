@@ -22,25 +22,18 @@ assert VALIDATOR_SPEC.loader is not None
 VALIDATOR_SPEC.loader.exec_module(VALIDATOR)
 
 
-def ranking():
-    return json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))["ranking"]
-
-
 class MaterializeSourceScansTests(unittest.TestCase):
-    def test_discovery_breakdown_is_normalized_and_weighted_from_config(self):
-        breakdown = MODULE.score_breakdown(
+    def test_discovery_priority_is_not_public_value_v2(self):
+        signals = MODULE.discovery_signals(
             "National policy takes effect",
             "Emergency public services changed",
             "GLB",
-            ranking(),
         )
 
-        self.assertTrue(all(value % 5 == 0 for value in breakdown.values()))
-        self.assertTrue(all(0 <= value <= 100 for value in breakdown.values()))
-        self.assertEqual(
-            84.5,
-            MODULE.weighted_score(breakdown, ranking()),
-        )
+        self.assertTrue(signals["urgent"])
+        self.assertTrue(signals["policy"])
+        self.assertTrue(signals["broad_scope"])
+        self.assertGreater(MODULE.discovery_priority_score(signals), 0)
 
     def test_more_than_thirty_items_all_enter_candidate_pool(self):
         articles = [
@@ -70,7 +63,7 @@ class MaterializeSourceScansTests(unittest.TestCase):
             }
             _scan, coverage = MODULE.materialize_source(
                 source, route, "2026-08-18T09:00:00+00:00",
-                "2026-08-18T12:00:00+00:00", root, ranking(),
+                "2026-08-18T12:00:00+00:00", root,
             )
             self.assertEqual(35, coverage["ranked_count"])
             self.assertEqual(35, coverage["selected_for_pool_count"])
@@ -168,14 +161,16 @@ class MaterializeSourceScansTests(unittest.TestCase):
             }
             source = {"source_id": "wire", "homepage": "https://example.com/", "section": "GLB"}
             scan, coverage = MODULE.materialize_source(
-                source, route, "2026-08-15T12:00:00+08:00", "2026-08-16T12:00:00+08:00", root, ranking()
+                source, route, "2026-08-15T12:00:00+08:00", "2026-08-16T12:00:00+08:00", root
             )
             self.assertEqual("crossed_window_start", scan["terminal_proof"]["type"])
             self.assertEqual(1, coverage["within_window_count"])
             ranked = coverage["ranked_items"][0]
-            self.assertEqual(set(ranking()["dimensions"]), set(ranked["importance_breakdown"]))
-            self.assertAlmostEqual(ranked["importance_score"], MODULE.weighted_score(ranked["importance_breakdown"], ranking()))
-            self.assertEqual("public_value_v2", coverage["ranking_method"])
+            self.assertIn("discovery_priority_score", ranked)
+            self.assertIn("discovery_signals", ranked)
+            self.assertNotIn("importance_score", ranked)
+            self.assertNotIn("importance_breakdown", ranked)
+            self.assertEqual("discovery_priority_v1", coverage["discovery_ranking_method"])
             self.assertEqual([], VALIDATOR.validate_scan(scan, coverage, source))
 
     def test_dynamic_html_page_cannot_use_closing_tag_as_exhaustion_proof(self):
@@ -196,7 +191,7 @@ class MaterializeSourceScansTests(unittest.TestCase):
             source = {"source_id": "wire", "homepage": "https://example.com/", "section": "GLB"}
             with self.assertRaisesRegex(ValueError, "HTML route did not reach window boundary"):
                 MODULE.materialize_source(
-                    source, route, "2026-08-15T12:00:00+08:00", "2026-08-16T12:00:00+08:00", root, ranking()
+                    source, route, "2026-08-15T12:00:00+08:00", "2026-08-16T12:00:00+08:00", root
                 )
 
     def test_cna_json_api_materializes_items_and_proves_source_exhaustion(self):
@@ -234,7 +229,7 @@ class MaterializeSourceScansTests(unittest.TestCase):
             }
             source = {"source_id": "cna", "homepage": "https://www.cna.com.tw/", "section": "TWN"}
             scan, coverage = MODULE.materialize_source(
-                source, route, "2026-08-16T21:17:00+08:00", "2026-08-17T21:17:00+08:00", root, ranking()
+                source, route, "2026-08-16T21:17:00+08:00", "2026-08-17T21:17:00+08:00", root
             )
             self.assertEqual(2, coverage["within_window_count"])
             self.assertEqual("source_exhausted", scan["terminal_proof"]["type"])
@@ -266,7 +261,7 @@ class MaterializeSourceScansTests(unittest.TestCase):
             }
             source = {"source_id": "regional_a", "homepage": "https://regional.example.com/", "section": "TWN"}
             scan, coverage = MODULE.materialize_source(
-                source, route, "2026-08-16T22:57:00+08:00", "2026-08-17T22:57:00+08:00", root, ranking()
+                source, route, "2026-08-16T22:57:00+08:00", "2026-08-17T22:57:00+08:00", root
             )
             self.assertEqual("crossed_window_start", scan["terminal_proof"]["type"])
             self.assertEqual(1, coverage["within_window_count"])
@@ -324,7 +319,7 @@ class MaterializeSourceScansTests(unittest.TestCase):
 
             scan, coverage = MODULE.materialize_source(
                 source, route, "2026-08-16T22:00:00+08:00",
-                "2026-08-17T22:00:00+08:00", root, ranking(),
+                "2026-08-17T22:00:00+08:00", root,
             )
 
             self.assertEqual(3, len(scan["pages"]))
@@ -355,7 +350,7 @@ class MaterializeSourceScansTests(unittest.TestCase):
             }
             source = {"source_id": "regional_b", "homepage": "https://regional.example.com/", "section": "TWN"}
             scan, coverage = MODULE.materialize_source(
-                source, route, "2026-08-15T12:00:00+08:00", "2026-08-16T20:00:00+08:00", root, ranking()
+                source, route, "2026-08-15T12:00:00+08:00", "2026-08-16T20:00:00+08:00", root
             )
             self.assertEqual(1, coverage["ranked_count"])
             self.assertEqual("https://regional.example.com/politics/4008088", coverage["ranked_items"][0]["url"])

@@ -13,7 +13,7 @@
   "$defs": {
     "sourceCoverage": {
       "type": "object",
-      "required": ["source_id", "status", "within_window_count", "ranked_count", "ranked_items", "selected_for_pool_count", "selected_item_urls", "ranking_completed", "ranking_method", "failure_reason"],
+      "required": ["source_id", "status", "within_window_count", "ranked_count", "ranked_items", "selected_for_pool_count", "selected_item_urls", "discovery_ranking_completed", "discovery_ranking_method", "failure_reason"],
       "properties": {
         "source_id": {"type": "string"},
         "status": {"enum": ["completed", "failed"]},
@@ -23,22 +23,22 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["url", "title", "published_at", "importance_score", "importance_breakdown", "importance_reason"],
+            "required": ["url", "title", "published_at", "discovery_priority_score", "discovery_signals", "discovery_priority_reason"],
             "properties": {
               "url": {"type": "string", "format": "uri"},
               "title": {"type": "string", "minLength": 1},
               "published_at": {"type": "string", "format": "date-time"},
-              "importance_score": {"type": "number", "minimum": 0, "maximum": 100},
-              "importance_breakdown": {"$ref": "#/$defs/importanceBreakdown"},
-              "importance_reason": {"type": "string", "minLength": 1}
+              "discovery_priority_score": {"type": "number", "minimum": 0, "maximum": 100},
+              "discovery_signals": {"type": "object"},
+              "discovery_priority_reason": {"type": "string", "minLength": 1}
             },
             "additionalProperties": true
           }
         },
         "selected_for_pool_count": {"type": "integer", "minimum": 0},
         "selected_item_urls": {"type": "array", "items": {"type": "string", "format": "uri"}},
-        "ranking_completed": {"type": "boolean"},
-        "ranking_method": {"const": "public_value_v2"},
+        "discovery_ranking_completed": {"type": "boolean"},
+        "discovery_ranking_method": {"const": "discovery_priority_v1"},
         "failure_reason": {"type": ["string", "null"]}
         ,"scan_window_start": {"type": "string", "format": "date-time"}
         ,"scan_window_end": {"type": "string", "format": "date-time"}
@@ -408,7 +408,7 @@
         "grade_reason": {"type": "string", "minLength": 1},
         "grading_evidence": {
           "type": "object",
-          "required": ["impact_scope_level", "direct_consequences", "structural_significance", "window_material_changes", "why_current_grade", "why_not_higher", "why_not_lower", "border_conflict_review", "ongoing_conflict_review"],
+          "required": ["impact_scope_level", "direct_consequences", "structural_significance", "window_material_changes", "border_conflict_review", "ongoing_conflict_review"],
           "properties": {
             "impact_scope_level": {"enum": ["facility", "local", "subregional", "national", "multinational", "global"]},
             "direct_consequences": {"type": "array", "items": {"type": "string", "minLength": 1}},
@@ -421,14 +421,13 @@
             "local_disaster_review": {"$ref": "#/$defs/localDisasterReview"},
             "border_conflict_review": {
               "type": "object",
-              "required": ["is_border_conflict", "formal_war", "de_facto_war_scale", "related_to_monitored_section", "user_weight_elevated", "default_d_applied", "exception_reason"],
+              "required": ["is_border_conflict", "formal_war", "de_facto_war_scale", "related_to_monitored_section", "user_weight_elevated", "exception_reason"],
               "properties": {
                 "is_border_conflict": {"type": "boolean"},
                 "formal_war": {"type": "boolean"},
                 "de_facto_war_scale": {"type": "boolean"},
                 "related_to_monitored_section": {"type": "boolean"},
                 "user_weight_elevated": {"type": "boolean"},
-                "default_d_applied": {"type": "boolean"},
                 "exception_reason": {"type": ["string", "null"]}
               },
               "additionalProperties": false

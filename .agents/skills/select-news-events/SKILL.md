@@ -104,7 +104,7 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 - 所有事件都以六項證據綜合評分；死亡數、地域數、國家大小或任何單一項都不得直接指定最終等級，也不得建立地域硬上限或例外補丁。重要性／嚴重程度放入 `public_impact`，直接人口／行政區／國家／公共系統範圍放入 `geographic_or_population_scope`，其餘四項各自獨立給分，最後依固定總分級距換算 `SS` 至 `E`。
 - 每個候選先填唯一 `evidence_facts`，以 `consequence_evidence` 分開 realized／ongoing／potential／speculative，再由逐項 `dimension_evidence` 引用 fact ID；之後才填 0–100 `importance_breakdown`、加權 `importance_score` 與 `grading_evidence`。5 分中點需 `midpoint_rationales`；三項以上重用同一 fact 需 `cross_dimension_rationales`；單項或總分達 70 需完成 `high_score_challenges`。政策事件填 `policy_stage`，證據成熟度另填 `evidence_confidence`／`confidence_band`。只有所有 gate 通過才能標 `grade_status=validated`；只有 `grade_reason`、模板句、關鍵字或未來可能性不得完成評級。
 - 來源清單的站內 `importance_score` 只供 discovery 排序；去重後的最終候選必須從零依事件證據重評，禁止複製來源排序分數或把「政府／全國／重大」等字詞本身當成公共後果。
-- 國與國之間尚未升級為正式戰爭或事實戰爭規模的邊境小衝突，若與使用者監控板塊無直接關係，且使用者沒有提高戰爭／邊境權重，固定評為 `D`。少量死傷、增兵、軍演、警告、單次砲擊或空襲都不能自行解除此規則。
+- 邊境或長期衝突事件不得依類型固定等級，也不得繼承母事件等級。每次只以本輪已實現／持續後果、直接範圍、急迫性、制度意義與十四天增量計算六項；例行事件通常自然得到低分，重大實際後果則依證據提高。
 - 長期戰爭中的同戰線、同攻擊型態、相近規模交火與例行傷亡更新，固定評為 `D`；不得繼承母事件的高等級。只有可能改變戰局、造成實質升級、改變停火／和平進程、開啟新戰線／新國家介入，或造成可驗證的油價、航運、能源、糧食、金融、供應鏈等外部系統影響，才能解除折扣並依實際影響重評。
 - 油價或其他市場反應必須記錄幅度、期間、是否超出正常波動及與衝突的直接因果證據；只有方向性上漲不得自動升級。
 

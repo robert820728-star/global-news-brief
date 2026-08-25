@@ -102,7 +102,7 @@ def grading_evidence(grade="C"):
         "border_conflict_review": {
             "is_border_conflict": False, "formal_war": False,
             "de_facto_war_scale": False, "related_to_monitored_section": False,
-            "user_weight_elevated": False, "default_d_applied": False,
+            "user_weight_elevated": False,
             "exception_reason": None,
         },
         "ongoing_conflict_review": {
@@ -158,9 +158,9 @@ def valid_audit(candidates=None, per_source_count=1):
         source_id = item["source_id"]
         ranked_items = [
             {"url": f"https://example.com/{source_id}/{index}", "title": f"{source_id}-{index}",
-             "published_at": "2026-08-13T05:00:00+00:00", "importance_score": 50,
-             "importance_breakdown": importance_breakdown(50),
-             "importance_reason": "依公共影響、範圍與結構意義排序"}
+             "published_at": "2026-08-13T05:00:00+00:00", "discovery_priority_score": 50,
+             "discovery_signals": {"policy": True},
+             "discovery_priority_reason": "依 discovery 訊號安排補齊順序"}
             for index in range(per_source_count)
         ]
         old_url = f"https://example.com/{source_id}/before-window"
@@ -189,7 +189,8 @@ def valid_audit(candidates=None, per_source_count=1):
             "ranked_items": ranked_items,
             "selected_for_pool_count": per_source_count,
             "selected_item_urls": [item["url"] for item in ranked_items],
-            "ranking_completed": True, "ranking_method": "public_value_v2", "failure_reason": None,
+            "discovery_ranking_completed": True,
+            "discovery_ranking_method": "discovery_priority_v1", "failure_reason": None,
             "scan_window_start": window_start, "scan_window_end": window_end,
             "scan_evidence_path": str(scan_path),
         })
@@ -311,21 +312,21 @@ class CandidateAuditTests(unittest.TestCase):
         self.assertTrue(any("grading_evidence" in error for error in errors))
         self.assertTrue(any("缺少原始入池網址" in error for error in errors))
 
-    def test_every_retained_run_requires_the_current_ranking_method(self):
+    def test_every_retained_run_requires_the_current_discovery_ranking_method(self):
         audit = valid_audit()
         historical = copy.deepcopy(audit["runs"][0])
         historical["run_id"] = "historical-old-method"
         historical["generated_at"] = "2026-08-13T06:00:00+08:00"
         old_method = "_".join(("public", "value", "v1"))
         for coverage in historical["source_coverage"]:
-            coverage["ranking_method"] = old_method
+            coverage["discovery_ranking_method"] = old_method
             coverage.pop("scan_window_start", None)
             coverage.pop("scan_window_end", None)
             coverage.pop("scan_evidence_path", None)
         audit["runs"].insert(0, historical)
 
         errors = MODULE.validate(audit, source_pool())
-        self.assertTrue(any("ranking_method" in error for error in errors))
+        self.assertTrue(any("discovery_ranking_method" in error for error in errors))
 
     def test_grading_regression_cases_stay_in_calibrated_ranges(self):
         fixture = json.loads(
@@ -359,6 +360,28 @@ class CandidateAuditTests(unittest.TestCase):
             41.0,
             MODULE.weighted_score(scores, source_pool()["ranking"]),
         )
+
+    def test_zero_score_dimension_may_have_no_fact_ids(self):
+        item = candidate("C")
+        item["importance_breakdown"]["urgency_and_safety"] = 0
+        item["dimension_evidence"]["urgency_and_safety"] = []
+        self.sync_score(item)
+
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+
+        self.assertFalse(any("urgency_and_safety 必須是非空" in error for error in errors))
+
+    def test_grade_casualty_and_confidence_authority_is_runtime_config(self):
+        pool = source_pool()
+        ranking = copy.deepcopy(pool["ranking"])
+        ranking["grade_minimum_scores"]["B"] = 61
+        ranking["confidence_bands"]["high"] = [90, 100]
+        ranking["confidence_bands"]["medium"] = [60, 89]
+        ranking["casualty_public_impact_floors"]["100-249"] = 70
+
+        self.assertEqual("B-", MODULE.grade_from_importance_score(60, ranking))
+        self.assertEqual("medium", MODULE.confidence_band(85, ranking))
+        self.assertEqual(70, MODULE.public_impact_floor_from_confirmed_deaths(100, ranking))
 
     @staticmethod
     def sync_score(item):
@@ -904,9 +927,9 @@ class CandidateAuditTests(unittest.TestCase):
     def test_every_shortlist_item_requires_all_major_scores(self):
         audit = valid_audit()
         ranked = audit["runs"][0]["source_coverage"][0]["ranked_items"][0]
-        ranked.pop("importance_breakdown")
+        ranked.pop("discovery_priority_score")
         errors = MODULE.validate(audit, source_pool())
-        self.assertTrue(any("importance_breakdown" in error for error in errors))
+        self.assertTrue(any("discovery_priority_score" in error for error in errors))
 
         audit = valid_audit()
         audit["runs"][0]["candidates"][0].pop("dimension_evidence")
@@ -914,13 +937,6 @@ class CandidateAuditTests(unittest.TestCase):
         self.assertTrue(any("dimension_evidence" in error for error in errors))
 
     def test_major_scores_must_match_weights_and_total(self):
-        audit = valid_audit()
-        ranked = audit["runs"][0]["source_coverage"][0]["ranked_items"][0]
-        ranked["importance_breakdown"]["public_impact"] = 31
-        errors = MODULE.validate(audit, source_pool())
-        self.assertTrue(any("大項分數" in error for error in errors))
-        self.assertTrue(any("importance_score" in error for error in errors))
-
         item = candidate("D", "excluded", "below_public_value_threshold")
         item["importance_score"] = 95
         errors = MODULE.validate(valid_audit([item]), source_pool())
@@ -961,10 +977,6 @@ class CandidateAuditTests(unittest.TestCase):
             ranking.get("dimension_anchors", {}).get("urgency_and_safety"),
         )
 
-        ranking["grade_minimum_scores"]["C"] = 50
-        errors = MODULE.validate(valid_audit(), pool)
-        self.assertTrue(any("grade_minimum_scores" in error for error in errors))
-
         schema = MODULE.load(ROOT / "schemas" / "news-candidate-audit.schema.json")
         candidate_properties = schema["$defs"]["v2Candidate"]["properties"]
         self.assertIn("importance_score", candidate_properties)
@@ -975,12 +987,6 @@ class CandidateAuditTests(unittest.TestCase):
         item = candidate("C", "merged", "duplicate_merged")
         errors = MODULE.validate(valid_audit([item]), source_pool())
         self.assertTrue(any("selected_event_id" in error for error in errors))
-
-    def test_cultural_suspension_novelty_rule_is_locked(self):
-        pool = source_pool()
-        pool["cultural_industry_event_rule"]["first_large_award_suspension_min_grade"] = "C-"
-        errors = MODULE.validate(valid_audit(), pool)
-        self.assertTrue(any("首次停辦最低為 C" in error for error in errors))
 
     def test_all_discovery_sources_send_every_ranked_item_to_pool(self):
         self.assertEqual([], MODULE.validate(valid_audit(per_source_count=73), source_pool()))
@@ -1068,16 +1074,10 @@ class CandidateAuditTests(unittest.TestCase):
         errors = MODULE.validate(valid_audit([item]), source_pool())
         self.assertTrue(any("模板理由" in error for error in errors))
 
-    def test_non_monitored_border_skirmish_is_forced_to_d(self):
+    def test_border_conflict_grade_is_derived_from_dimensions(self):
         item = candidate("B", "selected")
         review = item["grading_evidence"]["border_conflict_review"]
-        review.update({"is_border_conflict": True, "default_d_applied": False})
-        errors = MODULE.validate(valid_audit([item]), source_pool())
-        self.assertTrue(any("邊境小衝突必須評為 D" in error for error in errors))
-
-        item = candidate("D", "excluded", "below_public_value_threshold")
-        review = item["grading_evidence"]["border_conflict_review"]
-        review.update({"is_border_conflict": True, "default_d_applied": True})
+        review.update({"is_border_conflict": True})
         self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
 
     def test_monitored_border_conflict_can_be_regraded_with_reason(self):
@@ -1090,15 +1090,14 @@ class CandidateAuditTests(unittest.TestCase):
         })
         self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
 
-    def test_routine_ongoing_war_update_is_forced_to_d(self):
+    def test_routine_ongoing_war_update_is_scored_from_current_consequences(self):
         item = candidate("B", "selected")
         review = item["grading_evidence"]["ongoing_conflict_review"]
         review.update({
             "is_ongoing_conflict": True, "same_conflict_as_history": True,
             "routine_incident": True, "continuity_discount_applied": False,
         })
-        errors = MODULE.validate(valid_audit([item]), source_pool())
-        self.assertTrue(any("長期戰爭的常態小衝突" in error for error in errors))
+        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
 
     def test_external_system_impact_can_remove_war_discount(self):
         item = candidate("B+", "selected")
@@ -1112,7 +1111,7 @@ class CandidateAuditTests(unittest.TestCase):
         })
         self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
 
-    def test_ongoing_war_cannot_bypass_discount_by_marking_non_routine_only(self):
+    def test_ongoing_war_review_does_not_override_weighted_grade(self):
         item = candidate("B", "selected")
         review = item["grading_evidence"]["ongoing_conflict_review"]
         review.update({
@@ -1120,8 +1119,7 @@ class CandidateAuditTests(unittest.TestCase):
             "routine_incident": False, "change_types": ["material_escalation"],
             "exception_reason": "僅宣稱不是例行事件，但沒有任何實質變化證據。",
         })
-        errors = MODULE.validate(valid_audit([item]), source_pool())
-        self.assertTrue(any("未證明戰局" in error for error in errors))
+        self.assertEqual([], MODULE.validate(valid_audit([item]), source_pool()))
 
     def test_b_minus_or_higher_requires_direct_consequence(self):
         item = candidate("B-", "selected")
