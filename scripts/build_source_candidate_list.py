@@ -37,7 +37,7 @@ def load_json(path: Path):
 
 
 def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
-    sources = pool.get("discovery_sources") or pool.get("sources", [])
+    sources = pool.get("discovery_sources", [])
     expected = {item["source_id"]: item for item in sources}
     if not expected or len(expected) != len(sources):
         raise ValueError("新聞發現來源必須至少有一個且 source_id 不得重複")

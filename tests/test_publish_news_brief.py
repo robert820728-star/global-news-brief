@@ -25,7 +25,7 @@ import publish_news_brief
 def write_valid_audit(root: Path):
     source_pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
     coverage = []
-    for item in source_pool["sources"]:
+    for item in source_pool["discovery_sources"]:
         source_id = item["source_id"]
         article_url = f"https://example.com/{source_id}"
         old_url = f"https://example.com/{source_id}/old"
@@ -155,7 +155,7 @@ def write_valid_audit(root: Path):
         "decision": "selected", "reason_code": "selected_threshold_met",
         "reason": "達到B級", "selected_event_id": "TWN-01",
         "candidate_urls": [url for item in coverage for url in item["selected_item_urls"]],
-        "source_ids": [item["source_id"] for item in source_pool["sources"]],
+        "source_ids": [item["source_id"] for item in source_pool["discovery_sources"]],
         "source_audit": {
             "search_performed": True, "reliable_source_count": 1,
             "independent_group_count": 1, "official_or_primary_found": False,

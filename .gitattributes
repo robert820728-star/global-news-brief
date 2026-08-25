@@ -1,0 +1,15 @@
+# Preserve byte identity for the verified bootstrap transport and runtime closure.
+/.agents/skills/** -text
+/bootstrap/** -text
+/bootstrap-workspace.md -text
+/daily-schedule-prompt.md -text
+/maps/** -text
+/news-brief-examples.md -text
+/news-brief-settings.md -text
+/news-brief-template.md -text
+/news-source-pool.json -text
+/schemas/** -text
+/scripts/** -text
+/source-route-config.json -text
+/state/candidate-audit.json -text
+/user-preferences.example.yaml -text

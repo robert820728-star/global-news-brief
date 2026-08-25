@@ -375,6 +375,12 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("reader_omission_note", document)
         self.assertIn("不得因宿主缺少原生媒體能力阻擋正式文字交付", daily)
         self.assertNotIn("只把圖片交付切換到既有 full-runtime", daily)
+        self.assertIn("先實際嘗試", daily)
+        self.assertIn("下載失敗", daily)
+        self.assertIn("截圖", daily)
+        self.assertIn("status=completed", daily)
+        self.assertNotIn("若必要地圖或附件仍需 full-runtime，保持 `status=running`", daily)
+        self.assertNotIn("不得標記 canonical completed", daily)
 
     def test_empty_audit_baseline_is_not_claimed_as_fourteen_day_complete(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
@@ -383,15 +389,15 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("空的 `runs` 陣列", daily)
         self.assertIn("不得宣告十四天清單已完成", daily)
 
-    def test_mobile_b_or_higher_requires_a_visible_source_image(self):
+    def test_mobile_images_search_multiple_same_event_sources_before_degrading(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
-            "MOBILE_B_OR_HIGHER_VISIBLE_IMAGE_GATE",
-            "B 以上",
-            "C 級新聞可使用圖片說明",
-            "不得整份零張可見圖片",
-            "只重做圖片階段",
+            "MOBILE_PER_STORY_VISIBLE_IMAGE_GATE",
+            "可檢查多個來源",
+            "不限一個",
+            "其他可靠媒體",
+            "只重做該則圖片取得／交付",
         ):
             self.assertIn(requirement, daily)
 
@@ -473,10 +479,12 @@ class PipelineContractTests(unittest.TestCase):
             ):
                 self.assertIn(requirement, document)
             self.assertNotIn("FIRST_RUN_SOURCE_COVERAGE_COMPLETENESS_GATE", document)
-            self.assertNotIn("15/15", document)
 
         discovery = pool["discovery_sources"]
         self.assertEqual(["gdelt", "cna", "chinanews"], [item["source_id"] for item in discovery])
+        for retired_key in ("sources", "section_sources", "primary_sources_per_section"):
+            self.assertNotIn(retired_key, pool)
+        self.assertFalse((ROOT / "source-health-profile.json").exists())
         self.assertEqual(1, pool["discovery_policy"]["minimum_ready_sources"])
         self.assertEqual("degrade_not_block", pool["discovery_policy"]["source_failure_policy"])
         self.assertEqual("all_verified_in_window", pool["candidate_transfer_policy"])
@@ -500,6 +508,29 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("FULL_DISCOVERY_POOL_NO_FIXED_LIMIT", document)
             self.assertIn("15-minute", document)
 
+    def test_install_is_the_complete_and_consistent_entry_point(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        for requirement in (
+            "文件權責與讀取順序",
+            "完整每日執行流程",
+            "必填產物與驗證",
+            "執行模式與完成條件",
+            "NATIVE_MEDIA_UNAVAILABLE",
+            "reader-canonical-capability-degraded",
+            "# 每日新聞讀者版",
+            "PRE_MANIFEST_RECOVERY_BUNDLE_GATE",
+            "recover_news_run.py plan",
+            "--bootstrap-receipt",
+        ):
+            self.assertIn(requirement, install)
+        for skill in (
+            "acquire-news-candidates", "select-news-events", "audit-news-candidates",
+            "verify-news-events", "build-news-maps", "build-news-charts",
+            "collect-news-images", "recover-news-run", "daily-news-brief",
+        ):
+            self.assertIn(f".agents/skills/{skill}/SKILL.md", install)
+        self.assertNotIn("YYYY/MM/DD 每日新聞`；下一行", install)
+
     def test_candidate_discovery_has_no_fixed_source_completion_gate(self):
         documents = {
             "settings": (ROOT / "news-brief-settings.md").read_text(encoding="utf-8"),
@@ -512,7 +543,6 @@ class PipelineContractTests(unittest.TestCase):
         }
         forbidden = (
             "任一來源未完成",
-            "十五站與完成回填",
             "任一來源未完成、未按站內前 30 則",
             "prevalidated daily-news sources",
         )

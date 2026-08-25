@@ -124,7 +124,7 @@ def valid_audit(candidates=None, per_source_count=1):
     window_start = "2026-08-13T06:00:00+08:00"
     window_end = "2026-08-14T06:00:00+08:00"
     coverage = []
-    for item in source_pool()["sources"]:
+    for item in source_pool()["discovery_sources"]:
         source_id = item["source_id"]
         ranked_items = [
             {"url": f"https://example.com/{source_id}/{index}", "title": f"{source_id}-{index}",
@@ -525,10 +525,6 @@ class CandidateAuditTests(unittest.TestCase):
 
     def test_degraded_discovery_coverage_accepts_one_ready_source(self):
         pool = source_pool()
-        pool["discovery_sources"] = [
-            next(item for item in pool["sources"] if item["source_id"] == source_id)
-            for source_id in ("cna", "chinanews", "reuters")
-        ]
         pool["discovery_policy"] = {
             "minimum_ready_sources": 1,
             "source_failure_policy": "degrade_not_block",
@@ -734,17 +730,20 @@ class CandidateAuditTests(unittest.TestCase):
         errors = MODULE.validate(valid_audit(), pool)
         self.assertTrue(any("首次停辦最低為 C" in error for error in errors))
 
-    def test_all_configured_sources_send_every_ranked_item_to_pool(self):
+    def test_all_discovery_sources_send_every_ranked_item_to_pool(self):
         self.assertEqual([], MODULE.validate(valid_audit(per_source_count=73), source_pool()))
 
     def test_source_coverage_count_is_driven_by_source_pool(self):
         pool = source_pool()
-        self.assertEqual(15, len(pool["sources"]))
+        self.assertEqual(3, len(pool["discovery_sources"]))
+        self.assertNotIn("sources", pool)
+        self.assertNotIn("section_sources", pool)
+        self.assertNotIn("primary_sources_per_section", pool)
         self.assertEqual([], MODULE.validate(valid_audit(), pool))
 
         missing = valid_audit()
-        missing["runs"][0]["source_coverage"].pop()
-        missing["runs"][0]["raw_item_count"] -= 1
+        missing["runs"][0]["source_coverage"].clear()
+        missing["runs"][0]["raw_item_count"] = 0
         errors = MODULE.validate(missing, pool)
         self.assertTrue(any("source coverage" in error for error in errors))
 
@@ -756,12 +755,11 @@ class CandidateAuditTests(unittest.TestCase):
         errors = MODULE.validate(extra, pool)
         self.assertTrue(any("source coverage" in error for error in errors))
 
-    def test_section_source_contract_matches_flat_source_order(self):
+    def test_discovery_source_ids_must_be_unique(self):
         pool = source_pool()
-        pool["section_sources"]["GLB"] = pool["section_sources"]["GLB"][:-1]
+        pool["discovery_sources"].append(dict(pool["discovery_sources"][0]))
         errors = MODULE.validate(valid_audit(), pool)
-        self.assertTrue(any("primary_sources_per_section" in error for error in errors))
-        self.assertTrue(any("展開順序" in error for error in errors))
+        self.assertTrue(any("discovery" in error and "唯一" in error for error in errors))
 
     def test_source_cannot_submit_fewer_than_its_complete_ranked_list(self):
         audit = valid_audit(per_source_count=73)
@@ -795,9 +793,9 @@ class CandidateAuditTests(unittest.TestCase):
             item["candidate_id"] = item["dedup_key"] = str(index)
             item["selected_event_id"] = f"GLB-{index + 1:02d}"
             items.append(item)
-        self.assertEqual([], MODULE.validate(valid_audit(items, per_source_count=3), source_pool()))
+        self.assertEqual([], MODULE.validate(valid_audit(items, per_source_count=10), source_pool()))
         items[0]["decision"] = "excluded"
-        errors = MODULE.validate(valid_audit(items, per_source_count=3), source_pool())
+        errors = MODULE.validate(valid_audit(items, per_source_count=10), source_pool())
         self.assertTrue(any("C 以上必須入選" in error for error in errors))
 
     def test_c_minus_requires_explicit_use_reason(self):

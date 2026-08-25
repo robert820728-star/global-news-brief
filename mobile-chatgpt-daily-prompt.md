@@ -20,7 +20,7 @@
 - `SEMANTIC_EVENT_LEDGER_GATE`: 只有語意事件才算新聞、才可進入六項評分。前處理的網址正規化與標題分群只產生文章層 `provisional_article_groups`，不得當成事件。選稿必須讀取文章內容或來源支援摘要，為每個真正事件建立唯一 `semantic_event_id` 與完整 `event_identity`，並逐列寫入 `article_dispositions`。每列只能是 `event_evidence`、`non_news` 或 `unresolved`；`event_evidence` 必須指向事件，`non_news` 必須保存具體理由，`unresolved` 必須排查歸零才能完成 audit。文章列數、網址數與標題群組數不得稱為新聞數或完成評分數。
 - `EVENT_REGION_AND_TIME_IDENTITY_GATE`: 語意聚類完成後、六項評分前，從事件內容獨立建立 `country_codes`、`primary_country_code`、`location_evidence`、`event_occurred_at`、`material_update_at`、`material_update_type`、`material_update_evidence` 與 `temporal_review`。來源分桶及媒體國別不得作為事件地區。時間資格由模型逐事件比較文章內容、十四天時間線、舊數據與本輪事實，判定 `new_event`、`ongoing_current_impact`、`material_update` 或 `old_restatement`；程式不得用文章日期或數字關鍵字代替語意判斷。已結束事件只重複舊傷亡、重新整理、回顧、週年、換標題或重刊時為 `non_news`。開始較早但有內容證明在本輪時間窗仍持續運作或造成當下影響的事件可列 `ongoing_current_impact`，不以開始日久遠自動排除，也不要求新增傷亡。缺漏或矛盾一律 `unresolved`，不得評分或刊出。
 - `POLICY_GOVERNANCE_EVIDENCE_GATE`: 事件身分與時間資格確認後、六項評分前，先證明政策／法規／主管機關處置／平台治理事件真正是什麼。最新一輪每個候選必須填 `policy_governance_review`；適用時分列法律依據、官方行動、業者或平台實際效果、受影響行為者、跨機關影響、先例或外溢範圍、窗內效果及證據網址。未經證實的指控必須放入 `unverified_allegations`，不得併入事件身分、直接後果或六項分數。草評後逐項核對公共影響、範圍、結構意義與窗內增量；任何矛盾或未解都必須退回重審並重新評分。具有官方行動、實際業者效果及跨機關／外溢證據但低於 B 時，必須填具體 `why_not_b`；不得自動升 B，也不得略過反向挑戰。
-- The system must score and deduplicate before independent verification. Verification may use the original report, official material, or another reliable source from the wider source pool; it is not required to come from the discovery feed.
+- The system must score and deduplicate before independent verification. Verification selects original reporting, official or primary material, and genuinely independent evidence appropriate to the event and claim; it has no fixed source count or list and need not come from the discovery feed.
 - The system must collect images only after verification. A discovery image hint is only a lead and never counts as a verified or delivered image.
 - Browser/web search is the last discovery fallback after the three feeds, and may also be used to locate original evidence for a scored event. Search results must still be deduplicated and scored before selection.
 
@@ -38,16 +38,16 @@
 - `DOMAIN_EXPERTISE_MATCH`: an assessment only strengthens verification when its author or institution has relevant expertise and a transparent method. General reporting may establish that a claim circulated, but cannot replace technical, scientific, legal, statistical, medical, military, or other domain evidence.
 - `TIMELINESS_WITH_SOURCE_LIMIT_NOTE`: the absence of an official record does not by itself prohibit publication of a timely event. Reliable on-scene reporting, attributable imagery, or multiple genuinely independent observations may support publication, but the reader must be told which official statistics or primary records are still unavailable; disputed numbers, attribution, and technical conclusions remain provisional and receive lower verification confidence until updated.
 
-+## Same-source recovery order
+## Same-source recovery order
 
 `SAME_SOURCE_RECOVERY_ORDER`
 
-The required order for every configured source is: `canonical route -> same-site direct fetch -> same-site alternate non-browser route -> browser-rendered snapshot`.
+The required order for every configured discovery route is: `canonical route -> same-site direct fetch -> same-site alternate non-browser route -> browser-rendered snapshot`.
 
 - Run `scripts/recover_same_source_leads.py` for a verified coverage lead; never inject a search result directly into selection.
 - `browser is the final fallback only`. It is permitted only after the direct article fetch and all configured same-site non-browser alternatives have failed and those failures were logged.
 - A browser DOM snapshot must pass the same same-source host, SHA-256, publication-window, evidence, coverage, and candidate validators as direct evidence.
-- Recovery applies to all configured sources. It updates only the affected source scan and coverage record; it must not restart already verified sources.
+- Recovery applies only to the affected configured discovery route. It must not restart routes that already have verified evidence.
 
 
 本規則供一般 ChatGPT Scheduled Task 使用。目標是以較低消耗完成每日基礎更新，不要求本機程式、命令列、檔案下載、地圖或資料圖表；唯一必要的 repository 寫入是下列小型執行紀錄與最新讀者版。
@@ -68,7 +68,7 @@ The required order for every configured source is: `canonical route -> same-site
    - `LEGACY_TODAY_OVERVIEW_NO_OMISSION_GATE`：`## 今日總覽` 內每個有新聞的板塊都必須原樣保留既有 `時間｜事件｜評級` 三欄總清單並列出該區全部入選事件。不得省略、跨區集中或重新設計。
    - `LEGACY_SECTIONED_READER_LAYOUT_GATE`：今日總覽後必須依相同板塊順序放逐區新聞；每則固定為「標題｜評級 → 可見圖片或圖片說明 → 新聞摘要 → 評為X級的評論與段末來源」。不得改成欄位式逐條詳報，不得顯示事件編號，也不得產生 `時間／來源／事件細節／分析` 欄位組。送出前必須執行 `scripts/validate_news_brief.py brief --reader-layout legacy-sectioned`；格式錯誤時只重做 reader render，不重跑新聞階段。
    - `READER_INTERNAL_REPAIR_LOG_EXCLUSION_GATE`：重試、429、archive 切換、去重效能、圖片補救、checkpoint 重建及其他「修復紀錄」只可寫入內部 run log／audit receipt，不得出現在讀者版、`latest-reader.md` 或其逐字對話副本。對話如需附 run receipt，只能在完整 reader 之後以一行列出 run_id 與驗收結果，不得附修復過程。
-7. 只有所有必要視覺與 canonical reader validators 均通過時，輸出對話前最後一次持久更新才可為 `delivery-handoff`、`status=completed`、`delivery_status=handoff_started`。若必要地圖或附件仍需 full-runtime，保持 `status=running` 並保存 handoff target，不得提前 completed。即使已 handoff，沒有外部明確回執時仍不得宣稱 `client_confirmed` 或手機畫面已收到。
+7. canonical reader、當輪新聞證據、候選稽核與該執行模式可執行的驗證通過後，輸出對話前最後一次持久更新可為 `delivery-handoff`、`status=completed`、`delivery_status=handoff_started`。若已先實際嘗試圖片下載、截圖備援及可用的本機／原生附件路徑，但宿主仍無法交付媒體，改記 `delivery_profile=reader-canonical-capability-degraded`、`native_media_status=unavailable` 與 `capability_limitations=[NATIVE_MEDIA_UNAVAILABLE]`；`last_error` 必須為空。這不阻擋 completed，但不得宣稱附件或像素驗收。即使已 handoff，沒有外部明確回執時仍不得宣稱 `client_confirmed` 或手機畫面已收到。
    - `CONVERSATION_READER_BYTE_IDENTITY_GATE`：排程最終訊息必須直接交付 `logs/latest-reader.md` 的完整內容，順序與文字不得改成摘要、驗收報告、節錄或僅告知 GitHub 已保存。可以在完整 reader 之後附極短的 run receipt，但不得以 receipt 取代讀者版。若最終訊息未包含完整 reader，`delivery-handoff` 不得視為驗收通過。
 
 紀錄格式必須符合 `schemas/mobile-run-log.schema.json`，並明確寫入 `execution_mode=mobile-native`；詳細輪替規則見 `docs/mobile-run-ledger.md`。紀錄只包含階段、時間、commit、錯誤摘要、完整海選清單位置及讀者版位置，不保存憑證、完整來源頁或圖片二進位內容。
@@ -132,17 +132,17 @@ The required order for every configured source is: `canonical route -> same-site
    - 若沒有小尺寸版本且本輪無法實際轉檔，但原始圖片是可公開讀取且不會短期失效的 HTTPS 網址，允許改放同一張原圖；「有圖可看」優先於檔案大小，不得因此中止整份新聞。
    - 圖片只以對話中可直接觀看的內嵌圖片或圖片卡呈現，並附描述畫面的替代文字；不得用圖片網址或圖片來源頁連結代替圖片。新聞事實的來源連結仍照常保留。標題、摘要與來源不得依賴圖片才能理解。
    - 不使用需要登入、限制外站引用、防盜連、含短效簽名或到期 token 的圖片網址，也不使用 `data:` 或 `blob:` 網址。
-   - `MOBILE_PER_STORY_VISIBLE_IMAGE_GATE`（取代整份層級的 `MOBILE_B_OR_HIGHER_VISIBLE_IMAGE_GATE`）：每一則本輪入選新聞都必須逐則執行圖片搜尋與顯示驗收，一則新聞的圖片不得替其他新聞通過。逐則先檢查已引用來源頁的內文圖片、`og:image`／`srcset`、縮圖欄位與官方圖資；仍無結果時，再檢查一個已加入來源欄且可靠的同事件來源。圖片必須在本對話實際可見、可確認與該事件相關，且不得用無關示意圖、人物舊照或來源標誌湊數。舊規則「C 級新聞可使用圖片說明」不代表可跳過逐則找圖；若讀者版含 B 以上事件，仍不得整份零張可見圖片。找到可用圖片卻無法顯示時，只重做圖片階段且限於該則，不重跑 discovery、評分、驗證或 reader 文字。
+   - `MOBILE_PER_STORY_VISIBLE_IMAGE_GATE`（取代整份層級的 `MOBILE_B_OR_HIGHER_VISIBLE_IMAGE_GATE`）：每一則本輪入選新聞都必須逐則執行圖片搜尋與顯示驗收，一則新聞的圖片不得替其他新聞通過。逐則先檢查已引用來源頁的內文圖片、`og:image`／`srcset`、縮圖欄位與官方圖資；仍無結果時，依序檢查官方機關／當事組織、原始通訊社及其他可靠媒體的同事件報導，可檢查多個來源，不限一個，也不要求必須是完全相同像素。每張候選圖都必須保存實際圖片來源頁並核對事件與日期；不得用無法追溯的搬運站、搜尋縮圖、無關示意圖、人物舊照或來源標誌湊數。找到可用圖片卻無法顯示時，只重做該則圖片取得／交付，不重跑 discovery、評分、驗證或 reader 文字。
    - 只有同一張原圖也不適合公開內嵌時，才不換圖、不留下破圖，也不輸出圖片網址；直接以 `**圖片說明：**` 說明該圖內容與未內嵌原因。完全沒有可確認圖片時，也只列 `**圖片說明：**`，用一句非技術性文字說明未找到可確認且適合刊載的圖片。
    - `IMAGE_READER_VISIBLE_DELIVERY_GATE`：宿主宣告具備原生媒體能力時，圖片只有在本輪排程對話的最終訊息中實際顯示為可見圖片或圖片卡，才算圖片交付成功。Markdown 圖片語法、本機絕對路徑、`sandbox:` 路徑、外部圖片網址、空白方框或破圖圖示都不算可見圖片。
-   - `NATIVE_MEDIA_BLOCK_DELIVERY_GATE`：宿主具備原生媒體能力時，最終交付必須是 ChatGPT 原生 `image/media content block` 或原生圖片卡，不得把外部 HTTPS 圖片寫進 `agentMessage text` 後期待 Markdown 自動渲染。圖片先保存為實體 JPEG／WebP 位元組，完成 MIME、解碼、尺寸與內容驗收後，再以上傳附件或原生媒體工具送入本對話；穩定網址、HTTP 200 與 Markdown 語法都不能取代上傳。
+   - `NATIVE_MEDIA_BLOCK_DELIVERY_GATE`：圖片先保存為實體 JPEG／WebP，完成 MIME、解碼、尺寸與內容驗收後，必須先實際嘗試宿主支援的本機附件、本機媒體呈現、`image/media content block` 或原生圖片卡。外部 HTTPS 網址與只有文字的 Markdown 不能冒充已交付圖片；但不得因工具清單中沒有某個特定名稱的 media API，就禁止已驗證的本機檔案或預先宣告無法交付。
    - `NATIVE_IMAGE_SEARCH_CARD_ROUTE`：mobile-native 對每則既有選圖使用 ChatGPT 原生圖片搜尋／媒體工具，查詢必須同時包含事件、發布者與日期，交付原生圖片卡；不得在 reader 內產生 `![alt](https://...)`。`read_thread` 可把這類原生卡表示為 `async_image_group`，但該標記本身仍不是像素驗收。
    - 外部驗收器必須用結構化 `read_thread` 讀取本輪最終回覆，確認存在非文字的 `image/media content block` 或原生 `async_image_group`，再以唯讀畫面擷取確認實際 `rendered pixel` 圖片區域寬高非零。若只有一般 `agentMessage text`、圖片網址、Markdown、圖說，或畫面仍空白，立即判定圖片交付失敗，不得要求使用者目視補驗。
-   - `NATIVE_MEDIA_CAPABILITY_FALLBACK`：若宿主沒有可產生原生媒體區塊的工具，記錄 `NATIVE_MEDIA_UNAVAILABLE` 與宿主能力，不得建立新 run、重跑 discovery／評分／驗證或把外部圖片網址偽裝為圖片交付。能執行 runtime 時仍先以 `scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>` 建立可驗證資產；每則圖片仍必須保存 verified image evidence（來源頁或同事件可靠來源的 URL、檢查時間、內容／視覺檢查結果與可用時的 SHA-256），並在 manifest 使用 `images.status=omitted`、明確的 `reader_omission_note`。這是原生媒體交付的能力降級，不是新聞、驗證或文字 reader 的失敗；不得因宿主缺少原生媒體能力阻擋正式文字交付，也不得宣稱已做原生像素驗收。
+   - `NATIVE_MEDIA_CAPABILITY_FALLBACK`：不得根據工具名稱或預檢結果直接宣告 `NATIVE_MEDIA_UNAVAILABLE`。能執行 runtime 時先用 `scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>`；每則必須先記錄原圖下載結果，下載失敗就嘗試來源頁／官方產品頁截圖。取得合格本機 JPEG／WebP 後，再先實際嘗試可用的本機附件或原生媒體交付。只有最後一哩的實際交付嘗試仍失敗，才記錄 `delivery_profile=reader-canonical-capability-degraded`、`native_media_status=unavailable` 與 `capability_limitations=[NATIVE_MEDIA_UNAVAILABLE]`。保存 verified image evidence、取得／交付嘗試與 `reader_omission_note`，不得建立新 run 或重跑 discovery／評分／驗證。這不是 `last_error`；不得因宿主缺少原生媒體能力阻擋正式文字交付、`delivery-handoff` 或 `status=completed`，也不得宣稱已做原生附件或像素驗收。
    - 若無法在送出前確認圖片可見，必須移除該圖片標記，改成一句非技術性的 `**圖片說明：**`；不得寫「沿用前輪選圖」、「前輪同圖」、「不重新驗收」或「圖片待補」。
 8. reader 只使用 `news-brief-template.md` 的「今日總覽＋分區單項新聞」版型；不得另建 `逐條詳報`、`後續觀察` 或欄位式事件卡。
 9. 每則新聞的地圖、資料圖表與來源圖片依序直向排列；每張附件的下一個非空白行必須是對應的地圖一／資料圖表一／圖一／圖二圖說。禁止圖廊、輪播、同列圖片、疊圖、manifest 外圖片及新聞區塊外圖片。
-10. `map.required=true` 但無法產生並驗收附件時，不得標記 canonical completed；保留已完成新聞階段，只把地圖／render 交給 full-runtime。
+10. `mobile-native` 無法產生地圖或其他本機視覺時，依同一 delivery profile 記錄 capability omission；它不阻擋 canonical reader completed。若日後由 full-runtime 補圖，只續做該視覺階段，不得重跑新聞或改變既有 reader 事實。
 11. 十四天海選清單保留在 audit artifact，不附加到 canonical reader；每筆仍保存日期、區域、標題、六項評分、總分、等級、決定、理由與來源。
 
 只提供有來源支持的內容。GitHub 規則、搜尋或來源無法讀取時，回報實際缺口，不得假裝完成。

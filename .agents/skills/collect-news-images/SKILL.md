@@ -19,9 +19,10 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 偵測到官方或媒體圖片時，必須下載來源頁中的實際媒體檔。`images.assets[].source_url` 保存文章頁，`images.assets[].source_image_url` 保存實際圖片網址；後者必須出現在同一文章頁檢查的 `detected_image_urls`，且不得等於文章頁網址。找到圖片卻沒有對應附件時維持 `pending` 並恢復。
 - 每張來源圖片必須由 `scripts/materialize_news_images.py` 對 `source_image_url` 下載、解碼與寫檔，並保存 `materialized-images.json`；不得手工產生同名檔或只憑 manifest 宣告來源。
 - 任一來源找到可信且相關圖片後，`images.status` 只能在至少一張附件通過驗收後改為 `ready`。
-- 已找到可用圖片但下載或截圖失敗時，`images.status` 維持 `pending`，並把圖片階段標成失敗後回到本技能重試；不得改成 `omitted` 後交付。
+- 已找到可用圖片時，先下載原始媒體檔；下載失敗才依圖片政策截圖並驗證。`full-runtime` 兩者都失敗時 `images.status` 維持 `pending` 並只重試圖片階段。`mobile-native` 只有在實際取得與本機／原生附件交付都已嘗試且最後一哩仍失敗時，才可用 `reader-canonical-capability-degraded` 記錄非阻塞的 `NATIVE_MEDIA_UNAVAILABLE`；不得在未嘗試前預判。
 - 只有全部引用來源都已檢查且均無可用圖片，才可使用 `omitted`，並保存具體後台原因；同時填寫繁體中文、非技術性的 `reader_omission_note`，供讀者版說明為何本則沒有圖片。
 - 圖片取得失敗不改變事件等級。
+- 原引用來源沒有可取得圖片時，依序搜尋官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導；可檢查多個來源，不限一個，也不要求找到完全相同像素。新來源必須加入事件的圖片證據與來源追溯，並核對發布日期、人物／地點與事件關聯；搜尋縮圖、無法追溯的搬運站、舊照或無關示意圖不得入選。
 - 自製定位地圖由 `build-news-maps` 處理，不得放進 `images`。
 - 自製資料圖表由 `build-news-charts` 處理，不得放進 `images`。
 - `map.assets`、`charts.assets`、`images.assets` 三組附件路徑必須兩兩不重複；任何一種視覺完成都不能改變另外兩種的需求、狀態、檢查紀錄或附件。同一張合格官方／專業來源圖片可以同時滿足來源圖片與專業圖資兩組檢查，但兩組檢查紀錄都必須保留。`IMAGE_ONE_ASSET_MAY_SATISFY_BOTH_SOURCE_AND_PROFESSIONAL`

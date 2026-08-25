@@ -7,6 +7,9 @@
   "required": [
     "schema_version",
     "execution_mode",
+    "delivery_profile",
+    "native_media_status",
+    "capability_limitations",
     "run_id",
     "scheduled_for",
     "status",
@@ -22,8 +25,17 @@
     "candidate_audit_artifact"
   ],
   "properties": {
-    "schema_version": { "const": "1.1.0" },
+    "schema_version": { "const": "1.2.0" },
     "execution_mode": { "enum": ["full-runtime", "mobile-native"] },
+    "delivery_profile": {
+      "enum": ["full-assets", "reader-canonical-capability-degraded"]
+    },
+    "native_media_status": { "enum": ["available", "unavailable"] },
+    "capability_limitations": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "enum": ["NATIVE_MEDIA_UNAVAILABLE"] }
+    },
     "run_id": {
       "type": "string",
       "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$"

@@ -35,7 +35,7 @@ class SourceScanEvidenceTests(unittest.TestCase):
             pool_path = root / "pool.json"
             scan_path.write_text(json.dumps(scan), encoding="utf-8")
             coverage_path.write_text(json.dumps([{"source_id": "wire", **self.coverage()}]), encoding="utf-8")
-            pool_path.write_text(json.dumps({"sources": [self.source()]}), encoding="utf-8")
+            pool_path.write_text(json.dumps({"discovery_sources": [self.source()]}), encoding="utf-8")
             result = subprocess.run(
                 [sys.executable, str(ROOT / "scripts" / "validate_source_scan_evidence.py"),
                  "--scan", str(scan_path), "--coverage", str(coverage_path),
@@ -62,7 +62,7 @@ class SourceScanEvidenceTests(unittest.TestCase):
             coverage_path = root / "coverage.json"
             pool_path = root / "pool.json"
             coverage_path.write_text(json.dumps([{"source_id": "wire", **self.coverage()}]), encoding="utf-8")
-            pool_path.write_text(json.dumps({"sources": [self.source()]}), encoding="utf-8")
+            pool_path.write_text(json.dumps({"discovery_sources": [self.source()]}), encoding="utf-8")
             result = subprocess.run(
                 [sys.executable, str(ROOT / "scripts" / "validate_source_scan_evidence.py"),
                  "--scan-dir", str(scans), "--coverage", str(coverage_path),

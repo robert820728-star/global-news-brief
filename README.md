@@ -27,7 +27,7 @@
 完成後，每次排程都會重新讀取 repo 最新規則，並以獨立結果對話輸出當日新聞。完整版每輪會以兩個帶新 nonce 的 GitHub API 端點交叉確認當下 `main` SHA；同一輪固定使用確認後的 SHA，下一輪再重新解析，不會把安裝時或前一輪的 commit 永久釘住：
 
 - 排程及結果對話名稱固定為「每日新聞」。
-- 每份讀者版第一行固定為執行地日期的 `YYYY/MM/DD 每日新聞`，下一行自動列出本期總數與各板塊數量。
+- 每份讀者版第一行固定為 `# 每日新聞讀者版`，下一個非空白行是 manifest 衍生的統計期間；總數與各板塊事件完整列在唯一的 `## 今日總覽`。
 - 地圖點位直接標示地名；圖說只解釋地點與事件的關係，不以 1、2、3 代碼或重複底圖描述增加閱讀負擔。
 
 詳細步驟請見 [INSTALL.md](INSTALL.md)，個人設定格式請見 [user-preferences.example.yaml](user-preferences.example.yaml)，排程執行提示詞請見 [daily-schedule-prompt.md](daily-schedule-prompt.md)。
@@ -40,15 +40,17 @@
 
 ## 模組化架構
 
-工作流固定使用七個 repo 技能，透過同一份事件清單交接；後段技能不能重建事件或刪除前段成果。
+工作流固定使用九個 repo 技能，透過同一份事件清單交接；後段技能不能重建事件或刪除前段成果。
 
 | 階段 | 技能 | 唯一負責內容 |
 |---|---|---|
 | 主控 | `daily-news-brief` | 精確時間窗、模組順序、詳報組裝、最終輸出與驗收 |
+| 取得 | `acquire-news-candidates` | 三條 discovery routes、快照、時間邊界與候選清單 |
 | 海選 | `select-news-events` | 候選、事件去重、板塊、編號、入選與評級 |
 | 稽核 | `audit-news-candidates` | 十四天候選紀錄、排除理由、D／E 內部分級與持續事件比較 |
 | 複查 | `verify-news-events` | 多來源、原始／官方回查、主張台帳、差異與不確定性 |
 | 地圖 | `build-news-maps` | 自製定位地圖及其驗收 |
+| 圖表 | `build-news-charts` | 有助理解的數值比較、趨勢、比例或分布圖表 |
 | 圖片 | `collect-news-images` | 官方資訊圖、新聞配圖、下載／截圖與視覺驗收 |
 | 恢復 | `recover-news-run` | 失敗偵測、局部重跑、重試上限與重新驗證 |
 
@@ -56,7 +58,7 @@
 
 ## 核心文件
 
-- `.agents/skills/`：七個可獨立維護的工作流技能
+- `.agents/skills/`：九個可獨立維護的工作流技能
 - `schemas/news-event-manifest.schema.json`：跨技能事件資料契約
 - `schemas/news-candidate-audit.schema.json`：候選稽核與十四天歷史資料契約
 - `scripts/manage_candidate_audit.py`：候選歷史裁切、附加與驗證工具

@@ -111,7 +111,7 @@ def rank_scan(scan: dict, source: dict, coverage: dict) -> dict:
 
 def recover(pool: dict, scan_dir: Path, coverage: list[dict], leads: list[dict],
             snapshot_dir: Path, *, fetcher=fetch_direct, timeout_seconds: int = 20) -> dict:
-    sources = {item["source_id"]: item for item in pool.get("sources", [])}
+    sources = {item["source_id"]: item for item in pool.get("discovery_sources", [])}
     coverage_by_id = {item["source_id"]: item for item in coverage}
     scans = {}
     recovered = []

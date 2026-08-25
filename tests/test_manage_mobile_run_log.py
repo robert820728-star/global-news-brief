@@ -50,6 +50,9 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertEqual(current["status"], "awaiting_executor")
         self.assertEqual(current["current_stage"], "schedule-prepared")
         self.assertEqual(current["execution_mode"], "full-runtime")
+        self.assertEqual(current["delivery_profile"], "full-assets")
+        self.assertEqual(current["native_media_status"], "available")
+        self.assertEqual(current["capability_limitations"], [])
         self.assertIsNone(current["candidate_audit_artifact"])
         self.assertEqual(current["delivery_status"], "not_ready")
         workflow = (ROOT / ".github" / "workflows" / "prepare-mobile-run-ledger.yml").read_text(
@@ -89,6 +92,16 @@ class MobileRunLogTests(unittest.TestCase):
 
     def test_next_prepare_rotates_completed_current_to_previous(self):
         self.prepare()
+        artifact = {
+            "branch": "run-logs",
+            "path": "logs/latest-candidate-audit.json",
+            "blob_sha": "a" * 40,
+        }
+        reader = {
+            "branch": "run-logs",
+            "path": "logs/latest-reader.md",
+            "blob_sha": "b" * 40,
+        }
         self.module.advance_run(
             self.ledger_dir,
             run_id=RUN_1,
@@ -96,11 +109,44 @@ class MobileRunLogTests(unittest.TestCase):
             updated_at="2026-08-18T00:15:00Z",
             status="completed",
             delivery_status="handoff_started",
+            candidate_audit_artifact=artifact,
+            reader_artifact=reader,
         )
         self.prepare(run_id=RUN_2, at="2026-08-18T21:58:00Z")
         self.assertEqual(self.read("previous.json")["run_id"], RUN_1)
         self.assertEqual(self.read("previous.json")["status"], "completed")
         self.assertEqual(self.read("current.json")["run_id"], RUN_2)
+
+    def test_mobile_native_can_complete_with_nonblocking_native_media_limitation(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+            delivery_profile="reader-canonical-capability-degraded",
+            native_media_status="unavailable",
+            capability_limitations=["NATIVE_MEDIA_UNAVAILABLE"],
+        )
+        self.module.advance_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            stage="delivery-handoff",
+            updated_at="2026-08-18T00:15:00Z",
+            status="completed",
+            delivery_status="handoff_started",
+            reader_artifact={
+                "branch": "run-logs", "path": "logs/latest-reader.md", "blob_sha": "b" * 40,
+            },
+            candidate_audit_artifact={
+                "branch": "run-logs", "path": "logs/latest-candidate-audit.json", "blob_sha": "a" * 40,
+            },
+        )
+        current = self.read("current.json")
+        self.assertEqual(current["status"], "completed")
+        self.assertEqual(current["delivery_profile"], "reader-canonical-capability-degraded")
+        self.assertEqual(current["capability_limitations"], ["NATIVE_MEDIA_UNAVAILABLE"])
+        self.assertIsNone(current["last_error"])
 
     def test_next_prepare_marks_running_current_interrupted(self):
         self.prepare()

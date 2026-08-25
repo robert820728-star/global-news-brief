@@ -8,7 +8,6 @@
     "absence_from_heat_never_excludes_complete_sources": true,
     "validator": "scripts/validate_local_source_admission.py"
   },
-  "primary_sources_per_section": 5,
   "source_scan_evidence_required": true,
   "discovery_policy": {
     "strategy": "aggregate_then_regional_supplements",
@@ -80,7 +79,7 @@
     "cross_source_substitution_forbidden": false,
     "browser_snapshot_required_when_used": true,
     "browser_must_not_be_a_runtime_dependency": true,
-    "configured_primary_sources_must_pass_non_browser_health_check": false
+    "configured_discovery_routes_must_record_health": true
   },
   "cultural_industry_event_rule": {
     "first_large_award_suspension_min_grade": "C",
@@ -185,30 +184,10 @@
     },
     "tie_breakers": ["newer_published_at", "more_direct_primary_evidence", "stable_url"]
   },
-  "section_sources": {
-    "TWN": ["cna", "pts", "udn", "tvbs", "ebc"],
-    "CHN": ["xinhua", "caixin", "chinanews", "jiemian", "yicai"],
-    "GLB": ["reuters", "ap", "guardian", "aljazeera", "cbs_news"]
-  },
-  "sources": [
-    {"source_id":"cna","name":"中央通訊社","homepage":"https://www.cna.com.tw/list/aall.aspx","section":"TWN","categories":["politics","economy","technology","public_safety"],"role":"taiwan_wire"},
-    {"source_id":"pts","name":"公視新聞網","homepage":"https://news.pts.org.tw/","section":"TWN","categories":["public_policy","society","politics","public_safety"],"role":"public_service_media"},
-    {"source_id":"udn","name":"聯合新聞網","homepage":"https://udn.com/news/index","section":"TWN","categories":["politics","society","economy","international"],"role":"general_media"},
-    {"source_id":"tvbs","name":"TVBS 新聞網","homepage":"https://news.tvbs.com.tw/","section":"TWN","categories":["politics","society","international","public_safety","economy"],"role":"general_media"},
-    {"source_id":"ebc","name":"東森新聞","homepage":"https://news.ebc.net.tw/","section":"TWN","categories":["politics","society","international","public_safety","economy"],"role":"general_media"},
-    {"source_id":"xinhua","name":"新華社／新華網","homepage":"https://www.news.cn/","section":"CHN","categories":["policy","economy","disaster","official_positions"],"role":"china_state_primary"},
-    {"source_id":"caixin","name":"財新","homepage":"https://www.caixin.com/","section":"CHN","categories":["economy","finance","business","investigations"],"role":"china_independent_business"},
-    {"source_id":"chinanews","name":"中國新聞網","homepage":"https://www.chinanews.com.cn/","section":"CHN","categories":["politics","society","economy","regional"],"role":"china_wire"},
-    {"source_id":"jiemian","name":"界面新聞","homepage":"https://www.jiemian.com/","section":"CHN","categories":["society","policy","business","finance","technology"],"role":"general_business_media"},
-    {"source_id":"yicai","name":"第一財經","homepage":"https://www.yicai.com/","section":"CHN","categories":["economy","finance","business","technology"],"role":"business_media"},
-    {"source_id":"reuters","name":"Reuters","homepage":"https://www.reuters.com/world/","section":"GLB","categories":["politics","economy","business","technology","conflict","disaster"],"role":"independent_wire"},
-    {"source_id":"ap","name":"Associated Press","homepage":"https://apnews.com/world-news","section":"GLB","categories":["breaking","politics","conflict","disaster","public_safety"],"role":"independent_wire"},
-    {"source_id":"guardian","name":"The Guardian","homepage":"https://www.theguardian.com/world","section":"GLB","categories":["world","politics","conflict","society","climate"],"role":"international_general_media"},
-    {"source_id":"aljazeera","name":"Al Jazeera English","homepage":"https://www.aljazeera.com/news/","section":"GLB","categories":["world","conflict","diplomacy","humanitarian","economy"],"role":"international_general_media"},
-    {"source_id":"cbs_news","name":"CBS News World","homepage":"https://www.cbsnews.com/world/","section":"GLB","categories":["world","politics","disaster","public_safety","science"],"role":"international_general_media"}
-  ],
-  "specialist_supplements": [
-    {"source_id":"nature","name":"Nature News","homepage":"https://www.nature.com/news","categories":["science","medicine","climate","research"],"trigger":"science_or_research"},
-    {"source_id":"who_don","name":"WHO Disease Outbreak News","homepage":"https://www.who.int/emergencies/disease-outbreak-news","categories":["public_health","epidemic"],"trigger":"public_health_or_epidemic"}
-  ]
+  "verification_source_selection": {
+    "strategy": "event_and_claim_role",
+    "fixed_source_count": null,
+    "fixed_source_list": false,
+    "required_roles_depend_on_claim_category": true
+  }
 }

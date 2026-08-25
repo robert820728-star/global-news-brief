@@ -12,7 +12,7 @@ description: Recover interrupted or failed daily-news stages before or after a m
 本輪建立 checkpoint：
 
 ```bash
-python3 scripts/news_run_checkpoint.py init --output <checkpoint> --run-id <run-id> --window-start <window-start> --window-end <window-end>
+python3 scripts/news_run_checkpoint.py init --output <checkpoint> --run-id <run-id> --window-start <window-start> --window-end <window-end> --bootstrap-receipt <bootstrap-receipt>
 ```
 
 manifest 尚未建立時，唯一恢復規劃命令是：
@@ -36,7 +36,7 @@ python3 scripts/news_run_checkpoint.py mark \
   --artifact <name>=<path> --message "<result>"
 ```
 
-`source-scan` 必須保存15站原始快照、連續翻頁／停止證據、邊界證據與 SHA-256。直接介面遭遇403、robots、不支援 MIME、逾時、解析失敗或動態內容未載入時，固定切換 `browser_rendered`；瀏覽器仍失敗才切同站分類頁、搜尋頁、RSS、API 或存檔入口。不得因第一條路徑失敗停止整輪，也不得以別站補足。`audit-news-candidates` 完成後把 candidate audit 綁定到 checkpoint；`materialize-manifest` 只可由 audit 中的 selected event ids 物化 manifest，完成後綁定 manifest。
+`source-scan` 必須保存三條 discovery routes 的原始快照、連續翻頁／停止證據、邊界證據與 SHA-256。取得順序固定為 `canonical route → same-site direct fetch → same-site alternate non-browser route → browser-rendered snapshot`；瀏覽器永遠是最後備援。單一路徑失敗時記錄 degraded coverage，只要仍有可驗證當輪候選就繼續；不得把別站證據冒充為失敗 route。`audit-news-candidates` 完成後把 candidate audit 綁定到 checkpoint；`materialize-manifest` 只可由 audit 中的 selected event ids 物化 manifest，完成後綁定 manifest。
 
 ## 2. Manifest 後
 
@@ -60,7 +60,7 @@ python3 scripts/recover_news_run.py record \
 
 ## 3. 重試原則
 
-同一事件／stage 最多三次。第一輪修原路徑；第二輪切換同級合法替代來源或取得方法；第三輪仍失敗時，只有不可排除的硬性權限、網路、來源不存在等阻擋才可停止。格式、地圖、圖表、圖片取得與驗證失敗都必須保留 `recovering/failed` 狀態，不能改寫為 omitted 來假裝完成。
+同一事件／stage 最多三次。第一輪修原路徑；第二輪切換同級合法替代來源或取得方法；第三輪仍失敗時，只有不可排除的硬性權限、網路、來源不存在等阻擋才可停止。`mobile-native` 的 `NATIVE_MEDIA_UNAVAILABLE` 是已完成實際交付嘗試後的能力限制，不是 stage error；它使用 `reader-canonical-capability-degraded` 完成 reader，不能寫入 `last_error`。其他格式、證據或宣稱已交付之資產驗證失敗仍必須保留 `recovering/failed`。
 
 恢復成功後重新跑該 stage 的驗證，再繼續後續 stage。若任何前置 artifact 在恢復期間被修改，必須重新綁定 SHA-256，不能沿用舊 checkpoint 證明。
 

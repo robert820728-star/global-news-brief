@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Recover important Taiwan domestic economy, consumer-safety, and central-institution stories without increasing the fifteen-source primary scan or flooding the reader edition.
+**Goal:** Recover important Taiwan domestic economy, consumer-safety, and central-institution stories without increasing the then-current fixed primary scan or flooding the reader edition.
 
 **Architecture:** Repair generic HTML materialization so descriptive anchor metadata wins over numeric URL slugs. Add three bounded, same-source Taiwan coverage sweeps to the orchestration contract, then calibrate grades around verified national consequences rather than topics or political rhetoric.
 

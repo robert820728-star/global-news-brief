@@ -61,7 +61,7 @@
 - Modify: `.agents/skills/daily-news-brief/SKILL.md`
 - Modify: `tests/test_pipeline_contract.py`
 
-- [ ] Add failing contract assertions for resilient GDELT, complete candidate transfer, and removal of the stale fifteen-site rule.
+- [ ] Add failing contract assertions for resilient GDELT, complete candidate transfer, and removal of the stale fixed-site rule.
 - [ ] Update configuration and all execution surfaces to the same contract.
 - [ ] Run contract tests and confirm GREEN.
 

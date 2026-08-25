@@ -29,7 +29,7 @@ def load_module():
 class SameSourceRecoveryTests(unittest.TestCase):
     def fixture(self, root: Path):
         pool = {
-            "sources": [{
+            "discovery_sources": [{
                 "source_id": "wire", "name": "Wire", "homepage": "https://example.com/",
                 "section": "TWN", "categories": ["politics"],
             }]
@@ -112,7 +112,7 @@ class SameSourceRecoveryTests(unittest.TestCase):
             self.assertEqual("same_source_alternate", scan["supplemental_pages"][1]["recovery_route"])
             self.assertEqual(2, coverage[0]["within_window_count"])
             self.assertIn("https://example.com/news/policy", coverage[0]["selected_item_urls"])
-            self.assertEqual([], VALIDATOR.validate_scan(scan, coverage[0], pool["sources"][0]))
+            self.assertEqual([], VALIDATOR.validate_scan(scan, coverage[0], pool["discovery_sources"][0]))
 
     def test_browser_dom_snapshot_uses_the_same_validation_path(self):
         self.assertTrue(SCRIPT.is_file(), "missing canonical same-source recovery tool")

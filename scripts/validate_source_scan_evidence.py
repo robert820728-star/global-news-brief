@@ -221,13 +221,10 @@ def resolve_source_inputs(scan, coverage, source):
             (item for item in coverage if isinstance(item, dict) and item.get("source_id") == source_id),
             None,
         )
-    if isinstance(source, dict) and (
-        isinstance(source.get("sources"), list)
-        or isinstance(source.get("discovery_sources"), list)
-    ):
+    if isinstance(source, dict) and isinstance(source.get("discovery_sources"), list):
         source = next((
             item
-            for item in source.get("sources", []) + source.get("discovery_sources", [])
+            for item in source.get("discovery_sources", [])
             if isinstance(item, dict) and item.get("source_id") == source_id
         ), None)
     if not isinstance(coverage, dict):
@@ -257,12 +254,9 @@ def main():
         errors = validate_scan(scan, coverage, source)
         source_count = 1
     else:
-        sources = (
-            source.get("discovery_sources") or source.get("sources")
-            if isinstance(source, dict) else None
-        )
+        sources = source.get("discovery_sources") if isinstance(source, dict) else None
         if not isinstance(sources, list) or not sources:
-            print("FAIL: --scan-dir 模式需要含 sources 的 aggregate source pool")
+            print("FAIL: --scan-dir 模式需要含 discovery_sources 的 aggregate source pool")
             return 1
         coverage_items = coverage if isinstance(coverage, list) else []
         minimum_ready = int(source.get("discovery_policy", {}).get(

@@ -1471,7 +1471,7 @@ def build_parser() -> argparse.ArgumentParser:
     brief.add_argument("--input", required=True)
     brief.add_argument(
         "--reader-layout",
-        choices=("structured", "legacy-sectioned"),
+        choices=("legacy-sectioned",),
         default="legacy-sectioned",
     )
     return parser
@@ -1496,9 +1496,7 @@ def main(argv: list[str] | None = None) -> int:
             )
         manifest = load_json(args.manifest)
         text = Path(args.input).read_text(encoding="utf-8")
-        if args.reader_layout == "legacy-sectioned":
-            return print_result(validate_canonical_reader(manifest, text))
-        return print_result(validate_brief_text(manifest, text))
+        return print_result(validate_canonical_reader(manifest, text))
     except (OSError, ValueError, json.JSONDecodeError) as error:
         print(f"FAIL: {error}")
         return 1

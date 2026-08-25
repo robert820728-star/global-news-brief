@@ -11,16 +11,16 @@ description: Use when a daily-news run needs a fresh, auditable rolling-window c
 
 Use `news-source-pool.json.discovery_sources` for the initial list: GDELT plus CNA and China News Service. A failed discovery feed is recorded as degraded and does not block the brief when another feed or the final web-search fallback yields current verifiable candidates. Deduplicate and score before any C-or-higher event is independently verified; collect images only after verification.
 
-+## Same-source recovery order
+## Same-source recovery order
 
 `SAME_SOURCE_RECOVERY_ORDER`
 
-The required order for every configured source is: `canonical route -> same-site direct fetch -> same-site alternate non-browser route -> browser-rendered snapshot`.
+The required order for every configured discovery route is: `canonical route -> same-site direct fetch -> same-site alternate non-browser route -> browser-rendered snapshot`.
 
 - Run `scripts/recover_same_source_leads.py` for a verified coverage lead; never inject a search result directly into selection.
 - `browser is the final fallback only`. It is permitted only after the direct article fetch and all configured same-site non-browser alternatives have failed and those failures were logged.
 - A browser DOM snapshot must pass the same same-source host, SHA-256, publication-window, evidence, coverage, and candidate validators as direct evidence.
-- Recovery applies to all configured sources. It updates only the affected source scan and coverage record; it must not restart already verified sources.
+- Recovery applies only to the affected discovery route and must not restart routes that already have verified evidence.
 
 
 只負責逐站取得文章清單與原始證據，不評級、不排除、不撰寫簡報。
@@ -36,7 +36,7 @@ The required order for every configured source is: `canonical route -> same-site
 
 GDELT 固定先讀官方 15 分鐘 export archives，依精確時間窗下載完整分片並在本地過濾。只有 archive 不可用時才可送出一次 DOC API 補充請求；不得因 429 等待或重試，DOC API 結果必須標示為非完整補充。兩者皆不可用才使用有時效標記的最近有效快取。
 
-每個主要來源依序嘗試：
+每條 discovery route 依序嘗試：
 
 1. 官方 API、JSON、RSS 或其他結構化直接介面。
 2. 普通 HTML 列表、分類頁、站內搜尋或 sitemap。
@@ -48,11 +48,11 @@ GDELT 固定先讀官方 15 分鐘 export archives，依精確時間窗下載完
 
 ## 逐站完成條件
 
-- `discovery_sources` 固定為 GDELT、中央社與中新社；GDELT 覆蓋三個板塊，兩個區域來源補台灣與中國盲區。其餘 `sources` 是評分後驗證池，不是前期完成門檻。
+- `discovery_sources` 固定為 GDELT、中央社與中新社；GDELT 覆蓋三個板塊，兩個區域來源補台灣與中國盲區。評分後驗證依事件與主張角色選取原始、官方／主要與真正獨立的證據，不使用固定驗證池或數量。
 - 連續翻頁直到跨過精確24小時起點或來源明確耗盡。
-- `GDELT_RESILIENT_ACQUISITION`：DOC API 失敗時總請求數最多 5 次；429 後每次至少等待 120 秒，若 `Retry-After` 更久則依其指定。第 5 次仍失敗不得發第 6 次，立即改讀 GDELT 官方 15 分鐘 export archives，最後才使用明確標記時效的有效快取；不得因單一介面 429 停止發佈。
+- `GDELT_RESILIENT_ACQUISITION`：先讀 GDELT 官方 15 分鐘 export archives。只有 archives 不可用時才發送一次不阻塞的 DOC API 補充請求；遇到 429 不等待、不重試，並把 DOC 結果標為 incomplete supplemental coverage。兩者都不可用才讀取具時效標記的有效快取；不得因單一介面失敗停止發佈。
 - `FULL_DISCOVERY_POOL_NO_FIXED_LIMIT`：每個成功來源在精確 24 小時窗內的已驗證條目全部入池，不得設前 30 或其他固定名額。
-- specialist supplements 只在相應主題完成評分後用於驗證，不計入 discovery readiness。
+- 類別專用的官方、原始或專業來源只在相應事件評分後按需選取，不計入 discovery readiness，也不形成固定清單。
 - `TAIWAN_DOMESTIC_COVERAGE_GUARD` 以中央社補查三個限定領域，每個領域最多 `5 results`；中央社不可用或明顯過舊時才使用最後的網頁搜尋備援。所有線索都先查重與評分，不得在評級前啟動圖片。
 
 ## 每篇最少欄位

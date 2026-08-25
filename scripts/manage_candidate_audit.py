@@ -320,7 +320,6 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
     if data.get("retention_days") != 14:
         errors.append("retention_days 必須固定為 14")
 
-    expected_sources = None
     source_scan_evidence_required = False
     source_by_id = {}
     discovery_source_ids = []
@@ -328,7 +327,6 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
     all_configured_source_ids = set()
     ranking_dimensions = dict(DEFAULT_RANKING_DIMENSIONS)
     if source_pool:
-        expected_sources = [item["source_id"] for item in source_pool.get("sources", [])]
         discovery_source_ids = [
             item["source_id"] for item in source_pool.get("discovery_sources", [])
         ]
@@ -337,40 +335,14 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                 "minimum_ready_sources", len(discovery_source_ids)
             )
         )
-        all_configured_source_ids = set(expected_sources) | set(discovery_source_ids)
-        expected_source_count = len(expected_sources)
-        section_sources = source_pool.get("section_sources", {})
-        configured_per_section = source_pool.get("primary_sources_per_section")
-        flattened_section_sources = [
-            source_id
-            for source_ids in section_sources.values()
-            for source_id in source_ids
-        ] if isinstance(section_sources, dict) else []
+        all_configured_source_ids = set(discovery_source_ids)
         source_scan_evidence_required = source_pool.get("source_scan_evidence_required") is True
         source_by_id = {
             item["source_id"]: item
-            for item in (
-                source_pool.get("sources", [])
-                + source_pool.get("discovery_sources", [])
-            )
+            for item in source_pool.get("discovery_sources", [])
         }
-        if not expected_sources or len(set(expected_sources)) != expected_source_count:
-            errors.append("news-source-pool.json 必須定義至少一個且全部唯一的核心來源")
-        if (
-            not isinstance(configured_per_section, int)
-            or configured_per_section < 1
-            or not isinstance(section_sources, dict)
-            or not section_sources
-            or any(
-                not isinstance(source_ids, list)
-                or len(source_ids) != configured_per_section
-                or len(set(source_ids)) != len(source_ids)
-                for source_ids in section_sources.values()
-            )
-        ):
-            errors.append("section_sources 每個板塊必須符合 primary_sources_per_section 且不得重複")
-        if flattened_section_sources != expected_sources:
-            errors.append("section_sources 展開順序必須與 sources 完全一致")
+        if not discovery_source_ids or len(set(discovery_source_ids)) != len(discovery_source_ids):
+            errors.append("news-source-pool.json 必須定義至少一個且全部唯一的 discovery source")
         if not source_scan_evidence_required:
             errors.append("news-source-pool.json 必須鎖定 source_scan_evidence_required=true")
         ranking = source_pool.get("ranking", {})
@@ -410,17 +382,16 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             errors.append(run_label + ".source_coverage 必須是陣列")
             coverage = []
         coverage_ids = [item.get("source_id") for item in coverage if isinstance(item, dict)]
-        legacy_full_coverage = expected_sources is not None and coverage_ids == expected_sources
         discovery_coverage = (
             bool(discovery_source_ids)
             and len(coverage_ids) >= minimum_ready_discovery_sources
             and len(coverage_ids) == len(set(coverage_ids))
             and set(coverage_ids).issubset(set(discovery_source_ids))
         )
-        if expected_sources is not None and not (legacy_full_coverage or discovery_coverage):
+        if source_pool is not None and not discovery_coverage:
             errors.append(
                 run_label
-                + " source coverage 必須是完整舊來源池，或達到最低可用數的 discovery sources"
+                + " source coverage 必須達到最低可用數、不得重複，且只能引用 configured discovery sources"
             )
 
         raw_total = 0
@@ -526,7 +497,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                 errors.append(label + " 入池網址必須精確等於完整排序清單")
             raw_total += selected
         if run.get("raw_item_count") != raw_total:
-            errors.append(run_label + ".raw_item_count 必須等於全部核心來源入池數量總和")
+            errors.append(run_label + ".raw_item_count 必須等於全部 discovery 來源入池數量總和")
 
         candidates = run.get("candidates", [])
         if run.get("deduplicated_candidate_count") != len(candidates):
@@ -1019,7 +990,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             if not isinstance(source_ids, list) or not source_ids:
                 errors.append(label + " 缺少來源池追溯")
             elif any(source_id not in valid_source_ids for source_id in source_ids):
-                errors.append(label + " 引用未定義的核心來源")
+                errors.append(label + " 引用未定義的 discovery 來源")
 
             if grade in AUTO_SELECT and decision not in {"selected", "merged"}:
                 errors.append(label + " C 以上必須入選；禁止篇數上限、相對淘汰或延後")
@@ -1052,7 +1023,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             if set(candidate_url_list) != event_urls:
                 errors.append(run_label + " candidate_urls 必須精確等於 event_evidence 網址")
         elif set(candidate_url_list) != set(pool_urls):
-            errors.append(run_label + " 每個核心來源入池網址都必須歸屬一個去重候選，禁止候選無聲消失")
+            errors.append(run_label + " 每個 discovery 來源入池網址都必須歸屬一個去重候選，禁止候選無聲消失")
     if require_fourteen_day_complete:
         errors += fourteen_day_completeness_errors(data)
     return errors

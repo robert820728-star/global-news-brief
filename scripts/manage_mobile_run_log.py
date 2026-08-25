@@ -13,8 +13,11 @@ from typing import Any
 import run_identity
 
 
-SCHEMA_VERSION = "1.1.0"
+SCHEMA_VERSION = "1.2.0"
 EXECUTION_MODES = {"full-runtime", "mobile-native"}
+DELIVERY_PROFILES = {"full-assets", "reader-canonical-capability-degraded"}
+NATIVE_MEDIA_STATUSES = {"available", "unavailable"}
+KNOWN_CAPABILITY_LIMITATIONS = {"NATIVE_MEDIA_UNAVAILABLE"}
 STAGES = (
     "schedule-prepared",
     "executor-started",
@@ -46,10 +49,16 @@ DELIVERY_STATUSES = {
 
 def _read_json(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
-    if value.get("schema_version") == "1.0.0":
+    if value.get("schema_version") in {"1.0.0", "1.1.0"}:
         value["schema_version"] = SCHEMA_VERSION
         value.setdefault("execution_mode", "full-runtime")
         value.setdefault("candidate_audit_artifact", None)
+        value.setdefault("reader_artifact", None)
+        value.setdefault("delivery_status", "not_ready")
+        value.setdefault("client_confirmation_supported", False)
+        value.setdefault("delivery_profile", "full-assets")
+        value.setdefault("native_media_status", "available")
+        value.setdefault("capability_limitations", [])
     return value
 
 
@@ -74,6 +83,9 @@ def validate_record(record: dict[str, Any]) -> None:
     required = {
         "schema_version",
         "execution_mode",
+        "delivery_profile",
+        "native_media_status",
+        "capability_limitations",
         "run_id",
         "scheduled_for",
         "status",
@@ -95,6 +107,26 @@ def validate_record(record: dict[str, Any]) -> None:
         raise ValueError("unsupported run-log schema version")
     if record["execution_mode"] not in EXECUTION_MODES:
         raise ValueError("invalid execution_mode")
+    if record["delivery_profile"] not in DELIVERY_PROFILES:
+        raise ValueError("invalid delivery_profile")
+    if record["native_media_status"] not in NATIVE_MEDIA_STATUSES:
+        raise ValueError("invalid native_media_status")
+    limitations = record["capability_limitations"]
+    if (
+        not isinstance(limitations, list)
+        or len(limitations) != len(set(limitations))
+        or any(item not in KNOWN_CAPABILITY_LIMITATIONS for item in limitations)
+    ):
+        raise ValueError("invalid capability_limitations")
+    degraded = record["delivery_profile"] == "reader-canonical-capability-degraded"
+    if degraded and (
+        record["execution_mode"] != "mobile-native"
+        or record["native_media_status"] != "unavailable"
+        or "NATIVE_MEDIA_UNAVAILABLE" not in limitations
+    ):
+        raise ValueError("capability-degraded delivery requires mobile-native NATIVE_MEDIA_UNAVAILABLE")
+    if not degraded and "NATIVE_MEDIA_UNAVAILABLE" in limitations:
+        raise ValueError("NATIVE_MEDIA_UNAVAILABLE requires the capability-degraded delivery profile")
     if not run_identity.is_valid_run_id(record["run_id"]):
         raise ValueError("run_id must use canonical format gnb-YYYYMMDDTHHMMSSZ-xxxxxxxx")
     if record["status"] not in STATUSES:
@@ -110,6 +142,11 @@ def validate_record(record: dict[str, Any]) -> None:
         "client_confirmation_supported"
     ):
         raise ValueError("client delivery cannot be confirmed without an external acknowledgement")
+    if record["status"] == "completed":
+        if record.get("reader_artifact") is None or record.get("candidate_audit_artifact") is None:
+            raise ValueError("completed requires saved reader and candidate-audit artifacts")
+        if degraded and record.get("last_error") is not None:
+            raise ValueError("a capability limitation is not a last_error")
 
 
 def prepare_run(
@@ -119,6 +156,9 @@ def prepare_run(
     scheduled_for: str,
     updated_at: str,
     execution_mode: str = "full-runtime",
+    delivery_profile: str = "full-assets",
+    native_media_status: str = "available",
+    capability_limitations: list[str] | None = None,
 ) -> dict[str, Any]:
     ledger_dir = Path(ledger_dir)
     current_path = ledger_dir / "current.json"
@@ -139,6 +179,9 @@ def prepare_run(
     current: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
         "execution_mode": execution_mode,
+        "delivery_profile": delivery_profile,
+        "native_media_status": native_media_status,
+        "capability_limitations": list(capability_limitations or []),
         "run_id": run_id,
         "scheduled_for": scheduled_for,
         "status": "awaiting_executor",
@@ -171,6 +214,9 @@ def advance_run(
     last_error: dict[str, str] | None = None,
     reader_artifact: dict[str, str] | None = None,
     execution_mode: str | None = None,
+    delivery_profile: str | None = None,
+    native_media_status: str | None = None,
+    capability_limitations: list[str] | None = None,
     candidate_audit_artifact: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     ledger_dir = Path(ledger_dir)
@@ -211,6 +257,12 @@ def advance_run(
         current["reader_artifact"] = reader_artifact
     if execution_mode is not None:
         current["execution_mode"] = execution_mode
+    if delivery_profile is not None:
+        current["delivery_profile"] = delivery_profile
+    if native_media_status is not None:
+        current["native_media_status"] = native_media_status
+    if capability_limitations is not None:
+        current["capability_limitations"] = list(capability_limitations)
     if candidate_audit_artifact is not None:
         current["candidate_audit_artifact"] = candidate_audit_artifact
     current["last_error"] = last_error
@@ -229,6 +281,9 @@ def build_parser() -> argparse.ArgumentParser:
     prepare.add_argument("--scheduled-for", required=True)
     prepare.add_argument("--updated-at", required=True)
     prepare.add_argument("--execution-mode", choices=sorted(EXECUTION_MODES), default="full-runtime")
+    prepare.add_argument("--delivery-profile", choices=sorted(DELIVERY_PROFILES), default="full-assets")
+    prepare.add_argument("--native-media-status", choices=sorted(NATIVE_MEDIA_STATUSES), default="available")
+    prepare.add_argument("--capability-limitation", action="append", choices=sorted(KNOWN_CAPABILITY_LIMITATIONS), default=[])
 
     advance = subparsers.add_parser("advance")
     advance.add_argument("--ledger-dir", type=Path, required=True)
@@ -240,6 +295,9 @@ def build_parser() -> argparse.ArgumentParser:
     advance.add_argument("--client-ack", action="store_true")
     advance.add_argument("--main-sha")
     advance.add_argument("--execution-mode", choices=sorted(EXECUTION_MODES))
+    advance.add_argument("--delivery-profile", choices=sorted(DELIVERY_PROFILES))
+    advance.add_argument("--native-media-status", choices=sorted(NATIVE_MEDIA_STATUSES))
+    advance.add_argument("--capability-limitation", action="append", choices=sorted(KNOWN_CAPABILITY_LIMITATIONS))
     advance.add_argument("--candidate-audit-artifact", type=Path)
 
     validate = subparsers.add_parser("validate")
@@ -256,6 +314,9 @@ def main() -> int:
             scheduled_for=args.scheduled_for,
             updated_at=args.updated_at,
             execution_mode=args.execution_mode,
+            delivery_profile=args.delivery_profile,
+            native_media_status=args.native_media_status,
+            capability_limitations=args.capability_limitation,
         )
     elif args.command == "advance":
         result = advance_run(
@@ -268,6 +329,9 @@ def main() -> int:
             client_ack=args.client_ack,
             main_sha=args.main_sha,
             execution_mode=args.execution_mode,
+            delivery_profile=args.delivery_profile,
+            native_media_status=args.native_media_status,
+            capability_limitations=args.capability_limitation,
             candidate_audit_artifact=(
                 _read_json(args.candidate_audit_artifact)
                 if args.candidate_audit_artifact else None

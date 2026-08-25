@@ -18,7 +18,7 @@ timezone:
 daily_run_time: "06:00"
 conversation_mode: standalone_new_chat_each_run
 conversation_title: 每日新聞
-content_date_heading: "YYYY/MM/DD 每日新聞"
+reader_title: "# 每日新聞讀者版"
 
 workflow:
   orchestrator: daily-news-brief

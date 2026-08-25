@@ -10,7 +10,7 @@ The validated daily run shows two distinct failures. Some requested topics never
 
 ## Chosen design
 
-Keep the existing five primary Taiwan sources and fifteen-source global contract. Add three bounded Taiwan-only coverage sweeps after normal source materialization:
+Keep the then-current configured Taiwan sources and fixed global source contract. Add three bounded Taiwan-only coverage sweeps after normal source materialization:
 
 1. economy, trade, industry, and supply-chain effects;
 2. food, medicine, consumer safety, and nationwide recalls;

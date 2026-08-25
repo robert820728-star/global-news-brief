@@ -13,7 +13,7 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 - 使用者板塊、順序、主題權重與最低等級；篇數上限不是有效設定。
 - repo 根目錄 `news-brief-settings.md`。
 - 候選來源網址與基本中繼資料。
-- `news-source-pool.json` 依板塊固定的15個主要來源（每板塊5站）。
+- `news-source-pool.json` 的 GDELT、中央社與中新社三條 discovery routes；驗證來源不使用固定數量或預設清單，而由後續技能依事件與主張角色選取。
 - `work/model-source-candidates.json`，必須由 `acquire-news-candidates` 先建立完整 `work/source-candidates.json`，再經 `scripts/build_news_relevance_gate.py` 逐列守恆路由並通過兩份 schema 與逐站證據驗證。
 
 ## 流程
@@ -45,9 +45,9 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 
 ### 一、廣泛海選
 
-不得在本技能臨時重新抓新聞。先調用 `acquire-news-candidates` 逐站掃描15個主要來源，保存原始快照、SHA-256、連續翻頁鏈及時間邊界或來源耗盡證據，再讀取其候選清單。驗證器必須從快照重算清單，禁止模型自行宣告筆數。直接連結遇到403、robots、不支援 MIME、逾時、解析失敗或動態內容未載入時，必須切換完整瀏覽器渲染並保存 DOM；不得把第一種工具失敗當成來源不可讀。不得以總候選數或任何等級數量作為成功門檻。
+不得在本技能臨時重新抓新聞。先調用 `acquire-news-candidates` 執行三條 discovery routes，保存原始快照、SHA-256、連續翻頁鏈及時間邊界或來源耗盡證據，再讀取候選清單。驗證器必須從快照重算清單，禁止模型自行宣告筆數。直接連結遇到403、robots、不支援 MIME、逾時、解析失敗或動態內容未載入時，依 `canonical route → same-site direct fetch → same-site alternate non-browser route → browser-rendered snapshot` 恢復；瀏覽器只可作最後備援。不得以總候選數或任何等級數量作為成功門檻。
 
-每站確認完整抵達精確 24 小時邊界後，再按公共價值排序；每筆都依 `public_value_v1` 保存六項 `importance_breakdown`、`importance_score` 與事件特有理由，各項不得超過設定權重且六項總和必須等於總分。`FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` 要求成功來源的全部已驗證窗內條目入池，不設前 30 或其他固定名額。不得把其他來源冒充為某站覆蓋；文化產業、創作者生態或平台制度轉折仍依六項指標正常評分，不得因娛樂新聞整體降權而漏掉。保存每站來源確認紀錄後才可跨站去重。
+每條成功 route 確認完整抵達精確 24 小時邊界後，再按公共價值排序；每筆都依 `public_value_v1` 保存六項 `importance_breakdown`、`importance_score` 與事件特有理由，各項不得超過設定權重且六項總和必須等於總分。`FULL_DISCOVERY_POOL_NO_FIXED_LIMIT` 要求成功 route 的全部已驗證窗內條目入池，不設前 30 或其他固定名額。不得把其他來源冒充為某 route 覆蓋；文化產業、創作者生態或平台制度轉折仍依六項指標正常評分，不得因娛樂新聞整體降權而漏掉。保存 route 確認紀錄後才可跨來源去重。
 
 搜尋各設定板塊及公共政策、經濟、科技、資安、國際關係、災害、公衛、公共安全、科學、自然史、文化與產業。
 

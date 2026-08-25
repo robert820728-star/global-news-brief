@@ -12,7 +12,7 @@
 - `SEMANTIC_EVENT_LEDGER_GATE`: 只有語意事件才算新聞、才可進入六項評分。前處理的網址正規化與標題分群只產生文章層 `provisional_article_groups`，不得當成事件。選稿必須讀取文章內容或來源支援摘要，為每個真正事件建立唯一 `semantic_event_id` 與完整 `event_identity`，並逐列寫入 `article_dispositions`。每列只能是 `event_evidence`、`non_news` 或 `unresolved`；`event_evidence` 必須指向事件，`non_news` 必須保存具體理由，`unresolved` 必須排查歸零才能完成 audit。文章列數、網址數與標題群組數不得稱為新聞數或完成評分數。
 - `EVENT_REGION_AND_TIME_IDENTITY_GATE`: 建立語意事件後、六項評分前，必須從文章內容獨立填寫 `event_identity.country_codes`、`primary_country_code`、`location_evidence`、`event_occurred_at`、`material_update_at`、`material_update_type`、`material_update_evidence` 與 `temporal_review`。來源分桶、來源媒體國別及候選清單的 `section` 只供 discovery，不是事件地區證據；事件板塊由 `primary_country_code` 推導。時間資格必須由模型比較文章內容、十四天事件時間線與本輪數據，分成 `new_event`、`ongoing_current_impact`、`material_update` 或 `old_restatement`；程式只驗證結論與證據一致性。舊事件重新整理、回顧、週年、換標題或重刊一律 `non_news`；但開始較早且有證據顯示仍持續跨越本輪時間窗、仍造成當下影響的事件，可列 `ongoing_current_impact`，不要求硬湊新增傷亡。地區或時間身分缺漏、矛盾時維持 `unresolved`，不得評分或刊出。
 - `POLICY_GOVERNANCE_EVIDENCE_GATE`: 事件身分與時間資格確認後、六項評分前，先證明政策／法規／主管機關處置／平台治理事件真正是什麼。最新一輪每個候選必須填 `policy_governance_review`；適用時分列法律依據、官方行動、業者或平台實際效果、受影響行為者、跨機關影響、先例或外溢範圍、窗內效果及證據網址。未經證實的指控必須放入 `unverified_allegations`，不得併入事件身分、直接後果或六項分數。草評後逐項核對公共影響、範圍、結構意義與窗內增量；任何矛盾或未解都必須退回重審並重新評分。具有官方行動、實際業者效果及跨機關／外溢證據但低於 B 時，必須填具體 `why_not_b`；不得自動升 B，也不得略過反向挑戰。
-- The system must score and deduplicate before independent verification. Verification uses the original report, official evidence, or another reliable source from the wider verification pool and does not require all verification sites to be reachable.
+- The system must score and deduplicate before independent verification. Verification selects the original report, official or primary evidence, and genuinely independent evidence appropriate to each event and claim; it has no fixed source count or verification-site list.
 - The system must collect images only after verification. Discovery image URLs are hints only and cannot satisfy the reader-visible image gate.
 
 ### Category-appropriate verification
@@ -29,16 +29,16 @@
 - `DOMAIN_EXPERTISE_MATCH`: an assessment only strengthens verification when its author or institution has relevant expertise and a transparent method. General reporting may establish that a claim circulated, but cannot replace technical, scientific, legal, statistical, medical, military, or other domain evidence.
 - `TIMELINESS_WITH_SOURCE_LIMIT_NOTE`: the absence of an official record does not by itself prohibit publication of a timely event. Reliable on-scene reporting, attributable imagery, or multiple genuinely independent observations may support publication, but the reader must be told which official statistics or primary records are still unavailable; disputed numbers, attribution, and technical conclusions remain provisional and receive lower verification confidence until updated.
 
-+## Same-source recovery order
+## Same-source recovery order
 
 `SAME_SOURCE_RECOVERY_ORDER`
 
-The required order for every configured source is: `canonical route -> same-site direct fetch -> same-site alternate non-browser route -> browser-rendered snapshot`.
+The required order for every configured discovery route is: `canonical route -> same-site direct fetch -> same-site alternate non-browser route -> browser-rendered snapshot`.
 
 - Run `scripts/recover_same_source_leads.py` for a verified coverage lead; never inject a search result directly into selection.
 - `browser is the final fallback only`. It is permitted only after the direct article fetch and all configured same-site non-browser alternatives have failed and those failures were logged.
 - A browser DOM snapshot must pass the same same-source host, SHA-256, publication-window, evidence, coverage, and candidate validators as direct evidence.
-- Recovery applies to all configured sources. It updates only the affected source scan and coverage record; it must not restart already verified sources.
+- Recovery applies only to the affected configured discovery route. It must not restart routes that already have verified evidence.
 
 
 本文件是排程執行時的主控契約。所有新聞內容、選稿、驗證、地圖、圖表、圖片、恢復與發布規則，以 repository 內最新版設定、skills、schemas 與 scripts 為準；不得由模型自行另造平行流程。
@@ -72,7 +72,7 @@ Before reading the recursive tree, capsule manifest, helpers, payload, or chunks
 - If the probe succeeds, continue the full verified-runtime path below.
 - If the local execution backend is absent or returns a host execution error, classify it as `host_execution_unavailable`, not as a repository materialization defect. Do not fetch the capsule, do not fetch chunks, do not disable the daily schedule, and do not modify `main`.
 - In that case, fetch `mobile-chatgpt-daily-prompt.md` from the same pinned `main` SHA and immediately run its `mobile-native` path in the same scheduled task. This fallback must still deliver the source-backed reader edition, full fourteen-day candidate audit, six scores and totals, every C-or-higher event, and the mobile image decision or non-technical no-image explanation.
-- A `mobile-native` result is a usable degraded reader draft, not a canonical full-asset release. If any selected event requires a map or another attachment that the host cannot materialize and validate, preserve the completed news stages and hand only that visual stage to full-runtime. Never mark the canonical checkpoint completed or claim full visual validation while a required attachment is omitted.
+- A `mobile-native` result is a canonical reader release under its declared delivery profile. It may use `reader-canonical-capability-degraded` when a real local/native-media delivery attempt fails after source-image download or screenshot acquisition has been tried. The run may still become `status=completed`; it records `native_media_status=unavailable` and `NATIVE_MEDIA_UNAVAILABLE`, preserves image evidence and omission notes, and must not claim attachment or rendered-pixel validation. A later full-runtime pass may enrich only the missing visual delivery and must not rerun the news stages.
 - Record `execution_mode=full-runtime` or `execution_mode=mobile-native` in the run ledger. The next scheduled run probes capabilities again and resolves fresh `main`; it must not create a second task merely to retry the missing runtime.
 
 `PRE_PROBE_METADATA_READ_RECOVERY`: if the executor accidentally reads only repository tree, manifest, helper, payload, or chunk metadata before the capability probe, that ordering mistake must not fail the run. The recovery must occur before any news source or prior result is read: immediately perform the one probe, discard the pre-read metadata, and continue through the selected execution mode. The executor must not reuse any pre-read tree, manifest, helper, payload, or chunk; it must refetch the required metadata from the same pinned SHA after routing. This recovery does not permit pre-reading news, an old reader, candidate audit, or source results, and it does not relax any capsule hash or workspace verification.
@@ -180,7 +180,7 @@ Stage -1 完成後，至少讀取並遵守：
    - 先執行一次無參數 renderer，確認三個 canonical 底圖 `taiwan-counties-yellow-v2.png`、`china-provinces-yellow-v2.png`、`world-countries-pacific-robinson-yellow-v2.png` 都由本輪 workspace 產生。每個 `map.required=true` 事件再建立 overlay JSON，依行政區精確鍵值著色並提供繁中 `label`，以 `<bundled-python> scripts/render_base_maps.py --overlay-spec <file>` 產生事件圖；不得直接引用 workspace 外殘留的舊 PNG。
 8. `build-news-charts`
 9. `collect-news-images`
-    - 對已選取且有候選來源圖片的事件，先建立只含 `event_id`、`source_page_url`、`source_image_url`、`alt`、`credit` 的 JSON 陣列；`source_image_url` 必須是來源頁實際檢出的 og:image、src/srcset 或官方媒體檔，不得等於文章頁網址。再執行 `<bundled-python> scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>`。宿主具備原生媒體能力時，只有 manifest 中 `status=ready`、可解碼且有本機 `local_path`、MIME、尺寸與 SHA-256 的實體檔可以交給原生附件／媒體交付層；外部網址、Markdown、工具內部預覽或模型自製文字資訊卡不得冒充來源圖片。若宿主明確不具備該能力，套用 `NATIVE_MEDIA_CAPABILITY_FALLBACK`：保存 verified image evidence 與 `reader_omission_note`，不以無法上傳附件阻擋已驗證的文字 reader，也不得宣稱原生媒體已交付。
+    - 對已選取且有候選來源圖片的事件，先建立只含 `event_id`、`source_page_url`、`source_image_url`、`alt`、`credit` 的 JSON 陣列；`source_image_url` 必須是來源頁實際檢出的 og:image、src/srcset 或官方媒體檔，不得等於文章頁網址。先下載原始媒體檔；下載失敗時才以同一來源頁或官方產品頁截圖補救，再執行 `<bundled-python> scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>` 驗證可取得的實體檔。已有 `status=ready`、可解碼且含 `local_path`、MIME、尺寸與 SHA-256 的 JPEG／WebP 時，必須先實際嘗試宿主支援的本機附件或本機媒體呈現方式；不得只因工具名稱中沒有特定 media API 就預判不可交付。只有實際交付嘗試失敗後才可套用 `NATIVE_MEDIA_CAPABILITY_FALLBACK`，保存嘗試證據與 `reader_omission_note`；它不阻擋已驗證 reader 或 `status=completed`，也不得冒稱原生附件已交付。
    - 單張下載、解碼或寫檔失敗只影響該事件圖片，不得重跑 discovery、評分、驗證或 reader 文字；保留既有 checkpoint，依圖片契約改用合規的無圖說明或只重做圖片交付。
    - 只有 checkpoint 的 `collect-news-images` completed 後，才可第一次執行 `scripts/validate_news_brief.py manifest --input <final-manifest>`；final-manifest validator 不得提前到 verify、map 或 chart 階段。
    - 若執行者誤在圖片階段完成前呼叫該命令，script 會輸出 `DEFERRED` 並以成功狀態返回；這不是 validator 通過，也不得標記整輪失敗。立即繼續原定 pipeline，並在 `collect-news-images` completed 後重新執行到真正輸出 `OK`。

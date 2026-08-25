@@ -109,14 +109,16 @@ Retain `bootstrap-progress.json` on failure so the final report can diagnose the
 
 ## Canonical completion capability
 
-`CANONICAL_COMPLETION_REQUIRES_FULL_ASSET_VALIDATION`
+`CANONICAL_COMPLETION_USES_DECLARED_DELIVERY_PROFILE`
 
-Canonical completion requires the verified runtime, the canonical publisher,
-all manifest/reader/map/image validators, and materialized local attachments
-when the delivery host declares native-media capability. `NATIVE_MEDIA_CAPABILITY_FALLBACK`
-allows a host without that capability to publish the verified textual reader only
-when every omitted image has verified image evidence and a `reader_omission_note`;
-the receipt must record the capability limitation and must not claim native-media
-pixel validation. Missing image evidence or a required map remains blocking.
+Full-runtime completion requires the verified runtime, canonical publisher, all
+manifest/reader/map/image validators, and materialized local attachments. A
+mobile-native run completes under its declared reader delivery profile. It must
+first attempt source-image download, screenshot fallback, and any supported local
+or native attachment route. Only an actual final-mile delivery failure may use
+`NATIVE_MEDIA_CAPABILITY_FALLBACK`: record `reader-canonical-capability-degraded`,
+`native_media_status=unavailable`, verified image evidence and `reader_omission_note` values.
+That capability limitation is not `last_error` and does not block `status=completed`;
+the run must not claim attachment or pixel validation.
 
 Do not mislabel it as source-scan, preprocessing, validation, image, map, or publisher failure. Do not bypass the repository pipeline by manually producing a news brief.

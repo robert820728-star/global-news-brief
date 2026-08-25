@@ -1,177 +1,252 @@
-# 每日新聞安裝指引
+# 每日新聞安裝與操作指引
 
-本文件供 ChatGPT 在使用者於新對話貼上本 GitHub repo 網址後執行初始化。不得把安裝流程或後台限制寫進每日新聞讀者版。
+本文件是本 repository 的唯一安裝入口，也是新對話第一次使用時的操作教程。它負責說明讀取順序、排程安裝、兩種執行模式、完整每日流程、必填產物、驗證與局部恢復。每日讀者版不得包含本文件的安裝或後台內容。
 
 ## 安裝目標
 
-1. 以最少問題建立使用者個人偏好。
-2. 建立名為「每日新聞」的每日獨立排程。
-3. 每次執行建立獨立結果對話，對話名稱固定為「每日新聞」。
-4. 每份內容第一行顯示當天日期：`YYYY/MM/DD 每日新聞`；下一行由 manifest 自動列出本期總數與各板塊數量。
-5. 每次執行重新讀取本 repo 最新規則與排程保存的個人偏好。
-6. 監控板塊確認後，初始化並驗收每個板塊的可重用區域底圖規格；事件地圖以板塊底圖作為第一層上下文，再依事件建立局部定位、範圍或路線圖。
-7. 首次安裝後立即執行一次測試並驗收。
+1. 只詢問必要偏好，建立名為「每日新聞」的每日獨立排程。
+2. 每輪重新解析最新 `main`，同一輪固定使用一個經雙端點確認的 commit。
+3. 依宿主能力選擇 `full-runtime` 或 `mobile-native`，兩者都必須產生可驗證的 canonical reader。
+4. 新聞發現只使用 GDELT、中央社與中新社三條 discovery routes；事件驗證依主張類型選取原始、官方／主要及真正獨立的證據，不使用固定來源數或固定驗證名單。
+5. 首次安裝後立即執行一次測試，驗證排程、完整讀者版、執行紀錄及目前模式可交付的視覺。
 
 ## 使用者啟動指令
 
-使用者只需在全新對話貼上：
+在全新對話貼上：
 
 > 請使用以下 GitHub 專案建立我的每日新聞簡報：
 >
 > https://github.com/robert820728-star/global-news-brief
 >
-> 請先完整閱讀最新版 `INSTALL.md`，再依照其中的安裝流程、技能、設定檔與排程模板執行，不要自行簡化或重新發明流程。
+> 請先完整閱讀最新版 `INSTALL.md`，再依照其中的讀取順序、技能、設定、產物、驗證與恢復規則執行，不要自行簡化或重新發明流程。
 
-收到指令後，必須以本文件作為完整安裝入口，直接開始安裝，不得要求使用者在啟動指令中重複本文件已記載的設定規則，也不要求使用者先理解 YAML、三碼代碼、排程語法或地圖資料格式。
+收到後，以本文件為入口直接開始。使用者不必理解 YAML、三碼代碼、排程語法、schema 或 Git blob。
 
-安裝程序固定遵守：
+## 文件權責與讀取順序
 
-1. 詢問使用者是否要自訂監控板塊；板塊可以是國家或區域。若不自訂，使用台灣（TWN）、中國（CHN）、世界（GLB）。
-2. 輸出語言預設使用使用者目前使用的語言。
-3. 詢問時區與每日更新時間；未指定時，使用使用者當地時區每天 06:00。
-4. 依照 repository 內的 `daily-schedule-prompt.md` 建立每日排程，不得臨時改寫或省略固定流程。
-5. 新聞時間窗為執行當下往前精確 24 小時，並完整套用海選、十四天候選稽核、評級、多來源驗證、官方資料回查、地圖、資料圖表、官方專業資訊圖、媒體圖片與自主恢復規則。
-6. 若目前環境無法直接完成排程、安裝技能或保存十四天紀錄，必須明確說明限制並引導完成必要操作，不得假稱已完成。
-7. 在使用者確認設定前，不得建立排程。
+同一主題只以表中「權責文件」為準；其他文件可補充但不得覆寫。若兩份現行文件有矛盾，停止安裝並指出精確路徑與衝突句，不能自行挑一份。
 
-## 一、驗證來源
+| 順序 | 權責文件 | 正確用途 |
+|---:|---|---|
+| 1 | `INSTALL.md` | 安裝入口、檔案清單、模式選擇、完整步驟、產物、驗證與恢復 |
+| 2 | `bootstrap-workspace.md` | fresh-main 解析、capsule 物化、bootstrap receipt 與 checkpoint 前置條件 |
+| 3 | `daily-schedule-prompt.md` | full-runtime 的詳細每日執行契約 |
+| 4 | `mobile-chatgpt-daily-prompt.md` | Scheduled Task／mobile-native 的詳細每日執行契約 |
+| 5 | `.agents/skills/daily-news-brief/SKILL.md` | 主控順序、stage ownership 與發布流程 |
+| 6 | 各 stage skill | 只負責該 stage 的輸入、欄位與完成條件 |
+| 7 | `news-brief-settings.md`、`news-source-pool.json`、`source-route-config.json` | 編輯／評級設定、三條 discovery routes 與取得路徑 |
+| 8 | `schemas/*.json` 與 `scripts/*.py` | 可機器檢查的資料契約與 validator；與 prose 衝突時必須修正衝突，不能繞過 validator |
+| 9 | `news-brief-template.md` | 唯一讀者版骨架 |
+| 10 | `news-brief-examples.md` | 只在格式驗證失敗或維護規則時查正反例，不是每日必讀 |
+| 11 | `VERSION-RECORD.md`、`docs/superpowers/**` | 歷史與設計紀錄；不覆寫現行契約，歷史中的舊 15 來源敘述不代表現行規則 |
 
-- 確認 repo 可讀取。
-- 確認下列核心檔案存在：
-  - `.agents/skills/daily-news-brief/SKILL.md`
-  - `.agents/skills/acquire-news-candidates/SKILL.md`
-  - `.agents/skills/select-news-events/SKILL.md`
-  - `.agents/skills/audit-news-candidates/SKILL.md`
-  - `.agents/skills/verify-news-events/SKILL.md`
-  - `.agents/skills/build-news-maps/SKILL.md`
-  - `.agents/skills/collect-news-images/SKILL.md`
-  - `.agents/skills/recover-news-run/SKILL.md`
-  - `schemas/news-event-manifest.schema.json`
-  - `schemas/news-candidate-audit.schema.json`
-  - `schemas/news-source-candidate-list.schema.json`
-  - `news-source-pool.json`
-  - `scripts/preprocess_news_candidates.py`
-  - `scripts/build_source_candidate_list.py`
-  - `scripts/validate_news_brief.py`
-  - `scripts/validate_map_decisions.py`
-  - `scripts/initialize_section_basemaps.py`
-  - `scripts/fetch_admin_boundaries.py`
-  - `maps/style.json`
-  - `scripts/manage_candidate_audit.py`
-  - `scripts/recover_news_run.py`
-  - `scripts/publish_news_brief.py`
-  - `news-brief-settings.md`
-  - `news-brief-template.md`
-  - `news-brief-examples.md`
-  - `user-preferences.example.yaml`
-  - `daily-schedule-prompt.md`
-- 若核心文件缺失或互相衝突，先回報，不建立不完整排程。
-- 使用公開 repo 不要求 GitHub 帳號。讀取規則、執行每日簡報、來源驗證、地圖與圖片功能不需要 repository 寫入權限。
-- 十四天候選回查為增強功能：有持久工作區或 repository 寫入權限時保存跨日歷史；沒有時降級為本輪稽核，不得阻止每日簡報。
+## 一、安裝前驗證
+
+先確認 repo 可讀取，並確認下列現行必要檔案全部存在。
+
+### 九個技能
+
+- `.agents/skills/daily-news-brief/SKILL.md`
+- `.agents/skills/acquire-news-candidates/SKILL.md`
+- `.agents/skills/select-news-events/SKILL.md`
+- `.agents/skills/audit-news-candidates/SKILL.md`
+- `.agents/skills/verify-news-events/SKILL.md`
+- `.agents/skills/build-news-maps/SKILL.md`
+- `.agents/skills/build-news-charts/SKILL.md`
+- `.agents/skills/collect-news-images/SKILL.md`
+- `.agents/skills/recover-news-run/SKILL.md`
+
+### 設定、模板與契約
+
+- `bootstrap-workspace.md`
+- `daily-schedule-prompt.md`
+- `mobile-chatgpt-daily-prompt.md`
+- `news-brief-settings.md`
+- `news-brief-template.md`
+- `news-brief-examples.md`
+- `user-preferences.example.yaml`
+- `news-source-pool.json`
+- `source-route-config.json`
+- `schemas/news-event-manifest.schema.json`
+- `schemas/news-candidate-audit.schema.json`
+- `schemas/news-source-candidate-list.schema.json`
+- `schemas/news-relevance-gate.schema.json`
+- `schemas/mobile-run-log.schema.json`
+
+### 核心工具與地圖資產
+
+- `scripts/news_run_checkpoint.py`
+- `scripts/fetch_source_routes.py`
+- `scripts/materialize_source_scans.py`
+- `scripts/validate_source_scan_evidence.py`
+- `scripts/build_source_candidate_list.py`
+- `scripts/build_news_relevance_gate.py`
+- `scripts/validate_local_source_admission.py`
+- `scripts/preprocess_news_candidates.py`
+- `scripts/manage_candidate_audit.py`
+- `scripts/materialize_event_manifest.py`
+- `scripts/apply_event_stage_patch.py`
+- `scripts/validate_news_brief.py`
+- `scripts/validate_map_decisions.py`
+- `scripts/materialize_news_images.py`
+- `scripts/recover_news_run.py`
+- `scripts/manage_canonical_run_bundle.py`
+- `scripts/check_unique_delivery_gate.py`
+- `scripts/publish_news_brief.py`
+- `scripts/initialize_section_basemaps.py`
+- `scripts/fetch_admin_boundaries.py`
+- `scripts/render_base_maps.py`
+- `maps/style.json`
+- `maps/source/world-countries.geojson`
+
+`news-source-pool.json` 必須只預先設定 GDELT、CNA、China News Service 三條 `discovery_sources`。評分後的驗證來源由事件與主張角色決定，不得另設一組預先固定的驗證來源清單。
 
 ## 二、只詢問三件事
 
-### 問題一：監控板塊
+1. 監控板塊：是否自訂國家或區域？未自訂使用台灣（TWN）、中國（CHN）、世界（GLB）。
+2. 主題偏好：是否提高或降低特定主題權重？未指定沿用 repository 預設，偏好不能降低證據、安全或驗證門檻。
+3. 執行時間：每天幾點？優先使用帳號／裝置時區；無法判斷才追問時區，預設每日 06:00。
 
-> 是否要自訂新聞監控板塊？板塊可以是單一國家，也可以是區域，例如台灣、中國、日本、美國、歐盟、北美、非洲或東南亞。若不自訂，使用預設的「台灣、中國、世界」。
+輸出語言沿用使用者已設定語言，否則使用安裝對話主要語言。國家板塊使用 ISO 3166-1 alpha-3；區域使用穩定不衝突的三碼。取得建立排程的授權後，直接完成安裝與首次測試，不再分階段重複詢問同一決定。
 
-- 板塊數量不限。
-- 台灣與中國預設獨立；只有使用者明確要求才可合併。
-- 使用者只需提供自然語言名稱；成員範圍與三碼代碼由後台解析。
-- 只有名稱確實有歧義時才追問。
+## 三、執行模式與完成條件
 
-### 問題二：主題偏好
+| 項目 | `full-runtime` | `mobile-native` |
+|---|---|---|
+| 適用環境 | 可執行 bundled Python、物化檔案與 canonical publisher | Scheduled Task／無本機 runtime 的一般 ChatGPT 宿主 |
+| 新聞流程 | 完整執行 | 完整執行；不得因缺少本機工具省略 discovery、語意評分、驗證或 reader |
+| 地圖／圖表／圖片 | required 資產必須物化、檔案與像素驗證 | 先執行宿主可用的原生／本機媒體路徑；不支援的視覺以 capability omission 記錄 |
+| canonical 完成 | `full-assets`，所有宣稱的附件通過 | `full-assets` 或 `reader-canonical-capability-degraded` 均可 `status=completed` |
+| `NATIVE_MEDIA_UNAVAILABLE` | 若必要附件仍缺少，屬未完成的視覺 stage | 只能在「原圖下載 → 下載失敗才截圖 → 已取得檔案後實際附件交付」均有證據且最後一哩仍失敗時記錄；它是 `capability_limitations`，不是 `last_error` |
+| 後續補圖 | 局部恢復該視覺 stage | 可由 full-runtime 只補缺少視覺；不得建立新 run 或重跑新聞、評分與驗證 |
 
-> 是否要提高或降低某些新聞主題的權重？若沒有，使用預設設定。
+不能因工具清單沒有特定名稱的 media API，就預先宣告無法交付。已有可解碼、尺寸與 SHA-256 通過的本機 JPEG／WebP 時，必須先實際嘗試宿主支援的本機附件或本機媒體呈現方式。外部圖片網址不能冒充附件；但合格本機檔案也不能被規則無條件禁止。
 
-- 只記錄使用者明確提出的差異。
-- 未指定項目沿用 repo 預設。
-- 個人偏好不得降低來源驗證、圖片驗收、地圖定位與安全規則。
+## 四、建立排程與板塊底圖
 
-### 問題三：執行時間
+依 [daily-schedule-prompt.md](daily-schedule-prompt.md) 建立每日獨立排程：名稱與結果對話名稱均為「每日新聞」，每次建立新結果對話；24 小時窗從實際執行時刻精確倒推。個人偏好保存在使用者自己的排程設定，不回寫公共 `main`。
 
-> 希望每天幾點產生新聞簡報？
+板塊確定後：
 
-- 時區優先使用使用者帳號、裝置或目前工作區時區。
-- 只有時區無法判斷、跨時區使用或使用者主動指定時才追問。
-- 不要求使用者填寫排程語法。
+1. 檢查 `maps/generated/sections/<CODE>-base.json`。
+2. 缺少時以 `scripts/initialize_section_basemaps.py` 建規格；國家板塊由 `scripts/fetch_admin_boundaries.py` 取得 geoBoundaries gbOpen ADM1，不寫國家特例。
+3. 可執行 runtime 時產生 PNG／SVG 並視覺驗收；未實際產圖只能標 `spec_ready`，不能標 `ready`。
+4. 每日事件仍由 `build-news-maps` 判斷點位、範圍、路線或局部圖；板塊底圖不能直接冒充事件地圖。
 
-## 三、自動判斷
+## 五、完整每日執行流程
 
-### 語言
+下表是不可省略的主順序。`stage completed` 必須有具名 artifact 與 SHA-256；不能只寫一個完成字串。
 
-1. 優先使用使用者已明確設定的輸出語言。
-2. 沒有設定時，使用安裝對話的主要語言。
-3. 只有無法可靠判斷或使用者要求變更時才詢問。
-4. 語言套用於板塊名稱、欄位、標題、內文、地圖圖說與圖片圖說；來源原名及網址可保留。
+| 階段 | 必讀／輸入 | 必填產物與驗證 | 完成或恢復條件 |
+|---|---|---|---|
+| -1 fresh main 與 bootstrap | `bootstrap-workspace.md`、雙端點 current main、fresh nonce、capsule manifest／payload | 經 blob SHA、payload SHA-256、runtime fingerprint 驗證的 workspace 與 `bootstrap-receipt.json` | receipt 未通過前不得建立 news checkpoint；修 bootstrap 本身，不得開始新聞搜尋 |
+| 0 checkpoint init | run id、精確 24 小時窗、bootstrap receipt | `python3 scripts/news_run_checkpoint.py init --output <checkpoint> --run-id <run-id> --window-start <start> --window-end <end> --bootstrap-receipt <bootstrap-receipt>` | checkpoint 綁定本輪 main 與窗；用 `news_run_checkpoint.py plan` 找最早未完成 stage |
+| 1 source-scan | `news-source-pool.json`、`source-route-config.json` | 三條 discovery route 的 route snapshots、scan evidence、coverage、`source-candidates.json`、`news-relevance-gate.json`、`model-source-candidates.json` | GDELT archive-first → archive 不可用才一次 non-blocking DOC → cache；同來源恢復最後才 browser；至少一條 route 或最終 web fallback 有可驗證當輪候選即可繼續 |
+| 2 preprocess | model-admitted rows | `preprocessed-candidates.json`；時間窗、canonical URL、provisional article groups | 這些群組不是語意事件；失敗只重跑 preprocess |
+| 3 pre-manifest recovery bundle | source、gate、preprocess、content hydration receipts | `PRE_MANIFEST_RECOVERY_BUNDLE_GATE`：`recovery/checkpoint.json`、`source-candidates.json`、`news-relevance-gate.json`、`model-source-candidates.json`、`preprocessed-candidates.json`、`content-hydration-batches.json`；以 `manage_canonical_run_bundle.py pack-recovery` 建立 connector-safe bundle 並 atomic tree/commit | 必須在 `FIRST_SELECT_NEWS_EVENTS_EXECUTION` 前完成；中斷以 bundle `restore` 從最早缺失 artifact 繼續 |
+| 4 select-news-events | hydrated rows、偏好、十四天 timeline | `selection-results.json`、唯一 `semantic_event_id`／`event_identity`、每列 `article_dispositions` | `event_evidence`、`non_news`、`unresolved` 逐列守恆；unresolved 歸零才可完成；執行 `validate_local_source_admission.py` |
+| 5 audit-news-candidates | selection、上一份 durable audit（若有） | 本輪 candidate audit、十四天 merge status、所有六項分數／理由／等級／決定／`selected_event_id` | 保存 processing counts；十四天歷史不完整標 `audit_bootstrap_incomplete`，但不得刪除或阻擋有效 24 小時 reader |
+| 6 materialize-manifest | audit 中 selected C 以上事件 | `news-event-manifest.json`，事件集合精確等於 selected ids | 只能物化，不得另加／漏掉新聞；綁定 checkpoint |
+| 7 verify-news-events | 事件與主張類型 | stage patch、原始報導、官方／主要記錄、獨立證據鏈、claim status、source limits | 只合併 verify 欄位並執行 stage ownership validator；驗證來源無固定數或名單 |
+| 8 build-news-maps | 已驗證事件、map policy | map decision、必要 overlay、canonical basemap、PNG／SVG | `validate_map_decisions.py`；只修失敗事件地圖 |
+| 9 build-news-charts | 已驗證數據與 chart policy | 只有在比較、趨勢、比例、分布或查表有增量時建立 chart assets | 圖表不能替代地圖或來源圖片；只修失敗圖表 |
+| 10 collect-news-images | 已驗證來源頁與官方產品頁 | 每則 source checks、download／screenshot attempts、`materialized-images.json`、MIME、尺寸、SHA-256、visual check、附件或 omission note | 先下載原圖，下載失敗才截圖；已有本機檔先實際交付。full-runtime 未完成保持 pending；mobile-native 最後一哩失敗可 capability-degraded completed |
+| 11 final manifest 與 render | collect stage 已 completed／依 profile 合法 omission | 首次執行 `validate_news_brief.py manifest` 到 `OK`；由 manifest 渲染 reader，綁定 `render.manifest` 與 `render.brief` | 提前呼叫 manifest validator 回 `DEFERRED` 不算通過也不算失敗；繼續原 stage 後重跑 |
+| 12 publish 與 bundle | final checkpoint、manifest、audit、source pool、reader、map decisions、宣稱交付的附件 | `publish_news_brief.py` release／receipt；`manage_canonical_run_bundle.py pack`、atomic bundle＋current log、`verify`／`restore` byte identity | full-runtime 由 canonical publisher fail-closed；mobile-native 依 mobile ledger schema 保存 reader/audit 與 delivery profile |
+| 13 conversation delivery | release receipt 或 mobile saved reader | 完整 reader bytes、附件／能力限制 receipt、`delivery-handoff` | 不能只交摘要或驗收報告；`client_confirmed` 只有外部明確回執才可使用 |
 
-### 板塊代碼
+## 六、必填產物與驗證
 
-- 每個板塊配置唯一的三個大寫英文字母。
-- 國家優先使用 ISO 3166-1 alpha-3；區域或組織使用清楚、穩定且不衝突的三碼。
-- 事件編號格式固定為 `XXX-01`、`XXX-02`。
+### Candidate audit counts
 
-### 板塊底圖初始化
+本輪必須從 artifact 重算並保存：
 
-板塊名稱、範圍與三碼代碼確定後，在建立排程前初始化區域底圖：
+- `merged_article_row_count`
+- `in_window_article_row_count`
+- `canonical_url_count`
+- `provisional_title_cluster_count`
+- `semantic_event_count`
+- `scored_event_count`
+- `c_or_higher_scored_event_count`
+- `selected_event_count`
+- `event_evidence_article_row_count`
+- `non_news_article_row_count`
+- `unresolved_article_row_count`
 
-1. 檢查 `maps/generated/sections/<CODE>-base.json` 是否已有與目前板塊範圍相符的底圖規格。
-2. 沒有時使用 `scripts/initialize_section_basemaps.py` 建立板塊底圖規格。單一國家一律以 ISO 3166-1 alpha-3 三碼呼叫 `scripts/fetch_admin_boundaries.py`，從固定的 geoBoundaries gbOpen 來源下載 ADM1（州、省、郡、都道府縣等第一級行政區）並自動計算範圍；不得為日本、澳洲、美國等國家各寫特例。跨國區域才使用成員國國界與明確區域範圍。ADM1 取得或驗證失敗時必須進入恢復流程，不得退回無行政區的底圖。
-3. 若環境可執行 Python／Matplotlib，立即由 `maps/source/world-countries.geojson` 或更高解析度的 repo 地理資料產生 `maps/generated/sections/<CODE>-base.png` 與 `.svg`。
-4. 必須完成視覺驗收：板塊沒有被裁掉、投影與比例可讀、跨日期變更線／太平洋區域沒有錯誤斷裂、主要成員與周邊地理上下文可辨識。
-5. 驗收後將 metadata 的 `status` 設為 `ready`、`visual_checked` 設為 `true`。只有規格、沒有實際圖檔時保持 `spec_ready`，不得假稱已生成底圖。
-6. 沒有 repository 寫入權限時，可在使用者持久工作區保存同等的底圖與 metadata；兩者皆不可用時，排程仍可建立，但首次測試必須明確驗證事件地圖能由世界底圖現場生成，不得假稱板塊底圖已持久保存。
-7. 每日事件地圖不得把板塊底圖直接當作完成品。板塊底圖是第一層上下文；`build-news-maps` 仍須依事件來源增加點位、範圍、路線、高亮或必要的局部圖。
+文章列、canonical URL、標題群組與語意事件是不同口徑，不能互相冒充。所有 C 級以上事件都必須映射到 reader；不設篇數上限。
 
-### 篇幅與門檻
+### Source and verification evidence
 
-- 未指定時沿用 `user-preferences.example.yaml` 的預設值。
-- 板塊增加時不得為了填滿每區而加入低價值新聞。
-- 同一事件只放在一個主要板塊，跨國系統性事件才優先放全球板塊。
+- Discovery coverage 只記 GDELT、CNA、China News Service 的實際成功／失敗與快照，不要求任何固定驗證站點逐站可用。
+- 每個 selected event 依類型使用原始／官方／專業／獨立證據。多家媒體轉載同一 wire、新聞稿或匿名說法只算一條證據鏈。
+- 一個可靠來源仍可發布，但必須顯示來源限制；缺官方紀錄不自動否決即時事件，爭議數字與歸因保持暫定。
 
-## 模型與執行環境
+### Reader structure
 
-- 預設安裝不要求 Ollama、本地 GPU 或額外模型帳號。
-- 每次先使用 `scripts/preprocess_news_candidates.py` 完成確定性的時間窗、網址正規化與初步重複聚類，再由模型判斷語意與公共價值。
-- 若使用者已有 Ollama 或低成本模型服務，可在個人偏好啟用小模型分類；小模型只能做主題、板塊、實體與合併建議，不得單獨排除候選或決定最終評級。
-- 暫定 B 以上及政治、選舉、軍事、外交、金融市場、重大企業與科技、災害、疫情、公共安全事件，固定交由高階模型複核。
-- 雲端排程不能直接假設可連線使用者電腦上的 Ollama；未確認端點可用時必須跳過小模型層，不得中止每日新聞。
+canonical reader 固定依 `news-brief-template.md`：
 
-## 四、建立每日獨立排程
+1. 第一行：`# 每日新聞讀者版`
+2. 下一個非空白行：manifest 衍生的 `統計期間：...`
+3. 六項評級說明
+4. 唯一一個 `## 今日總覽`，按板塊列出全部 selected events
+5. 依相同板塊順序輸出單項新聞：`標題｜評級 → 圖片或圖片說明 → 新聞摘要 → 評級評論與段末來源`
 
-取得使用者排程授權後，依 [daily-schedule-prompt.md](daily-schedule-prompt.md) 建立排程：
+reader 不顯示 run id、commit、後台 counts、十四天 audit、修復紀錄或「逐條詳報」欄位卡。對話名稱可為「每日新聞」，但不能在 reader 前另加 `YYYY/MM/DD 每日新聞` 或手填總數摘要。
 
-- 排程名稱：每日新聞。
-- 頻率：每天一次。
-- 執行時間與時區：依個人偏好。
-- 模式：每次建立獨立結果對話，不返回安裝對話，也不堆疊於前一天對話。
-- 結果對話名稱：每日新聞。
-- 內容日期：每份讀者版第一行固定為執行地日期的 `YYYY/MM/DD 每日新聞`。
-- 數量摘要：日期後固定用一句話列出本期新聞總數與各板塊數量，不得手填或沿用前次數字。
-- 地圖標示：點位直接顯示地名，禁止用 1、2、3 代替；圖說只說明地點對事件的意義，不重複底圖類型。
-- 新聞時間窗：每次實際執行時間往前精確 24 小時。
-- 規則來源：每次以 `daily-schedule-prompt.md` 的雙端點、fresh nonce 規則重新解析 GitHub 最新 `main`；不得列舉分支或沿用安裝時／前一輪 commit SHA。
-- 個人偏好：保存在使用者自己的排程設定，不回寫公共 repo。
-- 執行流程：固定由 `daily-news-brief` 依序調用海選、候選稽核、複查、地圖、圖片與自主恢復技能，再套用模板；不得把整個流程改寫成單一臨時提示詞。
-- 候選歷史：優先保存於使用者可持久工作區；工作區不可用且使用者有 repository 寫入權限時才回寫。兩者皆無時照常執行，僅不保證跨日十四天回查。
-- 執行診斷 / Run diagnostics：若 GitHub connector 有留言權限，依 `bootstrap/RUN_LEDGER_PROTOCOL.md` 在固定 issue 以每輪一則 comment 保存節流進度；沒有權限時顯示 `external_ledger: unavailable` 並照常完成新聞，不把診斷台帳變成執行前提。
+### Media evidence and completion
 
-## 五、首次測試
+- 每則先檢查已引用來源的 `og:image`、`src/srcset`、內文圖與官方產品圖；仍無結果時依序查官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導，可查多個來源而不限一個。
+- 先下載實際媒體檔；下載失敗才截取同一來源頁／官方產品頁的合規畫面。
+- 取得的本機檔必須通過 MIME、解碼、尺寸、SHA-256、時間與內容相關性檢查。
+- 通過後先實際使用宿主支援的本機附件／本機媒體／原生媒體路徑；不能僅因未看到特定工具名稱就判 `NATIVE_MEDIA_UNAVAILABLE`。
+- capability-degraded mobile completion 必須保存逐則取得與交付嘗試，`last_error=null`，並清楚表示未完成附件／像素驗收。
 
-- 排程建立後立即手動執行一次，不必等待隔日。
-- 檢查：
-  - 是否建立獨立結果對話，而非回到安裝對話。
-  - 排程與可控制的結果對話名稱是否為「每日新聞」。
-  - 內容第一行是否為當天的 `YYYY/MM/DD 每日新聞`。
-  - 板塊、三碼事件編號、語言、時區、24 小時時間窗、來源、地圖、圖片與三個頂層區塊是否正確。
-  - 每個自訂板塊是否有已驗收的 section basemap；若環境無法持久生成，是否如實標記降級並確認事件地圖仍可現場生成。
-  - 所有自製地圖是否固定使用 `maps/style.json` 的 `yellow-admin-v2`，並與台灣、中國、世界三張核准參考圖保持淡黃色陸地、灰色行政界線與白色背景；藍底或平台預設地圖必須判定失敗並重跑。
-  - 所有事件是否都完成 map decision；命中海域、保護區、棲地、遷徙、擴散、路線、跨境、災害範圍等強地理訊號卻判定 not_required 時，是否被 `scripts/validate_map_decisions.py` 攔截。
-  - 所有事件是否都完成多來源搜尋；只有一個可靠來源時是否照常收錄、保留原等級並顯示固定來源限制文字。
-  - 地圖與圖片是否同時保留，且沒有因後段處理而覆蓋來源、標題、等級或其他附件。
-- 若環境可執行 Python，另執行 `python3 -m unittest discover -s tests -v` 確認驗證器正常。
-- 若測試失敗，只修正失敗環節，不重新詢問已確認的偏好；不得在沒有可交付檔案時結束，必須由自主恢復定位中斷階段、修復並繼續，直到發布閘門產生 `release/news-brief.md`。
+## 七、局部恢復指令
+
+### Manifest 前
+
+```bash
+python3 scripts/news_run_checkpoint.py plan --input <checkpoint>
+```
+
+只重跑回報的最早未完成 stage。source route、hydration batch、selection 或 audit 已完成且 hash 未變的產物不得清空。
+
+### Manifest 後
+
+```bash
+python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
+```
+
+只修 `verification`、`map`、`charts`、`images` 或 `render/validate` 中的失敗事件／欄位。stage patch 以 `scripts/apply_event_stage_patch.py` 合併；不得用 shell 字串直接改 manifest。`recover_news_run.py` 沒有 `--checkpoint` 參數，checkpoint 由 `news_run_checkpoint.py` 維護。
+
+`NATIVE_MEDIA_UNAVAILABLE` 在 mobile-native 是非阻塞 capability limitation，不是 recovery target；補圖時沿用同一 run 與既有 checkpoint，只續做視覺交付。
+
+## 八、首次測試
+
+排程建立後立即手動執行一次，至少檢查：
+
+- fresh main 經雙端點與 fresh nonce 解析，同輪沒有混用 SHA。
+- bootstrap receipt 在 checkpoint 前通過；checkpoint init 含 `--bootstrap-receipt`。
+- 三條 discovery routes 如實記錄，沒有另一組預先固定的驗證來源池要求。
+- source rows、語意事件、scored／selected counts 口徑守恆，unresolved 為零。
+- 所有 C 級以上事件都在 canonical reader，且第一行為 `# 每日新聞讀者版`。
+- reader 只有一個 `## 今日總覽`，沒有日期前綴、手填數量摘要、事件 ID 或後台修復文字。
+- map decision、chart decision 與每則 image check 均已執行；下載失敗有截圖備援證據。
+- 已下載圖片確實先嘗試本機／原生附件交付；不能未嘗試就宣告 `NATIVE_MEDIA_UNAVAILABLE`。
+- full-runtime 的宣稱附件實際存在且像素驗證通過；mobile-native 的 capability degradation 記在 delivery profile，不是 `last_error`，而且 run 可 `status=completed`。
+- 最終訊息包含完整 saved reader，不是摘要或只說 GitHub 已保存。
+
+可執行 runtime 時，使用已驗證 bundled Python 執行：
+
+```bash
+python3 -m unittest discover -s tests -v
+python3 scripts/validate_news_brief.py manifest --input <manifest>
+python3 scripts/validate_news_brief.py brief --manifest <manifest> --input <reader>
+python3 scripts/validate_map_decisions.py --input <manifest>
+```
+
+測試失敗只修失敗環節，不重新詢問已確認偏好，不重跑已完成新聞階段。若 real runtime 不可用，必須明確標示未執行的驗證；不能假稱通過。
 
 ## 分享方式
 
-接收者在自己的新對話貼上 repo 網址並執行啟動指令。每個人各自授權建立排程並保存自己的偏好。沒有 GitHub 帳號也可使用完整每日新聞流程；只有跨日候選歷史的保存能力會依工作區權限降級。
+接收者在自己的新對話貼上 repo 網址與啟動指令，各自授權建立排程並保存個人偏好。公開 repo 的讀取不要求 GitHub 帳號；跨日 audit 與 run ledger 的持久化依工作區或 repository 寫入權限降級，但不能阻止有效的當日 reader。

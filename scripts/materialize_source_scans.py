@@ -469,7 +469,7 @@ def main() -> int:
     output_dir.mkdir(parents=True, exist_ok=True)
     route_by_id = {item["source_id"]: item for item in routes["results"]}
     coverage = []
-    discovery_sources = pool.get("discovery_sources", pool.get("sources", []))
+    discovery_sources = pool.get("discovery_sources", [])
     minimum_ready = int(pool.get("discovery_policy", {}).get(
         "minimum_ready_sources", len(discovery_sources)
     ))

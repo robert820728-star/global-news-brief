@@ -8,27 +8,27 @@ The initial list comes from GDELT, CNA, and China News Service. `GDELT_RESILIENT
 
 `REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE`：中央社與中新社等 `regional_supplement` 的所有精確窗內 provisional groups 必須完整出現在模型 `candidate_groups`，不得因沒有 GDELT heat、Google Trends、Google News coverage 或關鍵字命中而省略。熱度只能增加召回或安排處理順序，不能決定重要性或排除；模型輸入建立後、語意合併與六項評分前，必須執行 `python3 scripts/validate_local_source_admission.py --preprocessed <preprocessed-candidates.json> --selection <selection-results.json> --source-pool news-source-pool.json`，失敗時不得繼續。
 
-+## Same-source recovery order
+## Same-source recovery order
 
 `SAME_SOURCE_RECOVERY_ORDER`
 
-The required order for every configured source is: `canonical route -> same-site direct fetch -> same-site alternate non-browser route -> browser-rendered snapshot`.
+The required order for every configured discovery route is: `canonical route -> same-site direct fetch -> same-site alternate non-browser route -> browser-rendered snapshot`.
 
 - Run `scripts/recover_same_source_leads.py` for a verified coverage lead; never inject a search result directly into selection.
 - `browser is the final fallback only`. It is permitted only after the direct article fetch and all configured same-site non-browser alternatives have failed and those failures were logged.
 - A browser DOM snapshot must pass the same same-source host, SHA-256, publication-window, evidence, coverage, and candidate validators as direct evidence.
-- Recovery applies to all configured sources. It updates only the affected source scan and coverage record; it must not restart already verified sources.
+- Recovery applies only to the affected configured discovery route and must not restart verified routes.
 
 
 ## 目的
 
-保存每日新聞簡報的編輯偏好、板塊、分級與收納標準。執行流程、候選稽核、來源複查、地圖、資料圖表、圖片、自主恢復及欄位所有權由 repo 內八個技能負責，避免單一提示詞同時搜尋、判斷、製圖與排版。
+保存每日新聞簡報的編輯偏好、板塊、分級與收納標準。執行流程、候選取得、候選稽核、來源複查、地圖、資料圖表、圖片、自主恢復及欄位所有權由 repo 內九個技能負責，避免單一提示詞同時搜尋、判斷、製圖與排版。
 
 ## 排程與時間窗
 
 - 每次以實際執行時間往前精確 24 小時搜尋新聞，不得改用自然日、昨日／今日分界或只抓凌晨至今。
 - 每次執行重新讀取 repo 最新規則與排程保存的個人偏好。
-- 排程與結果對話名稱依 `daily-schedule-prompt.md`；讀者版第一行顯示執行地日期 `YYYY/MM/DD 每日新聞`。
+- 排程與結果對話名稱依 `daily-schedule-prompt.md`；讀者版第一行固定為 `# 每日新聞讀者版`，下一個非空白行是 manifest 衍生的 `統計期間：...`。
 - 測試排程不得修改或取代既有正式排程。
 
 ## 執行輸入正規化
@@ -45,14 +45,15 @@ The required order for every configured source is: `canonical route -> same-site
 依下列順序執行，不得跳過、合併成一次自由寫稿或讓後段重建前段資料：
 
 1. `daily-news-brief`：建立事件清單、調度模組、保存欄位、輸出與驗收。
-2. `select-news-events`：候選海選、事件聚類去重、偏好篩選與重要性評級。
-3. `audit-news-candidates`：保存十四天候選決定、排除理由與持續事件比較。
-4. `verify-news-events`：多來源搜尋、原始／官方資料回查、主張比對與不確定性。
-5. `build-news-maps`：判斷空間意義並產生自製定位地圖。
-6. `build-news-charts`：只有數值比較、趨勢、比例或分布有助理解時產生自製資料圖表。
-7. `collect-news-images`：取得官方資訊圖與新聞配圖，下載／截圖並視覺驗收。
-8. `recover-news-run`：偵測失敗或中斷，只調度失敗事件與模組重跑並重新驗證。
-9. 套用 `news-brief-template.md`，再執行 `scripts/validate_news_brief.py`。
+2. `acquire-news-candidates`：執行三條 discovery routes、保存快照與完整窗內候選。
+3. `select-news-events`：候選海選、事件聚類去重、偏好篩選與重要性評級。
+4. `audit-news-candidates`：保存十四天候選決定、排除理由與持續事件比較。
+5. `verify-news-events`：依事件／主張角色搜尋原始、官方與獨立證據並處理不確定性。
+6. `build-news-maps`：判斷空間意義並產生自製定位地圖。
+7. `build-news-charts`：只有數值比較、趨勢、比例或分布有助理解時產生自製資料圖表。
+8. `collect-news-images`：取得官方資訊圖與新聞配圖，下載／截圖並視覺驗收。
+9. `recover-news-run`：偵測失敗或中斷，只調度失敗事件與模組重跑並重新驗證。
+10. 套用 `news-brief-template.md`，再執行 `scripts/validate_news_brief.py`。
 
 事件資料必須遵守 `schemas/news-event-manifest.schema.json`。每個模組只能修改自己擁有的欄位；不得重新生成整份事件清單，也不得清空其他模組已完成的來源、地圖或圖片。
 
@@ -70,7 +71,7 @@ The required order for every configured source is: `canonical route -> same-site
 - 所有 C 級以上新聞仍完整納入，不以節省圖片成本縮減新聞或來源覆蓋。
 - `IMAGE_DEFAULT_ONE_ASSET`：每則事件預設一張來源圖片；`IMAGE_SECOND_ASSET_REQUIRES_INCREMENTAL_INFORMATION`：第二張必須提供第一張沒有的範圍、數字、現場或時間資訊，最多兩張。
 - `IMAGE_SOURCE_FILE_IDENTITY_GATE`：每張來源圖片同時保存文章頁 `source_url` 與實際媒體檔 `source_image_url`；實際圖片網址必須出現在同一來源頁的 `detected_image_urls`、不得等於文章頁，且必須由 canonical materializer 的 `materialized-images.json` 綁定本機檔案、SHA-256 與尺寸。
-- `MOBILE_PER_STORY_VISIBLE_IMAGE_GATE`：mobile-native 對每一則本輪入選新聞逐則執行圖片搜尋與可見性驗收；先查已引用來源的內文圖片、`og:image`、`srcset`、縮圖欄位與官方圖資，再查一個已引用且可靠的同事件來源。一則新聞的圖片不得替其他新聞通過。只有逐則確認沒有合格公開圖片，或合格圖片確實不適合公開內嵌時，才可用該則專屬的非技術性無圖說明；找到可用圖片但顯示失敗時只重做該則圖片階段。
+- `MOBILE_PER_STORY_VISIBLE_IMAGE_GATE`：mobile-native 對每一則本輪入選新聞逐則執行圖片搜尋與可見性驗收，一則新聞的圖片不得替其他新聞通過；先查已引用來源，再依序查官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導，可查多個來源而不限一個。每張候選圖都要保存來源頁並核對事件與日期，不要求完全相同像素；無法追溯的搬運站、搜尋縮圖、舊照或無關示意圖不合格。找到可用圖片但顯示失敗時只重做該則圖片取得／交付，不重跑新聞流程。
 - `IMAGE_ONE_ASSET_MAY_SATISFY_BOTH_SOURCE_AND_PROFESSIONAL`：同一張合格官方／專業圖可同時滿足引用來源圖片與專業圖資要求，但兩組來源檢查紀錄都要保留。
 - `IMAGE_SHA256_REUSE`：同一輪以圖片內容 SHA-256 去重，相同內容沿用一次下載、一次 `640px` 縮圖與一次驗收結果。
 - `IMAGE_VISUAL_CHECK_ONCE_PER_HASH`：先做 MIME、解碼、尺寸與 SHA-256 程式檢查；每個唯一 hash 只開啟驗收一次，只有內容、日期或相關性不確定時才加深判讀。
