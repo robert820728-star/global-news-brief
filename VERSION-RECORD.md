@@ -10,7 +10,7 @@ This file records the current installable contract. Earlier implementation attem
 - Approach / 作法：Keep only the three configured discovery routes, require the current normalized scoring schema for every retained run, reject unknown source-coverage fields, and make verification evidence selection depend on event and claim roles. / 僅保留三條已設定的 discovery routes；所有保留 run 一律使用目前的正規化評分 schema；拒絕未知的 source-coverage 欄位；驗證證據依事件與主張角色選取。
 - Entry points / 入口：`INSTALL.md`, scheduling prompts, candidate-audit schema and validator, source materializers, skills, and regression tests. / `INSTALL.md`、排程提示、候選稽核 schema 與驗證器、來源 materializer、技能及回歸測試。
 - Validation / 驗證：Three consecutive post-change audits are required: repository-wide semantic review, white-box data-flow and adversarial validation, then clean-export full regression plus remote-main verification. Any finding resets the count. / 修改後必須連續通過三次檢查：全庫語義檢查、白箱資料流與對抗驗證、乾淨匯出完整回歸及遠端 main 核驗；任一次發現問題即歸零重算。
-- Result / 結果：Pending final three-pass and GitHub verification. / 等待三次檢查及 GitHub 最終核驗。
+- Result / 結果：Promoted after three consecutive independent checks covering repository semantics, executable data flow, clean-room regression, capsule integrity, and remote-main binding. / 已在全庫語義、可執行資料流、乾淨環境回歸、capsule 完整性及遠端 main 綁定連續通過三次獨立檢查後晉升。
 - Rollback / 回復：Use the immediately preceding Git commit. / 使用前一個 Git commit。
 
 ## v0.5.1 — Public-value evidence binding / 公共價值證據綁定
