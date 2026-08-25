@@ -6,7 +6,7 @@ This file records the current installable contract. Earlier implementation attem
 
 ## v0.5.4 — Current names and current-only run logs / 現行命名與僅接受現行 run log
 
-- Reason / 建立原因：A fresh semantic inventory found that the only canonical reader layout still used `legacy-*` identifiers and the mobile ledger still migrated retired schemas through `legacy_completed`. / 全新語義盤點發現，唯一正式 reader 版型仍使用 `legacy-*` 識別字，mobile ledger 仍透過 `legacy_completed` 遷移已退役 schema。
+- Reason / 建立原因：A fresh semantic inventory found that the only canonical reader layout still used retired identifiers and the mobile ledger still migrated retired schemas through an obsolete completion state. / 全新語義盤點發現，唯一正式 reader 版型仍使用退役識別字，mobile ledger 仍透過過期的完成狀態遷移已退役 schema。
 - Approach / 作法：Rename the reader gate, validator, test fixture, and CLI choice to `canonical-sectioned`; reject non-current mobile run-log schemas; remove the retired durable-audit state and stale compatibility plans. / 將 reader gate、validator、測試 fixture 與 CLI 選項改為 `canonical-sectioned`；拒絕非現行 mobile run-log schema；移除退役的 durable-audit 狀態與過期相容計畫。
 - Entry points / 入口：`daily-schedule-prompt.md`, `mobile-chatgpt-daily-prompt.md`, `news-brief-template.md`, `scripts/validate_news_brief.py`, `scripts/manage_mobile_run_log.py`, `schemas/mobile-run-log.schema.json`, and regression tests. / `daily-schedule-prompt.md`、`mobile-chatgpt-daily-prompt.md`、`news-brief-template.md`、兩個執行 script、mobile schema 與回歸測試。
 - Important configuration / 重要設定：The sole reader layout identifier is `canonical-sectioned`; accepted durable-audit statuses are `not_started`, `updated`, `preserved_merge_deferred`, and `current_run_only`; run-log schema remains `1.3.0`. / 唯一 reader 版型識別字為 `canonical-sectioned`；durable-audit 僅接受四個現行狀態；run-log schema 維持 `1.3.0`。
