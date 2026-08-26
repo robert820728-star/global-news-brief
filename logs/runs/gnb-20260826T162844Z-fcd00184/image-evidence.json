@@ -1,0 +1,142 @@
+{
+  "schema_version": "mobile-image-evidence-1.0",
+  "run_id": "gnb-20260826T162844Z-fcd00184",
+  "main_sha": "a535e4f4fd900ad929f20fc9dcbf8a073dbbf05a",
+  "execution_mode": "mobile-native",
+  "generated_at": "2026-08-26T22:45:00Z",
+  "native_media_status": "unavailable",
+  "capability_limitation": "NATIVE_MEDIA_UNAVAILABLE",
+  "summary": "逐則完成來源頁圖片檢查與原生圖片搜尋／圖片卡嘗試；多則來源頁存在同事件圖片，但本宿主的原生圖片搜尋未能將同事件、同日期資產穩定物化為可交付卡片。其餘只返回舊照、示意圖或不相符圖片，均拒絕使用。讀者版因此不輸出任何圖片欄位、caption 或占位文字。",
+  "events": [
+    {
+      "event_id": "TWN-01",
+      "query": "立法院 無人機 採購條例 Focus Taiwan 2026-08-26",
+      "source_pages": ["https://focustaiwan.tw/politics/202608260023", "https://ppg.ly.gov.tw/ppg/sittings/2026082543/details?meetingDate=115%2F08%2F26"],
+      "source_image_result": "current_article_has_file_or_event_photo",
+      "native_card_attempted": true,
+      "native_card_result": "rejected_only_older_or_non_same_day_results",
+      "status": "delivery_unavailable",
+      "reader_omission_note": "本輪未能把已核對的同事件來源圖片穩定交付為可見原生圖片卡。"
+    },
+    {
+      "event_id": "TWN-02",
+      "query": "Taiwan mpox Clade Ib August 26 2026 CDC Taiwan",
+      "source_pages": ["https://www.cdc.gov.tw/Bulletin/Detail/Q8zNdJFLrJQ8ymZWL8bUqw?typeid=9", "https://focustaiwan.tw/society/202608260014"],
+      "source_image_result": "article_uses_general_mpox_illustration_not_case_specific",
+      "native_card_attempted": true,
+      "native_card_result": "rejected_generic_or_older_posters",
+      "status": "source_exhausted",
+      "reader_omission_note": "本輪未找到可確認為本次兩例個案、且適合直接刊載的事件圖片。"
+    },
+    {
+      "event_id": "TWN-03",
+      "query": "台灣 國中生 每週上網 38.4 小時 兒福聯盟 2026-08-26",
+      "source_pages": ["https://www.children.org.tw/news/news_detail/3629", "https://focustaiwan.tw/society/202608260019"],
+      "source_image_result": "current_reports_use_dataset_or_generic_illustration_without_event_specific_photo",
+      "native_card_attempted": true,
+      "native_card_result": "rejected_older_or_different_surveys",
+      "status": "source_exhausted",
+      "reader_omission_note": "本輪未找到與2026年本次調查直接對應、可確認且適合刊載的來源圖片。"
+    },
+    {
+      "event_id": "TWN-04",
+      "query": "嘉義 黑麻油 苯駢芘 216瓶 2026-08-26 衛生局",
+      "source_pages": ["https://www.fda.gov.tw/tc/csmnewsContent.aspx?id=t634634&mid=267", "https://focustaiwan.tw/society/202608260024", "https://news.pts.org.tw/article/824260"],
+      "source_image_result": "current_article_identifies_photo_courtesy_of_chiayi_health_bureau",
+      "native_card_attempted": true,
+      "native_card_result": "exact_current_asset_not_materialized_as_native_card",
+      "status": "delivery_unavailable",
+      "reader_omission_note": "來源頁有本次事件圖片，但本輪未能穩定交付為可見原生圖片卡。"
+    },
+    {
+      "event_id": "TWN-05",
+      "query": "金門 海漂豬 非洲豬瘟 2026-08-26 local authorities",
+      "source_pages": ["https://asf.aphia.gov.tw/theme_data.php?id=21569&sub_theme=asf&theme=NewInfoListWS", "https://focustaiwan.tw/society/202608260008"],
+      "source_image_result": "current_article_identifies_photo_courtesy_of_local_authorities",
+      "native_card_attempted": true,
+      "native_card_result": "rejected_2020_2021_2024_old_kinmen_pig_photos",
+      "status": "delivery_unavailable",
+      "reader_omission_note": "來源頁有本次事件圖片，但原生搜尋只返回舊案照片，未交付以免混淆。"
+    },
+    {
+      "event_id": "TWN-06",
+      "query": "Taiwan to have a presence at this year's Pacific Islands Forum Focus Taiwan 2026-08-26 Palau",
+      "source_pages": ["https://www.mofa.gov.tw/News_Content.aspx?n=96&s=122955", "https://focustaiwan.tw/politics/202608260012"],
+      "source_image_result": "current_article_has_pacific_islands_forum_source_image",
+      "native_card_attempted": true,
+      "native_card_result": "rejected_older_palau_or_pif_photos_not_same_event",
+      "status": "delivery_unavailable",
+      "reader_omission_note": "來源頁有相關圖片，但原生搜尋未返回可確認為本次活動的同事件資產。"
+    },
+    {
+      "event_id": "TWN-07",
+      "query": "Taiwan Lviv smart medical cooperation memorandum August 26 2026 MOFA Lviv",
+      "source_pages": ["https://www.mofa.gov.tw/News_Content.aspx?n=95&s=122954&sms=73", "https://focustaiwan.tw/politics/202608260007", "https://www.icdf.org.tw/wSite/ct?ctNode=31381&mp=1&xItem=75493"],
+      "source_image_result": "current_mofa_and_icdf_pages_publish_same_event_signing_photos",
+      "native_card_attempted": true,
+      "native_card_result": "native_search_returned_older_lviv_cooperation_photo_instead_of_current_signing",
+      "status": "delivery_unavailable",
+      "reader_omission_note": "官方頁有本次簽約照片，但本輪原生搜尋未能交付同一張當日資產。"
+    },
+    {
+      "event_id": "TWN-08",
+      "query": "Taiwan shares August 26 2026 45,832.62 TAIEX Focus Taiwan",
+      "source_pages": ["https://focustaiwan.tw/business/202608260016", "https://focustaiwan.tw/business/202608260013", "https://histock.tw/stock/tchart.aspx?m=m36&no=0000"],
+      "source_image_result": "current_focus_reports_use_file_photo; current_numeric_market_data_available",
+      "native_card_attempted": true,
+      "native_card_result": "no_same_day_market_asset_returned_as_native_image_card",
+      "status": "source_exhausted",
+      "reader_omission_note": "本輪未取得能直接對應8月26日收盤數據的可見來源圖片。"
+    },
+    {
+      "event_id": "TWN-09",
+      "query": "Typhoon Saudel Taiwan August 26 2026 Central Weather Administration path",
+      "source_pages": ["https://focustaiwan.tw/society/202608260011", "https://watchln.ncdr.nat.gov.tw/watch_tracks_pro", "https://www.cwa.gov.tw/"],
+      "source_image_result": "official_professional_track_products_exist_for_current_storm",
+      "native_card_attempted": true,
+      "native_card_result": "exact_current_cwa_product_not_materialized; unrelated_or_older_weather_images_rejected",
+      "status": "delivery_unavailable",
+      "reader_omission_note": "官方颱風圖資存在，但本輪未能把同一時點產品穩定交付為可見原生圖片卡。"
+    },
+    {
+      "event_id": "CHN-01",
+      "query": "廣西 左江 1955年來最大洪水 崇左 2026-08-26 中新網",
+      "source_pages": ["https://www.gx.chinanews.com.cn/sh/2026-08-26/detail-ihfirmti5852070.shtml", "https://www.gx.chinanews.com.cn/hd2011/2026-08-26/ph-ihfirmti5851400.shtml", "https://www.gx.chinanews.com.cn/video/yc/2026-08-26/detail-ihfirmti5851865.shtml"],
+      "source_image_result": "same_event_rescue_gallery_with_2026-08-25_photos_detected_and_direct_image_urls_exposed",
+      "native_card_attempted": true,
+      "native_card_result": "direct_current_image_url_query_failed_to_return_same_asset_as_native_card",
+      "status": "delivery_unavailable",
+      "reader_omission_note": "同事件救援照片已在來源頁確認，但原生圖片卡路徑未能交付該當日資產。"
+    },
+    {
+      "event_id": "CHN-02",
+      "query": "沙德爾 福建 2026-08-26 中新網 停運",
+      "source_pages": ["https://www.fj.chinanews.com.cn/news/2026/2026-08-26/589727.html", "https://www.reuters.com/business/environment/china-prepares-more-heavy-rain-back-to-back-storms-2026-08-26/"],
+      "source_image_result": "current_reports_checked",
+      "native_card_attempted": true,
+      "native_card_result": "image_search_returned_2020_saudel_track_or_other_non_same_event_material; rejected",
+      "status": "source_exhausted",
+      "reader_omission_note": "原生搜尋未取得可確認為2026年本次福建防颱停運事件的同日圖片。"
+    },
+    {
+      "event_id": "CHN-03",
+      "query": "中國環流四號 目標圖像 2026 核聚變能大會 上海 8月26日",
+      "source_pages": ["https://www.sh.chinanews.com.cn/kjjy/2026-08-26/148734.shtml", "https://www.shanghai.gov.cn/nw4411/20260826/0905591b561343e586d689b64b7ab311.html"],
+      "source_image_result": "current_chinanews_page_states_target_image_published_and_courtesy_of_china_fusion_energy",
+      "native_card_attempted": true,
+      "native_card_result": "search_returned_related_older_fusion_device_photo_not_the_current_target_image; rejected",
+      "status": "delivery_unavailable",
+      "reader_omission_note": "本次目標圖像已由來源頁確認，但原生搜尋未能交付同一張當日發布資產。"
+    },
+    {
+      "event_id": "CHN-04",
+      "query": "A股 8月26日 2026 上證 3912.52 中新網",
+      "source_pages": ["https://www.hn.chinanews.com.cn/news/cjxx/2026/0826/533013.html", "https://www.cnfin.com/yw-lb/detail/20260826/4460663_1.html", "https://jp.investing.com/indices/shanghai-composite-historical-data"],
+      "source_image_result": "current_numeric_market_data_verified",
+      "native_card_attempted": true,
+      "native_card_result": "image_search_returned_other_dates_or_different_index_levels; rejected",
+      "status": "source_exhausted",
+      "reader_omission_note": "本輪未取得能直接對應8月26日收盤數據的同日可見來源圖片。"
+    }
+  ]
+}
