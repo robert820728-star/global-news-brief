@@ -1,34 +1,25 @@
 {
-  "candidate_audit_artifact": {
-    "branch": "run-logs",
-    "path": "logs/runs/gnb-20260825T225406Z-8f3a1c72/candidate-audit.json",
-    "blob_sha": "c8d3380a916826c8ceb9b2237e252e2f57267384"
-  },
-  "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
+  "candidate_audit_artifact": null,
+  "capability_limitations": [],
   "client_confirmation_supported": false,
-  "current_stage": "delivery-handoff",
-  "delivery_profile": "reader-canonical-capability-degraded",
-  "delivery_status": "handoff_started",
-  "durable_audit_artifact": {
-    "branch": "run-logs",
-    "path": "logs/latest-candidate-audit.json",
-    "blob_sha": "e80c53052c727d634b8a6127b67bd96efc13b009"
-  },
-  "durable_audit_status": "preserved_merge_deferred",
-  "execution_mode": "mobile-native",
-  "last_completed_stage": "github-result-saved",
+  "current_stage": "schedule-prepared",
+  "delivery_profile": "full-assets",
+  "delivery_status": "not_ready",
+  "durable_audit_artifact": null,
+  "durable_audit_status": "not_started",
+  "execution_mode": "full-runtime",
+  "image_evidence_artifact": null,
+  "last_completed_stage": null,
   "last_error": null,
-  "main_sha": "e1e0336aa6f5fcf0b4260c699c693159847e2948",
-  "native_media_status": "unavailable",
-  "reader_artifact": {
-    "branch": "run-logs",
-    "path": "logs/latest-reader.md",
-    "blob_sha": "7fa81285fa6f13fe1076b09c2206cb58c74081c1"
-  },
-  "run_id": "gnb-20260825T225406Z-8f3a1c72",
-  "scheduled_for": "2026-08-26T06:54:06+08:00",
-  "schema_version": "1.3.0",
-  "stage_index": 10,
-  "status": "completed",
-  "updated_at": "2026-08-25T23:27:00Z"
+  "main_sha": null,
+  "map_decisions_artifact": null,
+  "native_media_status": "available",
+  "reader_artifact": null,
+  "run_id": "gnb-20260826T162844Z-fcd00184",
+  "scheduled_for": "2026-08-27T06:00:00+08:00",
+  "schema_version": "1.5.0",
+  "stage_index": 0,
+  "status": "awaiting_executor",
+  "updated_at": "2026-08-26T16:28:44Z",
+  "verification_artifact": null
 }
