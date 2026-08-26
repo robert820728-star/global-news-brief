@@ -144,7 +144,7 @@ def validate(data: dict[str, Any]) -> list[str]:
             if not map_result.get("omission_reason"):
                 errors.append(f"{event_id}.map omitted 必須保存後台原因")
             if not map_result.get("reader_omission_note"):
-                errors.append(f"{event_id}.map omitted 必須提供讀者可見說明")
+                errors.append(f"{event_id}.map omitted 必須保存內部省略說明")
             if claim_critical:
                 errors.append(f"{event_id}.map 主張關鍵地圖不得省略")
 

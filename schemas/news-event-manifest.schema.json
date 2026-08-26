@@ -389,7 +389,7 @@
           "items": { "type": "string", "minLength": 1 }
         },
         "canvas_scope": {
-          "enum": ["full_world", "full_section", "regional_detail"]
+          "enum": ["full_world", "full_section"]
         },
         "base_map": { "type": "string", "minLength": 1 }
       },

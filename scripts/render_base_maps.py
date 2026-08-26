@@ -547,20 +547,49 @@ def render_event_spec(spec_path: Path):
     with Path(spec_path).open("r", encoding="utf-8") as handle:
         event_spec = json.load(handle)
     section = event_spec.get("section")
-    if section not in SECTION_BASE_MAPS:
-        raise ValueError("event map section 必須是 TWN、CHN 或 GLB")
+    if not isinstance(section, str) or not section:
+        raise ValueError("event map section 必須是板塊代碼")
     output = Path(event_spec.get("output", ""))
     if not output.parts or output.is_absolute() or ".." in output.parts:
         raise ValueError("event map output 必須是 maps/generated 之下的相對路徑")
-    base_name = SECTION_BASE_MAPS[section]
+    base_name = SECTION_BASE_MAPS.get(section)
+    if base_name:
+        base_spec = MAPS[base_name]
+    else:
+        metadata_path = OUT / "sections" / f"{section}-base.json"
+        if not metadata_path.is_file():
+            raise ValueError(f"event map section 缺少 initialized basemap：{section}")
+        with metadata_path.open("r", encoding="utf-8") as handle:
+            metadata = json.load(handle)
+        base_name = f"sections/{section}-base"
+        base_spec = section_spec_from_metadata(metadata)
     spec = {
-        **MAPS[base_name],
+        **base_spec,
         "canonical_base_name": base_name,
         "highlights": event_spec.get("highlights", []),
     }
     if not spec["highlights"]:
         raise ValueError("event map 至少需要一個行政區 highlight")
     return render(output.as_posix(), spec)
+
+
+def section_spec_from_metadata(metadata: dict) -> dict:
+    """Build one renderer specification from initialized section metadata."""
+    spec = {
+        "file": ROOT / metadata["source_geojson"],
+        "title": metadata.get("name", metadata["code"]),
+        "figsize": (8.5, 7.0),
+        "bounds": tuple(metadata["bounds"]),
+        "projection": metadata.get("projection", "regional"),
+        "standard_lat": metadata.get("standard_lat") or 0.0,
+        "central_lon": metadata.get("central_lon"),
+        "base_country_iso": metadata.get("base_country_iso"),
+        "style_id": metadata.get("style_id", STYLE_CONFIG["style_id"]),
+        "style": metadata.get("style", {}),
+    }
+    if spec["projection"] in {"pacific_centered", "robinson_pacific"}:
+        spec["cut_lon"] = metadata.get("cut_lon", -30.0)
+    return spec
 
 
 def section_specs():
@@ -571,21 +600,7 @@ def section_specs():
     for metadata_path in sorted(directory.glob("*-base.json")):
         with metadata_path.open("r", encoding="utf-8") as handle:
             metadata = json.load(handle)
-        source_path = ROOT / metadata["source_geojson"]
-        spec = {
-            "file": source_path,
-            "title": metadata.get("name", metadata["code"]),
-            "figsize": (8.5, 7.0),
-            "bounds": tuple(metadata["bounds"]),
-            "projection": metadata.get("projection", "regional"),
-            "standard_lat": metadata.get("standard_lat") or 0.0,
-            "central_lon": metadata.get("central_lon"),
-            "base_country_iso": metadata.get("base_country_iso"),
-            "style_id": metadata.get("style_id", STYLE_CONFIG["style_id"]),
-            "style": metadata.get("style", {}),
-        }
-        if spec["projection"] in {"pacific_centered", "robinson_pacific"}:
-            spec["cut_lon"] = metadata.get("cut_lon", -30.0)
+        spec = section_spec_from_metadata(metadata)
         yield f"sections/{metadata['code']}-base", spec, metadata_path, metadata
 
 

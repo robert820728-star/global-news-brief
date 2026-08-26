@@ -207,6 +207,15 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE", text, path.name)
             self.assertIn("validate_local_source_admission.py", text, path.name)
 
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        self.assertIn("MOBILE_STRUCTURAL_ADMISSION_EQUIVALENT", mobile)
+        self.assertIn("只有可執行 runtime 時", mobile)
+
+    def test_mobile_reader_validation_does_not_require_python_runtime(self):
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        self.assertIn("MOBILE_READER_STRUCTURE_EQUIVALENT", mobile)
+        self.assertNotIn("送出前執行 `scripts/validate_news_brief.py brief", mobile)
+
     def test_capsule_workflow_runs_full_repository_suite(self):
         workflow = (
             ROOT / ".github" / "workflows" / "build-bootstrap-capsule.yml"

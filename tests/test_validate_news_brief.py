@@ -363,9 +363,19 @@ class ValidatorTests(unittest.TestCase):
         event = manifest["events"][0]
         event["event_id"] = "JPN-01"
         event["primary_section"] = "JPN"
+        event["map"]["assets"][0]["base_map"] = "maps/generated/sections/JPN-base.png"
         reader = valid_brief().replace("TWN-01", "JPN-01").replace("### 台灣", "### 日本")
         self.assertEqual([], VALIDATOR.validate_manifest_data(manifest))
         self.assertEqual([], VALIDATOR.validate_canonical_reader(manifest, reader))
+
+    def test_custom_jpn_section_rejects_wrong_basemap(self):
+        manifest = valid_manifest()
+        manifest["sections"] = [{"code": "JPN", "name": "日本", "order": 1}]
+        event = manifest["events"][0]
+        event["event_id"] = "JPN-01"
+        event["primary_section"] = "JPN"
+        errors = VALIDATOR.validate_manifest_data(manifest)
+        self.assertTrue(any("JPN canonical 完整板塊底圖" in error for error in errors), errors)
 
     def test_three_part_reader_rejects_reversed_attachment_order(self):
         text = valid_brief()

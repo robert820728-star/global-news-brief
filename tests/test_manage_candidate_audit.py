@@ -284,6 +284,12 @@ def valid_audit(candidates=None, per_source_count=1):
 
 
 class CandidateAuditTests(unittest.TestCase):
+    def test_shipped_empty_audit_seed_uses_current_schema(self):
+        seed = json.loads(
+            (ROOT / "state/candidate-audit.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual([], MODULE.validate(seed, source_pool()))
+
     def test_custom_jpn_section_uses_run_scope_instead_of_else_glb(self):
         audit = valid_audit()
         run = audit["runs"][0]

@@ -81,6 +81,62 @@ class NoObsoleteContractsTests(unittest.TestCase):
     def test_web_search_cannot_add_canonical_discovery_candidates(self):
         pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
         self.assertFalse(pool["acquisition_policy"]["cross_source_fallback_may_add_candidates"])
+
+        documents = (
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/acquire-news-candidates/SKILL.md",
+        )
+        forbidden = ("網頁搜尋補候選", "至少一個 discovery source 或最後搜尋備援")
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            for phrase in forbidden:
+                self.assertNotIn(phrase, text, path.name)
+            self.assertIn("same-source", text, path.name)
+
+    def test_active_map_contract_has_no_local_detail_mode(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-event-manifest.schema.json").read_text(encoding="utf-8")
+        )
+        scopes = schema["$defs"]["mapAsset"]["properties"]["canvas_scope"]["enum"]
+        self.assertEqual(["full_world", "full_section"], scopes)
+
+        documents = (
+            ROOT / "INSTALL.md",
+            ROOT / "maps/README.md",
+            ROOT / "news-brief-examples.md",
+            ROOT / ".agents/skills/build-news-maps/SKILL.md",
+        )
+        forbidden = ("cropped or local detail map", "局部圖補充", "路線或局部圖")
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            for phrase in forbidden:
+                self.assertNotIn(phrase, text, path.name)
+        maps_readme = (ROOT / "maps/README.md").read_text(encoding="utf-8")
+        self.assertIn("custom three-letter section code", maps_readme)
+
+    def test_verify_skill_does_not_describe_c_minus_as_selected(self):
+        documents = (
+            ROOT / ".agents/skills/verify-news-events/SKILL.md",
+            ROOT / "news-brief-settings.md",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn("包括 C 與 C−", text, path.name)
+            self.assertIn("C 以上", text, path.name)
+
+    def test_map_omission_reason_is_internal_not_reader_visible(self):
+        documents = (
+            ROOT / "scripts/validate_map_decisions.py",
+            ROOT / "news-brief-settings.md",
+            ROOT / ".agents/skills/collect-news-images/SKILL.md",
+        )
+        forbidden = ("讀者可見說明", "留下後台原因與讀者說明", "保存原因與讀者說明")
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            for phrase in forbidden:
+                self.assertNotIn(phrase, text, path.name)
+        validator = documents[0].read_text(encoding="utf-8")
+        self.assertIn("內部省略說明", validator)
     def test_repository_contains_no_retired_source_or_scoring_contract(self):
         forbidden = (
             "fixed" + "_source",

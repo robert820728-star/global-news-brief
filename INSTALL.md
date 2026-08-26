@@ -131,7 +131,7 @@
 1. 檢查 `maps/generated/sections/<CODE>-base.json`。
 2. 缺少時以 `scripts/initialize_section_basemaps.py` 建規格；國家板塊由 `scripts/fetch_admin_boundaries.py` 取得 geoBoundaries gbOpen ADM1，不寫國家特例。
 3. 可執行 runtime 時產生 PNG／SVG 並視覺驗收；未實際產圖只能標 `spec_ready`，不能標 `ready`。
-4. 每日事件仍由 `build-news-maps` 判斷點位、範圍、路線或局部圖；板塊底圖不能直接冒充事件地圖。
+4. 每日事件仍由 `build-news-maps` 判斷點位、範圍或路線；事件標記必須疊加在完整板塊底圖，板塊底圖不能直接冒充事件地圖。
 
 ## 五、完整每日執行流程
 
@@ -263,7 +263,7 @@ reader 不顯示 run id、commit、後台 counts、十四天 audit 或修復紀�
 - 取得的本機檔必須通過 MIME、解碼、尺寸、SHA-256、時間與內容相關性檢查。
 - 通過後先實際使用宿主支援的本機附件／本機媒體／原生媒體路徑；不能僅因未看到特定工具名稱就判 `NATIVE_MEDIA_UNAVAILABLE`。
 - capability-degraded mobile completion 必須保存逐則取得與交付嘗試，`last_error=null`，並清楚表示未完成附件／像素驗收。
-- manifest 對 `map` 與 `images` 都必須保存 `claim_critical`。只有視覺本身直接支撐核心主張時，缺少附件才阻擋；一般配圖／定位圖取得失敗改為 `omitted`，保存後台原因及讀者說明，文字 reader 繼續完成。
+- manifest 對 `map` 與 `images` 都必須保存 `claim_critical`。只有視覺本身直接支撐核心主張時，缺少附件才阻擋；一般配圖／定位圖取得失敗改為 `omitted`，保存後台原因及內部省略說明但不顯示於 reader，文字 reader 繼續完成。
 
 ## 七、局部恢復指令
 

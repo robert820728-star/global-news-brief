@@ -22,7 +22,7 @@ Reusable base maps for news brief location highlighting.
 | China | `maps/source/china-provinces.geojson` | Province-level boundaries | `maps/generated/china-provinces-yellow-v2.png` |
 | World | `maps/source/world-countries.geojson` | Country boundaries | `maps/generated/world-countries-pacific-robinson-yellow-v2.png` |
 
-For an event map, write a compact JSON overlay specification and run `python scripts/render_base_maps.py --overlay-spec <file>`. Use `section` (`TWN`, `CHN`, or `GLB`), a relative `output`, and one or more `highlights`. Each highlight has an exact GeoJSON property `match`, a Traditional Chinese `label`, and `role` (`primary` or `secondary`). The renderer colors the matched administrative polygon and writes the label directly on both PNG and SVG output.
+For an event map, write a compact JSON overlay specification and run `python scripts/render_base_maps.py --overlay-spec <file>`. Use `section` (`TWN`, `CHN`, `GLB`, or a custom three-letter section code initialized under `maps/generated/sections/`), a relative `output`, and one or more `highlights`. Each highlight has an exact GeoJSON property `match`, a Traditional Chinese `label`, and `role` (`primary` or `secondary`). The renderer colors the matched administrative polygon and writes the label directly on both PNG and SVG output.
 
 ## Rendering
 
@@ -36,8 +36,8 @@ The renderer writes PNG and SVG files to `maps/generated/`.
 
 ## News Brief Rules
 
-- Use the map that matches the geographic scale of the event, not the news section.
-- A full-context map must appear before any cropped or local detail map.
+- Use the complete canonical basemap for the event's primary section.
+- Cropped, zoomed, or local-detail self-rendered locator maps are not publication outputs.
 - Use official or source-provided disaster, weather, epidemic, earthquake, and route maps first when available.
 - Use these base maps as reader-orientation overlays, especially when a location is not obvious from the story.
 - Self-rendered maps should be described as compiled from cited sources, not as official maps.

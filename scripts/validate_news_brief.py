@@ -254,8 +254,11 @@ def _validate_media_result(
                 "CHN": "maps/generated/china-provinces-yellow-v2.png",
                 "GLB": "maps/generated/world-countries-pacific-robinson-yellow-v2.png",
             }
-            expected_base_map = canonical_base_maps.get(event_section)
-            if expected_base_map and asset.get("base_map") != expected_base_map:
+            expected_base_map = canonical_base_maps.get(
+                event_section,
+                f"maps/generated/sections/{event_section}-base.png",
+            )
+            if asset.get("base_map") != expected_base_map:
                 errors.append(
                     f"{asset_label} 未綁定 {event_section} canonical 完整板塊底圖"
                 )

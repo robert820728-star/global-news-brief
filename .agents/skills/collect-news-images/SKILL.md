@@ -119,7 +119,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 影像沒有誤導性裁切，文字可辨識。
 - 不是無關舊照、資料庫示意照或被錯誤歸屬的畫面。
 
-失敗時依取得順序重試。若來源已確認有可用圖片但重試仍失敗，`claim_critical=true` 才維持未完成狀態並只重跑圖片模組；非關鍵圖片改為 `omitted`，保存原因與讀者說明後交付文字版。不得只留下「圖一」文字。
+失敗時依取得順序重試。若來源已確認有可用圖片但重試仍失敗，`claim_critical=true` 才維持未完成狀態並只重跑圖片模組；非關鍵圖片改為 `omitted`，只在內部 evidence／receipt 保存原因後交付文字版，不在 reader 顯示省略說明。不得只留下「圖一」文字。
 
 ## 與候選來源確認共同發布
 

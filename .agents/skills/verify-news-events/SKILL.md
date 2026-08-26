@@ -13,7 +13,7 @@ description: Verify selected news events through claim decomposition, independen
 
 ## 核心原則
 
-- 所有入選事件，包括 C 與 C−，都主動尋找多個獨立可靠來源。
+- 所有入選事件（C 以上）都主動尋找多個獨立可靠來源。
 - B 以上提高搜尋深度，原則上涵蓋官方／原始資料與至少一個獨立媒體或第三方角色。
 - 多來源是查證目標，不是評級或入選硬門檻。
 - 搜尋後只有一個可靠來源時，保留事件及原評級，標記 `single_reliable_source`。

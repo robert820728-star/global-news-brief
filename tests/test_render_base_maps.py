@@ -106,6 +106,47 @@ class RenderBaseMapsTests(unittest.TestCase):
             self.assertTrue((sections / "FIX-base.png").is_file())
             self.assertTrue((sections / "FIX-base.svg").is_file())
 
+    def test_custom_section_event_overlay_uses_initialized_basemap(self):
+        geojson = {
+            "type": "FeatureCollection",
+            "features": [{
+                "type": "Feature", "properties": {"ADMIN": "Fixture"},
+                "geometry": {"type": "Polygon", "coordinates": [[
+                    [120.0, 22.0], [121.0, 22.0], [121.0, 23.0],
+                    [120.0, 23.0], [120.0, 22.0],
+                ]]},
+            }],
+        }
+        metadata = {
+            "schema_version": 1, "code": "FIX", "name": "Fixture",
+            "source_geojson": "map.geojson", "bounds": [119.5, 121.5, 21.5, 23.5],
+            "projection": "regional", "standard_lat": 23.0,
+            "png_path": "maps/generated/sections/FIX-base.png",
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "map.geojson").write_text(json.dumps(geojson), encoding="utf-8")
+            sections = root / "generated" / "sections"
+            sections.mkdir(parents=True)
+            (sections / "FIX-base.json").write_text(json.dumps(metadata), encoding="utf-8")
+            overlay = root / "event.json"
+            overlay.write_text(json.dumps({
+                "section": "FIX", "output": "events/FIX-test",
+                "highlights": [{
+                    "match": {"ADMIN": "Fixture"}, "label": "測試地點", "role": "primary",
+                }],
+            }, ensure_ascii=False), encoding="utf-8")
+
+            old_root, old_out = MODULE.ROOT, MODULE.OUT
+            MODULE.ROOT, MODULE.OUT = root, root / "generated"
+            try:
+                result = MODULE.render_event_spec(overlay)
+            finally:
+                MODULE.ROOT, MODULE.OUT = old_root, old_out
+
+            self.assertTrue((root / "generated/events/FIX-test.png").is_file())
+            self.assertEqual("maps/generated/sections/FIX-base.png", result["base_map"])
+
     def test_clean_runtime_outputs_canonical_basemaps_and_colored_event_overlay(self):
         with tempfile.TemporaryDirectory() as directory:
             generated = Path(directory) / "generated"
