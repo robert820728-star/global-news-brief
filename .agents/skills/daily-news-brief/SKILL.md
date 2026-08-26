@@ -5,7 +5,11 @@ description: Orchestrate the complete daily news brief with verified runtime-cap
 
 # 每日新聞主控
 
-本技能只負責流程順序、欄位所有權與交付契約。事件資料在 manifest 建立後是唯一事件交換層；manifest 建立以前則以同一份 `news-run-checkpoint.json` 保存 run 狀態。不得從搜尋結果直接跳到讀者版。
+本技能只負責流程順序、欄位所有權與交付契約，並先依 execution mode 選擇唯一可執行路徑。full-runtime 在 manifest 建立後以 manifest 作唯一事件交換層，建立以前以同一份 `news-run-checkpoint.json` 保存 run 狀態；mobile-native 不建立 checkpoint 或 manifest，改以同一 occurrence ledger、run-scoped candidate audit 與既有 verification／map／image／Reader artifact bindings 保存狀態。兩種模式都不得從搜尋結果直接跳到讀者版。
+
+## Execution-mode boundary
+
+下列 Stage -1、checkpoint、manifest、stage patch、Python validator 與 canonical publisher CLI 只適用 full-runtime。mobile-native 必須依 `mobile-chatgpt-daily-prompt.md` 的同一新聞、評分、驗證與 Reader 契約執行，不得冒充使用 full-runtime 工具；它只能同階段更新或前進至緊鄰下一 stage，並在進入 `selection-verified`／`visuals-completed`／`reader-rendered`／`github-result-saved` 前依序綁定 candidate audit／verification／map+image／Reader。不得建立 mobile checkpoint 或 manifest。
 
 ## Stage -1：可執行工作區
 
@@ -19,7 +23,7 @@ Stage -1 必須從同一個最新 `main` commit 取得並驗證 `bootstrap/capsu
 
 先讀 `bootstrap-workspace.md`、`news-brief-settings.md`、`news-brief-template.md`、`user-preferences.example.yaml` 或本輪偏好、`news-source-pool.json`、全部 schema、`references/manifest-contract.md`、`scripts/news_run_checkpoint.py`、`scripts/build_source_candidate_list.py`、`scripts/build_news_relevance_gate.py`、`scripts/check_unique_delivery_gate.py`、`scripts/publish_news_brief.py`，以及 `acquire-news-candidates`、`select-news-events`、`audit-news-candidates`、`verify-news-events`、`build-news-maps`、`build-news-charts`、`collect-news-images`、`recover-news-run` 技能。格式驗證失敗才查 `news-brief-examples.md` 對應段落。
 
-## 固定流程
+## full-runtime 固定流程
 
 1. Stage -1 bootstrap 已成功後，以實際執行時間計算精確 24 小時窗，建立唯一 `run-id`；任何來源掃描前執行：
 
@@ -44,6 +48,8 @@ python3 scripts/news_run_checkpoint.py init --output <checkpoint> --run-id <run-
 
 ## 恢復邏輯
 
+先依 execution mode 分流。以下 checkpoint／manifest 命令只適用 full-runtime。
+
 Checkpoint 前的 Stage -1 失敗：重新執行 `bootstrap-workspace.md` 的 verified runtime capsule bootstrap；先嘗試一次固定 SHA payload，失敗才只重抓缺失／驗證失敗 chunk。不得改用手工新聞、逐 blob full-tree 搬運或 shell 網路 clone。
 
 Manifest 前：
@@ -60,6 +66,8 @@ python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 
 只重跑失敗事件／stage 與必要的後續依賴。已完成且 SHA 綁定仍一致的工作不得清空。只有不可排除的硬性環境阻擋才可停止；一般來源失敗、圖片失敗、地圖失敗、格式失敗與驗證失敗都不是無聲結束理由。
 
+mobile-native 的核心主張在恢復後仍 `insufficient` 時，保持 `current_stage=selection-verified`，不得前進 visuals；更新同一 run 的 `candidate-audit.json`，重評或排除受影響候選，更新 `candidate_audit_artifact` 的 Git blob SHA，再重新 verification。成功保存新的 `verification.json` 後才可前進。不得執行 stage regression，不得建立 mobile checkpoint 或 manifest，也不得重跑 discovery 或建立替代 run。其他中斷由 ledger 讀回已綁定 artifact，從 first incomplete stage 接續。
+
 ## 交付不變式
 
 Repository 內只能有一個 canonical publisher：`scripts/publish_news_brief.py`。其他腳本不得建立保留 release 檔名。`daily-schedule-prompt.md` 必須且只能宣告一次 canonical gate 與一次 receipt delivery 命令。最終對話內容只可來自 canonical publisher 的 `--deliver-receipt ... --conversation-transport` stdout；canonical release 與其 SHA-256 保持不變，不得重新讀取 release 後自行轉貼、加前後文、重寫摘要、回退到草稿或舊 release。
@@ -69,7 +77,7 @@ Repository 內只能有一個 canonical publisher：`scripts/publish_news_brief.
 
 `CONDITIONAL_RECOVERY_BUNDLE_POLICY`
 
-After `preprocess-news-candidates` completes, record each artifact's local hash in the checkpoint. `FIRST_SELECT_NEWS_EVENTS_EXECUTION` may start immediately when the workspace is durable and the local hash/checkpoint binding validates. Do not make a remote recovery bundle a routine selection gate.
+For full-runtime only, after `preprocess-news-candidates` completes, record each artifact's local hash in the checkpoint. `FIRST_SELECT_NEWS_EVENTS_EXECUTION` may start immediately when the workspace is durable and the local hash/checkpoint binding validates. Do not make a remote recovery bundle a routine selection gate. Mobile-native does not create this checkpoint or bundle.
 
 Create and verify the recovery bundle only for a real `cross-host handoff`, an `ephemeral workspace`, or an approaching `warning or timeout boundary`:
 

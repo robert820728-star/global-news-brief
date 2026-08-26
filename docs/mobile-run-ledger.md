@@ -17,7 +17,7 @@ The branch tip exposes only two run records. Git commit history is not rewritten
 
 ## Persistence points
 
-The existing ledger binds `verification_artifact` to `logs/runs/<run_id>/verification.json` and `map_decisions_artifact` to `logs/runs/<run_id>/map-decisions.json`. Mobile-native may enter `visuals-completed` only after verification is bound, and may enter `reader-rendered` only after map decisions are bound. These Git blob references prove durable identity for same-run resume; they do not add a content-level validator or claim semantic machine verification.
+The existing ledger binds the run-scoped candidate audit, verification, map decisions, image evidence, and Reader at the stage where each completed result first becomes a resume dependency. Mobile-native may enter `selection-verified` only after `candidate_audit_artifact` is bound, `visuals-completed` only after `verification_artifact` is bound, `reader-rendered` only after both map decisions and image evidence are bound, and `github-result-saved` only after `reader_artifact` is bound. A transition may stay on the current stage or advance exactly one stage; forward skips and stage regression are rejected. These Git blob references prove durable identity for same-run resume; they do not add a content-level validator or claim semantic machine verification.
 
 The task performs one compact update at each high-level boundary: schedule preparation, executor start, main pinning, workspace readiness, source scan, candidate audit, selection verification, visuals, reader rendering, GitHub reader storage, and delivery handoff. A transition records the newly active stage and thereby identifies the last completed stage without doubling the write count.
 
@@ -30,4 +30,3 @@ Count receipts are derived data. If an event subtotal differs from the actual ru
 `.github/workflows/prepare-mobile-run-ledger.yml` runs at 05:58 Asia/Taipei and can also be dispatched manually. It performs only log rotation and initialization; it does not search news, call a model, or require an OpenAI API key. If the mobile executor never starts, `current.json` remains at `awaiting_executor` and the next run preserves that evidence as interrupted.
 
 If file writes are unavailable, the mobile task falls back to one updated comment in Issue #3. Logging failure is diagnostic degradation and must not cause fabricated news or a false delivery claim.
-

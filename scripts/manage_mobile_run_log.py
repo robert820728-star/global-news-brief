@@ -156,10 +156,30 @@ def validate_record(record: dict[str, Any]) -> None:
     ):
         raise ValueError("client delivery cannot be confirmed without an external acknowledgement")
     if record["execution_mode"] == "mobile-native":
+        if record["stage_index"] >= STAGE_INDEX["selection-verified"]:
+            _require_run_artifact(
+                record,
+                "candidate_audit_artifact",
+                "candidate-audit.json",
+                "candidate audit artifact",
+            )
         if record["stage_index"] >= STAGE_INDEX["visuals-completed"]:
             _require_run_artifact(record, "verification_artifact", "verification.json", "verification artifact")
         if record["stage_index"] >= STAGE_INDEX["reader-rendered"]:
             _require_run_artifact(record, "map_decisions_artifact", "map-decisions.json", "map decisions artifact")
+            _require_run_artifact(
+                record,
+                "image_evidence_artifact",
+                "image-evidence.json",
+                "image evidence artifact",
+            )
+        if record["stage_index"] >= STAGE_INDEX["github-result-saved"]:
+            _require_artifact(
+                record,
+                "reader_artifact",
+                "logs/latest-reader.md",
+                "reader artifact",
+            )
     if record["status"] == "completed":
         if record.get("reader_artifact") is None or record.get("candidate_audit_artifact") is None:
             raise ValueError("completed requires saved reader and candidate-audit artifacts")
@@ -183,13 +203,19 @@ def validate_record(record: dict[str, Any]) -> None:
 def _require_run_artifact(
     record: dict[str, Any], field: str, filename: str, label: str
 ) -> None:
-    artifact = record.get(field)
     expected_path = f"logs/runs/{record['run_id']}/{filename}"
+    _require_artifact(record, field, expected_path, label)
+
+
+def _require_artifact(
+    record: dict[str, Any], field: str, expected_path: str, label: str
+) -> None:
+    artifact = record.get(field)
     if not isinstance(artifact, dict) or artifact.get("branch") != "run-logs":
-        raise ValueError(f"mobile stage requires run-scoped {label}")
+        raise ValueError(f"mobile stage requires {label}")
     blob_sha = artifact.get("blob_sha")
     if artifact.get("path") != expected_path or not isinstance(blob_sha, str):
-        raise ValueError(f"mobile stage requires run-scoped {label}")
+        raise ValueError(f"mobile stage requires {label}")
     if len(blob_sha) != 40 or any(character not in "0123456789abcdef" for character in blob_sha):
         raise ValueError(f"mobile stage requires Git blob binding for {label}")
 
@@ -295,6 +321,10 @@ def advance_run(
         raise ValueError(
             f"stage regression: {current['current_stage']} -> {stage}"
         )
+    if STAGE_INDEX[stage] > current["stage_index"] + 1:
+        raise ValueError(
+            f"stage skip: {current['current_stage']} -> {stage}"
+        )
     if status not in STATUSES:
         raise ValueError(f"invalid status: {status}")
 
@@ -368,6 +398,7 @@ def build_parser() -> argparse.ArgumentParser:
     advance.add_argument("--delivery-status", choices=sorted(DELIVERY_STATUSES))
     advance.add_argument("--client-ack", action="store_true")
     advance.add_argument("--main-sha")
+    advance.add_argument("--reader-artifact", type=Path)
     advance.add_argument("--execution-mode", choices=sorted(EXECUTION_MODES))
     advance.add_argument("--delivery-profile", choices=sorted(DELIVERY_PROFILES))
     advance.add_argument("--native-media-status", choices=sorted(NATIVE_MEDIA_STATUSES))
@@ -407,6 +438,10 @@ def main() -> int:
             delivery_status=args.delivery_status,
             client_ack=args.client_ack,
             main_sha=args.main_sha,
+            reader_artifact=(
+                _read_artifact_reference(args.reader_artifact)
+                if args.reader_artifact else None
+            ),
             execution_mode=args.execution_mode,
             delivery_profile=args.delivery_profile,
             native_media_status=args.native_media_status,
@@ -442,5 +477,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
 

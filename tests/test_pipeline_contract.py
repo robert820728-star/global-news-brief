@@ -273,6 +273,31 @@ class PipelineContractTests(unittest.TestCase):
         ):
             self.assertIn(requirement, install)
 
+    def test_verification_recovery_is_mode_aware_without_mobile_checkpoint_or_manifest(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        daily = (ROOT / ".agents/skills/daily-news-brief/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        verify = (ROOT / ".agents/skills/verify-news-events/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        recover = (ROOT / ".agents/skills/recover-news-run/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        combined = "\n".join((install, daily, verify, recover))
+        for requirement in (
+            "mobile-native 保持 `current_stage=selection-verified`",
+            "更新同一 run 的 `candidate-audit.json`",
+            "更新 `candidate_audit_artifact` 的 Git blob SHA",
+            "不得執行 stage regression",
+            "不得建立 mobile checkpoint 或 manifest",
+        ):
+            self.assertIn(requirement, combined)
+        self.assertIn("full-runtime", verify)
+        self.assertIn("mobile-native", verify)
+        self.assertIn("full-runtime", recover)
+        self.assertIn("mobile-native", recover)
+
     def test_release_source_and_version_record_precede_capsule_generation(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         self.assertIn("SOURCE_BEFORE_CAPSULE_RELEASE_ORDER", install)
@@ -1255,4 +1280,3 @@ class PipelineContractTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

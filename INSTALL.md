@@ -155,9 +155,9 @@
 | 12 publish 與 bundle | final checkpoint、manifest、audit、source pool、reader、map decisions、宣稱交付的附件 | 依下方實際 CLI 由 `publish_news_brief.py` 建立 release／receipt；再以 `manage_canonical_run_bundle.py pack` 建立 transport，與 `logs/current.json` 一次 atomic 發布後執行 `verify`／`restore` 核對 byte identity | full-runtime 由 canonical publisher fail-closed；mobile-native 依 mobile ledger schema 保存 reader/audit 與 delivery profile |
 | 13 conversation delivery | release receipt 或 mobile saved reader | 完整 reader bytes、附件／能力限制 receipt、`delivery-handoff` | 不能只交摘要或驗收報告；`client_confirmed` 只有外部明確回執才可使用 |
 
-`SCHEDULED_OCCURRENCE_SINGLE_RUN_GATE`：mobile ledger 以 `scheduled_for` 作 occurrence key。同一 occurrence 的 `current.json` 只要存在，就沿用原 `run_id` 並從 first incomplete stage 接續；即使 reader 已保存但尚未 `delivery-handoff`，也不得 rotate、建立 replacement run 或重跑新聞階段。只有 `scheduled_for` 嚴格較晚的下一個真實每日 occurrence 才可把仍非 terminal 的前輪標為 `interrupted_by_next_run`。
+`SCHEDULED_OCCURRENCE_SINGLE_RUN_GATE`：mobile ledger 以 `scheduled_for` 作 occurrence key。同一 occurrence 的 `current.json` 只要存在，就沿用原 `run_id` 並從 first incomplete stage 接續；即使 reader 已保存但尚未 `delivery-handoff`，也不得 rotate、建立 replacement run 或重跑新聞階段。只有 `scheduled_for` 嚴格較晚的下一個真實每日 occurrence 才可把仍非 terminal 的前輪標為 `interrupted_by_next_run`。同一 run 只能留在原 stage 或前進至緊鄰的下一 stage，不得跳級，也不得執行 stage regression。
 
-`VERIFICATION_FEEDBACK_REWIND_GATE`：核心主張 `finding=insufficient` 時，verification 必須 `status=failed`，不得進 ready reader。完成既定驗證恢復後仍不足，執行 `python3 scripts/news_run_checkpoint.py rewind --input <checkpoint> --output <checkpoint> --stage audit-news-candidates --reason "<evidence failure>"`；只清除 audit 與其後 stage bindings，保留 source-scan、preprocess 與 semantic selection，將受影響候選重評或排除後重新物化 manifest。不得建立新 run 或重跑 discovery。
+`VERIFICATION_FEEDBACK_REWIND_GATE`：核心主張 `finding=insufficient` 時，verification 必須 `status=failed`，不得進 ready reader。full-runtime 完成既定驗證恢復後仍不足，執行 `python3 scripts/news_run_checkpoint.py rewind --input <checkpoint> --output <checkpoint> --stage audit-news-candidates --reason "<evidence failure>"`；只清除 audit 與其後 stage bindings，保留 source-scan、preprocess 與 semantic selection，將受影響候選重評或排除後重新物化 manifest。mobile-native 保持 `current_stage=selection-verified`，不得前進 `visuals-completed`；直接更新同一 run 的 `candidate-audit.json`，重評或排除受影響候選，更新 `candidate_audit_artifact` 的 Git blob SHA，再重新查證。查證成功並保存新的 `verification.json` 後才可前進。mobile-native 不得執行 stage regression，也不得建立 mobile checkpoint 或 manifest；兩種模式都不得建立新 run 或重跑 discovery。
 
 Stage 12 與 13 的 full-runtime 指令介面如下；`--artifact` 對每個必要 run artifact 重複一次。`release` 是 publisher 產物，不是子命令：
 
@@ -270,7 +270,7 @@ reader 不顯示 run id、commit、後台 counts、十四天 audit 或修復紀�
 
 ## 七、局部恢復指令
 
-### Manifest 前
+### full-runtime：Manifest 前
 
 ```bash
 python3 scripts/news_run_checkpoint.py plan --input <checkpoint>
@@ -278,7 +278,7 @@ python3 scripts/news_run_checkpoint.py plan --input <checkpoint>
 
 只重跑回報的最早未完成 stage。source route、hydration batch、selection 或 audit 已完成且 hash 未變的產物不得清空。
 
-### Manifest 後
+### full-runtime：Manifest 後
 
 ```bash
 python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
@@ -286,7 +286,11 @@ python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 
 只修 `verification`、`map`、`charts`、`images` 或 `render/validate` 中的失敗事件／欄位。stage patch 以 `scripts/apply_event_stage_patch.py` 合併；不得用 shell 字串直接改 manifest。`recover_news_run.py` 沒有 `--checkpoint` 參數，checkpoint 由 `news_run_checkpoint.py` 維護。
 
-`NATIVE_MEDIA_UNAVAILABLE` 在 mobile-native 是非阻塞 capability limitation，不是 recovery target；補圖時沿用同一 run 與既有 checkpoint，只續做視覺交付。
+### mobile-native：既有 ledger 內恢復
+
+mobile-native 沒有 checkpoint 或 manifest。查證不足時依 `VERIFICATION_FEEDBACK_REWIND_GATE` 停留在 `selection-verified` 並更新同一份 run-scoped audit；視覺或 Reader 中斷時由 ledger 綁定的 candidate audit、verification、map decisions、image evidence 與 Reader 從 first incomplete stage 接續。不得倒退 stage、不得跳級、不得建立替代 run。
+
+`NATIVE_MEDIA_UNAVAILABLE` 在 mobile-native 是非阻塞 capability limitation，不是 recovery target；補圖時沿用同一 run，只續做視覺交付。
 
 `FOURTEEN_DAY_AUDIT_MERGE_UNAVAILABLE` 同樣不是新聞 recovery target。保留既有 `logs/latest-candidate-audit.json`，保存本輪 run-scoped candidate audit，將 durable merge 交給日後具備適合 runtime 的維護步驟；當輪仍從 manifest／驗證繼續。
 
@@ -320,4 +324,3 @@ python3 scripts/validate_map_decisions.py --input <manifest>
 ## 分享方式
 
 接收者在自己的新對話貼上 repo 網址與啟動指令，各自授權建立排程並保存個人偏好。公開 repo 的讀取不要求 GitHub 帳號；跨日 audit 與 run ledger 的持久化依工作區或 repository 寫入權限降級，但不能阻止有效的當日 reader。
-
