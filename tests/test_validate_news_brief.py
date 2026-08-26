@@ -882,7 +882,7 @@ class ValidatorTests(unittest.TestCase):
         self.assertTrue(any("缺少附件路徑" in error for error in errors))
         self.assertTrue(any("必須保存具體判定理由" in error for error in errors))
 
-    def test_reader_brief_requires_explanation_when_event_has_no_image(self):
+    def test_reader_omits_visual_placeholder_when_event_has_no_image(self):
         manifest = valid_manifest()
         images = manifest["events"][0]["images"]
         for check in images["source_checks"] + images["professional_source_checks"]:
@@ -901,7 +901,28 @@ class ValidatorTests(unittest.TestCase):
             "",
         )
         errors = VALIDATOR.validate_brief_text(manifest, brief)
-        self.assertTrue(any("圖片說明" in error for error in errors))
+        self.assertFalse(any("圖片說明" in error for error in errors), errors)
+
+    def test_reader_rejects_image_description_without_attachment(self):
+        manifest = valid_manifest()
+        images = manifest["events"][0]["images"]
+        for check in images["source_checks"] + images["professional_source_checks"]:
+            check["usable_image_found"] = False
+            check["outcome"] = "no_usable_image"
+            check["detected_image_urls"] = []
+            check["failure_detail"] = "來源頁已完整檢查，未提供與本事件相符的可用圖片。"
+        images["status"] = "omitted"
+        images["assets"] = []
+        images["omission_reason"] = "所有已驗證來源頁均無可用圖片。"
+        images["professional_visual_status"] = "not_available"
+        images["professional_omission_reason"] = "官方與專業來源均未提供同期圖資。"
+        images["reader_omission_note"] = "未取得合格圖片。"
+        brief = valid_brief().replace(
+            "**圖片：**\n\n![圖一](sandbox:/tmp/image.png)\n\n圖一：官方資訊圖（來源：官方來源）。",
+            "**圖片說明：** 南部豪雨造成淹水與撤離。",
+        )
+        errors = VALIDATOR.validate_brief_text(manifest, brief)
+        self.assertTrue(any("沒有可見附件" in error for error in errors), errors)
 
 
     def test_chart_attachment_cannot_replace_or_duplicate_image(self):

@@ -256,7 +256,7 @@ The required order for every configured discovery route is: `canonical route -> 
 - 每則固定為 `### 事件名稱｜評級`，接著依序放地圖、資料圖表、來源圖片、新聞摘要、評級評論與段末來源。
 - 每張附件獨立成行並由下一個非空白行的圖說緊接；多張來源圖片固定為圖一、圖二直向排列，不得使用圖廊、輪播、同列圖片或疊圖。
 - manifest 沒有的圖片不得出現在 reader；頁首、統計期間、板塊表格、兩則新聞之間及 reader 結尾均不得另放圖片。
-- 沒有合格來源圖片時，只在該則新聞內顯示 `**圖片說明：**` 與 `images.reader_omission_note`。
+- 沒有合格來源圖片時，讀者版完整省略圖片與圖說；`images.reader_omission_note` 只保留於內部 evidence／receipt。
 
 ## 最終品質門檻
 

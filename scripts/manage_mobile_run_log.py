@@ -14,7 +14,7 @@ from typing import Any
 import run_identity
 
 
-SCHEMA_VERSION = "1.3.0"
+SCHEMA_VERSION = "1.4.0"
 EXECUTION_MODES = {"full-runtime", "mobile-native"}
 DELIVERY_PROFILES = {"full-assets", "reader-canonical-capability-degraded"}
 NATIVE_MEDIA_STATUSES = {"available", "unavailable"}
@@ -98,6 +98,7 @@ def validate_record(record: dict[str, Any]) -> None:
         "client_confirmation_supported",
         "reader_artifact",
         "candidate_audit_artifact",
+        "image_evidence_artifact",
         "durable_audit_status",
         "durable_audit_artifact",
     }
@@ -154,6 +155,11 @@ def validate_record(record: dict[str, Any]) -> None:
             raise ValueError("completed requires a run-scoped candidate audit")
         if degraded and record.get("last_error") is not None:
             raise ValueError("a capability limitation is not a last_error")
+        if degraded:
+            evidence = record.get("image_evidence_artifact")
+            expected_evidence_path = f"logs/runs/{record['run_id']}/image-evidence.json"
+            if not isinstance(evidence, dict) or evidence.get("path") != expected_evidence_path:
+                raise ValueError("capability-degraded completion requires run-scoped image evidence")
     durable_artifact = record.get("durable_audit_artifact")
     if record["durable_audit_status"] in {"updated", "preserved_merge_deferred"}:
         if not isinstance(durable_artifact, dict) or durable_artifact.get("path") != "logs/latest-candidate-audit.json":
@@ -215,6 +221,7 @@ def prepare_run(
         "client_confirmation_supported": False,
         "reader_artifact": None,
         "candidate_audit_artifact": None,
+        "image_evidence_artifact": None,
         "durable_audit_status": "not_started",
         "durable_audit_artifact": None,
     }
@@ -240,6 +247,7 @@ def advance_run(
     native_media_status: str | None = None,
     capability_limitations: list[str] | None = None,
     candidate_audit_artifact: dict[str, str] | None = None,
+    image_evidence_artifact: dict[str, str] | None = None,
     durable_audit_status: str | None = None,
     durable_audit_artifact: dict[str, str] | None = None,
 ) -> dict[str, Any]:
@@ -289,6 +297,8 @@ def advance_run(
         current["capability_limitations"] = list(capability_limitations)
     if candidate_audit_artifact is not None:
         current["candidate_audit_artifact"] = candidate_audit_artifact
+    if image_evidence_artifact is not None:
+        current["image_evidence_artifact"] = image_evidence_artifact
     if durable_audit_status is not None:
         current["durable_audit_status"] = durable_audit_status
     if durable_audit_artifact is not None:
@@ -327,6 +337,7 @@ def build_parser() -> argparse.ArgumentParser:
     advance.add_argument("--native-media-status", choices=sorted(NATIVE_MEDIA_STATUSES))
     advance.add_argument("--capability-limitation", action="append", choices=sorted(KNOWN_CAPABILITY_LIMITATIONS))
     advance.add_argument("--candidate-audit-artifact", type=Path)
+    advance.add_argument("--image-evidence-artifact", type=Path)
     advance.add_argument("--durable-audit-status", choices=sorted(DURABLE_AUDIT_STATUSES))
     advance.add_argument("--durable-audit-artifact", type=Path)
 
@@ -365,6 +376,10 @@ def main() -> int:
             candidate_audit_artifact=(
                 _read_json(args.candidate_audit_artifact)
                 if args.candidate_audit_artifact else None
+            ),
+            image_evidence_artifact=(
+                _read_json(args.image_evidence_artifact)
+                if args.image_evidence_artifact else None
             ),
             durable_audit_status=args.durable_audit_status,
             durable_audit_artifact=(

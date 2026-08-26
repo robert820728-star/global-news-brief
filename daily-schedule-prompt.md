@@ -71,7 +71,7 @@ Before reading the recursive tree, capsule manifest, helpers, payload, or chunks
 
 - If the probe succeeds, continue the full verified-runtime path below.
 - If the local execution backend is absent or returns a host execution error, classify it as `host_execution_unavailable`, not as a repository materialization defect. Do not fetch the capsule, do not fetch chunks, do not disable the daily schedule, and do not modify `main`.
-- In that case, fetch `mobile-chatgpt-daily-prompt.md` from the same pinned `main` SHA and immediately run its `mobile-native` path in the same scheduled task. This fallback must still deliver the source-backed reader edition, the current 24-hour run-scoped candidate audit, six scores and totals, every current C-or-higher event, and the mobile image decision or non-technical no-image explanation. The rolling fourteen-day continuity cache is updated only when it can be merged safely; preserving it with `durable_audit_status=preserved_merge_deferred` must not block the current reader.
+- In that case, fetch `mobile-chatgpt-daily-prompt.md` from the same pinned `main` SHA and immediately run its `mobile-native` path in the same scheduled task. This fallback must still deliver the source-backed reader edition, the current 24-hour run-scoped candidate audit, six scores and totals, every current C-or-higher event, and the mobile image decision with run-scoped evidence. When no image is visibly attached, the reader omits the visual block instead of printing a description placeholder. The rolling fourteen-day continuity cache is updated only when it can be merged safely; preserving it with `durable_audit_status=preserved_merge_deferred` must not block the current reader.
 - A `mobile-native` result is a canonical reader release under its declared delivery profile. It may use `reader-canonical-capability-degraded` when a real local/native-media delivery attempt fails after source-image download or screenshot acquisition has been tried. The run may still become `status=completed`; it records `native_media_status=unavailable` and `NATIVE_MEDIA_UNAVAILABLE`, preserves image evidence and omission notes, and must not claim attachment or rendered-pixel validation. A later full-runtime pass may enrich only the missing visual delivery and must not rerun the news stages.
 - Record `execution_mode=full-runtime` or `execution_mode=mobile-native` in the run ledger. The next scheduled run probes capabilities again and resolves fresh `main`; it must not create a second task merely to retry the missing runtime.
 
@@ -181,11 +181,11 @@ Stage -1 完成後，至少讀取並遵守：
 8. `build-news-charts`
 9. `collect-news-images`
     - 對已選取且有候選來源圖片的事件，先建立只含 `event_id`、`source_page_url`、`source_image_url`、`alt`、`credit` 的 JSON 陣列；`source_image_url` 必須是來源頁實際檢出的 og:image、src/srcset 或官方媒體檔，不得等於文章頁網址。先下載原始媒體檔；下載失敗時才以同一來源頁或官方產品頁截圖補救，再執行 `<bundled-python> scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>` 驗證可取得的實體檔。已有 `status=ready`、可解碼且含 `local_path`、MIME、尺寸與 SHA-256 的 JPEG／WebP 時，必須先實際嘗試宿主支援的本機附件或本機媒體呈現方式；不得只因工具名稱中沒有特定 media API 就預判不可交付。只有實際交付嘗試失敗後才可套用 `NATIVE_MEDIA_CAPABILITY_FALLBACK`，保存嘗試證據與 `reader_omission_note`；它不阻擋已驗證 reader 或 `status=completed`，也不得冒稱原生附件已交付。
-   - 單張下載、解碼或寫檔失敗只影響該事件圖片，不得重跑 discovery、評分、驗證或 reader 文字；保留既有 checkpoint，依圖片契約改用合規的無圖說明或只重做圖片交付。
+   - 單張下載、解碼或寫檔失敗只影響該事件圖片，不得重跑 discovery、評分、驗證或 reader 文字；保留既有 checkpoint。沒有實際可見附件時，reader 完整省略圖片與圖說，只在內部 evidence 保存原因；需要補圖時只重做圖片交付。
    - 只有 checkpoint 的 `collect-news-images` completed 後，才可第一次執行 `scripts/validate_news_brief.py manifest --input <final-manifest>`；final-manifest validator 不得提前到 verify、map 或 chart 階段。
    - 若執行者誤在圖片階段完成前呼叫該命令，script 會輸出 `DEFERRED` 並以成功狀態返回；這不是 validator 通過，也不得標記整輪失敗。立即繼續原定 pipeline，並在 `collect-news-images` completed 後重新執行到真正輸出 `OK`。
 10. `render`
-   - `images.status=omitted` 的事件必須在讀者版顯示非技術性的「圖片說明」，內容精確等於 manifest 的 `images.reader_omission_note`。
+   - `images.status=omitted` 的事件不得在讀者版顯示圖片說明、caption 或占位文字；`images.reader_omission_note` 只屬內部 evidence／receipt。
 11. validators / unique delivery gate
 12. canonical publisher release
 13. canonical receipt delivery
@@ -243,7 +243,7 @@ Repository 內只有 canonical publisher 可以建立 reader-facing release。�
 
 `READER_INTERNAL_REPAIR_LOG_EXCLUSION_GATE`：任何「修復紀錄」、429／HTTP 狀態、重試等待、archive 備援、去重效能修正、圖片補救與 checkpoint 重建都只屬內部 run log／audit receipt，不得出現在 canonical reader 或 reader bytes 的對話副本。
 
-`CANONICAL_SECTIONED_READER_LAYOUT_GATE`：canonical reader 必須使用 `news-brief-template.md` 的現行分區版型：標題、統計期間、六項評級說明後，先輸出唯一 `## 今日總覽`，依板塊列出 `時間｜事件｜評級` 完整清單；再依相同順序輸出各板塊所有單項新聞。每則固定為「標題｜評級 → 可見圖片或圖片說明 → 新聞摘要 → 評為X級的評論與段末來源」。不得改成欄位式逐條詳報，也不得加入事件編號、驗收摘要或後台欄位。格式錯誤只重做 reader render。
+`CANONICAL_SECTIONED_READER_LAYOUT_GATE`：canonical reader 必須使用 `news-brief-template.md` 的現行分區版型：標題、統計期間、六項評級說明後，先輸出唯一 `## 今日總覽`，依板塊列出 `時間｜事件｜評級` 完整清單；再依相同順序輸出各板塊所有單項新聞。每則固定為「標題｜評級 → 實際可見附件（若有）→ 新聞摘要 → 評為X級的評論與段末來源」。沒有附件時不得顯示圖說或占位文字。不得改成欄位式逐條詳報，也不得加入事件編號、驗收摘要或後台欄位。格式錯誤只重做 reader render。
 
 `CANONICAL_RUN_BUNDLE_GATE`：canonical publisher 成功後，run-logs 的同一 `logs/runs/<run_id>/` 必須持久化可獨立重算的 `candidate-audit.json`（含完整 `article_dispositions`）、`image-evidence/`、`materialized-images.json`、map decisions、checkpoint、counts、event manifest、reader、attachments index、release receipt 與 bundle manifest；每項保存 path、size、SHA-256 與 Git blob SHA。只有上述 bundle 與 canonical release 具有 byte identity，且 `logs/current.json` 原子指向本輪 completed run 後，才可宣稱 GitHub canonical delivery 完成。缺少證據時不得用本機路徑、聊天文字或舊 artifact 代替。
 

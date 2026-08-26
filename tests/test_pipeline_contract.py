@@ -241,6 +241,12 @@ class PipelineContractTests(unittest.TestCase):
         image_properties = schema["$defs"]["imageResult"]["properties"]
         self.assertIn("reader_omission_note", image_properties)
 
+    def test_template_uses_claim_critical_map_gate_and_no_image_placeholder(self):
+        template = (ROOT / "news-brief-template.md").read_text(encoding="utf-8")
+        self.assertIn("map.claim_critical=true", template)
+        self.assertNotIn("`map.required=true` 時必須附上", template)
+        self.assertNotIn("**圖片說明：**", template)
+
     def test_publisher_uses_only_canonical_sectioned_reader_validator(self):
         for relative in (
             "scripts/publish_news_brief.py",

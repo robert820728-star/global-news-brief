@@ -4,6 +4,16 @@ This file records the current installable contract. Earlier implementation attem
 
 本檔只記錄目前可安裝契約；較早的實作嘗試由 Git history 保存，避免退役行為繼續留在執行中的 repository 表面。
 
+## v0.6.0-rc.4 — Visible-media truth and omission cleanup / 可見媒體真實性與省略清理
+
+- Reason / 建立原因：A production mobile-native run emitted event descriptions under `圖片說明` without visible attachments, declared `NATIVE_MEDIA_UNAVAILABLE`, and completed without a persisted image-evidence artifact. The Reader template also conflicted with executable `claim_critical` map handling. / 實際 mobile-native run 在沒有可見附件時以「圖片說明」輸出事件描述、宣告 `NATIVE_MEDIA_UNAVAILABLE`，卻未保存 image-evidence artifact 仍完成；Reader template 亦與可執行的 `claim_critical` 地圖規則衝突。
+- Approach / 作法：Forbid every image-description placeholder when no attachment is visible, retain omission notes only in internal evidence, require a run-scoped `image_evidence_artifact` before capability-degraded completion, and align the template with claim-critical visual blocking. / 沒有可見附件時禁止所有圖片說明占位，省略原因只留內部 evidence；媒體能力降級完成前必須具備本輪 `image_evidence_artifact`；template 與主張關鍵視覺阻塞規則一致。
+- Entry points / 入口：Reader template/settings, mobile and full-runtime prompts, image/map Skills, mobile run-log schema and manager, Reader validator, `INSTALL.md`, generated capsule, and regressions. / Reader template／settings、mobile 與 full-runtime prompts、圖片／地圖 Skills、mobile run-log schema 與 manager、Reader validator、`INSTALL.md`、生成 capsule 與回歸測試。
+- Important configuration / 重要設定：Mobile run-log schema is `1.4.0`; `images.status=omitted` renders no visual text; only `claim_critical=true` missing visuals block a verified text Reader; capability degradation requires `logs/runs/<run_id>/image-evidence.json`. / Mobile run-log schema 為 `1.4.0`；`images.status=omitted` 不輸出任何視覺文字；只有 `claim_critical=true` 的視覺缺失阻塞已驗證文字 Reader；媒體能力降級必須保存 `logs/runs/<run_id>/image-evidence.json`。
+- Validation / 驗證：Production-run artifact tracing, red-green regressions, active-contract residue scan, full repository suite, capsule rebuild, and fixed-fingerprint final-state audit. / 實際 run artifact 逆向追蹤、紅綠回歸、active contract 殘留掃描、全庫測試、capsule 重建與固定指紋 final-state audit。
+- Result / 結果：Candidate prepared for verification; no remote-delivery claim is made until GitHub push and CI complete. / 候選版本已準備驗收；GitHub push 與 CI 完成前不宣告遠端交付。
+- Rollback / 回復：Revert the rc.4 source and generated-capsule commit together. / 一併回復 rc.4 source 與 generated-capsule commit。
+
 ## v0.6.0-rc.3 — Cross-stage convergence and scheduled-run ownership / 跨階段收斂與排程 run 所有權
 
 - Reason / 建立原因：Independent cross-module review found custom sections collapsing to `GLB`, a selected-`C-` path that could not publish, completed verification with insufficient evidence, failed source rows rejected by the standalone validator, one inaccessible article blocking a usable Reader, non-executable cross-source fallback promises, and same-occurrence scheduled runs being rotated after Reader creation. / 獨立跨模組檢查發現自訂板塊被壓成 `GLB`、可選取但無法發布的 `C-` 路徑、證據不足仍可標示查證完成、standalone validator 拒絕真實失敗來源、單篇不可讀文章阻擋可用 Reader、不可執行的跨來源 fallback 承諾，以及同一排程 occurrence 在 Reader 產生後仍被旋轉。

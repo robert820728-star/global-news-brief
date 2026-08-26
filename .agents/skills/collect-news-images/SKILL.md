@@ -21,7 +21,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 任一來源找到可信且相關圖片後，`images.status` 只能在至少一張附件通過驗收後改為 `ready`。
 - 每則事件必須明確設定 `images.claim_critical`。只有圖片本身是核心主張證據（例如唯一影像證據、衛星圖直接證明攻擊或官方圖是數據主張本體）才設為 `true`；一般新聞配圖、人物照或輔助專業圖設為 `false`。
 - `NATIVE_MEDIA_CAPABILITY_FALLBACK`：已找到可用圖片時，先下載原始媒體檔；下載失敗才依圖片政策截圖並驗證。兩者都失敗時，`claim_critical=true` 才維持 `pending` 並只重試圖片階段；非關鍵圖片改為 `images.status=omitted`，保存取得證據、`omission_reason` 與非技術性的 `reader_omission_note`，文字 reader 仍可完成。不得在未嘗試前預判。
-- 只有全部引用來源都已檢查且均無可用圖片，才可使用 `omitted`，並保存具體後台原因；同時填寫繁體中文、非技術性的 `reader_omission_note`，供讀者版說明為何本則沒有圖片。
+- 只有全部引用來源都已檢查且均無可用圖片，才可使用 `omitted`，並保存具體後台原因與繁體中文 `reader_omission_note`；兩者只供內部 evidence／receipt，不得顯示於讀者版。
 - 圖片取得失敗不改變事件等級。
 - 原引用來源沒有可取得圖片時，依序搜尋官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導；可檢查多個來源，不限一個，也不要求找到完全相同像素。新來源必須加入事件的圖片證據與來源追溯，並核對發布日期、人物／地點與事件關聯；搜尋縮圖、無法追溯的搬運站、舊照或無關示意圖不得入選。
 - 自製定位地圖由 `build-news-maps` 處理，不得放進 `images`。
@@ -180,4 +180,4 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - `images.omission_reason`
 - `images.reader_omission_note`
 
-所有來源確實沒有圖片時，保存後台原因，讀者版不顯示空圖片欄，改顯示 `**圖片說明：**` 與 `reader_omission_note`。來源有圖但取得失敗時不得進入讀者版輸出。
+所有來源確實沒有圖片時，保存後台原因；讀者版完整省略圖片、caption 與占位文字。來源有圖但取得失敗時，非主張關鍵圖片可依 omission contract 省略，主張關鍵圖片仍不得完成。

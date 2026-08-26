@@ -59,6 +59,7 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertEqual(current["native_media_status"], "available")
         self.assertEqual(current["capability_limitations"], [])
         self.assertIsNone(current["candidate_audit_artifact"])
+        self.assertIsNone(current["image_evidence_artifact"])
         self.assertEqual(current["durable_audit_status"], "not_started")
         self.assertIsNone(current["durable_audit_artifact"])
         self.assertEqual(current["delivery_status"], "not_ready")
@@ -156,6 +157,11 @@ class MobileRunLogTests(unittest.TestCase):
                 "path": f"logs/runs/{RUN_1}/candidate-audit.json",
                 "blob_sha": "a" * 40,
             },
+            image_evidence_artifact={
+                "branch": "run-logs",
+                "path": f"logs/runs/{RUN_1}/image-evidence.json",
+                "blob_sha": "d" * 40,
+            },
             durable_audit_status="preserved_merge_deferred",
             durable_audit_artifact={
                 "branch": "run-logs",
@@ -167,8 +173,47 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertEqual(current["status"], "completed")
         self.assertEqual(current["delivery_profile"], "reader-canonical-capability-degraded")
         self.assertEqual(current["capability_limitations"], ["NATIVE_MEDIA_UNAVAILABLE"])
+        self.assertEqual(
+            current["image_evidence_artifact"]["path"],
+            f"logs/runs/{RUN_1}/image-evidence.json",
+        )
         self.assertEqual(current["durable_audit_status"], "preserved_merge_deferred")
         self.assertIsNone(current["last_error"])
+
+    def test_capability_degraded_completion_requires_run_scoped_image_evidence(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+            delivery_profile="reader-canonical-capability-degraded",
+            native_media_status="unavailable",
+            capability_limitations=["NATIVE_MEDIA_UNAVAILABLE"],
+        )
+        with self.assertRaisesRegex(ValueError, "image evidence"):
+            self.module.advance_run(
+                self.ledger_dir,
+                run_id=RUN_1,
+                stage="delivery-handoff",
+                updated_at="2026-08-18T00:15:00Z",
+                status="completed",
+                delivery_status="handoff_started",
+                reader_artifact={
+                    "branch": "run-logs", "path": "logs/latest-reader.md", "blob_sha": "b" * 40,
+                },
+                candidate_audit_artifact={
+                    "branch": "run-logs",
+                    "path": f"logs/runs/{RUN_1}/candidate-audit.json",
+                    "blob_sha": "a" * 40,
+                },
+                durable_audit_status="preserved_merge_deferred",
+                durable_audit_artifact={
+                    "branch": "run-logs",
+                    "path": "logs/latest-candidate-audit.json",
+                    "blob_sha": "c" * 40,
+                },
+            )
 
     def test_completed_run_requires_run_scoped_candidate_audit_not_durable_history(self):
         self.prepare()

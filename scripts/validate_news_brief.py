@@ -491,7 +491,7 @@ def _validate_image_gate(
             f"{event_id}.images 未找到可用來源圖片時，必須以 omitted 保存後台原因"
         )
     elif not isinstance(images.get("reader_omission_note"), str) or not images["reader_omission_note"].strip():
-        errors.append(f"{event_id}.images 無合格圖片時必須提供讀者可見的 reader_omission_note")
+        errors.append(f"{event_id}.images 無合格圖片時必須保存內部 reader_omission_note")
 
     professional_required = images.get("professional_visual_required")
     expected_professional = _professional_visual_expected(event)
@@ -1201,10 +1201,8 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
         chart_result = event.get("charts", {})
         image_result = event.get("images", {})
         if isinstance(image_result, dict) and image_result.get("status") == "omitted":
-            note = image_result.get("reader_omission_note")
-            expected_note = f"**圖片說明：**{note}"
-            if not isinstance(note, str) or not note.strip() or expected_note not in block:
-                errors.append(f"{event_id} 無合格圖片時，讀者版必須完整顯示圖片說明")
+            if "**圖片說明：**" in block:
+                errors.append(f"{event_id} 沒有可見附件時不得顯示圖片說明")
         for field_key, field, result, marker in (
             ("map", "地圖", map_result, "**地圖：**"),
             ("charts", "資料圖表", chart_result, "**資料圖表：**"),
@@ -1504,9 +1502,8 @@ def validate_canonical_sectioned_layout(data: dict[str, Any], text: str) -> list
                 if not isinstance(result, dict):
                     continue
                 if field_key == "images" and result.get("status") == "omitted":
-                    note = result.get("reader_omission_note")
-                    if not isinstance(note, str) or f"**圖片說明：**{note}" not in block:
-                        errors.append(f"{event.get('event_id')} 無合格圖片時必須顯示圖片說明")
+                    if "**圖片說明：**" in block:
+                        errors.append(f"{event.get('event_id')} 沒有可見附件時不得顯示圖片說明")
     return errors
 
 

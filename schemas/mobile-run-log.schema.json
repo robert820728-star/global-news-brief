@@ -23,11 +23,12 @@
     "client_confirmation_supported",
     "reader_artifact",
     "candidate_audit_artifact",
+    "image_evidence_artifact",
     "durable_audit_status",
     "durable_audit_artifact"
   ],
   "properties": {
-    "schema_version": { "const": "1.3.0" },
+    "schema_version": { "const": "1.4.0" },
     "execution_mode": { "enum": ["full-runtime", "mobile-native"] },
     "delivery_profile": {
       "enum": ["full-assets", "reader-canonical-capability-degraded"]
@@ -106,6 +107,24 @@
             "path": {
               "type": "string",
               "pattern": "^logs/runs/gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}/candidate-audit\\.json$"
+            },
+            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+          }
+        }
+      ]
+    },
+    "image_evidence_artifact": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["branch", "path", "blob_sha"],
+          "properties": {
+            "branch": { "const": "run-logs" },
+            "path": {
+              "type": "string",
+              "pattern": "^logs/runs/gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}/image-evidence\\.json$"
             },
             "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
           }

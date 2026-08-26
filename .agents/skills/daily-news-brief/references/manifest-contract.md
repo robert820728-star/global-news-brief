@@ -60,5 +60,5 @@ python3 scripts/validate_news_brief.py stage \
 
 - 地圖、資料圖表或圖片不適用時使用 `status: not_required`。
 - 應嘗試但來源無圖或重試失敗時使用 `status: omitted` 並保存後台原因。
-- `omission_reason` 後台原因不得出現在讀者版；圖片省略時另以非技術性的 `images.reader_omission_note` 在讀者版「圖片說明」欄完整顯示。
+- `omission_reason` 與 `images.reader_omission_note` 都只保存於內部 evidence／receipt；圖片省略時讀者版不得顯示圖片說明、caption 或占位文字。
 - `verification.finding: single_reliable_source` 不得觸發自動降級或刪除。
