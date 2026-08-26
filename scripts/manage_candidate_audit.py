@@ -711,6 +711,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
     source_scan_evidence_required = False
     source_by_id = {}
     discovery_source_ids = []
+    primary_aggregator_ids = []
     minimum_ready_discovery_sources = 0
     all_configured_source_ids = set()
     if source_pool is None:
@@ -720,6 +721,11 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
     if source_pool:
         discovery_source_ids = [
             item["source_id"] for item in source_pool.get("discovery_sources", [])
+        ]
+        primary_aggregator_ids = [
+            item["source_id"]
+            for item in source_pool.get("discovery_sources", [])
+            if item.get("role") == "primary_aggregator"
         ]
         minimum_ready_discovery_sources = int(
             source_pool.get("discovery_policy", {}).get(
@@ -816,6 +822,24 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                 errors.append(run_label + ".section_scopes 板塊代碼不得重複")
             if fallback_count != 1:
                 errors.append(run_label + ".section_scopes 必須恰有一個 fallback 板塊")
+            coverage_by_id = {
+                item.get("source_id"): item
+                for item in coverage
+                if isinstance(item, dict)
+            }
+            if (
+                fallback_count == 1
+                and primary_aggregator_ids
+                and not any(
+                    coverage_by_id.get(source_id, {}).get("scan_status") == "completed"
+                    for source_id in primary_aggregator_ids
+                )
+            ):
+                errors.append(
+                    run_label
+                    + " fallback/global 板塊要求至少一條 primary_aggregator discovery route 成功；"
+                    "區域補充來源不得把全球 coverage 缺失洗成零事件"
+                )
 
         raw_total = 0
         for source_index, item in enumerate(coverage, 1):

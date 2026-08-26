@@ -118,7 +118,9 @@ first attempt source-image download, screenshot fallback, and any supported loca
 or native attachment route. Only an actual final-mile delivery failure may use
 `NATIVE_MEDIA_CAPABILITY_FALLBACK`: record `reader-canonical-capability-degraded`,
 `native_media_status=unavailable`, verified image evidence and `reader_omission_note` values.
-That capability limitation is not `last_error` and does not block `status=completed`;
+That capability limitation is not `last_error`, but it keeps the same run at
+`status=running` and `current_stage=visuals-completed`; it blocks reader delivery
+and `status=completed` until existing full-runtime delivery succeeds.
 the run must not claim attachment or pixel validation.
 
 Do not mislabel it as source-scan, preprocessing, validation, image, map, or publisher failure. Do not bypass the repository pipeline by manually producing a news brief.

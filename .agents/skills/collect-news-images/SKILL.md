@@ -22,7 +22,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - full-runtime 的每張來源圖片必須由 `scripts/materialize_news_images.py` 對 `source_image_url` 下載、解碼與寫檔，並保存 `materialized-images.json`；不得手工產生同名檔或只憑 manifest 宣告來源。mobile-native 不執行或冒充此步驟。
 - 任一來源找到可信且相關圖片後，`images.status` 只能在至少一張附件通過驗收後改為 `ready`。
 - 每則事件必須明確設定 `images.claim_critical`。只有圖片本身是核心主張證據（例如唯一影像證據、衛星圖直接證明攻擊或官方圖是數據主張本體）才設為 `true`；一般新聞配圖、人物照或輔助專業圖設為 `false`。
-- `NATIVE_MEDIA_CAPABILITY_FALLBACK`：full-runtime 已找到可用圖片時先下載原始媒體檔，下載失敗才依圖片政策截圖並驗證；mobile-native 則實際嘗試原生圖片／圖片卡交付。各模式可用路徑失敗時，`claim_critical=true` 才維持 `pending` 並只重試圖片階段；非關鍵圖片改為 `images.status=omitted`，保存取得證據、`omission_reason` 與非技術性的 `reader_omission_note`，文字 reader 仍可完成。不得在未嘗試前預判。
+- `NATIVE_MEDIA_CAPABILITY_FALLBACK`：full-runtime 已找到可用圖片時先下載原始媒體檔，下載失敗才依圖片政策截圖並驗證；mobile-native 則實際嘗試原生圖片／圖片卡交付。若來源確實沒有合格圖片，可記 source exhaustion 並省略圖片；若已確認存在合格來源圖片但可用交付路徑失敗，不論 `claim_critical` 都必須保持同一 run 的 `status=running`、`current_stage=visuals-completed`，只重試圖片交付，不得完成文字 reader。不得在未嘗試前預判。
 - 只有全部引用來源都已檢查且均無可用圖片，才可使用 `omitted`，並保存具體後台原因與繁體中文 `reader_omission_note`；兩者只供內部 evidence／receipt，不得顯示於讀者版。
 - 圖片取得失敗不改變事件等級。
 - 原引用來源沒有可取得圖片時，依序搜尋官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導；可檢查多個來源，不限一個，也不要求找到完全相同像素。新來源必須加入事件的圖片證據與來源追溯，並核對發布日期、人物／地點與事件關聯；搜尋縮圖、無法追溯的搬運站、舊照或無關示意圖不得入選。
@@ -36,8 +36,8 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 任何入選事件若屬氣象、災害、疫情、公共衛生、地震、海嘯、火山、野火、洪水、乾旱、熱浪、戰爭、軍事、航運、海峽／航道、漏油、油污、海洋污染、化學或核事故，`images.professional_visual_required` 固定為 `true`；此判定必須依事件內容完成，禁止使用評級門檻或事件編號白名單。
 - 先依事件類型與主要影響地區，主動搜尋主管機關、監測機構、地方政府或專業組織的圖資；不得只檢查新聞來源頁後就宣告沒有專業圖。
 - 每個查過的官方或專業頁面都寫入 `images.professional_source_checks`。至少涵蓋中央主管機關與主要受影響地區主管單位；跨國事件再查國際組織或受影響國官方來源。
-- 官方專業圖資檢查同樣必須保存檢查時間、方法、檢出的圖片網址與判定理由；full-runtime 另保存本地頁面證據，mobile-native 保存宿主結構化檢查結果。取得失敗時，只有 `claim_critical=true` 才必須進入恢復流程；否則記為 `not_available` 並繼續文字交付。
-- 找到與事件時間、地區及主張相符的專業圖時，full-runtime 至少一張 `kind` 為 `official_information` 或 `professional_information` 的本地附件通過視覺與時間驗收前，不得把 manifest 的 `images.professional_visual_status` 宣稱為 `ready`；mobile-native 只在 image evidence／ledger 記錄原生卡交付結果。只有該圖同時是主張關鍵證據時才阻擋整則事件交付。
+- 官方專業圖資檢查同樣必須保存檢查時間、方法、檢出的圖片網址與判定理由；full-runtime 另保存本地頁面證據，mobile-native 保存宿主結構化檢查結果。確實沒有合格專業圖時，只有 `claim_critical=true` 才阻擋；但已確認合格專業圖而交付失敗時，不論 `claim_critical` 都必須進入同一 run 的視覺恢復。
+- 找到與事件時間、地區及主張相符的專業圖時，full-runtime 至少一張 `kind` 為 `official_information` 或 `professional_information` 的本地附件通過視覺與時間驗收前，不得把 manifest 的 `images.professional_visual_status` 宣稱為 `ready`；mobile-native 只在 image evidence／ledger 記錄原生卡交付結果。已確認圖片尚未成功交付時不得完成整則事件；`claim_critical` 只決定來源確實無圖時能否省略。
 - full-runtime 專業圖下載或截圖失敗時，依「原始下載資產 → 官方產品頁截圖 → 官方歷史／存檔頁 → 地方主管機關 → 主要媒體引用的同一官方圖」重試；mobile-native 依同一來源優先序嘗試原生圖片／圖片卡。不得因第一次取得失敗就改用現場照結案。
 - 只有完成上述搜尋且確實沒有符合事件階段的專業圖，才可把 `images.professional_visual_status` 設為 `not_available`，並在 `images.professional_omission_reason` 保存具體後台原因。
 - 自製定位地圖、自製資料圖表、普通新聞照片與頁首圖均不能滿足專業圖資硬閘門。若同一張 `official_information`／`professional_information` 圖確實出現在已引用來源或本身就是已引用官方來源，且通過時間與內容驗收，可同時滿足來源頁附件與專業圖資硬閘門；不得為形式另附重複照片。
@@ -121,11 +121,11 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 影像沒有誤導性裁切，文字可辨識。
 - 不是無關舊照、資料庫示意照或被錯誤歸屬的畫面。
 
-失敗時依取得順序重試。若來源已確認有可用圖片但重試仍失敗，`claim_critical=true` 才維持未完成狀態並只重跑圖片模組；非關鍵圖片改為 `omitted`，只在內部 evidence／receipt 保存原因後交付文字版，不在 reader 顯示省略說明。不得只留下「圖一」文字。
+失敗時依取得順序重試。若來源已確認有可用圖片但重試仍失敗，不論 `claim_critical` 都維持未完成狀態並只重跑圖片模組；來源確實沒有合格圖片時，非關鍵圖片才可改為 `omitted`，只在內部 evidence 保存原因且不在 reader 顯示省略說明。不得只留下「圖一」文字。
 
 ## 與候選來源確認共同發布
 
-圖片驗收與候選稽核確認在 `publish_news_brief.py` 同一個閘門執行。發布時必須同時提供候選稽核檔；完全沒有可核實候選、候選缺少 SS–E 評級理由、達標事件漏入 manifest、主張關鍵圖片缺失或來源頁檢查未完成時，不得產生 release。非關鍵圖片取得失敗只形成 visual degradation。單一 discovery route 缺失或不完整只記 coverage 降級，不得阻擋其他可用候選。
+圖片驗收與候選稽核確認在 `publish_news_brief.py` 同一個閘門執行。發布時必須同時提供候選稽核檔；完全沒有可核實候選、候選缺少 SS–E 評級理由、達標事件漏入 manifest、主張關鍵圖片缺失、已確認圖片尚未交付或來源頁檢查未完成時，不得產生 release。來源確實無圖或非關鍵本機生成視覺失敗才形成可完成的 visual degradation。單一 discovery route 缺失或不完整只記 coverage 降級，不得阻擋其他可用候選。
 
 ## 時間與區域
 

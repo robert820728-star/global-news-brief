@@ -147,6 +147,13 @@ def validate_record(record: dict[str, Any]) -> None:
     stage = record["current_stage"]
     if stage not in STAGE_INDEX or record["stage_index"] != STAGE_INDEX[stage]:
         raise ValueError("stage_index does not match current_stage")
+    if "NATIVE_MEDIA_UNAVAILABLE" in limitations and (
+        record["stage_index"] > STAGE_INDEX["visuals-completed"]
+        or record["status"] == "completed"
+    ):
+        raise ValueError(
+            "native media delivery recovery must remain at visuals-completed and cannot be completed"
+        )
     if record["last_completed_stage"] not in (None, *STAGES):
         raise ValueError("invalid last_completed_stage")
     if record["delivery_status"] not in DELIVERY_STATUSES:

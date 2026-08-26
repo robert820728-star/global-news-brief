@@ -4,7 +4,7 @@
 
 `DISCOVERY_THEN_VERIFY`
 
-The initial list comes from GDELT, CNA, and China News Service. `GDELT_RESILIENT_ACQUISITION` uses GDELT's official 15-minute export archives as primary discovery, permits one non-blocking DOC API request only when the archive is unavailable, and then uses a labeled last-known-good cache. A discovery source failure degrades coverage but does not block the whole brief when another route yields verifiable current candidates. `FULL_DISCOVERY_POOL_UNCAPPED` sends every verified in-window item from a successful route into deduplication and scoring without a preset per-source top-N cutoff.
+The initial list comes from GDELT, CNA, and China News Service. `GDELT_RESILIENT_ACQUISITION` uses GDELT's official 15-minute export archives as primary discovery, permits one non-blocking DOC API request only when the archive is unavailable, and then uses a labeled last-known-good cache. A regional supplement failure degrades only its covered section; a run containing the fallback/global section still requires a successful configured primary aggregator under `GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE`. `FULL_DISCOVERY_POOL_UNCAPPED` sends every verified in-window item from a successful route into deduplication and scoring without a preset per-source top-N cutoff.
 
 `REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE`：中央社與中新社等 `regional_supplement` 的所有精確窗內 provisional groups 必須完整出現在模型 `candidate_groups`，不得因沒有 GDELT heat、Google Trends、Google News coverage 或關鍵字命中而省略。熱度只能增加召回或安排處理順序，不能決定重要性或排除。模型輸入建立後、語意合併與六項評分前，只有可執行 runtime 時才執行 `python3 scripts/validate_local_source_admission.py --preprocessed <preprocessed-candidates.json> --selection <selection-results.json> --source-pool news-source-pool.json`；`MOBILE_STRUCTURAL_ADMISSION_EQUIVALENT`：mobile-native 必須逐一比對 regional supplements 的 provisional group IDs 與各組 candidate IDs，確認 selection 完整包含且沒有新增未發現列，不符合時不得繼續，也不得宣稱已執行 Python validator。
 
@@ -115,7 +115,7 @@ full-runtime 的 post-selection event exchange 必須遵守 `schemas/news-event-
 
 ## 候選海選
 
-- 前期 canonical 候選只由設定中的 discovery routes 及其同站恢復路徑取得。`GDELT` 是主要彙整入口；中央社與中新社是台灣、中國的區域補充，但都不是單獨完成門檻。跨來源網頁搜尋只能找回指向 configured source 的同站線索，或供後段獨立驗證使用；未經 source-scan materialize 的搜尋結果不得直接加入 canonical pool，也不得補足失敗 route 的 coverage。只要仍有 configured route 提供可核實的精確 24 小時候選就繼續，只有完全沒有可核實候選才停止。
+- 前期 canonical 候選只由設定中的 discovery routes 及其同站恢復路徑取得。`GDELT` 是主要彙整入口；中央社與中新社是台灣、中國的區域補充。跨來源網頁搜尋只能找回指向 configured source 的同站線索，或供後段獨立驗證使用；未經 source-scan materialize 的搜尋結果不得直接加入 canonical pool，也不得補足失敗 route 的 coverage。`GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE`：本輪包含 fallback／全球板塊時，至少一條 `role=primary_aggregator` 的 configured route 必須成功 materialize；GDELT 的 archive、一次 DOC API 與有效 cache 全部不可用時，同一 run 停在 source-scan，中央社／中新社即使有候選也不能把世界零筆解釋成零事件或完成 audit。
 - `GDELT_RESILIENT_ACQUISITION`：GDELT 官方 15 分鐘 export archives 是主要 discovery。只有預期分片全部成功才可標 `coverage_complete`；部分分片成功必須標 `degraded_partial`，不得冒充 ready/full coverage。只有 archive 不可用時才允許一次不阻塞的 DOC API 補充請求；不得為 429 等待或重試，DOC API 成功也必須標為非完整補充。兩者都不可用才採最近一次有效快取並明確標示 degraded。
 - `SOURCE_SCAN_COVERAGE_SEPARATION`：`scan_status=completed` 只表示既有頁面已成功物化與驗證，不代表 coverage 完整。每條 configured discovery route 都必須保留在 candidate audit；另以 `coverage_complete`、`coverage_status`、`coverage_reason`、`missing_segments` 與 `missing_date_variants` 保存完整、部分降級、快取降級或不可用狀態。部分來源仍可貢獻已驗證候選，但不得在下游洗成 full coverage；release receipt 必須保存摘要。
 - 中新社日索引固定取得執行日與前一日後再套精確 24 小時窗；中央社依 `NextPageIdx` 連續翻頁，直到跨過窗起點或來源明確耗盡。固定只抓當日頁或第一頁 500 筆都不得宣稱完整 coverage。
@@ -239,7 +239,7 @@ full-runtime 的 post-selection event exchange 必須遵守 `schemas/news-event-
 - 資料圖表技能只擁有 `charts`；不得製作純文字摘要卡，也不得修改或取代來源圖片。
 - 圖片技能只擁有 `images`；不得修改來源、等級、地圖或詳報內容。
 - 所有入選事件均固定執行來源頁圖片檢查；full-runtime 保存本地證據，mobile-native 保存該宿主可產生的來源檢查與原生圖片卡結構化結果。評級只影響新聞重要度，不影響是否查圖。
-- 圖片與地圖都必須另填 `claim_critical`。只有視覺本身直接支撐核心新聞主張時才可設為 `true`；一般配圖與定位輔助失敗時可標記 `omitted`，只在內部 evidence／receipt 保存原因，不在文字 reader 顯示省略說明。
+- 圖片與地圖都必須另填 `claim_critical`。只有視覺本身直接支撐核心新聞主張時才可設為 `true`；來源確實沒有合格圖片或非關鍵本機生成視覺無法產生時可標記 `omitted`。已確認合格來源圖片的交付失敗不得因 `claim_critical=false` 降級成正式完成。
 - 地震、疫情、氣象、災害、戰爭、航運、漏油與海洋污染等類型固定啟用官方專業圖資要求；判定依事件內容，不得硬編碼事件編號。
 - 地圖、資料圖表與來源圖片三組附件路徑必須兩兩獨立，任一組不得替代另一組。
 - 地圖標籤必須符合輸出語言；繁體中文輸出時不得只有英文地名。
@@ -268,7 +268,7 @@ full-runtime 的 post-selection event exchange 必須遵守 `schemas/news-event-
 - 單一可靠來源事件已顯示來源限制，但沒有因此自動降級。
 - 地圖、資料圖表與圖片各自保留；前兩者不計入圖片張數，三者不得互相取代。
 - 事件資料中已驗收的每張地圖、資料圖表與圖片，都按 manifest 順序實際出現在所屬新聞內，並由緊接附件的編號圖說逐一說明。
-- `claim_critical=true` 的必要地圖或圖片不得省略，必須為 `ready` 且至少有一張附件；非關鍵視覺可在取得或產生失敗時降級為 `omitted`。
+- `claim_critical=true` 的必要地圖或圖片不得省略，必須為 `ready` 且至少有一張附件；非關鍵視覺只有在來源確實沒有合格圖片或本機生成資產無法產生時可降級為 `omitted`，已確認圖片的交付失敗必須恢復。
 - reader 不得包含 manifest 以外或新聞區塊以外的圖片。
 - 不存在只有圖說沒有附件、空白圖、破圖、錯誤頁、過期圖資或與事件不符的圖片。
 - 板塊順序、表格、空行、分隔線與繁體中文格式正確。

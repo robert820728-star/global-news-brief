@@ -943,10 +943,10 @@ class CandidateAuditTests(unittest.TestCase):
         run = audit["runs"][0]
         only_url = next(
             item["selected_item_urls"][0]
-            for item in run["source_coverage"] if item["source_id"] == "cna"
+            for item in run["source_coverage"] if item["source_id"] == "gdelt"
         )
         for item in run["source_coverage"]:
-            if item["source_id"] == "cna":
+            if item["source_id"] == "gdelt":
                 continue
             item.update({
                 "scan_status": "failed", "coverage_complete": False,
@@ -967,11 +967,46 @@ class CandidateAuditTests(unittest.TestCase):
         run["processing_counts"]["unresolved_article_row_count"] = 0
         run["article_dispositions"] = [
             item for item in run["article_dispositions"]
-            if item["source_id"] == "cna"
+            if item["source_id"] == "gdelt"
         ]
         run["candidates"][0]["candidate_urls"] = [only_url]
-        run["candidates"][0]["source_ids"] = ["cna"]
+        run["candidates"][0]["source_ids"] = ["gdelt"]
         self.assertEqual([], MODULE.validate(audit, pool))
+
+    def test_global_fallback_section_rejects_unavailable_primary_aggregator(self):
+        pool = source_pool()
+        audit = valid_audit()
+        run = audit["runs"][0]
+        for item in run["source_coverage"]:
+            if item["source_id"] != "gdelt":
+                continue
+            removed_count = item["selected_for_pool_count"]
+            item.update({
+                "scan_status": "failed", "coverage_complete": False,
+                "coverage_status": "unavailable", "coverage_reason": "route failed",
+                "within_window_count": 0, "ranked_count": 0, "ranked_items": [],
+                "selected_for_pool_count": 0, "selected_item_urls": [],
+                "discovery_ranking_completed": False, "failure_reason": "route failed",
+                "scan_window_start": None, "scan_window_end": None,
+                "scan_evidence_path": None,
+            })
+            run["raw_item_count"] -= removed_count
+            for key in (
+                "merged_article_row_count", "in_window_article_row_count",
+                "canonical_url_count", "provisional_title_cluster_count",
+                "event_evidence_article_row_count",
+            ):
+                run["processing_counts"][key] -= removed_count
+        run["article_dispositions"] = [
+            item for item in run["article_dispositions"]
+            if item["source_id"] != "gdelt"
+        ]
+        remaining_url = run["source_coverage"][1]["selected_item_urls"][0]
+        run["candidates"][0]["candidate_urls"] = [remaining_url]
+        run["candidates"][0]["source_ids"] = ["cna"]
+
+        errors = MODULE.validate(audit, pool)
+        self.assertTrue(any("fallback/global 板塊" in error for error in errors))
 
     def test_local_disaster_death_count_is_evidence_not_a_grade_gate(self):
         item = candidate("C", "selected")

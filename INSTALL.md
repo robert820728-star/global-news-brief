@@ -115,9 +115,9 @@
 |---|---|---|
 | 適用環境 | 可執行 bundled Python、物化檔案與 canonical publisher | Scheduled Task／無本機 runtime 的一般 ChatGPT 宿主 |
 | 新聞流程 | 完整執行 | 完整執行；不得因缺少本機工具省略 discovery、語意評分、驗證或 reader |
-| 地圖／圖表／圖片 | `claim_critical=true` 的視覺必須物化並完成檔案／像素驗證；非關鍵視覺失敗可 omitted | 同一規則；先執行宿主可用的原生／本機媒體路徑，不支援的非關鍵視覺以 capability omission 記錄 |
-| canonical 完成 | `full-assets`，所有宣稱的附件通過 | `full-assets` 或 `reader-canonical-capability-degraded` 均可 `status=completed` |
-| `NATIVE_MEDIA_UNAVAILABLE` | 若必要附件仍缺少，屬未完成的視覺 stage | 逐則來源檢查及原生圖片／圖片卡交付均已實際嘗試仍失敗時記錄；它是 `capability_limitations`，不是 `last_error`，不得捏造本地下載、截圖、物化或像素驗收 |
+| 地圖／圖表／圖片 | `claim_critical=true` 的視覺必須物化並完成檔案／像素驗證；來源確實沒有合格圖片時可 omitted | 先執行宿主可用的原生媒體路徑；來源確實沒有合格圖片時可 omitted，已確認有合格圖片但交付失敗時必須停在視覺恢復 |
+| canonical 完成 | `full-assets`，所有宣稱的附件通過 | 只有沒有未解決媒體交付失敗時可 `status=completed`；`reader-canonical-capability-degraded` 是可恢復中間狀態，不是正式完成 |
+| `NATIVE_MEDIA_UNAVAILABLE` | 若已確認圖片仍未交付，屬未完成的視覺 stage | 逐則來源檢查及原生圖片／圖片卡交付均已實際嘗試仍失敗時記錄；保持同一 run 的 `status=running`、`current_stage=visuals-completed`，不是 `last_error`，不得捏造本地下載、截圖、物化或像素驗收 |
 | 後續補圖 | 局部恢復該視覺 stage | 可由 full-runtime 只補缺少視覺；不得建立新 run 或重跑新聞、評分與驗證 |
 
 不能因工具清單沒有特定名稱的 media API，就預先宣告無法交付。已有可解碼、尺寸與 SHA-256 通過的本機 JPEG／WebP 時，必須先實際嘗試宿主支援的本機附件或本機媒體呈現方式。外部圖片網址不能冒充附件；但合格本機檔案也不能被規則無條件禁止。
@@ -141,7 +141,7 @@
 |---|---|---|---|
 | -1 fresh main 與 bootstrap | `bootstrap-workspace.md`、雙端點 current main、fresh nonce；full-runtime 另讀 capsule manifest／payload | full-runtime 產生經 blob SHA、payload SHA-256、runtime fingerprint 驗證的 workspace 與 `bootstrap-receipt.json`；mobile-native 只固定 fresh main 並使用既有 occurrence ledger，不冒充 capsule 已物化 | full-runtime receipt 未通過前不得建立 news checkpoint；mobile-native 不執行 unavailable bootstrap，而由同一 `scheduled_for`／`run_id` 接續 |
 | 0 checkpoint init | run id、精確 24 小時窗；full-runtime 另需 bootstrap receipt | full-runtime 執行 canonical checkpoint CLI：`python3 scripts/news_run_checkpoint.py init ...`；mobile-native 沿用既有 occurrence ledger 的 `logs/current.json` 保存 run id、窗、main 與 first incomplete stage | 兩種模式都綁定同一輪 main 與時間窗；mobile-native 不宣稱執行 `news_run_checkpoint.py` |
-| 1 source-scan | `news-source-pool.json`、`source-route-config.json` | 三條 discovery route 的 snapshots、scan evidence、truthful coverage、`source-candidates.json`、`news-relevance-gate.json`、`model-source-candidates.json` | `SOURCE_SCAN_COVERAGE_SEPARATION`：`scan_status` 只表示掃描程序是否完成，`coverage_status`／`coverage_complete` 另表示來源覆蓋是否完整；每條 configured route 都留在 audit。`FULL_DISCOVERY_POOL_UNCAPPED`：中新社抓當日＋前一日日索引；CNA 依 `NextPageIdx` 翻頁；GDELT 全部分片才 `complete`，部分成功標 `degraded_partial`。已取得列完整入池，弱 signal 仍進模型 |
+| 1 source-scan | `news-source-pool.json`、`source-route-config.json` | 三條 discovery route 的 snapshots、scan evidence、truthful coverage、`source-candidates.json`、`news-relevance-gate.json`、`model-source-candidates.json` | `SOURCE_SCAN_COVERAGE_SEPARATION`：`scan_status` 只表示掃描程序是否完成，`coverage_status`／`coverage_complete` 另表示來源覆蓋是否完整；每條 configured route 都留在 audit。`GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE`：本輪有 fallback／全球板塊時，至少一條 `primary_aggregator` 必須成功；GDELT 的 archive、一次 DOC、有效 cache 全部不可用時，同一 run 停在 source-scan，區域補充不得把全球 coverage 缺失洗成零事件。`FULL_DISCOVERY_POOL_UNCAPPED`：已取得列完整入池，弱 signal 仍進模型 |
 | 2 preprocess | model-admitted rows | `preprocessed-candidates.json`；時間窗、canonical URL、provisional article groups | 這些群組不是語意事件；失敗只重跑 preprocess |
 | 3 conditional recovery | source、gate、preprocess、content hydration receipts | full-runtime 預設只保存 local hash 與 checkpoint binding；`CONDITIONAL_RECOVERY_BUNDLE_POLICY` 僅在 cross-host handoff、ephemeral workspace 或 warning/timeout boundary 時，以 `manage_canonical_run_bundle.py pack-recovery` 建立六份 artifact bundle；mobile-native 使用既有 occurrence ledger 與 run-scoped artifacts | durable workspace 可直接進入 `FIRST_SELECT_NEWS_EVENTS_EXECUTION`；必要時 full-runtime 用 bundle `restore`，mobile-native 從 ledger 的 first incomplete stage 接續 |
 | 4 select-news-events | hydrated rows、偏好、十四天 timeline | `selection-results.json`、唯一 `semantic_event_id`／`event_identity`、每列 `article_dispositions` | `event_evidence`、`non_news`、`unresolved`、`unresolved_exhausted` 逐列守恆；full-runtime 執行 `validate_local_source_admission.py`，mobile-native 執行既有 `MOBILE_STRUCTURAL_ADMISSION_EQUIVALENT`，不得冒充 Python 已執行 |
@@ -150,7 +150,7 @@
 | 7 verify-news-events | 事件與主張類型 | full-runtime 以 stage patch 寫入 manifest；mobile-native 保存 `verification.json` 並以 `verification_artifact` 綁定本輪 Git blob；兩者均保存原始報導、官方／主要記錄、獨立證據鏈、claim status 與 source limits | full-runtime 只合併 verify 欄位並執行 stage ownership validator；mobile-native 進入 `visuals-completed` 前必須先保存 `verification.json`，resume 讀回它而不重跑已完成 verification |
 | 8 build-news-maps | 已驗證事件、map policy | full-runtime 保存 map decision、必要 overlay、canonical basemap 與 PNG／SVG；mobile-native 保存 `map-decisions.json` 並以 `map_decisions_artifact` 綁定本輪 Git blob | full-runtime 執行 `validate_map_decisions.py` 且只修失敗事件地圖；mobile-native 不執行本機 renderer，進入 `reader-rendered` 前讀回既有 map decisions |
 | 9 build-news-charts | 已驗證數據與 chart policy | full-runtime 只在比較、趨勢、比例、分布或查表有增量時建立 chart assets；mobile-native 保存可執行的判定，不宣稱產生本機 chart | 圖表不能替代地圖或來源圖片；full-runtime 只修失敗圖表，mobile-native 無本機資產時依既有 capability omission 繼續文字 reader |
-| 10 collect-news-images | 已驗證來源頁與官方產品頁 | 每則 source checks 與 `claim_critical`；full-runtime 另保存 download／screenshot attempts、`materialized-images.json`、MIME、尺寸、SHA-256 與 visual check；mobile-native 保存原生圖片／圖片卡嘗試及宿主結構化結果 | full-runtime 先下載原圖、失敗才截圖；mobile-native 不假裝具備本機物化能力；主張關鍵視覺未完成保持 pending，非關鍵視覺依各模式窮盡後可 omitted；兩種 runtime 都可交付已驗證文字 reader |
+| 10 collect-news-images | 已驗證來源頁與官方產品頁 | 每則 source checks 與 `claim_critical`；full-runtime 另保存 download／screenshot attempts、`materialized-images.json`、MIME、尺寸、SHA-256 與 visual check；mobile-native 保存原生圖片／圖片卡嘗試及宿主結構化結果 | full-runtime 先下載原圖、失敗才截圖；mobile-native 不假裝具備本機物化能力；來源確實沒有合格圖片時可 omitted；已確認有合格圖片但未能顯示時不得完成視覺 stage 或正式 reader |
 | 11 final authority 與 render | collect stage 已 completed／依 profile 合法 omission | full-runtime 首次執行 `validate_news_brief.py manifest` 到 `OK`，由 manifest 渲染 reader 並執行 brief validator；mobile-native 由 run-scoped selected events 與已驗證事實渲染 reader，再執行既有 `MOBILE_READER_STRUCTURE_EQUIVALENT` | full-runtime 提前取得 `DEFERRED` 時繼續原 stage；mobile-native 不宣稱 script 或 manifest schema 已通過，結構錯誤只重做 render |
 | 12 publish 與 bundle | final checkpoint、manifest、audit、source pool、reader、map decisions、宣稱交付的附件 | 依下方實際 CLI 由 `publish_news_brief.py` 建立 release／receipt；再以 `manage_canonical_run_bundle.py pack` 建立 transport，與 `logs/current.json` 一次 atomic 發布後執行 `verify`／`restore` 核對 byte identity | full-runtime 由 canonical publisher fail-closed；mobile-native 依 mobile ledger schema 保存 reader/audit 與 delivery profile |
 | 13 conversation delivery | release receipt 或 mobile saved reader | 完整 reader bytes、附件／能力限制 receipt、`delivery-handoff` | 不能只交摘要或驗收報告；`client_confirmed` 只有外部明確回執才可使用 |
@@ -260,13 +260,13 @@ reader 不顯示 run id、commit、後台 counts、十四天 audit 或修復紀�
 
 `MOBILE_NATIVE_IMAGE_EVIDENCE_ROUTE`：圖片證據依執行模式走兩條既有能力路徑，不新增狀態機。full-runtime 逐則完成來源檢查、下載、失敗後的同來源截圖、檔案驗收與附件交付；無本機 runtime 的 mobile-native 逐則完成來源檢查、原生圖片搜尋／圖片卡嘗試與宿主可提供的結構化交付結果。mobile-native 不得捏造本地路徑、下載、截圖、物化、附件或像素驗收。
 
-`NATIVE_MEDIA_CAPABILITY_FALLBACK`：兩種模式都只有在自身可執行的取得與交付路徑已實際窮盡後，才可把最後一哩宿主限制記為 capability limitation；不得把它寫成 `last_error`，也不得重跑新聞流程。完全沒有合格來源圖片是 `no_usable_image_after_source_exhaustion`，不是 `NATIVE_MEDIA_UNAVAILABLE`。
+`NATIVE_MEDIA_CAPABILITY_FALLBACK`：兩種模式都只有在自身可執行的取得與交付路徑已實際窮盡後，才可把最後一哩宿主限制記為 capability limitation；不得把它寫成 `last_error`，也不得重跑新聞流程。完全沒有合格來源圖片是 `no_usable_image_after_source_exhaustion`，不是 `NATIVE_MEDIA_UNAVAILABLE`。一旦已確認存在合格來源圖片而交付失敗，同一 run 必須保持 `status=running`、`current_stage=visuals-completed`，不得進入 reader 正式交付或 canonical completed；只把圖片交付切換到既有 full-runtime，以直接來源圖片 URL 下載、失敗後截圖及本機附件接續。
 
 - 每則先檢查已引用來源的 `og:image`、`src/srcset`、內文圖與官方產品圖；仍無結果時依序查官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導，可查多個來源而不限一個。
 - full-runtime 先下載實際媒體檔；下載失敗才截取同一來源頁／官方產品頁的合規畫面。取得的本機檔必須通過 MIME、解碼、尺寸、SHA-256、時間與內容相關性檢查，再實際使用宿主支援的附件／媒體路徑。
 - mobile-native 使用原生圖片搜尋／圖片卡時，保存來源、事件與日期核對、交付嘗試及宿主結構化結果；不能僅因未看到特定工具名稱就判 `NATIVE_MEDIA_UNAVAILABLE`，也不能聲稱已完成本機檔案或像素驗收。
-- capability-degraded mobile completion 必須保存逐則來源檢查與原生交付嘗試，`last_error=null`，並清楚表示未完成 pixel machine verification。`image_evidence_artifact` 的 Git blob SHA 只證明 evidence 已持久化，不證明內容已通過語義或像素機器驗證。
-- manifest 對 `map` 與 `images` 都必須保存 `claim_critical`。只有視覺本身直接支撐核心主張時，缺少附件才阻擋；一般配圖／定位圖取得失敗改為 `omitted`，保存後台原因及內部省略說明但不顯示於 reader，文字 reader 繼續完成。
+- capability-degraded mobile recovery 必須保存逐則來源檢查與原生交付嘗試，`last_error=null`，並清楚表示未完成 pixel machine verification。`image_evidence_artifact` 的 Git blob SHA 只證明 evidence 已持久化，不證明內容已通過語義或像素機器驗證。
+- manifest 對 `map` 與 `images` 都必須保存 `claim_critical`。來源確實沒有合格圖片時，一般配圖可 `omitted` 並只保存後台原因；但只要已確認存在合格來源圖片，是否 `claim_critical` 都不能把交付失敗降級成正式完成。
 
 ## 七、局部恢復指令
 
@@ -290,7 +290,7 @@ python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 
 mobile-native 沒有 checkpoint 或 manifest。查證不足時依 `VERIFICATION_FEEDBACK_REWIND_GATE` 停留在 `selection-verified` 並更新同一份 run-scoped audit；視覺或 Reader 中斷時由 ledger 綁定的 candidate audit、verification、map decisions、image evidence 與 Reader 從 first incomplete stage 接續。不得倒退 stage、不得跳級、不得建立替代 run。
 
-`NATIVE_MEDIA_UNAVAILABLE` 在 mobile-native 是非阻塞 capability limitation，不是 recovery target；補圖時沿用同一 run，只續做視覺交付。
+`NATIVE_MEDIA_UNAVAILABLE` 在 mobile-native 是既有視覺恢復條件：沿用同一 run，保持 `status=running` 與 `current_stage=visuals-completed`，只續做視覺交付；不得建立新 run、重跑新聞階段或標記 canonical completed。
 
 `FOURTEEN_DAY_AUDIT_MERGE_UNAVAILABLE` 同樣不是新聞 recovery target。保留既有 `logs/latest-candidate-audit.json`，保存本輪 run-scoped candidate audit，將 durable merge 交給日後具備適合 runtime 的維護步驟；當輪仍從 manifest／驗證繼續。
 
@@ -307,7 +307,7 @@ mobile-native 沒有 checkpoint 或 manifest。查證不足時依 `VERIFICATION_
 - reader 依序只有 `## 今日總覽`、`## 逐條詳報`、`## 後續觀察`，事件 ID 與必填欄位完整，沒有日期前綴、手填數量摘要或後台修復文字。
 - map decision、chart decision 與每則 image check 均已執行；full-runtime 下載失敗有截圖備援證據，mobile-native 有原生圖片／圖片卡嘗試結果。
 - 各執行模式已實際嘗試自身可用的附件／原生圖片交付；不能未嘗試就宣告 `NATIVE_MEDIA_UNAVAILABLE`，mobile-native 也不得捏造本地流程。
-- full-runtime 的宣稱附件實際存在且像素驗證通過；mobile-native 的 capability degradation 記在 delivery profile，不是 `last_error`，而且 run 可 `status=completed`。
+- full-runtime 的宣稱附件實際存在且像素驗證通過；mobile-native 的 capability degradation 記在 delivery profile、不是 `last_error`，但只要包含 `NATIVE_MEDIA_UNAVAILABLE` 就必須停在同一 run 的視覺恢復，不可 `status=completed`。
 - 最終訊息包含完整 saved reader，不是摘要或只說 GitHub 已保存。
 
 可執行 runtime 時，使用已驗證 bundled Python 執行：

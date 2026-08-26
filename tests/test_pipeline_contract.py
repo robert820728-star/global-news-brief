@@ -653,7 +653,7 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("scripts/materialize_news_images.py", document)
             self.assertIn("--manifest <materialized-images.json>", document)
 
-    def test_native_media_unavailable_uses_verified_omission_without_blocking_release(self):
+    def test_native_media_unavailable_keeps_same_run_at_visual_recovery(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         bootstrap = (ROOT / "bootstrap-workspace.md").read_text(encoding="utf-8")
 
@@ -661,14 +661,27 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("NATIVE_MEDIA_CAPABILITY_FALLBACK", document)
             self.assertIn("verified image evidence", document)
             self.assertIn("reader_omission_note", document)
-        self.assertIn("不得因宿主缺少原生媒體能力阻擋正式文字交付", daily)
-        self.assertNotIn("只把圖片交付切換到既有 full-runtime", daily)
+        self.assertIn("只把圖片交付切換到既有 full-runtime", daily)
         self.assertIn("先實際嘗試", daily)
         self.assertIn("下載失敗", daily)
         self.assertIn("截圖", daily)
-        self.assertIn("status=completed", daily)
-        self.assertNotIn("若必要地圖或附件仍需 full-runtime，保持 `status=running`", daily)
-        self.assertNotIn("不得標記 canonical completed", daily)
+        self.assertIn("若已確認存在合格來源圖片但仍需 full-runtime，保持 `status=running`", daily)
+        self.assertIn("不得標記 canonical completed", daily)
+        self.assertNotIn("不得因宿主缺少原生媒體能力阻擋正式文字交付", daily)
+
+    def test_global_section_requires_primary_discovery_coverage(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        acquire = (
+            ROOT / ".agents" / "skills" / "acquire-news-candidates" / "SKILL.md"
+        ).read_text(encoding="utf-8")
+        for document in (install, settings, mobile, acquire):
+            self.assertIn("GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE", document)
+        for document in (install, settings, acquire):
+            self.assertIn("primary_aggregator", document)
+        self.assertIn("保持 `status=running`、`current_stage=source-scan`", mobile)
+        self.assertIn("不得輸出冒充完整的 Reader", mobile)
 
     def test_mobile_native_image_route_does_not_require_local_materialization(self):
         documents = (
@@ -774,7 +787,8 @@ class PipelineContractTests(unittest.TestCase):
             for requirement in (
                 "DISCOVERY_THEN_VERIFY",
                 "GDELT",
-                "discovery source failure must not block the whole brief",
+                "regional-supplement discovery failure does not block another covered section",
+                "GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE",
                 "score and deduplicate before independent verification",
                 "collect images only after verification",
                 "TECH_SCIENCE_EVIDENCE_ROUTE",

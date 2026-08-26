@@ -66,13 +66,13 @@ mobile-native 只可留在目前 stage 或前進至緊鄰的下一 stage，不�
 
 ## 4. 重試原則
 
-同一事件／stage 最多三次。第一輪修原路徑；第二輪切換同級合法替代來源或取得方法；第三輪仍失敗時，只有不可排除的硬性權限、網路、來源不存在等阻擋才可停止。`mobile-native` 的 `NATIVE_MEDIA_UNAVAILABLE` 是已完成實際交付嘗試後的能力限制，不是 stage error；它使用 `reader-canonical-capability-degraded` 完成 reader，不能寫入 `last_error`。其他格式、證據或宣稱已交付之資產驗證失敗仍必須保留 `recovering/failed`。
+同一事件／stage 最多三次。第一輪修原路徑；第二輪切換同級合法替代來源或取得方法；第三輪仍失敗時，只有不可排除的硬性權限、網路、來源不存在等阻擋才可停止。`mobile-native` 的 `NATIVE_MEDIA_UNAVAILABLE` 是已完成實際交付嘗試後的能力限制，不寫入 `last_error`；但它是既有視覺恢復條件，必須讓同一 run 保持 `status=running`、`current_stage=visuals-completed`，由 full-runtime 只接續圖片交付，不得完成 reader。其他格式、證據或宣稱已交付之資產驗證失敗仍必須保留 `recovering/failed`。
 
 恢復成功後重新跑該 stage 的驗證，再繼續後續 stage。若任何前置 artifact 在恢復期間被修改，full-runtime 必須重新綁定 checkpoint SHA-256；mobile-native 必須更新同一 ledger 的 Git blob SHA，不能沿用舊 binding。
 
 ## 5. 發布前條件
 
-full-runtime 只有所有 required stages 都為 `completed`、candidate audit 與 manifest selected ids 一一對應、讀者版與 manifest 一致、所有宣稱 ready 或 `claim_critical=true` 的附件存在且視覺驗證通過、沒有 unresolved recovery target 時，才可交給 `scripts/publish_news_brief.py`。mobile-native 則要求 run-scoped audit 的 selected ids 與 Reader 守恆、上述 artifact boundaries 已綁定、沒有 unresolved recovery target，才可進 `delivery-handoff`。非關鍵 omitted 視覺不是 recovery target。恢復工具本身永遠不直接對使用者輸出草稿或 release。
+full-runtime 只有所有 required stages 都為 `completed`、candidate audit 與 manifest selected ids 一一對應、讀者版與 manifest 一致、所有宣稱 ready 或 `claim_critical=true` 的附件存在且視覺驗證通過、沒有 unresolved recovery target 時，才可交給 `scripts/publish_news_brief.py`。mobile-native 則要求 run-scoped audit 的 selected ids 與 Reader 守恆、上述 artifact boundaries 已綁定、沒有 unresolved recovery target，才可進 `delivery-handoff`。來源確實沒有合格圖片時的非關鍵 omitted 視覺不是 recovery target；已確認圖片的交付失敗則是 recovery target，不論 `claim_critical`。恢復工具本身永遠不直接對使用者輸出草稿或 release。
 
 
 ## Conditional pre-manifest recovery boundary

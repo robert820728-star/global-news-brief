@@ -397,41 +397,7 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertEqual(self.read("previous.json")["status"], "completed")
         self.assertEqual(self.read("current.json")["run_id"], RUN_2)
 
-    def test_mobile_native_can_complete_with_nonblocking_native_media_limitation(self):
-        self.module.prepare_run(
-            self.ledger_dir,
-            run_id=RUN_1,
-            scheduled_for="2026-08-18T06:00:00+08:00",
-            updated_at="2026-08-17T21:58:00Z",
-            execution_mode="mobile-native",
-            delivery_profile="reader-canonical-capability-degraded",
-            native_media_status="unavailable",
-            capability_limitations=["NATIVE_MEDIA_UNAVAILABLE"],
-        )
-        artifacts = self.mobile_artifacts()
-        artifacts["delivery-handoff"] = {
-            "status": "completed",
-            "delivery_status": "handoff_started",
-            "durable_audit_status": "preserved_merge_deferred",
-            "durable_audit_artifact": {
-                "branch": "run-logs",
-                "path": "logs/latest-candidate-audit.json",
-                "blob_sha": "c" * 40,
-            },
-        }
-        self.advance_to("delivery-handoff", stage_kwargs=artifacts)
-        current = self.read("current.json")
-        self.assertEqual(current["status"], "completed")
-        self.assertEqual(current["delivery_profile"], "reader-canonical-capability-degraded")
-        self.assertEqual(current["capability_limitations"], ["NATIVE_MEDIA_UNAVAILABLE"])
-        self.assertEqual(
-            current["image_evidence_artifact"]["path"],
-            f"logs/runs/{RUN_1}/image-evidence.json",
-        )
-        self.assertEqual(current["durable_audit_status"], "preserved_merge_deferred")
-        self.assertIsNone(current["last_error"])
-
-    def test_capability_degraded_completion_requires_run_scoped_image_evidence(self):
+    def test_mobile_native_media_delivery_failure_stops_at_visuals(self):
         self.module.prepare_run(
             self.ledger_dir,
             run_id=RUN_1,
@@ -444,18 +410,98 @@ class MobileRunLogTests(unittest.TestCase):
         )
         artifacts = self.mobile_artifacts()
         self.advance_to("visuals-completed", stage_kwargs=artifacts)
-        with self.assertRaisesRegex(ValueError, "image evidence"):
+        with self.assertRaisesRegex(ValueError, "native media delivery recovery"):
             self.module.advance_run(
                 self.ledger_dir,
                 run_id=RUN_1,
                 stage="reader-rendered",
                 updated_at="2026-08-17T22:40:00Z",
-                map_decisions_artifact={
-                    "branch": "run-logs",
-                    "path": f"logs/runs/{RUN_1}/map-decisions.json",
-                    "blob_sha": "f" * 40,
-                },
+                **artifacts["reader-rendered"],
             )
+        current = self.read("current.json")
+        self.assertEqual(current["status"], "running")
+        self.assertEqual(current["current_stage"], "visuals-completed")
+        self.assertEqual(current["delivery_profile"], "reader-canonical-capability-degraded")
+        self.assertEqual(current["capability_limitations"], ["NATIVE_MEDIA_UNAVAILABLE"])
+        self.assertIsNone(current["last_error"])
+
+    def test_completed_record_rejects_native_media_delivery_failure(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+            delivery_profile="reader-canonical-capability-degraded",
+            native_media_status="unavailable",
+            capability_limitations=["NATIVE_MEDIA_UNAVAILABLE"],
+        )
+        self.advance_to("visuals-completed", stage_kwargs=self.mobile_artifacts())
+        current = self.read("current.json")
+        current["current_stage"] = "delivery-handoff"
+        current["stage_index"] = self.module.STAGE_INDEX["delivery-handoff"]
+        current["status"] = "completed"
+        current["delivery_status"] = "handoff_started"
+        with self.assertRaisesRegex(ValueError, "native media delivery recovery"):
+            self.module.validate_record(current)
+
+    def test_mobile_source_exhaustion_can_complete_without_capability_limitation(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+        )
+        artifacts = self.mobile_artifacts()
+        artifacts["delivery-handoff"] = {
+            "status": "completed",
+            "delivery_status": "handoff_started",
+        }
+        self.advance_to("delivery-handoff", stage_kwargs=artifacts)
+        current = self.read("current.json")
+        self.assertEqual("completed", current["status"])
+        self.assertEqual([], current["capability_limitations"])
+
+    def test_no_image_report_with_verified_source_image_is_rejected(self):
+        reader = ROOT / "tests" / "fixtures" / "mobile-reader-missing-verified-image.md"
+        evidence = (
+            ROOT
+            / "tests"
+            / "fixtures"
+            / "mobile-reader-missing-verified-image-evidence.json"
+        )
+        self.assertNotIn("![", reader.read_text(encoding="utf-8"))
+        evidence_data = json.loads(evidence.read_text(encoding="utf-8"))
+        self.assertTrue(evidence_data["events"][0]["usable_image_found"])
+        self.assertEqual(
+            evidence_data["events"][0]["delivery_outcome"], "delivery_unavailable"
+        )
+
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+            delivery_profile="reader-canonical-capability-degraded",
+            native_media_status="unavailable",
+            capability_limitations=["NATIVE_MEDIA_UNAVAILABLE"],
+        )
+        artifacts = self.mobile_artifacts()
+        self.advance_to("visuals-completed", stage_kwargs=artifacts)
+        with self.assertRaisesRegex(ValueError, "native media delivery recovery"):
+            self.module.advance_run(
+                self.ledger_dir,
+                run_id=RUN_1,
+                stage="reader-rendered",
+                updated_at="2026-08-17T22:08:00Z",
+                **artifacts["reader-rendered"],
+            )
+
+        current = self.read("current.json")
+        self.assertEqual(current["status"], "running")
+        self.assertEqual(current["current_stage"], "visuals-completed")
 
     def test_completed_run_requires_run_scoped_candidate_audit_not_durable_history(self):
         self.prepare()

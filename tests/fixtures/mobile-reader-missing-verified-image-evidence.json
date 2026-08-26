@@ -1,0 +1,14 @@
+{
+  "run_id": "gnb-20260817T215800Z-00000001",
+  "events": [
+    {
+      "event_id": "TWN-01",
+      "source_page_url": "https://example.invalid/current-event",
+      "detected_image_urls": [
+        "https://example.invalid/current-event.jpg"
+      ],
+      "usable_image_found": true,
+      "delivery_outcome": "delivery_unavailable"
+    }
+  ]
+}
