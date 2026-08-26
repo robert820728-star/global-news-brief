@@ -49,13 +49,13 @@ The required order for every configured discovery route is: `canonical route -> 
 3. `select-news-events`：候選海選、事件聚類去重、偏好篩選與重要性評級。
 4. `audit-news-candidates`：保存十四天候選決定、排除理由與持續事件比較。
 5. `verify-news-events`：依事件／主張角色搜尋原始、官方與獨立證據並處理不確定性。
-6. `build-news-maps`：判斷空間意義並產生自製定位地圖。
-7. `build-news-charts`：只有數值比較、趨勢、比例或分布有助理解時產生自製資料圖表。
-8. `collect-news-images`：取得官方資訊圖與新聞配圖，下載／截圖並視覺驗收。
+6. `build-news-maps`：判斷空間意義；依 execution mode 執行可用路徑，full-runtime 可產生自製定位地圖，mobile-native 保存判定而不得冒充本機 renderer 已執行。
+7. `build-news-charts`：判斷數值比較、趨勢、比例或分布是否有助理解；依 execution mode 執行可用路徑，只有 full-runtime 可宣稱產生本機資料圖表。
+8. `collect-news-images`：取得官方資訊圖與新聞配圖；依 execution mode 執行可用路徑，full-runtime 下載／截圖並視覺驗收，mobile-native 使用來源檢查與原生圖片／圖片卡交付。
 9. `recover-news-run`：偵測失敗或中斷，只調度失敗事件與模組重跑並重新驗證。
-10. 套用 `news-brief-template.md`，再執行 `scripts/validate_news_brief.py`。
+10. 套用 `news-brief-template.md`；full-runtime 執行 `scripts/validate_news_brief.py`，mobile-native 執行 `MOBILE_READER_STRUCTURE_EQUIVALENT` 且不得冒稱 script validator 已執行。
 
-事件資料必須遵守 `schemas/news-event-manifest.schema.json`。每個模組只能修改自己擁有的欄位；不得重新生成整份事件清單，也不得清空其他模組已完成的來源、地圖或圖片。
+full-runtime 的 post-selection event exchange 必須遵守 `schemas/news-event-manifest.schema.json`；mobile-native 以 run-scoped candidate audit 的 selected events 與既有 mobile evidence／ledger contracts 為 publication authority，不建立或冒充通過 full-runtime manifest。每個模組只能修改自己擁有的欄位；不得重新生成整份事件清單，也不得清空其他模組已完成的來源、地圖或圖片。
 
 `news-brief-examples.md` 只在格式驗收失敗、規則維護或需要正反例時讀取，不得每次預設全文載入，也不得照抄其中事件。
 
@@ -274,3 +274,4 @@ The required order for every configured discovery route is: `canonical route -> 
 - 板塊順序、表格、空行、分隔線與繁體中文格式正確。
 
 驗證失敗時只修正失敗欄位，再重新驗證；不得從頭重寫整份簡報。
+

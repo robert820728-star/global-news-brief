@@ -59,6 +59,8 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertEqual(current["native_media_status"], "available")
         self.assertEqual(current["capability_limitations"], [])
         self.assertIsNone(current["candidate_audit_artifact"])
+        self.assertIsNone(current["verification_artifact"])
+        self.assertIsNone(current["map_decisions_artifact"])
         self.assertIsNone(current["image_evidence_artifact"])
         self.assertEqual(current["durable_audit_status"], "not_started")
         self.assertIsNone(current["durable_audit_artifact"])
@@ -93,6 +95,86 @@ class MobileRunLogTests(unittest.TestCase):
         current = self.read("current.json")
         self.assertEqual(current["execution_mode"], "mobile-native")
         self.assertEqual(current["candidate_audit_artifact"], artifact)
+
+    def test_mobile_native_requires_verification_binding_after_verification_stage(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+        )
+        self.module.advance_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            stage="selection-verified",
+            updated_at="2026-08-17T22:20:00Z",
+        )
+        with self.assertRaisesRegex(ValueError, "verification artifact"):
+            self.module.advance_run(
+                self.ledger_dir,
+                run_id=RUN_1,
+                stage="visuals-completed",
+                updated_at="2026-08-17T22:30:00Z",
+            )
+
+    def test_mobile_native_requires_map_binding_after_visuals_stage(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+        )
+        verification = {
+            "branch": "run-logs",
+            "path": f"logs/runs/{RUN_1}/verification.json",
+            "blob_sha": "e" * 40,
+        }
+        self.module.advance_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            stage="visuals-completed",
+            updated_at="2026-08-17T22:30:00Z",
+            verification_artifact=verification,
+        )
+        with self.assertRaisesRegex(ValueError, "map decisions artifact"):
+            self.module.advance_run(
+                self.ledger_dir,
+                run_id=RUN_1,
+                stage="reader-rendered",
+                updated_at="2026-08-17T22:40:00Z",
+            )
+
+    def test_same_occurrence_resume_preserves_verification_and_map_bindings(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+        )
+        verification = {
+            "branch": "run-logs",
+            "path": f"logs/runs/{RUN_1}/verification.json",
+            "blob_sha": "e" * 40,
+        }
+        maps = {
+            "branch": "run-logs",
+            "path": f"logs/runs/{RUN_1}/map-decisions.json",
+            "blob_sha": "f" * 40,
+        }
+        self.module.advance_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            stage="reader-rendered",
+            updated_at="2026-08-17T22:40:00Z",
+            verification_artifact=verification,
+            map_decisions_artifact=maps,
+        )
+        resumed = self.prepare(run_id=RUN_2, at="2026-08-17T22:54:00Z")
+        self.assertEqual(verification, resumed["verification_artifact"])
+        self.assertEqual(maps, resumed["map_decisions_artifact"])
 
     def test_prepare_rejects_noncanonical_run_id(self):
         with self.assertRaisesRegex(ValueError, "canonical format"):
@@ -157,6 +239,16 @@ class MobileRunLogTests(unittest.TestCase):
                 "path": f"logs/runs/{RUN_1}/candidate-audit.json",
                 "blob_sha": "a" * 40,
             },
+            verification_artifact={
+                "branch": "run-logs",
+                "path": f"logs/runs/{RUN_1}/verification.json",
+                "blob_sha": "e" * 40,
+            },
+            map_decisions_artifact={
+                "branch": "run-logs",
+                "path": f"logs/runs/{RUN_1}/map-decisions.json",
+                "blob_sha": "f" * 40,
+            },
             image_evidence_artifact={
                 "branch": "run-logs",
                 "path": f"logs/runs/{RUN_1}/image-evidence.json",
@@ -206,6 +298,16 @@ class MobileRunLogTests(unittest.TestCase):
                     "branch": "run-logs",
                     "path": f"logs/runs/{RUN_1}/candidate-audit.json",
                     "blob_sha": "a" * 40,
+                },
+                verification_artifact={
+                    "branch": "run-logs",
+                    "path": f"logs/runs/{RUN_1}/verification.json",
+                    "blob_sha": "e" * 40,
+                },
+                map_decisions_artifact={
+                    "branch": "run-logs",
+                    "path": f"logs/runs/{RUN_1}/map-decisions.json",
+                    "blob_sha": "f" * 40,
                 },
                 durable_audit_status="preserved_merge_deferred",
                 durable_audit_artifact={
@@ -332,4 +434,5 @@ class MobileRunLogTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
 

@@ -14,7 +14,7 @@ from typing import Any
 import run_identity
 
 
-SCHEMA_VERSION = "1.4.0"
+SCHEMA_VERSION = "1.5.0"
 EXECUTION_MODES = {"full-runtime", "mobile-native"}
 DELIVERY_PROFILES = {"full-assets", "reader-canonical-capability-degraded"}
 NATIVE_MEDIA_STATUSES = {"available", "unavailable"}
@@ -61,6 +61,13 @@ def _read_json(path: Path) -> dict[str, Any]:
     return value
 
 
+def _read_artifact_reference(path: Path) -> dict[str, str]:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError("artifact reference must be an object")
+    return value
+
+
 def _atomic_write(path: Path, value: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     handle, temp_name = tempfile.mkstemp(
@@ -98,6 +105,8 @@ def validate_record(record: dict[str, Any]) -> None:
         "client_confirmation_supported",
         "reader_artifact",
         "candidate_audit_artifact",
+        "verification_artifact",
+        "map_decisions_artifact",
         "image_evidence_artifact",
         "durable_audit_status",
         "durable_audit_artifact",
@@ -146,6 +155,11 @@ def validate_record(record: dict[str, Any]) -> None:
         "client_confirmation_supported"
     ):
         raise ValueError("client delivery cannot be confirmed without an external acknowledgement")
+    if record["execution_mode"] == "mobile-native":
+        if record["stage_index"] >= STAGE_INDEX["visuals-completed"]:
+            _require_run_artifact(record, "verification_artifact", "verification.json", "verification artifact")
+        if record["stage_index"] >= STAGE_INDEX["reader-rendered"]:
+            _require_run_artifact(record, "map_decisions_artifact", "map-decisions.json", "map decisions artifact")
     if record["status"] == "completed":
         if record.get("reader_artifact") is None or record.get("candidate_audit_artifact") is None:
             raise ValueError("completed requires saved reader and candidate-audit artifacts")
@@ -164,6 +178,20 @@ def validate_record(record: dict[str, Any]) -> None:
     if record["durable_audit_status"] in {"updated", "preserved_merge_deferred"}:
         if not isinstance(durable_artifact, dict) or durable_artifact.get("path") != "logs/latest-candidate-audit.json":
             raise ValueError("durable audit status requires logs/latest-candidate-audit.json evidence")
+
+
+def _require_run_artifact(
+    record: dict[str, Any], field: str, filename: str, label: str
+) -> None:
+    artifact = record.get(field)
+    expected_path = f"logs/runs/{record['run_id']}/{filename}"
+    if not isinstance(artifact, dict) or artifact.get("branch") != "run-logs":
+        raise ValueError(f"mobile stage requires run-scoped {label}")
+    blob_sha = artifact.get("blob_sha")
+    if artifact.get("path") != expected_path or not isinstance(blob_sha, str):
+        raise ValueError(f"mobile stage requires run-scoped {label}")
+    if len(blob_sha) != 40 or any(character not in "0123456789abcdef" for character in blob_sha):
+        raise ValueError(f"mobile stage requires Git blob binding for {label}")
 
 
 def prepare_run(
@@ -221,6 +249,8 @@ def prepare_run(
         "client_confirmation_supported": False,
         "reader_artifact": None,
         "candidate_audit_artifact": None,
+        "verification_artifact": None,
+        "map_decisions_artifact": None,
         "image_evidence_artifact": None,
         "durable_audit_status": "not_started",
         "durable_audit_artifact": None,
@@ -247,6 +277,8 @@ def advance_run(
     native_media_status: str | None = None,
     capability_limitations: list[str] | None = None,
     candidate_audit_artifact: dict[str, str] | None = None,
+    verification_artifact: dict[str, str] | None = None,
+    map_decisions_artifact: dict[str, str] | None = None,
     image_evidence_artifact: dict[str, str] | None = None,
     durable_audit_status: str | None = None,
     durable_audit_artifact: dict[str, str] | None = None,
@@ -297,6 +329,10 @@ def advance_run(
         current["capability_limitations"] = list(capability_limitations)
     if candidate_audit_artifact is not None:
         current["candidate_audit_artifact"] = candidate_audit_artifact
+    if verification_artifact is not None:
+        current["verification_artifact"] = verification_artifact
+    if map_decisions_artifact is not None:
+        current["map_decisions_artifact"] = map_decisions_artifact
     if image_evidence_artifact is not None:
         current["image_evidence_artifact"] = image_evidence_artifact
     if durable_audit_status is not None:
@@ -337,6 +373,8 @@ def build_parser() -> argparse.ArgumentParser:
     advance.add_argument("--native-media-status", choices=sorted(NATIVE_MEDIA_STATUSES))
     advance.add_argument("--capability-limitation", action="append", choices=sorted(KNOWN_CAPABILITY_LIMITATIONS))
     advance.add_argument("--candidate-audit-artifact", type=Path)
+    advance.add_argument("--verification-artifact", type=Path)
+    advance.add_argument("--map-decisions-artifact", type=Path)
     advance.add_argument("--image-evidence-artifact", type=Path)
     advance.add_argument("--durable-audit-status", choices=sorted(DURABLE_AUDIT_STATUSES))
     advance.add_argument("--durable-audit-artifact", type=Path)
@@ -374,16 +412,24 @@ def main() -> int:
             native_media_status=args.native_media_status,
             capability_limitations=args.capability_limitation,
             candidate_audit_artifact=(
-                _read_json(args.candidate_audit_artifact)
+                _read_artifact_reference(args.candidate_audit_artifact)
                 if args.candidate_audit_artifact else None
             ),
+            verification_artifact=(
+                _read_artifact_reference(args.verification_artifact)
+                if args.verification_artifact else None
+            ),
+            map_decisions_artifact=(
+                _read_artifact_reference(args.map_decisions_artifact)
+                if args.map_decisions_artifact else None
+            ),
             image_evidence_artifact=(
-                _read_json(args.image_evidence_artifact)
+                _read_artifact_reference(args.image_evidence_artifact)
                 if args.image_evidence_artifact else None
             ),
             durable_audit_status=args.durable_audit_status,
             durable_audit_artifact=(
-                _read_json(args.durable_audit_artifact)
+                _read_artifact_reference(args.durable_audit_artifact)
                 if args.durable_audit_artifact else None
             ),
         )
@@ -396,4 +442,5 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
 

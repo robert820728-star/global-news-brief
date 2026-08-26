@@ -254,6 +254,30 @@ class PipelineContractTests(unittest.TestCase):
             "source-image download or screenshot acquisition has been tried", schedule
         )
 
+    def test_shared_settings_and_visual_stages_are_mode_aware(self):
+        settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "full-runtime 的 post-selection event exchange",
+            "mobile-native 以 run-scoped candidate audit",
+            "依 execution mode 執行可用路徑",
+            "full-runtime 執行 `scripts/validate_news_brief.py`",
+            "mobile-native 執行 `MOBILE_READER_STRUCTURE_EQUIVALENT`",
+        ):
+            self.assertIn(requirement, settings)
+        for requirement in (
+            "mobile-native 保存 `verification.json`",
+            "mobile-native 保存 `map-decisions.json`",
+            "mobile-native 不執行本機 renderer",
+        ):
+            self.assertIn(requirement, install)
+
+    def test_release_source_and_version_record_precede_capsule_generation(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        self.assertIn("SOURCE_BEFORE_CAPSULE_RELEASE_ORDER", install)
+        self.assertIn("不得在 capsule commit 後再修改 active tracked source", install)
+
     def test_mobile_native_cards_stay_outside_strict_local_manifest_assets(self):
         schema = json.loads(
             (ROOT / "schemas/news-event-manifest.schema.json").read_text(encoding="utf-8")
@@ -1231,3 +1255,4 @@ class PipelineContractTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

@@ -7,6 +7,8 @@ The mobile ChatGPT task remains the news executor. GitHub stores a compact, dura
 - `logs/current.json` is the active or most recently completed run.
 - `logs/previous.json` is the immediately preceding run.
 - `logs/runs/<run_id>/candidate-audit.json` is the run-scoped candidate audit for the current 24-hour window and is the completion artifact.
+- `logs/runs/<run_id>/verification.json` preserves completed mobile verification before the run crosses into visuals.
+- `logs/runs/<run_id>/map-decisions.json` preserves completed mobile map decisions before the run crosses into Reader rendering.
 - `logs/latest-candidate-audit.json` is the optional rolling fourteen-day continuity cache. It is replaced only after a safe merge; an unavailable merge preserves the prior blob and does not block the current reader.
 - `logs/latest-reader.md` is replaced only after a new reader edition has been rendered successfully.
 - `scheduled_for` is the occurrence key. Re-entering the same occurrence returns the existing `current.json` and resumes its first incomplete stage, including when a reader is already saved but handoff is incomplete. Only a strictly later scheduled occurrence rotates `current.json`; a non-terminal older occurrence is then preserved as `interrupted_by_next_run` in `previous.json`.
@@ -14,6 +16,8 @@ The mobile ChatGPT task remains the news executor. GitHub stores a compact, dura
 The branch tip exposes only two run records. Git commit history is not rewritten and must never contain credentials, connector diagnostics, private source content, or binary images.
 
 ## Persistence points
+
+The existing ledger binds `verification_artifact` to `logs/runs/<run_id>/verification.json` and `map_decisions_artifact` to `logs/runs/<run_id>/map-decisions.json`. Mobile-native may enter `visuals-completed` only after verification is bound, and may enter `reader-rendered` only after map decisions are bound. These Git blob references prove durable identity for same-run resume; they do not add a content-level validator or claim semantic machine verification.
 
 The task performs one compact update at each high-level boundary: schedule preparation, executor start, main pinning, workspace readiness, source scan, candidate audit, selection verification, visuals, reader rendering, GitHub reader storage, and delivery handoff. A transition records the newly active stage and thereby identifies the last completed stage without doubling the write count.
 
@@ -26,3 +30,4 @@ Count receipts are derived data. If an event subtotal differs from the actual ru
 `.github/workflows/prepare-mobile-run-ledger.yml` runs at 05:58 Asia/Taipei and can also be dispatched manually. It performs only log rotation and initialization; it does not search news, call a model, or require an OpenAI API key. If the mobile executor never starts, `current.json` remains at `awaiting_executor` and the next run preserves that evidence as interrupted.
 
 If file writes are unavailable, the mobile task falls back to one updated comment in Issue #3. Logging failure is diagnostic degradation and must not cause fabricated news or a false delivery claim.
+

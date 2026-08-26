@@ -147,9 +147,9 @@
 | 4 select-news-events | hydrated rows、偏好、十四天 timeline | `selection-results.json`、唯一 `semantic_event_id`／`event_identity`、每列 `article_dispositions` | `event_evidence`、`non_news`、`unresolved`、`unresolved_exhausted` 逐列守恆；full-runtime 執行 `validate_local_source_admission.py`，mobile-native 執行既有 `MOBILE_STRUCTURAL_ADMISSION_EQUIVALENT`，不得冒充 Python 已執行 |
 | 5 audit-news-candidates | selection、上一份 durable audit（若有）、`news-source-pool.json.ranking` | 本輪 run-scoped candidate audit、十四天 merge status、`public_value_v2` 的 facts／Actual-Potential 分類／六項 0–100 分數／加權總分／delta／challenge／confidence／`grade_status`／決定／`selected_event_id` | 依下方 V2 順序逐 gate 驗證；先修正可重算 counts。十四天歷史無法合併時保留舊 blob 並延後維護，但不得把 provisional 冒充 validated |
 | 6 publication event authority | audit 中 selected C 以上且 `grade_status=validated` 的事件 | full-runtime 物化並驗證 `news-event-manifest.json`，事件集合精確等於 selected ids；mobile-native 以同一 run-scoped candidate audit 的 selected events 作唯一事件集合 | full-runtime 只能一對一物化並綁定 checkpoint；mobile-native 不建立或聲稱通過 full-runtime manifest schema，也不得另加／漏掉新聞 |
-| 7 verify-news-events | 事件與主張類型 | stage patch、原始報導、官方／主要記錄、獨立證據鏈、claim status、source limits | 只合併 verify 欄位並執行 stage ownership validator；證據依事件與主張角色動態選取 |
-| 8 build-news-maps | 已驗證事件、map policy | map decision、必要 overlay、canonical basemap、PNG／SVG | `validate_map_decisions.py`；只修失敗事件地圖 |
-| 9 build-news-charts | 已驗證數據與 chart policy | 只有在比較、趨勢、比例、分布或查表有增量時建立 chart assets | 圖表不能替代地圖或來源圖片；只修失敗圖表 |
+| 7 verify-news-events | 事件與主張類型 | full-runtime 以 stage patch 寫入 manifest；mobile-native 保存 `verification.json` 並以 `verification_artifact` 綁定本輪 Git blob；兩者均保存原始報導、官方／主要記錄、獨立證據鏈、claim status 與 source limits | full-runtime 只合併 verify 欄位並執行 stage ownership validator；mobile-native 進入 `visuals-completed` 前必須先保存 `verification.json`，resume 讀回它而不重跑已完成 verification |
+| 8 build-news-maps | 已驗證事件、map policy | full-runtime 保存 map decision、必要 overlay、canonical basemap 與 PNG／SVG；mobile-native 保存 `map-decisions.json` 並以 `map_decisions_artifact` 綁定本輪 Git blob | full-runtime 執行 `validate_map_decisions.py` 且只修失敗事件地圖；mobile-native 不執行本機 renderer，進入 `reader-rendered` 前讀回既有 map decisions |
+| 9 build-news-charts | 已驗證數據與 chart policy | full-runtime 只在比較、趨勢、比例、分布或查表有增量時建立 chart assets；mobile-native 保存可執行的判定，不宣稱產生本機 chart | 圖表不能替代地圖或來源圖片；full-runtime 只修失敗圖表，mobile-native 無本機資產時依既有 capability omission 繼續文字 reader |
 | 10 collect-news-images | 已驗證來源頁與官方產品頁 | 每則 source checks 與 `claim_critical`；full-runtime 另保存 download／screenshot attempts、`materialized-images.json`、MIME、尺寸、SHA-256 與 visual check；mobile-native 保存原生圖片／圖片卡嘗試及宿主結構化結果 | full-runtime 先下載原圖、失敗才截圖；mobile-native 不假裝具備本機物化能力；主張關鍵視覺未完成保持 pending，非關鍵視覺依各模式窮盡後可 omitted；兩種 runtime 都可交付已驗證文字 reader |
 | 11 final authority 與 render | collect stage 已 completed／依 profile 合法 omission | full-runtime 首次執行 `validate_news_brief.py manifest` 到 `OK`，由 manifest 渲染 reader 並執行 brief validator；mobile-native 由 run-scoped selected events 與已驗證事實渲染 reader，再執行既有 `MOBILE_READER_STRUCTURE_EQUIVALENT` | full-runtime 提前取得 `DEFERRED` 時繼續原 stage；mobile-native 不宣稱 script 或 manifest schema 已通過，結構錯誤只重做 render |
 | 12 publish 與 bundle | final checkpoint、manifest、audit、source pool、reader、map decisions、宣稱交付的附件 | 依下方實際 CLI 由 `publish_news_brief.py` 建立 release／receipt；再以 `manage_canonical_run_bundle.py pack` 建立 transport，與 `logs/current.json` 一次 atomic 發布後執行 `verify`／`restore` 核對 byte identity | full-runtime 由 canonical publisher fail-closed；mobile-native 依 mobile ledger schema 保存 reader/audit 與 delivery profile |
@@ -170,6 +170,8 @@ python3 scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-re
 ```
 
 `pack` 命令列出的三個 `--artifact` 只是語法示例，不是完整清單；實際發布必須把本輪 candidate audit、完整 `article_dispositions`、image evidence、materialized images、map decisions、checkpoint、counts、event manifest、reader、attachments index、release receipt 及其他宣稱交付的附件全部逐項加入。完成 `pack` 後先 `verify`，上傳 transport 與 `logs/current.json` 的單一 atomic commit，再從該 commit 下載並 `restore`；只有重組後 byte identity 一致才可執行 Stage 13。
+
+`SOURCE_BEFORE_CAPSULE_RELEASE_ORDER`：版本實作、測試、active tracked source 與最終雙語 `VERSION-RECORD.md` 必須先合併為同一 source candidate，再只觸發一次完整 CI 與 capsule generation。不得在 capsule commit 後再修改 active tracked source 或補寫 version record，否則該 capsule 已不再代表最新 source，必須重新走完整 source→CI→capsule 順序。CI 的瞬時 queued／success 狀態留在交付摘要、Release 或 Issue，不以 post-capsule source commit 追記。
 
 ## 六、必填產物與驗證
 
@@ -318,3 +320,4 @@ python3 scripts/validate_map_decisions.py --input <manifest>
 ## 分享方式
 
 接收者在自己的新對話貼上 repo 網址與啟動指令，各自授權建立排程並保存個人偏好。公開 repo 的讀取不要求 GitHub 帳號；跨日 audit 與 run ledger 的持久化依工作區或 repository 寫入權限降級，但不能阻止有效的當日 reader。
+
