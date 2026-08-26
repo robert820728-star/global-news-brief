@@ -13,7 +13,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 
 ## 適用門檻
 
-`MOBILE_NATIVE_IMAGE_EVIDENCE_ROUTE`：以下本地 `evidence_path`、下載、截圖、`materialized-images.json`、檔案與像素驗收要求只適用於 full-runtime。沒有本機 runtime 的 mobile-native 仍須逐則檢查來源、核對事件與日期、嘗試原生圖片搜尋／圖片卡並保存宿主可提供的結構化交付結果；不得捏造本地路徑、下載、截圖、物化、附件或像素驗收。完全沒有合格來源圖片是 source exhaustion；只有找到可用圖片而該模式的實際交付路徑失敗，才可記 `NATIVE_MEDIA_UNAVAILABLE`。兩條路徑沿用既有 `delivery_profile`、`native_media_status`、`capability_limitations` 與 `image_evidence_artifact`，不得新增狀態或 receipt。
+`MOBILE_NATIVE_IMAGE_EVIDENCE_ROUTE`：以下本地 `evidence_path`、下載、截圖、`materialized-images.json`、檔案與像素驗收要求只適用於 full-runtime。沒有本機 runtime 的 mobile-native 仍須逐則檢查來源、核對事件與日期、嘗試原生圖片搜尋／圖片卡並保存宿主可提供的結構化交付結果；不得捏造本地路徑、下載、截圖、物化、附件或像素驗收。原生圖片卡只屬對話交付層，保存於既有 image evidence／ledger，不得寫入 `images.assets` 或冒充通過 full-runtime manifest。完全沒有合格來源圖片是 source exhaustion；只有找到可用圖片而該模式的實際交付路徑失敗，才可記 `NATIVE_MEDIA_UNAVAILABLE`。兩條路徑沿用既有 `delivery_profile`、`native_media_status`、`capability_limitations` 與 `image_evidence_artifact`，不得新增狀態或 receipt。
 
 - 所有入選事件（SS 至 C）：`images.required` 固定為 `true`，逐一開啟 `verification.sources` 的來源頁檢查圖片；評級不得作為跳過圖片流程的條件。
 - 每個引用來源都必須寫入 `images.source_checks`；除是否找到可用圖片、嘗試次數與結果外，必須保存 `checked_at`、`inspection_method`、`detected_image_urls` 與 `failure_detail`。full-runtime 另保存本地 `evidence_path`；mobile-native 保存宿主結構化檢查結果。
@@ -36,9 +36,9 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 任何入選事件若屬氣象、災害、疫情、公共衛生、地震、海嘯、火山、野火、洪水、乾旱、熱浪、戰爭、軍事、航運、海峽／航道、漏油、油污、海洋污染、化學或核事故，`images.professional_visual_required` 固定為 `true`；此判定必須依事件內容完成，禁止使用評級門檻或事件編號白名單。
 - 先依事件類型與主要影響地區，主動搜尋主管機關、監測機構、地方政府或專業組織的圖資；不得只檢查新聞來源頁後就宣告沒有專業圖。
 - 每個查過的官方或專業頁面都寫入 `images.professional_source_checks`。至少涵蓋中央主管機關與主要受影響地區主管單位；跨國事件再查國際組織或受影響國官方來源。
-- 官方專業圖資檢查同樣必須保存檢查時間、方法、本地頁面證據、檢出的圖片網址與判定理由。取得失敗時，只有 `claim_critical=true` 才必須進入恢復流程；否則記為 `not_available` 並繼續文字交付。
-- 找到與事件時間、地區及主張相符的專業圖時，至少一張 `kind` 為 `official_information` 或 `professional_information` 的本地附件通過視覺與時間驗收前，不得把 `images.professional_visual_status` 宣稱為 `ready`。只有該圖同時是主張關鍵證據時才阻擋整則事件交付。
-- 專業圖下載或截圖失敗時，依「原始下載資產 → 官方產品頁截圖 → 官方歷史／存檔頁 → 地方主管機關 → 主要媒體引用的同一官方圖」重試；不得因第一次取得失敗就改用現場照結案。
+- 官方專業圖資檢查同樣必須保存檢查時間、方法、檢出的圖片網址與判定理由；full-runtime 另保存本地頁面證據，mobile-native 保存宿主結構化檢查結果。取得失敗時，只有 `claim_critical=true` 才必須進入恢復流程；否則記為 `not_available` 並繼續文字交付。
+- 找到與事件時間、地區及主張相符的專業圖時，full-runtime 至少一張 `kind` 為 `official_information` 或 `professional_information` 的本地附件通過視覺與時間驗收前，不得把 manifest 的 `images.professional_visual_status` 宣稱為 `ready`；mobile-native 只在 image evidence／ledger 記錄原生卡交付結果。只有該圖同時是主張關鍵證據時才阻擋整則事件交付。
+- full-runtime 專業圖下載或截圖失敗時，依「原始下載資產 → 官方產品頁截圖 → 官方歷史／存檔頁 → 地方主管機關 → 主要媒體引用的同一官方圖」重試；mobile-native 依同一來源優先序嘗試原生圖片／圖片卡。不得因第一次取得失敗就改用現場照結案。
 - 只有完成上述搜尋且確實沒有符合事件階段的專業圖，才可把 `images.professional_visual_status` 設為 `not_available`，並在 `images.professional_omission_reason` 保存具體後台原因。
 - 自製定位地圖、自製資料圖表、普通新聞照片與頁首圖均不能滿足專業圖資硬閘門。若同一張 `official_information`／`professional_information` 圖確實出現在已引用來源或本身就是已引用官方來源，且通過時間與內容驗收，可同時滿足來源頁附件與專業圖資硬閘門；不得為形式另附重複照片。
 
@@ -90,13 +90,13 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 3. 同一張圖能同時通過來源與專業圖資檢查時只附一次；不得用兩個路徑或不同尺寸重複附圖。
 4. 超過 2 張時刪除重複、低資訊、過時或驗收失敗圖片。
 
-## 低負擔處理
+## full-runtime 低負擔處理
 
 - 下載或截圖後先計算內容 SHA-256，並保存到 `images.assets[].content_sha256`。`IMAGE_SHA256_REUSE`
 - 同一輪遇到相同 SHA-256 時，沿用已下載檔案、`640px` 縮圖、轉檔結果及驗收結論；不得重複下載、縮圖或開圖。
 - 先以 MIME、實際解碼、寬高與 SHA-256 完成程式檢查，再進入內容驗收。
 - 每個唯一 SHA-256 只實際開啟並視覺驗收一次；只有事件相關性、日期、統計截止或畫面內容仍不確定時才加深判讀。`IMAGE_VISUAL_CHECK_ONCE_PER_HASH`
-- 行動對話優先沿用同圖最長邊 `640px`、JPEG／WebP 品質 `75–82`、目標 `200KB` 以下；無法轉檔時保留同一張原圖作備援，不因壓縮失敗中止簡報。
+- full-runtime 對行動對話優先沿用同圖最長邊 `640px`、JPEG／WebP 品質 `75–82`、目標 `200KB` 以下；mobile-native 不宣稱自行轉檔，改用宿主原生圖片卡可提供的版本。兩者都不因壓縮能力缺少而中止文字 reader。
 
 ## 取得順序
 
@@ -147,6 +147,8 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 
 ## 輸出
 
+full-runtime 只寫入下列 manifest `images` 欄位；mobile-native 不建立該本機附件 manifest，只把來源檢查、原生圖片卡與交付結果寫入既有 `image-evidence.json`／ledger：
+
 只寫入：
 
 - `images.required`
@@ -156,7 +158,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - `images.source_checks[].checked`
 - `images.source_checks[].checked_at`
 - `images.source_checks[].inspection_method`
-- `images.source_checks[].evidence_path`
+- `images.source_checks[].evidence_path`（full-runtime 必填）
 - `images.source_checks[].detected_image_urls`
 - `images.source_checks[].usable_image_found`
 - `images.source_checks[].attempts`

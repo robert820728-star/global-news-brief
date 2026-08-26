@@ -565,7 +565,11 @@ def validate_policy_governance_review(
     required_nonempty_lists = ["evidence_urls"]
     if policy_stage == "consideration":
         required_nonempty_lists.append("official_actions")
-    elif policy_stage in {"proposal", "draft", "introduced", "passed", "signed"}:
+    elif policy_stage in {"proposal", "draft"}:
+        required_nonempty_lists.extend(
+            ["official_actions", "affected_actor_classes"]
+        )
+    elif policy_stage in {"introduced", "passed", "signed"}:
         required_nonempty_lists.extend(
             ["legal_basis", "official_actions", "affected_actor_classes"]
         )

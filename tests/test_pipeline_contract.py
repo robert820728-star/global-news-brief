@@ -228,6 +228,63 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("MOBILE_READER_STRUCTURE_EQUIVALENT", settings)
         self.assertIn("只有可執行 runtime 時", settings)
 
+    def test_high_authority_flow_routes_runtime_only_artifacts_by_execution_mode(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        schedule = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "full-runtime 執行 canonical checkpoint CLI",
+            "mobile-native 沿用既有 occurrence ledger",
+            "full-runtime 物化並驗證 `news-event-manifest.json`",
+            "mobile-native 不建立或聲稱通過 full-runtime manifest schema",
+        ):
+            self.assertIn(requirement, install)
+        self.assertIn(
+            "overview 與 run-scoped candidate audit 的 selected event IDs 守恆",
+            mobile,
+        )
+        self.assertNotIn("overview 與 manifest 事件 ID 守恆", mobile)
+        self.assertNotIn("checkpoint、manifest 與 receipts", mobile)
+        self.assertIn(
+            "the delivery path available to the selected execution mode has actually been attempted",
+            schedule,
+        )
+        self.assertNotIn(
+            "source-image download or screenshot acquisition has been tried", schedule
+        )
+
+    def test_mobile_native_cards_stay_outside_strict_local_manifest_assets(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-event-manifest.schema.json").read_text(encoding="utf-8")
+        )
+        source_check = schema["$defs"]["imageSourceCheck"]
+        image_asset = schema["$defs"]["imageAsset"]
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        image_skill = (
+            ROOT / ".agents/skills/collect-news-images/SKILL.md"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("evidence_path", source_check["required"])
+        self.assertEqual(
+            "scripts/materialize_news_images.py",
+            image_asset["properties"]["materialized_by"]["const"],
+        )
+        for text in (mobile, image_skill):
+            self.assertIn("原生圖片卡只屬對話交付層", text)
+            self.assertIn("不得寫入 `images.assets`", text)
+
+    def test_mode_specific_image_reference_and_readme_do_not_require_local_mobile_files(self):
+        policy = (
+            ROOT / ".agents/skills/collect-news-images/references/image-policy.md"
+        ).read_text(encoding="utf-8")
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+
+        self.assertIn("full-runtime 保存本地頁面證據", policy)
+        self.assertIn("mobile-native 保存宿主結構化檢查結果", policy)
+        self.assertIn("mobile-native 使用原生圖片搜尋／圖片卡", readme)
+        self.assertIn("只有 full-runtime 取得並驗證 capsule", readme)
+
     def test_capsule_workflow_runs_full_repository_suite(self):
         workflow = (
             ROOT / ".github" / "workflows" / "build-bootstrap-capsule.yml"
@@ -804,7 +861,7 @@ class PipelineContractTests(unittest.TestCase):
             "## 逐條詳報",
             "## 後續觀察",
             "不得省略、跨區集中或重新設計",
-            "validate_news_brief.py brief",
+            "MOBILE_READER_STRUCTURE_EQUIVALENT",
         ):
             self.assertIn(requirement, daily)
         self.assertNotIn("--reader-layout canonical-sectioned", daily)

@@ -452,6 +452,30 @@ class CandidateAuditTests(unittest.TestCase):
                     any("window_material_effects" in error for error in errors), errors
                 )
 
+    def test_policy_proposal_and_draft_may_have_no_legal_basis(self):
+        for stage in ("proposal", "draft"):
+            with self.subTest(stage=stage):
+                item = candidate("C+")
+                item["policy_stage"] = stage
+                review = policy_governance_review(applies=True)
+                review["legal_basis"] = []
+                item["grading_evidence"]["policy_governance_review"] = review
+
+                errors = MODULE.validate(valid_audit([item]), source_pool())
+
+                self.assertFalse(any("legal_basis" in error for error in errors), errors)
+
+    def test_introduced_policy_requires_legal_basis(self):
+        item = candidate("C+")
+        item["policy_stage"] = "introduced"
+        review = policy_governance_review(applies=True)
+        review["legal_basis"] = []
+        item["grading_evidence"]["policy_governance_review"] = review
+
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+
+        self.assertTrue(any("legal_basis" in error for error in errors), errors)
+
     def test_effective_policy_requires_window_material_effect(self):
         item = candidate("C+")
         item["policy_stage"] = "effective"
