@@ -1,0 +1,22 @@
+{
+  "schema_version":"mobile-chart-decisions-1.0",
+  "run_id":"gnb-20260826T162844Z-fcd00184",
+  "main_sha":"a535e4f4fd900ad929f20fc9dcbf8a073dbbf05a",
+  "decided_at":"2026-08-26T22:42:00Z",
+  "execution_mode":"mobile-native",
+  "events":[
+    {"event_id":"TWN-01","required":false,"reason":"多版本條文差異屬政策文字與預算結構，現有同口徑數據不足以形成不誤導的圖表。"},
+    {"event_id":"TWN-02","required":false,"reason":"僅2例，單項病例數不值得為形式製作數據卡。"},
+    {"event_id":"TWN-03","required":true,"status":"omitted","reason":"38.4小時、91.6%持有手機及其他調查數據具比較價值，但mobile-native不能冒充已執行本機圖表renderer。"},
+    {"event_id":"TWN-04","required":true,"status":"omitted","reason":"苯駢芘3.2 μg/kg對比法規限值2.0 μg/kg具同口徑比較價值，但mobile-native不能冒充已執行本機圖表renderer。"},
+    {"event_id":"TWN-05","required":false,"reason":"22場訪視與單一海漂豬陽性屬不同口徑，不宜拼成比較圖。"},
+    {"event_id":"TWN-06","required":false,"reason":"核心是外交參與安排，非數值關係。"},
+    {"event_id":"TWN-07","required":false,"reason":"72萬為官方估計單項受益人口，現階段未有實際成效比較數列。"},
+    {"event_id":"TWN-08","required":true,"status":"omitted","reason":"指數點位、漲幅與成交額具市場數據價值，但單位不同且mobile-native不能產生本機圖表。"},
+    {"event_id":"TWN-09","required":false,"reason":"目前核心是預報路徑與預警管制，專業氣象圖比自製數據圖更適合。"},
+    {"event_id":"CHN-01","required":true,"status":"omitted","reason":"水位超警、流量與歷史極值具有資料價值，但口徑不同且mobile-native不能產生本機圖表。"},
+    {"event_id":"CHN-02","required":true,"status":"omitted","reason":"22條客渡運航線、44艘客渡船及13,255名電力搶修人員屬不同口徑，不宜合併同軸；mobile-native亦無本機renderer。"},
+    {"event_id":"CHN-03","required":false,"reason":"目前是技術路線與目標圖像發布，沒有足夠同口徑量化指標可比較。"},
+    {"event_id":"CHN-04","required":true,"status":"omitted","reason":"三大指數同日漲幅可比較，但mobile-native不能冒充已執行本機圖表renderer。"}
+  ]
+}
