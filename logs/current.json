@@ -20,6 +20,6 @@
   "schema_version": "1.5.0",
   "stage_index": 6,
   "status": "running",
-  "updated_at": "2026-08-26T22:25:00Z",
-  "verification_artifact": null
+  "updated_at": "2026-08-26T22:38:00Z",
+  "verification_artifact": {"branch":"run-logs","path":"logs/runs/gnb-20260826T162844Z-fcd00184/verification.json","blob_sha":"baa0964851909e7de2444a3a744a41254228bc2b"}
 }
