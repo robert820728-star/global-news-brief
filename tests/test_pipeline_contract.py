@@ -211,10 +211,22 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("MOBILE_STRUCTURAL_ADMISSION_EQUIVALENT", mobile)
         self.assertIn("只有可執行 runtime 時", mobile)
 
+        shared_documents = (
+            ROOT / "news-brief-settings.md",
+            ROOT / ".agents/skills/select-news-events/SKILL.md",
+        )
+        for path in shared_documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("MOBILE_STRUCTURAL_ADMISSION_EQUIVALENT", text, path.name)
+            self.assertIn("只有可執行 runtime 時", text, path.name)
+
     def test_mobile_reader_validation_does_not_require_python_runtime(self):
         mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         self.assertIn("MOBILE_READER_STRUCTURE_EQUIVALENT", mobile)
         self.assertNotIn("送出前執行 `scripts/validate_news_brief.py brief", mobile)
+        settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
+        self.assertIn("MOBILE_READER_STRUCTURE_EQUIVALENT", settings)
+        self.assertIn("只有可執行 runtime 時", settings)
 
     def test_capsule_workflow_runs_full_repository_suite(self):
         workflow = (
@@ -551,6 +563,27 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("status=completed", daily)
         self.assertNotIn("若必要地圖或附件仍需 full-runtime，保持 `status=running`", daily)
         self.assertNotIn("不得標記 canonical completed", daily)
+
+    def test_mobile_native_image_route_does_not_require_local_materialization(self):
+        documents = (
+            ROOT / "INSTALL.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / "docs/mobile-run-ledger.md",
+            ROOT / ".agents/skills/collect-news-images/SKILL.md",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("MOBILE_NATIVE_IMAGE_EVIDENCE_ROUTE", text, path.name)
+        mobile = documents[1].read_text(encoding="utf-8")
+        image_skill = documents[3].read_text(encoding="utf-8")
+        ledger = documents[2].read_text(encoding="utf-8")
+        self.assertIn("不得捏造本地", mobile)
+        self.assertIn("不得捏造本地", image_skill)
+        self.assertIn("Git blob SHA 只證明", ledger)
+        self.assertNotIn(
+            "mobile-native run that actually attempted download, screenshot fallback",
+            ledger,
+        )
 
     def test_empty_audit_baseline_is_not_claimed_as_fourteen_day_complete(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")

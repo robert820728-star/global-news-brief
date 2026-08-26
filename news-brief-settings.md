@@ -6,7 +6,7 @@
 
 The initial list comes from GDELT, CNA, and China News Service. `GDELT_RESILIENT_ACQUISITION` uses GDELT's official 15-minute export archives as primary discovery, permits one non-blocking DOC API request only when the archive is unavailable, and then uses a labeled last-known-good cache. A discovery source failure degrades coverage but does not block the whole brief when another route yields verifiable current candidates. `FULL_DISCOVERY_POOL_UNCAPPED` sends every verified in-window item from a successful route into deduplication and scoring without a preset per-source top-N cutoff.
 
-`REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE`：中央社與中新社等 `regional_supplement` 的所有精確窗內 provisional groups 必須完整出現在模型 `candidate_groups`，不得因沒有 GDELT heat、Google Trends、Google News coverage 或關鍵字命中而省略。熱度只能增加召回或安排處理順序，不能決定重要性或排除；模型輸入建立後、語意合併與六項評分前，必須執行 `python3 scripts/validate_local_source_admission.py --preprocessed <preprocessed-candidates.json> --selection <selection-results.json> --source-pool news-source-pool.json`，失敗時不得繼續。
+`REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE`：中央社與中新社等 `regional_supplement` 的所有精確窗內 provisional groups 必須完整出現在模型 `candidate_groups`，不得因沒有 GDELT heat、Google Trends、Google News coverage 或關鍵字命中而省略。熱度只能增加召回或安排處理順序，不能決定重要性或排除。模型輸入建立後、語意合併與六項評分前，只有可執行 runtime 時才執行 `python3 scripts/validate_local_source_admission.py --preprocessed <preprocessed-candidates.json> --selection <selection-results.json> --source-pool news-source-pool.json`；`MOBILE_STRUCTURAL_ADMISSION_EQUIVALENT`：mobile-native 必須逐一比對 regional supplements 的 provisional group IDs 與各組 candidate IDs，確認 selection 完整包含且沒有新增未發現列，不符合時不得繼續，也不得宣稱已執行 Python validator。
 
 ## Same-source recovery order
 
@@ -70,7 +70,7 @@ The required order for every configured discovery route is: `canonical route -> 
 - 每個事件獨立處理；失敗只重跑該事件與原欄位技能。避免整份候選、十四天歷史與所有來源在每次請求重複載入。
 - 所有 C 級以上新聞仍完整納入，不以節省圖片成本縮減新聞或來源覆蓋。
 - `IMAGE_DEFAULT_ONE_ASSET`：每則事件預設一張來源圖片；`IMAGE_SECOND_ASSET_REQUIRES_INCREMENTAL_INFORMATION`：第二張必須提供第一張沒有的範圍、數字、現場或時間資訊，最多兩張。
-- `IMAGE_SOURCE_FILE_IDENTITY_GATE`：每張來源圖片同時保存文章頁 `source_url` 與實際媒體檔 `source_image_url`；實際圖片網址必須出現在同一來源頁的 `detected_image_urls`、不得等於文章頁，且必須由 canonical materializer 的 `materialized-images.json` 綁定本機檔案、SHA-256 與尺寸。
+- `IMAGE_SOURCE_FILE_IDENTITY_GATE`：每張來源圖片同時保存文章頁 `source_url` 與實際媒體檔 `source_image_url`；實際圖片網址必須出現在同一來源頁的 `detected_image_urls` 且不得等於文章頁。full-runtime 必須再由 canonical materializer 的 `materialized-images.json` 綁定本機檔案、SHA-256 與尺寸；mobile-native 依 `MOBILE_NATIVE_IMAGE_EVIDENCE_ROUTE` 保存來源檢查、原生圖片卡嘗試與宿主結構化結果，不得捏造本地物化或像素驗收。
 - `MOBILE_PER_STORY_VISIBLE_IMAGE_GATE`：mobile-native 對每一則本輪入選新聞逐則執行圖片搜尋與可見性驗收，一則新聞的圖片不得替其他新聞通過；先查已引用來源，再依序查官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導，可查多個來源而不限一個。每張候選圖都要保存來源頁並核對事件與日期，不要求完全相同像素；無法追溯的搬運站、搜尋縮圖、舊照或無關示意圖不合格。找到可用圖片但顯示失敗時只重做該則圖片取得／交付，不重跑新聞流程。
 - `IMAGE_ONE_ASSET_MAY_SATISFY_BOTH_SOURCE_AND_PROFESSIONAL`：同一張合格官方／專業圖可同時滿足引用來源圖片與專業圖資要求，但兩組來源檢查紀錄都要保留。
 - `IMAGE_SHA256_REUSE`：同一輪以圖片內容 SHA-256 去重，相同內容沿用一次下載、一次 `640px` 縮圖與一次驗收結果。
@@ -81,7 +81,7 @@ The required order for every configured discovery route is: `canonical route -> 
 `EVENT_REGION_AND_TIME_IDENTITY_GATE`
 
 - 候選來源的來源分桶、媒體所在地與首頁分類都不是事件地區；它們不得複製到語意事件的主要板塊。
-- 每個新語意事件先保存 `event_identity.country_codes`、`primary_country_code` 與 `location_evidence`。`primary_country_code=TWN` 對應台灣、`CHN` 對應中國，其餘國家、跨國或全球事件對應世界；來源是中央社、中新社或其他媒體都不得改變此映射。
+- 每個新語意事件先保存 `event_identity.country_codes`、`primary_country_code` 與 `location_evidence`。事件板塊由 `country_codes` 對照本輪有序 `section_scopes` 決定；只有未命中任何非 fallback scope 時才進入唯一 fallback。來源是中央社、中新社或其他媒體都不得改變此映射。
 - 同時保存 `event_occurred_at` 與 `material_update_at`。前者是底層事件真正發生時間，後者是本輪可驗證實質變化時間，不得用文章 `published_at` 自動代填任一欄。
 - 同時保存模型產生的 `temporal_review`，逐項區分本輪新增／變更事實、重複舊事實與仍在窗內持續的當下影響。模型必須比較文章內容與十四天事件時間線；程式只驗證欄位與結論一致，不得靠文章發布日或傷亡數字關鍵字自行決定新舊。
 - 已結束的舊事件若只是重新整理、回顧、週年、重刊、換標題或重複舊傷亡數字，標為 `non_news`。事件雖開始較早但確實持續跨越本輪時間窗並仍造成可驗證影響時，可列 `ongoing_current_impact`，不要求一定有新增傷亡。地區或時間無法確認則保持 `unresolved`，不得進入六項評分。
@@ -238,7 +238,7 @@ The required order for every configured discovery route is: `canonical route -> 
 - 所有板塊地圖固定保留完整板塊底圖：`TWN` 顯示完整台灣、`CHN` 顯示完整中國、`GLB` 顯示完整世界，自訂國家或區域亦顯示其完整板塊。只能疊加事件標記、標籤、路線或影響範圍；禁止裁切、局部放大或以局部定位圖替代。manifest 必須記錄完整畫布 `canvas_scope` 與 canonical `base_map`，否則發布器阻擋交付。
 - 資料圖表技能只擁有 `charts`；不得製作純文字摘要卡，也不得修改或取代來源圖片。
 - 圖片技能只擁有 `images`；不得修改來源、等級、地圖或詳報內容。
-- 所有入選事件均固定執行來源頁圖片檢查並保存本地證據；評級只影響新聞重要度，不影響是否查圖。
+- 所有入選事件均固定執行來源頁圖片檢查；full-runtime 保存本地證據，mobile-native 保存該宿主可產生的來源檢查與原生圖片卡結構化結果。評級只影響新聞重要度，不影響是否查圖。
 - 圖片與地圖都必須另填 `claim_critical`。只有視覺本身直接支撐核心新聞主張時才可設為 `true`；一般配圖與定位輔助失敗時可標記 `omitted`，只在內部 evidence／receipt 保存原因，不在文字 reader 顯示省略說明。
 - 地震、疫情、氣象、災害、戰爭、航運、漏油與海洋污染等類型固定啟用官方專業圖資要求；判定依事件內容，不得硬編碼事件編號。
 - 地圖、資料圖表與來源圖片三組附件路徑必須兩兩獨立，任一組不得替代另一組。
@@ -261,7 +261,7 @@ The required order for every configured discovery route is: `canonical route -> 
 
 ## 最終品質門檻
 
-送出前必須以 `scripts/validate_news_brief.py` 驗證事件資料與讀者版，至少確認：
+送出前，只有可執行 runtime 時才以 `scripts/validate_news_brief.py` 驗證事件資料與讀者版；`MOBILE_READER_STRUCTURE_EQUIVALENT`：mobile-native 必須以結構等價檢查完成下列同一組驗收，不符合時不得送出，也不得宣稱已執行 script validator。至少確認：
 
 - 所有入選事件同時存在於今日總覽與逐條詳報，編號、標題、等級及順序一致。
 - 後段技能沒有刪除或覆寫其他技能欄位。

@@ -117,7 +117,7 @@
 | 新聞流程 | 完整執行 | 完整執行；不得因缺少本機工具省略 discovery、語意評分、驗證或 reader |
 | 地圖／圖表／圖片 | `claim_critical=true` 的視覺必須物化並完成檔案／像素驗證；非關鍵視覺失敗可 omitted | 同一規則；先執行宿主可用的原生／本機媒體路徑，不支援的非關鍵視覺以 capability omission 記錄 |
 | canonical 完成 | `full-assets`，所有宣稱的附件通過 | `full-assets` 或 `reader-canonical-capability-degraded` 均可 `status=completed` |
-| `NATIVE_MEDIA_UNAVAILABLE` | 若必要附件仍缺少，屬未完成的視覺 stage | 只能在「原圖下載 → 下載失敗才截圖 → 已取得檔案後實際附件交付」均有證據且最後一哩仍失敗時記錄；它是 `capability_limitations`，不是 `last_error` |
+| `NATIVE_MEDIA_UNAVAILABLE` | 若必要附件仍缺少，屬未完成的視覺 stage | 逐則來源檢查及原生圖片／圖片卡交付均已實際嘗試仍失敗時記錄；它是 `capability_limitations`，不是 `last_error`，不得捏造本地下載、截圖、物化或像素驗收 |
 | 後續補圖 | 局部恢復該視覺 stage | 可由 full-runtime 只補缺少視覺；不得建立新 run 或重跑新聞、評分與驗證 |
 
 不能因工具清單沒有特定名稱的 media API，就預先宣告無法交付。已有可解碼、尺寸與 SHA-256 通過的本機 JPEG／WebP 時，必須先實際嘗試宿主支援的本機附件或本機媒體呈現方式。外部圖片網址不能冒充附件；但合格本機檔案也不能被規則無條件禁止。
@@ -150,7 +150,7 @@
 | 7 verify-news-events | 事件與主張類型 | stage patch、原始報導、官方／主要記錄、獨立證據鏈、claim status、source limits | 只合併 verify 欄位並執行 stage ownership validator；證據依事件與主張角色動態選取 |
 | 8 build-news-maps | 已驗證事件、map policy | map decision、必要 overlay、canonical basemap、PNG／SVG | `validate_map_decisions.py`；只修失敗事件地圖 |
 | 9 build-news-charts | 已驗證數據與 chart policy | 只有在比較、趨勢、比例、分布或查表有增量時建立 chart assets | 圖表不能替代地圖或來源圖片；只修失敗圖表 |
-| 10 collect-news-images | 已驗證來源頁與官方產品頁 | 每則 source checks、`claim_critical`、download／screenshot attempts、`materialized-images.json`、MIME、尺寸、SHA-256、visual check、附件或 omission note | 先下載原圖，下載失敗才截圖；主張關鍵視覺未完成保持 pending，非關鍵視覺兩種方式都失敗則 omitted；兩種 runtime 都可交付已驗證文字 reader |
+| 10 collect-news-images | 已驗證來源頁與官方產品頁 | 每則 source checks 與 `claim_critical`；full-runtime 另保存 download／screenshot attempts、`materialized-images.json`、MIME、尺寸、SHA-256 與 visual check；mobile-native 保存原生圖片／圖片卡嘗試及宿主結構化結果 | full-runtime 先下載原圖、失敗才截圖；mobile-native 不假裝具備本機物化能力；主張關鍵視覺未完成保持 pending，非關鍵視覺依各模式窮盡後可 omitted；兩種 runtime 都可交付已驗證文字 reader |
 | 11 final manifest 與 render | collect stage 已 completed／依 profile 合法 omission | 首次執行 `validate_news_brief.py manifest` 到 `OK`；由 manifest 渲染 reader，綁定 `render.manifest` 與 `render.brief`；reader 以 `validate_news_brief.py brief` 驗證唯一三段式版型 | 提前呼叫 manifest validator 回 `DEFERRED` 不算通過也不算失敗；繼續原 stage 後重跑 |
 | 12 publish 與 bundle | final checkpoint、manifest、audit、source pool、reader、map decisions、宣稱交付的附件 | 依下方實際 CLI 由 `publish_news_brief.py` 建立 release／receipt；再以 `manage_canonical_run_bundle.py pack` 建立 transport，與 `logs/current.json` 一次 atomic 發布後執行 `verify`／`restore` 核對 byte identity | full-runtime 由 canonical publisher fail-closed；mobile-native 依 mobile ledger schema 保存 reader/audit 與 delivery profile |
 | 13 conversation delivery | release receipt 或 mobile saved reader | 完整 reader bytes、附件／能力限制 receipt、`delivery-handoff` | 不能只交摘要或驗收報告；`client_confirmed` 只有外部明確回執才可使用 |
@@ -256,13 +256,14 @@ reader 不顯示 run id、commit、後台 counts、十四天 audit 或修復紀�
 
 ### Media evidence and completion
 
-`NATIVE_MEDIA_CAPABILITY_FALLBACK`：只有在逐則完成來源圖片取得、下載失敗後的同來源截圖備援、檔案驗收與實際附件交付嘗試後，mobile-native 才可把最後一哩宿主限制記為 capability limitation；不得把它寫成 `last_error`，也不得重跑新聞流程。
+`MOBILE_NATIVE_IMAGE_EVIDENCE_ROUTE`：圖片證據依執行模式走兩條既有能力路徑，不新增狀態機。full-runtime 逐則完成來源檢查、下載、失敗後的同來源截圖、檔案驗收與附件交付；無本機 runtime 的 mobile-native 逐則完成來源檢查、原生圖片搜尋／圖片卡嘗試與宿主可提供的結構化交付結果。mobile-native 不得捏造本地路徑、下載、截圖、物化、附件或像素驗收。
+
+`NATIVE_MEDIA_CAPABILITY_FALLBACK`：兩種模式都只有在自身可執行的取得與交付路徑已實際窮盡後，才可把最後一哩宿主限制記為 capability limitation；不得把它寫成 `last_error`，也不得重跑新聞流程。完全沒有合格來源圖片是 `no_usable_image_after_source_exhaustion`，不是 `NATIVE_MEDIA_UNAVAILABLE`。
 
 - 每則先檢查已引用來源的 `og:image`、`src/srcset`、內文圖與官方產品圖；仍無結果時依序查官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導，可查多個來源而不限一個。
-- 先下載實際媒體檔；下載失敗才截取同一來源頁／官方產品頁的合規畫面。
-- 取得的本機檔必須通過 MIME、解碼、尺寸、SHA-256、時間與內容相關性檢查。
-- 通過後先實際使用宿主支援的本機附件／本機媒體／原生媒體路徑；不能僅因未看到特定工具名稱就判 `NATIVE_MEDIA_UNAVAILABLE`。
-- capability-degraded mobile completion 必須保存逐則取得與交付嘗試，`last_error=null`，並清楚表示未完成附件／像素驗收。
+- full-runtime 先下載實際媒體檔；下載失敗才截取同一來源頁／官方產品頁的合規畫面。取得的本機檔必須通過 MIME、解碼、尺寸、SHA-256、時間與內容相關性檢查，再實際使用宿主支援的附件／媒體路徑。
+- mobile-native 使用原生圖片搜尋／圖片卡時，保存來源、事件與日期核對、交付嘗試及宿主結構化結果；不能僅因未看到特定工具名稱就判 `NATIVE_MEDIA_UNAVAILABLE`，也不能聲稱已完成本機檔案或像素驗收。
+- capability-degraded mobile completion 必須保存逐則來源檢查與原生交付嘗試，`last_error=null`，並清楚表示未完成 pixel machine verification。`image_evidence_artifact` 的 Git blob SHA 只證明 evidence 已持久化，不證明內容已通過語義或像素機器驗證。
 - manifest 對 `map` 與 `images` 都必須保存 `claim_critical`。只有視覺本身直接支撐核心主張時，缺少附件才阻擋；一般配圖／定位圖取得失敗改為 `omitted`，保存後台原因及內部省略說明但不顯示於 reader，文字 reader 繼續完成。
 
 ## 七、局部恢復指令
@@ -298,8 +299,8 @@ python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 - run-scoped candidate audit 與 durable 十四天 cache 分開記錄；durable merge 延後不會進入 `last_error`。
 - 所有 C 級以上事件都在 canonical reader，且第一行為 `# 每日新聞讀者版`。
 - reader 依序只有 `## 今日總覽`、`## 逐條詳報`、`## 後續觀察`，事件 ID 與必填欄位完整，沒有日期前綴、手填數量摘要或後台修復文字。
-- map decision、chart decision 與每則 image check 均已執行；下載失敗有截圖備援證據。
-- 已下載圖片確實先嘗試本機／原生附件交付；不能未嘗試就宣告 `NATIVE_MEDIA_UNAVAILABLE`。
+- map decision、chart decision 與每則 image check 均已執行；full-runtime 下載失敗有截圖備援證據，mobile-native 有原生圖片／圖片卡嘗試結果。
+- 各執行模式已實際嘗試自身可用的附件／原生圖片交付；不能未嘗試就宣告 `NATIVE_MEDIA_UNAVAILABLE`，mobile-native 也不得捏造本地流程。
 - full-runtime 的宣稱附件實際存在且像素驗證通過；mobile-native 的 capability degradation 記在 delivery profile，不是 `last_error`，而且 run 可 `status=completed`。
 - 最終訊息包含完整 saved reader，不是摘要或只說 GitHub 已保存。
 

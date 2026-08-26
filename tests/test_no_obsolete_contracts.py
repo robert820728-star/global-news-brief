@@ -93,6 +93,24 @@ class NoObsoleteContractsTests(unittest.TestCase):
                 self.assertNotIn(phrase, text, path.name)
             self.assertIn("same-source", text, path.name)
 
+    def test_current_section_contract_has_no_else_glb_fallback(self):
+        settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
+        validator = (ROOT / "scripts/manage_candidate_audit.py").read_text(encoding="utf-8")
+        self.assertNotIn("其餘國家、跨國或全球事件對應世界", settings)
+        self.assertIn("section_scopes", settings)
+        self.assertNotRegex(validator, r'else\s+"GLB"')
+
+    def test_source_pool_has_no_unused_same_source_override(self):
+        pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
+        self.assertTrue(pool["taiwan_coverage_sweeps"])
+        for sweep in pool["taiwan_coverage_sweeps"]:
+            self.assertNotIn("same_source_only", sweep)
+
+    def test_positive_reader_examples_match_current_image_limit(self):
+        examples = (ROOT / "news-brief-examples.md").read_text(encoding="utf-8")
+        for phrase in ("本次選入 3 則", "圖三", "1-5 張", "5 張"):
+            self.assertNotIn(phrase, examples)
+
     def test_active_map_contract_has_no_local_detail_mode(self):
         schema = json.loads(
             (ROOT / "schemas/news-event-manifest.schema.json").read_text(encoding="utf-8")

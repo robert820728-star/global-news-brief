@@ -13,14 +13,16 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 
 ## 適用門檻
 
+`MOBILE_NATIVE_IMAGE_EVIDENCE_ROUTE`：以下本地 `evidence_path`、下載、截圖、`materialized-images.json`、檔案與像素驗收要求只適用於 full-runtime。沒有本機 runtime 的 mobile-native 仍須逐則檢查來源、核對事件與日期、嘗試原生圖片搜尋／圖片卡並保存宿主可提供的結構化交付結果；不得捏造本地路徑、下載、截圖、物化、附件或像素驗收。完全沒有合格來源圖片是 source exhaustion；只有找到可用圖片而該模式的實際交付路徑失敗，才可記 `NATIVE_MEDIA_UNAVAILABLE`。兩條路徑沿用既有 `delivery_profile`、`native_media_status`、`capability_limitations` 與 `image_evidence_artifact`，不得新增狀態或 receipt。
+
 - 所有入選事件（SS 至 C）：`images.required` 固定為 `true`，逐一開啟 `verification.sources` 的來源頁檢查圖片；評級不得作為跳過圖片流程的條件。
-- 每個引用來源都必須寫入 `images.source_checks`；除是否找到可用圖片、嘗試次數與結果外，必須保存 `checked_at`、`inspection_method`、本地 `evidence_path`、`detected_image_urls` 與 `failure_detail`。
-- `evidence_path` 必須是頁面截圖、保存頁面或可重現檢查結果的本地證據；發布器會確認檔案實際存在。宣告 `no_usable_image` 時不得只填布林值，必須有頁面證據與具體理由。
+- 每個引用來源都必須寫入 `images.source_checks`；除是否找到可用圖片、嘗試次數與結果外，必須保存 `checked_at`、`inspection_method`、`detected_image_urls` 與 `failure_detail`。full-runtime 另保存本地 `evidence_path`；mobile-native 保存宿主結構化檢查結果。
+- full-runtime 的 `evidence_path` 必須是頁面截圖、保存頁面或可重現檢查結果的本地證據，發布器會確認檔案實際存在。mobile-native 宣告 `no_usable_image` 時不得只填布林值，仍須保存已檢查來源與具體理由，但不得假造本地檔案。
 - 偵測到官方或媒體圖片時，必須先嘗試下載來源頁中的實際媒體檔。`images.assets[].source_url` 保存文章頁，`images.assets[].source_image_url` 保存實際圖片網址；後者必須出現在同一文章頁檢查的 `detected_image_urls`，且不得等於文章頁網址。
-- 每張來源圖片必須由 `scripts/materialize_news_images.py` 對 `source_image_url` 下載、解碼與寫檔，並保存 `materialized-images.json`；不得手工產生同名檔或只憑 manifest 宣告來源。
+- full-runtime 的每張來源圖片必須由 `scripts/materialize_news_images.py` 對 `source_image_url` 下載、解碼與寫檔，並保存 `materialized-images.json`；不得手工產生同名檔或只憑 manifest 宣告來源。mobile-native 不執行或冒充此步驟。
 - 任一來源找到可信且相關圖片後，`images.status` 只能在至少一張附件通過驗收後改為 `ready`。
 - 每則事件必須明確設定 `images.claim_critical`。只有圖片本身是核心主張證據（例如唯一影像證據、衛星圖直接證明攻擊或官方圖是數據主張本體）才設為 `true`；一般新聞配圖、人物照或輔助專業圖設為 `false`。
-- `NATIVE_MEDIA_CAPABILITY_FALLBACK`：已找到可用圖片時，先下載原始媒體檔；下載失敗才依圖片政策截圖並驗證。兩者都失敗時，`claim_critical=true` 才維持 `pending` 並只重試圖片階段；非關鍵圖片改為 `images.status=omitted`，保存取得證據、`omission_reason` 與非技術性的 `reader_omission_note`，文字 reader 仍可完成。不得在未嘗試前預判。
+- `NATIVE_MEDIA_CAPABILITY_FALLBACK`：full-runtime 已找到可用圖片時先下載原始媒體檔，下載失敗才依圖片政策截圖並驗證；mobile-native 則實際嘗試原生圖片／圖片卡交付。各模式可用路徑失敗時，`claim_critical=true` 才維持 `pending` 並只重試圖片階段；非關鍵圖片改為 `images.status=omitted`，保存取得證據、`omission_reason` 與非技術性的 `reader_omission_note`，文字 reader 仍可完成。不得在未嘗試前預判。
 - 只有全部引用來源都已檢查且均無可用圖片，才可使用 `omitted`，並保存具體後台原因與繁體中文 `reader_omission_note`；兩者只供內部 evidence／receipt，不得顯示於讀者版。
 - 圖片取得失敗不改變事件等級。
 - 原引用來源沒有可取得圖片時，依序搜尋官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導；可檢查多個來源，不限一個，也不要求找到完全相同像素。新來源必須加入事件的圖片證據與來源追溯，並核對發布日期、人物／地點與事件關聯；搜尋縮圖、無法追溯的搬運站、舊照或無關示意圖不得入選。

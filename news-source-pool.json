@@ -94,22 +94,19 @@
       "sweep_id": "economy_trade_industry",
       "topics": ["economy", "trade", "industry", "business_costs", "supply_chain"],
       "window_hours": 24,
-      "result_limit": 5,
-      "same_source_only": false
+      "result_limit": 5
     },
     {
       "sweep_id": "health_food_consumer",
       "topics": ["food_safety", "medicine", "consumer_safety", "recall", "public_health"],
       "window_hours": 24,
-      "result_limit": 5,
-      "same_source_only": false
+      "result_limit": 5
     },
     {
       "sweep_id": "central_policy_institutions",
       "topics": ["central_budget", "legislation", "constitutional_action", "public_service_operation"],
       "window_hours": 24,
-      "result_limit": 5,
-      "same_source_only": false
+      "result_limit": 5
     }
   ],
   "ranking": {

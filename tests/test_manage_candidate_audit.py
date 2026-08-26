@@ -436,6 +436,33 @@ class CandidateAuditTests(unittest.TestCase):
 
         self.assertFalse(any("direct_operational_effects" in error for error in errors))
 
+    def test_policy_proposal_and_draft_may_have_no_window_material_effect(self):
+        for stage in ("proposal", "draft"):
+            with self.subTest(stage=stage):
+                item = candidate("C+")
+                item["policy_stage"] = stage
+                review = policy_governance_review(applies=True)
+                review["direct_operational_effects"] = []
+                review["window_material_effects"] = []
+                item["grading_evidence"]["policy_governance_review"] = review
+
+                errors = MODULE.validate(valid_audit([item]), source_pool())
+
+                self.assertFalse(
+                    any("window_material_effects" in error for error in errors), errors
+                )
+
+    def test_effective_policy_requires_window_material_effect(self):
+        item = candidate("C+")
+        item["policy_stage"] = "effective"
+        review = policy_governance_review(applies=True)
+        review["window_material_effects"] = []
+        item["grading_evidence"]["policy_governance_review"] = review
+
+        errors = MODULE.validate(valid_audit([item]), source_pool())
+
+        self.assertTrue(any("window_material_effects" in error for error in errors), errors)
+
     def test_non_conflict_candidate_uses_minimal_nonapplicable_reviews(self):
         item = candidate("C+")
         item["grading_evidence"]["border_conflict_review"] = {"applies": False}
@@ -670,7 +697,7 @@ class CandidateAuditTests(unittest.TestCase):
         run, _ = self.add_structured_identity(audit, country="CHN")
         run["candidates"][0]["section"] = "TWN"
         errors = MODULE.validate(audit, source_pool())
-        self.assertTrue(any("section 必須由 event_identity.primary_country_code" in error for error in errors))
+        self.assertTrue(any("section 必須由 event_identity.country_codes 對照 section_scopes" in error for error in errors))
 
     def test_non_taiwan_non_china_event_maps_to_world(self):
         audit = valid_audit()

@@ -565,7 +565,11 @@ def validate_policy_governance_review(
     required_nonempty_lists = ["evidence_urls"]
     if policy_stage == "consideration":
         required_nonempty_lists.append("official_actions")
-    elif policy_stage not in {"rumor", "not_applicable"}:
+    elif policy_stage in {"proposal", "draft", "introduced", "passed", "signed"}:
+        required_nonempty_lists.extend(
+            ["legal_basis", "official_actions", "affected_actor_classes"]
+        )
+    elif policy_stage in {"effective", "implemented", "measurable_effect"}:
         required_nonempty_lists.extend(
             ["legal_basis", "official_actions", "affected_actor_classes", "window_material_effects"]
         )
@@ -1068,16 +1072,10 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                         expected_section = scope.get("code")
                 if expected_section is None and len(fallback_codes) == 1:
                     expected_section = fallback_codes[0]
-                if expected_section is None:
-                    expected_section = (
-                        "TWN" if primary_country == "TWN"
-                        else "CHN" if primary_country == "CHN"
-                        else "GLB"
-                    )
-                if candidate.get("section") != expected_section:
+                if expected_section is not None and candidate.get("section") != expected_section:
                     errors.append(
-                        label + f".section 必須由 event_identity.primary_country_code "
-                        f"推導為 {expected_section}；來源分桶不得參與"
+                        label + f".section 必須由 event_identity.country_codes 對照 "
+                        f"section_scopes 推導為 {expected_section}；來源分桶不得參與"
                     )
 
                 update_type = identity.get("material_update_type")
