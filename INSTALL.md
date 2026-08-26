@@ -151,7 +151,7 @@
 | 8 build-news-maps | 已驗證事件、map policy | map decision、必要 overlay、canonical basemap、PNG／SVG | `validate_map_decisions.py`；只修失敗事件地圖 |
 | 9 build-news-charts | 已驗證數據與 chart policy | 只有在比較、趨勢、比例、分布或查表有增量時建立 chart assets | 圖表不能替代地圖或來源圖片；只修失敗圖表 |
 | 10 collect-news-images | 已驗證來源頁與官方產品頁 | 每則 source checks、`claim_critical`、download／screenshot attempts、`materialized-images.json`、MIME、尺寸、SHA-256、visual check、附件或 omission note | 先下載原圖，下載失敗才截圖；主張關鍵視覺未完成保持 pending，非關鍵視覺兩種方式都失敗則 omitted；兩種 runtime 都可交付已驗證文字 reader |
-| 11 final manifest 與 render | collect stage 已 completed／依 profile 合法 omission | 首次執行 `validate_news_brief.py manifest` 到 `OK`；由 manifest 渲染 reader，綁定 `render.manifest` 與 `render.brief`；reader 以 `validate_news_brief.py brief --reader-layout canonical-sectioned` 驗證 | 提前呼叫 manifest validator 回 `DEFERRED` 不算通過也不算失敗；繼續原 stage 後重跑 |
+| 11 final manifest 與 render | collect stage 已 completed／依 profile 合法 omission | 首次執行 `validate_news_brief.py manifest` 到 `OK`；由 manifest 渲染 reader，綁定 `render.manifest` 與 `render.brief`；reader 以 `validate_news_brief.py brief` 驗證唯一三段式版型 | 提前呼叫 manifest validator 回 `DEFERRED` 不算通過也不算失敗；繼續原 stage 後重跑 |
 | 12 publish 與 bundle | final checkpoint、manifest、audit、source pool、reader、map decisions、宣稱交付的附件 | 依下方實際 CLI 由 `publish_news_brief.py` 建立 release／receipt；再以 `manage_canonical_run_bundle.py pack` 建立 transport，與 `logs/current.json` 一次 atomic 發布後執行 `verify`／`restore` 核對 byte identity | full-runtime 由 canonical publisher fail-closed；mobile-native 依 mobile ledger schema 保存 reader/audit 與 delivery profile |
 | 13 conversation delivery | release receipt 或 mobile saved reader | 完整 reader bytes、附件／能力限制 receipt、`delivery-handoff` | 不能只交摘要或驗收報告；`client_confirmed` 只有外部明確回執才可使用 |
 
@@ -246,10 +246,13 @@ canonical reader 固定依 `news-brief-template.md`：
 1. 第一行：`# 每日新聞讀者版`
 2. 下一個非空白行：manifest 衍生的 `統計期間：...`
 3. 六項評級說明
-4. 唯一一個 `## 今日總覽`，按板塊列出全部 selected events
-5. 依相同板塊順序輸出單項新聞：`標題｜評級 → 實際可見附件（若有）→ 新聞摘要 → 評級評論與段末來源`；沒有附件時不得顯示圖片說明或其他視覺占位文字。
+4. `## 今日總覽`：按板塊用 `編號｜時間｜事件｜等級` 表格列出全部 selected events
+5. `## 逐條詳報`：每則使用 `事件編號. 標題 - 等級`，依序輸出 `時間／來源／地圖／資料圖表／圖片／事件細節／各方說法／分析`；時間、來源、事件細節與分析必填，視覺與各方說法依 manifest 條件式顯示
+6. `## 後續觀察`：逐項逐字使用 manifest `detail.follow_up` 的具體條件
 
-reader 不顯示 run id、commit、後台 counts、十四天 audit、修復紀錄或「逐條詳報」欄位卡。對話名稱可為「每日新聞」，但不能在 reader 前另加 `YYYY/MM/DD 每日新聞` 或手填總數摘要。
+`CANONICAL_THREE_PART_READER_LAYOUT_GATE`：上述三個二級標題與順序是唯一發布路徑。簡化的「分區標題 → 標題｜評級 → 摘要 → 評級評論」版型不得發布。兩則詳報間固定一條 `---`；最後一則後不放分隔線。
+
+reader 不顯示 run id、commit、後台 counts、十四天 audit 或修復紀錄。對話名稱可為「每日新聞」，但不能在 reader 前另加 `YYYY/MM/DD 每日新聞` 或手填總數摘要。沒有實際可見附件時省略對應視覺欄位，不得顯示圖片說明或其他占位文字。
 
 ### Media evidence and completion
 
@@ -294,7 +297,7 @@ python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 - 語意事件、scored／selected counts 已由本輪事件陣列重算；可取得文章列層證據時再檢查 source-row 守恆，無法取得時明確標未驗證而不捏造。
 - run-scoped candidate audit 與 durable 十四天 cache 分開記錄；durable merge 延後不會進入 `last_error`。
 - 所有 C 級以上事件都在 canonical reader，且第一行為 `# 每日新聞讀者版`。
-- reader 只有一個 `## 今日總覽`，沒有日期前綴、手填數量摘要、事件 ID 或後台修復文字。
+- reader 依序只有 `## 今日總覽`、`## 逐條詳報`、`## 後續觀察`，事件 ID 與必填欄位完整，沒有日期前綴、手填數量摘要或後台修復文字。
 - map decision、chart decision 與每則 image check 均已執行；下載失敗有截圖備援證據。
 - 已下載圖片確實先嘗試本機／原生附件交付；不能未嘗試就宣告 `NATIVE_MEDIA_UNAVAILABLE`。
 - full-runtime 的宣稱附件實際存在且像素驗證通過；mobile-native 的 capability degradation 記在 delivery profile，不是 `last_error`，而且 run 可 `status=completed`。

@@ -9,22 +9,22 @@
   "scope_en": "This file traces five S5 release-integration checks only; it is not an exhaustive active-rule catalog. INSTALL.md governs the current entrypoint, sequence, and authority order.",
   "rules": [
     {
-      "requirement_zh_tw": "讀者版先有唯一今日總覽，再依台灣、中國、世界順序輸出單項新聞。",
-      "requirement_en": "The reader begins with one Today Overview, followed by per-story Taiwan, China, and World sections.",
+      "requirement_zh_tw": "讀者版依序使用今日總覽、逐條詳報、後續觀察；詳報保留事件編號及時間、來源、事件細節、分析欄位。",
+      "requirement_en": "The reader uses Today Overview, Detailed Reports, and Follow-up in order; detailed reports preserve event IDs and the time, source, event-detail, and analysis fields.",
       "authority": ["news-brief-template.md#固定骨架", "news-brief-settings.md#輸出規格"],
       "producer": "canonical reader renderer",
       "validator": "scripts/validate_news_brief.py::validate_canonical_reader",
       "test": "tests/test_validate_news_brief.py::test_canonical_reader_requires_a_front_today_overview",
-      "prior_rule_disposition": "retired: field-based 逐條詳報/後續觀察; retained: per-story title/image/summary/grade/source layout",
+      "prior_rule_disposition": "restored: field-based 逐條詳報/後續觀察; retired: simplified per-section title/image/summary/grade/source cards",
       "status": "enforced"
     },
     {
       "requirement_zh_tw": "圖片只能位於所屬新聞內，依地圖、資料圖表、圖一、圖二直向排列，圖說緊接且不得疊圖。",
       "requirement_en": "Images stay inside their owning story, vertically ordered after maps/charts, with adjacent numbered captions and no overlap.",
-      "authority": ["news-brief-template.md#圖片、地圖與資料圖表"],
+      "authority": ["news-brief-template.md#欄位規則"],
       "producer": "reader renderer",
       "validator": "scripts/validate_news_brief.py::_validate_story_asset_stream",
-      "test": "tests/test_validate_news_brief.py::test_sectioned_reader_rejects_image_outside_story",
+      "test": "tests/test_validate_news_brief.py::test_three_part_reader_rejects_image_outside_story",
       "prior_rule_disposition": "current",
       "status": "enforced"
     },

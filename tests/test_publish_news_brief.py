@@ -11,7 +11,7 @@ from PIL import Image
 from tests.test_validate_news_brief import (
     MAIN_SHA,
     RUN_ID,
-    canonical_sectioned_brief,
+    valid_brief,
     valid_manifest,
 )
 
@@ -268,7 +268,7 @@ def prepare_inputs(root: Path):
     manifest["events"][0]["images"]["materialization_manifest_path"] = str(materialization_path)
     manifest["events"][0]["images"]["source_checks"][0]["evidence_path"] = str(source_check_path)
     manifest["events"][0]["images"]["professional_source_checks"][0]["evidence_path"] = str(professional_check_path)
-    brief = canonical_sectioned_brief().replace("sandbox:/tmp/map.png", str(map_path)).replace(
+    brief = valid_brief().replace("sandbox:/tmp/map.png", str(map_path)).replace(
         "sandbox:/tmp/image.png", str(image_path)
     )
     manifest_path = root / "manifest.json"

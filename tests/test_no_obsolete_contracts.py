@@ -176,7 +176,8 @@ class NoObsoleteContractsTests(unittest.TestCase):
         image_skill = (
             ROOT / ".agents" / "skills" / "collect-news-images" / "SKILL.md"
         ).read_text(encoding="utf-8")
-        self.assertIn("canonical-sectioned", install)
+        self.assertIn("CANONICAL_THREE_PART_READER_LAYOUT_GATE", install)
+        self.assertNotIn("canonical-sectioned", install)
         self.assertIn("logs/current.json", install)
         self.assertIn("NATIVE_MEDIA_CAPABILITY_FALLBACK", image_skill)
 

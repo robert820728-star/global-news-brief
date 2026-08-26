@@ -4,6 +4,16 @@ This file records the current installable contract. Earlier implementation attem
 
 本檔只記錄目前可安裝契約；較早的實作嘗試由 Git history 保存，避免退役行為繼續留在執行中的 repository 表面。
 
+## v0.6.0-rc.5 — Three-part reader presentation restoration / 三段式讀者版呈現回移
+
+- Reason / 建立原因：Git history confirmed that the user-approved `今日總覽／逐條詳報／後續觀察` layout and the `時間／來源／事件細節／分析` fields were mistakenly retired as legacy on 2026-08-20, after which the simplified section-card layout was made canonical. / Git history 證實使用者指定的「今日總覽／逐條詳報／後續觀察」與「時間／來源／事件細節／分析」欄位在 2026-08-20 被誤判為 legacy 而移除，後續又把簡化分區卡片版型升為 canonical。
+- Approach / 作法：Surgically restore only the reader presentation contract from historical state `42a87ba0`, retain the current reader-only header and all rc.1–rc.4 pipeline improvements, promote the field validator to the sole publisher path, and delete the simplified validator and layout CLI instead of keeping a compatibility mode. / 僅從歷史狀態 `42a87ba0` 外科式回移讀者呈現契約，保留目前讀者專用頁首與 rc.1–rc.4 的所有流程改進；將欄位式 validator 升為唯一 publisher 路徑，並刪除簡化版 validator 與版型 CLI，不保留相容雙軌。
+- Entry points / 入口：Reader template/settings, `INSTALL.md`, README, both scheduling prompts, canonical validator, publisher/unique-delivery call path, rule matrix, tests, version record, and generated capsule. / Reader template／settings、`INSTALL.md`、README、兩份排程 prompt、canonical validator、publisher／unique-delivery 呼叫路徑、規則矩陣、測試、版本紀錄與生成 capsule。
+- Important configuration / 重要設定：The sole reader headings are `## 今日總覽`, `## 逐條詳報`, and `## 後續觀察`; event IDs and field order are mandatory; no-image placeholders remain forbidden; run IDs, commit SHAs, release markers, counts, and repair logs remain internal. / 唯一 reader 二級標題為 `## 今日總覽`、`## 逐條詳報`、`## 後續觀察`；事件編號與欄位順序必填；無圖占位仍禁止；run id、commit SHA、發布狀態、counts 與修復紀錄仍只留內部。
+- Validation / 驗證：Git-history reverse inspection, TDD red-green canonical-path tests, structural residue checks, negative simplified-layout probes, full bundled-Python suite, capsule rebuild/verification, and consecutive unchanged-fingerprint final-state audit cycles. / Git history 反向核對、canonical 路徑 TDD 紅綠測試、結構化殘留檢查、簡化版負向探針、bundled Python 全庫測試、capsule 重建／驗證與連續不變指紋 final-state audit。
+- Result / 結果：Candidate pending final verification and remote CI; no GitHub completion is claimed before push succeeds. / 候選版本等待最終驗證與遠端 CI；push 成功前不宣告 GitHub 完成。
+- Rollback / 回復：Revert the rc.5 source and generated-capsule commits; presentation baseline before this restoration is `134e8d4a`, while `42a87ba0` is historical format evidence only. / 一併回復 rc.5 source 與 generated-capsule commits；本次回移前的呈現基準為 `134e8d4a`，`42a87ba0` 僅作歷史版型證據。
+
 ## v0.6.0-rc.4 — Visible-media truth and omission cleanup / 可見媒體真實性與省略清理
 
 - Reason / 建立原因：A production mobile-native run emitted event descriptions under `圖片說明` without visible attachments, declared `NATIVE_MEDIA_UNAVAILABLE`, and completed without a persisted image-evidence artifact. The Reader template also conflicted with executable `claim_critical` map handling. / 實際 mobile-native run 在沒有可見附件時以「圖片說明」輸出事件描述、宣告 `NATIVE_MEDIA_UNAVAILABLE`，卻未保存 image-evidence artifact 仍完成；Reader template 亦與可執行的 `claim_critical` 地圖規則衝突。

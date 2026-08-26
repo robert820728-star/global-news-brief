@@ -209,13 +209,11 @@ def valid_manifest():
 
 def valid_brief():
     note = VALIDATOR.SINGLE_SOURCE_NOTE
-    return f"""2026/08/14 每日新聞
+    return f"""# 每日新聞讀者版
 
-執行編號：{RUN_ID}
-程式版本：{MAIN_SHA}
-正式發布：是
+統計期間：2026 年 8 月 13 日 06:00:00 至 8 月 14 日 06:00:00（台北時間）
 
-本期共 1 則新聞：台灣 1 則。
+評級綜合考量：重要性／嚴重程度、影響範圍、急迫與安全、結構／政策意義、本期實質新進展、核心板塊關聯。
 
 ## 今日總覽
 
@@ -290,6 +288,20 @@ def canonical_sectioned_brief():
 
 
 class ValidatorTests(unittest.TestCase):
+    def test_canonical_reader_accepts_restored_three_part_field_layout(self):
+        self.assertEqual(
+            [],
+            VALIDATOR.validate_canonical_reader(
+                valid_manifest(), valid_brief()
+            ),
+        )
+
+    def test_canonical_reader_rejects_simplified_section_story_layout(self):
+        errors = VALIDATOR.validate_canonical_reader(
+            valid_manifest(), canonical_sectioned_brief()
+        )
+        self.assertTrue(any("逐條詳報" in error for error in errors), errors)
+
     def test_insufficient_finding_cannot_be_completed_or_ready(self):
         manifest = valid_manifest()
         verification = manifest["events"][0]["verification"]
@@ -319,10 +331,10 @@ class ValidatorTests(unittest.TestCase):
         self.assertTrue(any("validated_grade" in error for error in errors))
 
     def test_canonical_reader_requires_a_front_today_overview(self):
-        text = canonical_sectioned_brief().replace(
-            "## 今日總覽\n\n### 🇹🇼 台灣新聞\n\n"
-            "| 時間 | 事件 | 評級 |\n|---|---|---:|\n"
-            "| 8/14 05:30 | 測試地震事件 | B |\n\n",
+        text = valid_brief().replace(
+            "## 今日總覽\n\n### 台灣\n\n"
+            "| 編號 | 時間 | 事件 | 等級 |\n|---|---|---|---|\n"
+            "| TWN-01 | 8/14 05:30 | 測試地震事件 | B |\n\n",
             "",
         )
         errors = VALIDATOR.validate_canonical_reader(
@@ -345,67 +357,54 @@ class ValidatorTests(unittest.TestCase):
         errors = VALIDATOR.validate_manifest_data(manifest)
         self.assertTrue(any("source_image_url" in error for error in errors), errors)
 
-    def test_canonical_sectioned_reader_layout_passes(self):
-        self.assertEqual(
-            [],
-            VALIDATOR.validate_canonical_sectioned_layout(
-                valid_manifest(), canonical_sectioned_brief()
-            ),
-        )
-
     def test_custom_jpn_section_passes_manifest_and_reader_layout(self):
         manifest = valid_manifest()
         manifest["sections"] = [{"code": "JPN", "name": "日本", "order": 1}]
         event = manifest["events"][0]
         event["event_id"] = "JPN-01"
         event["primary_section"] = "JPN"
-        reader = canonical_sectioned_brief().replace("🇹🇼 台灣新聞", "日本新聞")
+        reader = valid_brief().replace("TWN-01", "JPN-01").replace("### 台灣", "### 日本")
         self.assertEqual([], VALIDATOR.validate_manifest_data(manifest))
-        self.assertEqual([], VALIDATOR.validate_canonical_sectioned_layout(manifest, reader))
+        self.assertEqual([], VALIDATOR.validate_canonical_reader(manifest, reader))
 
-    def test_field_based_reader_fails_canonical_layout_gate(self):
-        errors = VALIDATOR.validate_canonical_sectioned_layout(valid_manifest(), valid_brief())
-        self.assertTrue(any("canonical 分區格式" in error for error in errors), errors)
-
-    def test_sectioned_reader_rejects_reversed_attachment_order(self):
-        text = canonical_sectioned_brief()
+    def test_three_part_reader_rejects_reversed_attachment_order(self):
+        text = valid_brief()
         map_block = """![地圖一](sandbox:/tmp/map.png)
 
 地圖一：事件位置，依來源資料整理。"""
         image_block = """![圖一](sandbox:/tmp/image.png)
 
 圖一：官方資訊圖（來源：官方來源）。"""
-        text = text.replace(
-            map_block + "\n\n" + image_block,
-            image_block + "\n\n" + map_block,
-        )
-        errors = VALIDATOR.validate_canonical_sectioned_layout(valid_manifest(), text)
+        text = text.replace(map_block, "__MAP_BLOCK__").replace(
+            image_block, map_block
+        ).replace("__MAP_BLOCK__", image_block)
+        errors = VALIDATOR.validate_canonical_reader(valid_manifest(), text)
         self.assertTrue(any("附件順序" in error for error in errors), errors)
 
-    def test_sectioned_reader_requires_caption_immediately_after_attachment(self):
-        text = canonical_sectioned_brief().replace(
+    def test_three_part_reader_requires_caption_immediately_after_attachment(self):
+        text = valid_brief().replace(
             "![圖一](sandbox:/tmp/image.png)\n\n圖一：",
             "![圖一](sandbox:/tmp/image.png)\n\n插入了不屬於圖說的文字。\n\n圖一：",
         )
-        errors = VALIDATOR.validate_canonical_sectioned_layout(valid_manifest(), text)
+        errors = VALIDATOR.validate_canonical_reader(valid_manifest(), text)
         self.assertTrue(any("圖說必須緊接" in error for error in errors), errors)
 
-    def test_sectioned_reader_rejects_unmanifested_story_image(self):
-        text = canonical_sectioned_brief().replace(
-            "據官方來源指出，地震事件已發生。",
+    def test_three_part_reader_rejects_unmanifested_story_image(self):
+        text = valid_brief().replace(
+            "**事件細節：**據官方來源指出，地震事件已發生。",
             "![額外圖片](sandbox:/tmp/extra.png)\n\n額外圖片說明。\n\n"
-            "據官方來源指出，地震事件已發生。",
+            "**事件細節：**據官方來源指出，地震事件已發生。",
         )
-        errors = VALIDATOR.validate_canonical_sectioned_layout(valid_manifest(), text)
+        errors = VALIDATOR.validate_canonical_reader(valid_manifest(), text)
         self.assertTrue(any("未列入 manifest" in error for error in errors), errors)
 
-    def test_sectioned_reader_rejects_image_outside_story(self):
-        text = canonical_sectioned_brief().replace(
-            "## 🇹🇼 台灣新聞",
-            "![頁首圖片](sandbox:/tmp/header.png)\n\n## 🇹🇼 台灣新聞",
+    def test_three_part_reader_rejects_image_outside_story(self):
+        text = valid_brief().replace(
+            "## 逐條詳報",
+            "![頁首圖片](sandbox:/tmp/header.png)\n\n## 逐條詳報",
         )
-        errors = VALIDATOR.validate_canonical_sectioned_layout(valid_manifest(), text)
-        self.assertTrue(any("新聞區塊之外" in error for error in errors), errors)
+        errors = VALIDATOR.validate_canonical_reader(valid_manifest(), text)
+        self.assertTrue(any("逐條詳報事件區塊" in error for error in errors), errors)
 
     def test_ready_manifest_allows_noncritical_omitted_map(self):
         manifest = valid_manifest()
@@ -437,7 +436,7 @@ class ValidatorTests(unittest.TestCase):
             "若中央氣象署將震度上修至 6 強或新增 10 人以上傷亡，更新影響範圍與評級。",
             "追蹤官方後續更新與實際影響。",
         )
-        errors = VALIDATOR.validate_brief_text(manifest, text)
+        errors = VALIDATOR.validate_canonical_reader(manifest, text)
         self.assertTrue(any("後續觀察" in error and "具體" in error for error in errors))
 
     def test_reader_follow_up_must_match_manifest_event_condition(self):
@@ -445,7 +444,7 @@ class ValidatorTests(unittest.TestCase):
             "若中央氣象署將震度上修至 6 強或新增 10 人以上傷亡，更新影響範圍與評級。",
             "若官方更新數字就再觀察。",
         )
-        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        errors = VALIDATOR.validate_canonical_reader(valid_manifest(), text)
         self.assertTrue(any("後續觀察" in error and "manifest" in error for error in errors))
     def test_manifest_requires_canonical_run_identity(self):
         manifest = valid_manifest()
@@ -455,19 +454,23 @@ class ValidatorTests(unittest.TestCase):
         self.assertTrue(any("run.run_id" in error for error in errors))
         self.assertTrue(any("run.main_sha" in error for error in errors))
 
-    def test_reader_rejects_mismatched_run_id(self):
-        text = valid_brief().replace(RUN_ID, "gnb-20260817T102800Z-deadbeef", 1)
-        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+    def test_reader_rejects_reader_visible_run_id(self):
+        text = valid_brief().replace(
+            "統計期間：", f"執行編號：{RUN_ID}\n\n統計期間：", 1
+        )
+        errors = VALIDATOR.validate_canonical_reader(valid_manifest(), text)
         self.assertTrue(any("執行編號" in error for error in errors))
 
-    def test_reader_rejects_nonfinal_delivery_marker(self):
-        text = valid_brief().replace("正式發布：是", "正式發布：否", 1)
-        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+    def test_reader_rejects_reader_visible_delivery_marker(self):
+        text = valid_brief().replace(
+            "統計期間：", "正式發布：是\n\n統計期間：", 1
+        )
+        errors = VALIDATOR.validate_canonical_reader(valid_manifest(), text)
         self.assertTrue(any("正式發布" in error for error in errors))
 
     def test_reader_rejects_internal_repair_log(self):
         text = valid_brief() + "\n\n修復紀錄：DOC API 重試後成功。\n"
-        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        errors = VALIDATOR.validate_canonical_reader(valid_manifest(), text)
         self.assertTrue(any("修復紀錄" in error and "讀者版" in error for error in errors))
 
     def test_premature_final_manifest_command_is_deferred_without_failing_run(self):
@@ -517,23 +520,25 @@ class ValidatorTests(unittest.TestCase):
             )
         )
         crlf_brief = brief.replace("\n", "\r\n")
-        self.assertEqual([], VALIDATOR.validate_brief_text(manifest, crlf_brief))
+        self.assertEqual([], VALIDATOR.validate_canonical_reader(manifest, crlf_brief))
 
     def test_valid_manifest_and_brief(self):
         manifest = valid_manifest()
         self.assertEqual([], VALIDATOR.validate_manifest_data(manifest))
-        self.assertEqual([], VALIDATOR.validate_brief_text(manifest, valid_brief()))
+        self.assertEqual([], VALIDATOR.validate_canonical_reader(manifest, valid_brief()))
 
     def test_single_source_does_not_change_grade(self):
         manifest = valid_manifest()
         self.assertEqual("B", manifest["events"][0]["grade"])
         self.assertEqual([], VALIDATOR.validate_manifest_data(manifest))
 
-    def test_brief_requires_manifest_derived_news_count_summary(self):
-        errors = VALIDATOR.validate_brief_text(
-            valid_manifest(), valid_brief().replace("本期共 1 則新聞：台灣 1 則。\n\n", "")
+    def test_reader_rejects_manual_news_count_summary(self):
+        errors = VALIDATOR.validate_canonical_reader(
+            valid_manifest(), valid_brief().replace(
+                "## 今日總覽", "本期共 1 則新聞：台灣 1 則。\n\n## 今日總覽", 1
+            )
         )
-        self.assertTrue(any("本期新聞總數" in error for error in errors))
+        self.assertTrue(any("手填新聞數量" in error for error in errors), errors)
 
     def test_map_requires_named_place_labels(self):
         manifest = valid_manifest()
@@ -595,7 +600,7 @@ class ValidatorTests(unittest.TestCase):
             "![圖一](sandbox:/tmp/image.png)",
             'genui{"async_image_group":{"query":"test"}}',
         )
-        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        errors = VALIDATOR.validate_canonical_reader(valid_manifest(), text)
         self.assertTrue(any("禁止的圖廊、疊圖或動態元件" in error for error in errors))
 
     def test_reader_times_reject_timezone_suffixes_after_user_timezone_conversion(self):
@@ -607,7 +612,7 @@ class ValidatorTests(unittest.TestCase):
                     f"新聞時間：8/14 05:30 {suffix}；事件時間：8/14 05:00。"
                 )
                 text = valid_brief().replace("8/14 05:30", f"8/14 05:30 {suffix}")
-                errors = VALIDATOR.validate_brief_text(manifest, text)
+                errors = VALIDATOR.validate_canonical_reader(manifest, text)
                 self.assertTrue(
                     any("使用者時區" in error and "時區標記" in error for error in errors),
                     errors,
@@ -618,7 +623,7 @@ class ValidatorTests(unittest.TestCase):
             "## 逐條詳報",
             "### 中國\n\n| 編號 | 時間 | 事件 | 等級 |\n|---|---|---|---|\n| TWN-01 | 8/14 05:30 | 測試事件 | B |\n\n## 逐條詳報",
         )
-        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        errors = VALIDATOR.validate_canonical_reader(valid_manifest(), text)
         self.assertTrue(any("獨立標題與表格" in error for error in errors))
         self.assertTrue(any("錯誤板塊" in error for error in errors))
 
@@ -627,12 +632,12 @@ class ValidatorTests(unittest.TestCase):
             "![圖一](sandbox:/tmp/image.png)",
             "![官方圖片](sandbox:/tmp/image.png)",
         )
-        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        errors = VALIDATOR.validate_canonical_reader(valid_manifest(), text)
         self.assertTrue(any("逐張使用 Markdown 並依序標示圖一" in error for error in errors))
 
     def test_brief_catches_missing_image(self):
         text = valid_brief().replace("sandbox:/tmp/image.png", "sandbox:/tmp/other.png")
-        errors = VALIDATOR.validate_brief_text(valid_manifest(), text)
+        errors = VALIDATOR.validate_canonical_reader(valid_manifest(), text)
         self.assertTrue(any("漏放圖片附件" in error for error in errors))
 
     def test_ready_manifest_allows_noncritical_omitted_image_when_acquisition_fails(self):
@@ -900,7 +905,7 @@ class ValidatorTests(unittest.TestCase):
             "**圖片：**\n\n![圖一](sandbox:/tmp/image.png)\n\n圖一：官方資訊圖（來源：官方來源）。\n\n",
             "",
         )
-        errors = VALIDATOR.validate_brief_text(manifest, brief)
+        errors = VALIDATOR.validate_canonical_reader(manifest, brief)
         self.assertFalse(any("圖片說明" in error for error in errors), errors)
 
     def test_reader_rejects_image_description_without_attachment(self):
@@ -921,7 +926,7 @@ class ValidatorTests(unittest.TestCase):
             "**圖片：**\n\n![圖一](sandbox:/tmp/image.png)\n\n圖一：官方資訊圖（來源：官方來源）。",
             "**圖片說明：** 南部豪雨造成淹水與撤離。",
         )
-        errors = VALIDATOR.validate_brief_text(manifest, brief)
+        errors = VALIDATOR.validate_canonical_reader(manifest, brief)
         self.assertTrue(any("沒有可見附件" in error for error in errors), errors)
 
 

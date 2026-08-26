@@ -16,7 +16,6 @@ import run_identity
 
 
 EVENT_ID_RE = re.compile(r"^[A-Z]{3}-\d{2,3}$")
-DATE_LINE_RE = re.compile(r"^\d{4}/\d{2}/\d{2} 每日新聞$")
 DETAIL_HEADING_RE = re.compile(r"^### ([A-Z]{3}-\d{2,3})\. (.+) - (SS|[SAB][+-]?|C[+]?)$")
 ALLOWED_GRADES = {
     "SS", "S+", "S", "S-", "A+", "A", "A-",
@@ -1021,45 +1020,39 @@ def _event_blocks(text: str) -> dict[str, str]:
     matches = list(re.finditer(r"(?m)^### ([A-Z]{3}-\d{2,3})\. .+$", text))
     blocks: dict[str, str] = {}
     for index, match in enumerate(matches):
-        end = matches[index + 1].start() if index + 1 < len(matches) else len(text)
+        boundaries = [matches[index + 1].start()] if index + 1 < len(matches) else []
+        next_h2 = re.search(r"(?m)^## [^\r\n]+\r?$", text[match.end():])
+        if next_h2:
+            boundaries.append(match.end() + next_h2.start())
+        end = min(boundaries) if boundaries else len(text)
         blocks[match.group(1)] = text[match.start():end]
     return blocks
 
 
-def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
+def validate_three_part_reader(data: dict[str, Any], text: str) -> list[str]:
     errors = validate_manifest_data(data)
     nonempty = [line.strip() for line in text.splitlines() if line.strip()]
-    if not nonempty or not DATE_LINE_RE.fullmatch(nonempty[0]):
-        errors.append("讀者版第一個非空白行必須是 YYYY/MM/DD 每日新聞")
+    if not nonempty or nonempty[0] != "# 每日新聞讀者版":
+        errors.append("讀者版第一個非空白行必須是 # 每日新聞讀者版")
+    if len(nonempty) < 2 or not nonempty[1].startswith("統計期間："):
+        errors.append("讀者版缺少 manifest 衍生的統計期間")
+    expected_rubric = (
+        "評級綜合考量：重要性／嚴重程度、影響範圍、急迫與安全、"
+        "結構／政策意義、本期實質新進展、核心板塊關聯。"
+    )
+    if len(nonempty) < 3 or nonempty[2] != expected_rubric:
+        errors.append("讀者版缺少六項評級說明")
+    reader_header = text.split("## 今日總覽", 1)[0]
+    if "本期共" in reader_header:
+        errors.append("讀者版頁首不得加入手填新聞數量摘要")
 
-    run = data.get("run") if isinstance(data.get("run"), dict) else {}
-    expected_identity = [
-        f"執行編號：{run.get('run_id')}",
-        f"程式版本：{run.get('main_sha')}",
-        "正式發布：是",
-    ]
-    if nonempty[1:4] != expected_identity:
-        errors.append("讀者版必須在日期後顯示與 manifest 一致的執行編號、程式版本與正式發布狀態")
-
-    section_counts = []
     events = data.get("events", [])
-    for section in data.get("sections", []):
-        if not isinstance(section, dict):
-            continue
-        count = sum(
-            1 for event in events
-            if isinstance(event, dict) and event.get("primary_section") == section.get("code")
-        )
-        section_counts.append(f"{section.get('name')} {count} 則")
-    expected_summary = f"本期共 {len(events)} 則新聞：{'、'.join(section_counts)}。"
-    if len(nonempty) < 5 or nonempty[4] != expected_summary:
-        errors.append(f"日期行後必須簡短列出本期新聞總數與各板塊數量：{expected_summary}")
 
     h2 = re.findall(r"(?m)^## ([^\r\n]+)\r?$", text)
     if h2 != REQUIRED_H2:
         errors.append("讀者版只能有今日總覽、逐條詳報、後續觀察三個二級標題，且順序固定")
 
-    for phrase in BACKEND_PHRASES:
+    for phrase in (*BACKEND_PHRASES, "驗收摘要", "執行編號：", "程式版本：", "正式發布："):
         if phrase in text:
             errors.append(f"讀者版含有後台文字：{phrase}")
     for token in FORBIDDEN_RENDER_TOKENS:
@@ -1138,6 +1131,12 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
         errors.append("逐條詳報的事件順序、數量或編號與事件資料不一致")
 
     blocks = _event_blocks(text)
+    all_reader_images = list(MARKDOWN_IMAGE_RE.finditer(text))
+    story_image_count = sum(
+        len(list(MARKDOWN_IMAGE_RE.finditer(block))) for block in blocks.values()
+    )
+    if story_image_count != len(all_reader_images):
+        errors.append("讀者版圖片只能出現在所屬逐條詳報事件區塊內")
     separators = len(re.findall(r"(?m)^---\r?$", text))
     expected_separators = max(0, len(expected_ids) - 1)
     if separators != expected_separators:
@@ -1174,6 +1173,7 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
             continue
         if not block.startswith(expected_heading):
             errors.append(f"{event_id} 詳報標題與事件資料不一致")
+        _validate_story_asset_stream(event, block, errors)
         required_labels = ["**時間：**", "**來源：**", "**事件細節：**", "**分析：**"]
         positions = [block.find(label) for label in required_labels]
         if any(position < 0 for position in positions):
@@ -1193,9 +1193,12 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
             errors.append(f"{event_id} 地圖、資料圖表、圖片或文字欄位順序錯誤")
 
         verification = event.get("verification", {})
-        if isinstance(verification, dict) and verification.get("finding") == "single_reliable_source":
-            if SINGLE_SOURCE_NOTE not in block:
+        if isinstance(verification, dict):
+            if verification.get("finding") == "single_reliable_source" and SINGLE_SOURCE_NOTE not in block:
                 errors.append(f"{event_id} 讀者版缺少單一來源說明")
+            for source in verification.get("sources", []):
+                if isinstance(source, dict) and source.get("url") not in block:
+                    errors.append(f"{event_id} 缺少來源連結：{source.get('url')}")
 
         map_result = event.get("map", {})
         chart_result = event.get("charts", {})
@@ -1269,17 +1272,6 @@ def validate_brief_text(data: dict[str, Any], text: str) -> list[str]:
     return errors
 
 
-def _canonical_section_title(section: dict[str, Any]) -> str:
-    code = section.get("code")
-    if code == "TWN":
-        return "🇹🇼 台灣新聞"
-    if code == "CHN":
-        return "🇨🇳 中國新聞"
-    if code == "GLB":
-        return "🌍 國際世界"
-    return f"{section.get('name', '')}新聞"
-
-
 def _expected_reader_assets(
     event: dict[str, Any],
 ) -> list[tuple[str, str, str, str]]:
@@ -1351,165 +1343,9 @@ def _validate_story_asset_stream(
             )
 
 
-def validate_canonical_sectioned_layout(data: dict[str, Any], text: str) -> list[str]:
-    """Validate the reader-visible section/table/story layout used by ChatGPT."""
-    errors = validate_manifest_data(data)
-    nonempty = [line.strip() for line in text.splitlines() if line.strip()]
-    if not nonempty or nonempty[0] != "# 每日新聞讀者版":
-        errors.append("讀者版必須使用 canonical 分區格式，第一行為 # 每日新聞讀者版")
-    if len(nonempty) < 2 or not nonempty[1].startswith("統計期間："):
-        errors.append("canonical 分區格式缺少統計期間")
-    expected_rubric = (
-        "評級綜合考量：重要性／嚴重程度、影響範圍、急迫與安全、"
-        "結構／政策意義、本期實質新進展、核心板塊關聯。"
-    )
-    if len(nonempty) < 3 or nonempty[2] != expected_rubric:
-        errors.append("canonical 分區格式缺少六項評級說明")
-
-    forbidden = (
-        "## 逐條詳報", "## 後續觀察",
-        "**時間：**", "**來源：**", "**事件細節：**", "**分析：**",
-        "驗收摘要", "執行編號：", "程式版本：", "正式發布：",
-    )
-    for phrase in (*BACKEND_PHRASES, *forbidden):
-        if phrase in text:
-            errors.append(f"canonical 分區格式含有禁止內容：{phrase}")
-    for token in FORBIDDEN_RENDER_TOKENS:
-        if token in text:
-            errors.append(f"讀者版使用禁止的圖廊、疊圖或動態元件：{token}")
-
-    story_heading_matches = list(
-        re.finditer(r"(?m)^### (.+)｜(SS|[SAB][+-]?|C[+]?)\r?$", text)
-    )
-    story_spans: list[tuple[int, int]] = []
-    for index, match in enumerate(story_heading_matches):
-        later_headings = [
-            candidate.start()
-            for candidate in story_heading_matches[index + 1:]
-            if candidate.start() > match.start()
-        ]
-        next_section = re.search(r"(?m)^## [^\r\n]+\r?$", text[match.end():])
-        boundaries = later_headings
-        if next_section:
-            boundaries = boundaries + [match.end() + next_section.start()]
-        story_spans.append(
-            (match.start(), min(boundaries) if boundaries else len(text))
-        )
-    for image_match in MARKDOWN_IMAGE_RE.finditer(text):
-        if not any(
-            start <= image_match.start() < end for start, end in story_spans
-        ):
-            errors.append(
-                "讀者版圖片出現在新聞區塊之外："
-                f"{image_match.group(2)}"
-            )
-
-    events = [event for event in data.get("events", []) if isinstance(event, dict)]
-    populated_sections: list[tuple[dict[str, Any], list[dict[str, Any]]]] = []
-    for section in data.get("sections", []):
-        if not isinstance(section, dict):
-            continue
-        section_events = [
-            event for event in events if event.get("primary_section") == section.get("code")
-        ]
-        if section_events:
-            populated_sections.append((section, section_events))
-
-    expected_section_h2 = [_canonical_section_title(section) for section, _ in populated_sections]
-    expected_h2 = ["今日總覽", *expected_section_h2]
-    actual_h2 = re.findall(r"(?m)^## ([^\r\n]+)\r?$", text)
-    if actual_h2 != expected_h2:
-        errors.append("讀者版必須先有今日總覽，再依設定順序使用分區新聞標題")
-
-    section_matches = list(re.finditer(r"(?m)^## ([^\r\n]+)\r?$", text))
-    sections_by_title: dict[str, str] = {}
-    for index, match in enumerate(section_matches):
-        end = section_matches[index + 1].start() if index + 1 < len(section_matches) else len(text)
-        sections_by_title[match.group(1)] = text[match.end():end]
-
-    overview_body = sections_by_title.get("今日總覽", "")
-    overview_matches = list(re.finditer(r"(?m)^### ([^\r\n]+)\r?$", overview_body))
-    overview_by_title: dict[str, str] = {}
-    for index, match in enumerate(overview_matches):
-        end = overview_matches[index + 1].start() if index + 1 < len(overview_matches) else len(overview_body)
-        overview_by_title[match.group(1)] = overview_body[match.end():end]
-    if [match.group(1) for match in overview_matches] != expected_section_h2:
-        errors.append("今日總覽必須依設定順序列出每個有新聞的板塊")
-
-    visible_timezone_re = re.compile(
-        r"(?i)(?:\b(?:UTC|GMT)\b|(?<!\d)[+-]\d{2}:\d{2}\b|"
-        r"\b(?:Africa|America|Antarctica|Asia|Atlantic|Australia|Europe|Indian|Pacific)/[A-Za-z_+-]+\b)"
-    )
-    for section, section_events in populated_sections:
-        section_title = _canonical_section_title(section)
-        body = sections_by_title.get(section_title)
-        if body is None:
-            continue
-        overview_section = overview_by_title.get(section_title, "")
-        if overview_section.count("| 時間 | 事件 | 評級 |") != 1:
-            errors.append(f"今日總覽的板塊「{section_title}」必須只有一張時間／事件／評級清單")
-        if "| 時間 | 事件 | 評級 |" in body:
-            errors.append(f"板塊「{section_title}」不得重複今日總覽清單")
-
-        rows: list[tuple[str, str, str]] = []
-        for line in overview_section.splitlines():
-            if not line.lstrip().startswith("|"):
-                continue
-            cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
-            if len(cells) == 3 and cells[0] not in {"時間", "---"} and not set(cells[0]) <= {"-", ":"}:
-                rows.append((cells[0], cells[1], cells[2]))
-        expected_rows = [
-            (
-                str(event.get("detail", {}).get("overview_time", "")),
-                str(event.get("title", "")),
-                str(event.get("grade", "")),
-            )
-            for event in section_events
-        ]
-        if rows != expected_rows:
-            errors.append(f"板塊「{section_title}」總清單與事件資料不一致")
-        if any(visible_timezone_re.search(row[0]) for row in rows):
-            errors.append("讀者可見時間不得顯示 UTC、GMT、數字偏移或時區標記")
-
-        heading_matches = list(re.finditer(r"(?m)^### (.+)｜(SS|[SAB][+-]?|C[+]?)\r?$", body))
-        actual_headings = [(match.group(1), match.group(2)) for match in heading_matches]
-        expected_headings = [
-            (str(event.get("title", "")), str(event.get("grade", "")))
-            for event in section_events
-        ]
-        if actual_headings != expected_headings:
-            errors.append(f"板塊「{section_title}」新聞標題、評級或順序不一致")
-
-        for index, event in enumerate(section_events):
-            if index >= len(heading_matches):
-                break
-            start = heading_matches[index].start()
-            end = heading_matches[index + 1].start() if index + 1 < len(heading_matches) else len(body)
-            block = body[start:end]
-            grade = str(event.get("grade", ""))
-            if f"評為{grade}級" not in block:
-                errors.append(f"{event.get('event_id')} 缺少「評為{grade}級」的評級評論")
-            _validate_story_asset_stream(event, block, errors)
-            verification = event.get("verification", {})
-            if isinstance(verification, dict):
-                if verification.get("finding") == "single_reliable_source" and SINGLE_SOURCE_NOTE not in block:
-                    errors.append(f"{event.get('event_id')} 讀者版缺少單一來源說明")
-                for source in verification.get("sources", []):
-                    if isinstance(source, dict) and source.get("url") not in block:
-                        errors.append(f"{event.get('event_id')} 缺少來源連結：{source.get('url')}")
-            for field_key in ("map", "charts", "images"):
-                result = event.get(field_key, {})
-                if not isinstance(result, dict):
-                    continue
-                if field_key == "images" and result.get("status") == "omitted":
-                    if "**圖片說明：**" in block:
-                        errors.append(f"{event.get('event_id')} 沒有可見附件時不得顯示圖片說明")
-    return errors
-
-
 def validate_canonical_reader(data: dict[str, Any], text: str) -> list[str]:
     """Validate the only reader layout accepted by canonical publication."""
-    return validate_canonical_sectioned_layout(data, text)
+    return validate_three_part_reader(data, text)
 
 
 def print_result(errors: list[str]) -> int:
@@ -1536,11 +1372,6 @@ def build_parser() -> argparse.ArgumentParser:
     brief = subparsers.add_parser("brief", help="驗證事件資料與讀者版一致性")
     brief.add_argument("--manifest", required=True)
     brief.add_argument("--input", required=True)
-    brief.add_argument(
-        "--reader-layout",
-        choices=("canonical-sectioned",),
-        default="canonical-sectioned",
-    )
     return parser
 
 

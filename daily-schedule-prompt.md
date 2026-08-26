@@ -243,7 +243,7 @@ Repository 內只有 canonical publisher 可以建立 reader-facing release。�
 
 `READER_INTERNAL_REPAIR_LOG_EXCLUSION_GATE`：任何「修復紀錄」、429／HTTP 狀態、重試等待、archive 備援、去重效能修正、圖片補救與 checkpoint 重建都只屬內部 run log／audit receipt，不得出現在 canonical reader 或 reader bytes 的對話副本。
 
-`CANONICAL_SECTIONED_READER_LAYOUT_GATE`：canonical reader 必須使用 `news-brief-template.md` 的現行分區版型：標題、統計期間、六項評級說明後，先輸出唯一 `## 今日總覽`，依板塊列出 `時間｜事件｜評級` 完整清單；再依相同順序輸出各板塊所有單項新聞。每則固定為「標題｜評級 → 實際可見附件（若有）→ 新聞摘要 → 評為X級的評論與段末來源」。沒有附件時不得顯示圖說或占位文字。不得改成欄位式逐條詳報，也不得加入事件編號、驗收摘要或後台欄位。格式錯誤只重做 reader render。
+`CANONICAL_THREE_PART_READER_LAYOUT_GATE`：canonical reader 必須使用 `news-brief-template.md` 的三段式版型：標題、統計期間、六項評級說明後，依序輸出 `## 今日總覽`、`## 逐條詳報`、`## 後續觀察`。總覽依板塊列出 `編號｜時間｜事件｜等級` 完整清單；逐條詳報依 manifest 順序使用「事件編號. 事件名稱 - 等級」，並保留 `時間／來源／事件細節／分析` 必填欄位，地圖／資料圖表／圖片／各方說法依 manifest 條件式顯示。沒有實際附件時省略對應視覺欄位，不得顯示圖說或占位文字；兩則事件間固定一條 `---`。簡化分區新聞卡不得發布。格式錯誤只重做 reader render。
 
 `CANONICAL_RUN_BUNDLE_GATE`：canonical publisher 成功後，run-logs 的同一 `logs/runs/<run_id>/` 必須持久化可獨立重算的 `candidate-audit.json`（含完整 `article_dispositions`）、`image-evidence/`、`materialized-images.json`、map decisions、checkpoint、counts、event manifest、reader、attachments index、release receipt 與 bundle manifest；每項保存 path、size、SHA-256 與 Git blob SHA。只有上述 bundle 與 canonical release 具有 byte identity，且 `logs/current.json` 原子指向本輪 completed run 後，才可宣稱 GitHub canonical delivery 完成。缺少證據時不得用本機路徑、聊天文字或舊 artifact 代替。
 

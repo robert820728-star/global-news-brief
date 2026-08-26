@@ -225,12 +225,13 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("sections", text, path.name)
             self.assertIn("topic_weights", text, path.name)
 
-    def test_contract_documents_do_not_reintroduce_retired_reader_outline(self):
+    def test_contract_documents_require_the_restored_three_part_reader_outline(self):
         settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
         mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
-        self.assertNotIn("其後只能有三個二級標題", settings)
+        for heading in ("## 今日總覽", "## 逐條詳報", "## 後續觀察"):
+            self.assertIn(heading, settings)
+            self.assertIn(heading, mobile)
         self.assertNotRegex(mobile, r"(?m)^## 基礎讀者版$")
-        self.assertNotRegex(mobile, r"(?m)^8\. `## 後續觀察`")
 
     def test_manifest_schema_allows_reader_image_omission_note(self):
         schema = json.loads(
@@ -247,14 +248,14 @@ class PipelineContractTests(unittest.TestCase):
         self.assertNotIn("`map.required=true` 時必須附上", template)
         self.assertNotIn("**圖片說明：**", template)
 
-    def test_publisher_uses_only_canonical_sectioned_reader_validator(self):
+    def test_publisher_uses_only_canonical_three_part_reader_validator(self):
         for relative in (
             "scripts/publish_news_brief.py",
             "scripts/check_unique_delivery_gate.py",
         ):
             text = (ROOT / relative).read_text(encoding="utf-8")
             self.assertIn("validate_canonical_reader", text)
-            self.assertNotIn("validate_news_brief.validate_brief_text", text)
+            self.assertNotIn("validate_canonical_sectioned_layout", text)
 
     def test_scheduled_host_without_python_uses_mobile_native_fallback(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
@@ -754,14 +755,17 @@ class PipelineContractTests(unittest.TestCase):
         for requirement in (
             "READER_TEMPLATE_STRUCTURE_GATE",
             "CANONICAL_TODAY_OVERVIEW_NO_OMISSION_GATE",
-            "CANONICAL_SECTIONED_READER_LAYOUT_GATE",
+            "CANONICAL_THREE_PART_READER_LAYOUT_GATE",
             "news-brief-template.md",
             "每日新聞讀者版",
-            "時間｜事件｜評級",
+            "編號｜時間｜事件｜等級",
+            "## 逐條詳報",
+            "## 後續觀察",
             "不得省略、跨區集中或重新設計",
-            "--reader-layout canonical-sectioned",
+            "validate_news_brief.py brief",
         ):
             self.assertIn(requirement, daily)
+        self.assertNotIn("--reader-layout canonical-sectioned", daily)
 
     def test_reader_excludes_internal_repair_log(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
@@ -772,32 +776,35 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("修復紀錄", document)
             self.assertIn("不得出現在讀者版", document)
 
-    def test_reader_preserves_canonical_sectioned_story_layout(self):
+    def test_reader_preserves_canonical_three_part_field_layout(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         scheduled = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         template = (ROOT / "news-brief-template.md").read_text(encoding="utf-8")
 
         for document in (daily, scheduled):
-            self.assertIn("CANONICAL_SECTIONED_READER_LAYOUT_GATE", document)
-            self.assertIn("不得改成欄位式逐條詳報", document)
+            self.assertIn("CANONICAL_THREE_PART_READER_LAYOUT_GATE", document)
+            self.assertIn("時間／來源／事件細節／分析", document)
         for requirement in (
             "# 每日新聞讀者版",
             "統計期間：",
             "評級綜合考量：",
             "## 今日總覽",
-            "## 🇹🇼 台灣新聞",
-            "| 時間 | 事件 | 評級 |",
-            "### 事件名稱｜A",
-            "評為A級",
-        ):
-            self.assertIn(requirement, template)
-        for forbidden_example in (
+            "## 逐條詳報",
+            "## 後續觀察",
+            "| 編號 | 時間 | 事件 | 等級 |",
             "### TWN-01. 事件名稱 - A",
             "**時間：**新聞時間：",
+            "**來源：**",
             "**事件細節：**說明發生什麼",
             "**分析：**說明真正值得注意",
         ):
+            self.assertIn(requirement, template)
+        for forbidden_example in (
+            "## 🇹🇼 台灣新聞",
+            "--reader-layout canonical-sectioned",
+        ):
             self.assertNotIn(forbidden_example, template)
+        self.assertNotRegex(template, r"(?m)^### 事件名稱｜A$")
 
     def test_canonical_run_bundle_persists_recomputable_audit_and_image_evidence(self):
         scheduled = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
