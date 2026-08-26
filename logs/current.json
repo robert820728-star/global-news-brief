@@ -11,7 +11,7 @@
   "image_evidence_artifact": {"branch":"run-logs","path":"logs/runs/gnb-20260826T162844Z-fcd00184/image-evidence.json","blob_sha":"8a8c10f8a6cc2eaedc0dc0a4a28dc3ed2a8db1fb"},
   "last_completed_stage": "workspace-ready",
   "last_error": null,
-  "main_sha": "033184e36743355a005d2ef8e73c9fb9453ae448",
+  "main_sha": "a5a70dd4a7c1b2eea0f6852d8832caf65b203861",
   "map_decisions_artifact": {"branch":"run-logs","path":"logs/runs/gnb-20260826T162844Z-fcd00184/map-decisions.json","blob_sha":"6ae9bdc2da8158a7dc895552f0f0cefed2bc0842"},
   "native_media_status": "unavailable",
   "reader_artifact": {"branch":"run-logs","path":"logs/latest-reader.md","blob_sha":"8825faf7a6bdb41e433664c1ccbf5cfd91e7371c"},
@@ -20,6 +20,6 @@
   "schema_version": "1.5.0",
   "stage_index": 4,
   "status": "running",
-  "updated_at": "2026-08-26T23:56:37Z",
+  "updated_at": "2026-08-26T23:59:15Z",
   "verification_artifact": {"branch":"run-logs","path":"logs/runs/gnb-20260826T162844Z-fcd00184/verification.json","blob_sha":"baa0964851909e7de2444a3a744a41254228bc2b"}
 }
