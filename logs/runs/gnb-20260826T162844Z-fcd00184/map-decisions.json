@@ -1,0 +1,22 @@
+{
+  "schema_version":"mobile-map-decisions-1.0",
+  "run_id":"gnb-20260826T162844Z-fcd00184",
+  "main_sha":"a535e4f4fd900ad929f20fc9dcbf8a073dbbf05a",
+  "decided_at":"2026-08-26T22:41:00Z",
+  "execution_mode":"mobile-native",
+  "events":[
+    {"event_id":"TWN-01","required":false,"claim_critical":false,"status":"not_required","rationale":"核心是全國性採購法案與預算治理，地點或空間關係不改變讀者理解。"},
+    {"event_id":"TWN-02","required":false,"claim_critical":false,"status":"not_required","rationale":"目前僅2例且官方未公布可支持地理分布判讀的擴散範圍；位置圖會過度暗示群聚。"},
+    {"event_id":"TWN-03","required":false,"claim_critical":false,"status":"not_required","rationale":"全國性調查的核心是比例與使用時數，不是地理分布。"},
+    {"event_id":"TWN-04","required":false,"claim_critical":false,"status":"not_required","rationale":"食品回收風險由產品批次與流向界定，嘉義單點位置不會改善風險判讀。"},
+    {"event_id":"TWN-05","required":true,"claim_critical":false,"status":"omitted","rationale":"金門海漂豬與金門至台灣本島／其他離島的產品流向具有明確跨海空間關係。","omission_reason":"mobile-native 無 canonical 本機定位圖 renderer，且本地附件契約不得冒充已執行。","reader_omission_note":""},
+    {"event_id":"TWN-06","required":true,"claim_critical":false,"status":"omitted","rationale":"台灣與帛琉、太平洋島國論壇的跨國位置關係有助理解外交脈絡。","omission_reason":"mobile-native 無 canonical 本機定位圖 renderer，且本地附件契約不得冒充已執行。","reader_omission_note":""},
+    {"event_id":"TWN-07","required":true,"claim_critical":false,"status":"omitted","rationale":"台灣與烏克蘭利沃夫的跨境醫療合作位置關係有助理解援外範圍。","omission_reason":"mobile-native 無 canonical 本機定位圖 renderer，且本地附件契約不得冒充已執行。","reader_omission_note":""},
+    {"event_id":"TWN-08","required":false,"claim_critical":false,"status":"not_required","rationale":"全市場指數與成交數據的核心是時間與價格變化，不是空間關係。"},
+    {"event_id":"TWN-09","required":true,"claim_critical":false,"status":"omitted","rationale":"颱風路徑、警戒區與台灣各地預警管制屬強地理訊號。","omission_reason":"mobile-native 無 canonical 本機定位圖 renderer，且本地附件契約不得冒充已執行。","reader_omission_note":""},
+    {"event_id":"CHN-01","required":true,"claim_critical":false,"status":"omitted","rationale":"洪水沿左江流域、多站超警與受災範圍屬強地理訊號。","omission_reason":"mobile-native 無 canonical 本機定位圖 renderer，且本地附件契約不得冒充已執行。","reader_omission_note":""},
+    {"event_id":"CHN-02","required":true,"claim_critical":false,"status":"omitted","rationale":"颱風接近福建並造成航線、景區及列車停運，路徑與影響區域屬強地理訊號。","omission_reason":"mobile-native 無 canonical 本機定位圖 renderer，且本地附件契約不得冒充已執行。","reader_omission_note":""},
+    {"event_id":"CHN-03","required":false,"claim_critical":false,"status":"not_required","rationale":"核聚變裝置目標圖像與技術路線是科技事件，上海位置不改變核心技術主張。"},
+    {"event_id":"CHN-04","required":false,"claim_critical":false,"status":"not_required","rationale":"A股指數與成交額是市場時間序列，地理定位不改善理解。"}
+  ]
+}
