@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 20390)
-Total output lines: 2567
-
 {
   "archive": "tar.xz",
   "chunk_count": 55,
@@ -1182,7 +1179,7 @@ Total output lines: 2567
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "82f8e4989b410dac34911fd1a48c027af0221353c08f608d23c4518611677ae6",
+          "sha256": "42ce5e2f40110d57fc1c8a3b59eed94707816621050abae1a85ee64d945179d2",
           "size": 2056,
           "start_line": 1
         },
@@ -1208,11 +1205,11 @@ Total output lines: 2567
           "start_line": 25
         }
       ],
-      "encoded_sha256": "c90dbc0cb237df0cd2901b3f9b755dc755d627f91310adb7a9ef954357c3621d",
+      "encoded_sha256": "e103043d4fc6649870c7383bcfffcd673751f62dc4f396dacd8dc4bd8c13aed5",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0031.txt",
-      "sha256": "6d7e462cf460489069cb06372a20635f60de6c4ec38f3924651a51872719b407",
+      "sha256": "8c921ff6dad96afc3d809c47e823ce4447b2b775bb10bc79e5a85d0f0bfc5bdb",
       "size": 8224
     },
     {
@@ -1329,7 +1326,60 @@ Total output lines: 2567
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0034.txt",
-      "sha…390 tokens truncated…e": 16,
+      "sha256": "67d1456ebabe2a06cbd0f0dd3748c702c7a03ed3a32442d79a5981810eed735c",
+      "size": 8224
+    },
+    {
+      "block_count": 4,
+      "blocks": [
+        {
+          "end_line": 8,
+          "index": 1,
+          "sha256": "b7721b1c0dcc7894a808bbe08304c3a3d9ff9295644589a0e74ec2c1fd21c894",
+          "size": 2056,
+          "start_line": 1
+        },
+        {
+          "end_line": 16,
+          "index": 2,
+          "sha256": "39474adfe95e31ca2948f611dcfe41c9e1e333266cc6abc503b35457868f3702",
+          "size": 2056,
+          "start_line": 9
+        },
+        {
+          "end_line": 24,
+          "index": 3,
+          "sha256": "27dfe59201810c072915f10413e79785bf37147b204994c48f62dfeca606fa82",
+          "size": 2056,
+          "start_line": 17
+        },
+        {
+          "end_line": 32,
+          "index": 4,
+          "sha256": "7bb4807a52d06de2690f4cac44d0a812d261a40e64d343aaec24aedc2b14a268",
+          "size": 2056,
+          "start_line": 25
+        }
+      ],
+      "encoded_sha256": "6e8969b9b4c2df40310a4e0003527e0cb5b69c70728c78f30a2181c2c8f5dda0",
+      "encoded_size": 8192,
+      "line_count": 32,
+      "name": "capsule.part0035.txt",
+      "sha256": "19bf24c49ff829cf820584e35dc570e19589e7f97920b8205c1a7a2019e7b8aa",
+      "size": 8224
+    },
+    {
+      "block_count": 4,
+      "blocks": [
+        {
+          "end_line": 8,
+          "index": 1,
+          "sha256": "53580d91dedc38c7999b2c5b8cb4cec032f677317a03da332e234b355ac2e805",
+          "size": 2056,
+          "start_line": 1
+        },
+        {
+          "end_line": 16,
           "index": 2,
           "sha256": "d6c7c3e4cb526503fd199d4dd3c66a3bb1f1f9a3af555356c8e2d39b5d9b743c",
           "size": 2056,
@@ -1455,23 +1505,23 @@ Total output lines: 2567
         {
           "end_line": 24,
           "index": 3,
-          "sha256": "809422fe8781bfba0cfb72d89e7bbb0e614b081852217bbf786c8541d4055c4d",
+          "sha256": "dcc87fa28bddb721280b19cff7027789da819726a1c1f4a8ff5cb4a3afd02b39",
           "size": 2056,
           "start_line": 17
         },
         {
           "end_line": 32,
           "index": 4,
-          "sha256": "0824051450e84ec83ce0fa177a34e072daff1ed97d9e2f1572643891fe9b8d49",
+          "sha256": "4b7beef6eff9b7cea81950b67e547163e746099b757860972d9a3d25ed8f04aa",
           "size": 2056,
           "start_line": 25
         }
       ],
-      "encoded_sha256": "ce7713364475d902cfdc9eda19e3152a05c9b1c3db5adef1cf6c9c9f74a55e14",
+      "encoded_sha256": "adc5f6627fda2ee7e6348eb607bbfe304c648def98515b7f2d16a17e08176904",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0039.txt",
-      "sha256": "0134265ce03105f8dd48205f7244586245e3ee03ccf41a643932387972b7f207",
+      "sha256": "75e2500f47216c3e34a8dde0d9afe2ec382dcea82e1d5b097cf1c08b09524be2",
       "size": 8224
     },
     {
@@ -1480,37 +1530,37 @@ Total output lines: 2567
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "cddbb74b30f989d7b5ca87df186c768e041fa6529f6d15ba54ec412a1cd0dff6",
+          "sha256": "2d89aff0fa3d5c64995f22842f116016d7b8fa07d770b3b383659d1003d929d7",
           "size": 2056,
           "start_line": 1
         },
         {
           "end_line": 16,
           "index": 2,
-          "sha256": "c5e7d23d7ab7b8e81a9c5aa50c9bc5247567c12377af4c358294c2a70579a45b",
+          "sha256": "eba9ff600cb06777d241c310bca023c37abb6b3e0346211e7d9164ab92dd86f9",
           "size": 2056,
           "start_line": 9
         },
         {
           "end_line": 24,
           "index": 3,
-          "sha256": "58b454b708dc9092f3ee73a05ca0fae81445c592feb7721491236046dbfe0846",
+          "sha256": "eec6358e5c5cd04a7e2a21cf357e3feb1ce6e3b906ccdecbe65a576451bc519c",
           "size": 2056,
           "start_line": 17
         },
         {
           "end_line": 32,
           "index": 4,
-          "sha256": "2176f6e1afdd5f533968655999192379ff585a1ebe95b45941465e96f9fc2223",
+          "sha256": "56eb1f9b9534b2f36e733b8588561d8ab635c4c1c878632b35bf487cc83d1e3a",
           "size": 2056,
           "start_line": 25
         }
       ],
-      "encoded_sha256": "08578ab3c03b05bd8a7533dbd167aaac6e9e85319326c8791e6980dae7fca796",
+      "encoded_sha256": "c48176893e4582068c94f2853ff4084ed9fbd481f6e8caee7d43c3fdd49ee5a0",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0040.txt",
-      "sha256": "cae22dc5a6b9e0246da6ebd233d67d759eb8237eda2128ea3d7ae4c05ff804d0",
+      "sha256": "b5a283b2793ac5bac1fa6327a872723cf1de31ea86775fc600987477de81eff3",
       "size": 8224
     },
     {
@@ -1519,37 +1569,37 @@ Total output lines: 2567
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "2c1c8e281561ad635c32667f7ef946e117cf658526fdef253533d2feacfb64be",
+          "sha256": "4ea6866b16b3d57110dae51ad3e3137f05bbf4afcc3e29349872d6f47ee1ec0f",
           "size": 2056,
           "start_line": 1
         },
         {
           "end_line": 16,
           "index": 2,
-          "sha256": "ab222a4c306ff84367fd4fc8f8bae3721195b01fee5dc3828a28cfb7755e44de",
+          "sha256": "a58126525cf53df6a35d82112b8b89317b3873ccf17c5d09001f0e0a72d5d007",
           "size": 2056,
           "start_line": 9
         },
         {
           "end_line": 24,
           "index": 3,
-          "sha256": "8d1c11c9054e9b4fff9343e9134310d198b7a1e9354a768d5ea9ad8fa1e4bd23",
+          "sha256": "c4362be265ca6c233b38e2b518b3640ec89a89c447c5325a1b0eaac655a68ab9",
           "size": 2056,
           "start_line": 17
         },
         {
           "end_line": 32,
           "index": 4,
-          "sha256": "d8af523a786353c445bdd141b12e251628e69855238b35b66bdacaf92434719f",
+          "sha256": "bae62df3a8aa6b1b5f8a364f980124b206c350ab9788425990d49a97218c278e",
           "size": 2056,
           "start_line": 25
         }
       ],
-      "encoded_sha256": "af7733a1add11ec20193b97ad7e8d9de3ebcd48d91e8f4db5f48152609f63500",
+      "encoded_sha256": "da099991cba7bed3655c810b9380ab733d8226877998c2752e86ec4ccb659980",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0041.txt",
-      "sha256": "d5f4cdf223487720908a076ad1b5886bd87f45dad68f1d08c06cd2e321c4986a",
+      "sha256": "4bd15bc17bb1d3576fa1b3f661b368b4aec760e684c02840a0704f54c5fc4274",
       "size": 8224
     },
     {
@@ -1558,37 +1608,37 @@ Total output lines: 2567
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "7b203ac7e24c4f4cc97a523d33ccf9164db16f6f37f818a11a59af9b5d8e2472",
+          "sha256": "4bacfeb2dbb6b1a8d42042f323d4ddbf45f1c910818bad46c9fcbd2a68960c6d",
           "size": 2056,
           "start_line": 1
         },
         {
           "end_line": 16,
           "index": 2,
-          "sha256": "23c375bf7118587e98cfaec426cf637a63a4265e4b842e8e58a5ec481db6334e",
+          "sha256": "346a920c196e3c9945e3f80e375d0d8a3ff4d35cbb575cfaf7138d01343ad432",
           "size": 2056,
           "start_line": 9
         },
         {
           "end_line": 24,
           "index": 3,
-          "sha256": "e5f39e991a5128dd376ec77be403d82b6b3cd66314078514ef9ed6be408388c0",
+          "sha256": "0e4264db3c549463eebcf30e9589fde67948f77a6550724f6059c43015b2c26c",
           "size": 2056,
           "start_line": 17
         },
         {
           "end_line": 32,
           "index": 4,
-          "sha256": "dfae81e176b0f934fb8ea367f8845740f6a2544fac180ff871e3fd1cb09d1495",
+          "sha256": "b44375a2e2d0fa8a9c8400502cc3ac7f1db3ff6d10f2b703a8089db3617d1b10",
           "size": 2056,
           "start_line": 25
         }
       ],
-      "encoded_sha256": "2edf8f069cfd5dcbcb2e33bbbe22bc8f51a27f129186996fc56597d6853791a2",
+      "encoded_sha256": "76d0c26b6cba6108129d71ab73767b63df33dbdb0b7ee18c46f9126676e20942",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0042.txt",
-      "sha256": "91ac6858508c3abb0e69e8dc46f872cae0ccef683a66b8a4cc8e626d0a49d1db",
+      "sha256": "fca619bbd6586478f8369fc3ee54529904f828e7479a4322efe85dfc115d32b8",
       "size": 8224
     },
     {
@@ -1597,37 +1647,37 @@ Total output lines: 2567
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "35166d3de3c26ae6f76b0ed736177bc429380c398b794b71540643def85a0f26",
+          "sha256": "15c395ca98c25a2aaa32f37c41d5a2f33d0c35f0a6a36e31e269417636f1d381",
           "size": 2056,
           "start_line": 1
         },
         {
           "end_line": 16,
           "index": 2,
-          "sha256": "0485cd7255acb89677cc4ecfa47e64cf52ab16ca79168c54056b6c2d2fa472f6",
+          "sha256": "e2d5c2957165e9b9ab4375d875169522ec29ee4fc8d41948d234b5761b833150",
           "size": 2056,
           "start_line": 9
         },
         {
           "end_line": 24,
           "index": 3,
-          "sha256": "70407566f5fdb18877625b6b4c2e1a345f1bb81119711a9d6a50831a33956045",
+          "sha256": "b85e420e450677a4bbd1d102e6005963ea600c1cc57119a9eed159869a7f18e5",
           "size": 2056,
           "start_line": 17
         },
         {
           "end_line": 32,
           "index": 4,
-          "sha256": "4753c7200eae99930f6264e382f553cfc9bb8156e950854524d60a5e335df345",
+          "sha256": "2ba52e31535c6c692721084c4e6a1be5d51f96daa76672cf50858ca08eab8fef",
           "size": 2056,
           "start_line": 25
         }
       ],
-      "encoded_sha256": "02b1bdaf38b6dd2018d031f65e333e1bcd939ed0987e8dbe03f4c1fcbf7a201b",
+      "encoded_sha256": "e755f4c2d8c8c57e64f72821b93730faef00bfb00cd586c05bdc307f93cbc601",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0043.txt",
-      "sha256": "eb8a26cd4b149ac4b8ad14924064b1e8a7ac0460049f80c5d662d0a27d3c822c",
+      "sha256": "aff12d35c5e50d1018596dea23a28cba573e29e16b992b8a21769a93c43035e7",
       "size": 8224
     },
     {
@@ -1636,37 +1686,37 @@ Total output lines: 2567
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "c3bcc245b1813e100507caaf7de55c1e87859bba267c29fd66049152332b9b09",
+          "sha256": "968792202892792985acec92f7933c74b98b20c6a0fc4318b00b0a5b716f9eda",
           "size": 2056,
           "start_line": 1
         },
         {
           "end_line": 16,
           "index": 2,
-          "sha256": "35dfb4a68ef95236a9f13d57618bfb4f64582c9b87f3426f4e1832f211bbfad6",
+          "sha256": "8ee1c6ba561fd0f0dcaad30e7f6e8ed1e01f6f1dfb017dc3a85f9a3a7d05a815",
           "size": 2056,
           "start_line": 9
         },
         {
           "end_line": 24,
           "index": 3,
-          "sha256": "10ca4633ae5bda141c861420510d639d22984a45dff40b10e3ab4d2e70c38771",
+          "sha256": "c8d449ec7a1696c0e3616fe8bea8f7649779b67ea2e80eca29fe4ec41dadda37",
           "size": 2056,
           "start_line": 17
         },
         {
           "end_line": 32,
           "index": 4,
-          "sha256": "49d789c9b512699521a595506ebc6c80526438f73feffeb0c68bbab4631f6148",
+          "sha256": "398c4d63be924f72fb2e1c7998f8d7eb86aeb01d94a84a61176f77dc5e7523dc",
           "size": 2056,
           "start_line": 25
         }
       ],
-      "encoded_sha256": "82430570bbfe470a98695a91ed59c6d3ea0aaded258462bc2d803c30f2101d08",
+      "encoded_sha256": "26e711eb4af0910ab4c52a03b692462dd0a4a81258192e41d8b11136550a845f",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0044.txt",
-      "sha256": "c8862979c49aabcb6b713afb8934c655179040a9536f6c4d2827418641a01e7f",
+      "sha256": "34b157ba6b1dd33aee74daa2840ba428f756ed5daa4698b4a78d0d68585c2bea",
       "size": 8224
     },
     {
@@ -1675,37 +1725,37 @@ Total output lines: 2567
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "0497122c7c9a5f2dea774ab5990125b7608ff262161237a58372cb1c738b5a78",
+          "sha256": "58bd21fe45c91b07969b5649d7ca54f377a759d85dbe42539e3cf22084a010a0",
           "size": 2056,
           "start_line": 1
         },
         {
           "end_line": 16,
           "index": 2,
-          "sha256": "48544e31642e5f40f3c0643e3279b8c2fe91b86e40c7e0093763be465f8bb170",
+          "sha256": "5bd35342dc702eede16927174f662f53b6039dad3a6fcc712bed6eee51c9736c",
           "size": 2056,
           "start_line": 9
         },
         {
           "end_line": 24,
           "index": 3,
-          "sha256": "44b1ac3f70a2845930f3687fffd14c4711df6bf14c790b4f27370d505a7e7799",
+          "sha256": "295377a6e8ecbdeffb6c5545976d371eee02ad45d4dc333b5899aa3f980113d3",
           "size": 2056,
           "start_line": 17
         },
         {
           "end_line": 32,
           "index": 4,
-          "sha256": "4731af379b399e37586d16e705b86780d08faa5510653378ea4fd4305a8b0ec4",
+          "sha256": "9972428187a765e84582ccc667c8a0d50cc5e3843c8b32ac40f589b78a357021",
           "size": 2056,
           "start_line": 25
         }
       ],
-      "encoded_sha256": "8b44e2a9b349e0eb44eae4aecc01bcf752905b0dba66cacfbaa94256054cf780",
+      "encoded_sha256": "bdd53d71a33046b452fa98b921f256f085e0e0e4a2ad603d749e15ff721950e2",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0045.txt",
-      "sha256": "e2ae360e94ccfa24f79bcbe1d3979f690e18e9fd0d73acc14cc5d878ebc79459",
+      "sha256": "ecb16909ce5c422d6dce6bb179be848bdad6837459b217dc373bd3f5e91022ef",
       "size": 8224
     },
     {
@@ -1714,37 +1764,37 @@ Total output lines: 2567
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "21632a163d356991befa003949eb69cd0de1b724f94e89465fbee3f690b7f456",
+          "sha256": "6d290112df69d12d29fe2f4f17092a136f70cdf81858c9fbf3f0223ee6365adc",
           "size": 2056,
           "start_line": 1
         },
         {
           "end_line": 16,
           "index": 2,
-          "sha256": "34e0d88574e1a43b4c5c987adecc3cf05acaabb51a8b90f2b8384169b5d34bfa",
+          "sha256": "9428e3c1b4802fd7808f63fdbd3136f9dce03791536b27e103c919f301c1a2cb",
           "size": 2056,
           "start_line": 9
         },
         {
           "end_line": 24,
           "index": 3,
-          "sha256": "2729ef011df9dab3503153939009721aad64010c696e47072090b57b47e7fa0e",
+          "sha256": "34d484d032470d1d8daa886dcc2e004679be2af73fe507b8dbe77197f53c3b59",
           "size": 2056,
           "start_line": 17
         },
         {
           "end_line": 32,
           "index": 4,
-          "sha256": "41561935a10fba7a3dd0006beef41dd4d979d5f92c00e5aae3616a35d5d50532",
+          "sha256": "1789f9e3fa8ead9f6756ecd39402f4ac60b188d4d04e4962391a554a3e886607",
           "size": 2056,
           "start_line": 25
         }
       ],
-      "encoded_sha256": "6cf7038921a4c995b9042032b286f703f7c1339cc8645e926939ab3568dad4f3",
+      "encoded_sha256": "0401e58769a923c3ba4bb951eea8a1c93095f06166dfad27a2b7fef684e80faa",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0046.txt",
-      "sha256": "91c0de698fdb7159ae261e92feb6829dcc35701ebc4389d594c688fdcd485b55",
+      "sha256": "51d25a90360d44e801e7844b31b7dd4be09de9def21d9061f11ac4253b3e19f0",
       "size": 8224
     },
     {
@@ -1753,37 +1803,37 @@ Total output lines: 2567
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "c02361faf1155f630bf6e9eb7416bb18a8d0fa86b7da5dd5d1889095b5ddaa5a",
+          "sha256": "88614709ccfa16eaecb666d59a45df204aa3edf30a89f34e8b511e4a17b2f36b",
           "size": 2056,
           "start_line": 1
         },
         {
           "end_line": 16,
           "index": 2,
-          "sha256": "7c80d2150871708edee916ab8053103abb8ba29816477d9ef4d49b11323e3a94",
+          "sha256": "28a73723a58d442ac6cef6e63ef0c68734490ce3100817ab74847d6c48b88068",
           "size": 2056,
           "start_line": 9
         },
         {
           "end_line": 24,
           "index": 3,
-          "sha256": "60dd0238d5a0a814165b86b8c749a99a61751830b83e6f754d6f547e65ee9e86",
+          "sha256": "aa74ef065d04bda5ed15eb44dab31dfd69ff0fbd427cb8b9e761c086faaafa63",
           "size": 2056,
           "start_line": 17
         },
         {
           "end_line": 32,
           "index": 4,
-          "sha256": "8f316a47f0ba8dd6acd18c5ac375c338cd3008cdaad07b395baf467eab12731f",
+          "sha256": "14ca67a2777f4e8d2bc8128a343f507513da9b445a571e2d7e87e76ff0231f21",
           "size": 2056,
           "start_line": 25
         }
       ],
-      "encoded_sha256": "0e02103cfccc417e70a487d650ae1b5f2701640cb89b727d1dc2648188db7141",
+      "encoded_sha256": "4decc14eb00cc491d854409985d26f7e018f0b0d30ad99794d297a2d52ba7f17",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0047.txt",
-      "sha256": "6c38e77de45eca502a9e042d7a4ca84c4678f16541bb9ef9c1c6a2e3feff0cbb",
+      "sha256": "a5152d094c0920abbb281c282feda9b28b01fe9c01ce97abb4b5d623976c2c85",
       "size": 8224
     },
     {
@@ -1792,37 +1842,37 @@ Total output lines: 2567
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "494773eb161630e248f694ef11e30fd29410261ed51a418ab6985221f201c7eb",
+          "sha256": "f022f73408529fa309e1a226d07cd8d557d4faa2d6493dc26e5c72a11fa6fbd7",
           "size": 2056,
           "start_line": 1
         },
         {
           "end_line": 16,
           "index": 2,
-          "sha256": "f178c3ffe1bfbc06838c8b5b35f90bf6fb5451b50a9f678dd835b2195e9f7dc3",
+          "sha256": "e82fba125a98089ba932ca75c03eb0c3e6c1449e3d4fde9be0c6c42e89b94816",
           "size": 2056,
           "start_line": 9
         },
         {
           "end_line": 24,
           "index": 3,
-          "sha256": "51c5f6a9f94d4db4533df2c8710964378fb302f1143bfa0a85a7d1c8bbba52e2",
+          "sha256": "ae3be14a00173b5cb6db261f831ef2c8bd8c19ac0a29f1f40dbb260987ea748d",
           "size": 2056,
           "start_line": 17
         },
         {
           "end_line": 32,
           "index": 4,
-          "sha256": "a4e4f2fa5403f1e27176c35e1199e84080085688d5b7877f5cf27f015d8c4400",
+          "sha256": "1365dc12413408b9302d321724f0a5e4557c05e50fc31284e35cce3bf041714e",
           "size": 2056,
           "start_line": 25
         }
       ],
-      "encoded_sha256": "7baba0791ba4752d210b53eb2e562033a70922e9668d666aa89d352fa32cd124",
+      "encoded_sha256": "c0958676997827540c059abfafacc691d587e10707e3511815038e6c099a9b4c",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0048.txt",
-      "sha256": "d66315b29c8da43a0a1a9ed9fae7b4640815f63c146b86afb2ab8506819daf17",
+      "sha256": "fae10f7f0ea31f3100327f8f1a907f228b61f5b2a1e970d407aca86220bea1b7",
       "size": 8224
     },
     {
@@ -1831,37 +1881,37 @@ Total output lines: 2567
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "3fa8664647e1d458becf657513744342e650e9f4aa58a19ae78793f06312d715",
+          "sha256": "1e2d38cf1db05bd793c32f315f3db2045316cd19dca8d9538f1e9255143a03aa",
           "size": 2056,
           "start_line": 1
         },
         {
           "end_line": 16,
           "index": 2,
-          "sha256": "476c64ead365be74dc9062a4d2817b05ddffdef4357aa78ca8ac17c031c055d5",
+          "sha256": "00e6c5e3d7499a3fe2f51d9596d631f9f1e7d338ac061616a1526b64a4f62700",
           "size": 2056,
           "start_line": 9
         },
         {
           "end_line": 24,
           "index": 3,
-          "sha256": "38b9b3006fc4a2f658b5d562ebb6c96f179a3398fbc834f07388c89d16232fc6",
+          "sha256": "2af24f069a4bdbb422f681c981211733e6019e90d8c5a35ef908f67b2d3b2d27",
           "size": 2056,
           "start_line": 17
         },
         {
           "end_line": 32,
           "index": 4,
-          "sha256": "091b191d86d41b1c41a0822f8b5edd9128468330588afff1583bda0120ae29ed",
+          "sha256": "1f80795b2906f06990faa55b20922dfe02b74d0941483c7da962829b497d23e0",
           "size": 2056,
           "start_line": 25
         }
       ],
-      "encoded_sha256": "fce95b7e346ffb7c3bc4c9ab1ee858db9b0c26539ba2a0fc6a9c75340def76f4",
+      "encoded_sha256": "d71961d84e11feeb3bf58813782ba32f87604b0450c5a5841ba3c71307969692",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0049.txt",
-      "sha256": "84c0dd30d58b5f44ca1b4935ae6a5289bb96b08c71acc3e334de3ac869103c9b",
+      "sha256": "cf4414750bffa8ca04f89f6274cd1c6d132f94e3da40e9fbe8695f4a397b0e78",
       "size": 8224
     },
     {
@@ -1870,37 +1920,37 @@ Total output lines: 2567
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "6031b672173ad4165cd8c2edd5b506210e0ee88b6d4c2ea31ceeeb2270122309",
+          "sha256": "4d9d5c5b1a98c7b0b0ed1af41dd0d3ff5012c17b44bb92ee2ff10795e621192f",
           "size": 2056,
           "start_line": 1
         },
         {
           "end_line": 16,
           "index": 2,
-          "sha256": "7d1ae957538d070ca664caeeecc5f3ad1ae51467501c5aeed72daadfb45ee143",
+          "sha256": "d9a4bd41ac8d9e55c9d72f4a2c28afa4dc4503a46a9a08ce6f9d2060373773fa",
           "size": 2056,
           "start_line": 9
         },
         {
           "end_line": 24,
           "index": 3,
-          "sha256": "bb1135a91a073c238d03d3cc3197b5430bbbe345839c006acea90c8eb0772999",
+          "sha256": "28fe9c5de0f1700b5f69e2f7a661217ba4aa0f507d989e2cb162a3f07b080edc",
           "size": 2056,
           "start_line": 17
         },
         {
           "end_line": 32,
           "index": 4,
-          "sha256": "f884535ffb4880a0746a1ca93e0d3a3c7fb576426d6edc8f4eab96102f8348c7",
+          "sha256": "8da4a791639161b8eda8fa0972ca8ffbe80dffb6795ced88733a013773c09de7",
           "size": 2056,
           "start_line": 25
         }
       ],
-      "encoded_sha256": "6e87495d15d687ea77548f362d34668d0cf6d72a01c894671acf1d1239086a33",
+      "encoded_sha256": "bbd4c42f6ddc1934b2fdc06143e70cbd32333d3bba49e3c5c45ab059ff91e67c",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0050.txt",
-      "sha256": "41287b0838358cccb20c9043a46b0f88646126c618f95683444223e72404c165",
+      "sha256": "66ce0e105a8146e0e4970c207feaf9cf91b01acdab1c05671885929aa336c47a",
       "size": 8224
     },
     {
@@ -1909,37 +1959,37 @@ Total output lines: 2567
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "93938ecc1261b2b0a69fbaf186401e62d2415574a8f40ebe29f1c5ced733f1c9",
+          "sha256": "540ec69bd5ccdac700ac7e868a9814982b3fc6f825cbf74cc03e89eb4288bcf3",
           "size": 2056,
           "start_line": 1
         },
         {
           "end_line": 16,
           "index": 2,
-          "sha256": "e853a16deb44bde4f79d301b7f1d26e53bb44bde2affa9b67511432530f201ed",
+          "sha256": "283c3725785638b0955ebc7bcfe3d64a098eb3f641a4a07133fa992c482b6a6b",
           "size": 2056,
           "start_line": 9
         },
         {
           "end_line": 24,
           "index": 3,
-          "sha256": "7452b2028f59a1a37a6b81e136fd3416be10d1ee8aafb54f9dd8e78d72e4531f",
+          "sha256": "2ad364ca47af135c67d35745d9c5b09516f4ad28e0a315f7426eebe91821c81c",
           "size": 2056,
           "start_line": 17
         },
         {
           "end_line": 32,
           "index": 4,
-          "sha256": "d6931f0b8c4a964b31afec65516e8dd9bee6059a89a294bbd14f889042ec380b",
+          "sha256": "8549cb7e8aa44473f2e1c3ade8143f7dfc9c5675bf9d5148d5837b720ee93874",
           "size": 2056,
           "start_line": 25
         }
       ],
-      "encoded_sha256": "b000ac0173dc96dcfca6a8e65907b78c3e9d396d178a55daff9455f2e91cb304",
+      "encoded_sha256": "8b23aebbad6720a48fa03781c018f02e0190ca679616be9f0249299ed7f82088",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0051.txt",
-      "sha256": "722a6f1ea7eb18f428e70ae0880603cff50b51eec6abda7a7f628419c2948b24",
+      "sha256": "f473d1d6c8b2b02b6ee5c47836f9960dd92da661b2d14c42ddc5316ed5aeb401",
       "size": 8224
     },
     {
@@ -1948,37 +1998,37 @@ Total output lines: 2567
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "eef08664ab3c9e175db749950ed1d832c5e018b985023a15ffdfa237c7322338",
+          "sha256": "1a0159a9ce244f5aa4ab7b4c60650b8e18f5e852e1080b4d5a1109b31cbfde86",
           "size": 2056,
           "start_line": 1
         },
         {
           "end_line": 16,
           "index": 2,
-          "sha256": "59edb5061e975a35ceef245a06960b0d8ef0c206e74491ae04dbe7ddba4ba143",
+          "sha256": "e86524e1247baefe0da75c95f873a87153913fe6d5266c354598d78159f2764b",
           "size": 2056,
           "start_line": 9
         },
         {
           "end_line": 24,
           "index": 3,
-          "sha256": "3b7966f6513557848bad3cab542a7ebfa7a38e888a97d8588af8b49c894fbe23",
+          "sha256": "f29cb187451ca6cf21a4be8e72f1ebd8d7ec0ccf19a6505292aa0c8a65764c6b",
           "size": 2056,
           "start_line": 17
         },
         {
           "end_line": 32,
           "index": 4,
-          "sha256": "cd47b332afd69851a32bfeb01d69d103894592fdaec0bf25b8f5e205f4fd82e0",
+          "sha256": "b209a7a5a9ccba369c35f795e2476ead853a52f172da8e1e9f9555b35a93e0de",
           "size": 2056,
           "start_line": 25
         }
       ],
-      "encoded_sha256": "8e0efeeb5760cfa1f2258ad46c759a69d29243f539326e5033ce84bbc7ab9876",
+      "encoded_sha256": "0a78917b1932023e6d056fb37d0cf2389b6b24c2de4ffd8dfc918f4545b0747b",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0052.txt",
-      "sha256": "9810b1ddf42bca23d9d3e3fd9d9bcd1feb7191ea7f91ab4ec447b72353e352d9",
+      "sha256": "51fd6486d27fd88281fe85f2a6c1ba5e108561a15a7e6b810c67120748fea44e",
       "size": 8224
     },
     {
@@ -1987,37 +2037,37 @@ Total output lines: 2567
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "f106c9e5c743dae4019c761d6d1fc8f49a10cb4b7f620a7bb4a2b21a087c8343",
+          "sha256": "0e76bec1e23a5e69575cf865202b5bc3b33803e04a64c453d8cbc622e9a1ba38",
           "size": 2056,
           "start_line": 1
         },
         {
           "end_line": 16,
           "index": 2,
-          "sha256": "4c8fe3d72617ddc33a6433c28a43c2913cb95e3f151e3955cd838423c7f92631",
+          "sha256": "c50493fb9cb6acbe580d5caf044ed2c010148eb8063721f7a1bb28c1fe6df8af",
           "size": 2056,
           "start_line": 9
         },
         {
           "end_line": 24,
           "index": 3,
-          "sha256": "6be0ed54937810173653f7a60874e1ef696931fcd1ca2a4e50aee842b9346dea",
+          "sha256": "9248b5a2701afed9183f64da5755478731f4381abed7755c6ee4892f7e6952c5",
           "size": 2056,
           "start_line": 17
         },
         {
           "end_line": 32,
           "index": 4,
-          "sha256": "1111020f363b6f43d4957c40dfc0c54279e98bbba030e1791580ab5f1f78c7b9",
+          "sha256": "f222096f4ad29735a550da4664360f4f602d9b4fe60a4b0e4a31a340dd15cc20",
           "size": 2056,
           "start_line": 25
         }
       ],
-      "encoded_sha256": "6b62418ebd5250d400b3671127d16a8f65213aa735cf5668e9c5322c5098c51e",
+      "encoded_sha256": "1da8ffe4b2be6ec77de61884eae5d4c1121b49b725dce15f94fb3e2c45b5b226",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0053.txt",
-      "sha256": "6d2741ebdf3f25d42d6f63222695411398f7606d4862946d2b675f352156a0f4",
+      "sha256": "37d002550c25f4f8db9dcf3bbc845ff406df8dded7f987eeb67df707d1971ce9",
       "size": 8224
     },
     {
@@ -2026,59 +2076,59 @@ Total output lines: 2567
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "91944d7b996b668aea64b8a8ca80c0f6fcc5fa0d0bcad331b2f58eca1043b40a",
+          "sha256": "d622ad105f2e5240480f6f9dd67a0e4e8de6ad515a24889e0737c21e00abdbec",
           "size": 2056,
           "start_line": 1
         },
         {
           "end_line": 16,
           "index": 2,
-          "sha256": "982511040189496a161b20244b328a1eb399750e736eb126ea0e5023828d3462",
+          "sha256": "b2c07458e722e0ad1c2cb607f6f0a716e15f88dc25e7254ee2f48de52ad138d2",
           "size": 2056,
           "start_line": 9
         },
         {
           "end_line": 24,
           "index": 3,
-          "sha256": "091cf235f6419f30c830feb3226fd4aa3f755b5a9a60f79972b06cf11f8280f2",
+          "sha256": "e97bec9428cab7855291d61d9ffba134e7cc499239b33bb9225087a252ea5210",
           "size": 2056,
           "start_line": 17
         },
         {
           "end_line": 32,
           "index": 4,
-          "sha256": "399cfadb275f17cf1e3d47042d046763a971cc478da2f757d495182032246890",
+          "sha256": "b519fc52c06f11da0988dea5a219e1b83758163eae7c123c9137e67bd6bfcd00",
           "size": 2056,
           "start_line": 25
         }
       ],
-      "encoded_sha256": "bd9c2f66813039f80160bd0a7673d9db5476970ab7a8a2c63e203bc3b52e5daf",
+      "encoded_sha256": "943a50bc25c24eebc324cc4433995a270017e6956bae3b853c96bf33a1868fa3",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0054.txt",
-      "sha256": "929be9b5db559388ee8baf210ebb3b81403bf99efec7fe377478a2506ebd9a21",
+      "sha256": "593b17b30db7766837df4ddfad7d58ae2cd07d0bc9d08ac7450a67a945e4fb44",
       "size": 8224
     },
     {
       "block_count": 1,
       "blocks": [
         {
-          "end_line": 6,
+          "end_line": 8,
           "index": 1,
-          "sha256": "9fac1f64f2448ee581f6b6f9bccceb75845f771071676c37640e2fdc99921672",
-          "size": 1382,
+          "sha256": "e60bb649de0cf2848e00339f1500491fb8c9dd385934c1981894602be14a8c3d",
+          "size": 2040,
           "start_line": 1
         }
       ],
-      "encoded_sha256": "b7b219e5df1a8b42e1eea0091e036a7ba82d4c0889e9cd83a86a2dc2e8118204",
-      "encoded_size": 1376,
-      "line_count": 6,
+      "encoded_sha256": "3b856f461052cfdf8bcff150e1853ded861c644cab82e3c75a5654eb48645027",
+      "encoded_size": 2032,
+      "line_count": 8,
       "name": "capsule.part0055.txt",
-      "sha256": "9fac1f64f2448ee581f6b6f9bccceb75845f771071676c37640e2fdc99921672",
-      "size": 1382
+      "sha256": "e60bb649de0cf2848e00339f1500491fb8c9dd385934c1981894602be14a8c3d",
+      "size": 2040
     }
   ],
-  "encoded_size": 443744,
+  "encoded_size": 444400,
   "encoding": "base64",
   "line_width": 256,
   "loader": {
@@ -2091,12 +2141,12 @@ Total output lines: 2567
   "materialization_scope": "verified-runtime-capsule",
   "payload": {
     "name": "capsule-payload.tar.xz",
-    "sha256": "209193c914ffae36a67ca456d25fec0c20b7fe86f68d5e7b33ef2de182385228",
-    "size": 332808,
-    "source_blob_sha": "726a81f7f84de2dffa7216fd5d7b1a21282038b4"
+    "sha256": "89652cdc7c3b65235834962767998e5291a123bab98bcc7eca64b140101f17ec",
+    "size": 333300,
+    "source_blob_sha": "c67a96dc758ede759b8141bc8c0488b57278f706"
   },
-  "payload_sha256": "209193c914ffae36a67ca456d25fec0c20b7fe86f68d5e7b33ef2de182385228",
-  "payload_size": 332808,
+  "payload_sha256": "89652cdc7c3b65235834962767998e5291a123bab98bcc7eca64b140101f17ec",
+  "payload_size": 333300,
   "repository": "robert820728-star/global-news-brief",
   "retrieval_block_lines": 8,
   "runtime_file_count": 68,
@@ -2277,9 +2327,9 @@ Total output lines: 2567
     },
     {
       "path": "news-brief-settings.md",
-      "sha256": "01d2e6fdc7b93b4ed5b5bbd4e3a898e42744c0d8919560f2e1fd88901c1e598f",
-      "size": 36897,
-      "source_blob_sha": "1bdacdd7bf2dcb319e6c592ea0a1cf9262e7fe74"
+      "sha256": "e3f5b6004ed821ba2367728aadfa45037db31680791d61476422fffbb4076a7b",
+      "size": 37553,
+      "source_blob_sha": "2aa44ab97bb531c29c1aa5e92694a3f22e4ced9a"
     },
     {
       "path": "news-brief-template.md",
@@ -2295,9 +2345,9 @@ Total output lines: 2567
     },
     {
       "path": "schemas/mobile-run-log.schema.json",
-      "sha256": "d27380bbc030f0f3a8dc46e36ddc07b5833f5c85c7da141801f160cc8432ab94",
-      "size": 5050,
-      "source_blob_sha": "b2e154f60976e435cd17828dce84742c1ad69ebe"
+      "sha256": "722e8d8358cfe8b9666cf65aaf2a127d651887ee828d5cd6326609511c45a53a",
+      "size": 6225,
+      "source_blob_sha": "ba093ce207ea0eeb8e001c8686a4cdab5a6fe324"
     },
     {
       "path": "schemas/news-candidate-audit.schema.json",
@@ -2385,9 +2435,9 @@ Total output lines: 2567
     },
     {
       "path": "scripts/manage_mobile_run_log.py",
-      "sha256": "cb57d1dece5c2d4a1d82f641d601fa23bc0addf858e8ee31e4480d00cb8777ba",
-      "size": 16828,
-      "source_blob_sha": "8ea57af93ecec800fea5bdb4d00830abc5d92fd1"
+      "sha256": "cf4ac64d8ef1b91665bfdb618a481c83e8c36a8563301eac8866dc0e4bf8848e",
+      "size": 19206,
+      "source_blob_sha": "3b00e83e9efe9eb2daeab5baafdd5a3fc0748de5"
     },
     {
       "path": "scripts/materialize_event_manifest.py",
@@ -2510,8 +2560,7 @@ Total output lines: 2567
       "source_blob_sha": "82179e799dd7558fa68f8cade43424b63a13dcc4"
     }
   ],
-  "runtime_fingerprint": "75958e19e0ebb31694845bf0406a8a6a8f39045457f7389e423f9c445d1cf07c",
+  "runtime_fingerprint": "bb4fe679848b77b83174b11f620c4979859734fd3e85c1704bb21c9bd580f552",
   "schema_version": "1.1.0",
-  "source_commit": "f9e8518543ce60c58405d01258355688054558ec"
+  "source_commit": "2a399b5e9f551a379406d378b5310eabc20a1cc7"
 }
-
