@@ -7,7 +7,7 @@
   "delivery_status": "not_ready",
   "durable_audit_artifact": null,
   "durable_audit_status": "not_started",
-  "execution_mode": "full-runtime",
+  "execution_mode": "mobile-native",
   "image_evidence_artifact": null,
   "last_completed_stage": null,
   "last_error": null,
@@ -20,6 +20,6 @@
   "schema_version": "1.5.0",
   "stage_index": 0,
   "status": "awaiting_executor",
-  "updated_at": "2026-08-27T02:49:01Z",
+  "updated_at": "2026-08-27T10:36:35Z",
   "verification_artifact": null
 }
