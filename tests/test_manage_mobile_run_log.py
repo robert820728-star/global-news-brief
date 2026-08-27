@@ -64,6 +64,7 @@ class MobileRunLogTests(unittest.TestCase):
             run_id=run_id,
             scheduled_for=scheduled_for,
             updated_at=at,
+            execution_mode="full-runtime",
         )
 
     def advance_to(self, target, *, stage_kwargs=None):
@@ -139,17 +140,20 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertEqual(current["durable_audit_status"], "not_started")
         self.assertIsNone(current["durable_audit_artifact"])
         self.assertEqual(current["delivery_status"], "not_ready")
-        workflow = (ROOT / ".github" / "workflows" / "prepare-mobile-run-ledger.yml").read_text(
-            encoding="utf-8"
+        self.assertFalse(
+            (ROOT / ".github" / "workflows" / "prepare-mobile-run-ledger.yml").exists()
         )
-        self.assertIn("58 21 * * *", workflow)
-        self.assertIn("run-logs", workflow)
 
-    def test_mobile_watchdog_prepares_mobile_native(self):
-        workflow = (ROOT / ".github" / "workflows" / "prepare-mobile-run-ledger.yml").read_text(
-            encoding="utf-8"
+    def test_prepare_uses_actual_task_occurrence_without_fixed_clock(self):
+        current = self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T04:00:00+09:00",
+            updated_at="2026-08-17T19:00:00Z",
+            execution_mode="mobile-native",
         )
-        self.assertIn("--execution-mode mobile-native", workflow)
+        self.assertEqual("2026-08-18T04:00:00+09:00", current["scheduled_for"])
+        self.assertEqual("mobile-native", current["execution_mode"])
 
     def test_mobile_native_mode_and_candidate_audit_artifact_are_persisted(self):
         self.module.prepare_run(
@@ -411,24 +415,24 @@ class MobileRunLogTests(unittest.TestCase):
                 window=mismatched,
             )
 
-    def test_mobile_window_timezone_must_be_asia_taipei(self):
+    def test_mobile_window_accepts_task_timezone(self):
         self.module.prepare_run(
             self.ledger_dir,
             run_id=RUN_1,
-            scheduled_for="2026-08-18T06:00:00+08:00",
-            updated_at="2026-08-17T21:58:00Z",
+            scheduled_for="2026-08-18T07:00:00+09:00",
+            updated_at="2026-08-17T21:59:00Z",
             execution_mode="mobile-native",
         )
-        invalid_timezone = dict(RUN_WINDOW)
-        invalid_timezone["timezone"] = "banana"
-        with self.assertRaisesRegex(ValueError, "mobile-native window timezone must be Asia/Taipei"):
-            self.module.advance_run(
-                self.ledger_dir,
-                run_id=RUN_1,
-                stage="executor-started",
-                updated_at="2026-08-17T22:00:00Z",
-                window=invalid_timezone,
-            )
+        task_timezone = dict(RUN_WINDOW)
+        task_timezone["timezone"] = "Asia/Tokyo"
+        result = self.module.advance_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            stage="executor-started",
+            updated_at="2026-08-17T22:00:00Z",
+            window=task_timezone,
+        )
+        self.assertEqual("Asia/Tokyo", result["window"]["timezone"])
 
     def test_executor_window_equivalent_offset_is_accepted(self):
         self.prepare()
@@ -881,10 +885,9 @@ class MobileRunLogTests(unittest.TestCase):
         self.prepare(RUN_3, "2026-08-19T21:58:00Z", "2026-08-20T06:00:00+08:00")
         self.assertEqual(self.read("previous.json")["run_id"], RUN_2)
         self.assertNotIn(RUN_1, (self.ledger_dir / "previous.json").read_text(encoding="utf-8"))
-        workflow = (ROOT / ".github" / "workflows" / "prepare-mobile-run-ledger.yml").read_text(
-            encoding="utf-8"
+        self.assertFalse(
+            (ROOT / ".github" / "workflows" / "prepare-mobile-run-ledger.yml").exists()
         )
-        self.assertNotIn("HEAD:main", workflow)
 
     def test_same_occurrence_resumes_existing_reader_run_without_rotation(self):
         self.prepare()

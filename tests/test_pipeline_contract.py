@@ -11,14 +11,14 @@ class PipelineContractTests(unittest.TestCase):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
 
         self.assertIn(
-            "python3 scripts/publish_news_brief.py --checkpoint <checkpoint> "
+            "<bundled-python> scripts/publish_news_brief.py --checkpoint <checkpoint> "
             "--manifest <final-manifest> --audit <candidate-audit> "
             "--source-pool news-source-pool.json --brief <reader> "
             "--output-dir <release-dir>",
             install,
         )
         self.assertIn(
-            "python3 scripts/publish_news_brief.py --deliver-receipt "
+            "<bundled-python> scripts/publish_news_brief.py --deliver-receipt "
             "<release-dir>/release-receipt.json --checkpoint <checkpoint> "
             "--conversation-transport",
             install,
@@ -235,7 +235,7 @@ class PipelineContractTests(unittest.TestCase):
 
         for requirement in (
             "full-runtime 執行 canonical checkpoint CLI",
-            "mobile-native 沿用既有 occurrence ledger",
+            "mobile-native 在 capability routing 選定後建立或 resume",
             "full-runtime 物化並驗證 `news-event-manifest.json`",
             "mobile-native 不建立或聲稱通過 full-runtime manifest schema",
         ):
@@ -879,6 +879,28 @@ class PipelineContractTests(unittest.TestCase):
         ):
             self.assertIn(f".agents/skills/{skill}/SKILL.md", install)
         self.assertNotIn("YYYY/MM/DD 每日新聞`；下一行", install)
+
+    def test_trigger_owned_occurrence_contract_has_no_future_reservation(self):
+        self.assertFalse(
+            (ROOT / ".github" / "workflows" / "prepare-mobile-run-ledger.yml").exists()
+        )
+        documents = (
+            ROOT / "INSTALL.md",
+            ROOT / "README.md",
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / "docs" / "mobile-run-ledger.md",
+        )
+        for path in documents:
+            content = path.read_text(encoding="utf-8")
+            self.assertNotIn("PRISTINE_RESERVATION_REPLACEMENT_GATE", content, path.name)
+            self.assertNotIn("05:58 watchdog", content, path.name)
+            self.assertNotIn("05:58 守望", content, path.name)
+        manager = (ROOT / "scripts" / "manage_mobile_run_log.py").read_text(encoding="utf-8")
+        self.assertNotIn("_is_pristine_reservation", manager)
+        self.assertIn('required=True', manager)
+        self.assertIn("task 真正觸發", (ROOT / "INSTALL.md").read_text(encoding="utf-8"))
+        self.assertIn("external full-runtime visual-recovery executor", (ROOT / "docs" / "mobile-run-ledger.md").read_text(encoding="utf-8"))
 
     def test_candidate_discovery_uses_dynamic_verification_selection(self):
         documents = {

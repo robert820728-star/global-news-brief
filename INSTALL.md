@@ -129,7 +129,9 @@
 
 1. 監控板塊：是否自訂國家或區域？未自訂使用台灣（TWN）、中國（CHN）、世界（GLB）。
 2. 主題偏好：是否提高或降低特定主題權重？未指定沿用 repository 預設，偏好不能降低證據、安全或驗證門檻。
-3. 內建排程 profile：repository packaged Scheduled Task 固定每日 06:00、`Asia/Taipei`、繁體中文；安裝時只詢問監控板塊與主題偏好，不再詢問排程時間／時區。若需要其他 mobile 時間或時區，不得沿用內建 05:58 watchdog 或共用 `run-logs/current.json`，且本 repository 不宣稱該自訂 mobile profile 受支援。國家板塊使用 ISO 3166-1 alpha-3；區域使用穩定不衝突的三碼。本輪 normalized audit 以有序 `section_scopes` 保存每個板塊的 `code`、`member_country_codes` 與唯一 `fallback`；事件板塊只能由其內容確認的 `country_codes` 對照這份權威決定，不得硬編碼成 TWN／CHN／其他皆 GLB。取得建立排程的授權後，直接完成安裝與首次測試，不再分階段重複詢問同一決定。
+3. 排程時間與時區：由 ChatGPT Scheduled Task 本身的單次／循環設定決定；使用者已指定就直接沿用，未指定才詢問，仍無偏好時預設每日 06:00 並優先採帳號／裝置時區。repository 不預先建立 future occurrence，也不綁定特定鐘點。國家板塊使用 ISO 3166-1 alpha-3；區域使用穩定不衝突的三碼。本輪 normalized audit 以有序 `section_scopes` 保存每個板塊的 `code`、`member_country_codes` 與唯一 `fallback`；事件板塊只能由其內容確認的 `country_codes` 對照這份權威決定，不得硬編碼成 TWN／CHN／其他皆 GLB。取得建立排程的授權後，直接完成安裝與首次測試，不再分階段重複詢問同一決定。
+
+輸出語言沿用使用者既有設定；未設定時使用安裝對話主要語言。
 
 ## 三、執行模式與完成條件
 
@@ -147,7 +149,7 @@
 
 ## 四、建立排程與板塊底圖
 
-repository packaged Scheduled Task profile 固定為每日 06:00、`Asia/Taipei`：宿主具備 verified runtime 時走 full-runtime，否則依同一排程 occurrence 進入 mobile-native fallback；05:58 watchdog 只服務這個內建 profile。不得把不同時間／時區的 mobile schedule 與內建 watchdog 共用同一 `run-logs/current.json`。兩種執行模式的 24 小時窗都從實際 executor 啟動時刻精確倒推，個人偏好不回寫公共 `main`。
+單次與循環 Scheduled Task 都以該 task 真正觸發的 `scheduled_for` 作 occurrence key；04:00、06:00 或其他時間完全走同一流程。repository 不設 pre-trigger watchdog，也不得在 task 實際觸發前寫入 future `current.json`。每輪先 fresh-resolve `main` 並做一次 capability probe；probe 成功才以 `execution_mode=full-runtime` 建立／接續該輪執行狀態，host execution unavailable 時才以 `execution_mode=mobile-native` 建立／接續 mobile ledger。mode 自 actual occurrence 的 `prepare` 起不可切換。兩種模式的 24 小時窗都從實際 executor 啟動時刻精確倒推，個人偏好不回寫公共 `main`。
 
 板塊確定後：
 
@@ -162,8 +164,8 @@ repository packaged Scheduled Task profile 固定為每日 06:00、`Asia/Taipei`
 
 | 階段 | 必讀／輸入 | 必填產物與驗證 | 完成或恢復條件 |
 |---|---|---|---|
-| -1 fresh main 與 bootstrap | `bootstrap-workspace.md`、雙端點 current main、fresh nonce；full-runtime 另讀 capsule manifest／payload | full-runtime 產生經 blob SHA、payload SHA-256、runtime fingerprint 驗證的 workspace 與 `bootstrap-receipt.json`；mobile-native 只固定 fresh main 並使用既有 occurrence ledger，不冒充 capsule 已物化 | full-runtime receipt 未通過前不得建立 news checkpoint；mobile-native 不執行 unavailable bootstrap，而由同一 `scheduled_for`／`run_id` 接續 |
-| 0 checkpoint init | run id、精確 24 小時窗；full-runtime 另需 bootstrap receipt | full-runtime 執行 canonical checkpoint CLI：`python3 scripts/news_run_checkpoint.py init ...`；mobile-native 沿用既有 occurrence ledger 的 `logs/current.json` 保存 run id、窗、main 與 first incomplete stage | 兩種模式都綁定同一輪 main 與時間窗；mobile-native 不宣稱執行 `news_run_checkpoint.py` |
+| -1 fresh main 與 bootstrap | `bootstrap-workspace.md`、雙端點 current main、fresh nonce；full-runtime 另讀 capsule manifest／payload | 先完成 capability routing；full-runtime 產生經 blob SHA、payload SHA-256、runtime fingerprint 驗證的 workspace 與 `bootstrap-receipt.json`；mobile-native 在 actual task trigger 後建立／接續該 `scheduled_for` 的 occurrence ledger，不冒充 capsule 已物化 | full-runtime receipt 未通過前不得建立 news checkpoint；mobile-native 不執行 unavailable bootstrap，只從同一 actual occurrence 的 first incomplete stage 接續 |
+| 0 checkpoint init | run id、精確 24 小時窗；full-runtime 另需 bootstrap receipt | full-runtime 執行 canonical checkpoint CLI：`<bundled-python> scripts/news_run_checkpoint.py init ...`；mobile-native 在 capability routing 選定後建立或 resume `logs/current.json`，保存 run id、窗、main 與 first incomplete stage | 兩種模式都綁定同一輪 main 與時間窗；mobile-native 不宣稱執行 `news_run_checkpoint.py` |
 | 1 source-scan | `news-source-pool.json`、`source-route-config.json` | 三條 discovery route 的 snapshots、scan evidence、truthful coverage、`source-candidates.json`、`news-relevance-gate.json`、`model-source-candidates.json` | `SOURCE_SCAN_COVERAGE_SEPARATION`：`scan_status` 只表示掃描程序是否完成，`coverage_status`／`coverage_complete` 另表示來源覆蓋是否完整；每條 configured route 都留在 audit。`GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE`：本輪有 fallback／全球板塊時，至少一條 `primary_aggregator` 必須成功；GDELT 的 archive、一次 DOC、有效 cache 全部不可用時，同一 run 停在 source-scan，區域補充不得把全球 coverage 缺失洗成零事件。`FULL_DISCOVERY_POOL_UNCAPPED`：已取得列完整入池，弱 signal 仍進模型 |
 | 2 preprocess | model-admitted rows | `preprocessed-candidates.json`；時間窗、canonical URL、provisional article groups | 這些群組不是語意事件；失敗只重跑 preprocess |
 | 3 conditional recovery | source、gate、preprocess、content hydration receipts | full-runtime 預設只保存 local hash 與 checkpoint binding；`CONDITIONAL_RECOVERY_BUNDLE_POLICY` 僅在 cross-host handoff、ephemeral workspace 或 warning/timeout boundary 時，以 `manage_canonical_run_bundle.py pack-recovery` 建立六份 artifact bundle；mobile-native 使用既有 occurrence ledger 與 run-scoped artifacts | durable workspace 可直接進入 `FIRST_SELECT_NEWS_EVENTS_EXECUTION`；必要時 full-runtime 用 bundle `restore`，mobile-native 從 ledger 的 first incomplete stage 接續 |
@@ -178,20 +180,19 @@ repository packaged Scheduled Task profile 固定為每日 06:00、`Asia/Taipei`
 | 12 publish 與 bundle | final checkpoint、manifest、audit、source pool、reader、map decisions、宣稱交付的附件 | 依下方實際 CLI 由 `publish_news_brief.py` 建立 release／receipt；再以 `manage_canonical_run_bundle.py pack` 建立 transport，與 `logs/current.json` 一次 atomic 發布後執行 `verify`／`restore` 核對 byte identity | full-runtime 由 canonical publisher fail-closed；mobile-native 依 mobile ledger schema 保存 reader/audit 與 delivery profile |
 | 13 conversation delivery | release receipt 或 mobile saved reader | 完整 reader bytes、附件／能力限制 receipt、`delivery-handoff` | 不能只交摘要或驗收報告；`client_confirmed` 只有外部明確回執才可使用 |
 
-`SCHEDULED_OCCURRENCE_SINGLE_RUN_GATE`：mobile ledger 以 `scheduled_for` 作 occurrence key。同一 occurrence 的 `current.json` 只要存在，就沿用原 `run_id` 並從 first incomplete stage 接續；即使 reader 已保存但尚未 `delivery-handoff`，也不得 rotate、建立 replacement run 或重跑新聞階段。已進入 `executor-started` 或之後的 occurrence 仍只有 `scheduled_for` 嚴格較晚的下一個真實 occurrence 才可 rotate，且非 terminal 前輪才標為 `interrupted_by_next_run`。同一 run 只能留在原 stage 或前進至緊鄰的下一 stage，不得跳級，也不得執行 stage regression。
+`SCHEDULED_OCCURRENCE_SINGLE_RUN_GATE`：mobile ledger 以 Scheduled Task 真正觸發的 `scheduled_for` 作 occurrence key；repository 不預建 future key。同一 occurrence 的 `current.json` 只要存在，就沿用原 `run_id` 並從 first incomplete stage 接續；即使 reader 已保存但尚未 `delivery-handoff`，也不得 rotate、建立 replacement run 或重跑新聞階段。只有 `scheduled_for` 嚴格較晚的下一個實際觸發 occurrence 才可 rotate，且非 terminal 前輪才標為 `interrupted_by_next_run`；相同 key resume、較舊 key 一律拒絕。同一 run 只能留在原 stage 或前進至緊鄰的下一 stage，不得跳級，也不得執行 stage regression。
 
-`PRISTINE_RESERVATION_REPLACEMENT_GATE`：`schedule-prepared + awaiting_executor + main_sha=null + window=null + 所有 run artifact=null` 代表 watchdog／cutover 建立但尚未消耗 executor 的 pristine future reservation，不是已啟動 run。若實際 adhoc／安裝測試的 `scheduled_for` 早於這筆 reservation，可直接以實際 occurrence 取代 `current.json`，不得把未執行 reservation 寫成 `previous.json` 或 `interrupted_by_next_run`；相同 `scheduled_for` 仍 resume 同一 `run_id`。一旦 reservation 進入 `executor-started`，older occurrence 就恢復嚴格禁止。之後較晚的正式 06:00 occurrence 依正常規則 rotate 已完成或仍 running 的 adhoc run。
 
-`VERIFICATION_FEEDBACK_REWIND_GATE`：核心主張 `finding=insufficient` 時，verification 必須 `status=failed`，不得進 ready reader。full-runtime 完成既定驗證恢復後仍不足，執行 `python3 scripts/news_run_checkpoint.py rewind --input <checkpoint> --output <checkpoint> --stage audit-news-candidates --reason "<evidence failure>"`；只清除 audit 與其後 stage bindings，保留 source-scan、preprocess 與 semantic selection，將受影響候選重評或排除後重新物化 manifest。mobile-native 保持 `current_stage=selection-verified`，不得前進 `visuals-completed`；直接更新同一 run 的 `candidate-audit.json`，重評或排除受影響候選，更新 `candidate_audit_artifact` 的 Git blob SHA，再重新查證。查證成功並保存新的 `verification.json` 後才可前進。mobile-native 不得執行 stage regression，也不得建立 mobile checkpoint 或 manifest；兩種模式都不得建立新 run 或重跑 discovery。
+`VERIFICATION_FEEDBACK_REWIND_GATE`：核心主張 `finding=insufficient` 時，verification 必須 `status=failed`，不得進 ready reader。full-runtime 完成既定驗證恢復後仍不足，執行 `<bundled-python> scripts/news_run_checkpoint.py rewind --input <checkpoint> --output <checkpoint> --stage audit-news-candidates --reason "<evidence failure>"`；只清除 audit 與其後 stage bindings，保留 source-scan、preprocess 與 semantic selection，將受影響候選重評或排除後重新物化 manifest。mobile-native 保持 `current_stage=selection-verified`，不得前進 `visuals-completed`；直接更新同一 run 的 `candidate-audit.json`，重評或排除受影響候選，更新 `candidate_audit_artifact` 的 Git blob SHA，再重新查證。查證成功並保存新的 `verification.json` 後才可前進。mobile-native 不得執行 stage regression，也不得建立 mobile checkpoint 或 manifest；兩種模式都不得建立新 run 或重跑 discovery。
 
 Stage 12 與 13 的 full-runtime 指令介面如下；`--artifact` 對每個必要 run artifact 重複一次。`release` 是 publisher 產物，不是子命令：
 
 ```bash
-python3 scripts/publish_news_brief.py --checkpoint <checkpoint> --manifest <final-manifest> --audit <candidate-audit> --source-pool news-source-pool.json --brief <reader> --output-dir <release-dir>
-python3 scripts/manage_canonical_run_bundle.py pack --run-id <run-id> --transport-dir <transport-dir> --manifest <bundle-manifest> --artifact checkpoint=<checkpoint> --artifact reader=<reader> --artifact release-receipt=<release-dir>/release-receipt.json
-python3 scripts/manage_canonical_run_bundle.py verify --manifest <bundle-manifest> --transport-dir <transport-dir>
-python3 scripts/manage_canonical_run_bundle.py restore --manifest <bundle-manifest> --transport-dir <transport-dir> --output-dir <restore-proof-dir>
-python3 scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-receipt.json --checkpoint <checkpoint> --conversation-transport
+<bundled-python> scripts/publish_news_brief.py --checkpoint <checkpoint> --manifest <final-manifest> --audit <candidate-audit> --source-pool news-source-pool.json --brief <reader> --output-dir <release-dir>
+<bundled-python> scripts/manage_canonical_run_bundle.py pack --run-id <run-id> --transport-dir <transport-dir> --manifest <bundle-manifest> --artifact checkpoint=<checkpoint> --artifact reader=<reader> --artifact release-receipt=<release-dir>/release-receipt.json
+<bundled-python> scripts/manage_canonical_run_bundle.py verify --manifest <bundle-manifest> --transport-dir <transport-dir>
+<bundled-python> scripts/manage_canonical_run_bundle.py restore --manifest <bundle-manifest> --transport-dir <transport-dir> --output-dir <restore-proof-dir>
+<bundled-python> scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-receipt.json --checkpoint <checkpoint> --conversation-transport
 ```
 
 `pack` 命令列出的三個 `--artifact` 只是語法示例，不是完整清單；實際發布必須把本輪 candidate audit、完整 `article_dispositions`、image evidence、materialized images、map decisions、checkpoint、counts、event manifest、reader、attachments index、release receipt 及其他宣稱交付的附件全部逐項加入。完成 `pack` 後先 `verify`，上傳 transport 與 `logs/current.json` 的單一 atomic commit，再從該 commit 下載並 `restore`；只有重組後 byte identity 一致才可執行 Stage 13。
@@ -254,7 +255,7 @@ python3 scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-re
 先建立只含本輪 selected event skeleton 的 manifest，再以唯一 canonical binder 寫入正式分數；不得手抄或由後段 stage 重算：
 
 ```bash
-python3 scripts/materialize_event_manifest.py \
+<bundled-python> scripts/materialize_event_manifest.py \
   --audit <run-scoped-candidate-audit.json> \
   --manifest <event-manifest-skeleton.json> \
   --output <news-event-manifest.json>
@@ -298,7 +299,7 @@ reader 不顯示 run id、commit、後台 counts、十四天 audit 或修復紀�
 ### full-runtime：Manifest 前
 
 ```bash
-python3 scripts/news_run_checkpoint.py plan --input <checkpoint>
+<bundled-python> scripts/news_run_checkpoint.py plan --input <checkpoint>
 ```
 
 只重跑回報的最早未完成 stage。source route、hydration batch、selection 或 audit 已完成且 hash 未變的產物不得清空。
@@ -306,7 +307,7 @@ python3 scripts/news_run_checkpoint.py plan --input <checkpoint>
 ### full-runtime：Manifest 後
 
 ```bash
-python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
+<bundled-python> scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 ```
 
 只修 `verification`、`map`、`charts`、`images` 或 `render/validate` 中的失敗事件／欄位。stage patch 以 `scripts/apply_event_stage_patch.py` 合併；不得用 shell 字串直接改 manifest。`recover_news_run.py` 沒有 `--checkpoint` 參數，checkpoint 由 `news_run_checkpoint.py` 維護。
@@ -315,9 +316,9 @@ python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 
 mobile-native 沒有 checkpoint 或 manifest。查證不足時依 `VERIFICATION_FEEDBACK_REWIND_GATE` 停留在 `selection-verified` 並更新同一份 run-scoped audit；視覺或 Reader 中斷時由 ledger 綁定的 candidate audit、verification、map decisions、image evidence 與 Reader 從 first incomplete stage 接續。不得倒退 stage、不得跳級、不得建立替代 run。
 
-`RUN_ARTIFACT_IDENTITY_GATE`：`execution_mode` 在 prepare 建立 occurrence 時固定且其後不可切換；mobile watchdog 必須明確以 `mobile-native` prepare。`window` 在 `schedule-prepared` 必須為 null；第一次進入 `executor-started` 時，以該次實際執行時刻固定 `end`、倒推精確 24 小時得到 `start`，並保存時區，之後同一 occurrence 不得重新計算或修改。`main_sha` 在 `main-pinned` 前必須為 null，進入 `main-pinned` 時必須已設定，且同一 `scheduled_for` 不可再改變。每個 active artifact binding 都必須攜帶並符合 current ledger 的 `run_id`、`main_sha` 與 `window`；candidate audit、verification、map decisions、image evidence 與 Reader 不得另行建立時間窗。任何身分不一致或尚未到對應 stage 卻綁定未來 artifact 時立即拒絕，不得 repin、mode switch、migration 或 compatibility bypass。
+`RUN_ARTIFACT_IDENTITY_GATE`：排程實際觸發後先完成 capability routing，再由 actual executor 的 `prepare` 以 `full-runtime` 或 `mobile-native` 一次性固定 `execution_mode`；repository 不建立 future reservation，mode 其後不可切換。`window` 在 `schedule-prepared` 必須為 null；第一次進入 `executor-started` 時，以該次實際執行時刻固定 `end`、倒推精確 24 小時得到 `start`，並保存該 task 的時區，之後同一 occurrence 不得重新計算或修改。`main_sha` 在 `main-pinned` 前必須為 null，進入 `main-pinned` 時必須已設定，且同一 `scheduled_for` 不可再改變。每個 active artifact binding 都必須攜帶並符合 current ledger 的 `run_id`、`main_sha` 與 `window`；candidate audit、verification、map decisions、image evidence 與 Reader 不得另行建立時間窗。任何身分不一致或尚未到對應 stage 卻綁定未來 artifact 時立即拒絕，不得 repin、mode switch、migration 或 compatibility bypass。
 
-`VISUAL_DELIVERY_ONLY_RECOVERY`：`NATIVE_MEDIA_UNAVAILABLE` 只能存在於同一 run 的 `status=running`、`current_stage=visuals-completed`，且必須已有本輪 image evidence binding。full-runtime 接手時只讀既有 candidate audit、verification、map decisions、image evidence 與已確認的來源圖片 URL，只補下載／截圖／物化／可見附件交付；不得重跑 discovery、scoring、verification、建立 new run 或變更 event IDs。
+`VISUAL_DELIVERY_ONLY_RECOVERY`：`NATIVE_MEDIA_UNAVAILABLE` 只能存在於同一 run 的 `status=running`、`current_stage=visuals-completed`，且必須已有本輪 image evidence binding。此 run 的 `execution_mode` 仍保持 `mobile-native`；full-runtime 只作為外部 visual-recovery executor，讀既有 candidate audit、verification、map decisions、image evidence 與已確認的來源圖片 URL，只補下載／截圖／物化／可見附件交付。這不是 mode switch；不得重跑 discovery、scoring、verification、建立 new run 或變更 event IDs。
 
 `QUALIFIED_IMAGE_DELIVERY_INDEPENDENT_OF_CLAIM_CRITICAL`：所有 C 級以上事件只要已確認存在合格來源圖片，交付失敗就必須停在上述視覺恢復；`claim_critical=false` 不得把 delivery failure 改寫成 omitted 或完成文字 Reader。只有完整 source exhaustion 證明不存在合格圖片時，非關鍵圖片才可 omitted。
 
@@ -339,16 +340,15 @@ mobile-native 沒有 checkpoint 或 manifest。查證不足時依 `VERIFICATION_
 - full-runtime 的宣稱附件實際存在且像素驗證通過；mobile-native 的 capability degradation 記在 delivery profile、不是 `last_error`，但只要包含 `NATIVE_MEDIA_UNAVAILABLE` 就必須停在同一 run 的視覺恢復，不可 `status=completed`。
 - 最終訊息包含完整 saved reader，不是摘要或只說 GitHub 已保存。
 
-可執行 runtime 時，使用已驗證 bundled Python 執行：
+可執行 runtime 時，installation completion 只跑 capsule 內實際存在的 runtime smoke validation，並一律使用已驗證的 `<bundled-python>`：
 
 ```bash
-python3 -m unittest discover -s tests -v
-python3 scripts/validate_news_brief.py manifest --input <manifest>
-python3 scripts/validate_news_brief.py brief --manifest <manifest> --input <reader>
-python3 scripts/validate_map_decisions.py --input <manifest>
+<bundled-python> scripts/validate_news_brief.py manifest --input <manifest>
+<bundled-python> scripts/validate_news_brief.py brief --manifest <manifest> --input <reader>
+<bundled-python> scripts/validate_map_decisions.py --input <manifest>
 ```
 
-測試失敗只修失敗環節，不重新詢問已確認偏好，不重跑已完成新聞階段。若 real runtime 不可用，必須明確標示未執行的驗證；不能假稱通過。
+`tests/` 明確不屬於 runtime capsule；完整 `python3 -m unittest discover -s tests -v` 只適用完整 source checkout／repository maintenance／CI，不是 Scheduled Task 安裝完成 gate。runtime smoke validation 失敗只修失敗環節，不重新詢問已確認偏好，不重跑已完成新聞階段。若 real runtime 不可用，必須明確標示未執行的驗證；不能假稱通過。
 
 ## 分享方式
 
