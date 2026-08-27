@@ -40,13 +40,19 @@ jobs:
           PY
           python3 .github/rc16_patch.py
           python3 .github/rc16_refine.py
-      - name: Create clean source commit
+      - name: Rebase validated source diff onto current main
         run: |
-          git -c core.whitespace=cr-at-eol diff --check
+          git fetch origin main
+          # The watchdog executable bytes are already correct; keep the current main workflow
+          # unchanged because this GitHub App lacks workflows permission.
+          git checkout origin/main -- .github/workflows/prepare-mobile-run-ledger.yml
+          git -c core.whitespace=cr-at-eol diff --check origin/main -- scripts/manage_mobile_run_log.py tests/test_mobile_pristine_reservation.py tests/test_news_run_checkpoint.py tests/test_pipeline_contract.py bootstrap-workspace.md INSTALL.md README.md mobile-chatgpt-daily-prompt.md docs/mobile-run-ledger.md mobile-chatgpt-start-prompt.md VERSION-RECORD.md
+          git diff --binary origin/main -- scripts/manage_mobile_run_log.py tests/test_mobile_pristine_reservation.py tests/test_news_run_checkpoint.py tests/test_pipeline_contract.py bootstrap-workspace.md INSTALL.md README.md mobile-chatgpt-daily-prompt.md docs/mobile-run-ledger.md mobile-chatgpt-start-prompt.md VERSION-RECORD.md > /tmp/rc16.patch
+          git reset --hard origin/main
+          git clean -fd
+          git apply --index /tmp/rc16.patch
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git rm -f .github/workflows/rc16-finalize.yml .github/rc16_patch.py .github/rc16_refine.py
-          git add scripts/manage_mobile_run_log.py tests/test_mobile_pristine_reservation.py tests/test_news_run_checkpoint.py tests/test_pipeline_contract.py bootstrap-workspace.md INSTALL.md README.md mobile-chatgpt-daily-prompt.md docs/mobile-run-ledger.md mobile-chatgpt-start-prompt.md .github/workflows/prepare-mobile-run-ledger.yml VERSION-RECORD.md
           git commit -m "Close adhoc occurrence and mobile authority gaps"
       - name: Install release dependencies
         run: |
@@ -60,9 +66,7 @@ jobs:
           python3 scripts/verify_bootstrap_capsule.py
           python3 -m unittest tests.test_mobile_pristine_reservation -v
           python3 -m unittest discover -s tests -v
-      - name: Push clean verified source to main
+      - name: Push verified fast-forward source to main
         run: |
           git reset --hard HEAD
           git push origin HEAD:main
-
-# one-shot trigger after final operator-inventory wording fix
