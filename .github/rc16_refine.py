@@ -76,6 +76,11 @@ replace_once(
     "公開 repo 的讀取不要求 GitHub 帳號；跨日 audit 與 run ledger 的持久化依工作區或 repository 寫入權限降級，但不能阻止有效的當日 reader。",
     "公開 repo 的讀取不要求 GitHub 帳號。full-runtime 的外部 diagnostic ledger 可依既有規則 best-effort 降級；但可恢復的 durable mobile-native Scheduled Task 必須具備 `run-logs` 寫入權限，缺少寫入權限時不得宣稱 durable resume／continuity。一次性 reader 可在當前執行完成，但不屬於 durable mobile profile。",
 )
+replace_once(
+    "INSTALL.md",
+    "以上是 operator-facing necessary closure；完整 capsule runtime closure 以 `bootstrap/capsule-manifest.json.runtime_files` 為機器權威，不在 INSTALL 重複列出全部 runtime files。",
+    "以上是 operator-facing necessary closure；完整 capsule runtime closure 以 `bootstrap/capsule-manifest.json` 裡的 `runtime_files` 欄位為機器權威，不在 INSTALL 重複列出全部 runtime files。",
+)
 
 replace_once(
     "README.md",
