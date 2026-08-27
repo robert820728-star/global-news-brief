@@ -1,22 +1,50 @@
 {
-  "candidate_audit_artifact": "logs/runs/gnb-20260825T222429Z-f78c4e91/candidate-audit.json",
-  "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
+  "candidate_audit_artifact": {
+    "blob_sha": "1f30c4858a4180f8cb2daeea2b06aba880331e6c",
+    "branch": "run-logs",
+    "path": "logs/runs/gnb-20260826T162844Z-fcd00184/candidate-audit.json"
+  },
+  "capability_limitations": [
+    "NATIVE_MEDIA_UNAVAILABLE"
+  ],
   "client_confirmation_supported": false,
-  "current_stage": "visuals-completed",
+  "current_stage": "source-scan",
   "delivery_profile": "reader-canonical-capability-degraded",
   "delivery_status": "not_ready",
-  "durable_audit_artifact": "logs/latest-candidate-audit.json",
-  "durable_audit_status": "preserved_merge_deferred",
+  "durable_audit_artifact": null,
+  "durable_audit_status": "current_run_only",
   "execution_mode": "mobile-native",
-  "last_completed_stage": "selection-verified",
-  "last_error": null,
-  "main_sha": "e1e0336aa6f5fcf0b4260c699c693159847e2948",
+  "image_evidence_artifact": {
+    "blob_sha": "8a8c10f8a6cc2eaedc0dc0a4a28dc3ed2a8db1fb",
+    "branch": "run-logs",
+    "path": "logs/runs/gnb-20260826T162844Z-fcd00184/image-evidence.json"
+  },
+  "last_completed_stage": "workspace-ready",
+  "last_error": {
+    "code": "executor_interrupted",
+    "message": "The next scheduled run started before this run reached a terminal state."
+  },
+  "main_sha": "a5a70dd4a7c1b2eea0f6852d8832caf65b203861",
+  "map_decisions_artifact": {
+    "blob_sha": "6ae9bdc2da8158a7dc895552f0f0cefed2bc0842",
+    "branch": "run-logs",
+    "path": "logs/runs/gnb-20260826T162844Z-fcd00184/map-decisions.json"
+  },
   "native_media_status": "unavailable",
-  "reader_artifact": null,
-  "run_id": "gnb-20260825T222429Z-f78c4e91",
-  "scheduled_for": "2026-08-26T06:24:29+08:00",
-  "schema_version": "1.3.0",
-  "stage_index": 7,
+  "reader_artifact": {
+    "blob_sha": "8825faf7a6bdb41e433664c1ccbf5cfd91e7371c",
+    "branch": "run-logs",
+    "path": "logs/latest-reader.md"
+  },
+  "run_id": "gnb-20260826T162844Z-fcd00184",
+  "scheduled_for": "2026-08-27T06:00:00+08:00",
+  "schema_version": "1.5.0",
+  "stage_index": 4,
   "status": "interrupted_by_next_run",
-  "updated_at": "2026-08-25T22:55:20Z"
+  "updated_at": "2026-08-27T02:49:01Z",
+  "verification_artifact": {
+    "blob_sha": "baa0964851909e7de2444a3a744a41254228bc2b",
+    "branch": "run-logs",
+    "path": "logs/runs/gnb-20260826T162844Z-fcd00184/verification.json"
+  }
 }
