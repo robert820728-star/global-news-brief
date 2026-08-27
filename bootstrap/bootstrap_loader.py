@@ -36,8 +36,8 @@ def safe_member_name(name: str) -> bool:
     return bool(name) and not path.is_absolute() and ".." not in path.parts
 
 
-def load_manifest(path: Path) -> dict:
-    data = json.loads(path.read_text(encoding="utf-8"))
+def load_manifest_bytes(raw: bytes) -> dict:
+    data = json.loads(raw.decode("utf-8"))
     if data.get("schema_version") != SCHEMA_VERSION:
         raise ValueError(f"capsule schema must be {SCHEMA_VERSION}")
     if data.get("repository") != REPOSITORY:
@@ -51,6 +51,10 @@ def load_manifest(path: Path) -> dict:
         if not isinstance(value, int) or value <= 0:
             raise ValueError(f"capsule {field} must be a positive integer")
     return data
+
+
+def load_manifest(path: Path) -> dict:
+    return load_manifest_bytes(path.read_bytes())
 
 
 def verify_chunk_transport(item: dict, raw: bytes, line_width: int,
@@ -215,10 +219,21 @@ def extract_verified(payload: bytes, manifest: dict, destination: Path) -> list[
     return [expected[path] for path in sorted(expected)]
 
 
-def materialize(manifest_path: Path, chunks_dir: Path | None, workspace: Path,
+def materialize(manifest_path: Path | None, chunks_dir: Path | None, workspace: Path,
                 commit_sha: str, manifest_blob_sha: str,
-                payload_url: str | None = None) -> dict:
-    manifest = load_manifest(manifest_path)
+                payload_url: str | None = None,
+                manifest_url: str | None = None) -> dict:
+    if manifest_url:
+        with urllib.request.urlopen(manifest_url, timeout=30) as response:
+            manifest_raw = response.read()
+        if git_blob_sha1_bytes(manifest_raw) != manifest_blob_sha:
+            raise ValueError("manifest git blob mismatch")
+        manifest = load_manifest_bytes(manifest_raw)
+    elif manifest_path is not None:
+        manifest_raw = manifest_path.read_bytes()
+        manifest = load_manifest_bytes(manifest_raw)
+    else:
+        raise ValueError("capsule manifest source missing")
     if payload_url:
         payload = payload_from_url(manifest, payload_url)
         transport = "direct-payload"
@@ -239,7 +254,6 @@ def materialize(manifest_path: Path, chunks_dir: Path | None, workspace: Path,
         shutil.rmtree(stage, ignore_errors=True)
         raise
 
-    manifest_raw = manifest_path.read_bytes()
     receipt = {
         "schema_version": "1.1.0",
         "status": "completed",
@@ -272,7 +286,9 @@ def materialize(manifest_path: Path, chunks_dir: Path | None, workspace: Path,
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--manifest", required=True)
+    manifest_source = parser.add_mutually_exclusive_group(required=True)
+    manifest_source.add_argument("--manifest")
+    manifest_source.add_argument("--manifest-url")
     transport = parser.add_mutually_exclusive_group(required=True)
     transport.add_argument("--chunks-dir")
     transport.add_argument("--payload-url")
@@ -282,9 +298,10 @@ def main() -> int:
     args = parser.parse_args()
     try:
         receipt = materialize(
-            Path(args.manifest), Path(args.chunks_dir) if args.chunks_dir else None,
+            Path(args.manifest) if args.manifest else None,
+            Path(args.chunks_dir) if args.chunks_dir else None,
             Path(args.workspace), args.commit_sha, args.manifest_blob_sha,
-            payload_url=args.payload_url,
+            payload_url=args.payload_url, manifest_url=args.manifest_url,
         )
     except Exception as error:
         print(f"BOOTSTRAP FAIL: {error}")
@@ -300,3 +317,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

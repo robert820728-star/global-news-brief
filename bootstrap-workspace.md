@@ -28,9 +28,24 @@ Before executing any `scripts/*.py`, do all of the following:
    - a `payload` record for `capsule-payload.tar.xz` with size, SHA-256, and Git blob SHA;
    - non-empty `runtime_files` and `chunks` lists.
 7. Fail stale capsules closed. Compare every `runtime_files[].path` and `source_blob_sha` in the manifest with the same path in the resolved SHA's recursive tree. Require the tree blob for `bootstrap/capsule-payload.tar.xz` to equal `manifest.payload.source_blob_sha`. Also fetch that commit's metadata and require `manifest.source_commit` to be either the resolved commit itself or its first parent. If any runtime path or payload blob is missing/different, or the source-commit relation is stale, stop with `repository materialization / executable workspace acquisition`. After validation, update the same comment to `stage=bootstrap-manifest-verified` and `progress=0/<chunks_total>`.
-8. `EARLY_DIAGNOSTIC_HELPERS_VERIFIED`: fetch `bootstrap/bootstrap_loader.py`, `bootstrap/bootstrap_progress.py`, and `bootstrap/bootstrap-progress.schema.json` from the same resolved commit. Validate each connector-returned Git blob SHA against the resolved tree; also validate the loader against `manifest.loader.source_blob_sha`. Write them to a temporary writable staging directory, then update the same comment to `stage=bootstrap-helpers-verified`. The progress helper uses only the Python standard library and is allowed before the news runtime exists.
-9. Initialize the separate pre-checkpoint record with `python3 <staging>/bootstrap_progress.py init --output <staging>/bootstrap-progress.json --run-id <run-id> --resolved-commit <latest-main-commit-sha> --chunks-total <count>`, then use its `ledger` command to import the early ledger status and comment id. This file is diagnostic evidence, not the news checkpoint.
-10. Attempt the low-pressure primary transport once. Run the verified loader against the exact pinned URL `https://raw.githubusercontent.com/robert820728-star/global-news-brief/<latest-main-commit-sha>/bootstrap/capsule-payload.tar.xz`. The loader downloads the bytes with the Python standard library, then requires the manifest size, SHA-256, and Git blob SHA before extracting anything:
+8. `VERIFIED_BOOTSTRAP_SEED_ROUTE`: obtain the `bootstrap/bootstrap_loader.py` blob SHA from the verified recursive tree. Use the host Python standard library to fetch only the exact pinned raw loader URL, compute Git's `blob <size>\0<bytes>` SHA-1 locally, and write it to staging only when it equals the tree SHA and `manifest.loader.source_blob_sha`. This seed is the only code allowed to execute before the verified loader. A connector response is not required to perform connector-to-local file handoff. The cross-shell seed command is:
+
+```bash
+python3 -c "import hashlib,pathlib,sys,urllib.request;u,e,o=sys.argv[1:];d=urllib.request.urlopen(u,timeout=30).read();h=hashlib.sha1(('blob '+str(len(d))+'\\0').encode('ascii')+d).hexdigest();assert h==e,'loader git blob mismatch';pathlib.Path(o).write_bytes(d)" "https://raw.githubusercontent.com/robert820728-star/global-news-brief/<latest-main-commit-sha>/bootstrap/bootstrap_loader.py" "<loader-git-blob-sha>" "<staging>/bootstrap_loader.py"
+```
+
+After the verified bytes exist, update the same comment to `stage=bootstrap-helpers-verified`.
+9. Run the verified loader with pinned manifest and payload URLs. The loader downloads the manifest, requires its Git blob SHA before parsing it, then downloads and verifies the payload before extracting any runtime file:
+
+```bash
+python3 <staging>/bootstrap_loader.py \
+  --manifest-url https://raw.githubusercontent.com/robert820728-star/global-news-brief/<latest-main-commit-sha>/bootstrap/capsule-manifest.json \
+  --payload-url https://raw.githubusercontent.com/robert820728-star/global-news-brief/<latest-main-commit-sha>/bootstrap/capsule-payload.tar.xz \
+  --workspace <workspace> \
+  --commit-sha <latest-main-commit-sha> \
+  --manifest-blob-sha <manifest-git-blob-sha>
+```
+10. After workspace materialization, initialize `bootstrap-progress.json` with the verified `bootstrap/bootstrap_progress.py` now present inside the workspace, import the early ledger status and comment id, and record `transport=direct-payload`. This diagnostic record is not the news checkpoint. The old local-manifest loader form remains valid only when the host already has a lossless verified local manifest:
 
 ```bash
 python3 <staging>/bootstrap_loader.py \
@@ -41,7 +56,7 @@ python3 <staging>/bootstrap_loader.py \
   --manifest-blob-sha <manifest-git-blob-sha>
 ```
 
-11. If and only if the direct request is unavailable or fails payload verification, record that single failure and use the existing segmented connector transport below. Do not retry the direct URL and do not ask the user to intervene.
+11. If the pinned seed or direct loader transport is unavailable, use the segmented connector transport below only when the host exposes a lossless connector-to-local byte handoff. If it does not, stop attempting full-runtime before occurrence creation and route the same scheduled task to `mobile-native`; do not record a repository materialization failure, do not create a replacement run, and do not ask the user to intervene.
 12. **Do not fetch an entire fallback chunk in one connector response.** For every chunk in `manifest.chunks[]`, iterate its `blocks[]` in order. The normal fallback requests a **16-line** range spanning two adjacent declared blocks. Save the exact canonical-LF response and run `bootstrap/bootstrap_progress.py verify-grouped` with the two original block specifications. The helper splits the response and independently verifies both original block sizes and SHA-256 values. If either half is missing or altered, discard the grouped response and fall back to the exact 8-line request for each affected block.
 13. Every exact block request uses the same pinned commit and same declared `start_line` / `end_line` for **one initial attempt plus at most three retries**. Use backoff delays of **2, 5, and 10 seconds**, or the host's smallest safe equivalents, and record every attempt's byte size, SHA-256, and error with the progress helper. After the fourth failure, stop. Never restart or re-download earlier verified chunks.
 14. After all blocks for one chunk validate, concatenate the verified block files in order into the canonical chunk file. Locally verify the complete chunk `size` and `sha256`, then verify the unwrapped Base64 `encoded_size` and `encoded_sha256`. Only then atomically advance `chunks_completed` by one with the progress helper. Only after every chunk passes may Stage -1 continue.
@@ -81,9 +96,9 @@ If the host does not provide a path, run `python3 scripts/resolve_bundled_python
 
 ## Transport policy
 
-The primary transport is the one-request pinned raw payload executed only by the verified loader. The segmented connector chunks remain the final fallback when the host blocks that request.
+The primary transport begins with one pinned raw loader seed verified against the recursive-tree Git blob SHA. That verified loader is then the only component permitted to request the exact pinned manifest and payload URLs; it verifies the manifest Git blob before parsing and the payload size, SHA-256, and Git blob before extraction. Segmented connector chunks are a fallback only on hosts that can losslessly materialize connector bytes.
 
-Never use shell `git clone`, `curl`, `wget`, an unpinned URL, or arbitrary raw GitHub HTTP for Stage -1. The sole shell-network exception is the loader's exact pinned `capsule-payload.tar.xz` URL above; its bytes are accepted only after manifest size, SHA-256, and Git blob verification.
+Never use shell `git clone`, `curl`, `wget`, an unpinned URL, or arbitrary raw GitHub HTTP for Stage -1. The only shell-network exceptions are the pinned loader seed and the verified loader's pinned manifest/payload requests described above.
 
 ## Capsule maintenance
 

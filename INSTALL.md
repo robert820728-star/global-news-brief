@@ -149,7 +149,7 @@
 
 ## 四、建立排程與板塊底圖
 
-單次與循環 Scheduled Task 都以該 task 真正觸發的 `scheduled_for` 作 occurrence key；04:00、06:00 或其他時間完全走同一流程。repository 不設 pre-trigger watchdog，也不得在 task 實際觸發前寫入 future `current.json`。每輪先 fresh-resolve `main` 並做一次 capability probe；probe 成功才以 `execution_mode=full-runtime` 建立／接續該輪執行狀態，host execution unavailable 時才以 `execution_mode=mobile-native` 建立／接續 mobile ledger。mode 自 actual occurrence 的 `prepare` 起不可切換。兩種模式的 24 小時窗都從實際 executor 啟動時刻精確倒推，個人偏好不回寫公共 `main`。
+單次與循環 Scheduled Task 都以該 task 真正觸發的 `scheduled_for` 作 occurrence key；04:00、06:00 或其他時間完全走同一流程。repository 不設 pre-trigger watchdog，也不得在 task 實際觸發前寫入 future `current.json`。每輪先 fresh-resolve `main` 並做一次 capability routing。只有本機執行／可寫能力與 `VERIFIED_BOOTSTRAP_SEED_ROUTE` 都成功，才以 `execution_mode=full-runtime` 建立／接續該輪執行狀態；本機執行不存在，或 pinned loader seed 無法取得且宿主也沒有 lossless connector-to-local handoff 時，必須在建立 occurrence 前選 `execution_mode=mobile-native`。bootstrap transport 不可用是 capability routing 結果，不得誤報成 repository materialization defect。mode 自 actual occurrence 的 `prepare` 起不可切換。兩種模式的 24 小時窗都從實際 executor 啟動時刻精確倒推，個人偏好不回寫公共 `main`。
 
 板塊確定後：
 
@@ -164,7 +164,7 @@
 
 | 階段 | 必讀／輸入 | 必填產物與驗證 | 完成或恢復條件 |
 |---|---|---|---|
-| -1 fresh main 與 bootstrap | `bootstrap-workspace.md`、雙端點 current main、fresh nonce；full-runtime 另讀 capsule manifest／payload | 先完成 capability routing；full-runtime 產生經 blob SHA、payload SHA-256、runtime fingerprint 驗證的 workspace 與 `bootstrap-receipt.json`；mobile-native 在 actual task trigger 後建立／接續該 `scheduled_for` 的 occurrence ledger，不冒充 capsule 已物化 | full-runtime receipt 未通過前不得建立 news checkpoint；mobile-native 不執行 unavailable bootstrap，只從同一 actual occurrence 的 first incomplete stage 接續 |
+| -1 fresh main 與 bootstrap | `bootstrap-workspace.md`、雙端點 current main、fresh nonce；full-runtime 另需 pinned loader seed／capsule manifest／payload | 先完成 capability routing；full-runtime 必須由已核對 Git blob SHA 的 loader seed 開始，產生經 manifest blob、payload SHA-256、runtime fingerprint 驗證的 workspace 與 `bootstrap-receipt.json`；seed transport 不可用且沒有 lossless connector-to-local handoff 時改走 mobile-native | full-runtime receipt 未通過前不得建立 news checkpoint；不得只因 Python／可寫 probe 成功便強制進入一條無法物化 loader 的 full-runtime；mobile-native 從同一 actual occurrence 的 first incomplete stage 接續 |
 | 0 checkpoint init | run id、精確 24 小時窗；full-runtime 另需 bootstrap receipt | full-runtime 執行 canonical checkpoint CLI：`<bundled-python> scripts/news_run_checkpoint.py init ...`；mobile-native 在 capability routing 選定後建立或 resume `logs/current.json`，保存 run id、窗、main 與 first incomplete stage | 兩種模式都綁定同一輪 main 與時間窗；mobile-native 不宣稱執行 `news_run_checkpoint.py` |
 | 1 source-scan | `news-source-pool.json`、`source-route-config.json` | 三條 discovery route 的 snapshots、scan evidence、truthful coverage、`source-candidates.json`、`news-relevance-gate.json`、`model-source-candidates.json` | `SOURCE_SCAN_COVERAGE_SEPARATION`：`scan_status` 只表示掃描程序是否完成，`coverage_status`／`coverage_complete` 另表示來源覆蓋是否完整；每條 configured route 都留在 audit。`GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE`：本輪有 fallback／全球板塊時，至少一條 `primary_aggregator` 必須成功；GDELT 的 archive、一次 DOC、有效 cache 全部不可用時，同一 run 停在 source-scan，區域補充不得把全球 coverage 缺失洗成零事件。`FULL_DISCOVERY_POOL_UNCAPPED`：已取得列完整入池，弱 signal 仍進模型 |
 | 2 preprocess | model-admitted rows | `preprocessed-candidates.json`；時間窗、canonical URL、provisional article groups | 這些群組不是語意事件；失敗只重跑 preprocess |

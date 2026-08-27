@@ -127,6 +127,125 @@ class BootstrapCapsuleTests(unittest.TestCase):
             )
             self.assertEqual("direct-payload", receipt["capsule"]["transport"])
 
+    def test_loader_materializes_from_manifest_and_payload_urls(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            capsule_dir = root / "capsule"
+            manifest = BUILDER.build_capsule(
+                ROOT, capsule_dir, source_commit="test-source"
+            )
+            manifest_path = capsule_dir / "capsule-manifest.json"
+            manifest_blob_sha = LOADER.git_blob_sha1_bytes(manifest_path.read_bytes())
+            workspace = root / "workspace"
+
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "bootstrap/bootstrap_loader.py"),
+                    "--manifest-url",
+                    manifest_path.as_uri(),
+                    "--payload-url",
+                    (capsule_dir / "capsule-payload.tar.xz").as_uri(),
+                    "--workspace",
+                    str(workspace),
+                    "--commit-sha",
+                    "test-commit",
+                    "--manifest-blob-sha",
+                    manifest_blob_sha,
+                ],
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            receipt = json.loads(
+                (workspace / "bootstrap-workspace.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(manifest["payload_sha256"], receipt["capsule"]["payload_sha256"])
+
+    def test_loader_rejects_remote_manifest_blob_mismatch(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            capsule_dir = root / "capsule"
+            BUILDER.build_capsule(ROOT, capsule_dir, source_commit="test-source")
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "bootstrap/bootstrap_loader.py"),
+                    "--manifest-url",
+                    (capsule_dir / "capsule-manifest.json").as_uri(),
+                    "--payload-url",
+                    (capsule_dir / "capsule-payload.tar.xz").as_uri(),
+                    "--workspace",
+                    str(root / "workspace"),
+                    "--commit-sha",
+                    "test-commit",
+                    "--manifest-blob-sha",
+                    "0" * 40,
+                ],
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(2, result.returncode)
+            self.assertIn("manifest git blob mismatch", result.stdout)
+
+    def test_empty_staging_can_seed_verified_loader_and_materialize(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            capsule_dir = root / "capsule"
+            BUILDER.build_capsule(ROOT, capsule_dir, source_commit="test-source")
+            staging = root / "empty-staging"
+            staging.mkdir()
+            seeded_loader = staging / "bootstrap_loader.py"
+            loader_bytes = (ROOT / "bootstrap/bootstrap_loader.py").read_bytes()
+            expected_loader_blob = LOADER.git_blob_sha1_bytes(loader_bytes)
+            seed_code = (
+                "import hashlib,pathlib,sys,urllib.request;"
+                "u,e,o=sys.argv[1:];"
+                "d=urllib.request.urlopen(u,timeout=30).read();"
+                "h=hashlib.sha1(('blob '+str(len(d))+'\\0').encode('ascii')+d).hexdigest();"
+                "assert h==e,'loader git blob mismatch';"
+                "pathlib.Path(o).write_bytes(d)"
+            )
+            seeded = subprocess.run(
+                [
+                    sys.executable,
+                    "-c",
+                    seed_code,
+                    (ROOT / "bootstrap/bootstrap_loader.py").as_uri(),
+                    expected_loader_blob,
+                    str(seeded_loader),
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(0, seeded.returncode, seeded.stdout + seeded.stderr)
+            self.assertEqual(loader_bytes, seeded_loader.read_bytes())
+
+            manifest_path = capsule_dir / "capsule-manifest.json"
+            workspace = root / "workspace"
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(seeded_loader),
+                    "--manifest-url",
+                    manifest_path.as_uri(),
+                    "--payload-url",
+                    (capsule_dir / "capsule-payload.tar.xz").as_uri(),
+                    "--workspace",
+                    str(workspace),
+                    "--commit-sha",
+                    "test-commit",
+                    "--manifest-blob-sha",
+                    LOADER.git_blob_sha1_bytes(manifest_path.read_bytes()),
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            self.assertTrue((workspace / "bootstrap-workspace.json").is_file())
+
     def test_extracted_runtime_renders_and_validates_canonical_event_map(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -240,3 +359,4 @@ class BootstrapCapsuleTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

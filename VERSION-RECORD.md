@@ -1,5 +1,14 @@
 # Version Record / 版本紀錄
 
+## v0.6.0-rc.18 — Verified bootstrap seed path / 驗證式 bootstrap seed 路徑
+
+- Reason / 建立原因：Production run `gnb-20260827T220115Z-7c3a9e21` proved that the prior capability probe forced full-runtime when Python and a writable directory existed, even though the connector could not hand exact helper bytes to local staging and raw helper acquisition was forbidden. Existing tests started from an already checked-out loader and skipped the failing boundary. / 正式 run `gnb-20260827T220115Z-7c3a9e21` 證明舊 probe 只要有 Python 與可寫目錄便強制 full-runtime，但 connector 無法把 helper 精確 bytes 交給本機 staging，規則又禁止 raw helper 取得；既有測試從已 checkout loader 開始，跳過真正失敗邊界。
+- Approach / 作法：Seed only the pinned loader through Python standard-library HTTP, verify its Git blob SHA before execution, then let that verified loader fetch and verify the pinned manifest and payload. If neither this seed nor lossless connector handoff exists, route to mobile-native before occurrence creation. / 僅以 Python standard-library HTTP 取得 pinned loader，執行前驗證 Git blob SHA，再由已驗證 loader 取得並核對 pinned manifest 與 payload；若 seed 與 lossless connector handoff 都不可用，則在建立 occurrence 前改走 mobile-native。
+- Non-goals / 不修改：No scoring, discovery, image, map, reader, recovery state, receipt, schema, source class, or compatibility-layer change. / 不修改評分、discovery、圖片、地圖、Reader、recovery state、receipt、schema、source class 或 compatibility layer。
+- Validation / 驗證：Red-green loader regressions cover manifest URL materialization and manifest blob mismatch. A clean-room regression starts with an empty staging directory, seeds and verifies the loader bytes, then materializes the runtime without connector-to-file handoff. Full CI and a real scheduled-host Stage -1 smoke remain required. / 紅綠 loader 回歸覆蓋 manifest URL 物化與 manifest blob 不符；clean-room 回歸從空 staging 開始，取得並驗證 loader bytes，再於無 connector-to-file handoff 下物化 runtime。正式驗收仍必須通過全庫 CI 與真實宿主 Stage -1 smoke。
+- Result / 結果：Source candidate only until remote CI, generated capsule binding, and the real host smoke pass; static tests alone are not release acceptance. / 在遠端 CI、generated capsule binding 與真實宿主 smoke 通過前僅為 source candidate；靜態測試不得單獨作為 release acceptance。
+
+
 This file records the current installable contract. Earlier implementation attempts remain available through Git history so retired behavior cannot leak into the runtime repository surface.
 
 本檔只記錄目前可安裝契約；較早的實作嘗試由 Git history 保存，避免退役行為繼續留在執行中的 repository 表面。
