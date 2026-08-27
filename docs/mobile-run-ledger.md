@@ -13,6 +13,10 @@ The mobile ChatGPT task remains the news executor. GitHub stores a compact, dura
 - `logs/latest-reader.md` is replaced only after a new reader edition has been rendered successfully.
 - `scheduled_for` is the occurrence key. Re-entering the same occurrence returns the existing `current.json` and resumes its first incomplete stage, including when a reader is already saved but handoff is incomplete. Only a strictly later scheduled occurrence rotates `current.json`; a non-terminal older occurrence is then preserved as `interrupted_by_next_run` in `previous.json`.
 
+`PRISTINE_RESERVATION_REPLACEMENT_GATE`: a record that is still `schedule-prepared` / `awaiting_executor` with null `main_sha`, null `window`, and no bound run artifacts is only an unconsumed future reservation. A real adhoc/install test may replace that reservation even when its `scheduled_for` is earlier, without creating `previous.json` or `interrupted_by_next_run`. Same-key entry still resumes the existing run. Once `executor-started` has been reached, the normal older-occurrence prohibition applies again. A later formal occurrence rotates the adhoc run normally.
+
+Durable mobile-native Scheduled Tasks require GitHub write access to `run-logs`; read-only/no-write execution may produce a one-shot reader but has no durable resume semantics and is not this ledger profile.
+
 The branch tip exposes only two run records. Git commit history is not rewritten and must never contain credentials, connector diagnostics, private source content, or binary images.
 
 ## Persistence points
@@ -29,6 +33,6 @@ Count receipts are derived data. If an event subtotal differs from the actual ru
 
 ## Watchdog
 
-`.github/workflows/prepare-mobile-run-ledger.yml` runs at 05:58 Asia/Taipei and can also be dispatched manually. It performs only log rotation and initialization; it does not search news, call a model, or require an OpenAI API key. If the mobile executor never starts, `current.json` remains at `awaiting_executor` and the next run preserves that evidence as interrupted.
+`.github/workflows/prepare-mobile-run-ledger.yml` is only the repository's default durable mobile profile helper: it runs at 05:58 `Asia/Taipei` to reserve the 06:00 `Asia/Taipei` occurrence and can also be dispatched manually. It performs only log rotation and initialization; it does not search news, call a model, or require an OpenAI API key. If the mobile executor never starts, `current.json` remains at `awaiting_executor` and the next run preserves that evidence as interrupted.
 
 If file writes are unavailable, the mobile task falls back to one updated comment in Issue #3. Logging failure is diagnostic degradation and must not cause fabricated news or a false delivery claim.

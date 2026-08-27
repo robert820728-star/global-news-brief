@@ -55,12 +55,19 @@ class NewsRunCheckpointTests(unittest.TestCase):
     def test_bootstrap_receipt_requires_every_install_runtime_entrypoint(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         preflight = install.split("## 一、安裝前驗證", 1)[1].split("## 二、", 1)[0]
+        runtime_preflight, operator_support = preflight.split("### Bootstrap infrastructure", 1)
         expected = set(re.findall(
             r"`((?:\.agents|bootstrap|scripts|schemas|maps)/[^`]+|[^`/]+\.(?:md|json|yaml))`",
-            preflight,
+            runtime_preflight,
         ))
-
         self.assertTrue(expected.issubset(set(MODULE.BOOTSTRAP_REQUIRED_PATHS)))
+
+        support_paths = set(re.findall(
+            r"`((?:\.agents|bootstrap|scripts|schemas|maps)/[^`]+|[^`/]+\.(?:md|json|yaml))`",
+            "### Bootstrap infrastructure" + operator_support,
+        ))
+        for rel in support_paths:
+            self.assertTrue((ROOT / rel).exists(), rel)
 
     def test_source_scan_completion_requires_all_canonical_artifacts(self):
         self.assertEqual(

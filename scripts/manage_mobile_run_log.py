@@ -287,6 +287,33 @@ def _validate_window(window: Any, label: str) -> None:
         raise ValueError(f"{label} window must span exactly 24 hours")
 
 
+
+
+def _is_pristine_reservation(record: dict[str, Any]) -> bool:
+    artifact_fields = (
+        "reader_artifact",
+        "candidate_audit_artifact",
+        "verification_artifact",
+        "map_decisions_artifact",
+        "image_evidence_artifact",
+        "durable_audit_artifact",
+    )
+    return (
+        record["status"] == "awaiting_executor"
+        and record["current_stage"] == "schedule-prepared"
+        and record["stage_index"] == STAGE_INDEX["schedule-prepared"]
+        and record["last_completed_stage"] is None
+        and record["main_sha"] is None
+        and record["window"] is None
+        and record["delivery_profile"] == "full-assets"
+        and record["native_media_status"] == "available"
+        and record["capability_limitations"] == []
+        and record["delivery_status"] == "not_ready"
+        and not record["client_confirmation_supported"]
+        and record["last_error"] is None
+        and record["durable_audit_status"] == "not_started"
+        and all(record.get(field) is None for field in artifact_fields)
+    )
 def prepare_run(
     ledger_dir: Path | str,
     *,
@@ -305,23 +332,35 @@ def prepare_run(
     if current_path.exists():
         previous = _read_json(current_path)
         validate_record(previous)
+        pristine_reservation = _is_pristine_reservation(previous)
+        replace_pristine_earlier = False
         try:
             incoming_occurrence = datetime.fromisoformat(scheduled_for)
             current_occurrence = datetime.fromisoformat(previous["scheduled_for"])
             if incoming_occurrence == current_occurrence:
                 return previous
-            if incoming_occurrence < current_occurrence:
+            replace_pristine_earlier = (
+                incoming_occurrence < current_occurrence
+                and pristine_reservation
+            )
+            if incoming_occurrence < current_occurrence and not replace_pristine_earlier:
                 raise ValueError("cannot replace current.json with an older scheduled occurrence")
         except TypeError as error:
             raise ValueError("scheduled_for values must use comparable ISO timestamps") from error
-        if previous["status"] in {"awaiting_executor", "running"}:
-            previous["status"] = "interrupted_by_next_run"
-            previous["last_error"] = {
-                "code": "executor_interrupted",
-                "message": "The next scheduled run started before this run reached a terminal state.",
-            }
-            previous["updated_at"] = updated_at
-        _atomic_write(previous_path, previous)
+
+        # A pristine schedule-prepared reservation has never consumed an executor,
+        # window, main pin, or artifact. Replacing it is not an interruption and
+        # must not create false previous-run history. This permits an immediate
+        # adhoc/install test to run before a pre-created future daily reservation.
+        if not replace_pristine_earlier:
+            if previous["status"] in {"awaiting_executor", "running"}:
+                previous["status"] = "interrupted_by_next_run"
+                previous["last_error"] = {
+                    "code": "executor_interrupted",
+                    "message": "The next scheduled run started before this run reached a terminal state.",
+                }
+                previous["updated_at"] = updated_at
+            _atomic_write(previous_path, previous)
 
     current: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,

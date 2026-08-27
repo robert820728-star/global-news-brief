@@ -4,7 +4,7 @@
 
 ## 手機 ChatGPT 基礎排程
 
-若要在一般手機 ChatGPT 對話執行，不使用手機 Codex，請先選擇 `Instant` 並貼上 [mobile-chatgpt-start-prompt.md](mobile-chatgpt-start-prompt.md)。此低消耗版本不執行本機程式、地圖或圖表，但仍保存當輪海選、每筆六項大評分、當輪所有 C 級以上新聞的讀者版，以及可用時的十四天 continuity cache。十四天 merge 延後不會阻擋當日讀者版。mobile-native 使用原生圖片搜尋／圖片卡並保存結構化交付結果，不宣稱本機下載、縮圖或附件驗收；只有完整來源檢查後確實沒有合格圖片才可省略視覺區塊，已確認合格圖片但交付失敗時必須停在同一 run 的視覺恢復，不得完成 Reader，也不用圖片說明、圖片網址或原網站連結冒充附件。執行進度與最新讀者版會保存在 `run-logs` 分支；05:58 的輕量守望工作只初始化紀錄，不搜尋新聞，也不使用模型額度。
+若要在一般手機 ChatGPT 對話執行，不使用手機 Codex，請先選擇 `Instant` 並貼上 [mobile-chatgpt-start-prompt.md](mobile-chatgpt-start-prompt.md)。此低消耗版本不執行本機程式、地圖或圖表，但仍保存當輪海選、每筆六項大評分、當輪所有 C 級以上新聞的讀者版，以及可用時的十四天 continuity cache。十四天 merge 延後不會阻擋當日讀者版。mobile-native 使用原生圖片搜尋／圖片卡並保存結構化交付結果，不宣稱本機下載、縮圖或附件驗收；只有完整來源檢查後確實沒有合格圖片才可省略視覺區塊，已確認合格圖片但交付失敗時必須停在同一 run 的視覺恢復，不得完成 Reader，也不用圖片說明、圖片網址或原網站連結冒充附件。執行進度與最新讀者版會保存在 `run-logs` 分支；repository 內建的 durable mobile profile 固定為每日 06:00、`Asia/Taipei`、繁體中文，05:58 的輕量守望工作只替這個預設 profile 初始化紀錄，不搜尋新聞，也不使用模型額度。
 
 完整本機工作流仍使用下方的安裝方式與 `daily-schedule-prompt.md`；兩種模式互不覆蓋。
 
@@ -18,13 +18,11 @@
 
 > 請讀取此 GitHub repo 的 INSTALL.md，協助我設定個人偏好與每日新聞排程。任何建立或修改排程的動作都先取得我的確認。
 
-安裝時只需確認三件事：
+安裝時只需確認兩項偏好；內建排程 profile 固定如下：
 
 1. 是否自訂監控板塊；可以是單一國家，也可以是區域，例如日本、歐盟、北美、非洲或東南亞。不自訂時使用台灣、中國、世界。
 2. 是否調整特別感興趣或降低權重的新聞主題。
-3. 每日幾點執行。
-
-輸出語言優先沿用使用者已設定的語言；沒有設定時沿用安裝對話的主要語言。時區優先使用帳號、裝置或目前工作區時區，只有無法判斷時才詢問。
+3. 內建 Scheduled Task profile 固定為每日 06:00、`Asia/Taipei`、繁體中文；宿主可用 verified runtime 時走 full-runtime，否則同一 occurrence 走 mobile-native fallback。其他 mobile 時間／時區不得沿用內建 05:58 watchdog 或共用 `run-logs/current.json`。
 
 完成後，每次排程都會重新讀取 repo 最新規則，並以獨立結果對話輸出當日新聞。完整版每輪會以兩個帶新 nonce 的 GitHub API 端點交叉確認當下 `main` SHA；同一輪固定使用確認後的 SHA，下一輪再重新解析，不會把安裝時或前一輪的 commit 永久釘住：
 
@@ -36,7 +34,7 @@
 
 ## 不需要 GitHub 帳號
 
-公開 repo 的規則、技能、模板、地圖與圖片流程都可直接讀取；沒有 GitHub 帳號或寫入權限仍可產生完整每日新聞。
+公開 repo 的規則、技能、模板、地圖與圖片流程可在沒有 GitHub 帳號時直接讀取；但可恢復的 durable mobile-native Scheduled Task 必須使用具此 repository `run-logs` 寫入權限的 GitHub app。沒有寫入權限時最多只能在當前執行做一次性 reader，不得宣稱具備跨執行 resume、durable run identity 或 continuity。
 
 十四天候選回查採漸進式保存：優先使用可持久工作區，其次使用具寫入權限的 repository。若兩者皆不可用，系統仍完成本輪海選、D／E 內部分級、來源複查與讀者版，只是不保證跨日保存十四天歷史。此降級不得影響事件評級、入選、圖片、地圖或最終輸出。
 
@@ -76,7 +74,7 @@ full-runtime 各 stage 共用 `schemas/news-event-manifest.schema.json`，欄位
 
 ## 本地驗證
 
-只有 full-runtime 取得並驗證 capsule、建立本機 checkpoint 與必要時回退到分段 chunks；mobile-native 固定 fresh main 後直接沿用同一 `scheduled_for` 的 run ledger 與 run-scoped artifacts，不捏造 capsule、workspace 或 checkpoint。台帳失敗只降低診斷能力，不會阻擋每日新聞。 / Only full-runtime fetches and verifies the capsule, creates a local checkpoint, and falls back to segmented chunks when needed. Mobile-native pins fresh main and resumes the same scheduled occurrence through the existing run ledger and run-scoped artifacts without claiming a capsule, workspace, or local checkpoint.
+只有 full-runtime 取得並驗證 capsule、建立本機 checkpoint 與必要時回退到分段 chunks；mobile-native 固定 fresh main 後直接沿用同一 `scheduled_for` 的 run ledger 與 run-scoped artifacts，不捏造 capsule、workspace 或 checkpoint。full-runtime 的 external diagnostic ledger 失敗只降低診斷能力；可恢復的 durable mobile-native 則必須具備 `run-logs` 寫入權限，不能套用這個降級。 / Only full-runtime fetches and verifies the capsule, creates a local checkpoint, and may degrade its external diagnostic ledger. Durable mobile-native pins fresh main and resumes through the writable `run-logs` ledger and run-scoped artifacts without claiming a capsule, workspace, or local checkpoint.
 
 ```bash
 python3 -m unittest discover -s tests -v

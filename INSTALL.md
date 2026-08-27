@@ -99,21 +99,44 @@
 - `maps/style.json`
 - `maps/source/world-countries.geojson`
 
+### Bootstrap infrastructure
+
+- `bootstrap/capsule-manifest.json`
+- `bootstrap/bootstrap_loader.py`
+- `bootstrap/bootstrap_progress.py`
+- `bootstrap/bootstrap-progress.schema.json`
+- `bootstrap/RUN_LEDGER_PROTOCOL.md`
+- `scripts/resolve_bundled_python.py`
+- `scripts/run_identity.py`
+
+### Mobile execution support
+
+- `scripts/manage_mobile_run_log.py`
+- `schemas/mobile-run-log.schema.json`
+- `mobile-chatgpt-start-prompt.md`
+- `mobile-chatgpt-daily-prompt.md`
+
+### Recovery／validation support
+
+- `scripts/recover_same_source_leads.py`
+- `scripts/validate_selection_freshness.py`
+
+以上是 operator-facing necessary closure；完整 capsule runtime closure 以 `bootstrap/capsule-manifest.json` 裡的 `runtime_files` 欄位為機器權威，不在 INSTALL 重複列出全部 runtime files。
+
 `news-source-pool.json` 必須只預先設定 GDELT、CNA、China News Service 三條 `discovery_sources`。評分後的驗證來源由事件與主張角色決定，不得另設一組預先固定的驗證來源清單。
 
-## 二、只詢問三件事
+## 二、只詢問必要偏好
 
 1. 監控板塊：是否自訂國家或區域？未自訂使用台灣（TWN）、中國（CHN）、世界（GLB）。
 2. 主題偏好：是否提高或降低特定主題權重？未指定沿用 repository 預設，偏好不能降低證據、安全或驗證門檻。
-3. 執行時間：每天幾點？優先使用帳號／裝置時區；無法判斷才追問時區，預設每日 06:00。
-
-輸出語言沿用使用者已設定語言，否則使用安裝對話主要語言。國家板塊使用 ISO 3166-1 alpha-3；區域使用穩定不衝突的三碼。本輪 normalized audit 以有序 `section_scopes` 保存每個板塊的 `code`、`member_country_codes` 與唯一 `fallback`；事件板塊只能由其內容確認的 `country_codes` 對照這份權威決定，不得硬編碼成 TWN／CHN／其他皆 GLB。取得建立排程的授權後，直接完成安裝與首次測試，不再分階段重複詢問同一決定。
+3. 內建排程 profile：repository packaged Scheduled Task 固定每日 06:00、`Asia/Taipei`、繁體中文；安裝時只詢問監控板塊與主題偏好，不再詢問排程時間／時區。若需要其他 mobile 時間或時區，不得沿用內建 05:58 watchdog 或共用 `run-logs/current.json`，且本 repository 不宣稱該自訂 mobile profile 受支援。國家板塊使用 ISO 3166-1 alpha-3；區域使用穩定不衝突的三碼。本輪 normalized audit 以有序 `section_scopes` 保存每個板塊的 `code`、`member_country_codes` 與唯一 `fallback`；事件板塊只能由其內容確認的 `country_codes` 對照這份權威決定，不得硬編碼成 TWN／CHN／其他皆 GLB。取得建立排程的授權後，直接完成安裝與首次測試，不再分階段重複詢問同一決定。
 
 ## 三、執行模式與完成條件
 
 | 項目 | `full-runtime` | `mobile-native` |
 |---|---|---|
 | 適用環境 | 可執行 bundled Python、物化檔案與 canonical publisher | Scheduled Task／無本機 runtime 的一般 ChatGPT 宿主 |
+| 持久化前提 | 外部 ledger 可依 full-runtime 規則 best-effort 降級 | 可恢復的 durable Scheduled Task 必須使用具此 repository `run-logs` 寫入權限的 GitHub app；無寫入權限只可做一次性、不可跨執行恢復的 reader，不得宣稱 durable mobile profile |
 | 新聞流程 | 完整執行 | 完整執行；不得因缺少本機工具省略 discovery、語意評分、驗證或 reader |
 | 地圖／圖表／圖片 | `claim_critical=true` 的視覺必須物化並完成檔案／像素驗證；來源確實沒有合格圖片時可 omitted | 先執行宿主可用的原生媒體路徑；來源確實沒有合格圖片時可 omitted，已確認有合格圖片但交付失敗時必須停在視覺恢復 |
 | canonical 完成 | `full-assets`，所有宣稱的附件通過 | 只有沒有未解決媒體交付失敗時可 `status=completed`；`reader-canonical-capability-degraded` 是可恢復中間狀態，不是正式完成 |
@@ -124,7 +147,7 @@
 
 ## 四、建立排程與板塊底圖
 
-依 [daily-schedule-prompt.md](daily-schedule-prompt.md) 建立每日獨立排程：名稱與結果對話名稱均為「每日新聞」，每次建立新結果對話；24 小時窗從實際執行時刻精確倒推。個人偏好保存在使用者自己的排程設定，不回寫公共 `main`。
+repository packaged Scheduled Task profile 固定為每日 06:00、`Asia/Taipei`：宿主具備 verified runtime 時走 full-runtime，否則依同一排程 occurrence 進入 mobile-native fallback；05:58 watchdog 只服務這個內建 profile。不得把不同時間／時區的 mobile schedule 與內建 watchdog 共用同一 `run-logs/current.json`。兩種執行模式的 24 小時窗都從實際 executor 啟動時刻精確倒推，個人偏好不回寫公共 `main`。
 
 板塊確定後：
 
@@ -155,7 +178,9 @@
 | 12 publish 與 bundle | final checkpoint、manifest、audit、source pool、reader、map decisions、宣稱交付的附件 | 依下方實際 CLI 由 `publish_news_brief.py` 建立 release／receipt；再以 `manage_canonical_run_bundle.py pack` 建立 transport，與 `logs/current.json` 一次 atomic 發布後執行 `verify`／`restore` 核對 byte identity | full-runtime 由 canonical publisher fail-closed；mobile-native 依 mobile ledger schema 保存 reader/audit 與 delivery profile |
 | 13 conversation delivery | release receipt 或 mobile saved reader | 完整 reader bytes、附件／能力限制 receipt、`delivery-handoff` | 不能只交摘要或驗收報告；`client_confirmed` 只有外部明確回執才可使用 |
 
-`SCHEDULED_OCCURRENCE_SINGLE_RUN_GATE`：mobile ledger 以 `scheduled_for` 作 occurrence key。同一 occurrence 的 `current.json` 只要存在，就沿用原 `run_id` 並從 first incomplete stage 接續；即使 reader 已保存但尚未 `delivery-handoff`，也不得 rotate、建立 replacement run 或重跑新聞階段。只有 `scheduled_for` 嚴格較晚的下一個真實每日 occurrence 才可把仍非 terminal 的前輪標為 `interrupted_by_next_run`。同一 run 只能留在原 stage 或前進至緊鄰的下一 stage，不得跳級，也不得執行 stage regression。
+`SCHEDULED_OCCURRENCE_SINGLE_RUN_GATE`：mobile ledger 以 `scheduled_for` 作 occurrence key。同一 occurrence 的 `current.json` 只要存在，就沿用原 `run_id` 並從 first incomplete stage 接續；即使 reader 已保存但尚未 `delivery-handoff`，也不得 rotate、建立 replacement run 或重跑新聞階段。已進入 `executor-started` 或之後的 occurrence 仍只有 `scheduled_for` 嚴格較晚的下一個真實 occurrence 才可 rotate，且非 terminal 前輪才標為 `interrupted_by_next_run`。同一 run 只能留在原 stage 或前進至緊鄰的下一 stage，不得跳級，也不得執行 stage regression。
+
+`PRISTINE_RESERVATION_REPLACEMENT_GATE`：`schedule-prepared + awaiting_executor + main_sha=null + window=null + 所有 run artifact=null` 代表 watchdog／cutover 建立但尚未消耗 executor 的 pristine future reservation，不是已啟動 run。若實際 adhoc／安裝測試的 `scheduled_for` 早於這筆 reservation，可直接以實際 occurrence 取代 `current.json`，不得把未執行 reservation 寫成 `previous.json` 或 `interrupted_by_next_run`；相同 `scheduled_for` 仍 resume 同一 `run_id`。一旦 reservation 進入 `executor-started`，older occurrence 就恢復嚴格禁止。之後較晚的正式 06:00 occurrence 依正常規則 rotate 已完成或仍 running 的 adhoc run。
 
 `VERIFICATION_FEEDBACK_REWIND_GATE`：核心主張 `finding=insufficient` 時，verification 必須 `status=failed`，不得進 ready reader。full-runtime 完成既定驗證恢復後仍不足，執行 `python3 scripts/news_run_checkpoint.py rewind --input <checkpoint> --output <checkpoint> --stage audit-news-candidates --reason "<evidence failure>"`；只清除 audit 與其後 stage bindings，保留 source-scan、preprocess 與 semantic selection，將受影響候選重評或排除後重新物化 manifest。mobile-native 保持 `current_stage=selection-verified`，不得前進 `visuals-completed`；直接更新同一 run 的 `candidate-audit.json`，重評或排除受影響候選，更新 `candidate_audit_artifact` 的 Git blob SHA，再重新查證。查證成功並保存新的 `verification.json` 後才可前進。mobile-native 不得執行 stage regression，也不得建立 mobile checkpoint 或 manifest；兩種模式都不得建立新 run 或重跑 discovery。
 
@@ -327,4 +352,4 @@ python3 scripts/validate_map_decisions.py --input <manifest>
 
 ## 分享方式
 
-接收者在自己的新對話貼上 repo 網址與啟動指令，各自授權建立排程並保存個人偏好。公開 repo 的讀取不要求 GitHub 帳號；跨日 audit 與 run ledger 的持久化依工作區或 repository 寫入權限降級，但不能阻止有效的當日 reader。
+接收者在自己的新對話貼上 repo 網址與啟動指令，各自授權建立排程並保存個人偏好。公開 repo 的讀取不要求 GitHub 帳號。full-runtime 的外部 diagnostic ledger 可依既有規則 best-effort 降級；但可恢復的 durable mobile-native Scheduled Task 必須具備 `run-logs` 寫入權限，缺少寫入權限時不得宣稱 durable resume／continuity。一次性 reader 可在當前執行完成，但不屬於 durable mobile profile。

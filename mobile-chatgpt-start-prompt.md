@@ -7,7 +7,7 @@
 ```text
 請建立一個 ChatGPT Scheduled Task，名稱為「每日新聞」。
 
-排程：每天 06:00，時區 Asia/Taipei；建立後立即執行一次。
+排程：每天 06:00，時區 Asia/Taipei；這是 repository 內建 durable mobile profile，建立後立即執行一次；如需其他 mobile 時間／時區，不得沿用本 repo 的 05:58 watchdog。
 執行模式：維持目前的 Instant，不切換到 Thinking 或 Pro。
 GitHub 規則來源：https://github.com/robert820728-star/global-news-brief/blob/main/mobile-chatgpt-daily-prompt.md
 監控區域：台灣、中國、全球

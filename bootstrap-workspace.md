@@ -114,13 +114,14 @@ Retain `bootstrap-progress.json` on failure so the final report can diagnose the
 Full-runtime completion requires the verified runtime, canonical publisher, all
 manifest/reader/map/image validators, and materialized local attachments. A
 mobile-native run completes under its declared reader delivery profile. It must
-first attempt source-image download, screenshot fallback, and any supported local
-or native attachment route. Only an actual final-mile delivery failure may use
+inspect verified source pages, attempt the host's native image search/image-card
+delivery route, and record the structured delivery result. It must not claim local
+download, screenshot, materialization, attachment, or pixel validation.
+Only an actual final-mile delivery failure may use
 `NATIVE_MEDIA_CAPABILITY_FALLBACK`: record `reader-canonical-capability-degraded`,
 `native_media_status=unavailable`, verified image evidence and `reader_omission_note` values.
 That capability limitation is not `last_error`, but it keeps the same run at
 `status=running` and `current_stage=visuals-completed`; it blocks reader delivery
 and `status=completed` until existing full-runtime delivery succeeds.
-the run must not claim attachment or pixel validation.
 
 Do not mislabel it as source-scan, preprocessing, validation, image, map, or publisher failure. Do not bypass the repository pipeline by manually producing a news brief.
