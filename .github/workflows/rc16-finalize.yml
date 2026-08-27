@@ -43,9 +43,8 @@ jobs:
       - name: Rebase validated source diff onto current main
         run: |
           git fetch origin main
-          # The watchdog executable bytes are already correct; keep the current main workflow
-          # unchanged because this GitHub App lacks workflows permission.
           git checkout origin/main -- .github/workflows/prepare-mobile-run-ledger.yml
+          git add -N tests/test_mobile_pristine_reservation.py
           git -c core.whitespace=cr-at-eol diff --check origin/main -- scripts/manage_mobile_run_log.py tests/test_mobile_pristine_reservation.py tests/test_news_run_checkpoint.py tests/test_pipeline_contract.py bootstrap-workspace.md INSTALL.md README.md mobile-chatgpt-daily-prompt.md docs/mobile-run-ledger.md mobile-chatgpt-start-prompt.md VERSION-RECORD.md
           git diff --binary origin/main -- scripts/manage_mobile_run_log.py tests/test_mobile_pristine_reservation.py tests/test_news_run_checkpoint.py tests/test_pipeline_contract.py bootstrap-workspace.md INSTALL.md README.md mobile-chatgpt-daily-prompt.md docs/mobile-run-ledger.md mobile-chatgpt-start-prompt.md VERSION-RECORD.md > /tmp/rc16.patch
           git reset --hard origin/main
