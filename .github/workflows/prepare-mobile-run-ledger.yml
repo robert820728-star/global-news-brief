@@ -47,7 +47,8 @@ jobs:
             --ledger-dir "$RUNNER_TEMP/mobile-run-logs/logs" \
             --run-id "$run_id" \
             --scheduled-for "$scheduled_for" \
-            --updated-at "$updated_at"
+            --updated-at "$updated_at" \
+            --execution-mode mobile-native
 
       - name: Commit only the two-generation ledger
         shell: bash

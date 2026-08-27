@@ -137,6 +137,12 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertIn("58 21 * * *", workflow)
         self.assertIn("run-logs", workflow)
 
+    def test_mobile_watchdog_prepares_mobile_native(self):
+        workflow = (ROOT / ".github" / "workflows" / "prepare-mobile-run-ledger.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("--execution-mode mobile-native", workflow)
+
     def test_mobile_native_mode_and_candidate_audit_artifact_are_persisted(self):
         self.module.prepare_run(
             self.ledger_dir,
@@ -316,6 +322,39 @@ class MobileRunLogTests(unittest.TestCase):
                 stage="main-pinned",
                 updated_at="2026-08-17T22:02:00Z",
                 main_sha="2" * 40,
+            )
+
+    def test_main_pinned_requires_main_sha(self):
+        self.prepare()
+        self.advance_to("executor-started")
+        with self.assertRaisesRegex(ValueError, "main-pinned and later stages require main_sha"):
+            self.module.advance_run(
+                self.ledger_dir,
+                run_id=RUN_1,
+                stage="main-pinned",
+                updated_at="2026-08-17T22:02:00Z",
+            )
+
+    def test_main_sha_rejected_before_main_pinned(self):
+        self.prepare()
+        with self.assertRaisesRegex(ValueError, "main_sha belongs to main-pinned stage"):
+            self.module.advance_run(
+                self.ledger_dir,
+                run_id=RUN_1,
+                stage="schedule-prepared",
+                updated_at="2026-08-17T22:00:00Z",
+                main_sha=MAIN_SHA,
+            )
+
+    def test_execution_mode_cannot_change_after_prepare(self):
+        self.prepare()
+        with self.assertRaisesRegex(ValueError, "execution_mode is immutable"):
+            self.module.advance_run(
+                self.ledger_dir,
+                run_id=RUN_1,
+                stage="schedule-prepared",
+                updated_at="2026-08-17T22:00:00Z",
+                execution_mode="mobile-native",
             )
 
     def test_source_scan_rejects_candidate_audit_binding(self):

@@ -147,6 +147,11 @@ def validate_record(record: dict[str, Any]) -> None:
     stage = record["current_stage"]
     if stage not in STAGE_INDEX or record["stage_index"] != STAGE_INDEX[stage]:
         raise ValueError("stage_index does not match current_stage")
+    if record["stage_index"] < STAGE_INDEX["main-pinned"]:
+        if record["main_sha"] is not None:
+            raise ValueError("main_sha belongs to main-pinned stage")
+    elif record["main_sha"] is None:
+        raise ValueError("main-pinned and later stages require main_sha")
     if "NATIVE_MEDIA_UNAVAILABLE" in limitations and (
         record["current_stage"] != "visuals-completed"
         or record["status"] != "running"
@@ -398,8 +403,10 @@ def advance_run(
         current["main_sha"] = main_sha
     if reader_artifact is not None:
         current["reader_artifact"] = reader_artifact
-    if execution_mode is not None:
-        current["execution_mode"] = execution_mode
+    if execution_mode is not None and execution_mode != current["execution_mode"]:
+        raise ValueError(
+            "execution_mode is immutable for the same scheduled occurrence"
+        )
     if delivery_profile is not None:
         current["delivery_profile"] = delivery_profile
     if native_media_status is not None:
