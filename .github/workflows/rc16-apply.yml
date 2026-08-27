@@ -30,6 +30,26 @@ jobs:
           sed -i 's/A mobile-native run completes/mobile-native run completes/g' .github/rc16_patch.py
           python3 -c 'from pathlib import Path; p=Path(".github/rc16_patch.py"); s=p.read_text(); old="    candidates = [(old, new), (old.replace(\"\\n\", \"\\r\\n\"), new.replace(\"\\n\", \"\\r\\n\"))]\n"; new="    candidates = [(old, new)]\n    crlf_old = old.replace(\"\\n\", \"\\r\\n\")\n    if crlf_old != old:\n        candidates.append((crlf_old, new.replace(\"\\n\", \"\\r\\n\")))\n"; assert old in s; p.write_text(s.replace(old, new, 1))'
           python3 .github/rc16_patch.py
+          python3 - <<'PY'
+          from pathlib import Path
+          files = [
+              'scripts/manage_mobile_run_log.py',
+              'bootstrap-workspace.md',
+              'INSTALL.md',
+              'README.md',
+              'mobile-chatgpt-daily-prompt.md',
+              'docs/mobile-run-ledger.md',
+              'mobile-chatgpt-start-prompt.md',
+              '.github/workflows/prepare-mobile-run-ledger.yml',
+              'VERSION-RECORD.md',
+          ]
+          for name in files:
+              p = Path(name)
+              data = p.read_bytes()
+              while b'\r\r\n' in data:
+                  data = data.replace(b'\r\r\n', b'\r\n')
+              p.write_bytes(data)
+          PY
 
       - name: Verify bounded diff and tests
         run: |
