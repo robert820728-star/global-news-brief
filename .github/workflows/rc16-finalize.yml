@@ -40,6 +40,23 @@ jobs:
           PY
           python3 .github/rc16_patch.py
           python3 .github/rc16_refine.py
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('tests/test_pipeline_contract.py')
+          s=p.read_text(encoding='utf-8')
+          old='''        for document in (install, readme, start, watchdog):
+            self.assertIn("06:00", document)
+            self.assertIn("Asia/Taipei", document)
+'''
+          new='''        for document in (install, readme, start):
+            self.assertIn("06:00", document)
+            self.assertIn("Asia/Taipei", document)
+        self.assertIn("Asia/Taipei", watchdog)
+        self.assertIn("hour=6", watchdog)
+'''
+          if s.count(old)!=1: raise SystemExit('rc16 watchdog regression block mismatch')
+          p.write_text(s.replace(old,new,1),encoding='utf-8',newline='\n')
+          PY
       - name: Rebase validated source diff onto current main
         run: |
           git fetch origin main
