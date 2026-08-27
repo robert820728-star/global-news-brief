@@ -17,8 +17,8 @@ RUN_2 = "gnb-20260818T215800Z-00000002"
 RUN_3 = "gnb-20260819T215800Z-00000003"
 MAIN_SHA = "1" * 40
 RUN_WINDOW = {
-    "start": "2026-08-17T22:00:00Z",
-    "end": "2026-08-18T22:00:00Z",
+    "start": "2026-08-16T22:00:00Z",
+    "end": "2026-08-17T22:00:00Z",
     "timezone": "Asia/Taipei",
 }
 
@@ -80,11 +80,16 @@ class MobileRunLogTests(unittest.TestCase):
                 kwargs.setdefault("window", RUN_WINDOW)
             if stage == "main-pinned":
                 kwargs.setdefault("main_sha", MAIN_SHA)
+            updated_at = (
+                RUN_WINDOW["end"]
+                if stage == "executor-started"
+                else f"2026-08-17T22:{index:02d}:00Z"
+            )
             result = self.module.advance_run(
                 self.ledger_dir,
                 run_id=current["run_id"],
                 stage=stage,
-                updated_at=f"2026-08-17T22:{index:02d}:00Z",
+                updated_at=updated_at,
                 **kwargs,
             )
         return result
@@ -389,6 +394,57 @@ class MobileRunLogTests(unittest.TestCase):
                 updated_at="2026-08-17T22:30:00Z",
                 window=changed,
             )
+
+    def test_executor_window_end_must_match_updated_at(self):
+        self.prepare()
+        mismatched = {
+            "start": "2026-08-17T22:00:00Z",
+            "end": "2026-08-18T22:00:00Z",
+            "timezone": "Asia/Taipei",
+        }
+        with self.assertRaisesRegex(ValueError, "window end must match executor-started updated_at"):
+            self.module.advance_run(
+                self.ledger_dir,
+                run_id=RUN_1,
+                stage="executor-started",
+                updated_at="2026-08-17T22:00:00Z",
+                window=mismatched,
+            )
+
+    def test_mobile_window_timezone_must_be_asia_taipei(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+        )
+        invalid_timezone = dict(RUN_WINDOW)
+        invalid_timezone["timezone"] = "banana"
+        with self.assertRaisesRegex(ValueError, "mobile-native window timezone must be Asia/Taipei"):
+            self.module.advance_run(
+                self.ledger_dir,
+                run_id=RUN_1,
+                stage="executor-started",
+                updated_at="2026-08-17T22:00:00Z",
+                window=invalid_timezone,
+            )
+
+    def test_executor_window_equivalent_offset_is_accepted(self):
+        self.prepare()
+        equivalent_offset = {
+            "start": "2026-08-17T06:00:00+08:00",
+            "end": "2026-08-18T06:00:00+08:00",
+            "timezone": "Asia/Taipei",
+        }
+        result = self.module.advance_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            stage="executor-started",
+            updated_at="2026-08-17T22:00:00Z",
+            window=equivalent_offset,
+        )
+        self.assertEqual(result["window"], equivalent_offset)
 
     def test_candidate_audit_window_must_match_ledger_window(self):
         self.prepare()

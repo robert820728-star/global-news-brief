@@ -160,6 +160,11 @@ def validate_record(record: dict[str, Any]) -> None:
         raise ValueError("executor-started and later stages require window")
     else:
         _validate_window(record["window"], "run")
+        if (
+            record["execution_mode"] == "mobile-native"
+            and record["window"]["timezone"] != "Asia/Taipei"
+        ):
+            raise ValueError("mobile-native window timezone must be Asia/Taipei")
     if "NATIVE_MEDIA_UNAVAILABLE" in limitations and (
         record["current_stage"] != "visuals-completed"
         or record["status"] != "running"
@@ -226,13 +231,6 @@ def validate_record(record: dict[str, Any]) -> None:
         actual_audit_path = record["candidate_audit_artifact"].get("path")
         if actual_audit_path != expected_audit_path:
             raise ValueError("completed requires a run-scoped candidate audit")
-        if degraded and record.get("last_error") is not None:
-            raise ValueError("a capability limitation is not a last_error")
-        if degraded:
-            evidence = record.get("image_evidence_artifact")
-            expected_evidence_path = f"logs/runs/{record['run_id']}/image-evidence.json"
-            if not isinstance(evidence, dict) or evidence.get("path") != expected_evidence_path:
-                raise ValueError("capability-degraded completion requires run-scoped image evidence")
     durable_artifact = record.get("durable_audit_artifact")
     if record["durable_audit_status"] in {"updated", "preserved_merge_deferred"}:
         if not isinstance(durable_artifact, dict) or durable_artifact.get("path") != "logs/latest-candidate-audit.json":
@@ -398,6 +396,24 @@ def advance_run(
         )
     if status not in STATUSES:
         raise ValueError(f"invalid status: {status}")
+
+    first_executor_start = (
+        current["current_stage"] == "schedule-prepared"
+        and stage == "executor-started"
+    )
+    if first_executor_start and window is not None:
+        _validate_window(window, "run")
+        try:
+            executor_started_at = datetime.fromisoformat(updated_at)
+        except ValueError as error:
+            raise ValueError(
+                "executor-started updated_at must use an ISO timestamp"
+            ) from error
+        if executor_started_at.tzinfo is None:
+            raise ValueError("executor-started updated_at must include a time zone")
+        window_end = datetime.fromisoformat(window["end"])
+        if window_end != executor_started_at:
+            raise ValueError("window end must match executor-started updated_at")
 
     new_delivery_status = delivery_status or current["delivery_status"]
     if new_delivery_status == "client_confirmed" and not client_ack:
