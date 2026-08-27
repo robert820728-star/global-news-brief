@@ -28,6 +28,7 @@ jobs:
       - name: Apply bounded source changes
         run: |
           sed -i 's/A mobile-native run completes/mobile-native run completes/g' .github/rc16_patch.py
+          python3 -c 'from pathlib import Path; p=Path(".github/rc16_patch.py"); s=p.read_text(); old="    candidates = [(old, new), (old.replace(\"\\n\", \"\\r\\n\"), new.replace(\"\\n\", \"\\r\\n\"))]\n"; new="    candidates = [(old, new)]\n    crlf_old = old.replace(\"\\n\", \"\\r\\n\")\n    if crlf_old != old:\n        candidates.append((crlf_old, new.replace(\"\\n\", \"\\r\\n\")))\n"; assert old in s; p.write_text(s.replace(old, new, 1))'
           python3 .github/rc16_patch.py
 
       - name: Verify bounded diff and tests
