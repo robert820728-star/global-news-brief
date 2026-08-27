@@ -25,160 +25,29 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Refine and apply bounded source changes
-        shell: bash
+      - name: Apply bounded source changes
         run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p = Path('.github/rc16_patch.py')
-          s = p.read_text(encoding='utf-8')
-
-          def rep(old, new):
-              global s
-              if s.count(old) != 1:
-                  raise SystemExit(f'temporary patch source mismatch: {old[:80]!r} count={s.count(old)}')
-              s = s.replace(old, new, 1)
-
-          rep('A mobile-native run completes', 'mobile-native run completes')
-          rep(
-              '    candidates = [(old, new), (old.replace("\\n", "\\r\\n"), new.replace("\\n", "\\r\\n"))]\n',
-              '    candidates = [(old, new)]\n    crlf_old = old.replace("\\n", "\\r\\n")\n    if crlf_old != old:\n        candidates.append((crlf_old, new.replace("\\n", "\\r\\n")))\n',
-          )
-          rep(
-              '        pristine_reservation = _is_pristine_reservation(previous)\n        try:',
-              '        pristine_reservation = _is_pristine_reservation(previous)\n        replace_pristine_earlier = False\n        try:',
-          )
-          rep(
-              '            if incoming_occurrence < current_occurrence and not pristine_reservation:\n                raise ValueError("cannot replace current.json with an older scheduled occurrence")',
-              '            replace_pristine_earlier = (\n                incoming_occurrence < current_occurrence\n                and pristine_reservation\n            )\n            if incoming_occurrence < current_occurrence and not replace_pristine_earlier:\n                raise ValueError("cannot replace current.json with an older scheduled occurrence")',
-          )
-          rep('        if not pristine_reservation:\n', '        if not replace_pristine_earlier:\n')
-
-          s += r'''
-replace_once("INSTALL.md", "## 二、只詢問三件事", "## 二、只詢問必要偏好")
-replace_once(
-    "INSTALL.md",
-    "3. 執行設定：repository 內建的 durable `mobile-native` profile 固定為每日 06:00、`Asia/Taipei`、繁體中文，不再另外詢問 mobile 時間／時區；`full-runtime` 若要自訂每日時間，必須產生與該 profile 一致的 schedule prompt，不能與內建 mobile watchdog 混用。\n\nRepository 內建排程 profile 的輸出語言為繁體中文、時區語意為 `Asia/Taipei`；自訂 full-runtime profile 必須在安裝時一致產生，不得只改排程時間而沿用另一套固定時區契約。",
-    "3. 內建排程 profile：repository packaged Scheduled Task 固定每日 06:00、`Asia/Taipei`、繁體中文；安裝時只詢問監控板塊與主題偏好，不再詢問排程時間／時區。若需要其他 mobile 時間或時區，不得沿用內建 05:58 watchdog 或共用 `run-logs/current.json`，且本 repository 不宣稱該自訂 mobile profile 受支援。",
-)
-replace_once(
-    "INSTALL.md",
-    "full-runtime 依 [daily-schedule-prompt.md](daily-schedule-prompt.md) 建立每日獨立排程；repository 內建的 durable mobile-native profile 依 [mobile-chatgpt-start-prompt.md](mobile-chatgpt-start-prompt.md) 固定為每日 06:00、`Asia/Taipei`，05:58 watchdog 只服務這個預設 profile。不得把不同時間／時區的 mobile schedule 與內建 watchdog 共用同一 `run-logs/current.json`。兩種模式的 24 小時窗都從實際 executor 啟動時刻精確倒推，個人偏好不回寫公共 `main`。",
-    "repository packaged Scheduled Task profile 固定為每日 06:00、`Asia/Taipei`：宿主具備 verified runtime 時走 full-runtime，否則依同一排程 occurrence 進入 mobile-native fallback；05:58 watchdog 只服務這個內建 profile。不得把不同時間／時區的 mobile schedule 與內建 watchdog 共用同一 `run-logs/current.json`。兩種執行模式的 24 小時窗都從實際 executor 啟動時刻精確倒推，個人偏好不回寫公共 `main`。",
-)
-replace_once("README.md", "安裝時只需確認三件事：", "安裝時只需確認兩項偏好；內建排程 profile 固定如下：")
-replace_once(
-    "README.md",
-    "3. 執行 profile：full-runtime 可在安裝時產生一致的自訂排程；repository 內建的 durable mobile-native profile 固定為每日 06:00、`Asia/Taipei`。\n\nRepository 內建排程 profile 固定使用繁體中文與 `Asia/Taipei`。若自訂 full-runtime 排程，語言、時間與時區必須在同一 profile 內一致產生；不要只改外層排程卻沿用內建 mobile watchdog。",
-    "3. 內建 Scheduled Task profile 固定為每日 06:00、`Asia/Taipei`、繁體中文；宿主可用 verified runtime 時走 full-runtime，否則同一 occurrence 走 mobile-native fallback。其他 mobile 時間／時區不得沿用內建 05:58 watchdog 或共用 `run-logs/current.json`。",
-)
-'''
-          p.write_text(s, encoding='utf-8', newline='\n')
-          python_source = p.read_text(encoding='utf-8')
-          compile(python_source, str(p), 'exec')
-          PY
+          sed -i 's/A mobile-native run completes/mobile-native run completes/g' .github/rc16_patch.py
+          python3 -c 'from pathlib import Path; p=Path(".github/rc16_patch.py"); s=p.read_text(); old="    candidates = [(old, new), (old.replace(\"\\n\", \"\\r\\n\"), new.replace(\"\\n\", \"\\r\\n\"))]\n"; new="    candidates = [(old, new)]\n    crlf_old = old.replace(\"\\n\", \"\\r\\n\")\n    if crlf_old != old:\n        candidates.append((crlf_old, new.replace(\"\\n\", \"\\r\\n\")))\n"; assert old in s; p.write_text(s.replace(old, new, 1))'
           python3 .github/rc16_patch.py
-          python3 - <<'PY'
-          from pathlib import Path
-
-          # Refine the existing bootstrap test: INSTALL's original runtime section
-          # remains the full-runtime receipt authority; rc16 support inventory is
-          # operator-facing and is checked for existence instead of being forced
-          # into BOOTSTRAP_REQUIRED_PATHS.
-          p = Path('tests/test_news_run_checkpoint.py')
-          text = p.read_text(encoding='utf-8')
-          old = '''        preflight = install.split("## 一、安裝前驗證", 1)[1].split("## 二、", 1)[0]
-        expected = set(re.findall(
-            r"`((?:\\.agents|bootstrap|scripts|schemas|maps)/[^`]+|[^`/]+\\.(?:md|json|yaml))`",
-            preflight,
-        ))
-
-        self.assertTrue(expected.issubset(set(MODULE.BOOTSTRAP_REQUIRED_PATHS)))
-'''
-          new = '''        preflight = install.split("## 一、安裝前驗證", 1)[1].split("## 二、", 1)[0]
-        runtime_preflight, operator_support = preflight.split("### Bootstrap infrastructure", 1)
-        expected = set(re.findall(
-            r"`((?:\\.agents|bootstrap|scripts|schemas|maps)/[^`]+|[^`/]+\\.(?:md|json|yaml))`",
-            runtime_preflight,
-        ))
-        self.assertTrue(expected.issubset(set(MODULE.BOOTSTRAP_REQUIRED_PATHS)))
-
-        support_paths = set(re.findall(
-            r"`((?:\\.agents|bootstrap|scripts|schemas|maps)/[^`]+|[^`/]+\\.(?:md|json|yaml))`",
-            "### Bootstrap infrastructure" + operator_support,
-        ))
-        for rel in support_paths:
-            self.assertTrue((ROOT / rel).exists(), rel)
-'''
-          if text.count(old) != 1:
-              raise SystemExit('test_news_run_checkpoint preflight block mismatch')
-          p.write_text(text.replace(old, new, 1), encoding='utf-8', newline='\n')
-
-          # Add direct contract regressions for the three prose/authority closures.
-          p = Path('tests/test_pipeline_contract.py')
-          text = p.read_text(encoding='utf-8')
-          marker = '    def test_candidate_discovery_uses_dynamic_verification_selection(self):\n'
-          addition = '''    def test_rc16_mobile_authority_closure(self):
-        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
-        readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
-        bootstrap = (ROOT / "bootstrap-workspace.md").read_text(encoding="utf-8")
-        ledger = (ROOT / "docs" / "mobile-run-ledger.md").read_text(encoding="utf-8")
-        start = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
-        watchdog = (ROOT / ".github" / "workflows" / "prepare-mobile-run-ledger.yml").read_text(encoding="utf-8")
-
-        for document in (install, mobile, ledger):
-            self.assertIn("PRISTINE_RESERVATION_REPLACEMENT_GATE", document)
-        for document in (install, readme, mobile, ledger):
-            self.assertIn("run-logs", document)
-            self.assertIn("write", document.lower() if document is ledger else document.replace("寫入", "write"))
-        for document in (install, readme, start, watchdog):
-            self.assertIn("06:00", document)
-            self.assertIn("Asia/Taipei", document)
-        self.assertIn("native image search/image-card", bootstrap)
-        self.assertIn("must not claim local", bootstrap)
-        self.assertNotIn("first attempt source-image download, screenshot fallback", bootstrap)
-
-'''
-          if text.count(marker) != 1:
-              raise SystemExit('test_pipeline_contract insertion marker mismatch')
-          p.write_text(text.replace(marker, addition + marker, 1), encoding='utf-8', newline='\n')
-
-          # Preserve intentional CRLF where existing -text files use it; collapse
-          # only accidental doubled CR produced by replacement tooling.
-          files = [
-              'scripts/manage_mobile_run_log.py', 'bootstrap-workspace.md', 'INSTALL.md',
-              'README.md', 'mobile-chatgpt-daily-prompt.md', 'docs/mobile-run-ledger.md',
-              'mobile-chatgpt-start-prompt.md', '.github/workflows/prepare-mobile-run-ledger.yml',
-              'VERSION-RECORD.md',
-          ]
-          for name in files:
-              p = Path(name)
-              data = p.read_bytes()
-              while b'\r\r\n' in data:
-                  data = data.replace(b'\r\r\n', b'\r\n')
-              p.write_bytes(data)
-          PY
+          python3 .github/rc16_refine.py
 
       - name: Check bounded diff and create local source commit
-        shell: bash
         run: |
           git -c core.whitespace=cr-at-eol diff --check
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git rm .github/workflows/rc16-apply.yml .github/rc16_patch.py
+          git rm .github/workflows/rc16-apply.yml .github/rc16_patch.py .github/rc16_refine.py
           git add scripts/manage_mobile_run_log.py tests/test_mobile_pristine_reservation.py tests/test_news_run_checkpoint.py tests/test_pipeline_contract.py bootstrap-workspace.md INSTALL.md README.md mobile-chatgpt-daily-prompt.md docs/mobile-run-ledger.md mobile-chatgpt-start-prompt.md .github/workflows/prepare-mobile-run-ledger.yml VERSION-RECORD.md
           git commit -m "Close adhoc occurrence and mobile authority gaps"
 
       - name: Install release-test dependencies
-        shell: bash
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends fonts-noto-cjk
           python3 -m pip install --disable-pip-version-check pillow
 
       - name: Rebuild temporary capsule and run release-equivalent tests
-        shell: bash
         run: |
           source_sha="$(git rev-parse HEAD)"
           python3 scripts/build_bootstrap_capsule.py --source-commit "$source_sha"
@@ -187,5 +56,4 @@ replace_once(
           python3 -m unittest discover -s tests -v
 
       - name: Push verified source commit only
-        shell: bash
         run: git push origin HEAD:rc16-operational-closure
