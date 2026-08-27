@@ -64,3 +64,5 @@ jobs:
         run: |
           git reset --hard HEAD
           git push origin HEAD:main
+
+# one-shot trigger after final operator-inventory wording fix
