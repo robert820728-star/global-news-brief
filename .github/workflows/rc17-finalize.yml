@@ -31,6 +31,7 @@ jobs:
         run: |
           python3 .github/rc17_patch.py
           python3 .github/rc17_refine.py
+          python3 .github/rc17_fix_tests.py
           git -c core.whitespace=cr-at-eol diff --check
           python3 -m py_compile scripts/manage_mobile_run_log.py
 
