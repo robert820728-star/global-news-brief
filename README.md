@@ -4,7 +4,7 @@
 
 ## 手機 ChatGPT 基礎排程
 
-若要在一般手機 ChatGPT 對話執行，不使用手機 Codex，請先選擇 `Instant` 並貼上 [mobile-chatgpt-start-prompt.md](mobile-chatgpt-start-prompt.md)。此低消耗版本不執行本機程式、地圖或圖表，但仍保存當輪海選、每筆六項大評分、當輪所有 C 級以上新聞的讀者版，以及可用時的十四天 continuity cache。十四天 merge 延後不會阻擋當日讀者版。mobile-native 使用原生圖片搜尋／圖片卡並保存結構化交付結果，不宣稱本機下載、縮圖或附件驗收；無法可靠顯示時直接省略視覺區塊，不用圖片說明、圖片網址或原網站連結代替附件。執行進度與最新讀者版會保存在 `run-logs` 分支；05:58 的輕量守望工作只初始化紀錄，不搜尋新聞，也不使用模型額度。
+若要在一般手機 ChatGPT 對話執行，不使用手機 Codex，請先選擇 `Instant` 並貼上 [mobile-chatgpt-start-prompt.md](mobile-chatgpt-start-prompt.md)。此低消耗版本不執行本機程式、地圖或圖表，但仍保存當輪海選、每筆六項大評分、當輪所有 C 級以上新聞的讀者版，以及可用時的十四天 continuity cache。十四天 merge 延後不會阻擋當日讀者版。mobile-native 使用原生圖片搜尋／圖片卡並保存結構化交付結果，不宣稱本機下載、縮圖或附件驗收；只有完整來源檢查後確實沒有合格圖片才可省略視覺區塊，已確認合格圖片但交付失敗時必須停在同一 run 的視覺恢復，不得完成 Reader，也不用圖片說明、圖片網址或原網站連結冒充附件。執行進度與最新讀者版會保存在 `run-logs` 分支；05:58 的輕量守望工作只初始化紀錄，不搜尋新聞，也不使用模型額度。
 
 完整本機工作流仍使用下方的安裝方式與 `daily-schedule-prompt.md`；兩種模式互不覆蓋。
 

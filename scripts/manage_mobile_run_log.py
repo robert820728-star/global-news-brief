@@ -14,7 +14,7 @@ from typing import Any
 import run_identity
 
 
-SCHEMA_VERSION = "1.5.0"
+SCHEMA_VERSION = "1.6.0"
 EXECUTION_MODES = {"full-runtime", "mobile-native"}
 DELIVERY_PROFILES = {"full-assets", "reader-canonical-capability-degraded"}
 NATIVE_MEDIA_STATUSES = {"available", "unavailable"}
@@ -99,6 +99,7 @@ def validate_record(record: dict[str, Any]) -> None:
         "stage_index",
         "last_completed_stage",
         "main_sha",
+        "window",
         "updated_at",
         "last_error",
         "delivery_status",
@@ -152,6 +153,13 @@ def validate_record(record: dict[str, Any]) -> None:
             raise ValueError("main_sha belongs to main-pinned stage")
     elif record["main_sha"] is None:
         raise ValueError("main-pinned and later stages require main_sha")
+    if record["stage_index"] < STAGE_INDEX["executor-started"]:
+        if record["window"] is not None:
+            raise ValueError("window belongs to executor-started stage")
+    elif record["window"] is None:
+        raise ValueError("executor-started and later stages require window")
+    else:
+        _validate_window(record["window"], "run")
     if "NATIVE_MEDIA_UNAVAILABLE" in limitations and (
         record["current_stage"] != "visuals-completed"
         or record["status"] != "running"
@@ -258,16 +266,27 @@ def _validate_artifact_identity(record: dict[str, Any], field: str, label: str) 
     if artifact.get("main_sha") != record["main_sha"]:
         raise ValueError(f"{label} artifact main_sha does not match pinned main")
     window = artifact.get("window")
+    _validate_window(window, f"{label} artifact")
+    if window != record["window"]:
+        raise ValueError(f"{label} artifact window does not match ledger")
+
+
+def _validate_window(window: Any, label: str) -> None:
     if (
         not isinstance(window, dict)
         or set(window) != {"start", "end", "timezone"}
         or any(not isinstance(window[key], str) or not window[key] for key in window)
     ):
-        raise ValueError(f"{label} artifact window identity is invalid")
-    candidate = record.get("candidate_audit_artifact")
-    if field != "candidate_audit_artifact" and isinstance(candidate, dict):
-        if window != candidate.get("window"):
-            raise ValueError(f"{label} artifact window does not match candidate audit")
+        raise ValueError(f"{label} window identity is invalid")
+    try:
+        start = datetime.fromisoformat(window["start"])
+        end = datetime.fromisoformat(window["end"])
+    except ValueError as error:
+        raise ValueError(f"{label} window timestamps must use ISO format") from error
+    if start.tzinfo is None or end.tzinfo is None:
+        raise ValueError(f"{label} window timestamps must include time zones")
+    if (end - start).total_seconds() != 24 * 60 * 60:
+        raise ValueError(f"{label} window must span exactly 24 hours")
 
 
 def prepare_run(
@@ -319,6 +338,7 @@ def prepare_run(
         "stage_index": STAGE_INDEX["schedule-prepared"],
         "last_completed_stage": None,
         "main_sha": None,
+        "window": None,
         "updated_at": updated_at,
         "last_error": None,
         "delivery_status": "not_ready",
@@ -346,6 +366,7 @@ def advance_run(
     delivery_status: str | None = None,
     client_ack: bool = False,
     main_sha: str | None = None,
+    window: dict[str, str] | None = None,
     last_error: dict[str, str] | None = None,
     reader_artifact: dict[str, str] | None = None,
     execution_mode: str | None = None,
@@ -401,6 +422,10 @@ def advance_run(
                 "main_sha is immutable for the same scheduled occurrence"
             )
         current["main_sha"] = main_sha
+    if window is not None:
+        if current["window"] is not None and current["window"] != window:
+            raise ValueError("window is immutable for the same scheduled occurrence")
+        current["window"] = dict(window)
     if reader_artifact is not None:
         current["reader_artifact"] = reader_artifact
     if execution_mode is not None and execution_mode != current["execution_mode"]:
@@ -454,6 +479,9 @@ def build_parser() -> argparse.ArgumentParser:
     advance.add_argument("--delivery-status", choices=sorted(DELIVERY_STATUSES))
     advance.add_argument("--client-ack", action="store_true")
     advance.add_argument("--main-sha")
+    advance.add_argument("--window-start")
+    advance.add_argument("--window-end")
+    advance.add_argument("--window-timezone")
     advance.add_argument("--reader-artifact", type=Path)
     advance.add_argument("--execution-mode", choices=sorted(EXECUTION_MODES))
     advance.add_argument("--delivery-profile", choices=sorted(DELIVERY_PROFILES))
@@ -485,6 +513,20 @@ def main() -> int:
             capability_limitations=args.capability_limitation,
         )
     elif args.command == "advance":
+        window_values = (args.window_start, args.window_end, args.window_timezone)
+        if any(window_values) and not all(window_values):
+            raise ValueError(
+                "--window-start, --window-end, and --window-timezone must be supplied together"
+            )
+        window = (
+            {
+                "start": args.window_start,
+                "end": args.window_end,
+                "timezone": args.window_timezone,
+            }
+            if all(window_values)
+            else None
+        )
         result = advance_run(
             args.ledger_dir,
             run_id=args.run_id,
@@ -494,6 +536,7 @@ def main() -> int:
             delivery_status=args.delivery_status,
             client_ack=args.client_ack,
             main_sha=args.main_sha,
+            window=window,
             reader_artifact=(
                 _read_artifact_reference(args.reader_artifact)
                 if args.reader_artifact else None

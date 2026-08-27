@@ -76,6 +76,8 @@ class MobileRunLogTests(unittest.TestCase):
         for index in range(start, end):
             stage = self.module.STAGES[index]
             kwargs = dict(stage_kwargs.get(stage, {}))
+            if stage == "executor-started":
+                kwargs.setdefault("window", RUN_WINDOW)
             if stage == "main-pinned":
                 kwargs.setdefault("main_sha", MAIN_SHA)
             result = self.module.advance_run(
@@ -124,6 +126,7 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertEqual(current["delivery_profile"], "full-assets")
         self.assertEqual(current["native_media_status"], "available")
         self.assertEqual(current["capability_limitations"], [])
+        self.assertIsNone(current["window"])
         self.assertIsNone(current["candidate_audit_artifact"])
         self.assertIsNone(current["verification_artifact"])
         self.assertIsNone(current["map_decisions_artifact"])
@@ -345,6 +348,75 @@ class MobileRunLogTests(unittest.TestCase):
                 updated_at="2026-08-17T22:00:00Z",
                 main_sha=MAIN_SHA,
             )
+
+    def test_executor_started_requires_window(self):
+        self.prepare()
+        with self.assertRaisesRegex(ValueError, "executor-started and later stages require window"):
+            self.module.advance_run(
+                self.ledger_dir,
+                run_id=RUN_1,
+                stage="executor-started",
+                updated_at="2026-08-17T22:00:00Z",
+            )
+
+    def test_window_rejected_before_executor_started(self):
+        self.prepare()
+        with self.assertRaisesRegex(ValueError, "window belongs to executor-started stage"):
+            self.module.advance_run(
+                self.ledger_dir,
+                run_id=RUN_1,
+                stage="schedule-prepared",
+                updated_at="2026-08-17T21:59:00Z",
+                window=RUN_WINDOW,
+            )
+
+    def test_window_cannot_change_after_executor_started(self):
+        self.prepare()
+        self.module.advance_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            stage="executor-started",
+            updated_at="2026-08-17T22:00:00Z",
+            window=RUN_WINDOW,
+        )
+        changed = dict(RUN_WINDOW)
+        changed["end"] = "2026-08-17T22:30:00Z"
+        with self.assertRaisesRegex(ValueError, "window is immutable"):
+            self.module.advance_run(
+                self.ledger_dir,
+                run_id=RUN_1,
+                stage="executor-started",
+                updated_at="2026-08-17T22:30:00Z",
+                window=changed,
+            )
+
+    def test_candidate_audit_window_must_match_ledger_window(self):
+        self.prepare()
+        mismatched = dict(RUN_WINDOW)
+        mismatched["start"] = "2026-08-17T22:30:00Z"
+        mismatched["end"] = "2026-08-18T22:30:00Z"
+        artifact = artifact_reference(
+            f"logs/runs/{RUN_1}/candidate-audit.json",
+            "a" * 40,
+            window=mismatched,
+        )
+        with self.assertRaisesRegex(ValueError, "artifact window does not match ledger"):
+            self.advance_to(
+                "candidate-audit",
+                stage_kwargs={"candidate-audit": {"candidate_audit_artifact": artifact}},
+            )
+
+    def test_source_scan_resume_preserves_exact_window(self):
+        self.prepare()
+        self.advance_to("source-scan")
+        before = self.read("current.json")["window"]
+        resumed = self.module.advance_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            stage="source-scan",
+            updated_at="2026-08-17T22:30:00Z",
+        )
+        self.assertEqual(before, resumed["window"])
 
     def test_execution_mode_cannot_change_after_prepare(self):
         self.prepare()
