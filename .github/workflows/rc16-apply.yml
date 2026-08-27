@@ -37,7 +37,7 @@ jobs:
           git -c core.whitespace=cr-at-eol diff --check
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git rm .github/workflows/rc16-apply.yml .github/rc16_patch.py .github/rc16_refine.py
+          git rm -f .github/workflows/rc16-apply.yml .github/rc16_patch.py .github/rc16_refine.py
           git add scripts/manage_mobile_run_log.py tests/test_mobile_pristine_reservation.py tests/test_news_run_checkpoint.py tests/test_pipeline_contract.py bootstrap-workspace.md INSTALL.md README.md mobile-chatgpt-daily-prompt.md docs/mobile-run-ledger.md mobile-chatgpt-start-prompt.md .github/workflows/prepare-mobile-run-ledger.yml VERSION-RECORD.md
           git commit -m "Close adhoc occurrence and mobile authority gaps"
 
