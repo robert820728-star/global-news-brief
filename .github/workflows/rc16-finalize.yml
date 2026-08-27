@@ -40,23 +40,6 @@ jobs:
           PY
           python3 .github/rc16_patch.py
           python3 .github/rc16_refine.py
-      - name: Final bounded contract refinements
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          def replace_once(path,old,new):
-              p=Path(path); text=p.read_bytes().decode('utf-8'); candidates=[(old,new)]; crlf=old.replace('\n','\r\n')
-              if crlf!=old: candidates.append((crlf,new.replace('\n','\r\n')))
-              hits=[(o,n) for o,n in candidates if text.count(o)==1]
-              if len(hits)!=1: raise SystemExit(f'{path}: target mismatch')
-              o,n=hits[0]; p.write_bytes(text.replace(o,n,1).encode('utf-8'))
-          replace_once('README.md','## 本地驗證\n\n只有 full-runtime 取得並驗證 capsule、建立本機 checkpoint 與必要時回退到分段 chunks；mobile-native 固定 fresh main 後直接沿用同一 `scheduled_for` 的 run ledger 與 run-scoped artifacts，不捏造 capsule、workspace 或 checkpoint。台帳失敗只降低診斷能力，不會阻擋每日新聞。 / Only full-runtime fetches and verifies the capsule, creates a local checkpoint, and falls back to segmented chunks when needed. Mobile-native pins fresh main and resumes the same scheduled occurrence through the existing run ledger and run-scoped artifacts without claiming a capsule, workspace, or local checkpoint.','## 本地驗證\n\n只有 full-runtime 取得並驗證 capsule、建立本機 checkpoint 與必要時回退到分段 chunks；其 bootstrap／issue diagnostic ledger 仍是 best-effort。durable mobile-native 則固定 fresh main 後沿用同一 `scheduled_for` 的 `run-logs` ledger 與 run-scoped artifacts，不捏造 capsule、workspace 或 checkpoint，且 `run-logs` 寫入是可恢復排程的必要前提；無寫入權限不得宣稱 durable mobile continuity。 / Only full-runtime fetches and verifies the capsule, creates a local checkpoint, and falls back to segmented chunks when needed; its bootstrap/issue diagnostic ledger remains best-effort. Durable mobile-native pins fresh main and resumes the same scheduled occurrence through writable `run-logs` state and run-scoped artifacts without claiming a capsule, workspace, or local checkpoint.')
-          replace_once('INSTALL.md','接收者在自己的新對話貼上 repo 網址與啟動指令，各自授權建立排程並保存個人偏好。公開 repo 的讀取不要求 GitHub 帳號；跨日 audit 與 run ledger 的持久化依工作區或 repository 寫入權限降級，但不能阻止有效的當日 reader。','接收者在自己的新對話貼上 repo 網址與啟動指令，各自授權建立排程並保存個人偏好。公開 repo 的規則讀取不要求 GitHub 帳號；full-runtime 的外部 diagnostic ledger 可依能力降級，但 repository 內建的 durable mobile-native Scheduled Task 必須具備 `run-logs` 寫入權限。無寫入權限可做一次性 reader，但不得宣稱跨執行 resume、durable continuity 或內建 mobile profile 已完整支援。')
-          for name in ['scripts/manage_mobile_run_log.py','bootstrap-workspace.md','INSTALL.md','README.md','mobile-chatgpt-daily-prompt.md','docs/mobile-run-ledger.md','mobile-chatgpt-start-prompt.md','.github/workflows/prepare-mobile-run-ledger.yml','VERSION-RECORD.md','tests/test_news_run_checkpoint.py','tests/test_pipeline_contract.py']:
-              p=Path(name); data=p.read_bytes()
-              while b'\r\r\n' in data: data=data.replace(b'\r\r\n',b'\r\n')
-              p.write_bytes(data)
-          PY
       - name: Create clean source commit
         run: |
           git -c core.whitespace=cr-at-eol diff --check
