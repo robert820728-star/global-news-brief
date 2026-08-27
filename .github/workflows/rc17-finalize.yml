@@ -1,0 +1,154 @@
+name: Validate trigger-owned occurrence rc17
+
+on:
+  push:
+    branches:
+      - rc17-trigger-owned-occurrence
+    paths:
+      - '.github/workflows/rc17-finalize.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rc17-trigger-owned-occurrence-once
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: rc17-trigger-owned-occurrence
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Apply bounded source patch
+        run: |
+          python3 .github/rc17_patch.py
+          python3 .github/rc17_refine.py
+          git -c core.whitespace=cr-at-eol diff --check
+          python3 -m py_compile scripts/manage_mobile_run_log.py
+
+      - name: Create branch source commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Make occurrences trigger-owned and schedule-agnostic"
+
+      - name: Install release dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
+          python3 -m pip install --disable-pip-version-check pillow
+
+      - name: Targeted manager and authority tests
+        run: |
+          python3 -m unittest tests.test_manage_mobile_run_log tests.test_pipeline_contract -v
+
+      - name: Build temporary capsule and run full suite
+        run: |
+          source_sha="$(git rev-parse HEAD)"
+          python3 scripts/build_bootstrap_capsule.py --source-commit "$source_sha"
+          python3 scripts/verify_bootstrap_capsule.py
+          python3 -m unittest discover -s tests -v
+
+      - name: Independent adversarial self-check
+        run: |
+          python3 - <<'PY'
+          import importlib.util
+          import json
+          import sys
+          import tempfile
+          from pathlib import Path
+
+          root = Path.cwd()
+          scripts = root / 'scripts'
+          sys.path.insert(0, str(scripts))
+          spec = importlib.util.spec_from_file_location('mobile_log_review', scripts / 'manage_mobile_run_log.py')
+          m = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(m)
+
+          with tempfile.TemporaryDirectory() as td:
+              ledger = Path(td)
+              run1 = 'gnb-20260827T200000Z-abcdef01'
+              run2 = 'gnb-20260827T210000Z-abcdef02'
+              first = m.prepare_run(
+                  ledger,
+                  run_id=run1,
+                  scheduled_for='2026-08-28T04:00:00+09:00',
+                  updated_at='2026-08-27T19:00:00Z',
+                  execution_mode='mobile-native',
+              )
+              assert first['scheduled_for'] == '2026-08-28T04:00:00+09:00'
+              assert first['execution_mode'] == 'mobile-native'
+              same = m.prepare_run(
+                  ledger,
+                  run_id=run2,
+                  scheduled_for='2026-08-28T04:00:00+09:00',
+                  updated_at='2026-08-27T19:01:00Z',
+                  execution_mode='mobile-native',
+              )
+              assert same['run_id'] == run1
+              window = {
+                  'start': '2026-08-26T19:00:00Z',
+                  'end': '2026-08-27T19:00:00Z',
+                  'timezone': 'Asia/Tokyo',
+              }
+              started = m.advance_run(
+                  ledger,
+                  run_id=run1,
+                  stage='executor-started',
+                  updated_at='2026-08-27T19:00:00Z',
+                  window=window,
+              )
+              assert started['window']['timezone'] == 'Asia/Tokyo'
+              try:
+                  m.advance_run(
+                      ledger,
+                      run_id=run1,
+                      stage='executor-started',
+                      updated_at='2026-08-27T19:02:00Z',
+                      execution_mode='full-runtime',
+                  )
+              except ValueError as exc:
+                  assert 'execution_mode is immutable' in str(exc)
+              else:
+                  raise AssertionError('mode switch unexpectedly accepted')
+
+          active = [
+              'INSTALL.md',
+              'README.md',
+              'daily-schedule-prompt.md',
+              'mobile-chatgpt-daily-prompt.md',
+              'mobile-chatgpt-start-prompt.md',
+              'docs/mobile-run-ledger.md',
+              '.agents/skills/recover-news-run/SKILL.md',
+          ]
+          joined = '\n'.join((root / p).read_text(encoding='utf-8') for p in active)
+          for retired in ('PRISTINE_RESERVATION_REPLACEMENT_GATE', '05:58 watchdog', '05:58 守望'):
+              assert retired not in joined, retired
+          assert not (root / '.github/workflows/prepare-mobile-run-ledger.yml').exists()
+          assert '_is_pristine_reservation' not in (scripts / 'manage_mobile_run_log.py').read_text(encoding='utf-8')
+          assert 'external full-runtime visual-recovery executor' in (root / 'docs/mobile-run-ledger.md').read_text(encoding='utf-8')
+          assert '這不是 mode switch' in (root / 'INSTALL.md').read_text(encoding='utf-8')
+
+          install = (root / 'INSTALL.md').read_text(encoding='utf-8')
+          leftovers = [line for line in install.splitlines() if 'python3 scripts/' in line and 'resolve_bundled_python.py' not in line]
+          assert not leftovers, leftovers
+          manifest = json.loads((root / 'bootstrap/capsule-manifest.json').read_text(encoding='utf-8'))
+          runtime_paths = {item['path'] for item in manifest['runtime_files']}
+          assert not any(path.startswith('tests/') for path in runtime_paths)
+          assert 'tests/` 明確不屬於 runtime capsule' in install
+          print('independent self-check: PASS')
+          PY
+
+      - name: Discard generated capsule and publish validated source to branch
+        run: |
+          git reset --hard HEAD
+          git push origin HEAD:rc17-trigger-owned-occurrence
