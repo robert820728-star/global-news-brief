@@ -26,7 +26,9 @@ jobs:
           python-version: '3.12'
 
       - name: Apply bounded source changes
-        run: python3 .github/rc16_patch.py
+        run: |
+          sed -i 's/A mobile-native run completes/mobile-native run completes/g' .github/rc16_patch.py
+          python3 .github/rc16_patch.py
 
       - name: Verify bounded diff and tests
         run: |
