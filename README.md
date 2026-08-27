@@ -4,7 +4,7 @@
 
 ## 手機 ChatGPT 基礎排程
 
-若要在一般手機 ChatGPT 對話執行，不使用手機 Codex，請先選擇 `Instant` 並貼上 [mobile-chatgpt-start-prompt.md](mobile-chatgpt-start-prompt.md)。此低消耗版本不執行本機程式、地圖或圖表，但仍保存當輪海選、每筆六項大評分、當輪所有 C 級以上新聞的讀者版，以及可用時的十四天 continuity cache。十四天 merge 延後不會阻擋當日讀者版。mobile-native 使用原生圖片搜尋／圖片卡並保存結構化交付結果，不宣稱本機下載、縮圖或附件驗收；只有完整來源檢查後確實沒有合格圖片才可省略視覺區塊，已確認合格圖片但交付失敗時必須停在同一 run 的視覺恢復，不得完成 Reader，也不用圖片說明、圖片網址或原網站連結冒充附件。執行進度與最新讀者版會保存在 `run-logs` 分支；repository 內建的 durable mobile profile 固定為每日 06:00、`Asia/Taipei`、繁體中文，05:58 的輕量守望工作只替這個預設 profile 初始化紀錄，不搜尋新聞，也不使用模型額度。
+若要在一般手機 ChatGPT 對話執行，不使用手機 Codex，請先選擇 `Instant` 並貼上 [mobile-chatgpt-start-prompt.md](mobile-chatgpt-start-prompt.md)。此低消耗版本不執行本機程式、地圖或圖表，但仍保存當輪海選、每筆六項大評分、當輪所有 C 級以上新聞的讀者版，以及可用時的十四天 continuity cache。十四天 merge 延後不會阻擋當日讀者版。mobile-native 使用原生圖片搜尋／圖片卡並保存結構化交付結果，不宣稱本機下載、縮圖或附件驗收；只有完整來源檢查後確實沒有合格圖片才可省略視覺區塊，已確認合格圖片但交付失敗時必須停在同一 run 的視覺恢復，不得完成 Reader，也不用圖片說明、圖片網址或原網站連結冒充附件。執行進度與最新讀者版會保存在 `run-logs` 分支；repository 不預占任何 future occurrence。單次或循環 Scheduled Task 都在實際觸發後才依 capability routing 建立該輪執行狀態，因此 04:00、06:00 或其他使用者設定時間都走相同流程。
 
 完整本機工作流仍使用下方的安裝方式與 `daily-schedule-prompt.md`；兩種模式互不覆蓋。
 
@@ -18,11 +18,11 @@
 
 > 請讀取此 GitHub repo 的 INSTALL.md，協助我設定個人偏好與每日新聞排程。任何建立或修改排程的動作都先取得我的確認。
 
-安裝時只需確認兩項偏好；內建排程 profile 固定如下：
+安裝時確認兩項內容偏好與 Scheduled Task 自身的時間／時區：
 
 1. 是否自訂監控板塊；可以是單一國家，也可以是區域，例如日本、歐盟、北美、非洲或東南亞。不自訂時使用台灣、中國、世界。
 2. 是否調整特別感興趣或降低權重的新聞主題。
-3. 內建 Scheduled Task profile 固定為每日 06:00、`Asia/Taipei`、繁體中文；宿主可用 verified runtime 時走 full-runtime，否則同一 occurrence 走 mobile-native fallback。其他 mobile 時間／時區不得沿用內建 05:58 watchdog 或共用 `run-logs/current.json`。
+3. 單次或循環排程時間／時區由 Scheduled Task 自身決定；使用者指定 04:00、06:00 或其他時間都不需要修改 repository。未指定時才預設每日 06:00 並優先使用帳號／裝置時區。每次實際觸發後先 probe capability，再以該輪選定的 full-runtime 或 mobile-native 建立 occurrence。
 
 完成後，每次排程都會重新讀取 repo 最新規則，並以獨立結果對話輸出當日新聞。完整版每輪會以兩個帶新 nonce 的 GitHub API 端點交叉確認當下 `main` SHA；同一輪固定使用確認後的 SHA，下一輪再重新解析，不會把安裝時或前一輪的 commit 永久釘住：
 

@@ -160,11 +160,6 @@ def validate_record(record: dict[str, Any]) -> None:
         raise ValueError("executor-started and later stages require window")
     else:
         _validate_window(record["window"], "run")
-        if (
-            record["execution_mode"] == "mobile-native"
-            and record["window"]["timezone"] != "Asia/Taipei"
-        ):
-            raise ValueError("mobile-native window timezone must be Asia/Taipei")
     if "NATIVE_MEDIA_UNAVAILABLE" in limitations and (
         record["current_stage"] != "visuals-completed"
         or record["status"] != "running"
@@ -289,38 +284,13 @@ def _validate_window(window: Any, label: str) -> None:
 
 
 
-def _is_pristine_reservation(record: dict[str, Any]) -> bool:
-    artifact_fields = (
-        "reader_artifact",
-        "candidate_audit_artifact",
-        "verification_artifact",
-        "map_decisions_artifact",
-        "image_evidence_artifact",
-        "durable_audit_artifact",
-    )
-    return (
-        record["status"] == "awaiting_executor"
-        and record["current_stage"] == "schedule-prepared"
-        and record["stage_index"] == STAGE_INDEX["schedule-prepared"]
-        and record["last_completed_stage"] is None
-        and record["main_sha"] is None
-        and record["window"] is None
-        and record["delivery_profile"] == "full-assets"
-        and record["native_media_status"] == "available"
-        and record["capability_limitations"] == []
-        and record["delivery_status"] == "not_ready"
-        and not record["client_confirmation_supported"]
-        and record["last_error"] is None
-        and record["durable_audit_status"] == "not_started"
-        and all(record.get(field) is None for field in artifact_fields)
-    )
 def prepare_run(
     ledger_dir: Path | str,
     *,
     run_id: str,
     scheduled_for: str,
     updated_at: str,
-    execution_mode: str = "full-runtime",
+    execution_mode: str,
     delivery_profile: str = "full-assets",
     native_media_status: str = "available",
     capability_limitations: list[str] | None = None,
@@ -332,35 +302,23 @@ def prepare_run(
     if current_path.exists():
         previous = _read_json(current_path)
         validate_record(previous)
-        pristine_reservation = _is_pristine_reservation(previous)
-        replace_pristine_earlier = False
         try:
             incoming_occurrence = datetime.fromisoformat(scheduled_for)
             current_occurrence = datetime.fromisoformat(previous["scheduled_for"])
             if incoming_occurrence == current_occurrence:
                 return previous
-            replace_pristine_earlier = (
-                incoming_occurrence < current_occurrence
-                and pristine_reservation
-            )
-            if incoming_occurrence < current_occurrence and not replace_pristine_earlier:
+            if incoming_occurrence < current_occurrence:
                 raise ValueError("cannot replace current.json with an older scheduled occurrence")
         except TypeError as error:
             raise ValueError("scheduled_for values must use comparable ISO timestamps") from error
-
-        # A pristine schedule-prepared reservation has never consumed an executor,
-        # window, main pin, or artifact. Replacing it is not an interruption and
-        # must not create false previous-run history. This permits an immediate
-        # adhoc/install test to run before a pre-created future daily reservation.
-        if not replace_pristine_earlier:
-            if previous["status"] in {"awaiting_executor", "running"}:
-                previous["status"] = "interrupted_by_next_run"
-                previous["last_error"] = {
-                    "code": "executor_interrupted",
-                    "message": "The next scheduled run started before this run reached a terminal state.",
-                }
-                previous["updated_at"] = updated_at
-            _atomic_write(previous_path, previous)
+        if previous["status"] in {"awaiting_executor", "running"}:
+            previous["status"] = "interrupted_by_next_run"
+            previous["last_error"] = {
+                "code": "executor_interrupted",
+                "message": "The next scheduled run started before this run reached a terminal state.",
+            }
+            previous["updated_at"] = updated_at
+        _atomic_write(previous_path, previous)
 
     current: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
@@ -520,7 +478,7 @@ def build_parser() -> argparse.ArgumentParser:
     prepare.add_argument("--run-id", required=True)
     prepare.add_argument("--scheduled-for", required=True)
     prepare.add_argument("--updated-at", required=True)
-    prepare.add_argument("--execution-mode", choices=sorted(EXECUTION_MODES), default="full-runtime")
+    prepare.add_argument("--execution-mode", choices=sorted(EXECUTION_MODES), required=True)
     prepare.add_argument("--delivery-profile", choices=sorted(DELIVERY_PROFILES), default="full-assets")
     prepare.add_argument("--native-media-status", choices=sorted(NATIVE_MEDIA_STATUSES), default="available")
     prepare.add_argument("--capability-limitation", action="append", choices=sorted(KNOWN_CAPABILITY_LIMITATIONS), default=[])
