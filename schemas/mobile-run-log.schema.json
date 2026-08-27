@@ -103,14 +103,26 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": ["branch", "path", "blob_sha"],
+          "required": ["branch", "path", "blob_sha", "run_id", "main_sha", "window"],
           "properties": {
             "branch": { "const": "run-logs" },
             "path": {
               "type": "string",
               "pattern": "^logs/runs/gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}/candidate-audit\\.json$"
             },
-            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "run_id": { "type": "string", "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$" },
+            "main_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "window": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["start", "end", "timezone"],
+              "properties": {
+                "start": { "type": "string", "format": "date-time" },
+                "end": { "type": "string", "format": "date-time" },
+                "timezone": { "type": "string", "minLength": 1 }
+              }
+            }
           }
         }
       ]
@@ -121,14 +133,17 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": ["branch", "path", "blob_sha"],
+          "required": ["branch", "path", "blob_sha", "run_id", "main_sha", "window"],
           "properties": {
             "branch": { "const": "run-logs" },
             "path": {
               "type": "string",
               "pattern": "^logs/runs/gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}/verification\\.json$"
             },
-            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "run_id": { "type": "string", "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$" },
+            "main_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "window": { "$ref": "#/properties/candidate_audit_artifact/oneOf/1/properties/window" }
           }
         }
       ]
@@ -139,14 +154,17 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": ["branch", "path", "blob_sha"],
+          "required": ["branch", "path", "blob_sha", "run_id", "main_sha", "window"],
           "properties": {
             "branch": { "const": "run-logs" },
             "path": {
               "type": "string",
               "pattern": "^logs/runs/gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}/map-decisions\\.json$"
             },
-            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "run_id": { "type": "string", "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$" },
+            "main_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "window": { "$ref": "#/properties/candidate_audit_artifact/oneOf/1/properties/window" }
           }
         }
       ]
@@ -157,14 +175,17 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": ["branch", "path", "blob_sha"],
+          "required": ["branch", "path", "blob_sha", "run_id", "main_sha", "window"],
           "properties": {
             "branch": { "const": "run-logs" },
             "path": {
               "type": "string",
               "pattern": "^logs/runs/gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}/image-evidence\\.json$"
             },
-            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "run_id": { "type": "string", "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$" },
+            "main_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "window": { "$ref": "#/properties/candidate_audit_artifact/oneOf/1/properties/window" }
           }
         }
       ]
@@ -198,11 +219,14 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": ["branch", "path", "blob_sha"],
+          "required": ["branch", "path", "blob_sha", "run_id", "main_sha", "window"],
           "properties": {
             "branch": { "const": "run-logs" },
             "path": { "const": "logs/latest-reader.md" },
-            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "run_id": { "type": "string", "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$" },
+            "main_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "window": { "$ref": "#/properties/candidate_audit_artifact/oneOf/1/properties/window" }
           }
         }
       ]

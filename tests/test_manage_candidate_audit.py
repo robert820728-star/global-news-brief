@@ -937,7 +937,6 @@ class CandidateAuditTests(unittest.TestCase):
         pool = source_pool()
         pool["discovery_policy"] = {
             "minimum_ready_sources": 1,
-            "source_failure_policy": "degrade_not_block",
         }
         audit = valid_audit()
         run = audit["runs"][0]

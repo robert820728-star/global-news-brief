@@ -148,11 +148,17 @@ def validate_record(record: dict[str, Any]) -> None:
     if stage not in STAGE_INDEX or record["stage_index"] != STAGE_INDEX[stage]:
         raise ValueError("stage_index does not match current_stage")
     if "NATIVE_MEDIA_UNAVAILABLE" in limitations and (
-        record["stage_index"] > STAGE_INDEX["visuals-completed"]
-        or record["status"] == "completed"
+        record["current_stage"] != "visuals-completed"
+        or record["status"] != "running"
     ):
         raise ValueError(
-            "native media delivery recovery must remain at visuals-completed and cannot be completed"
+            "NATIVE_MEDIA_UNAVAILABLE requires running visuals-completed recovery"
+        )
+    if "NATIVE_MEDIA_UNAVAILABLE" in limitations and record.get(
+        "image_evidence_artifact"
+    ) is None:
+        raise ValueError(
+            "NATIVE_MEDIA_UNAVAILABLE requires run-scoped image evidence"
         )
     if record["last_completed_stage"] not in (None, *STAGES):
         raise ValueError("invalid last_completed_stage")
@@ -162,6 +168,19 @@ def validate_record(record: dict[str, Any]) -> None:
         "client_confirmation_supported"
     ):
         raise ValueError("client delivery cannot be confirmed without an external acknowledgement")
+    future_artifact_boundaries = (
+        ("candidate_audit_artifact", "candidate-audit", "candidate audit artifact"),
+        ("verification_artifact", "selection-verified", "verification artifact"),
+        ("map_decisions_artifact", "visuals-completed", "map decisions artifact"),
+        ("image_evidence_artifact", "visuals-completed", "image evidence artifact"),
+        ("reader_artifact", "reader-rendered", "reader artifact"),
+    )
+    for field, first_stage, label in future_artifact_boundaries:
+        if record["stage_index"] < STAGE_INDEX[first_stage] and record.get(field) is not None:
+            raise ValueError(f"{label} belongs to a future stage")
+    for field, _, label in future_artifact_boundaries:
+        if record.get(field) is not None:
+            _validate_artifact_identity(record, field, label)
     if record["execution_mode"] == "mobile-native":
         if record["stage_index"] >= STAGE_INDEX["selection-verified"]:
             _require_run_artifact(
@@ -225,6 +244,25 @@ def _require_artifact(
         raise ValueError(f"mobile stage requires {label}")
     if len(blob_sha) != 40 or any(character not in "0123456789abcdef" for character in blob_sha):
         raise ValueError(f"mobile stage requires Git blob binding for {label}")
+
+
+def _validate_artifact_identity(record: dict[str, Any], field: str, label: str) -> None:
+    artifact = record[field]
+    if artifact.get("run_id") != record["run_id"]:
+        raise ValueError(f"{label} artifact run_id does not match current run")
+    if artifact.get("main_sha") != record["main_sha"]:
+        raise ValueError(f"{label} artifact main_sha does not match pinned main")
+    window = artifact.get("window")
+    if (
+        not isinstance(window, dict)
+        or set(window) != {"start", "end", "timezone"}
+        or any(not isinstance(window[key], str) or not window[key] for key in window)
+    ):
+        raise ValueError(f"{label} artifact window identity is invalid")
+    candidate = record.get("candidate_audit_artifact")
+    if field != "candidate_audit_artifact" and isinstance(candidate, dict):
+        if window != candidate.get("window"):
+            raise ValueError(f"{label} artifact window does not match candidate audit")
 
 
 def prepare_run(
@@ -353,6 +391,10 @@ def advance_run(
     current["delivery_status"] = new_delivery_status
     current["client_confirmation_supported"] = bool(client_ack)
     if main_sha is not None:
+        if current["main_sha"] is not None and current["main_sha"] != main_sha:
+            raise ValueError(
+                "main_sha is immutable for the same scheduled occurrence"
+            )
         current["main_sha"] = main_sha
     if reader_artifact is not None:
         current["reader_artifact"] = reader_artifact

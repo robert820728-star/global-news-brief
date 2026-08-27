@@ -290,7 +290,11 @@ python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 
 mobile-native 沒有 checkpoint 或 manifest。查證不足時依 `VERIFICATION_FEEDBACK_REWIND_GATE` 停留在 `selection-verified` 並更新同一份 run-scoped audit；視覺或 Reader 中斷時由 ledger 綁定的 candidate audit、verification、map decisions、image evidence 與 Reader 從 first incomplete stage 接續。不得倒退 stage、不得跳級、不得建立替代 run。
 
-`NATIVE_MEDIA_UNAVAILABLE` 在 mobile-native 是既有視覺恢復條件：沿用同一 run，保持 `status=running` 與 `current_stage=visuals-completed`，只續做視覺交付；不得建立新 run、重跑新聞階段或標記 canonical completed。
+`RUN_ARTIFACT_IDENTITY_GATE`：同一 `scheduled_for` 的 `main_sha` 第一次 pin 後不可改變。每個 active artifact binding 都必須攜帶並符合 current ledger 的 `run_id` 與 `main_sha`；candidate audit binding 固定本輪 window，verification、map decisions、image evidence 與 Reader binding 的 window 必須與它完全相同。任何身分不一致或尚未到對應 stage 卻綁定未來 artifact 時立即拒絕，不得 repin、migration 或 compatibility bypass。
+
+`VISUAL_DELIVERY_ONLY_RECOVERY`：`NATIVE_MEDIA_UNAVAILABLE` 只能存在於同一 run 的 `status=running`、`current_stage=visuals-completed`，且必須已有本輪 image evidence binding。full-runtime 接手時只讀既有 candidate audit、verification、map decisions、image evidence 與已確認的來源圖片 URL，只補下載／截圖／物化／可見附件交付；不得重跑 discovery、scoring、verification、建立 new run 或變更 event IDs。
+
+`QUALIFIED_IMAGE_DELIVERY_INDEPENDENT_OF_CLAIM_CRITICAL`：所有 C 級以上事件只要已確認存在合格來源圖片，交付失敗就必須停在上述視覺恢復；`claim_critical=false` 不得把 delivery failure 改寫成 omitted 或完成文字 Reader。只有完整 source exhaustion 證明不存在合格圖片時，非關鍵圖片才可 omitted。
 
 `FOURTEEN_DAY_AUDIT_MERGE_UNAVAILABLE` 同樣不是新聞 recovery target。保留既有 `logs/latest-candidate-audit.json`，保存本輪 run-scoped candidate audit，將 durable merge 交給日後具備適合 runtime 的維護步驟；當輪仍從 manifest／驗證繼續。
 

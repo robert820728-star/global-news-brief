@@ -68,6 +68,8 @@ mobile-native 只可留在目前 stage 或前進至緊鄰的下一 stage，不�
 
 同一事件／stage 最多三次。第一輪修原路徑；第二輪切換同級合法替代來源或取得方法；第三輪仍失敗時，只有不可排除的硬性權限、網路、來源不存在等阻擋才可停止。`mobile-native` 的 `NATIVE_MEDIA_UNAVAILABLE` 是已完成實際交付嘗試後的能力限制，不寫入 `last_error`；但它是既有視覺恢復條件，必須讓同一 run 保持 `status=running`、`current_stage=visuals-completed`，由 full-runtime 只接續圖片交付，不得完成 reader。其他格式、證據或宣稱已交付之資產驗證失敗仍必須保留 `recovering/failed`。
 
+`VISUAL_DELIVERY_ONLY_RECOVERY`：已確認圖片但交付失敗時，existing full-runtime 只讀同一 run 已綁定的 candidate audit、verification、map decisions、image evidence 與 source image URL，只補下載、失敗後截圖、物化與可見附件。禁止 discovery、scoring、verification、new run 或 event-ID 變更。
+
 恢復成功後重新跑該 stage 的驗證，再繼續後續 stage。若任何前置 artifact 在恢復期間被修改，full-runtime 必須重新綁定 checkpoint SHA-256；mobile-native 必須更新同一 ledger 的 Git blob SHA，不能沿用舊 binding。
 
 ## 5. 發布前條件

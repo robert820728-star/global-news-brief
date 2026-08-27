@@ -3,6 +3,7 @@
   "events": [
     {
       "event_id": "TWN-01",
+      "claim_critical": false,
       "source_page_url": "https://example.invalid/current-event",
       "detected_image_urls": [
         "https://example.invalid/current-event.jpg"

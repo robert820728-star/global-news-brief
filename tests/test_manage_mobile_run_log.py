@@ -15,6 +15,23 @@ MODULE_PATH = ROOT / "scripts" / "manage_mobile_run_log.py"
 RUN_1 = "gnb-20260817T215800Z-00000001"
 RUN_2 = "gnb-20260818T215800Z-00000002"
 RUN_3 = "gnb-20260819T215800Z-00000003"
+MAIN_SHA = "1" * 40
+RUN_WINDOW = {
+    "start": "2026-08-17T22:00:00Z",
+    "end": "2026-08-18T22:00:00Z",
+    "timezone": "Asia/Taipei",
+}
+
+
+def artifact_reference(path, blob_sha, *, run_id=RUN_1, main_sha=MAIN_SHA, window=None):
+    return {
+        "branch": "run-logs",
+        "path": path,
+        "blob_sha": blob_sha,
+        "run_id": run_id,
+        "main_sha": main_sha,
+        "window": dict(window or RUN_WINDOW),
+    }
 
 
 def load_module():
@@ -58,49 +75,42 @@ class MobileRunLogTests(unittest.TestCase):
         result = current
         for index in range(start, end):
             stage = self.module.STAGES[index]
+            kwargs = dict(stage_kwargs.get(stage, {}))
+            if stage == "main-pinned":
+                kwargs.setdefault("main_sha", MAIN_SHA)
             result = self.module.advance_run(
                 self.ledger_dir,
                 run_id=current["run_id"],
                 stage=stage,
                 updated_at=f"2026-08-17T22:{index:02d}:00Z",
-                **stage_kwargs.get(stage, {}),
+                **kwargs,
             )
         return result
 
     def mobile_artifacts(self):
         return {
             "candidate-audit": {
-                "candidate_audit_artifact": {
-                    "branch": "run-logs",
-                    "path": f"logs/runs/{RUN_1}/candidate-audit.json",
-                    "blob_sha": "a" * 40,
-                }
+                "candidate_audit_artifact": artifact_reference(
+                    f"logs/runs/{RUN_1}/candidate-audit.json", "a" * 40
+                )
             },
             "visuals-completed": {
-                "verification_artifact": {
-                    "branch": "run-logs",
-                    "path": f"logs/runs/{RUN_1}/verification.json",
-                    "blob_sha": "e" * 40,
-                }
+                "verification_artifact": artifact_reference(
+                    f"logs/runs/{RUN_1}/verification.json", "e" * 40
+                )
             },
             "reader-rendered": {
-                "map_decisions_artifact": {
-                    "branch": "run-logs",
-                    "path": f"logs/runs/{RUN_1}/map-decisions.json",
-                    "blob_sha": "f" * 40,
-                },
-                "image_evidence_artifact": {
-                    "branch": "run-logs",
-                    "path": f"logs/runs/{RUN_1}/image-evidence.json",
-                    "blob_sha": "d" * 40,
-                },
+                "map_decisions_artifact": artifact_reference(
+                    f"logs/runs/{RUN_1}/map-decisions.json", "f" * 40
+                ),
+                "image_evidence_artifact": artifact_reference(
+                    f"logs/runs/{RUN_1}/image-evidence.json", "d" * 40
+                ),
             },
             "github-result-saved": {
-                "reader_artifact": {
-                    "branch": "run-logs",
-                    "path": "logs/latest-reader.md",
-                    "blob_sha": "b" * 40,
-                }
+                "reader_artifact": artifact_reference(
+                    "logs/latest-reader.md", "b" * 40
+                )
             },
         }
 
@@ -135,11 +145,9 @@ class MobileRunLogTests(unittest.TestCase):
             updated_at="2026-08-17T21:58:00Z",
             execution_mode="mobile-native",
         )
-        artifact = {
-            "branch": "run-logs",
-            "path": f"logs/runs/{RUN_1}/candidate-audit.json",
-            "blob_sha": "a" * 40,
-        }
+        artifact = artifact_reference(
+            f"logs/runs/{RUN_1}/candidate-audit.json", "a" * 40
+        )
         self.advance_to(
             "candidate-audit",
             stage_kwargs={
@@ -198,11 +206,9 @@ class MobileRunLogTests(unittest.TestCase):
             execution_mode="mobile-native",
         )
         self.advance_to("selection-verified", stage_kwargs=self.mobile_artifacts())
-        revised_audit = {
-            "branch": "run-logs",
-            "path": f"logs/runs/{RUN_1}/candidate-audit.json",
-            "blob_sha": "9" * 40,
-        }
+        revised_audit = artifact_reference(
+            f"logs/runs/{RUN_1}/candidate-audit.json", "9" * 40
+        )
         recovered = self.module.advance_run(
             self.ledger_dir,
             run_id=RUN_1,
@@ -300,6 +306,96 @@ class MobileRunLogTests(unittest.TestCase):
                 updated_at="2026-08-17T22:01:00Z",
             )
 
+    def test_main_sha_cannot_change_after_pin(self):
+        self.prepare()
+        self.advance_to("main-pinned")
+        with self.assertRaisesRegex(ValueError, "main_sha is immutable"):
+            self.module.advance_run(
+                self.ledger_dir,
+                run_id=RUN_1,
+                stage="main-pinned",
+                updated_at="2026-08-17T22:02:00Z",
+                main_sha="2" * 40,
+            )
+
+    def test_source_scan_rejects_candidate_audit_binding(self):
+        self.prepare()
+        self.advance_to("source-scan")
+        current = self.read("current.json")
+        current["candidate_audit_artifact"] = self.mobile_artifacts()["candidate-audit"][
+            "candidate_audit_artifact"
+        ]
+        with self.assertRaisesRegex(ValueError, "candidate audit artifact.*future stage"):
+            self.module.validate_record(current)
+
+    def test_source_scan_rejects_verification_binding(self):
+        self.prepare()
+        self.advance_to("source-scan")
+        current = self.read("current.json")
+        current["verification_artifact"] = self.mobile_artifacts()["visuals-completed"][
+            "verification_artifact"
+        ]
+        with self.assertRaisesRegex(ValueError, "verification artifact.*future stage"):
+            self.module.validate_record(current)
+
+    def test_source_scan_rejects_map_and_image_bindings(self):
+        self.prepare()
+        self.advance_to("source-scan")
+        current = self.read("current.json")
+        current.update(self.mobile_artifacts()["reader-rendered"])
+        with self.assertRaisesRegex(ValueError, "map decisions artifact.*future stage"):
+            self.module.validate_record(current)
+
+    def test_source_scan_rejects_reader_binding(self):
+        self.prepare()
+        self.advance_to("source-scan")
+        current = self.read("current.json")
+        current.update(self.mobile_artifacts()["github-result-saved"])
+        with self.assertRaisesRegex(ValueError, "reader artifact.*future stage"):
+            self.module.validate_record(current)
+
+    def test_artifact_run_id_mismatch_rejects_binding(self):
+        self.prepare()
+        artifact = artifact_reference(
+            f"logs/runs/{RUN_1}/candidate-audit.json", "a" * 40, run_id=RUN_2
+        )
+        with self.assertRaisesRegex(ValueError, "artifact run_id"):
+            self.advance_to(
+                "candidate-audit",
+                stage_kwargs={"candidate-audit": {"candidate_audit_artifact": artifact}},
+            )
+
+    def test_artifact_main_sha_mismatch_rejects_binding(self):
+        self.prepare()
+        artifact = artifact_reference(
+            f"logs/runs/{RUN_1}/candidate-audit.json", "a" * 40, main_sha="2" * 40
+        )
+        with self.assertRaisesRegex(ValueError, "artifact main_sha"):
+            self.advance_to(
+                "candidate-audit",
+                stage_kwargs={"candidate-audit": {"candidate_audit_artifact": artifact}},
+            )
+
+    def test_artifact_window_mismatch_rejects_binding(self):
+        self.prepare()
+        artifacts = self.mobile_artifacts()
+        mismatched = dict(RUN_WINDOW)
+        mismatched["end"] = "2026-08-18T21:59:59Z"
+        artifacts["visuals-completed"] = {
+            "verification_artifact": artifact_reference(
+                f"logs/runs/{RUN_1}/verification.json", "e" * 40, window=mismatched
+            )
+        }
+        with self.assertRaisesRegex(ValueError, "artifact window"):
+            self.advance_to("visuals-completed", stage_kwargs=artifacts)
+
+    def test_same_run_main_and_window_artifact_identity_passes(self):
+        self.prepare()
+        result = self.advance_to("candidate-audit", stage_kwargs=self.mobile_artifacts())
+        self.assertEqual(
+            RUN_WINDOW, result["candidate_audit_artifact"]["window"]
+        )
+
     def test_mobile_native_requires_map_binding_after_visuals_stage(self):
         self.module.prepare_run(
             self.ledger_dir,
@@ -308,11 +404,9 @@ class MobileRunLogTests(unittest.TestCase):
             updated_at="2026-08-17T21:58:00Z",
             execution_mode="mobile-native",
         )
-        verification = {
-            "branch": "run-logs",
-            "path": f"logs/runs/{RUN_1}/verification.json",
-            "blob_sha": "e" * 40,
-        }
+        verification = artifact_reference(
+            f"logs/runs/{RUN_1}/verification.json", "e" * 40
+        )
         artifacts = self.mobile_artifacts()
         artifacts["visuals-completed"] = {
             "verification_artifact": verification
@@ -334,16 +428,12 @@ class MobileRunLogTests(unittest.TestCase):
             updated_at="2026-08-17T21:58:00Z",
             execution_mode="mobile-native",
         )
-        verification = {
-            "branch": "run-logs",
-            "path": f"logs/runs/{RUN_1}/verification.json",
-            "blob_sha": "e" * 40,
-        }
-        maps = {
-            "branch": "run-logs",
-            "path": f"logs/runs/{RUN_1}/map-decisions.json",
-            "blob_sha": "f" * 40,
-        }
+        verification = artifact_reference(
+            f"logs/runs/{RUN_1}/verification.json", "e" * 40
+        )
+        maps = artifact_reference(
+            f"logs/runs/{RUN_1}/map-decisions.json", "f" * 40
+        )
         artifacts = self.mobile_artifacts()
         artifacts["visuals-completed"] = {
             "verification_artifact": verification
@@ -371,16 +461,10 @@ class MobileRunLogTests(unittest.TestCase):
 
     def test_next_prepare_rotates_completed_current_to_previous(self):
         self.prepare()
-        artifact = {
-            "branch": "run-logs",
-            "path": f"logs/runs/{RUN_1}/candidate-audit.json",
-            "blob_sha": "a" * 40,
-        }
-        reader = {
-            "branch": "run-logs",
-            "path": "logs/latest-reader.md",
-            "blob_sha": "b" * 40,
-        }
+        artifact = artifact_reference(
+            f"logs/runs/{RUN_1}/candidate-audit.json", "a" * 40
+        )
+        reader = artifact_reference("logs/latest-reader.md", "b" * 40)
         self.advance_to(
             "delivery-handoff",
             stage_kwargs={
@@ -404,13 +488,18 @@ class MobileRunLogTests(unittest.TestCase):
             scheduled_for="2026-08-18T06:00:00+08:00",
             updated_at="2026-08-17T21:58:00Z",
             execution_mode="mobile-native",
-            delivery_profile="reader-canonical-capability-degraded",
-            native_media_status="unavailable",
-            capability_limitations=["NATIVE_MEDIA_UNAVAILABLE"],
         )
         artifacts = self.mobile_artifacts()
+        artifacts["visuals-completed"].update({
+            "delivery_profile": "reader-canonical-capability-degraded",
+            "native_media_status": "unavailable",
+            "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
+            "image_evidence_artifact": artifacts["reader-rendered"][
+                "image_evidence_artifact"
+            ],
+        })
         self.advance_to("visuals-completed", stage_kwargs=artifacts)
-        with self.assertRaisesRegex(ValueError, "native media delivery recovery"):
+        with self.assertRaisesRegex(ValueError, "visuals-completed recovery"):
             self.module.advance_run(
                 self.ledger_dir,
                 run_id=RUN_1,
@@ -432,17 +521,23 @@ class MobileRunLogTests(unittest.TestCase):
             scheduled_for="2026-08-18T06:00:00+08:00",
             updated_at="2026-08-17T21:58:00Z",
             execution_mode="mobile-native",
-            delivery_profile="reader-canonical-capability-degraded",
-            native_media_status="unavailable",
-            capability_limitations=["NATIVE_MEDIA_UNAVAILABLE"],
         )
-        self.advance_to("visuals-completed", stage_kwargs=self.mobile_artifacts())
+        artifacts = self.mobile_artifacts()
+        artifacts["visuals-completed"].update({
+            "delivery_profile": "reader-canonical-capability-degraded",
+            "native_media_status": "unavailable",
+            "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
+            "image_evidence_artifact": artifacts["reader-rendered"][
+                "image_evidence_artifact"
+            ],
+        })
+        self.advance_to("visuals-completed", stage_kwargs=artifacts)
         current = self.read("current.json")
         current["current_stage"] = "delivery-handoff"
         current["stage_index"] = self.module.STAGE_INDEX["delivery-handoff"]
         current["status"] = "completed"
         current["delivery_status"] = "handoff_started"
-        with self.assertRaisesRegex(ValueError, "native media delivery recovery"):
+        with self.assertRaisesRegex(ValueError, "visuals-completed recovery"):
             self.module.validate_record(current)
 
     def test_mobile_source_exhaustion_can_complete_without_capability_limitation(self):
@@ -463,7 +558,7 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertEqual("completed", current["status"])
         self.assertEqual([], current["capability_limitations"])
 
-    def test_no_image_report_with_verified_source_image_is_rejected(self):
+    def test_noncritical_qualified_image_delivery_failure_blocks_reader(self):
         reader = ROOT / "tests" / "fixtures" / "mobile-reader-missing-verified-image.md"
         evidence = (
             ROOT
@@ -473,6 +568,7 @@ class MobileRunLogTests(unittest.TestCase):
         )
         self.assertNotIn("![", reader.read_text(encoding="utf-8"))
         evidence_data = json.loads(evidence.read_text(encoding="utf-8"))
+        self.assertFalse(evidence_data["events"][0]["claim_critical"])
         self.assertTrue(evidence_data["events"][0]["usable_image_found"])
         self.assertEqual(
             evidence_data["events"][0]["delivery_outcome"], "delivery_unavailable"
@@ -484,13 +580,18 @@ class MobileRunLogTests(unittest.TestCase):
             scheduled_for="2026-08-18T06:00:00+08:00",
             updated_at="2026-08-17T21:58:00Z",
             execution_mode="mobile-native",
-            delivery_profile="reader-canonical-capability-degraded",
-            native_media_status="unavailable",
-            capability_limitations=["NATIVE_MEDIA_UNAVAILABLE"],
         )
         artifacts = self.mobile_artifacts()
+        artifacts["visuals-completed"].update({
+            "delivery_profile": "reader-canonical-capability-degraded",
+            "native_media_status": "unavailable",
+            "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
+            "image_evidence_artifact": artifacts["reader-rendered"][
+                "image_evidence_artifact"
+            ],
+        })
         self.advance_to("visuals-completed", stage_kwargs=artifacts)
-        with self.assertRaisesRegex(ValueError, "native media delivery recovery"):
+        with self.assertRaisesRegex(ValueError, "visuals-completed recovery"):
             self.module.advance_run(
                 self.ledger_dir,
                 run_id=RUN_1,
@@ -503,6 +604,82 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertEqual(current["status"], "running")
         self.assertEqual(current["current_stage"], "visuals-completed")
 
+    def test_native_media_unavailable_requires_visuals_completed(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+        )
+        self.advance_to("source-scan")
+        current = self.read("current.json")
+        current.update({
+            "delivery_profile": "reader-canonical-capability-degraded",
+            "native_media_status": "unavailable",
+            "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
+        })
+        with self.assertRaisesRegex(ValueError, "requires running visuals-completed"):
+            self.module.validate_record(current)
+
+    def test_native_media_unavailable_requires_running_status(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+        )
+        artifacts = self.mobile_artifacts()
+        artifacts["visuals-completed"].update({
+            "delivery_profile": "reader-canonical-capability-degraded",
+            "native_media_status": "unavailable",
+            "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
+            "image_evidence_artifact": artifacts["reader-rendered"][
+                "image_evidence_artifact"
+            ],
+        })
+        self.advance_to("visuals-completed", stage_kwargs=artifacts)
+        current = self.read("current.json")
+        current["status"] = "failed"
+        with self.assertRaisesRegex(ValueError, "requires running visuals-completed"):
+            self.module.validate_record(current)
+
+    def test_same_run_visual_recovery_preserves_news_artifacts(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+        )
+        artifacts = self.mobile_artifacts()
+        artifacts["visuals-completed"].update({
+            "delivery_profile": "reader-canonical-capability-degraded",
+            "native_media_status": "unavailable",
+            "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
+            "image_evidence_artifact": artifacts["reader-rendered"][
+                "image_evidence_artifact"
+            ],
+        })
+        blocked = self.advance_to("visuals-completed", stage_kwargs=artifacts)
+        revised_image = artifact_reference(
+            f"logs/runs/{RUN_1}/image-evidence.json", "8" * 40
+        )
+        recovered = self.module.advance_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            stage="visuals-completed",
+            updated_at="2026-08-17T22:41:00Z",
+            delivery_profile="full-assets",
+            native_media_status="available",
+            capability_limitations=[],
+            image_evidence_artifact=revised_image,
+        )
+        self.assertEqual(blocked["candidate_audit_artifact"], recovered["candidate_audit_artifact"])
+        self.assertEqual(blocked["verification_artifact"], recovered["verification_artifact"])
+        self.assertEqual(revised_image, recovered["image_evidence_artifact"])
+
     def test_completed_run_requires_run_scoped_candidate_audit_not_durable_history(self):
         self.prepare()
         self.advance_to("github-result-saved")
@@ -514,16 +691,12 @@ class MobileRunLogTests(unittest.TestCase):
                 updated_at="2026-08-18T00:15:00Z",
                 status="completed",
                 delivery_status="handoff_started",
-                reader_artifact={
-                    "branch": "run-logs",
-                    "path": "logs/latest-reader.md",
-                    "blob_sha": "b" * 40,
-                },
-                candidate_audit_artifact={
-                    "branch": "run-logs",
-                    "path": "logs/latest-candidate-audit.json",
-                    "blob_sha": "a" * 40,
-                },
+                reader_artifact=artifact_reference(
+                    "logs/latest-reader.md", "b" * 40
+                ),
+                candidate_audit_artifact=artifact_reference(
+                    "logs/latest-candidate-audit.json", "a" * 40
+                ),
             )
 
     def test_next_prepare_marks_running_current_interrupted(self):
@@ -548,7 +721,7 @@ class MobileRunLogTests(unittest.TestCase):
 
     def test_same_occurrence_resumes_existing_reader_run_without_rotation(self):
         self.prepare()
-        reader = {"branch": "run-logs", "path": "logs/latest-reader.md", "blob_sha": "b" * 40}
+        reader = artifact_reference("logs/latest-reader.md", "b" * 40)
         self.advance_to(
             "reader-rendered",
             stage_kwargs={

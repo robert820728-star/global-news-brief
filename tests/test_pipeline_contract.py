@@ -669,6 +669,31 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("不得標記 canonical completed", daily)
         self.assertNotIn("不得因宿主缺少原生媒體能力阻擋正式文字交付", daily)
 
+    def test_claim_critical_cannot_bypass_qualified_image_delivery(self):
+        documents = (
+            ROOT / "INSTALL.md",
+            ROOT / "news-brief-settings.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/collect-news-images/SKILL.md",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("QUALIFIED_IMAGE_DELIVERY_INDEPENDENT_OF_CLAIM_CRITICAL", text)
+            self.assertNotIn("claim_critical=false → delivery failure may omit", text)
+            self.assertNotIn("非關鍵圖片交付失敗可直接完成文字 Reader", text)
+
+    def test_visual_recovery_cannot_restart_news_pipeline(self):
+        documents = (
+            ROOT / "INSTALL.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/recover-news-run/SKILL.md",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("VISUAL_DELIVERY_ONLY_RECOVERY", text)
+            for forbidden_action in ("discovery", "scoring", "verification", "new run"):
+                self.assertIn(forbidden_action, text)
+
     def test_global_section_requires_primary_discovery_coverage(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
@@ -809,7 +834,8 @@ class PipelineContractTests(unittest.TestCase):
             self.assertNotIn(retired_key, pool)
         self.assertFalse((ROOT / "source-health-profile.json").exists())
         self.assertEqual(1, pool["discovery_policy"]["minimum_ready_sources"])
-        self.assertEqual("degrade_not_block", pool["discovery_policy"]["source_failure_policy"])
+        self.assertNotIn("source_failure_policy", pool["discovery_policy"])
+        self.assertNotIn("stop_only_when_no_verifiable_candidates", pool["discovery_policy"])
         self.assertEqual("all_verified_in_window", pool["candidate_transfer_policy"])
         self.assertTrue(pool["verification_policy"]["after_scoring"])
         self.assertTrue(pool["verification_policy"]["images_after_verification"])

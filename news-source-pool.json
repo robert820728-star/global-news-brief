@@ -13,8 +13,6 @@
   "discovery_policy": {
     "strategy": "aggregate_then_regional_supplements",
     "minimum_ready_sources": 1,
-    "source_failure_policy": "degrade_not_block",
-    "stop_only_when_no_verifiable_candidates": true,
     "deduplicate_before_scoring": true
   },
   "discovery_sources": [

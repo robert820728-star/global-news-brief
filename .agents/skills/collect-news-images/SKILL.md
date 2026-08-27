@@ -22,7 +22,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - full-runtime 的每張來源圖片必須由 `scripts/materialize_news_images.py` 對 `source_image_url` 下載、解碼與寫檔，並保存 `materialized-images.json`；不得手工產生同名檔或只憑 manifest 宣告來源。mobile-native 不執行或冒充此步驟。
 - 任一來源找到可信且相關圖片後，`images.status` 只能在至少一張附件通過驗收後改為 `ready`。
 - 每則事件必須明確設定 `images.claim_critical`。只有圖片本身是核心主張證據（例如唯一影像證據、衛星圖直接證明攻擊或官方圖是數據主張本體）才設為 `true`；一般新聞配圖、人物照或輔助專業圖設為 `false`。
-- `NATIVE_MEDIA_CAPABILITY_FALLBACK`：full-runtime 已找到可用圖片時先下載原始媒體檔，下載失敗才依圖片政策截圖並驗證；mobile-native 則實際嘗試原生圖片／圖片卡交付。若來源確實沒有合格圖片，可記 source exhaustion 並省略圖片；若已確認存在合格來源圖片但可用交付路徑失敗，不論 `claim_critical` 都必須保持同一 run 的 `status=running`、`current_stage=visuals-completed`，只重試圖片交付，不得完成文字 reader。不得在未嘗試前預判。
+- `NATIVE_MEDIA_CAPABILITY_FALLBACK`／`QUALIFIED_IMAGE_DELIVERY_INDEPENDENT_OF_CLAIM_CRITICAL`：full-runtime 已找到可用圖片時先下載原始媒體檔，下載失敗才依圖片政策截圖並驗證；mobile-native 則實際嘗試原生圖片／圖片卡交付。若來源確實沒有合格圖片，可記 source exhaustion 並省略圖片；若已確認存在合格來源圖片但可用交付路徑失敗，不論 `claim_critical` 都必須保持同一 run 的 `status=running`、`current_stage=visuals-completed`，只重試圖片交付，不得完成文字 reader。不得在未嘗試前預判。
 - 只有全部引用來源都已檢查且均無可用圖片，才可使用 `omitted`，並保存具體後台原因與繁體中文 `reader_omission_note`；兩者只供內部 evidence／receipt，不得顯示於讀者版。
 - 圖片取得失敗不改變事件等級。
 - 原引用來源沒有可取得圖片時，依序搜尋官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導；可檢查多個來源，不限一個，也不要求找到完全相同像素。新來源必須加入事件的圖片證據與來源追溯，並核對發布日期、人物／地點與事件關聯；搜尋縮圖、無法追溯的搬運站、舊照或無關示意圖不得入選。

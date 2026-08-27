@@ -240,6 +240,7 @@ full-runtime 的 post-selection event exchange 必須遵守 `schemas/news-event-
 - 圖片技能只擁有 `images`；不得修改來源、等級、地圖或詳報內容。
 - 所有入選事件均固定執行來源頁圖片檢查；full-runtime 保存本地證據，mobile-native 保存該宿主可產生的來源檢查與原生圖片卡結構化結果。評級只影響新聞重要度，不影響是否查圖。
 - 圖片與地圖都必須另填 `claim_critical`。只有視覺本身直接支撐核心新聞主張時才可設為 `true`；來源確實沒有合格圖片或非關鍵本機生成視覺無法產生時可標記 `omitted`。已確認合格來源圖片的交付失敗不得因 `claim_critical=false` 降級成正式完成。
+- `QUALIFIED_IMAGE_DELIVERY_INDEPENDENT_OF_CLAIM_CRITICAL`：已確認合格來源圖片後，`claim_critical` 不再參與交付決定；true 與 false 的 delivery failure 都必須停在視覺恢復，只有完整 source exhaustion 才允許非關鍵圖片 omitted。
 - 地震、疫情、氣象、災害、戰爭、航運、漏油與海洋污染等類型固定啟用官方專業圖資要求；判定依事件內容，不得硬編碼事件編號。
 - 地圖、資料圖表與來源圖片三組附件路徑必須兩兩獨立，任一組不得替代另一組。
 - 地圖標籤必須符合輸出語言；繁體中文輸出時不得只有英文地名。
