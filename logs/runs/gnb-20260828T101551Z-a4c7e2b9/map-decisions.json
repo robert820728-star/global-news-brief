@@ -1,0 +1,14 @@
+{
+  "run_id":"gnb-20260828T101551Z-a4c7e2b9",
+  "main_sha":"6eb397b2195fd5b8a2dfe06045dcafa72e55110e",
+  "window":{"start":"2026-08-27T10:18:34+00:00","end":"2026-08-28T10:18:34+00:00","timezone":"Asia/Shanghai"},
+  "execution_mode":"mobile-native",
+  "decisions":[
+    {"event_id":"TWN-01","required":false,"claim_critical":false,"status":"not_required","reason":"The event is a nationwide demographic projection; a locator map would add little explanatory value."},
+    {"event_id":"CHN-01","required":true,"claim_critical":false,"status":"omitted","reason":"Landfall and affected-province geography is useful, but mobile-native cannot claim the local canonical map renderer executed."},
+    {"event_id":"CHN-02","required":false,"claim_critical":false,"status":"not_required","reason":"The housing-sales reform is national policy rather than a location-dependent claim."},
+    {"event_id":"CHN-03","required":true,"claim_critical":false,"status":"omitted","reason":"The Nepal-Tibet flood has strong spatial meaning, but mobile-native cannot claim a local canonical map asset."},
+    {"event_id":"GLB-01","required":true,"claim_critical":false,"status":"omitted","reason":"The Strait of Hormuz is a spatial chokepoint, but mobile-native cannot claim a generated canonical map asset."}
+  ],
+  "machine_validator_executed":false
+}
