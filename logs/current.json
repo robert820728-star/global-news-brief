@@ -7,12 +7,12 @@
   "run_id": "gnb-20260828T221600Z-a91f6c3d",
   "scheduled_for": "2026-08-28T22:00:00+00:00",
   "status": "running",
-  "current_stage": "workspace-ready",
-  "stage_index": 3,
-  "last_completed_stage": "main-pinned",
+  "current_stage": "source-scan",
+  "stage_index": 4,
+  "last_completed_stage": "workspace-ready",
   "main_sha": "4631443c73f791859c1eac956dd64d3df7a0f35e",
   "window": {"start":"2026-08-27T22:17:00+00:00","end":"2026-08-28T22:17:00+00:00","timezone":"Asia/Shanghai"},
-  "updated_at": "2026-08-28T22:22:00+00:00",
+  "updated_at": "2026-08-28T22:30:00+00:00",
   "last_error": null,
   "delivery_status": "not_ready",
   "client_confirmation_supported": false,
@@ -21,6 +21,6 @@
   "verification_artifact": null,
   "map_decisions_artifact": null,
   "image_evidence_artifact": null,
-  "durable_audit_status": "not_started",
-  "durable_audit_artifact": null
+  "durable_audit_status": "preserved_merge_deferred",
+  "durable_audit_artifact": {"branch":"run-logs","path":"logs/latest-candidate-audit.json","blob_sha":"e80c53052c727d634b8a6127b67bd96efc13b009"}
 }
