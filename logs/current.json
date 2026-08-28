@@ -7,24 +7,20 @@
   "run_id": "gnb-20260828T101551Z-a4c7e2b9",
   "scheduled_for": "2026-08-28T10:17:57+00:00",
   "status": "running",
-  "current_stage": "source-scan",
-  "stage_index": 4,
-  "last_completed_stage": "workspace-ready",
+  "current_stage": "candidate-audit",
+  "stage_index": 5,
+  "last_completed_stage": "source-scan",
   "main_sha": "6eb397b2195fd5b8a2dfe06045dcafa72e55110e",
-  "window": {
-    "start": "2026-08-27T10:18:34+00:00",
-    "end": "2026-08-28T10:18:34+00:00",
-    "timezone": "Asia/Shanghai"
-  },
-  "updated_at": "2026-08-28T10:26:20+00:00",
+  "window": {"start":"2026-08-27T10:18:34+00:00","end":"2026-08-28T10:18:34+00:00","timezone":"Asia/Shanghai"},
+  "updated_at": "2026-08-28T10:31:10+00:00",
   "last_error": null,
   "delivery_status": "not_ready",
   "client_confirmation_supported": false,
   "reader_artifact": null,
-  "candidate_audit_artifact": null,
+  "candidate_audit_artifact": {"branch":"run-logs","path":"logs/runs/gnb-20260828T101551Z-a4c7e2b9/candidate-audit.json","blob_sha":"5424583d4847d17919ef4990fa7cd0c136066096","run_id":"gnb-20260828T101551Z-a4c7e2b9","main_sha":"6eb397b2195fd5b8a2dfe06045dcafa72e55110e","window":{"start":"2026-08-27T10:18:34+00:00","end":"2026-08-28T10:18:34+00:00","timezone":"Asia/Shanghai"}},
   "verification_artifact": null,
   "map_decisions_artifact": null,
   "image_evidence_artifact": null,
-  "durable_audit_status": "not_started",
-  "durable_audit_artifact": null
+  "durable_audit_status": "preserved_merge_deferred",
+  "durable_audit_artifact": {"branch":"run-logs","path":"logs/latest-candidate-audit.json","blob_sha":"e80c53052c727d634b8a6127b67bd96efc13b009"}
 }
