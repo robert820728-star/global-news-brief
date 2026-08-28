@@ -1,0 +1,106 @@
+{
+  "run_id":"gnb-20260828T115908Z-a4d19c72",
+  "main_sha":"f05a223fcf970a5d3d3ba46b5aaa1fca9496e44e",
+  "window":{"start":"2026-08-27T12:02:49+00:00","end":"2026-08-28T12:02:49+00:00","timezone":"Asia/Shanghai"},
+  "execution_mode":"mobile-native",
+  "checked_at":"2026-08-28T12:17:00+00:00",
+  "machine_pixel_verification_executed":false,
+  "events":[
+    {
+      "event_id":"TWN-01",
+      "required":true,
+      "claim_critical":false,
+      "source_checks":[
+        {"layer":"original_or_primary","attempted":true,"source_url":"https://www.ndc.gov.tw/nc_27_40407","inspection_method":"source-page-and-native-image-search","result":"no_current_deliverable_media_card"},
+        {"layer":"official_or_party","attempted":true,"source_url":"https://pop-proj.ndc.gov.tw/Advanced_Search.aspx","inspection_method":"source-page-and-native-image-search","result":"data_interface_only_no_current_deliverable_media_card"},
+        {"layer":"wire","attempted":true,"source_url":"https://tw.news.yahoo.com/%E5%9C%8B%E7%99%BC%E6%9C%83%E6%9C%80%E6%96%B0%E4%BA%BA%E5%8F%A3%E6%8E%A8%E4%BC%B0-2075%E5%B9%B4%E8%80%81%E5%B9%B4%E4%BA%BA%E5%8F%A3%E9%81%8E%E5%8D%8A-%E5%9C%96-100033574.html","inspection_method":"source-page-and-native-image-search","result":"qualified_current_cna_photo_confirmed_in_page_text_but_native_card_not_retrieved","detail":"The Aug. 28 CNA image story explicitly identifies a same-day photo, but repeated native image queries surfaced only older demographic graphics or unrelated playground images."},
+        {"layer":"reliable_media","attempted":true,"source_url":"https://news.nextapple.com/finance/20260828/C5AF81C42F036FD9DCBFD3BD1039002D","inspection_method":"source-page-and-native-image-search","result":"qualified_current_reporter_photo_confirmed_in_page_text_but_native_card_not_retrieved","detail":"The current article identifies a same-day NDC release photo credited to reporter Hsu Li-chen; no deliverable image ref was returned."}
+      ],
+      "delivery_result":"native_media_unavailable",
+      "qualified_image_confirmed":true,
+      "reader_omission_note":"A qualified current source photo exists but could not be delivered as a native image card after the required source-layer attempts."
+    },
+    {
+      "event_id":"CHN-01",
+      "required":true,
+      "claim_critical":false,
+      "professional_visual_required":true,
+      "source_checks":[
+        {"layer":"original_or_primary","attempted":true,"source_url":"https://www.reuters.com/business/environment/typhoon-saudel-makes-landfall-taizhou-cctv-reports-2026-08-28/","inspection_method":"source-page-and-native-image-search","result":"no_current_deliverable_media_card"},
+        {"layer":"official_or_party","attempted":true,"source_url":"https://en.people.cn/n3/2026/0828/c90000-20493501.html","inspection_method":"source-page-and-native-image-search","result":"qualified_current_xinhua_photos_confirmed_in_page_text_but_native_card_not_retrieved","detail":"The official/state-agency page lists multiple Aug. 27 Yuhuan/Yueqing preparation photos, including evacuation and boarding-up scenes."},
+        {"layer":"wire","attempted":true,"source_url":"https://www.china.org.cn/2026-08/28/content_118668270.shtml","inspection_method":"native-image-search","result":"current_xinhua_photo_caption_confirmed_but_search_returned_old_unrelated_typhoon_image"},
+        {"layer":"reliable_media","attempted":true,"source_url":"https://www.scmp.com/news/china/article/3365546/storm-travel-chaos-typhoon-saudel-makes-double-landfall-china","inspection_method":"source-page-and-native-image-search","result":"qualified_current_xinhua_flood_photo_confirmed_in_page_text_but_native_card_not_retrieved"}
+      ],
+      "professional_source_checks":[{"source":"official meteorological/current-event visual search","result":"Current photo captions were confirmed, but native image search returned stale Typhoon Dolphin/Maria/Comay imagery and those results were rejected by the event/date gate."}],
+      "professional_visual_status":"not_available",
+      "delivery_result":"native_media_unavailable",
+      "qualified_image_confirmed":true,
+      "reader_omission_note":"Current Xinhua/SCMP source photos are confirmed, but the host did not expose a deliverable native image ref after actual attempts."
+    },
+    {
+      "event_id":"CHN-02",
+      "required":true,
+      "claim_critical":false,
+      "source_checks":[
+        {"layer":"original_or_primary","attempted":true,"source_url":"https://www.xinhuanet.com/politics/20260828/6a2cbaa5cc6f4a6e8d329c38edd3272b/c.html","inspection_method":"source-page-and-native-image-search","result":"no_traceable_current_event_media_file_exposed"},
+        {"layer":"official_or_party","attempted":true,"source_url":"https://news.cnr.cn/native/gd/kx/20260828/t20260828_527796516.shtml","inspection_method":"source-page-and-native-image-search","result":"no_traceable_current_event_media_file_exposed"},
+        {"layer":"wire","attempted":true,"source_url":"https://www.reuters.com/world/asia-pacific/china-reform-home-sales-system-curb-delivery-risks-2026-08-28/","inspection_method":"source-page-and-native-image-search","result":"only_old_or_generic_property_file_imagery_found_and_rejected"},
+        {"layer":"reliable_media","attempted":true,"source_url":"https://www.reuters.com/world/asia-pacific/china-reform-home-sales-system-curb-delivery-risks-2026-08-28/","inspection_method":"native-image-search-retry","result":"no_current_event_specific_qualified_image"}
+      ],
+      "delivery_result":"source_exhausted",
+      "qualified_image_confirmed":false,
+      "reader_omission_note":"Only generic or old housing imagery was found; no current event-specific qualified image passed the source/date gate."
+    },
+    {
+      "event_id":"CHN-03",
+      "required":true,
+      "claim_critical":false,
+      "professional_visual_required":true,
+      "source_checks":[
+        {"layer":"original_or_primary","attempted":true,"source_url":"https://www.reuters.com/business/environment/nepal-lake-breaks-banks-water-level-rising-district-official-says-2026-08-28/","inspection_method":"source-page-and-native-image-search","result":"no_current_native_image_ref"},
+        {"layer":"official_or_party","attempted":true,"source_url":"https://www.ifrc.org/press-release/nepal-ifrc-releases-emergency-funds-flash-floods-leave-communities-isolated","inspection_method":"source-page-and-native-image-search","result":"no_current_native_image_ref"},
+        {"layer":"wire","attempted":true,"source_url":"https://www.gettyimages.com/","inspection_method":"native-image-search","result":"qualified_current_image_delivered","native_image_ref":"turn375884image0","detail":"AFP/Getty aerial view of Trishuli Bazar flood aftermath photographed August 26, 2026, same disaster."},
+        {"layer":"reliable_media","attempted":true,"source_url":"https://apnews.com/article/ae9973b5fd2b1dc6d54c3e88b1b55bdc","inspection_method":"source-page-and-native-image-search","result":"same_event_reporting_confirmed"}
+      ],
+      "professional_source_checks":[{"source":"current flood/disaster map and professional visual search","result":"No current official infographic was exposed, but a same-disaster AFP/Getty aerial photograph was deliverable."}],
+      "professional_visual_status":"not_available",
+      "delivery_result":"available",
+      "qualified_image_confirmed":true,
+      "native_media_status":"available"
+    },
+    {
+      "event_id":"GLB-01",
+      "required":true,
+      "claim_critical":false,
+      "professional_visual_required":true,
+      "source_checks":[
+        {"layer":"original_or_primary","attempted":true,"source_url":"https://www.reuters.com/world/middle-east/iran-war-diplomacy-turns-toward-reopening-strait-hormuz-2026-08-28/","inspection_method":"source-page-and-native-image-search","result":"current_story_retrieved_but_no_native_image_ref"},
+        {"layer":"official_or_party","attempted":true,"source_url":"https://www.aljazeera.com/news/2026/8/26/iran-oman-agree-on-temporary-hormuz-route-what-we-know","inspection_method":"source-page-and-native-image-search","result":"no_current_deliverable_image_ref_for_this_update"},
+        {"layer":"wire","attempted":true,"source_url":"https://www.ksl.com/article/51616666/shipping-traffic-through-strait-of-hormuz-rises-slightly-data-shows","inspection_method":"source-page-and-native-image-search","result":"qualified_current_source_photo_confirmed_but_native_card_not_retrieved","detail":"Reuters/WANA photo caption identifies vessels near Bandar Abbas photographed August 26, 2026."},
+        {"layer":"reliable_media","attempted":true,"source_url":"https://www.al-monitor.com/originals/2026/08/shipping-traffic-through-strait-hormuz-rises-slightly-data-shows","inspection_method":"source-page-and-native-image-search","result":"qualified_current_reuters_wana_photo_confirmed_but_native_card_not_retrieved"}
+      ],
+      "professional_source_checks":[{"source":"current vessel-traffic visual search","result":"Native image results returned older or different Strait visuals; the exact Aug. 26 Reuters/WANA photo was confirmed in current source pages but no native image-card ref was exposed."}],
+      "professional_visual_status":"not_available",
+      "delivery_result":"native_media_unavailable",
+      "qualified_image_confirmed":true,
+      "reader_omission_note":"A qualified current Reuters/WANA source photo exists, but this host could not deliver it as a native image card after all required source-layer attempts."
+    },
+    {
+      "event_id":"GLB-02",
+      "required":true,
+      "claim_critical":false,
+      "source_checks":[
+        {"layer":"original_or_primary","attempted":true,"source_url":"https://apnews.com/article/615dcbccd5b37f68aca89f8e286f4d7b","inspection_method":"source-page-and-native-image-search","result":"qualified_current_ap_photo_confirmed_in_page_text_but_native_card_not_retrieved","detail":"Current AP coverage identifies an Aug. 27 photo of Health Minister Roger Kamba administering Ebola vaccine in Kisangani."},
+        {"layer":"official_or_party","attempted":true,"source_url":"https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON615","inspection_method":"source-page-and-native-image-search","result":"official_outbreak_material_found_but_no_current_aug28_native_photo_ref"},
+        {"layer":"wire","attempted":true,"source_url":"https://www.thehour.com/news/world/article/ebola-outbreak-in-eastern-congo-spreads-to-2-new-22407391.php","inspection_method":"source-page-and-native-image-search","result":"same_current_ap_photo_confirmed_but_native_card_not_retrieved"},
+        {"layer":"reliable_media","attempted":true,"source_url":"https://www.euronews.com/health/2026/08/28/congo-begins-ebola-vaccinations-against-worlds-fastest-growing-outbreak","inspection_method":"source-page-and-native-image-search","result":"same_current_ap_photo_confirmed_but_native_card_not_retrieved"}
+      ],
+      "delivery_result":"native_media_unavailable",
+      "qualified_image_confirmed":true,
+      "reader_omission_note":"A qualified Aug. 27 AP vaccination photo is confirmed across current source pages, but repeated native image searches exposed only older outbreak imagery, so delivery failed the current-event gate."
+    }
+  ],
+  "overall_result":"NATIVE_MEDIA_UNAVAILABLE",
+  "blocking_events":["TWN-01","CHN-01","GLB-01","GLB-02"],
+  "recovery_scope":"visual_delivery_only"
+}
