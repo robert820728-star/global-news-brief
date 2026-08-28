@@ -1,0 +1,57 @@
+name: Align hardening CI runtime
+
+on:
+  push:
+    branches:
+      - hardening/mobile-gate-assertions-20260829
+    paths:
+      - '.github/workflows/align-hardening-ci-runtime.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  align:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: hardening/mobile-gate-assertions-20260829
+      - name: Patch one-shot hardening workflow
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('.github/workflows/apply-mobile-gate-hardening.yml')
+          text = path.read_text(encoding='utf-8')
+
+          old = """          run_schema_path.write_text(json.dumps(run_schema, ensure_ascii=False, indent=2) + '\\n', encoding='utf-8')\n\n          # 3) Harden manage_mobile_run_log.py: the reader boundary now validates the gate coverage artifact.\n"""
+          new = """          run_schema_path.write_text(json.dumps(run_schema, ensure_ascii=False, indent=2) + '\\n', encoding='utf-8')\n\n          # Keep full-runtime bootstrap closure synchronized with INSTALL's runtime entrypoints.\n          replace_once(\n              'scripts/news_run_checkpoint.py',\n              '    \"schemas/mobile-run-log.schema.json\",\\n    \".agents/skills/daily-news-brief/SKILL.md\",',\n              '    \"schemas/mobile-run-log.schema.json\",\\n    \"schemas/mobile-gate-assertions.schema.json\",\\n    \".agents/skills/daily-news-brief/SKILL.md\",',\n          )\n\n          # 3) Harden manage_mobile_run_log.py: the reader boundary now validates the gate coverage artifact.\n"""
+          if text.count(old) != 1:
+              raise SystemExit(f'checkpoint patch anchor mismatch: {text.count(old)}')
+          text = text.replace(old, new, 1)
+
+          old = """      - name: Compile changed runtime program\n        run: python3 -m py_compile scripts/manage_mobile_run_log.py\n\n      - name: Run focused hardening tests\n"""
+          new = """      - name: Set up Python\n        uses: actions/setup-python@v5\n        with:\n          python-version: '3.12'\n\n      - name: Install runtime probe dependency\n        run: |\n          sudo apt-get update\n          sudo apt-get install -y --no-install-recommends fonts-noto-cjk\n          python3 -m pip install --disable-pip-version-check pillow\n\n      - name: Compile changed runtime programs\n        run: |\n          python3 -m py_compile \\\n            scripts/manage_mobile_run_log.py \\\n            scripts/news_run_checkpoint.py\n\n      - name: Run focused hardening tests\n"""
+          if text.count(old) != 1:
+              raise SystemExit(f'python setup anchor mismatch: {text.count(old)}')
+          text = text.replace(old, new, 1)
+
+          old = """      - name: Run full repository test suite\n        run: python3 -m unittest discover -s tests -v\n\n      - name: Commit hardened source to feature branch\n"""
+          new = """      - name: Build temporary deterministic capsule for full-suite validation\n        run: python3 scripts/build_bootstrap_capsule.py --source-commit \"$GITHUB_SHA\"\n\n      - name: Verify temporary capsule against checkout\n        run: python3 scripts/verify_bootstrap_capsule.py\n\n      - name: Run full repository test suite\n        run: python3 -m unittest discover -s tests -v\n\n      - name: Commit hardened source to feature branch\n"""
+          if text.count(old) != 1:
+              raise SystemExit(f'capsule build anchor mismatch: {text.count(old)}')
+          text = text.replace(old, new, 1)
+
+          path.write_text(text, encoding='utf-8', newline='\n')
+          Path('.github/workflows/align-hardening-ci-runtime.yml').unlink()
+          PY
+      - name: Commit CI alignment
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git commit -m "Align hardening validation with capsule runtime"
+          git push origin HEAD:hardening/mobile-gate-assertions-20260829
