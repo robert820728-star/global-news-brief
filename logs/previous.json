@@ -4,19 +4,19 @@
   "delivery_profile": "full-assets",
   "native_media_status": "available",
   "capability_limitations": [],
-  "run_id": "gnb-20260828T044935Z-a1b2c3d4",
-  "scheduled_for": "2026-08-28T04:46:55+00:00",
+  "run_id": "gnb-20260828T101300Z-7c91a4e2",
+  "scheduled_for": "2026-08-28T10:12:56+00:00",
   "status": "interrupted_by_next_run",
   "current_stage": "source-scan",
   "stage_index": 4,
   "last_completed_stage": "workspace-ready",
-  "main_sha": "ecede68c6a2feb4510feec35f1bcd9ef9e3cc536",
+  "main_sha": "6eb397b2195fd5b8a2dfe06045dcafa72e55110e",
   "window": {
-    "start": "2026-08-27T04:49:35+00:00",
-    "end": "2026-08-28T04:49:35+00:00",
+    "start": "2026-08-27T10:13:00+00:00",
+    "end": "2026-08-28T10:13:00+00:00",
     "timezone": "Asia/Shanghai"
   },
-  "updated_at": "2026-08-28T10:13:00+00:00",
+  "updated_at": "2026-08-28T10:18:34+00:00",
   "last_error": {
     "code": "executor_interrupted",
     "message": "The next scheduled run started before this run reached a terminal state."
