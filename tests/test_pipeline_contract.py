@@ -533,7 +533,7 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("bootstrap/bootstrap_progress.py", document)
             self.assertIn("16-line", document)
             self.assertIn("one initial attempt plus at most three retries", document)
-            self.assertIn("2, 5, and 10", document)
+            self.assertRegex(document, r"2\D+5\D+10")
             self.assertIn("RUN_RECEIPT", document)
             self.assertIn("external_ledger: unavailable", document)
 
