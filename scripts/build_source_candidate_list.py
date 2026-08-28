@@ -13,6 +13,7 @@ from pathlib import Path
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 TRACKING_KEYS = {"fbclid", "gclid", "mc_cid", "mc_eid"}
+WEB_FALLBACK_SOURCE_ID = "web_fallback"
 
 
 def parse_time(value: str) -> datetime:
@@ -50,6 +51,19 @@ def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
         for source_id, source in expected.items()
         if (scan_dir / f"{source_id}.json").is_file()
     }
+    if (
+        pool.get("acquisition_policy", {}).get(
+            "cross_source_fallback_may_add_candidates"
+        ) is True
+        and (scan_dir / f"{WEB_FALLBACK_SOURCE_ID}.json").is_file()
+    ):
+        available[WEB_FALLBACK_SOURCE_ID] = {
+            "source_id": WEB_FALLBACK_SOURCE_ID,
+            "name": "Verified global web fallback",
+            "default_section": "GLB",
+            "categories": [],
+            "acquisition_route": "web_search_fallback",
+        }
     if len(available) < minimum_ready:
         raise ValueError(
             f"可用新聞發現清單不足：{len(available)}，最低需要 {minimum_ready}"
@@ -102,7 +116,11 @@ def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
                     "url": url,
                     "categories": raw.get("categories") or source.get("categories", []),
                     "discovery_priority_reason": hint,
-                    "acquisition_route": raw.get("acquisition_route") or scan.get("collector"),
+                    "acquisition_route": (
+                        raw.get("acquisition_route")
+                        or source.get("acquisition_route")
+                        or scan.get("collector")
+                    ),
                     "canonical_url": canon,
                     "normalized_title": norm,
                     "dedup_seed": seed,

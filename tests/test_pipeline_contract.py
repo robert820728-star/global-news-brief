@@ -696,7 +696,7 @@ class PipelineContractTests(unittest.TestCase):
             for forbidden_action in ("discovery", "scoring", "verification", "new run"):
                 self.assertIn(forbidden_action, text)
 
-    def test_global_section_requires_primary_discovery_coverage(self):
+    def test_global_section_requires_primary_or_bounded_verified_fallback(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
         mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
@@ -705,10 +705,11 @@ class PipelineContractTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         for document in (install, settings, mobile, acquire):
             self.assertIn("GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE", document)
+            self.assertIn("web_fallback", document)
         for document in (install, settings, acquire):
             self.assertIn("primary_aggregator", document)
-        self.assertIn("保持 `status=running`、`current_stage=source-scan`", mobile)
-        self.assertIn("不得輸出冒充完整的 Reader", mobile)
+        self.assertIn("不得宣稱完整 coverage", mobile)
+        self.assertIn("才讓同一 run 保持 `status=running`、`current_stage=source-scan`", mobile)
 
     def test_mobile_native_image_route_does_not_require_local_materialization(self):
         documents = (

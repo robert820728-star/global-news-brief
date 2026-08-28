@@ -90,6 +90,38 @@ class CandidateListTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "可用新聞發現清單不足"):
                 builder.build(pool, Path(tmp), builder.parse_time("2026-08-15T02:00:00+00:00"), builder.parse_time("2026-08-16T02:00:00+00:00"))
 
+    def test_verified_web_fallback_enters_candidate_list_with_truthful_provenance(self):
+        pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
+        with tempfile.TemporaryDirectory() as tmp:
+            scan_dir = Path(tmp)
+            (scan_dir / "web_fallback.json").write_text(json.dumps({
+                "source_id": "web_fallback",
+                "collector": "verified-web-search-fallback",
+                "coverage_complete": False,
+                "coverage_status": "degraded_partial",
+                "pages": [{
+                    "snapshot_path": "snapshots/web-fallback.json",
+                    "extracted_items": [{
+                        "title": "Verified global event",
+                        "summary": "A verified international event with public impact.",
+                        "discovery_priority_reason": "Restores global recall after the primary route failed.",
+                        "published_at": "2026-08-16T01:00:00+00:00",
+                        "url": "https://www.reuters.com/world/example",
+                        "section": "GLB",
+                    }],
+                }],
+            }), encoding="utf-8")
+
+            result = builder.build(
+                pool, scan_dir,
+                builder.parse_time("2026-08-15T02:00:00+00:00"),
+                builder.parse_time("2026-08-16T02:00:00+00:00"),
+            )
+
+        self.assertEqual(["web_fallback"], result["sources"])
+        self.assertEqual("web_fallback", result["items"][0]["source_id"])
+        self.assertEqual("web_search_fallback", result["items"][0]["acquisition_route"])
+
 
 if __name__ == "__main__":
     unittest.main()

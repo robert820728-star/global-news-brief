@@ -78,20 +78,19 @@ class NoObsoleteContractsTests(unittest.TestCase):
         self.assertNotIn("[SABC][+-]?", validator)
         self.assertNotIn("SS 至 C" + "-", image_policy)
 
-    def test_web_search_cannot_add_canonical_discovery_candidates(self):
+    def test_web_search_fallback_is_bounded_and_cannot_claim_source_completeness(self):
         pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
-        self.assertFalse(pool["acquisition_policy"]["cross_source_fallback_may_add_candidates"])
+        self.assertTrue(pool["acquisition_policy"]["cross_source_fallback_may_add_candidates"])
+        self.assertFalse(pool["acquisition_policy"]["cross_source_fallback_may_satisfy_source_completeness"])
 
         documents = (
             ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / ".agents/skills/acquire-news-candidates/SKILL.md",
         )
-        forbidden = ("網頁搜尋補候選", "至少一個 discovery source 或最後搜尋備援")
         for path in documents:
             text = path.read_text(encoding="utf-8")
-            for phrase in forbidden:
-                self.assertNotIn(phrase, text, path.name)
-            self.assertIn("same-source", text, path.name)
+            self.assertIn("web_fallback", text, path.name)
+            self.assertIn("不得宣稱完整", text, path.name)
 
     def test_current_section_contract_has_no_else_glb_fallback(self):
         settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")

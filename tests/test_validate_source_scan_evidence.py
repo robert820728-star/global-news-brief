@@ -131,6 +131,52 @@ class SourceScanEvidenceTests(unittest.TestCase):
             self.assertEqual(0, result.returncode, result.stdout + result.stderr)
             self.assertIn("sources=1", result.stdout)
 
+    def test_scan_dir_accepts_bounded_verified_web_fallback(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            scans = root / "scans"
+            scans.mkdir()
+            path, digest = self.make_snapshot(directory, "NO_MORE_RESULTS")
+            metadata = {
+                "coverage_complete": False,
+                "coverage_status": "degraded_partial",
+                "coverage_reason": "configured primary aggregator unavailable",
+                "missing_segments": ["configured_primary_aggregator_unavailable"],
+                "missing_date_variants": [],
+            }
+            scan = {
+                "schema_version": "1.0.0", "source_id": "web_fallback",
+                "collector": "verified-web-search-fallback",
+                "generated_at": "2026-08-15T06:00:00+08:00",
+                "window_start": "2026-08-14T06:00:00+08:00",
+                "window_end": "2026-08-15T06:00:00+08:00",
+                "pages": [{"request_url": "https://search.example/global", "fetched_at": "2026-08-15T06:00:00+08:00", "http_status": 200, "snapshot_path": path, "sha256": digest, "next_url": None, "extracted_items": []}],
+                "terminal_proof": {"type": "source_exhausted", "page_index": 1, "terminal_marker": "NO_MORE_RESULTS"},
+                **metadata,
+            }
+            (scans / "web_fallback.json").write_text(json.dumps(scan), encoding="utf-8")
+            coverage = {
+                "source_id": "web_fallback", "scan_status": "completed",
+                "scan_window_start": scan["window_start"],
+                "scan_window_end": scan["window_end"],
+                "within_window_count": 0, "ranked_items": [], **metadata,
+            }
+            coverage_path = root / "coverage.json"
+            pool_path = root / "pool.json"
+            coverage_path.write_text(json.dumps([coverage]), encoding="utf-8")
+            pool_path.write_text(json.dumps({
+                "discovery_policy": {"minimum_ready_sources": 1},
+                "discovery_sources": [{"source_id": "gdelt", "homepage": "https://gdelt.example/"}],
+                "acquisition_policy": {"cross_source_fallback_may_add_candidates": True},
+            }), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(ROOT / "scripts" / "validate_source_scan_evidence.py"),
+                 "--scan-dir", str(scans), "--coverage", str(coverage_path),
+                 "--source", str(pool_path)],
+                capture_output=True, text=True, check=False,
+            )
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+
     def make_snapshot(self, directory, text):
         path = Path(directory) / "page.html"
         path.write_text(text, encoding="utf-8")

@@ -283,6 +283,62 @@ def valid_audit(candidates=None, per_source_count=1):
     }
 
 
+def replace_gdelt_with_verified_web_fallback(audit):
+    """Keep GDELT truthfully failed while reusing its verified rows as web fallback."""
+    run = audit["runs"][0]
+    gdelt = next(item for item in run["source_coverage"] if item["source_id"] == "gdelt")
+    fallback = copy.deepcopy(gdelt)
+    fallback["source_id"] = "web_fallback"
+    fallback.update({
+        "coverage_complete": False,
+        "coverage_status": "degraded_partial",
+        "coverage_reason": "GDELT unavailable; verified cross-source global discovery fallback",
+        "missing_segments": ["configured_primary_aggregator_unavailable"],
+    })
+    scan_path = Path(fallback["scan_evidence_path"])
+    scan = json.loads(scan_path.read_text(encoding="utf-8"))
+    scan.update({
+        "source_id": "web_fallback",
+        "collector": "verified-web-search-fallback",
+        "coverage_complete": False,
+        "coverage_status": "degraded_partial",
+        "coverage_reason": fallback["coverage_reason"],
+        "missing_segments": fallback["missing_segments"],
+    })
+    fallback_scan_path = scan_path.with_name("web_fallback.json")
+    fallback_scan_path.write_text(json.dumps(scan), encoding="utf-8")
+    fallback["scan_evidence_path"] = str(fallback_scan_path)
+
+    gdelt.update({
+        "scan_status": "failed",
+        "coverage_complete": False,
+        "coverage_status": "unavailable",
+        "coverage_reason": "archive, DOC API, and valid cache unavailable",
+        "missing_segments": [],
+        "missing_date_variants": [],
+        "within_window_count": 0,
+        "ranked_count": 0,
+        "ranked_items": [],
+        "selected_for_pool_count": 0,
+        "selected_item_urls": [],
+        "discovery_ranking_completed": False,
+        "failure_reason": "archive, DOC API, and valid cache unavailable",
+        "scan_window_start": None,
+        "scan_window_end": None,
+        "scan_evidence_path": None,
+    })
+    run["source_coverage"].append(fallback)
+    for row in run["article_dispositions"]:
+        if row["source_id"] == "gdelt":
+            row["source_id"] = "web_fallback"
+    for item in run["candidates"]:
+        item["source_ids"] = [
+            "web_fallback" if source_id == "gdelt" else source_id
+            for source_id in item["source_ids"]
+        ]
+    return fallback
+
+
 class CandidateAuditTests(unittest.TestCase):
     def test_shipped_empty_audit_seed_uses_current_schema(self):
         seed = json.loads(
@@ -1006,6 +1062,34 @@ class CandidateAuditTests(unittest.TestCase):
 
         errors = MODULE.validate(audit, pool)
         self.assertTrue(any("fallback/global 板塊" in error for error in errors))
+
+    def test_verified_web_fallback_can_restore_global_discovery_without_claiming_completeness(self):
+        pool = source_pool()
+        audit = valid_audit()
+        fallback = replace_gdelt_with_verified_web_fallback(audit)
+
+        self.assertFalse(fallback["coverage_complete"])
+        self.assertEqual("degraded_partial", fallback["coverage_status"])
+        self.assertEqual([], MODULE.validate(audit, pool))
+
+    def test_web_fallback_cannot_claim_complete_coverage(self):
+        pool = source_pool()
+        audit = valid_audit()
+        fallback = replace_gdelt_with_verified_web_fallback(audit)
+        fallback["coverage_complete"] = True
+        fallback["coverage_status"] = "complete"
+
+        errors = MODULE.validate(audit, pool)
+        self.assertTrue(any("web_fallback" in error and "完整 coverage" in error for error in errors))
+
+    def test_unverified_web_fallback_cannot_bypass_global_gate(self):
+        pool = source_pool()
+        audit = valid_audit()
+        fallback = replace_gdelt_with_verified_web_fallback(audit)
+        fallback["scan_evidence_path"] = None
+
+        errors = MODULE.validate(audit, pool)
+        self.assertTrue(any("scan_evidence_path" in error for error in errors))
 
     def test_local_disaster_death_count_is_evidence_not_a_grade_gate(self):
         item = candidate("C", "selected")

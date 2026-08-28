@@ -33,7 +33,7 @@
           "url": {"type": "string", "format": "uri"},
           "categories": {"type": "array", "items": {"type": "string"}},
           "discovery_priority_reason": {"type": "string", "minLength": 1},
-          "acquisition_route": {"enum": ["aggregate_api", "structured_direct", "html_direct", "browser_rendered", "same_source_alternate"]},
+          "acquisition_route": {"enum": ["aggregate_api", "structured_direct", "html_direct", "browser_rendered", "same_source_alternate", "web_search_fallback"]},
           "canonical_url": {"type": "string", "format": "uri"},
           "normalized_title": {"type": "string", "minLength": 1},
           "dedup_seed": {"type": "string", "minLength": 16},

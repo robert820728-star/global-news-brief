@@ -15,6 +15,8 @@ from datetime import datetime
 from pathlib import Path
 from urllib.parse import urlsplit, urlunsplit
 
+WEB_FALLBACK_SOURCE_ID = "web_fallback"
+
 
 def parse_time(value):
     return datetime.fromisoformat(str(value).replace("Z", "+00:00"))
@@ -245,11 +247,24 @@ def resolve_source_inputs(scan, coverage, source):
             None,
         )
     if isinstance(source, dict) and isinstance(source.get("discovery_sources"), list):
+        source_pool = source
         source = next((
             item
-            for item in source.get("discovery_sources", [])
+            for item in source_pool.get("discovery_sources", [])
             if isinstance(item, dict) and item.get("source_id") == source_id
         ), None)
+        if (
+            source is None
+            and source_id == WEB_FALLBACK_SOURCE_ID
+            and source_pool.get("acquisition_policy", {}).get(
+                "cross_source_fallback_may_add_candidates"
+            ) is True
+        ):
+            source = {
+                "source_id": WEB_FALLBACK_SOURCE_ID,
+                "homepage": "",
+                "allow_external_article_urls": True,
+            }
     if not isinstance(coverage, dict):
         raise ValueError(f"{source_id or 'unknown'}: aggregate coverage 找不到對應來源")
     if not isinstance(source, dict):

@@ -31,6 +31,7 @@ SOURCE_COVERAGE_FIELDS = {
     "discovery_ranking_method", "failure_reason", "scan_window_start", "scan_window_end",
     "scan_evidence_path",
 }
+WEB_FALLBACK_SOURCE_ID = "web_fallback"
 INTEGRATED_GRADING_PRINCIPLES = {
     "combined_evidence_no_single_dimension_hard_cap": True,
     "importance_severity_is_public_impact": True,
@@ -714,6 +715,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
     primary_aggregator_ids = []
     minimum_ready_discovery_sources = 0
     all_configured_source_ids = set()
+    web_fallback_enabled = False
     if source_pool is None:
         source_pool = load(Path(__file__).resolve().parents[1] / "news-source-pool.json")
     ranking_dimensions = {}
@@ -733,11 +735,24 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             )
         )
         all_configured_source_ids = set(discovery_source_ids)
+        web_fallback_enabled = (
+            source_pool.get("acquisition_policy", {}).get(
+                "cross_source_fallback_may_add_candidates"
+            ) is True
+        )
+        if web_fallback_enabled:
+            all_configured_source_ids.add(WEB_FALLBACK_SOURCE_ID)
         source_scan_evidence_required = source_pool.get("source_scan_evidence_required") is True
         source_by_id = {
             item["source_id"]: item
             for item in source_pool.get("discovery_sources", [])
         }
+        if web_fallback_enabled:
+            source_by_id[WEB_FALLBACK_SOURCE_ID] = {
+                "source_id": WEB_FALLBACK_SOURCE_ID,
+                "homepage": "",
+                "allow_external_article_urls": True,
+            }
         if not discovery_source_ids or len(set(discovery_source_ids)) != len(discovery_source_ids):
             errors.append("news-source-pool.json 必須定義至少一個且全部唯一的 discovery source")
         if not source_scan_evidence_required:
@@ -773,16 +788,22 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             isinstance(item, dict) and item.get("scan_status") == "completed"
             for item in coverage
         )
+        coverage_id_set = set(coverage_ids)
+        allowed_coverage_ids = set(discovery_source_ids)
+        if web_fallback_enabled:
+            allowed_coverage_ids.add(WEB_FALLBACK_SOURCE_ID)
         discovery_coverage = (
             bool(discovery_source_ids)
-            and set(coverage_ids) == set(discovery_source_ids)
-            and len(coverage_ids) == len(set(coverage_ids))
+            and set(discovery_source_ids).issubset(coverage_id_set)
+            and coverage_id_set.issubset(allowed_coverage_ids)
+            and len(coverage_ids) == len(coverage_id_set)
             and completed_coverage_count >= minimum_ready_discovery_sources
         )
         if source_pool is not None and is_latest_run and not discovery_coverage:
             errors.append(
                 run_label
-                + " source coverage 必須逐一保留全部 configured discovery sources、不得重複，且達到最低可用數"
+                + " source coverage 必須逐一保留全部 configured discovery sources；"
+                "只可額外保存受控 web_fallback、不得重複，且須達到最低可用數"
             )
 
         section_scopes = run.get("section_scopes")
@@ -827,17 +848,23 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
                 for item in coverage
                 if isinstance(item, dict)
             }
+            primary_aggregator_ready = any(
+                coverage_by_id.get(source_id, {}).get("scan_status") == "completed"
+                for source_id in primary_aggregator_ids
+            )
+            web_fallback_ready = (
+                web_fallback_enabled
+                and coverage_by_id.get(WEB_FALLBACK_SOURCE_ID, {}).get("scan_status") == "completed"
+            )
             if (
                 fallback_count == 1
                 and primary_aggregator_ids
-                and not any(
-                    coverage_by_id.get(source_id, {}).get("scan_status") == "completed"
-                    for source_id in primary_aggregator_ids
-                )
+                and not primary_aggregator_ready
+                and not web_fallback_ready
             ):
                 errors.append(
                     run_label
-                    + " fallback/global 板塊要求至少一條 primary_aggregator discovery route 成功；"
+                    + " fallback/global 板塊要求 primary_aggregator 或受控 web_fallback 成功；"
                     "區域補充來源不得把全球 coverage 缺失洗成零事件"
                 )
 
@@ -858,6 +885,20 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             scan_status = item.get("scan_status")
             coverage_complete = item.get("coverage_complete")
             coverage_status = item.get("coverage_status")
+            if item.get("source_id") == WEB_FALLBACK_SOURCE_ID:
+                if not web_fallback_enabled:
+                    errors.append(label + " web_fallback 未獲 acquisition policy 授權")
+                if (
+                    scan_status != "completed"
+                    or coverage_complete is not False
+                    or coverage_status != "degraded_partial"
+                ):
+                    errors.append(
+                        label
+                        + " web_fallback 必須是 completed/degraded_partial，且永遠不得宣稱完整 coverage"
+                    )
+                if not isinstance(item.get("coverage_reason"), str) or not item["coverage_reason"].strip():
+                    errors.append(label + " web_fallback 必須說明 primary aggregator 失敗與備援範圍")
             if scan_status not in {"completed", "failed"}:
                 errors.append(label + ".scan_status 必須是 completed 或 failed")
             if not isinstance(coverage_complete, bool):

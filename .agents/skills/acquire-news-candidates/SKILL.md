@@ -9,7 +9,7 @@ description: Use when a daily-news run needs a fresh, auditable rolling-window c
 
 `DISCOVERY_THEN_VERIFY`
 
-Use `news-source-pool.json.discovery_sources` for the canonical list: GDELT plus CNA and China News Service. A failed regional supplement is recorded as degraded and does not block another covered section. When the run includes the fallback/global section, however, at least one configured `primary_aggregator` must materialize successfully; regional supplements cannot turn missing global discovery into a zero-event result. Cross-source web results cannot enter the canonical candidate pool or satisfy coverage; they may only identify a same-source recovery lead that is materialized through the configured route, or support later verification. Deduplicate and score before any C-or-higher event is independently verified; collect images only after verification.
+Use `news-source-pool.json.discovery_sources` for the canonical routes: GDELT plus CNA and China News Service. A failed regional supplement is recorded as degraded and does not block another covered section. When the run includes the fallback/global section, a configured `primary_aggregator` is preferred. If every configured primary route is unavailable after its archive, DOC and valid-cache chain is exhausted, verified cross-source global results may enter the same audit as the reserved `web_fallback` row. That row must preserve its search evidence and every admitted URL, remain `coverage_complete=false` / `coverage_status=degraded_partial`, and never impersonate GDELT or satisfy configured-route completeness. Regional supplements alone still cannot turn missing global discovery into a zero-event result. Deduplicate and score before any C-or-higher event is independently verified; collect images only after verification.
 
 ## Same-source recovery order
 
@@ -52,7 +52,7 @@ GDELT 固定先讀官方 15 分鐘 export archives，依精確時間窗下載完
 - 連續翻頁直到跨過精確24小時起點或來源明確耗盡。
 - 中新社日索引至少抓執行日與前一日，再由精確時間窗篩選；不得只抓執行日頁面。中央社 POST API 必須依 `NextPageIdx` 實際翻頁，直到穿過 `window_start` 或明確耗盡，不得停在固定 500 筆第一頁。
 - GDELT 只有預期的全部 15 分鐘 archive 分片都完成時才可標 `coverage_complete=true`。部分分片有資料只能標 `degraded_partial`，不得冒充 ready/full coverage；可在清楚降級後繼續其他候選流程。
-- `GDELT_RESILIENT_ACQUISITION`：先讀 GDELT 官方 15 分鐘 export archives。只有 archives 不可用時才發送一次不阻塞的 DOC API 補充請求；遇到 429 不等待、不重試，並把 DOC 結果標為 incomplete supplemental coverage。兩者都不可用才讀取具時效標記的有效快取。若三者全部不可用且本輪含 fallback／全球板塊，`GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE` 要求同一 run 停在 source-scan；不得把區域來源的成功冒充全球 coverage，也不得宣稱世界零事件。
+- `GDELT_RESILIENT_ACQUISITION`：先讀 GDELT 官方 15 分鐘 export archives。只有 archives 不可用時才發送一次不阻塞的 DOC API 補充請求；遇到 429 不等待、不重試，並把 DOC 結果標為 incomplete supplemental coverage。兩者都不可用才讀取具時效標記的有效快取。若三者全部不可用且本輪含 fallback／全球板塊，必須執行受控全球網頁備援；只有逐筆保存查詢證據、時間、原始網址並 materialize 成 `web_fallback` source coverage row 的結果才可入池。該 row 永遠不得宣稱完整 coverage。備援也取不到可核實候選時，`GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE` 才要求同一 run 停在 source-scan。
 - `FULL_DISCOVERY_POOL_UNCAPPED`：每個成功來源在精確 24 小時窗內的已驗證條目全部入池，不得設前 30 或其他預設名額。
 - 類別專用的官方、原始或專業來源只在相應事件評分後按需選取，不計入 discovery readiness，也不形成固定清單。
 - `TAIWAN_DOMESTIC_COVERAGE_GUARD` 以中央社補查三個限定領域，每個領域最多 `5 results`；中央社不可用或明顯過舊時，網頁搜尋只能定位中央社 same-source 替代網址或供後續 verification 使用。外站搜尋結果不得建立 canonical discovery candidate、不得進入評分，也不得滿足中央社 coverage。
@@ -89,4 +89,4 @@ python3 scripts/build_news_relevance_gate.py \
   --admitted-output work/model-source-candidates.json
 ```
 
-接著以 `scripts/validate_source_scan_evidence.py` 驗證實際成功的 discovery scans，並以 `news-source-candidate-list.schema.json` 及 `news-relevance-gate.schema.json` 驗證兩份候選清單與 gate。Gate 的 decisions 必須逐列守恆，且所有 regional supplements 都進 admitted output。沒有 fallback／全球板塊時，至少一個 configured discovery source 取得可核實候選即可交給 `select-news-events`；本輪包含 fallback／全球板塊時另須至少一條 `primary_aggregator` 成功。same-source 搜尋備援只能恢復該 configured route；不得用外站候選掩蓋 coverage 缺口。
+接著以 `scripts/validate_source_scan_evidence.py` 驗證實際成功的 discovery scans，並以 `news-source-candidate-list.schema.json` 及 `news-relevance-gate.schema.json` 驗證兩份候選清單與 gate。Gate 的 decisions 必須逐列守恆，且所有 regional supplements 都進 admitted output。沒有 fallback／全球板塊時，至少一個 configured discovery source 取得可核實候選即可交給 `select-news-events`；本輪包含 fallback／全球板塊時，須有 `primary_aggregator` 成功，或在其完整恢復鏈全失敗後取得可重算的 `web_fallback` rows。`web_fallback` 只恢復全球候選召回，不得宣稱完整、不得滿足 configured source completeness，也不得把 CNA／中新社當成世界來源。

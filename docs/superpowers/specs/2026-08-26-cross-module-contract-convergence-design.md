@@ -28,7 +28,7 @@ Article hydration has two unresolved states: recoverable `unresolved`, which blo
 
 ### 5. Web search boundary
 
-Do not create a fictitious `fallback_web` source class. Cross-source web results cannot enter the canonical discovery pool and cannot satisfy source completeness. Web search may identify a same-source recovery lead that is rematerialized through the configured route, or support later verification. Remove all contrary promises.
+Superseded by the production failure confirmed on 2026-08-28: do not create a general fallback source framework, but permit the single reserved `web_fallback` row after all configured primary-aggregator routes are exhausted. Its verified rows may enter the canonical pool, while `coverage_complete=false` remains mandatory and configured-source completeness remains unsatisfied.
 
 ### 6. V2-only selection semantics
 
