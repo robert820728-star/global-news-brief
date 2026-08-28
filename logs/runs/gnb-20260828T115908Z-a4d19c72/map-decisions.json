@@ -1,0 +1,15 @@
+{
+  "run_id":"gnb-20260828T115908Z-a4d19c72",
+  "main_sha":"f05a223fcf970a5d3d3ba46b5aaa1fca9496e44e",
+  "window":{"start":"2026-08-27T12:02:49+00:00","end":"2026-08-28T12:02:49+00:00","timezone":"Asia/Shanghai"},
+  "execution_mode":"mobile-native",
+  "decisions":[
+    {"event_id":"TWN-01","required":false,"claim_critical":false,"status":"not_required","reason":"The population projection is nationwide and its key claim is numerical/structural; a locator map would not materially improve understanding."},
+    {"event_id":"CHN-01","required":true,"claim_critical":false,"status":"omitted","reason":"The two landfalls and affected provinces have clear spatial meaning, but mobile-native cannot claim the local canonical map renderer executed."},
+    {"event_id":"CHN-02","required":false,"claim_critical":false,"status":"not_required","reason":"The housing-sales reform is a nationwide policy event rather than a location-dependent claim."},
+    {"event_id":"CHN-03","required":true,"claim_critical":false,"status":"omitted","reason":"The Nepal-Tibet border flood and barrier-lake risk are strongly spatial, but mobile-native cannot claim a locally rendered canonical map asset."},
+    {"event_id":"GLB-01","required":true,"claim_critical":false,"status":"omitted","reason":"The Strait of Hormuz is a geographic chokepoint central to the story, but mobile-native cannot claim a generated canonical map asset."},
+    {"event_id":"GLB-02","required":true,"claim_critical":false,"status":"omitted","reason":"The outbreak's spread across provinces and health zones has spatial value, but mobile-native cannot claim the local canonical map renderer executed."}
+  ],
+  "machine_validator_executed":false
+}
