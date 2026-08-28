@@ -1,0 +1,15 @@
+{
+  "run_id":"gnb-20260828T101551Z-a4c7e2b9",
+  "main_sha":"6eb397b2195fd5b8a2dfe06045dcafa72e55110e",
+  "window":{"start":"2026-08-27T10:18:34+00:00","end":"2026-08-28T10:18:34+00:00","timezone":"Asia/Shanghai"},
+  "execution_mode":"mobile-native",
+  "validated_at":"2026-08-28T10:32:00+00:00",
+  "machine_validator_executed":false,
+  "events":[
+    {"event_id":"TWN-01","status":"verified","confidence":"high","minimum_claim":"國發會8月28日發布2026至2075人口推估，預估2075年總人口約1214.9萬、65歲以上占52.9%，2025年總生育率0.695。","sources":[{"role":"official_primary","url":"https://www.ndc.gov.tw/nc_27_40407"},{"role":"independent_reporting","url":"https://technews.tw/2026/08/28/national-development-council-population-halve-50-years-2037-older-workforce-majority/"}],"limitations":"長期推估是情境預測，不等於確定會發生的實際人口數。"},
+    {"event_id":"CHN-01","status":"verified","confidence":"high","minimum_claim":"颱風沙德爾8月28日上午兩度登陸浙江，並造成大規模撤離與交通停運。","sources":[{"role":"independent_reporting","url":"https://www.reuters.com/business/environment/typhoon-saudel-makes-landfall-taizhou-cctv-reports-2026-08-28/"},{"role":"official_local","url":"https://www.suzhou.gov.cn/szsrmzf/mszx/202608/8ed5a8ec7aa94b3b83f2de95ecda0439.shtml"}],"limitations":"撤離與停運數字會隨地方應變持續更新。"},
+    {"event_id":"CHN-02","status":"verified","confidence":"high","minimum_claim":"中國住建部、自然資源部與金融監管總局聯合發布商品住房銷售制度改革通知，要求預售單體主體結構封頂並有序推進現房銷售。","sources":[{"role":"primary_state_agency","url":"https://www.xinhuanet.com/20260828/239967702ed84ac3aa416b6a55047aa4/c.html"},{"role":"independent_reporting","url":"https://www.reuters.com/world/asia-pacific/china-reform-home-sales-system-curb-delivery-risks-2026-08-28/"}],"limitations":"各地落地速度與實際市場效果仍待後續觀察。"},
+    {"event_id":"CHN-03","status":"verified","confidence":"high","minimum_claim":"尼泊爾—西藏跨境洪災在8月28日仍造成大量死傷失蹤；新形成堰塞湖溢流一度中斷救援並形成二次洪災風險。","sources":[{"role":"independent_reporting","url":"https://www.reuters.com/business/environment/rescuers-scour-nepal-flood-debris-risk-fresh-flooding-grows-2026-08-28/"},{"role":"independent_reporting","url":"https://apnews.com/article/ae9973b5fd2b1dc6d54c3e88b1b55bdc"},{"role":"technical_context","url":"https://apnews.com/article/b3eda9410f9941f69add384944047bc3"}],"limitations":"不同來源的死亡與失蹤統計截止時間不同；讀者版不把任何單一數字描述為最終統計。"},
+    {"event_id":"GLB-01","status":"verified","confidence":"high","minimum_claim":"荷莫茲海峽重啟外交協商出現進展，但最新可見商船通行量仍明顯低於近期平均與正常水準。","sources":[{"role":"independent_reporting","url":"https://www.reuters.com/world/middle-east/iran-war-diplomacy-turns-toward-reopening-strait-hormuz-2026-08-28/"},{"role":"market_tracking_reporting","url":"https://www.reuters.com/business/energy/shipping-traffic-via-strait-hormuz-slips-below-10-day-average-data-shows-2026-08-28/"},{"role":"same_wire_image_source","url":"https://www.ksl.com/article/51616666/shipping-traffic-through-strait-of-hormuz-rises-slightly-data-shows"}],"limitations":"美方清雷與伊朗航道條件是各方可歸屬主張；Kpler AIS可見船數也可能漏掉關閉轉發器的船舶，因此不能宣稱海峽已完全恢復。"}
+  ]
+}
