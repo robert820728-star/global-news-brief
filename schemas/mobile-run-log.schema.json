@@ -27,26 +27,49 @@
     "verification_artifact",
     "map_decisions_artifact",
     "image_evidence_artifact",
+    "gate_assertions_artifact",
     "durable_audit_status",
     "durable_audit_artifact"
   ],
   "properties": {
-    "schema_version": { "const": "1.6.0" },
-    "execution_mode": { "enum": ["full-runtime", "mobile-native"] },
-    "delivery_profile": {
-      "enum": ["full-assets", "reader-canonical-capability-degraded"]
+    "schema_version": {
+      "const": "1.7.0"
     },
-    "native_media_status": { "enum": ["available", "unavailable"] },
+    "execution_mode": {
+      "enum": [
+        "full-runtime",
+        "mobile-native"
+      ]
+    },
+    "delivery_profile": {
+      "enum": [
+        "full-assets",
+        "reader-canonical-capability-degraded"
+      ]
+    },
+    "native_media_status": {
+      "enum": [
+        "available",
+        "unavailable"
+      ]
+    },
     "capability_limitations": {
       "type": "array",
       "uniqueItems": true,
-      "items": { "enum": ["NATIVE_MEDIA_UNAVAILABLE"] }
+      "items": {
+        "enum": [
+          "NATIVE_MEDIA_UNAVAILABLE"
+        ]
+      }
     },
     "run_id": {
       "type": "string",
       "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$"
     },
-    "scheduled_for": { "type": "string", "format": "date-time" },
+    "scheduled_for": {
+      "type": "string",
+      "format": "date-time"
+    },
     "status": {
       "enum": [
         "awaiting_executor",
@@ -71,128 +94,262 @@
         "delivery-handoff"
       ]
     },
-    "stage_index": { "type": "integer", "minimum": 0, "maximum": 10 },
+    "stage_index": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10
+    },
     "last_completed_stage": {
-      "type": ["string", "null"]
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "main_sha": {
-      "type": ["string", "null"],
+      "type": [
+        "string",
+        "null"
+      ],
       "pattern": "^[0-9a-f]{40}$"
     },
     "window": {
       "oneOf": [
-        { "type": "null" },
+        {
+          "type": "null"
+        },
         {
           "type": "object",
           "additionalProperties": false,
-          "required": ["start", "end", "timezone"],
+          "required": [
+            "start",
+            "end",
+            "timezone"
+          ],
           "properties": {
-            "start": { "type": "string", "format": "date-time" },
-            "end": { "type": "string", "format": "date-time" },
-            "timezone": { "type": "string", "minLength": 1 }
+            "start": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "end": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "timezone": {
+              "type": "string",
+              "minLength": 1
+            }
           }
         }
       ]
     },
-    "updated_at": { "type": "string", "format": "date-time" },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
     "last_error": {
       "oneOf": [
-        { "type": "null" },
+        {
+          "type": "null"
+        },
         {
           "type": "object",
           "additionalProperties": false,
-          "required": ["code", "message"],
+          "required": [
+            "code",
+            "message"
+          ],
           "properties": {
-            "code": { "type": "string", "minLength": 1 },
-            "message": { "type": "string", "minLength": 1 }
+            "code": {
+              "type": "string",
+              "minLength": 1
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            }
           }
         }
       ]
     },
     "delivery_status": {
-      "enum": ["not_ready", "reader_saved", "handoff_started", "client_confirmed"]
+      "enum": [
+        "not_ready",
+        "reader_saved",
+        "handoff_started",
+        "client_confirmed"
+      ]
     },
-    "client_confirmation_supported": { "type": "boolean" },
+    "client_confirmation_supported": {
+      "type": "boolean"
+    },
     "candidate_audit_artifact": {
       "oneOf": [
-        { "type": "null" },
+        {
+          "type": "null"
+        },
         {
           "type": "object",
           "additionalProperties": false,
-          "required": ["branch", "path", "blob_sha", "run_id", "main_sha", "window"],
+          "required": [
+            "branch",
+            "path",
+            "blob_sha",
+            "run_id",
+            "main_sha",
+            "window"
+          ],
           "properties": {
-            "branch": { "const": "run-logs" },
+            "branch": {
+              "const": "run-logs"
+            },
             "path": {
               "type": "string",
               "pattern": "^logs/runs/gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}/candidate-audit\\.json$"
             },
-            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
-            "run_id": { "type": "string", "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$" },
-            "main_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
-            "window": { "$ref": "#/properties/window/oneOf/1" }
+            "blob_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "run_id": {
+              "type": "string",
+              "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$"
+            },
+            "main_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "window": {
+              "$ref": "#/properties/window/oneOf/1"
+            }
           }
         }
       ]
     },
     "verification_artifact": {
       "oneOf": [
-        { "type": "null" },
+        {
+          "type": "null"
+        },
         {
           "type": "object",
           "additionalProperties": false,
-          "required": ["branch", "path", "blob_sha", "run_id", "main_sha", "window"],
+          "required": [
+            "branch",
+            "path",
+            "blob_sha",
+            "run_id",
+            "main_sha",
+            "window"
+          ],
           "properties": {
-            "branch": { "const": "run-logs" },
+            "branch": {
+              "const": "run-logs"
+            },
             "path": {
               "type": "string",
               "pattern": "^logs/runs/gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}/verification\\.json$"
             },
-            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
-            "run_id": { "type": "string", "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$" },
-            "main_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
-            "window": { "$ref": "#/properties/window/oneOf/1" }
+            "blob_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "run_id": {
+              "type": "string",
+              "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$"
+            },
+            "main_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "window": {
+              "$ref": "#/properties/window/oneOf/1"
+            }
           }
         }
       ]
     },
     "map_decisions_artifact": {
       "oneOf": [
-        { "type": "null" },
+        {
+          "type": "null"
+        },
         {
           "type": "object",
           "additionalProperties": false,
-          "required": ["branch", "path", "blob_sha", "run_id", "main_sha", "window"],
+          "required": [
+            "branch",
+            "path",
+            "blob_sha",
+            "run_id",
+            "main_sha",
+            "window"
+          ],
           "properties": {
-            "branch": { "const": "run-logs" },
+            "branch": {
+              "const": "run-logs"
+            },
             "path": {
               "type": "string",
               "pattern": "^logs/runs/gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}/map-decisions\\.json$"
             },
-            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
-            "run_id": { "type": "string", "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$" },
-            "main_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
-            "window": { "$ref": "#/properties/window/oneOf/1" }
+            "blob_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "run_id": {
+              "type": "string",
+              "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$"
+            },
+            "main_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "window": {
+              "$ref": "#/properties/window/oneOf/1"
+            }
           }
         }
       ]
     },
     "image_evidence_artifact": {
       "oneOf": [
-        { "type": "null" },
+        {
+          "type": "null"
+        },
         {
           "type": "object",
           "additionalProperties": false,
-          "required": ["branch", "path", "blob_sha", "run_id", "main_sha", "window"],
+          "required": [
+            "branch",
+            "path",
+            "blob_sha",
+            "run_id",
+            "main_sha",
+            "window"
+          ],
           "properties": {
-            "branch": { "const": "run-logs" },
+            "branch": {
+              "const": "run-logs"
+            },
             "path": {
               "type": "string",
               "pattern": "^logs/runs/gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}/image-evidence\\.json$"
             },
-            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
-            "run_id": { "type": "string", "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$" },
-            "main_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
-            "window": { "$ref": "#/properties/window/oneOf/1" }
+            "blob_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "run_id": {
+              "type": "string",
+              "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$"
+            },
+            "main_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "window": {
+              "$ref": "#/properties/window/oneOf/1"
+            }
           }
         }
       ]
@@ -207,38 +364,116 @@
     },
     "durable_audit_artifact": {
       "oneOf": [
-        { "type": "null" },
+        {
+          "type": "null"
+        },
         {
           "type": "object",
           "additionalProperties": false,
-          "required": ["branch", "path", "blob_sha"],
+          "required": [
+            "branch",
+            "path",
+            "blob_sha"
+          ],
           "properties": {
-            "branch": { "const": "run-logs" },
-            "path": { "const": "logs/latest-candidate-audit.json" },
-            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+            "branch": {
+              "const": "run-logs"
+            },
+            "path": {
+              "const": "logs/latest-candidate-audit.json"
+            },
+            "blob_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            }
           }
         }
       ]
     },
     "reader_artifact": {
       "oneOf": [
-        { "type": "null" },
+        {
+          "type": "null"
+        },
         {
           "type": "object",
           "additionalProperties": false,
-          "required": ["branch", "path", "blob_sha", "run_id", "main_sha", "window"],
+          "required": [
+            "branch",
+            "path",
+            "blob_sha",
+            "run_id",
+            "main_sha",
+            "window"
+          ],
           "properties": {
-            "branch": { "const": "run-logs" },
-            "path": { "const": "logs/latest-reader.md" },
-            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
-            "run_id": { "type": "string", "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$" },
-            "main_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
-            "window": { "$ref": "#/properties/window/oneOf/1" }
+            "branch": {
+              "const": "run-logs"
+            },
+            "path": {
+              "const": "logs/latest-reader.md"
+            },
+            "blob_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "run_id": {
+              "type": "string",
+              "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$"
+            },
+            "main_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "window": {
+              "$ref": "#/properties/window/oneOf/1"
+            }
+          }
+        }
+      ]
+    },
+    "gate_assertions_artifact": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "branch",
+            "path",
+            "blob_sha",
+            "run_id",
+            "main_sha",
+            "window"
+          ],
+          "properties": {
+            "branch": {
+              "const": "run-logs"
+            },
+            "path": {
+              "type": "string",
+              "pattern": "^logs/runs/gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}/gate-assertions\\.json$"
+            },
+            "blob_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "run_id": {
+              "type": "string",
+              "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$"
+            },
+            "main_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "window": {
+              "$ref": "#/properties/window/oneOf/1"
+            }
           }
         }
       ]
     }
   }
 }
-
-

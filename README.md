@@ -4,13 +4,9 @@
 
 ## 手機 ChatGPT 基礎排程
 
-若要在一般手機 ChatGPT 對話執行，不使用手機 Codex，請先選擇 `Instant` 並貼上 [mobile-chatgpt-start-prompt.md](mobile-chatgpt-start-prompt.md)。此低消耗版本不執行本機程式、地圖或圖表，但仍保存當輪海選、每筆六項大評分、當輪所有 C 級以上新聞的讀者版，以及可用時的十四天 continuity cache。十四天 merge 延後不會阻擋當日讀者版。mobile-native 依序嘗試文章直接媒體 URL、原生圖片搜尋／圖片卡與後續來源並保存結構化交付結果，不宣稱本機下載、縮圖或附件驗收；只有完整來源檢查後確實沒有合格圖片才可省略視覺區塊，已確認合格圖片但交付失敗時必須停在同一 run 的視覺恢復，不得完成 Reader，也不用圖片說明、圖片網址或原網站連結冒充附件。執行進度與最新讀者版會保存在 `run-logs` 分支；repository 不預占任何 future occurrence。單次或循環 Scheduled Task 都在實際觸發後才依 capability routing 建立該輪執行狀態，因此 04:00、06:00 或其他使用者設定時間都走相同流程。
+`INSTALL.md` 是唯一安裝入口。一般手機 ChatGPT／Scheduled Task 也先從 `INSTALL.md` 開始，由它在每次實際觸發時依 capability routing 選擇 `mobile-native` 或 `full-runtime`，再讀取對應權責文件；不得把 `mobile-chatgpt-daily-prompt.md`、圖片規則或其他執行細節複製成第二份 Scheduled Task prompt。`mobile-chatgpt-start-prompt.md` 只保留給舊書籤作相容導引。
 
-完整本機工作流仍使用下方的安裝方式與 `daily-schedule-prompt.md`；兩種模式互不覆蓋。
-
-完整 capsule 工作流的 canonical runtime 與來源擷取已使用跨平台 Python；full-runtime 不需要 PowerShell。宿主提供的 bundled-runtime Python 會先經 Pillow 實際匯入驗證，通過後才執行 checkpoint 與後續 pipeline；mobile-native 不冒充具備這條本機 runtime 路徑。
-
-目前評分契約為 `public_value_v2`：六項各以 0–100 表示，再按 30%／20%／15%／15%／10%／10% 加權。模型必須先列 fact 並區分 Actual／Potential，程式才接受分數；高分需要反向審查，本期增量 70 以上需要十四天 delta。證據信心與事件重要性分開，只有 `grade_status=validated` 可進 manifest 與讀者版。完整欄位、填寫順序與故障處理以 [INSTALL.md](INSTALL.md) 為準。
+mobile-native 仍必須完成 discovery、語意事件、Public Value V2 評分、驗證、逐則圖片 evidence 與 canonical reader；正式保存 Reader 前另以 `MANDATORY_GATE_EXECUTION_ASSERTION` 保存 run-scoped release coverage receipt。來源確實沒有合格圖片時才可依權責規則省略；已確認合格圖片但交付失敗時仍停在同一 run 的視覺恢復。執行進度與成功結果只回覆到建立該排程的原 ChatGPT 對話，不另開結果對話。
 
 ## 快速安裝
 
@@ -24,7 +20,7 @@
 2. 是否調整特別感興趣或降低權重的新聞主題。
 3. 單次或循環排程時間／時區由 Scheduled Task 自身決定；使用者指定 04:00、06:00 或其他時間都不需要修改 repository。未指定時才預設每日 06:00 並優先使用帳號／裝置時區。每次實際觸發後先 probe capability，再以該輪選定的 full-runtime 或 mobile-native 建立 occurrence。
 
-完成後，每次排程都會重新讀取 repo 最新規則，並以獨立結果對話輸出當日新聞。完整版每輪會以兩個帶新 nonce 的 GitHub API 端點交叉確認當下 `main` SHA；同一輪固定使用確認後的 SHA，下一輪再重新解析，不會把安裝時或前一輪的 commit 永久釘住：
+完成後，每次排程都會重新讀取 repo 最新規則，並把當輪進度、成功結果或最早不可恢復 blocker 回覆到建立該排程的原對話。完整版每輪會以兩個帶新 nonce 的 GitHub API 端點交叉確認當下 `main` SHA；同一輪固定使用確認後的 SHA，下一輪再重新解析，不會把安裝時或前一輪的 commit 永久釘住：
 
 - 排程及結果對話名稱固定為「每日新聞」。
 - 每份讀者版第一行固定為 `# 每日新聞讀者版`，下一個非空白行是 manifest 衍生的統計期間；其後依序使用 `## 今日總覽`、`## 逐條詳報`、`## 後續觀察`。總覽按板塊列事件，逐條詳報保留時間、來源、事件細節與分析欄位。
@@ -69,8 +65,8 @@ full-runtime 各 stage 共用 `schemas/news-event-manifest.schema.json`，欄位
 - `news-brief-examples.md`：正確與錯誤範例
 - `user-preferences.example.yaml`：使用者可覆寫的地區與主題偏好
 - `daily-schedule-prompt.md`：每日獨立排程的固定執行提示詞
-- `mobile-chatgpt-start-prompt.md`：手機一般 ChatGPT 建立低消耗排程的貼上指令
-- `mobile-chatgpt-daily-prompt.md`：手機排程每輪重新讀取的基礎新聞規則
+- `mobile-chatgpt-start-prompt.md`：舊手機入口的相容導引；重新導向唯一安裝入口 `INSTALL.md`
+- `mobile-chatgpt-daily-prompt.md`：由 `INSTALL.md` 導向的 mobile-native 詳細每日執行契約
 
 ## 本地驗證
 

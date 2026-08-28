@@ -12,9 +12,10 @@ from pathlib import Path
 from typing import Any
 
 import run_identity
+import mobile_gate_assertions
 
 
-SCHEMA_VERSION = "1.6.0"
+SCHEMA_VERSION = "1.7.0"
 EXECUTION_MODES = {"full-runtime", "mobile-native"}
 DELIVERY_PROFILES = {"full-assets", "reader-canonical-capability-degraded"}
 NATIVE_MEDIA_STATUSES = {"available", "unavailable"}
@@ -120,6 +121,7 @@ def validate_record(record: dict[str, Any]) -> None:
         "verification_artifact",
         "map_decisions_artifact",
         "image_evidence_artifact",
+        "gate_assertions_artifact",
         "durable_audit_status",
         "durable_audit_artifact",
     }
@@ -198,6 +200,7 @@ def validate_record(record: dict[str, Any]) -> None:
         ("map_decisions_artifact", "visuals-completed", "map decisions artifact"),
         ("image_evidence_artifact", "visuals-completed", "image evidence artifact"),
         ("reader_artifact", "reader-rendered", "reader artifact"),
+        ("gate_assertions_artifact", "github-result-saved", "gate assertions artifact"),
     )
     for field, first_stage, label in future_artifact_boundaries:
         if record["stage_index"] < STAGE_INDEX[first_stage] and record.get(field) is not None:
@@ -229,6 +232,12 @@ def validate_record(record: dict[str, Any]) -> None:
                 "reader_artifact",
                 "logs/latest-reader.md",
                 "reader artifact",
+            )
+            _require_run_artifact(
+                record,
+                "gate_assertions_artifact",
+                "gate-assertions.json",
+                "gate assertions artifact",
             )
     if record["status"] == "completed":
         if record.get("reader_artifact") is None or record.get("candidate_audit_artifact") is None:
@@ -398,6 +407,40 @@ def _validate_bound_image_evidence(
         raise ValueError("NATIVE_MEDIA_UNAVAILABLE requires an undelivered qualified image")
 
 
+def _artifact_identity(artifact: dict[str, Any]) -> str:
+    return f"{artifact['path']}@{artifact['blob_sha']}"
+
+
+def _validate_bound_gate_assertions(ledger_dir: Path | str, record: dict[str, Any]) -> None:
+    if record.get("execution_mode") != "mobile-native":
+        return
+    artifact = record.get("gate_assertions_artifact")
+    if not isinstance(artifact, dict):
+        return
+    path = _bound_artifact_path(Path(ledger_dir), artifact, "gate assertions")
+    if not path.is_file():
+        raise ValueError("bound gate assertions file is missing")
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ValueError("bound gate assertions are not readable JSON") from error
+    fields = (
+        "candidate_audit_artifact", "verification_artifact", "map_decisions_artifact",
+        "image_evidence_artifact", "reader_artifact",
+    )
+    artifacts = [record.get(field) for field in fields]
+    if any(not isinstance(item, dict) for item in artifacts):
+        raise ValueError("gate assertions require all publication evidence artifacts")
+    allowed = {_artifact_identity(item) for item in artifacts}
+    mobile_gate_assertions.validate_gate_assertions(
+        value,
+        record=record,
+        allowed_evidence_refs=allowed,
+        image_identity=_artifact_identity(record["image_evidence_artifact"]),
+        reader_identity=_artifact_identity(record["reader_artifact"]),
+    )
+
+
 def _validate_window(window: Any, label: str) -> None:
     if (
         not isinstance(window, dict)
@@ -477,6 +520,7 @@ def prepare_run(
         "verification_artifact": None,
         "map_decisions_artifact": None,
         "image_evidence_artifact": None,
+        "gate_assertions_artifact": None,
         "durable_audit_status": "not_started",
         "durable_audit_artifact": None,
     }
@@ -506,6 +550,7 @@ def advance_run(
     verification_artifact: dict[str, str] | None = None,
     map_decisions_artifact: dict[str, str] | None = None,
     image_evidence_artifact: dict[str, str] | None = None,
+    gate_assertions_artifact: dict[str, str] | None = None,
     durable_audit_status: str | None = None,
     durable_audit_artifact: dict[str, str] | None = None,
 ) -> dict[str, Any]:
@@ -593,6 +638,8 @@ def advance_run(
         current["map_decisions_artifact"] = map_decisions_artifact
     if image_evidence_artifact is not None:
         current["image_evidence_artifact"] = image_evidence_artifact
+    if gate_assertions_artifact is not None:
+        current["gate_assertions_artifact"] = gate_assertions_artifact
     if durable_audit_status is not None:
         current["durable_audit_status"] = durable_audit_status
     if durable_audit_artifact is not None:
@@ -607,6 +654,11 @@ def advance_run(
         )
     ):
         _validate_bound_image_evidence(ledger_dir, current)
+    if (
+        current.get("gate_assertions_artifact") is not None
+        and current["stage_index"] >= STAGE_INDEX["github-result-saved"]
+    ):
+        _validate_bound_gate_assertions(ledger_dir, current)
     _atomic_write(current_path, current)
     return current
 
@@ -646,6 +698,7 @@ def build_parser() -> argparse.ArgumentParser:
     advance.add_argument("--verification-artifact", type=Path)
     advance.add_argument("--map-decisions-artifact", type=Path)
     advance.add_argument("--image-evidence-artifact", type=Path)
+    advance.add_argument("--gate-assertions-artifact", type=Path)
     advance.add_argument("--durable-audit-status", choices=sorted(DURABLE_AUDIT_STATUSES))
     advance.add_argument("--durable-audit-artifact", type=Path)
 
@@ -716,6 +769,10 @@ def main() -> int:
                 _read_artifact_reference(args.image_evidence_artifact)
                 if args.image_evidence_artifact else None
             ),
+            gate_assertions_artifact=(
+                _read_artifact_reference(args.gate_assertions_artifact)
+                if args.gate_assertions_artifact else None
+            ),
             durable_audit_status=args.durable_audit_status,
             durable_audit_artifact=(
                 _read_artifact_reference(args.durable_audit_artifact)
@@ -733,6 +790,11 @@ def main() -> int:
             )
         ):
             _validate_bound_image_evidence(args.input.parent, result)
+        if (
+            result.get("gate_assertions_artifact") is not None
+            and result["stage_index"] >= STAGE_INDEX["github-result-saved"]
+        ):
+            _validate_bound_gate_assertions(args.input.parent, result)
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 0
 

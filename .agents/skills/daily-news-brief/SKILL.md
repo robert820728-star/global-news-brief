@@ -9,7 +9,7 @@ description: Orchestrate the complete daily news brief with verified runtime-cap
 
 ## Execution-mode boundary
 
-下列 Stage -1、checkpoint、manifest、stage patch、Python validator 與 canonical publisher CLI 只適用 full-runtime。mobile-native 必須依 `mobile-chatgpt-daily-prompt.md` 的同一新聞、評分、驗證與 Reader 契約執行，不得冒充使用 full-runtime 工具；它只能同階段更新或前進至緊鄰下一 stage，並在進入 `selection-verified`／`visuals-completed`／`reader-rendered`／`github-result-saved` 前依序綁定 candidate audit／verification／map+image／Reader。不得建立 mobile checkpoint 或 manifest。
+下列 Stage -1、checkpoint、manifest、stage patch、Python validator 與 canonical publisher CLI 只適用 full-runtime。mobile-native 必須依 `mobile-chatgpt-daily-prompt.md` 的同一新聞、評分、驗證與 Reader 契約執行，不得冒充使用 full-runtime 工具；它只能同階段更新或前進至緊鄰下一 stage，並在進入 `selection-verified`／`visuals-completed`／`reader-rendered`／`github-result-saved` 前依序綁定 candidate audit／verification／map+image／Reader+gate assertions。正式保存 Reader 前須通過 `MANDATORY_GATE_EXECUTION_ASSERTION`；不得以模型自我宣告替代本輪 artifact evidence。不得建立 mobile checkpoint 或 manifest。
 
 ## Stage -1：可執行工作區
 

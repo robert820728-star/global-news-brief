@@ -1,5 +1,13 @@
 # Version Record / 版本紀錄
 
+## v0.6.0-rc.22 — Mandatory mobile release gate assertion / Mobile 必要 Release Gate 執行證明
+
+- Reason / 建立原因：Scheduled Task 的 launcher 刻意只 fresh-resolve 最新 `INSTALL.md`，避免把圖片、驗證或評分規則複製成第二份 prompt；但 mobile-native 仍可能因模型漏讀、錯誤摘要或把「窮盡後可省略」曲解成「optional」而在文字上自稱完成。既有 image-evidence validator 已能檢查逐則圖片與 fallback 守恆，缺少的是跨權責 contract 的 release coverage 證明。
+- Approach / 作法：新增 `gate-assertions.json`、`schemas/mobile-gate-assertions.schema.json` 與 `scripts/mobile_gate_assertions.py`，由既有 `manage_mobile_run_log.py` 在 `github-result-saved` 發布邊界強制驗證。receipt 綁定同一 run/main/window、權責文件 blob、以及本輪 candidate audit／verification／map／image／Reader blobs；圖片 contracts 必須引用本輪 image evidence，Reader 結構 contracts 必須引用本輪 Reader。把 gate 放在 publish boundary 而不是 render 前，是為了避免 Reader 尚未存在時要求證明 Reader 結構的循環依賴。
+- Non-goals / 不修改：不把圖片或其他執行規則複製進 Scheduled Task prompt，不新增第二套新聞行為權威，不改 discovery routes、Public Value V2、C 級門檻、圖片四層 fallback、`NATIVE_MEDIA_UNAVAILABLE` 視覺恢復語義或 full-runtime completion state machine。`CONVERSATION_READER_BYTE_IDENTITY_GATE` 仍留在真正對話 delivery 邊界，不用 pre-handoff receipt 假裝已有客戶端回執。
+- Validation / 驗證：registry／schema／runtime constants 必須完全一致；ledger regressions 拒絕缺 receipt、blocked／缺項／重複／未知 contract、非本輪 artifact evidence、圖片 assertion 未綁 image evidence、Reader assertion 未綁 Reader。active-surface residue tests 禁止退役圖片 gate、舊直接 mobile 規則入口與「獨立結果對話」。bootstrap required paths 與 deterministic capsule 同步包含新 schema/helper；focused tests、完整 repository suite、capsule verification、feature final audit 與 main CI 均為 release gate。
+- Result / 結果：Source candidate until focused/full regression, capsule verification, final repository-wide conflict/residue audit and remote main CI all pass.
+
 ## v0.6.0-rc.21 — Direct article image delivery route / 文章原圖直接交付路徑
 
 - Reason / 建立原因：A real mobile run confirmed current-event images and exposed direct article JPEG URLs, but treated a missing native image-search/card reference as image unavailability. The image hard gate then correctly blocked the Reader for the wrong reason: the valid article-media path had never been attempted. / 真實 mobile run 已確認當期圖片存在且文章暴露直接 JPEG URL，卻把原生圖片搜尋／圖片卡沒有 image ref 誤判成圖片不可取得；圖片 hard gate 因而基於錯誤前提阻擋 Reader，實際上合法文章原圖路徑從未被嘗試。

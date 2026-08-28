@@ -290,6 +290,16 @@ class NoObsoleteContractsTests(unittest.TestCase):
         self.assertFalse(any(name.casefold().startswith("legacy") for name in defs))
         self.assertTrue(coverage["additionalProperties"] is False)
 
+    def test_active_execution_contracts_have_no_retired_mobile_image_gate(self):
+        paths = [
+            ROOT / "INSTALL.md", ROOT / "README.md", ROOT / "mobile-chatgpt-start-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md", ROOT / "daily-schedule-prompt.md", ROOT / "news-brief-settings.md",
+        ]
+        paths.extend((ROOT / ".agents" / "skills").rglob("*.md"))
+        retired = "MOBILE_" + "B_OR_HIGHER_VISIBLE_IMAGE_GATE"
+        hits = [str(path.relative_to(ROOT)) for path in paths if retired in path.read_text(encoding="utf-8")]
+        self.assertEqual([], hits)
+
     def test_active_execution_contracts_have_no_retired_relevance_or_recovery_prose(self):
         select_skill = (
             ROOT / ".agents" / "skills" / "select-news-events" / "SKILL.md"

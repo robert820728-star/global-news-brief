@@ -98,6 +98,7 @@ class MobileRunLogTests(unittest.TestCase):
     def mobile_artifacts(self):
         self.write_candidate_audit(["GLB-01"])
         self.write_image_evidence(self.delivered_image_event())
+        self.write_gate_assertions()
         return {
             "candidate-audit": {
                 "candidate_audit_artifact": artifact_reference(
@@ -120,9 +121,54 @@ class MobileRunLogTests(unittest.TestCase):
             "github-result-saved": {
                 "reader_artifact": artifact_reference(
                     "logs/latest-reader.md", "b" * 40
-                )
+                ),
+                "gate_assertions_artifact": artifact_reference(
+                    f"logs/runs/{RUN_1}/gate-assertions.json", "c" * 40
+                ),
             },
         }
+
+    def write_gate_assertions(self, *, blocked=None, omit=None, image_ref=None, reader_ref=None):
+        path = self.ledger_dir / "logs" / "runs" / RUN_1 / "gate-assertions.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        authorities = {
+            "INSTALL.md": "1" * 40,
+            "mobile-chatgpt-daily-prompt.md": "2" * 40,
+            ".agents/skills/daily-news-brief/SKILL.md": "3" * 40,
+            "schemas/mobile-run-log.schema.json": "4" * 40,
+        }
+        audit_ref = f"logs/runs/{RUN_1}/candidate-audit.json@{'a' * 40}"
+        image_ref = image_ref or f"logs/runs/{RUN_1}/image-evidence.json@{'d' * 40}"
+        reader_ref = reader_ref or f"logs/latest-reader.md@{'b' * 40}"
+        assertions = []
+        for contract_id in self.module.mobile_gate_assertions.REQUIRED_MOBILE_CONTRACT_IDS:
+            if contract_id == omit:
+                continue
+            refs = [audit_ref]
+            if contract_id in self.module.mobile_gate_assertions.IMAGE_CONTRACT_IDS:
+                refs = [image_ref]
+            elif contract_id in self.module.mobile_gate_assertions.READER_CONTRACT_IDS:
+                refs = [reader_ref]
+            assertions.append({
+                "contract_id": contract_id,
+                "status": "blocked" if contract_id == blocked else "passed",
+                "authority_path": "mobile-chatgpt-daily-prompt.md",
+                "authority_blob_sha": authorities["mobile-chatgpt-daily-prompt.md"],
+                "evidence_refs": refs,
+                "checked_at": "2026-08-17T22:35:00Z",
+            })
+        path.write_text(json.dumps({
+            "schema_version": "1.0.0",
+            "execution_mode": "mobile-native",
+            "run_id": RUN_1,
+            "main_sha": MAIN_SHA,
+            "window": RUN_WINDOW,
+            "authority_snapshot": [
+                {"path": key, "blob_sha": value} for key, value in authorities.items()
+            ],
+            "assertions": assertions,
+        }), encoding="utf-8")
+        return path
 
     def write_candidate_audit(self, selected_event_ids):
         path = (
@@ -239,6 +285,7 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertIsNone(current["verification_artifact"])
         self.assertIsNone(current["map_decisions_artifact"])
         self.assertIsNone(current["image_evidence_artifact"])
+        self.assertIsNone(current["gate_assertions_artifact"])
         self.assertEqual(current["durable_audit_status"], "not_started")
         self.assertIsNone(current["durable_audit_artifact"])
         self.assertEqual(current["delivery_status"], "not_ready")
@@ -360,6 +407,63 @@ class MobileRunLogTests(unittest.TestCase):
                 stage="reader-rendered",
                 updated_at="2026-08-17T22:40:00Z",
                 **artifacts["reader-rendered"],
+            )
+
+    def test_mobile_native_requires_gate_assertions_before_github_result_saved(self):
+        self.module.prepare_run(
+            self.ledger_dir, run_id=RUN_1, scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z", execution_mode="mobile-native"
+        )
+        artifacts = self.mobile_artifacts()
+        self.advance_to("reader-rendered", stage_kwargs=artifacts)
+        kwargs = dict(artifacts["github-result-saved"])
+        kwargs.pop("gate_assertions_artifact")
+        with self.assertRaisesRegex(ValueError, "gate assertions artifact"):
+            self.module.advance_run(
+                self.ledger_dir, run_id=RUN_1, stage="github-result-saved",
+                updated_at="2026-08-17T22:40:00Z", **kwargs
+            )
+
+    def test_mobile_native_rejects_blocked_contract_assertion(self):
+        self.module.prepare_run(
+            self.ledger_dir, run_id=RUN_1, scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z", execution_mode="mobile-native"
+        )
+        artifacts = self.mobile_artifacts()
+        self.write_gate_assertions(blocked="DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE")
+        self.advance_to("reader-rendered", stage_kwargs=artifacts)
+        with self.assertRaisesRegex(ValueError, "blocked mandatory contract"):
+            self.module.advance_run(
+                self.ledger_dir, run_id=RUN_1, stage="github-result-saved",
+                updated_at="2026-08-17T22:40:00Z", **artifacts["github-result-saved"]
+            )
+
+    def test_mobile_native_rejects_missing_contract_assertion(self):
+        self.module.prepare_run(
+            self.ledger_dir, run_id=RUN_1, scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z", execution_mode="mobile-native"
+        )
+        artifacts = self.mobile_artifacts()
+        self.write_gate_assertions(omit="IMAGE_FALLBACK_EXHAUSTION_GATE")
+        self.advance_to("reader-rendered", stage_kwargs=artifacts)
+        with self.assertRaisesRegex(ValueError, "mandatory contract assertions are incomplete"):
+            self.module.advance_run(
+                self.ledger_dir, run_id=RUN_1, stage="github-result-saved",
+                updated_at="2026-08-17T22:40:00Z", **artifacts["github-result-saved"]
+            )
+
+    def test_mobile_native_rejects_image_contract_not_bound_to_current_image_evidence(self):
+        self.module.prepare_run(
+            self.ledger_dir, run_id=RUN_1, scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z", execution_mode="mobile-native"
+        )
+        artifacts = self.mobile_artifacts()
+        self.write_gate_assertions(image_ref=f"logs/latest-reader.md@{'b' * 40}")
+        self.advance_to("reader-rendered", stage_kwargs=artifacts)
+        with self.assertRaisesRegex(ValueError, "image contract assertion"):
+            self.module.advance_run(
+                self.ledger_dir, run_id=RUN_1, stage="github-result-saved",
+                updated_at="2026-08-17T22:40:00Z", **artifacts["github-result-saved"]
             )
 
     def test_mobile_native_requires_reader_before_github_result_saved(self):
@@ -715,9 +819,6 @@ class MobileRunLogTests(unittest.TestCase):
             "map_decisions_artifact": maps,
             "image_evidence_artifact": self.mobile_artifacts()["reader-rendered"][
                 "image_evidence_artifact"
-            ],
-            "gate_assertions_artifact": self.mobile_artifacts()["reader-rendered"][
-                "gate_assertions_artifact"
             ],
         }
         self.advance_to("reader-rendered", stage_kwargs=artifacts)

@@ -39,6 +39,61 @@
 - `DOMAIN_EXPERTISE_MATCH`: an assessment only strengthens verification when its author or institution has relevant expertise and a transparent method. General reporting may establish that a claim circulated, but cannot replace technical, scientific, legal, statistical, medical, military, or other domain evidence.
 - `TIMELINESS_WITH_SOURCE_LIMIT_NOTE`: the absence of an official record does not by itself prohibit publication of a timely event. Reliable on-scene reporting, attributable imagery, or multiple genuinely independent observations may support publication, but the reader must be told which official statistics or primary records are still unavailable; disputed numbers, attribution, and technical conclusions remain provisional and receive lower verification confidence until updated.
 
+## Mandatory mobile release contract coverage
+
+`MANDATORY_GATE_EXECUTION_ASSERTION`
+
+mobile-native 在把本輪 Reader 保存為正式 GitHub 結果（`github-result-saved`）前，必須建立並持久化 `logs/runs/<run_id>/gate-assertions.json`，再把其 Git blob 綁定到 `logs/current.json.gate_assertions_artifact`。這份 artifact 只證明本輪對 release-critical contracts 已逐項判定並有現行 artifact 證據，**不是第二份新聞規則**；實際行為仍只以 `INSTALL.md` 的權責順序與各 contract 所在權責文件為準。
+
+`MOBILE_MANDATORY_GATE_REGISTRY`：本輪 release coverage 固定包含下列 contract IDs；`schemas/mobile-gate-assertions.schema.json`、`scripts/mobile_gate_assertions.py` 與 `scripts/manage_mobile_run_log.py` 必須與此清單完全一致。缺項、重複、未知 ID、無現行 evidence 或任何 `blocked` 都不得保存正式 Reader，也不得進入完成狀態：
+
+- `RUN_INPUT_NORMALIZATION_GATE`
+- `DISCOVERY_THEN_VERIFY`
+- `GDELT_RESILIENT_ACQUISITION`
+- `FULL_DISCOVERY_POOL_UNCAPPED`
+- `REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE`
+- `MOBILE_STRUCTURAL_ADMISSION_EQUIVALENT`
+- `GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE`
+- `PIPELINE_COUNT_RECEIPT`
+- `COUNT_RECEIPT_REPAIR_ONCE`
+- `SEMANTIC_EVENT_LEDGER_GATE`
+- `EVENT_REGION_AND_TIME_IDENTITY_GATE`
+- `POLICY_GOVERNANCE_EVIDENCE_GATE`
+- `PUBLIC_VALUE_V2_NORMALIZED_WEIGHTED_SCORING`
+- `CATEGORY_APPROPRIATE_EVIDENCE_ROUTE`
+- `TECH_SCIENCE_EVIDENCE_ROUTE`
+- `CONFLICT_MULTI_SIDE_EVIDENCE_ROUTE`
+- `DISASTER_OFFICIAL_STATISTICS_ROUTE`
+- `OFFICIAL_SOURCE_BIAS_GUARD`
+- `MEDIA_TRANSCRIPTION_IS_NOT_VERIFICATION`
+- `DOMAIN_EXPERTISE_MATCH`
+- `TIMELINESS_WITH_SOURCE_LIMIT_NOTE`
+- `SAME_SOURCE_RECOVERY_ORDER`
+- `RUN_ARTIFACT_IDENTITY_GATE`
+- `FOURTEEN_DAY_AUDIT_MERGE_UNAVAILABLE`
+- `CURRENT_SCHEMA_ONLY_DURABLE_AUDIT`
+- `MOBILE_COMPACT_HISTORY_SCHEMA_RULE`
+- `MOBILE_NATIVE_IMAGE_EVIDENCE_ROUTE`
+- `MOBILE_PER_STORY_VISIBLE_IMAGE_GATE`
+- `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`
+- `IMAGE_FALLBACK_EXHAUSTION_GATE`
+- `IMAGE_READER_VISIBLE_DELIVERY_GATE`
+- `NATIVE_MEDIA_BLOCK_DELIVERY_GATE`
+- `NATIVE_MEDIA_CAPABILITY_FALLBACK`
+- `QUALIFIED_IMAGE_DELIVERY_INDEPENDENT_OF_CLAIM_CRITICAL`
+- `VISUAL_DELIVERY_ONLY_RECOVERY`
+- `READER_TEMPLATE_STRUCTURE_GATE`
+- `CANONICAL_TODAY_OVERVIEW_NO_OMISSION_GATE`
+- `CANONICAL_THREE_PART_READER_LAYOUT_GATE`
+- `MOBILE_READER_STRUCTURE_EQUIVALENT`
+- `READER_INTERNAL_REPAIR_LOG_EXCLUSION_GATE`
+
+每筆 assertion 必須保存 `contract_id`、`status`、`authority_path`、`authority_blob_sha`、`evidence_refs` 與 `checked_at`。只有規則本身具有條件適用性且本輪確實不適用時才可用 `not_applicable`，並必填 `applicability_rationale`；「沒有工具」、「看起來不需要」、「已閱讀」或單純 `passed=true` 都不算證據。`authority_snapshot` 至少綁定本輪固定 `main_sha` 下的 `INSTALL.md`、`mobile-chatgpt-daily-prompt.md`、`.agents/skills/daily-news-brief/SKILL.md` 與 `schemas/mobile-run-log.schema.json` Git blob SHA。
+
+`evidence_refs` 只能引用本輪已綁定的 candidate audit、verification、map decisions、image evidence 或 Reader Git blob identity。所有圖片 contracts 都必須直接引用同一 run 的 `image-evidence.json@<blob_sha>`；因此「來源確實沒有合格圖片才可省略」不得被重新解讀成「圖片為 optional」。Reader 結構 contracts 必須直接引用本輪 `logs/latest-reader.md@<blob_sha>`。若 selected event 缺逐則 image evidence、四層搜尋尚未依規則窮盡、找到合格圖片卻未完成可見交付、Reader 結構未通過，或 evidence 與本輪 identity 不一致，release receipt 都不得通過。
+
+`CONVERSATION_READER_BYTE_IDENTITY_GATE` 屬於正式 Reader 已保存後的最後對話交付邊界，不能在 `github-result-saved` 前假裝已有客戶端回執，因此不納入此 pre-handoff receipt；它仍由下方既有 delivery contract 約束，且沒有外部回執時不得宣稱 `client_confirmed`。
+
 ## Same-source recovery order
 
 `SAME_SOURCE_RECOVERY_ORDER`
@@ -55,7 +110,7 @@ The required order for every configured discovery route is: `canonical route -> 
 
 ## 遠端執行紀錄（搜尋前先做）
 
-可恢復的 durable mobile-native Scheduled Task 必須使用已連接且具此 repository `run-logs` 寫入權限的 GitHub app，將紀錄寫在同一 repository 的 `run-logs` 分支。若沒有寫入權限，這個 durable profile 必須在 discovery 前明確 fail closed；可另做一次性 reader，但不得冒充具備本契約的 durable resume／continuity。正常只維護 `logs/current.json`、`logs/previous.json`、`logs/latest-candidate-audit.json` 與 `logs/latest-reader.md`，不得寫入 `main`，也不得逐新聞或逐工具呼叫建立紀錄。
+可恢復的 durable mobile-native Scheduled Task 必須使用已連接且具此 repository `run-logs` 寫入權限的 GitHub app，將紀錄寫在同一 repository 的 `run-logs` 分支。若沒有寫入權限，這個 durable profile 必須在 discovery 前明確 fail closed；可另做一次性 reader，但不得冒充具備本契約的 durable resume／continuity。正常只維護 `logs/current.json`、`logs/previous.json`、`logs/latest-candidate-audit.json`、`logs/latest-reader.md`，以及本輪 `logs/runs/<run_id>/` 下由 stage 契約明確要求的 candidate audit、verification、map decisions、image evidence 與 gate assertions；不得寫入 `main`，也不得逐新聞或逐工具呼叫另造紀錄。
 
 1. 排程外層為取得最新版規則而進行的 `external latest-main resolution`、capability routing 與 pinned prompt read 不計入本段順序；它們不得讀取新聞或舊成果。只有 capability routing 已選定 `mobile-native` 後，`first runtime GitHub action` 才讀取 `run-logs/logs/current.json`。同一 Scheduled Task 真正觸發的 `scheduled_for` 是唯一 occurrence key：若該 key 已存在就沿用其 `run_id`、固定 `window` 與最後階段，從 first incomplete stage 接續；若不存在才在此刻建立 `schedule-prepared / awaiting_executor / execution_mode=mobile-native` 的 current record。repository 不得在 task 觸發前預建 future occurrence。第一次更新至 `executor-started`、`status=running` 時，以當下實際執行時刻固定 `window.end`、倒推精確 24 小時得到 `window.start`，並保存該 task 的時區；其後 resume 必須讀回相同 window，不得按恢復時刻重算。
    - `run_id` 固定為 `gnb-YYYYMMDDThhmmssZ-xxxxxxxx`：UTC 精確到秒，加 8 碼小寫十六進位隨機值。格式不符、與 run-scoped candidate audit／讀者版不一致或沿用前輪編號時立即失敗。
@@ -132,7 +187,7 @@ The required order for every configured discovery route is: `canonical route -> 
    - 若沒有小尺寸版本且本輪無法實際轉檔，但原始圖片是可公開讀取且不會短期失效的 HTTPS 網址，允許改放同一張原圖；「有圖可看」優先於檔案大小，不得因此中止整份新聞。
    - 圖片只以對話中可直接觀看的內嵌圖片或圖片卡呈現，並附描述畫面的替代文字；不得用圖片網址或圖片來源頁連結代替圖片。新聞事實的來源連結仍照常保留。標題、摘要與來源不得依賴圖片才能理解。
    - 不使用需要登入、限制外站引用、防盜連、含短效簽名或到期 token 的圖片網址，也不使用 `data:` 或 `blob:` 網址。
-   - `MOBILE_PER_STORY_VISIBLE_IMAGE_GATE`（取代整份層級的 `MOBILE_B_OR_HIGHER_VISIBLE_IMAGE_GATE`）：每一則本輪入選新聞都必須逐則執行圖片搜尋與顯示驗收，一則新聞的圖片不得替其他新聞通過。逐則先檢查已引用來源頁的內文圖片、`og:image`／`srcset`、縮圖欄位與官方圖資；仍無結果時，依序檢查官方機關／當事組織、原始通訊社及其他可靠媒體的同事件報導，可檢查多個來源，不限一個，也不要求必須是完全相同像素。每張候選圖都必須保存實際圖片來源頁並核對事件與日期；不得用無法追溯的搬運站、搜尋縮圖、無關示意圖、人物舊照或來源標誌湊數。找到可用圖片卻無法顯示時，只重做該則圖片取得／交付，不重跑 discovery、評分、驗證或 reader 文字。
+   - `MOBILE_PER_STORY_VISIBLE_IMAGE_GATE`：每一則本輪入選新聞都必須逐則執行圖片搜尋與顯示驗收，一則新聞的圖片不得替其他新聞通過。逐則先檢查已引用來源頁的內文圖片、`og:image`／`srcset`、縮圖欄位與官方圖資；仍無結果時，依序檢查官方機關／當事組織、原始通訊社及其他可靠媒體的同事件報導，可檢查多個來源，不限一個，也不要求必須是完全相同像素。每張候選圖都必須保存實際圖片來源頁並核對事件與日期；不得用無法追溯的搬運站、搜尋縮圖、無關示意圖、人物舊照或來源標誌湊數。找到可用圖片卻無法顯示時，只重做該則圖片取得／交付，不重跑 discovery、評分、驗證或 reader 文字。
    - `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`：原生圖片搜尋／圖片卡不是唯一取得路徑。逐則檢查原引用文章的 `img`、`srcset`、`og:image` 或等價媒體欄位；若找到與當期事件相符的直接 JPEG／WebP URL，實際以宿主可用媒體路徑開啟／取得並嘗試可見交付。搜尋卡沒有 image ref 不等於圖片不可取得；外部 URL、Markdown 圖片字串或純文字連結本身不算可見交付。
    - `IMAGE_FALLBACK_EXHAUSTION_GATE`：每則事件在宣告 `NATIVE_MEDIA_UNAVAILABLE`、source exhaustion 或任何圖片 blocker 前，依序實際搜尋原引用來源、官方機關／當事組織、原始通訊社及其他可靠媒體的同事件合法刊載／轉載圖片。圖片證據來源與文字驗證來源可以不同，也可不是原文同一張，但必須可信、合法公開刊載、可追溯，且事件、日期、人物／地點一致。每則 image evidence 保存 `original_source_attempted`、`direct_media_url_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`；`delivery_unavailable` 或 source exhaustion 的 `direct_media_url_attempted` 必須為 `true`，任一來源層未實際搜尋時不得停止圖片 stage。直接文章原圖已成功可見交付時，不必再做無增量的後續來源搜尋。
    - 同一張原圖不適合公開內嵌或完全沒有可確認圖片時，不換無關圖、不留下破圖、不輸出圖片網址，也不以文字描述畫面冒充附件；reader 直接省略整個圖片區塊，原因只保存於本輪 image evidence。

@@ -62,7 +62,7 @@ python3 scripts/recover_news_run.py record \
 
 `MANDATORY_GATE_EXECUTION_ASSERTION` 是 mobile-native render 前的 mandatory coverage boundary；若 receipt 本身缺失或證據不足，只恢復缺失的 gate evidence，不得另造新聞流程。
 
-mobile-native 只可留在目前 stage 或前進至緊鄰的下一 stage，不得 stage regression 或跳級。進入各邊界前讀回並核對現有 Git blob binding：`selection-verified` 需要 candidate audit、`visuals-completed` 需要 verification、`reader-rendered` 需要 map decisions 與 image evidence、`github-result-saved` 需要 Reader。
+mobile-native 只可留在目前 stage 或前進至緊鄰的下一 stage，不得 stage regression 或跳級。進入各邊界前讀回並核對現有 Git blob binding：`selection-verified` 需要 candidate audit、`visuals-completed` 需要 verification、`reader-rendered` 需要 map decisions 與 image evidence、`github-result-saved` 需要 Reader 與 gate assertions。gate assertions 缺失、blocked 或 evidence binding 失敗時只恢復真正缺少的 release evidence，不得重跑已完成 discovery、評分或驗證。
 
 若核心主張在事件級驗證恢復後仍為 `insufficient`，保持 `current_stage=selection-verified` 且不得前進 visuals。更新同一 run 的 `candidate-audit.json`，將受影響候選重評或以 `unreliable_or_unverified` 排除，更新 `candidate_audit_artifact` 的 Git blob SHA，然後重新 verification；只有成功保存新的 `verification.json` 才可繼續。不得建立 mobile checkpoint 或 manifest，不得重跑 discovery、preprocess 或 semantic selection，也不得建立替代 run。
 
@@ -76,7 +76,7 @@ mobile-native 只可留在目前 stage 或前進至緊鄰的下一 stage，不�
 
 ## 5. 發布前條件
 
-full-runtime 只有所有 required stages 都為 `completed`、candidate audit 與 manifest selected ids 一一對應、讀者版與 manifest 一致、所有宣稱 ready 或 `claim_critical=true` 的附件存在且視覺驗證通過、沒有 unresolved recovery target 時，才可交給 `scripts/publish_news_brief.py`。mobile-native 則要求 run-scoped audit 的 selected ids 與 Reader 守恆、上述 artifact boundaries 已綁定、沒有 unresolved recovery target，才可進 `delivery-handoff`。來源確實沒有合格圖片時的非關鍵 omitted 視覺不是 recovery target；已確認圖片的交付失敗則是 recovery target，不論 `claim_critical`。恢復工具本身永遠不直接對使用者輸出草稿或 release。
+full-runtime 只有所有 required stages 都為 `completed`、candidate audit 與 manifest selected ids 一一對應、讀者版與 manifest 一致、所有宣稱 ready 或 `claim_critical=true` 的附件存在且視覺驗證通過、沒有 unresolved recovery target 時，才可交給 `scripts/publish_news_brief.py`。mobile-native 則要求 run-scoped audit 的 selected ids 與 Reader 守恆、上述 artifact boundaries（含已驗證 `gate_assertions_artifact`）已綁定、沒有 unresolved recovery target，才可進 `delivery-handoff`。來源確實沒有合格圖片時的非關鍵 omitted 視覺不是 recovery target；已確認圖片的交付失敗則是 recovery target，不論 `claim_critical`。恢復工具本身永遠不直接對使用者輸出草稿或 release。
 
 
 ## Conditional pre-manifest recovery boundary

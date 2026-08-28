@@ -72,6 +72,7 @@
 - `schemas/news-source-candidate-list.schema.json`
 - `schemas/news-relevance-gate.schema.json`
 - `schemas/mobile-run-log.schema.json`
+- `schemas/mobile-gate-assertions.schema.json`
 
 ### 核心工具與地圖資產
 
@@ -112,7 +113,9 @@
 ### Mobile execution support
 
 - `scripts/manage_mobile_run_log.py`
+- `scripts/mobile_gate_assertions.py`
 - `schemas/mobile-run-log.schema.json`
+- `schemas/mobile-gate-assertions.schema.json`
 - `mobile-chatgpt-start-prompt.md`
 - `mobile-chatgpt-daily-prompt.md`
 
@@ -197,7 +200,7 @@ ChatGPT Scheduled Task 的 task prompt 只是一個 bootstrap launcher，不是�
 | 8 build-news-maps | 已驗證事件、map policy | full-runtime 保存 map decision、必要 overlay、canonical basemap 與 PNG／SVG；mobile-native 保存 `map-decisions.json` 並以 `map_decisions_artifact` 綁定本輪 Git blob | full-runtime 執行 `validate_map_decisions.py` 且只修失敗事件地圖；mobile-native 不執行本機 renderer，進入 `reader-rendered` 前讀回既有 map decisions |
 | 9 build-news-charts | 已驗證數據與 chart policy | full-runtime 只在比較、趨勢、比例、分布或查表有增量時建立 chart assets；mobile-native 保存可執行的判定，不宣稱產生本機 chart | 圖表不能替代地圖或來源圖片；full-runtime 只修失敗圖表，mobile-native 無本機資產時依既有 capability omission 繼續文字 reader |
 | 10 collect-news-images | 已驗證來源頁與官方產品頁 | 每則 source checks 與 `claim_critical`；full-runtime 另保存 download／screenshot attempts、`materialized-images.json`、MIME、尺寸、SHA-256 與 visual check；mobile-native 保存文章直接媒體 URL、原生圖片／圖片卡及後續來源嘗試與宿主結構化結果 | full-runtime 先下載原圖、失敗才截圖；mobile-native 不假裝具備本機物化能力；來源確實沒有合格圖片時可 omitted；已確認有合格圖片但未能顯示時不得完成視覺 stage 或正式 reader |
-| 11 final authority 與 render | collect stage 已 completed／依 profile 合法 omission | full-runtime 首次執行 `validate_news_brief.py manifest` 到 `OK`，由 manifest 渲染 reader 並執行 brief validator；mobile-native 由 run-scoped selected events 與已驗證事實渲染 reader，再執行既有 `MOBILE_READER_STRUCTURE_EQUIVALENT` | full-runtime 提前取得 `DEFERRED` 時繼續原 stage；mobile-native 不宣稱 script 或 manifest schema 已通過，結構錯誤只重做 render |
+| 11 final authority 與 render | collect stage 已 completed／依 profile 合法 omission | full-runtime 首次執行 `validate_news_brief.py manifest` 到 `OK`，由 manifest 渲染 reader 並執行 brief validator；mobile-native 由 run-scoped selected events 與已驗證事實渲染 reader，執行 `MOBILE_READER_STRUCTURE_EQUIVALENT`；正式保存 Reader 前建立並驗證 `gate-assertions.json`，`MANDATORY_GATE_EXECUTION_ASSERTION` 未通過不得進 `github-result-saved` | full-runtime 提前取得 `DEFERRED` 時繼續原 stage；mobile-native 不宣稱 script 或 manifest schema 已通過，結構錯誤只重做 render |
 | 12 publish 與 bundle | final checkpoint、manifest、audit、source pool、reader、map decisions、宣稱交付的附件 | 依下方實際 CLI 由 `publish_news_brief.py` 建立 release／receipt；再以 `manage_canonical_run_bundle.py pack` 建立 transport，與 `logs/current.json` 一次 atomic 發布後執行 `verify`／`restore` 核對 byte identity | full-runtime 由 canonical publisher fail-closed；mobile-native 依 mobile ledger schema 保存 reader/audit 與 delivery profile |
 | 13 conversation delivery | release receipt 或 mobile saved reader | 完整 reader bytes、附件／能力限制 receipt、`delivery-handoff` | 不能只交摘要或驗收報告；`client_confirmed` 只有外部明確回執才可使用 |
 
@@ -319,6 +322,17 @@ reader 不顯示 run id、commit、後台 counts、十四天 audit 或修復紀�
 - capability-degraded mobile recovery 必須保存逐則來源檢查與原生交付嘗試，`last_error=null`，並清楚表示未完成 pixel machine verification。`image_evidence_artifact` 的 Git blob SHA 只證明 evidence 已持久化，不證明內容已通過語義或像素機器驗證。
 - manifest 對 `map` 與 `images` 都必須保存 `claim_critical`。來源確實沒有合格圖片時，一般配圖可 `omitted` 並只保存後台原因；但只要已確認存在合格來源圖片，是否 `claim_critical` 都不能把交付失敗降級成正式完成。
 
+### Mandatory mobile release gate assertion
+
+`MANDATORY_GATE_EXECUTION_ASSERTION`：mobile-native 在 `github-result-saved` 前必須以本輪固定 `main_sha` 的權責文件與本輪 artifacts 建立 `logs/runs/<run_id>/gate-assertions.json`，並將其 Git blob 綁定至 `gate_assertions_artifact`。這是 release coverage receipt，不是第二份規則；contract 清單以 `mobile-chatgpt-daily-prompt.md` 的 `MOBILE_MANDATORY_GATE_REGISTRY` 為人類可讀權威，schema 與 runtime validator 必須與該清單完全一致。
+
+- receipt 必須綁定同一 `run_id`、`main_sha`、精確 24 小時 `window` 與權責文件 Git blob SHA；不得引用前一輪或快取 authority snapshot。
+- 每個 registry contract 都必須逐項 `passed`，或只在規則本身具條件適用性且本輪有證據不適用時寫 `not_applicable`；缺項、重複、未知、無現行 artifact evidence 或 `blocked` 一律不得保存正式 Reader。
+- 圖片 contracts 的 `evidence_refs` 必須直接綁定本輪 `image-evidence.json@<blob_sha>`，Reader 結構 contracts 必須直接綁定本輪 `logs/latest-reader.md@<blob_sha>`。模型只說「已讀取／已遵守」不是 evidence。
+- `NATIVE_MEDIA_UNAVAILABLE` 仍依既有規則停在 `running + visuals-completed`；這種尚未能進 Reader 發布的 run 不要求偽造 release receipt。視覺恢復後才建立／更新 receipt。
+- `CONVERSATION_READER_BYTE_IDENTITY_GATE` 保留在真正對話交付邊界，不因 pre-handoff receipt 而提前宣稱已完成。
+- full-runtime 不使用 mobile gate receipt；其 completion 仍由 bootstrap receipt、checkpoint、manifest、stage validators、publisher 與 release receipt 驗證。
+
 ## 七、局部恢復指令
 
 ### full-runtime：Manifest 前
@@ -361,6 +375,7 @@ mobile-native 沒有 checkpoint 或 manifest。查證不足時依 `VERIFICATION_
 - 所有 C 級以上事件都在 canonical reader，且第一行為 `# 每日新聞讀者版`。
 - reader 依序只有 `## 今日總覽`、`## 逐條詳報`、`## 後續觀察`，事件 ID 與必填欄位完整，沒有日期前綴、手填數量摘要或後台修復文字。
 - map decision、chart decision 與每則 image check 均已執行；full-runtime 下載失敗有截圖備援證據，mobile-native 有文章直接媒體 URL、原生圖片／圖片卡及後續來源嘗試結果。
+- mobile-native 在正式保存 Reader 前已保存並綁定 `gate-assertions.json`；registry 無缺項、重複、未知、blocked 或非本輪 evidence，圖片 assertions 綁定本輪 image-evidence blob，Reader assertions 綁定本輪 Reader blob。
 - 各執行模式已實際嘗試自身可用的附件／原生圖片交付；不能未嘗試就宣告 `NATIVE_MEDIA_UNAVAILABLE`，mobile-native 也不得捏造本地流程。
 - full-runtime 的宣稱附件實際存在且像素驗證通過；mobile-native 的 capability degradation 記在 delivery profile、不是 `last_error`，但只要包含 `NATIVE_MEDIA_UNAVAILABLE` 就必須停在同一 run 的視覺恢復，不可 `status=completed`。
 - 最終訊息包含完整 saved reader，不是摘要或只說 GitHub 已保存。

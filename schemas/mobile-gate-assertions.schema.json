@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/robert820728-star/global-news-brief/schemas/mobile-gate-assertions.schema.json",
+  "title": "Mobile mandatory release contract assertions",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "execution_mode",
+    "run_id",
+    "main_sha",
+    "window",
+    "authority_snapshot",
+    "assertions"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "execution_mode": {
+      "const": "mobile-native"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$"
+    },
+    "main_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end",
+        "timezone"
+      ],
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "timezone": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "authority_snapshot": {
+      "type": "array",
+      "minItems": 4,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "blob_sha"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "blob_sha": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          }
+        }
+      }
+    },
+    "assertions": {
+      "type": "array",
+      "minItems": 40,
+      "maxItems": 40,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "contract_id",
+          "status",
+          "authority_path",
+          "authority_blob_sha",
+          "evidence_refs",
+          "checked_at"
+        ],
+        "properties": {
+          "contract_id": {
+            "enum": [
+              "RUN_INPUT_NORMALIZATION_GATE",
+              "DISCOVERY_THEN_VERIFY",
+              "GDELT_RESILIENT_ACQUISITION",
+              "FULL_DISCOVERY_POOL_UNCAPPED",
+              "REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE",
+              "MOBILE_STRUCTURAL_ADMISSION_EQUIVALENT",
+              "GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE",
+              "PIPELINE_COUNT_RECEIPT",
+              "COUNT_RECEIPT_REPAIR_ONCE",
+              "SEMANTIC_EVENT_LEDGER_GATE",
+              "EVENT_REGION_AND_TIME_IDENTITY_GATE",
+              "POLICY_GOVERNANCE_EVIDENCE_GATE",
+              "PUBLIC_VALUE_V2_NORMALIZED_WEIGHTED_SCORING",
+              "CATEGORY_APPROPRIATE_EVIDENCE_ROUTE",
+              "TECH_SCIENCE_EVIDENCE_ROUTE",
+              "CONFLICT_MULTI_SIDE_EVIDENCE_ROUTE",
+              "DISASTER_OFFICIAL_STATISTICS_ROUTE",
+              "OFFICIAL_SOURCE_BIAS_GUARD",
+              "MEDIA_TRANSCRIPTION_IS_NOT_VERIFICATION",
+              "DOMAIN_EXPERTISE_MATCH",
+              "TIMELINESS_WITH_SOURCE_LIMIT_NOTE",
+              "SAME_SOURCE_RECOVERY_ORDER",
+              "RUN_ARTIFACT_IDENTITY_GATE",
+              "FOURTEEN_DAY_AUDIT_MERGE_UNAVAILABLE",
+              "CURRENT_SCHEMA_ONLY_DURABLE_AUDIT",
+              "MOBILE_COMPACT_HISTORY_SCHEMA_RULE",
+              "MOBILE_NATIVE_IMAGE_EVIDENCE_ROUTE",
+              "MOBILE_PER_STORY_VISIBLE_IMAGE_GATE",
+              "DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE",
+              "IMAGE_FALLBACK_EXHAUSTION_GATE",
+              "IMAGE_READER_VISIBLE_DELIVERY_GATE",
+              "NATIVE_MEDIA_BLOCK_DELIVERY_GATE",
+              "NATIVE_MEDIA_CAPABILITY_FALLBACK",
+              "QUALIFIED_IMAGE_DELIVERY_INDEPENDENT_OF_CLAIM_CRITICAL",
+              "VISUAL_DELIVERY_ONLY_RECOVERY",
+              "READER_TEMPLATE_STRUCTURE_GATE",
+              "CANONICAL_TODAY_OVERVIEW_NO_OMISSION_GATE",
+              "CANONICAL_THREE_PART_READER_LAYOUT_GATE",
+              "MOBILE_READER_STRUCTURE_EQUIVALENT",
+              "READER_INTERNAL_REPAIR_LOG_EXCLUSION_GATE"
+            ]
+          },
+          "status": {
+            "enum": [
+              "passed",
+              "not_applicable",
+              "blocked"
+            ]
+          },
+          "authority_path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "authority_blob_sha": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          "evidence_refs": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "checked_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "applicability_rationale": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}
