@@ -1,0 +1,81 @@
+{
+  "run_id":"gnb-20260828T101551Z-a4c7e2b9",
+  "main_sha":"6eb397b2195fd5b8a2dfe06045dcafa72e55110e",
+  "window":{"start":"2026-08-27T10:18:34+00:00","end":"2026-08-28T10:18:34+00:00","timezone":"Asia/Shanghai"},
+  "execution_mode":"mobile-native",
+  "checked_at":"2026-08-28T10:37:00+00:00",
+  "machine_pixel_verification_executed":false,
+  "events":[
+    {
+      "event_id":"TWN-01",
+      "required":true,
+      "claim_critical":false,
+      "source_checks":[
+        {"source_url":"https://www.ndc.gov.tw/nc_27_40407","inspection_method":"source-page-and-native-image-search","result":"no_current_qualified_media_exposed"},
+        {"source_url":"https://money.udn.com/money/amp/story/10869/9720121","inspection_method":"source-page-and-native-image-search","result":"qualified_current_source_photo_confirmed_in_page_text_but_native_card_not_retrieved","detail":"Current article identifies a reporter photo of the NDC release; repeated native image search surfaced only older projection graphics."}
+      ],
+      "delivery_result":"native_media_unavailable",
+      "qualified_image_confirmed":true,
+      "reader_omission_note":"A current source photo was confirmed but could not be delivered as a native image card in this host."
+    },
+    {
+      "event_id":"CHN-01",
+      "required":true,
+      "claim_critical":false,
+      "professional_visual_required":true,
+      "source_checks":[
+        {"source_url":"https://www.reuters.com/business/environment/typhoon-saudel-makes-landfall-taizhou-cctv-reports-2026-08-28/","inspection_method":"source-page-and-native-image-search","result":"no_current_qualified_media_exposed"},
+        {"source_url":"https://www.suzhou.gov.cn/szsrmzf/mszx/202608/8ed5a8ec7aa94b3b83f2de95ecda0439.shtml","inspection_method":"official-page-and-native-image-search","result":"page_contains_image_markers_but_no_traceable_current_media_file_exposed"}
+      ],
+      "professional_source_checks":[{"source":"China meteorological/local government sources","result":"native search returned old/unrelated typhoon radar imagery, rejected by event/date gate"}],
+      "professional_visual_status":"not_available",
+      "delivery_result":"source_exhausted",
+      "qualified_image_confirmed":false,
+      "reader_omission_note":"No traceable current-event image passed the mobile event/date/source gate."
+    },
+    {
+      "event_id":"CHN-02",
+      "required":true,
+      "claim_critical":false,
+      "source_checks":[
+        {"source_url":"https://www.xinhuanet.com/20260828/239967702ed84ac3aa416b6a55047aa4/c.html","inspection_method":"source-page-and-native-image-search","result":"no_traceable_current_media_file_exposed"},
+        {"source_url":"https://www.reuters.com/world/asia-pacific/china-reform-home-sales-system-curb-delivery-risks-2026-08-28/","inspection_method":"source-page-and-native-image-search","result":"article_visual_is_old_property_file_photo_or_not_current_event_specific","detail":"Old property stock imagery is rejected by the current-event image gate."}
+      ],
+      "delivery_result":"source_exhausted",
+      "qualified_image_confirmed":false,
+      "reader_omission_note":"Only old or non-event-specific housing imagery was found."
+    },
+    {
+      "event_id":"CHN-03",
+      "required":true,
+      "claim_critical":false,
+      "professional_visual_required":true,
+      "source_checks":[
+        {"source_url":"https://www-pp.afp.com/es/cientos-de-desaparecidos-y-al-menos-160-muertos-tras-fuertes-inundaciones-en-frontera-de-nepal-y","inspection_method":"native-image-search","result":"qualified_current_image_delivered","native_image_ref":"turn473042image0","detail":"AFP/Getty aerial view of Trishuli Bazar flood aftermath photographed August 26, 2026, same disaster."}
+      ],
+      "professional_source_checks":[{"source":"official/professional disaster map search","result":"no current official information graphic surfaced through the native host"}],
+      "professional_visual_status":"not_available",
+      "delivery_result":"available",
+      "qualified_image_confirmed":true,
+      "native_media_status":"available"
+    },
+    {
+      "event_id":"GLB-01",
+      "required":true,
+      "claim_critical":false,
+      "professional_visual_required":true,
+      "source_checks":[
+        {"source_url":"https://www.ksl.com/article/51616666/shipping-traffic-through-strait-of-hormuz-rises-slightly-data-shows","inspection_method":"source-page-and-native-image-search","result":"qualified_current_source_photo_confirmed_but_delivery_failed","detail":"KSL's Reuters copy identifies Majid Asgaripour/WANA vessels near Bandar Abbas photographed August 26, 2026. Direct image fetch returned a cache miss and repeated native image searches returned only older visuals."},
+        {"source_url":"https://www.reuters.com/world/middle-east/shipping-traffic-through-strait-hormuz-rises-slightly-data-shows-2026-08-27/","inspection_method":"source-page-and-native-image-search","result":"qualified_current_source_photo_confirmed_but_native_card_not_retrieved"}
+      ],
+      "professional_source_checks":[{"source":"current vessel-traffic visual search","result":"only older March-April-July traffic maps surfaced; rejected as stale for the current Aug 28 update"}],
+      "professional_visual_status":"not_available",
+      "delivery_result":"native_media_unavailable",
+      "qualified_image_confirmed":true,
+      "reader_omission_note":"A qualified current Reuters/WANA source photo exists, but this host could not deliver it as a native image card after actual attempts."
+    }
+  ],
+  "overall_result":"NATIVE_MEDIA_UNAVAILABLE",
+  "blocking_events":["TWN-01","GLB-01"],
+  "recovery_scope":"visual_delivery_only"
+}
