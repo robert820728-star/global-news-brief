@@ -393,7 +393,7 @@ class PipelineContractTests(unittest.TestCase):
             "mobile-chatgpt-daily-prompt.md",
             "execution_mode=full-runtime",
             "execution_mode=mobile-native",
-            "do not disable the daily schedule",
+            "Do not disable the daily schedule",
         ):
             self.assertIn(requirement, prompt)
         self.assertLess(
@@ -484,7 +484,6 @@ class PipelineContractTests(unittest.TestCase):
                 "EARLY_DIAGNOSTIC_RUN_STARTED",
                 "EARLY_DIAGNOSTIC_TREE_VERIFIED",
                 "EARLY_DIAGNOSTIC_MANIFEST_VERIFIED",
-                "EARLY_DIAGNOSTIC_HELPERS_VERIFIED",
             )
             for marker in ordered_markers:
                 self.assertIn(marker, document)
@@ -492,6 +491,9 @@ class PipelineContractTests(unittest.TestCase):
             self.assertEqual(positions, sorted(positions))
             self.assertIn("before any recursive tree read", document)
             self.assertIn("update the same comment", document)
+            self.assertIn("VERIFIED_BOOTSTRAP_SEED_ROUTE", document)
+            self.assertIn("lossless connector-to-local byte handoff", document)
+            self.assertNotIn("EARLY_DIAGNOSTIC_HELPERS_VERIFIED", document)
 
     def test_fresh_main_wrapper_does_not_create_an_impossible_run_id_order(self):
         daily = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
