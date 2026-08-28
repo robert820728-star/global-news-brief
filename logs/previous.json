@@ -1,50 +1,33 @@
 {
-  "candidate_audit_artifact": {
-    "blob_sha": "1f30c4858a4180f8cb2daeea2b06aba880331e6c",
-    "branch": "run-logs",
-    "path": "logs/runs/gnb-20260826T162844Z-fcd00184/candidate-audit.json"
-  },
-  "capability_limitations": [
-    "NATIVE_MEDIA_UNAVAILABLE"
-  ],
-  "client_confirmation_supported": false,
-  "current_stage": "source-scan",
-  "delivery_profile": "reader-canonical-capability-degraded",
-  "delivery_status": "not_ready",
-  "durable_audit_artifact": null,
-  "durable_audit_status": "current_run_only",
+  "schema_version": "1.6.0",
   "execution_mode": "mobile-native",
-  "image_evidence_artifact": {
-    "blob_sha": "8a8c10f8a6cc2eaedc0dc0a4a28dc3ed2a8db1fb",
-    "branch": "run-logs",
-    "path": "logs/runs/gnb-20260826T162844Z-fcd00184/image-evidence.json"
-  },
+  "delivery_profile": "full-assets",
+  "native_media_status": "available",
+  "capability_limitations": [],
+  "run_id": "gnb-20260828T044935Z-a1b2c3d4",
+  "scheduled_for": "2026-08-28T04:46:55+00:00",
+  "status": "interrupted_by_next_run",
+  "current_stage": "source-scan",
+  "stage_index": 4,
   "last_completed_stage": "workspace-ready",
+  "main_sha": "ecede68c6a2feb4510feec35f1bcd9ef9e3cc536",
+  "window": {
+    "start": "2026-08-27T04:49:35+00:00",
+    "end": "2026-08-28T04:49:35+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "updated_at": "2026-08-28T10:13:00+00:00",
   "last_error": {
     "code": "executor_interrupted",
     "message": "The next scheduled run started before this run reached a terminal state."
   },
-  "main_sha": "a5a70dd4a7c1b2eea0f6852d8832caf65b203861",
-  "map_decisions_artifact": {
-    "blob_sha": "6ae9bdc2da8158a7dc895552f0f0cefed2bc0842",
-    "branch": "run-logs",
-    "path": "logs/runs/gnb-20260826T162844Z-fcd00184/map-decisions.json"
-  },
-  "native_media_status": "unavailable",
-  "reader_artifact": {
-    "blob_sha": "8825faf7a6bdb41e433664c1ccbf5cfd91e7371c",
-    "branch": "run-logs",
-    "path": "logs/latest-reader.md"
-  },
-  "run_id": "gnb-20260826T162844Z-fcd00184",
-  "scheduled_for": "2026-08-27T06:00:00+08:00",
-  "schema_version": "1.5.0",
-  "stage_index": 4,
-  "status": "interrupted_by_next_run",
-  "updated_at": "2026-08-27T02:49:01Z",
-  "verification_artifact": {
-    "blob_sha": "baa0964851909e7de2444a3a744a41254228bc2b",
-    "branch": "run-logs",
-    "path": "logs/runs/gnb-20260826T162844Z-fcd00184/verification.json"
-  }
+  "delivery_status": "not_ready",
+  "client_confirmation_supported": false,
+  "reader_artifact": null,
+  "candidate_audit_artifact": null,
+  "verification_artifact": null,
+  "map_decisions_artifact": null,
+  "image_evidence_artifact": null,
+  "durable_audit_status": "not_started",
+  "durable_audit_artifact": null
 }
