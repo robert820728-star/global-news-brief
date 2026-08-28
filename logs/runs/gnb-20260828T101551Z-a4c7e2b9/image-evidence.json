@@ -3,7 +3,7 @@
   "main_sha":"6eb397b2195fd5b8a2dfe06045dcafa72e55110e",
   "window":{"start":"2026-08-27T10:18:34+00:00","end":"2026-08-28T10:18:34+00:00","timezone":"Asia/Shanghai"},
   "execution_mode":"mobile-native",
-  "checked_at":"2026-08-28T10:37:00+00:00",
+  "checked_at":"2026-08-28T10:44:00+00:00",
   "machine_pixel_verification_executed":false,
   "events":[
     {
@@ -12,7 +12,8 @@
       "claim_critical":false,
       "source_checks":[
         {"source_url":"https://www.ndc.gov.tw/nc_27_40407","inspection_method":"source-page-and-native-image-search","result":"no_current_qualified_media_exposed"},
-        {"source_url":"https://money.udn.com/money/amp/story/10869/9720121","inspection_method":"source-page-and-native-image-search","result":"qualified_current_source_photo_confirmed_in_page_text_but_native_card_not_retrieved","detail":"Current article identifies a reporter photo of the NDC release; repeated native image search surfaced only older projection graphics."}
+        {"source_url":"https://money.udn.com/money/amp/story/10869/9720121","inspection_method":"source-page-and-native-image-search","result":"qualified_current_source_photo_confirmed_in_page_text_but_native_card_not_retrieved","detail":"Current article identifies a reporter photo of the NDC release; repeated native image search surfaced only older projection graphics."},
+        {"source_url":"https://news.nextapple.com/finance/20260828/C5AF81C42F036FD9DCBFD3BD1039002D","inspection_method":"source-page-and-native-image-search-retry","result":"qualified_current_source_photo_confirmed_in_page_text_but_native_card_not_retrieved","detail":"The current Aug. 28 report identifies a same-day NDC release photo credited to Hsu Li-chen; the native image search returned page-level results but no deliverable image-card reference."}
       ],
       "delivery_result":"native_media_unavailable",
       "qualified_image_confirmed":true,
@@ -66,9 +67,10 @@
       "professional_visual_required":true,
       "source_checks":[
         {"source_url":"https://www.ksl.com/article/51616666/shipping-traffic-through-strait-of-hormuz-rises-slightly-data-shows","inspection_method":"source-page-and-native-image-search","result":"qualified_current_source_photo_confirmed_but_delivery_failed","detail":"KSL's Reuters copy identifies Majid Asgaripour/WANA vessels near Bandar Abbas photographed August 26, 2026. Direct image fetch returned a cache miss and repeated native image searches returned only older visuals."},
-        {"source_url":"https://www.reuters.com/world/middle-east/shipping-traffic-through-strait-hormuz-rises-slightly-data-shows-2026-08-27/","inspection_method":"source-page-and-native-image-search","result":"qualified_current_source_photo_confirmed_but_native_card_not_retrieved"}
+        {"source_url":"https://www.reuters.com/world/middle-east/shipping-traffic-through-strait-hormuz-rises-slightly-data-shows-2026-08-27/","inspection_method":"source-page-and-native-image-search","result":"qualified_current_source_photo_confirmed_but_native_card_not_retrieved"},
+        {"source_url":"https://www.reuters.com/business/energy/shipping-traffic-via-strait-hormuz-slips-below-10-day-average-data-shows-2026-08-28/","inspection_method":"native-image-search-retry","result":"qualified_current_story_retrieved_but_no_native_image_ref","detail":"Repeated native image searches for current Strait of Hormuz vessel imagery returned current article results but no deliverable image-card reference; older Aug. 10 imagery was rejected as stale for this update."}
       ],
-      "professional_source_checks":[{"source":"current vessel-traffic visual search","result":"only older March-April-July traffic maps surfaced; rejected as stale for the current Aug 28 update"}],
+      "professional_source_checks":[{"source":"current vessel-traffic visual search","result":"only older March-April-July/August 10 traffic maps or photos surfaced; rejected as stale for the current Aug 28 update"}],
       "professional_visual_status":"not_available",
       "delivery_result":"native_media_unavailable",
       "qualified_image_confirmed":true,
