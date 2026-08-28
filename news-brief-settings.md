@@ -51,7 +51,7 @@ The required order for every configured discovery route is: `canonical route -> 
 5. `verify-news-events`：依事件／主張角色搜尋原始、官方與獨立證據並處理不確定性。
 6. `build-news-maps`：判斷空間意義；依 execution mode 執行可用路徑，full-runtime 可產生自製定位地圖，mobile-native 保存判定而不得冒充本機 renderer 已執行。
 7. `build-news-charts`：判斷數值比較、趨勢、比例或分布是否有助理解；依 execution mode 執行可用路徑，只有 full-runtime 可宣稱產生本機資料圖表。
-8. `collect-news-images`：取得官方資訊圖與新聞配圖；依 execution mode 執行可用路徑，full-runtime 下載／截圖並視覺驗收，mobile-native 使用來源檢查與原生圖片／圖片卡交付。
+8. `collect-news-images`：取得官方資訊圖與新聞配圖；依 execution mode 執行可用路徑，full-runtime 下載／截圖並視覺驗收，mobile-native 依序使用來源檢查、文章直接媒體 URL、原生圖片／圖片卡與後續來源交付。
 9. `recover-news-run`：偵測失敗或中斷，只調度失敗事件與模組重跑並重新驗證。
 10. 套用 `news-brief-template.md`；full-runtime 執行 `scripts/validate_news_brief.py`，mobile-native 執行 `MOBILE_READER_STRUCTURE_EQUIVALENT` 且不得冒稱 script validator 已執行。
 
@@ -70,9 +70,10 @@ full-runtime 的 post-selection event exchange 必須遵守 `schemas/news-event-
 - 每個事件獨立處理；失敗只重跑該事件與原欄位技能。避免整份候選、十四天歷史與所有來源在每次請求重複載入。
 - 所有 C 級以上新聞仍完整納入，不以節省圖片成本縮減新聞或來源覆蓋。
 - `IMAGE_DEFAULT_ONE_ASSET`：每則事件預設一張來源圖片；`IMAGE_SECOND_ASSET_REQUIRES_INCREMENTAL_INFORMATION`：第二張必須提供第一張沒有的範圍、數字、現場或時間資訊，最多兩張。
-- `IMAGE_SOURCE_FILE_IDENTITY_GATE`：每張來源圖片同時保存文章頁 `source_url` 與實際媒體檔 `source_image_url`；實際圖片網址必須出現在同一來源頁的 `detected_image_urls` 且不得等於文章頁。full-runtime 必須再由 canonical materializer 的 `materialized-images.json` 綁定本機檔案、SHA-256 與尺寸；mobile-native 依 `MOBILE_NATIVE_IMAGE_EVIDENCE_ROUTE` 保存來源檢查、原生圖片卡嘗試與宿主結構化結果，不得捏造本地物化或像素驗收。
+- `IMAGE_SOURCE_FILE_IDENTITY_GATE`：每張來源圖片同時保存文章頁 `source_url` 與實際媒體檔 `source_image_url`；實際圖片網址必須出現在同一來源頁的 `detected_image_urls` 且不得等於文章頁。full-runtime 必須再由 canonical materializer 的 `materialized-images.json` 綁定本機檔案、SHA-256 與尺寸；mobile-native 依 `MOBILE_NATIVE_IMAGE_EVIDENCE_ROUTE` 保存來源檢查、文章直接媒體 URL／原生圖片卡嘗試與宿主結構化結果，不得捏造本地物化或像素驗收。
 - `MOBILE_PER_STORY_VISIBLE_IMAGE_GATE`：mobile-native 對每一則本輪入選新聞逐則執行圖片搜尋與可見性驗收，一則新聞的圖片不得替其他新聞通過；先查已引用來源，再依序查官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導，可查多個來源而不限一個。每張候選圖都要保存來源頁並核對事件與日期，不要求完全相同像素；無法追溯的搬運站、搜尋縮圖、舊照或無關示意圖不合格。找到可用圖片但顯示失敗時只重做該則圖片取得／交付，不重跑新聞流程。
-- `IMAGE_FALLBACK_EXHAUSTION_GATE`：上述四層是依序必查 checklist。每則 image evidence 保存 `original_source_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`；任一來源層未實際搜尋時，不得宣告 `NATIVE_MEDIA_UNAVAILABLE`、source exhaustion 或圖片 blocker。圖片證據來源與文字驗證來源可以不同，且可使用另一張同事件合法刊載／轉載圖片，但必須可信、可追溯，並符合事件、日期、人物／地點。
+- `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`：原生圖片搜尋／圖片卡不是唯一取得路徑。原引用文章的 `img`、`srcset`、`og:image` 或等價欄位若暴露當期直接 JPEG／WebP URL，必須以宿主可用媒體路徑開啟／取得並嘗試可見交付；搜尋卡沒有 image ref 不等於不可取得，URL／Markdown 本身不算可見交付。
+- `IMAGE_FALLBACK_EXHAUSTION_GATE`：上述四層是依序必查 checklist。每則 image evidence 保存 `original_source_attempted`、`direct_media_url_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`；宣告 `NATIVE_MEDIA_UNAVAILABLE` 或 source exhaustion 前，`direct_media_url_attempted` 必須為 `true`，任一來源層未實際搜尋時不得停止圖片 stage。圖片證據來源與文字驗證來源可以不同，且可使用另一張同事件合法刊載／轉載圖片，但必須可信、可追溯，並符合事件、日期、人物／地點。直接文章原圖已成功可見交付時，不必再做無增量的後續來源搜尋。
 - `IMAGE_ONE_ASSET_MAY_SATISFY_BOTH_SOURCE_AND_PROFESSIONAL`：同一張合格官方／專業圖可同時滿足引用來源圖片與專業圖資要求，但兩組來源檢查紀錄都要保留。
 - `IMAGE_SHA256_REUSE`：同一輪以圖片內容 SHA-256 去重，相同內容沿用一次下載、一次 `640px` 縮圖與一次驗收結果。
 - `IMAGE_VISUAL_CHECK_ONCE_PER_HASH`：先做 MIME、解碼、尺寸與 SHA-256 程式檢查；每個唯一 hash 只開啟驗收一次，只有內容、日期或相關性不確定時才加深判讀。
@@ -239,7 +240,7 @@ full-runtime 的 post-selection event exchange 必須遵守 `schemas/news-event-
 - 所有板塊地圖固定保留完整板塊底圖：`TWN` 顯示完整台灣、`CHN` 顯示完整中國、`GLB` 顯示完整世界，自訂國家或區域亦顯示其完整板塊。只能疊加事件標記、標籤、路線或影響範圍；禁止裁切、局部放大或以局部定位圖替代。manifest 必須記錄完整畫布 `canvas_scope` 與 canonical `base_map`，否則發布器阻擋交付。
 - 資料圖表技能只擁有 `charts`；不得製作純文字摘要卡，也不得修改或取代來源圖片。
 - 圖片技能只擁有 `images`；不得修改來源、等級、地圖或詳報內容。
-- 所有入選事件均固定執行來源頁圖片檢查；full-runtime 保存本地證據，mobile-native 保存該宿主可產生的來源檢查與原生圖片卡結構化結果。評級只影響新聞重要度，不影響是否查圖。
+- 所有入選事件均固定執行來源頁圖片檢查；full-runtime 保存本地證據，mobile-native 保存該宿主可產生的來源檢查、文章直接媒體 URL、原生圖片卡與後續來源結構化結果。評級只影響新聞重要度，不影響是否查圖。
 - 圖片與地圖都必須另填 `claim_critical`。只有視覺本身直接支撐核心新聞主張時才可設為 `true`；來源確實沒有合格圖片或非關鍵本機生成視覺無法產生時可標記 `omitted`。已確認合格來源圖片的交付失敗不得因 `claim_critical=false` 降級成正式完成。
 - `QUALIFIED_IMAGE_DELIVERY_INDEPENDENT_OF_CLAIM_CRITICAL`：已確認合格來源圖片後，`claim_critical` 不再參與交付決定；true 與 false 的 delivery failure 都必須停在視覺恢復，只有完整 source exhaustion 才允許非關鍵圖片 omitted。
 - 地震、疫情、氣象、災害、戰爭、航運、漏油與海洋污染等類型固定啟用官方專業圖資要求；判定依事件內容，不得硬編碼事件編號。

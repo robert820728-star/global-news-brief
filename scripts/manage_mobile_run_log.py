@@ -347,7 +347,12 @@ def _validate_bound_image_evidence(
         if not isinstance(event_id, str) or not event_id.strip():
             raise ValueError(f"{label} requires event_id")
         event_ids.append(event_id)
-        for field in (*IMAGE_FALLBACK_ATTEMPT_FIELDS, "qualified_image_found", "delivery_attempted"):
+        for field in (
+            *IMAGE_FALLBACK_ATTEMPT_FIELDS,
+            "direct_media_url_attempted",
+            "qualified_image_found",
+            "delivery_attempted",
+        ):
             if not isinstance(event.get(field), bool):
                 raise ValueError(f"{label}.{field} must be boolean")
         result = event.get("delivery_result")
@@ -359,6 +364,13 @@ def _validate_bound_image_evidence(
         fallback_exhausted = all(
             event[field] is True for field in IMAGE_FALLBACK_ATTEMPT_FIELDS
         )
+        if (
+            result in {"delivery_unavailable", "source_exhausted"}
+            and event["direct_media_url_attempted"] is not True
+        ):
+            raise ValueError(
+                f"{label} requires direct media URL attempt before exhaustion"
+            )
         if result in {"delivery_unavailable", "source_exhausted"} and not fallback_exhausted:
             raise ValueError(
                 f"{label} requires four-tier image fallback exhaustion"

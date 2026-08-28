@@ -21,7 +21,7 @@
 | 疫情 | 國家公衛機關＋適用的國際組織 | 最新病例、死亡、分布或趨勢圖 | 自製三格數字卡、只有醫院照片 |
 | 野火／熱浪 | 氣象、消防、林業或災害應變機關 | 火場範圍、衛星熱點、疏散區或高溫風險圖 | 只有火焰照片或城市定位圖 |
 
-案例：日本千葉縣豪雨若已有日本氣象廳或地方防災機關發布的雨量、雷達、風險或警戒圖，full-runtime 至少一張必須下載或截圖並驗收；mobile-native 至少必須檢查同一官方來源並實際嘗試宿主原生圖片／圖片卡。路透社現場照可保留，但不能單獨完成專業圖檢查。
+案例：日本千葉縣豪雨若已有日本氣象廳或地方防災機關發布的雨量、雷達、風險或警戒圖，full-runtime 至少一張必須下載或截圖並驗收；mobile-native 至少必須檢查同一官方來源並實際嘗試文章直接媒體 URL 或宿主原生圖片／圖片卡。路透社現場照可保留，但不能單獨完成專業圖檢查。
 
 反例：諾貝爾獎、數學猜想或一般科技產品發表若核心事件沒有專業監測圖資需求，不啟用此硬閘門；仍照常檢查官方或媒體來源配圖。
 
@@ -59,7 +59,9 @@
 
 - SS 至 C 的每則入選事件都必須逐一檢查全部 `verification.sources`；不得因評級、已有地圖、已有圖表或已有另一來源圖片而跳過。
 - 每個檢查項目保存檢查時間、方法、檢出的圖片網址及判定理由；full-runtime 保存本地頁面證據，mobile-native 保存宿主結構化檢查結果。
-- 頁面存在合格圖片時，full-runtime 必須下載或截圖並附入 `images.assets`；mobile-native 使用原生圖片搜尋／圖片卡並將結果保存於既有 image evidence／ledger，不得寫入 `images.assets`。地圖與自製資料圖表均不能替代。
+- 頁面存在合格圖片時，full-runtime 必須下載或截圖並附入 `images.assets`；mobile-native 必須先依 `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE` 嘗試文章直接媒體 URL，再使用原生圖片搜尋／圖片卡與後續來源，並將結果保存於既有 image evidence／ledger，不得寫入 `images.assets`。地圖與自製資料圖表均不能替代。
 - `no_usable_image` 必須由該模式可取得的實際頁面或結構化檢查結果支持；頁面未完整載入、登入牆阻擋或該模式的交付嘗試失敗，都必須如實保存，不得冒充已驗收附件。
 
-`IMAGE_FALLBACK_EXHAUSTION_GATE`：原引用來源、官方機關／當事組織、原始通訊社及其他可靠媒體的同事件合法刊載／轉載是四個依序必查層級。圖片可與文字驗證使用不同來源，也不必是原文同一張，但必須可信、合法公開刊載、可追溯，且事件、日期、人物／地點一致。每則 evidence 保存 `original_source_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`；任一來源層未實際搜尋時，不得宣告 `NATIVE_MEDIA_UNAVAILABLE`、source exhaustion 或停止圖片 stage。
+`DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`：原生圖片搜尋／圖片卡不是唯一圖片取得路徑。原引用文章的 `img`、`srcset`、`og:image` 或等價欄位若提供與當期事件相符的直接 JPEG／WebP URL，必須實際以宿主可用媒體路徑開啟／取得並嘗試可見交付；搜尋卡沒有 image ref 不等於圖片不可取得。外部 URL、Markdown 圖片字串或純文字連結本身不算可見交付。
+
+`IMAGE_FALLBACK_EXHAUSTION_GATE`：原引用來源、官方機關／當事組織、原始通訊社及其他可靠媒體的同事件合法刊載／轉載是四個依序必查層級。圖片可與文字驗證使用不同來源，也不必是原文同一張，但必須可信、合法公開刊載、可追溯，且事件、日期、人物／地點一致。每則 evidence 保存 `original_source_attempted`、`direct_media_url_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`；`delivery_unavailable` 或 source exhaustion 的 `direct_media_url_attempted` 必須為 `true`，任一來源層未實際搜尋時不得宣告 `NATIVE_MEDIA_UNAVAILABLE`、source exhaustion 或停止圖片 stage。直接文章原圖已成功可見交付時，不必再做後續 fallback。

@@ -331,7 +331,7 @@ class PipelineContractTests(unittest.TestCase):
 
         self.assertIn("full-runtime 保存本地頁面證據", policy)
         self.assertIn("mobile-native 保存宿主結構化檢查結果", policy)
-        self.assertIn("mobile-native 使用原生圖片搜尋／圖片卡", readme)
+        self.assertIn("mobile-native 依序嘗試文章直接媒體 URL、原生圖片搜尋／圖片卡與後續來源", readme)
         self.assertIn("只有 full-runtime 取得並驗證 capsule", readme)
 
     def test_capsule_workflow_runs_full_repository_suite(self):
@@ -696,6 +696,7 @@ class PipelineContractTests(unittest.TestCase):
         )
         checklist = (
             "original_source_attempted",
+            "direct_media_url_attempted",
             "official_fallback_attempted",
             "wire_fallback_attempted",
             "reliable_media_fallback_attempted",
@@ -706,6 +707,7 @@ class PipelineContractTests(unittest.TestCase):
         for path in documents:
             text = path.read_text(encoding="utf-8")
             self.assertIn("IMAGE_FALLBACK_EXHAUSTION_GATE", text, path)
+            self.assertIn("DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE", text, path)
             for field in checklist:
                 self.assertIn(field, text, path)
         image_skill = documents[4].read_text(encoding="utf-8")

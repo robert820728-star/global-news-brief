@@ -9,6 +9,7 @@
         "https://example.invalid/current-event.jpg"
       ],
       "original_source_attempted": true,
+      "direct_media_url_attempted": true,
       "official_fallback_attempted": true,
       "wire_fallback_attempted": true,
       "reliable_media_fallback_attempted": true,

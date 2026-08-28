@@ -155,6 +155,7 @@ class MobileRunLogTests(unittest.TestCase):
         return {
             "event_id": "GLB-01",
             "original_source_attempted": True,
+            "direct_media_url_attempted": True,
             "official_fallback_attempted": False,
             "wire_fallback_attempted": False,
             "reliable_media_fallback_attempted": False,
@@ -167,6 +168,7 @@ class MobileRunLogTests(unittest.TestCase):
         return {
             "event_id": "GLB-01",
             "original_source_attempted": True,
+            "direct_media_url_attempted": True,
             "official_fallback_attempted": True,
             "wire_fallback_attempted": True,
             "reliable_media_fallback_attempted": True,
@@ -179,6 +181,7 @@ class MobileRunLogTests(unittest.TestCase):
         return {
             "event_id": "GLB-01",
             "original_source_attempted": True,
+            "direct_media_url_attempted": True,
             "official_fallback_attempted": True,
             "wire_fallback_attempted": True,
             "reliable_media_fallback_attempted": True,
@@ -813,6 +816,30 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertEqual("completed", current["status"])
         self.assertEqual([], current["capability_limitations"])
 
+    def test_direct_article_image_delivery_skips_unnecessary_later_fallbacks(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+        )
+        artifacts = self.mobile_artifacts()
+        event = self.delivered_image_event()
+        self.assertTrue(event["direct_media_url_attempted"])
+        self.assertFalse(event["official_fallback_attempted"])
+        self.assertFalse(event["wire_fallback_attempted"])
+        self.assertFalse(event["reliable_media_fallback_attempted"])
+        self.write_image_evidence(event)
+        artifacts["delivery-handoff"] = {
+            "status": "completed",
+            "delivery_status": "handoff_started",
+        }
+        self.advance_to("delivery-handoff", stage_kwargs=artifacts)
+        current = self.read("current.json")
+        self.assertEqual("completed", current["status"])
+        self.assertEqual([], current["capability_limitations"])
+
     def test_noncritical_qualified_image_delivery_failure_blocks_reader(self):
         reader = ROOT / "tests" / "fixtures" / "mobile-reader-missing-verified-image.md"
         evidence = (
@@ -863,6 +890,7 @@ class MobileRunLogTests(unittest.TestCase):
         self.write_image_evidence({
             "event_id": "GLB-01",
             "original_source_attempted": True,
+            "direct_media_url_attempted": True,
             "official_fallback_attempted": True,
             "wire_fallback_attempted": False,
             "reliable_media_fallback_attempted": False,
@@ -881,6 +909,42 @@ class MobileRunLogTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "fallback exhaustion"):
             self.advance_to("visuals-completed", stage_kwargs=artifacts)
 
+    def test_qualified_direct_media_url_requires_actual_attempt_before_unavailable(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+        )
+        artifacts = self.mobile_artifacts()
+        self.write_image_evidence({
+            "event_id": "GLB-01",
+            "original_source_attempted": True,
+            "source_url": "https://example.test/news/current-event",
+            "detected_image_urls": [
+                "https://cdn.example.test/news/current-event.jpg"
+            ],
+            "source_image_url": "https://cdn.example.test/news/current-event.jpg",
+            "direct_media_url_attempted": False,
+            "official_fallback_attempted": True,
+            "wire_fallback_attempted": True,
+            "reliable_media_fallback_attempted": True,
+            "qualified_image_found": True,
+            "delivery_attempted": True,
+            "delivery_result": "delivery_unavailable",
+        })
+        artifacts["visuals-completed"].update({
+            "delivery_profile": "reader-canonical-capability-degraded",
+            "native_media_status": "unavailable",
+            "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
+            "image_evidence_artifact": artifacts["reader-rendered"][
+                "image_evidence_artifact"
+            ],
+        })
+        with self.assertRaisesRegex(ValueError, "direct media URL"):
+            self.advance_to("visuals-completed", stage_kwargs=artifacts)
+
     def test_source_exhaustion_rejects_incomplete_source_fallback(self):
         self.module.prepare_run(
             self.ledger_dir,
@@ -893,6 +957,7 @@ class MobileRunLogTests(unittest.TestCase):
         self.write_image_evidence({
             "event_id": "CHN-01",
             "original_source_attempted": True,
+            "direct_media_url_attempted": True,
             "official_fallback_attempted": True,
             "wire_fallback_attempted": False,
             "reliable_media_fallback_attempted": False,
