@@ -96,6 +96,8 @@ class MobileRunLogTests(unittest.TestCase):
         return result
 
     def mobile_artifacts(self):
+        self.write_candidate_audit(["GLB-01"])
+        self.write_image_evidence(self.delivered_image_event())
         return {
             "candidate-audit": {
                 "candidate_audit_artifact": artifact_reference(
@@ -121,6 +123,103 @@ class MobileRunLogTests(unittest.TestCase):
                 )
             },
         }
+
+    def write_candidate_audit(self, selected_event_ids):
+        path = (
+            self.ledger_dir
+            / "logs"
+            / "runs"
+            / RUN_1
+            / "candidate-audit.json"
+        )
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            json.dumps({
+                "schema_version": "1.2.0",
+                "runs": [{
+                    "run_id": RUN_1,
+                    "candidates": [
+                        {
+                            "decision": "selected",
+                            "selected_event_id": event_id,
+                        }
+                        for event_id in selected_event_ids
+                    ],
+                }],
+            }),
+            encoding="utf-8",
+        )
+        return path
+
+    def delivered_image_event(self):
+        return {
+            "event_id": "GLB-01",
+            "original_source_attempted": True,
+            "official_fallback_attempted": False,
+            "wire_fallback_attempted": False,
+            "reliable_media_fallback_attempted": False,
+            "qualified_image_found": True,
+            "delivery_attempted": True,
+            "delivery_result": "delivered",
+        }
+
+    def unavailable_image_event(self):
+        return {
+            "event_id": "GLB-01",
+            "original_source_attempted": True,
+            "official_fallback_attempted": True,
+            "wire_fallback_attempted": True,
+            "reliable_media_fallback_attempted": True,
+            "qualified_image_found": True,
+            "delivery_attempted": True,
+            "delivery_result": "delivery_unavailable",
+        }
+
+    def exhausted_image_event(self):
+        return {
+            "event_id": "GLB-01",
+            "original_source_attempted": True,
+            "official_fallback_attempted": True,
+            "wire_fallback_attempted": True,
+            "reliable_media_fallback_attempted": True,
+            "qualified_image_found": False,
+            "delivery_attempted": False,
+            "delivery_result": "source_exhausted",
+        }
+
+    def unavailable_mobile_artifacts(self):
+        artifacts = self.mobile_artifacts()
+        self.write_image_evidence(self.unavailable_image_event())
+        artifacts["visuals-completed"].update({
+            "delivery_profile": "reader-canonical-capability-degraded",
+            "native_media_status": "unavailable",
+            "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
+            "image_evidence_artifact": artifacts["reader-rendered"][
+                "image_evidence_artifact"
+            ],
+        })
+        return artifacts
+
+    def write_image_evidence(self, event):
+        path = (
+            self.ledger_dir
+            / "logs"
+            / "runs"
+            / RUN_1
+            / "image-evidence.json"
+        )
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            json.dumps({
+                "run_id": RUN_1,
+                "main_sha": MAIN_SHA,
+                "window": RUN_WINDOW,
+                "execution_mode": "mobile-native",
+                "events": [event],
+            }),
+            encoding="utf-8",
+        )
+        return path
 
     def test_prepare_creates_awaiting_executor_record(self):
         self.prepare()
@@ -660,15 +759,7 @@ class MobileRunLogTests(unittest.TestCase):
             updated_at="2026-08-17T21:58:00Z",
             execution_mode="mobile-native",
         )
-        artifacts = self.mobile_artifacts()
-        artifacts["visuals-completed"].update({
-            "delivery_profile": "reader-canonical-capability-degraded",
-            "native_media_status": "unavailable",
-            "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
-            "image_evidence_artifact": artifacts["reader-rendered"][
-                "image_evidence_artifact"
-            ],
-        })
+        artifacts = self.unavailable_mobile_artifacts()
         self.advance_to("visuals-completed", stage_kwargs=artifacts)
         with self.assertRaisesRegex(ValueError, "visuals-completed recovery"):
             self.module.advance_run(
@@ -693,15 +784,7 @@ class MobileRunLogTests(unittest.TestCase):
             updated_at="2026-08-17T21:58:00Z",
             execution_mode="mobile-native",
         )
-        artifacts = self.mobile_artifacts()
-        artifacts["visuals-completed"].update({
-            "delivery_profile": "reader-canonical-capability-degraded",
-            "native_media_status": "unavailable",
-            "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
-            "image_evidence_artifact": artifacts["reader-rendered"][
-                "image_evidence_artifact"
-            ],
-        })
+        artifacts = self.unavailable_mobile_artifacts()
         self.advance_to("visuals-completed", stage_kwargs=artifacts)
         current = self.read("current.json")
         current["current_stage"] = "delivery-handoff"
@@ -720,6 +803,7 @@ class MobileRunLogTests(unittest.TestCase):
             execution_mode="mobile-native",
         )
         artifacts = self.mobile_artifacts()
+        self.write_image_evidence(self.exhausted_image_event())
         artifacts["delivery-handoff"] = {
             "status": "completed",
             "delivery_status": "handoff_started",
@@ -740,9 +824,9 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertNotIn("![", reader.read_text(encoding="utf-8"))
         evidence_data = json.loads(evidence.read_text(encoding="utf-8"))
         self.assertFalse(evidence_data["events"][0]["claim_critical"])
-        self.assertTrue(evidence_data["events"][0]["usable_image_found"])
+        self.assertTrue(evidence_data["events"][0]["qualified_image_found"])
         self.assertEqual(
-            evidence_data["events"][0]["delivery_outcome"], "delivery_unavailable"
+            evidence_data["events"][0]["delivery_result"], "delivery_unavailable"
         )
 
         self.module.prepare_run(
@@ -752,15 +836,7 @@ class MobileRunLogTests(unittest.TestCase):
             updated_at="2026-08-17T21:58:00Z",
             execution_mode="mobile-native",
         )
-        artifacts = self.mobile_artifacts()
-        artifacts["visuals-completed"].update({
-            "delivery_profile": "reader-canonical-capability-degraded",
-            "native_media_status": "unavailable",
-            "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
-            "image_evidence_artifact": artifacts["reader-rendered"][
-                "image_evidence_artifact"
-            ],
-        })
+        artifacts = self.unavailable_mobile_artifacts()
         self.advance_to("visuals-completed", stage_kwargs=artifacts)
         with self.assertRaisesRegex(ValueError, "visuals-completed recovery"):
             self.module.advance_run(
@@ -774,6 +850,73 @@ class MobileRunLogTests(unittest.TestCase):
         current = self.read("current.json")
         self.assertEqual(current["status"], "running")
         self.assertEqual(current["current_stage"], "visuals-completed")
+
+    def test_native_media_unavailable_rejects_incomplete_source_fallback(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+        )
+        artifacts = self.mobile_artifacts()
+        self.write_image_evidence({
+            "event_id": "GLB-01",
+            "original_source_attempted": True,
+            "official_fallback_attempted": True,
+            "wire_fallback_attempted": False,
+            "reliable_media_fallback_attempted": False,
+            "qualified_image_found": True,
+            "delivery_attempted": True,
+            "delivery_result": "delivery_unavailable",
+        })
+        artifacts["visuals-completed"].update({
+            "delivery_profile": "reader-canonical-capability-degraded",
+            "native_media_status": "unavailable",
+            "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
+            "image_evidence_artifact": artifacts["reader-rendered"][
+                "image_evidence_artifact"
+            ],
+        })
+        with self.assertRaisesRegex(ValueError, "fallback exhaustion"):
+            self.advance_to("visuals-completed", stage_kwargs=artifacts)
+
+    def test_source_exhaustion_rejects_incomplete_source_fallback(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+        )
+        artifacts = self.mobile_artifacts()
+        self.write_image_evidence({
+            "event_id": "CHN-01",
+            "original_source_attempted": True,
+            "official_fallback_attempted": True,
+            "wire_fallback_attempted": False,
+            "reliable_media_fallback_attempted": False,
+            "qualified_image_found": False,
+            "delivery_attempted": False,
+            "delivery_result": "source_exhausted",
+        })
+        with self.assertRaisesRegex(ValueError, "fallback exhaustion"):
+            self.advance_to(
+                "reader-rendered", stage_kwargs=artifacts
+            )
+
+    def test_image_evidence_must_cover_every_selected_event(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+        )
+        artifacts = self.mobile_artifacts()
+        self.write_candidate_audit(["GLB-01", "TWN-02"])
+        with self.assertRaisesRegex(ValueError, "selected event set"):
+            self.advance_to("reader-rendered", stage_kwargs=artifacts)
 
     def test_native_media_unavailable_requires_visuals_completed(self):
         self.module.prepare_run(
@@ -801,15 +944,7 @@ class MobileRunLogTests(unittest.TestCase):
             updated_at="2026-08-17T21:58:00Z",
             execution_mode="mobile-native",
         )
-        artifacts = self.mobile_artifacts()
-        artifacts["visuals-completed"].update({
-            "delivery_profile": "reader-canonical-capability-degraded",
-            "native_media_status": "unavailable",
-            "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
-            "image_evidence_artifact": artifacts["reader-rendered"][
-                "image_evidence_artifact"
-            ],
-        })
+        artifacts = self.unavailable_mobile_artifacts()
         self.advance_to("visuals-completed", stage_kwargs=artifacts)
         current = self.read("current.json")
         current["status"] = "failed"
@@ -824,19 +959,12 @@ class MobileRunLogTests(unittest.TestCase):
             updated_at="2026-08-17T21:58:00Z",
             execution_mode="mobile-native",
         )
-        artifacts = self.mobile_artifacts()
-        artifacts["visuals-completed"].update({
-            "delivery_profile": "reader-canonical-capability-degraded",
-            "native_media_status": "unavailable",
-            "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
-            "image_evidence_artifact": artifacts["reader-rendered"][
-                "image_evidence_artifact"
-            ],
-        })
+        artifacts = self.unavailable_mobile_artifacts()
         blocked = self.advance_to("visuals-completed", stage_kwargs=artifacts)
         revised_image = artifact_reference(
             f"logs/runs/{RUN_1}/image-evidence.json", "8" * 40
         )
+        self.write_image_evidence(self.delivered_image_event())
         recovered = self.module.advance_run(
             self.ledger_dir,
             run_id=RUN_1,

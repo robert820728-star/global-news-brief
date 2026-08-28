@@ -8,8 +8,13 @@
       "detected_image_urls": [
         "https://example.invalid/current-event.jpg"
       ],
-      "usable_image_found": true,
-      "delivery_outcome": "delivery_unavailable"
+      "original_source_attempted": true,
+      "official_fallback_attempted": true,
+      "wire_fallback_attempted": true,
+      "reliable_media_fallback_attempted": true,
+      "qualified_image_found": true,
+      "delivery_attempted": true,
+      "delivery_result": "delivery_unavailable"
     }
   ]
 }

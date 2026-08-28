@@ -142,7 +142,7 @@
 | 新聞流程 | 完整執行 | 完整執行；不得因缺少本機工具省略 discovery、語意評分、驗證或 reader |
 | 地圖／圖表／圖片 | `claim_critical=true` 的視覺必須物化並完成檔案／像素驗證；來源確實沒有合格圖片時可 omitted | 先執行宿主可用的原生媒體路徑；來源確實沒有合格圖片時可 omitted，已確認有合格圖片但交付失敗時必須停在視覺恢復 |
 | canonical 完成 | `full-assets`，所有宣稱的附件通過 | 只有沒有未解決媒體交付失敗時可 `status=completed`；`reader-canonical-capability-degraded` 是可恢復中間狀態，不是正式完成 |
-| `NATIVE_MEDIA_UNAVAILABLE` | 若已確認圖片仍未交付，屬未完成的視覺 stage | 逐則來源檢查及原生圖片／圖片卡交付均已實際嘗試仍失敗時記錄；保持同一 run 的 `status=running`、`current_stage=visuals-completed`，不是 `last_error`，不得捏造本地下載、截圖、物化或像素驗收 |
+| `NATIVE_MEDIA_UNAVAILABLE` | 若已確認圖片仍未交付，屬未完成的視覺 stage | 逐則依 `IMAGE_FALLBACK_EXHAUSTION_GATE` 搜完四層來源，至少找到一張合格圖片，且該模式所有可用可見交付方式均已實際失敗時才可記錄；保持同一 run 的 `status=running`、`current_stage=visuals-completed`，不是 `last_error`，不得捏造本地下載、截圖、物化或像素驗收 |
 | 後續補圖 | 局部恢復該視覺 stage | 可由 full-runtime 只補缺少視覺；不得建立新 run 或重跑新聞、評分與驗證 |
 
 不能因工具清單沒有特定名稱的 media API，就預先宣告無法交付。已有可解碼、尺寸與 SHA-256 通過的本機 JPEG／WebP 時，必須先實際嘗試宿主支援的本機附件或本機媒體呈現方式。外部圖片網址不能冒充附件；但合格本機檔案也不能被規則無條件禁止。
@@ -286,11 +286,14 @@ reader 不顯示 run id、commit、後台 counts、十四天 audit 或修復紀�
 
 `MOBILE_NATIVE_IMAGE_EVIDENCE_ROUTE`：圖片證據依執行模式走兩條既有能力路徑，不新增狀態機。full-runtime 逐則完成來源檢查、下載、失敗後的同來源截圖、檔案驗收與附件交付；無本機 runtime 的 mobile-native 逐則完成來源檢查、原生圖片搜尋／圖片卡嘗試與宿主可提供的結構化交付結果。mobile-native 不得捏造本地路徑、下載、截圖、物化、附件或像素驗收。
 
-`NATIVE_MEDIA_CAPABILITY_FALLBACK`：兩種模式都只有在自身可執行的取得與交付路徑已實際窮盡後，才可把最後一哩宿主限制記為 capability limitation；不得把它寫成 `last_error`，也不得重跑新聞流程。完全沒有合格來源圖片是 `no_usable_image_after_source_exhaustion`，不是 `NATIVE_MEDIA_UNAVAILABLE`。一旦已確認存在合格來源圖片而交付失敗，同一 run 必須保持 `status=running`、`current_stage=visuals-completed`，不得進入 reader 正式交付或 canonical completed；只把圖片交付切換到既有 full-runtime，以直接來源圖片 URL 下載、失敗後截圖及本機附件接續。
+`IMAGE_FALLBACK_EXHAUSTION_GATE`：原引用來源、原始圖片 URL、原生圖片卡或單一媒體交付失敗都不是圖片 blocker。每則事件在宣告 `NATIVE_MEDIA_UNAVAILABLE`、`source_exhausted` 或停止視覺 stage 前，必須依序實際搜尋原引用來源、官方機關／當事組織、原始通訊社及其他可靠媒體的同事件合法刊載／轉載圖片。圖片可以不是原文同一張，只要來源可信、合法公開刊載、可追溯，且事件、日期、人物／地點一致；圖片證據來源與文字驗證來源不必相同。每則 `image-evidence.json` 必須保存 `original_source_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`。任一來源層尚未實際搜尋時，不得宣告 fallback exhaustion、圖片不可取得或不可恢復 blocker；只要任一路徑找到合格圖片，就必須繼續嘗試實際可見交付。
+
+`NATIVE_MEDIA_CAPABILITY_FALLBACK`：兩種模式都只有在完成 `IMAGE_FALLBACK_EXHAUSTION_GATE` 的四層來源搜尋、至少找到一張合格圖片，且自身所有可執行交付路徑均已實際失敗後，才可把最後一哩宿主限制記為 capability limitation；不得把它寫成 `last_error`，也不得重跑新聞流程。完成四層搜尋後仍沒有合格圖片是 `no_usable_image_after_source_exhaustion`，不是 `NATIVE_MEDIA_UNAVAILABLE`。一旦已確認存在合格來源圖片而交付失敗，同一 run 必須保持 `status=running`、`current_stage=visuals-completed`，不得進入 reader 正式交付或 canonical completed；只把圖片交付切換到既有 full-runtime，以已確認的來源圖片 URL 下載、失敗後截圖及本機附件接續。
 
 - 每則先檢查已引用來源的 `og:image`、`src/srcset`、內文圖與官方產品圖；仍無結果時依序查官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導，可查多個來源而不限一個。
 - full-runtime 先下載實際媒體檔；下載失敗才截取同一來源頁／官方產品頁的合規畫面。取得的本機檔必須通過 MIME、解碼、尺寸、SHA-256、時間與內容相關性檢查，再實際使用宿主支援的附件／媒體路徑。
 - mobile-native 使用原生圖片搜尋／圖片卡時，保存來源、事件與日期核對、交付嘗試及宿主結構化結果；不能僅因未看到特定工具名稱就判 `NATIVE_MEDIA_UNAVAILABLE`，也不能聲稱已完成本機檔案或像素驗收。
+- 圖片來源可與文字驗證來源不同；合格條件是可信、合法公開刊載、可追溯，且與同一事件、日期、人物或地點一致。找到某來源頁有圖，不代表後續只能從該頁取得；單一路徑失敗必須繼續下一層 fallback。
 - capability-degraded mobile recovery 必須保存逐則來源檢查與原生交付嘗試，`last_error=null`，並清楚表示未完成 pixel machine verification。`image_evidence_artifact` 的 Git blob SHA 只證明 evidence 已持久化，不證明內容已通過語義或像素機器驗證。
 - manifest 對 `map` 與 `images` 都必須保存 `claim_critical`。來源確實沒有合格圖片時，一般配圖可 `omitted` 並只保存後台原因；但只要已確認存在合格來源圖片，是否 `claim_critical` 都不能把交付失敗降級成正式完成。
 
@@ -318,7 +321,7 @@ mobile-native 沒有 checkpoint 或 manifest。查證不足時依 `VERIFICATION_
 
 `RUN_ARTIFACT_IDENTITY_GATE`：排程實際觸發後先完成 capability routing，再由 actual executor 的 `prepare` 以 `full-runtime` 或 `mobile-native` 一次性固定 `execution_mode`；repository 不建立 future reservation，mode 其後不可切換。`window` 在 `schedule-prepared` 必須為 null；第一次進入 `executor-started` 時，以該次實際執行時刻固定 `end`、倒推精確 24 小時得到 `start`，並保存該 task 的時區，之後同一 occurrence 不得重新計算或修改。`main_sha` 在 `main-pinned` 前必須為 null，進入 `main-pinned` 時必須已設定，且同一 `scheduled_for` 不可再改變。每個 active artifact binding 都必須攜帶並符合 current ledger 的 `run_id`、`main_sha` 與 `window`；candidate audit、verification、map decisions、image evidence 與 Reader 不得另行建立時間窗。任何身分不一致或尚未到對應 stage 卻綁定未來 artifact 時立即拒絕，不得 repin、mode switch、migration 或 compatibility bypass。
 
-`VISUAL_DELIVERY_ONLY_RECOVERY`：`NATIVE_MEDIA_UNAVAILABLE` 只能存在於同一 run 的 `status=running`、`current_stage=visuals-completed`，且必須已有本輪 image evidence binding。此 run 的 `execution_mode` 仍保持 `mobile-native`；full-runtime 只作為外部 visual-recovery executor，讀既有 candidate audit、verification、map decisions、image evidence 與已確認的來源圖片 URL，只補下載／截圖／物化／可見附件交付。這不是 mode switch；不得重跑 discovery、scoring、verification、建立 new run 或變更 event IDs。
+`VISUAL_DELIVERY_ONLY_RECOVERY`：只有已完成四層圖片來源 fallback、至少找到一張合格圖片，且所有宿主可用交付方式均實際失敗後，`NATIVE_MEDIA_UNAVAILABLE` 才能存在於同一 run 的 `status=running`、`current_stage=visuals-completed`，且必須已有本輪 image evidence binding。此 run 的 `execution_mode` 仍保持 `mobile-native`；full-runtime 只作為外部 visual-recovery executor，讀既有 candidate audit、verification、map decisions、image evidence 與已確認的來源圖片 URL，只補下載／截圖／物化／可見附件交付。這不是 mode switch；不得重跑 discovery、scoring、verification、建立 new run 或變更 event IDs。
 
 `QUALIFIED_IMAGE_DELIVERY_INDEPENDENT_OF_CLAIM_CRITICAL`：所有 C 級以上事件只要已確認存在合格來源圖片，交付失敗就必須停在上述視覺恢復；`claim_critical=false` 不得把 delivery failure 改寫成 omitted 或完成文字 Reader。只有完整 source exhaustion 證明不存在合格圖片時，非關鍵圖片才可 omitted。
 

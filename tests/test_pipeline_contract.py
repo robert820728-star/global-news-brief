@@ -684,6 +684,36 @@ class PipelineContractTests(unittest.TestCase):
             self.assertNotIn("claim_critical=false → delivery failure may omit", text)
             self.assertNotIn("非關鍵圖片交付失敗可直接完成文字 Reader", text)
 
+    def test_image_fallback_exhaustion_is_a_first_class_outer_gate(self):
+        documents = (
+            ROOT / "INSTALL.md",
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / "news-brief-settings.md",
+            ROOT / ".agents" / "skills" / "collect-news-images" / "SKILL.md",
+            ROOT / ".agents" / "skills" / "collect-news-images" / "references" / "image-policy.md",
+            ROOT / "docs" / "mobile-run-ledger.md",
+        )
+        checklist = (
+            "original_source_attempted",
+            "official_fallback_attempted",
+            "wire_fallback_attempted",
+            "reliable_media_fallback_attempted",
+            "qualified_image_found",
+            "delivery_attempted",
+            "delivery_result",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("IMAGE_FALLBACK_EXHAUSTION_GATE", text, path)
+            for field in checklist:
+                self.assertIn(field, text, path)
+        image_skill = documents[4].read_text(encoding="utf-8")
+        self.assertNotIn(
+            "來源有圖但取得失敗時，非主張關鍵圖片可依 omission contract 省略",
+            image_skill,
+        )
+
     def test_visual_recovery_cannot_restart_news_pipeline(self):
         documents = (
             ROOT / "INSTALL.md",

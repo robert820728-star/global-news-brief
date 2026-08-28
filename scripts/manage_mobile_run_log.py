@@ -19,6 +19,17 @@ EXECUTION_MODES = {"full-runtime", "mobile-native"}
 DELIVERY_PROFILES = {"full-assets", "reader-canonical-capability-degraded"}
 NATIVE_MEDIA_STATUSES = {"available", "unavailable"}
 KNOWN_CAPABILITY_LIMITATIONS = {"NATIVE_MEDIA_UNAVAILABLE"}
+IMAGE_FALLBACK_ATTEMPT_FIELDS = (
+    "original_source_attempted",
+    "official_fallback_attempted",
+    "wire_fallback_attempted",
+    "reliable_media_fallback_attempted",
+)
+IMAGE_DELIVERY_RESULTS = {
+    "delivered",
+    "delivery_unavailable",
+    "source_exhausted",
+}
 DURABLE_AUDIT_STATUSES = {
     "not_started",
     "updated",
@@ -264,6 +275,117 @@ def _validate_artifact_identity(record: dict[str, Any], field: str, label: str) 
         raise ValueError(f"{label} artifact window does not match ledger")
 
 
+def _bound_artifact_path(
+    ledger_dir: Path, artifact: dict[str, Any], label: str
+) -> Path:
+    root = ledger_dir.parent if ledger_dir.name == "logs" else ledger_dir
+    root = root.resolve()
+    path = (root / str(artifact.get("path", ""))).resolve()
+    if path != root and root not in path.parents:
+        raise ValueError(f"{label} path escapes the run-logs checkout")
+    return path
+
+
+def _validate_bound_image_evidence(
+    ledger_dir: Path | str, record: dict[str, Any]
+) -> None:
+    if record.get("execution_mode") != "mobile-native":
+        return
+    artifact = record.get("image_evidence_artifact")
+    if not isinstance(artifact, dict):
+        return
+    path = _bound_artifact_path(Path(ledger_dir), artifact, "image evidence")
+    if not path.is_file():
+        raise ValueError("bound image evidence file is missing")
+    try:
+        evidence = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ValueError("bound image evidence is not readable JSON") from error
+    events = evidence.get("events") if isinstance(evidence, dict) else None
+    if not isinstance(events, list):
+        raise ValueError("bound image evidence must contain event checklists")
+
+    audit_artifact = record.get("candidate_audit_artifact")
+    if not isinstance(audit_artifact, dict):
+        raise ValueError("bound image evidence requires candidate audit")
+    audit_path = _bound_artifact_path(
+        Path(ledger_dir), audit_artifact, "candidate audit"
+    )
+    if not audit_path.is_file():
+        raise ValueError("bound candidate audit file is missing")
+    try:
+        audit = json.loads(audit_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ValueError("bound candidate audit is not readable JSON") from error
+    matching_runs = [
+        run
+        for run in audit.get("runs", [])
+        if isinstance(run, dict) and run.get("run_id") == record["run_id"]
+    ] if isinstance(audit, dict) else []
+    if len(matching_runs) != 1 or not isinstance(
+        matching_runs[0].get("candidates"), list
+    ):
+        raise ValueError("bound candidate audit must contain the current run")
+    selected_event_ids: list[str] = []
+    for candidate in matching_runs[0]["candidates"]:
+        if not isinstance(candidate, dict) or candidate.get("decision") != "selected":
+            continue
+        selected_event_id = candidate.get("selected_event_id")
+        if not isinstance(selected_event_id, str) or not selected_event_id.strip():
+            raise ValueError("selected candidate requires selected_event_id")
+        selected_event_ids.append(selected_event_id)
+    if len(selected_event_ids) != len(set(selected_event_ids)):
+        raise ValueError("bound candidate audit contains duplicate selected_event_id values")
+
+    unavailable_events = 0
+    event_ids: list[str] = []
+    for index, event in enumerate(events, 1):
+        label = f"image evidence event[{index}]"
+        if not isinstance(event, dict):
+            raise ValueError(f"{label} must be an object")
+        event_id = event.get("event_id")
+        if not isinstance(event_id, str) or not event_id.strip():
+            raise ValueError(f"{label} requires event_id")
+        event_ids.append(event_id)
+        for field in (*IMAGE_FALLBACK_ATTEMPT_FIELDS, "qualified_image_found", "delivery_attempted"):
+            if not isinstance(event.get(field), bool):
+                raise ValueError(f"{label}.{field} must be boolean")
+        result = event.get("delivery_result")
+        if result not in IMAGE_DELIVERY_RESULTS:
+            raise ValueError(f"{label}.delivery_result is invalid")
+        if event["original_source_attempted"] is not True:
+            raise ValueError(f"{label} requires original source inspection")
+
+        fallback_exhausted = all(
+            event[field] is True for field in IMAGE_FALLBACK_ATTEMPT_FIELDS
+        )
+        if result in {"delivery_unavailable", "source_exhausted"} and not fallback_exhausted:
+            raise ValueError(
+                f"{label} requires four-tier image fallback exhaustion"
+            )
+        if result == "delivered":
+            if not event["qualified_image_found"] or not event["delivery_attempted"]:
+                raise ValueError(f"{label} delivered result requires a qualified image and delivery attempt")
+        elif result == "delivery_unavailable":
+            unavailable_events += 1
+            if not event["qualified_image_found"] or not event["delivery_attempted"]:
+                raise ValueError(f"{label} unavailable result requires a qualified image and delivery attempt")
+        elif event["qualified_image_found"] or event["delivery_attempted"]:
+            raise ValueError(f"{label} source exhaustion forbids a found image or delivery attempt")
+
+    if len(event_ids) != len(set(event_ids)):
+        raise ValueError("bound image evidence contains duplicate event_id values")
+    if set(event_ids) != set(selected_event_ids):
+        raise ValueError(
+            "bound image evidence event set does not match selected event set"
+        )
+    limitations = set(record.get("capability_limitations") or [])
+    if unavailable_events and "NATIVE_MEDIA_UNAVAILABLE" not in limitations:
+        raise ValueError("undelivered qualified images require NATIVE_MEDIA_UNAVAILABLE")
+    if not unavailable_events and "NATIVE_MEDIA_UNAVAILABLE" in limitations:
+        raise ValueError("NATIVE_MEDIA_UNAVAILABLE requires an undelivered qualified image")
+
+
 def _validate_window(window: Any, label: str) -> None:
     if (
         not isinstance(window, dict)
@@ -465,6 +587,14 @@ def advance_run(
         current["durable_audit_artifact"] = durable_audit_artifact
     current["last_error"] = last_error
     validate_record(current)
+    if (
+        current.get("image_evidence_artifact") is not None
+        and (
+            current["stage_index"] >= STAGE_INDEX["reader-rendered"]
+            or "NATIVE_MEDIA_UNAVAILABLE" in current["capability_limitations"]
+        )
+    ):
+        _validate_bound_image_evidence(ledger_dir, current)
     _atomic_write(current_path, current)
     return current
 
@@ -583,6 +713,14 @@ def main() -> int:
     else:
         result = _read_json(args.input)
         validate_record(result)
+        if (
+            result.get("image_evidence_artifact") is not None
+            and (
+                result["stage_index"] >= STAGE_INDEX["reader-rendered"]
+                or "NATIVE_MEDIA_UNAVAILABLE" in result["capability_limitations"]
+            )
+        ):
+            _validate_bound_image_evidence(args.input.parent, result)
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 0
 

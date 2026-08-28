@@ -61,3 +61,5 @@
 - 每個檢查項目保存檢查時間、方法、檢出的圖片網址及判定理由；full-runtime 保存本地頁面證據，mobile-native 保存宿主結構化檢查結果。
 - 頁面存在合格圖片時，full-runtime 必須下載或截圖並附入 `images.assets`；mobile-native 使用原生圖片搜尋／圖片卡並將結果保存於既有 image evidence／ledger，不得寫入 `images.assets`。地圖與自製資料圖表均不能替代。
 - `no_usable_image` 必須由該模式可取得的實際頁面或結構化檢查結果支持；頁面未完整載入、登入牆阻擋或該模式的交付嘗試失敗，都必須如實保存，不得冒充已驗收附件。
+
+`IMAGE_FALLBACK_EXHAUSTION_GATE`：原引用來源、官方機關／當事組織、原始通訊社及其他可靠媒體的同事件合法刊載／轉載是四個依序必查層級。圖片可與文字驗證使用不同來源，也不必是原文同一張，但必須可信、合法公開刊載、可追溯，且事件、日期、人物／地點一致。每則 evidence 保存 `original_source_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`；任一來源層未實際搜尋時，不得宣告 `NATIVE_MEDIA_UNAVAILABLE`、source exhaustion 或停止圖片 stage。
