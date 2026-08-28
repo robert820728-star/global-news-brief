@@ -60,6 +60,8 @@ python3 scripts/recover_news_run.py record \
 
 ## 3. mobile-native：同一 ledger 內恢復
 
+`MANDATORY_GATE_EXECUTION_ASSERTION` 是 mobile-native render 前的 mandatory coverage boundary；若 receipt 本身缺失或證據不足，只恢復缺失的 gate evidence，不得另造新聞流程。
+
 mobile-native 只可留在目前 stage 或前進至緊鄰的下一 stage，不得 stage regression 或跳級。進入各邊界前讀回並核對現有 Git blob binding：`selection-verified` 需要 candidate audit、`visuals-completed` 需要 verification、`reader-rendered` 需要 map decisions 與 image evidence、`github-result-saved` 需要 Reader。
 
 若核心主張在事件級驗證恢復後仍為 `insufficient`，保持 `current_stage=selection-verified` 且不得前進 visuals。更新同一 run 的 `candidate-audit.json`，將受影響候選重評或以 `unreliable_or_unverified` 排除，更新 `candidate_audit_artifact` 的 Git blob SHA，然後重新 verification；只有成功保存新的 `verification.json` 才可繼續。不得建立 mobile checkpoint 或 manifest，不得重跑 discovery、preprocess 或 semantic selection，也不得建立替代 run。

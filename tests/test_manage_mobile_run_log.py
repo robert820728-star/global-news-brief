@@ -716,6 +716,9 @@ class MobileRunLogTests(unittest.TestCase):
             "image_evidence_artifact": self.mobile_artifacts()["reader-rendered"][
                 "image_evidence_artifact"
             ],
+            "gate_assertions_artifact": self.mobile_artifacts()["reader-rendered"][
+                "gate_assertions_artifact"
+            ],
         }
         self.advance_to("reader-rendered", stage_kwargs=artifacts)
         resumed = self.prepare(run_id=RUN_2, at="2026-08-17T22:54:00Z")

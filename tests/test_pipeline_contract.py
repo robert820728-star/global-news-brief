@@ -331,7 +331,8 @@ class PipelineContractTests(unittest.TestCase):
 
         self.assertIn("full-runtime 保存本地頁面證據", policy)
         self.assertIn("mobile-native 保存宿主結構化檢查結果", policy)
-        self.assertIn("mobile-native 依序嘗試文章直接媒體 URL、原生圖片搜尋／圖片卡與後續來源", readme)
+        self.assertIn("逐則圖片 evidence", readme)
+        self.assertIn("MANDATORY_GATE_EXECUTION_ASSERTION", readme)
         self.assertIn("只有 full-runtime 取得並驗證 capsule", readme)
 
     def test_capsule_workflow_runs_full_repository_suite(self):
@@ -577,14 +578,15 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("scripts/resolve_bundled_python.py", workflow)
         self.assertIn("scripts/fetch_source_routes.py", workflow)
 
-    def test_mobile_chatgpt_profile_is_low_cost_and_preserves_minimum_contract(self):
+    def test_mobile_chatgpt_profile_uses_install_as_single_entrypoint(self):
         start = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
-        self.assertIn("Instant", start)
-        self.assertIn("不要使用 Thinking 或 Pro", start)
-        self.assertIn("每天 06:00", start)
-        self.assertIn("建立後立即執行一次", start)
+        self.assertIn("唯一安裝入口", start)
+        self.assertIn("INSTALL.md", start)
+        self.assertIn("不得另開新對話", start)
+        for retired in ("GitHub 規則來源：", "最低驗收不可省略", "不要使用 Thinking 或 Pro"):
+            self.assertNotIn(retired, start)
         for requirement in ("十四天", "六項", "C 級以上", "圖片說明"):
             self.assertIn(requirement, daily)
         for forbidden in ("Codex", "powershell", "bootstrap capsule", "git clone"):
