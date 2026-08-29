@@ -1,69 +1,26 @@
 {
   "schema_version": "1.6.0",
   "execution_mode": "mobile-native",
-  "delivery_profile": "reader-canonical-capability-degraded",
-  "native_media_status": "unavailable",
-  "capability_limitations": [
-    "configured discovery routes unavailable in this host; bounded web_fallback used with degraded_partial coverage",
-    "NATIVE_MEDIA_UNAVAILABLE"
-  ],
-  "run_id": "gnb-20260829T035709Z-7c2f8a41",
-  "scheduled_for": "2026-08-29T03:55:54+00:00",
-  "status": "running",
-  "current_stage": "visuals-completed",
-  "stage_index": 7,
-  "last_completed_stage": "selection-verified",
-  "main_sha": "a4460a4ef09ae6b5079d2c67fa4b21b941cd76b1",
-  "window": {
-    "start": "2026-08-28T03:57:09+00:00",
-    "end": "2026-08-29T03:57:09+00:00",
-    "timezone": "Asia/Shanghai"
-  },
-  "updated_at": "2026-08-29T04:56:30+00:00",
+  "delivery_profile": "full-assets",
+  "native_media_status": "available",
+  "capability_limitations": [],
+  "run_id": "gnb-20260829T215713Z-7c4e1a92",
+  "scheduled_for": "2026-08-29T22:00:00+00:00",
+  "status": "awaiting_executor",
+  "current_stage": "schedule-prepared",
+  "stage_index": 0,
+  "last_completed_stage": null,
+  "main_sha": null,
+  "window": null,
+  "updated_at": "2026-08-29T21:57:13+00:00",
   "last_error": null,
   "delivery_status": "not_ready",
   "client_confirmation_supported": false,
   "reader_artifact": null,
-  "candidate_audit_artifact": {
-    "path": "logs/runs/gnb-20260829T035709Z-7c2f8a41/candidate-audit.json",
-    "blob_sha": "312b26cae1f1920e040e191fec97f4a1da28cc8f",
-    "run_id": "gnb-20260829T035709Z-7c2f8a41",
-    "main_sha": "a4460a4ef09ae6b5079d2c67fa4b21b941cd76b1",
-    "window": {
-      "start": "2026-08-28T03:57:09+00:00",
-      "end": "2026-08-29T03:57:09+00:00"
-    }
-  },
-  "verification_artifact": {
-    "path": "logs/runs/gnb-20260829T035709Z-7c2f8a41/verification.json",
-    "blob_sha": "d2549ef8461112dd00ff8357d1ae1bd520434150",
-    "run_id": "gnb-20260829T035709Z-7c2f8a41",
-    "main_sha": "a4460a4ef09ae6b5079d2c67fa4b21b941cd76b1",
-    "window": {
-      "start": "2026-08-28T03:57:09+00:00",
-      "end": "2026-08-29T03:57:09+00:00"
-    }
-  },
-  "map_decisions_artifact": {
-    "path": "logs/runs/gnb-20260829T035709Z-7c2f8a41/map-decisions.json",
-    "blob_sha": "4ebf0e6a59fcb8adec05ca38ad8f9a286e0a758b",
-    "run_id": "gnb-20260829T035709Z-7c2f8a41",
-    "main_sha": "a4460a4ef09ae6b5079d2c67fa4b21b941cd76b1",
-    "window": {
-      "start": "2026-08-28T03:57:09+00:00",
-      "end": "2026-08-29T03:57:09+00:00"
-    }
-  },
-  "image_evidence_artifact": {
-    "path": "logs/runs/gnb-20260829T035709Z-7c2f8a41/image-evidence.json",
-    "blob_sha": "b9e3c45cee26e5ad9b32b574a19bf72d94394121",
-    "run_id": "gnb-20260829T035709Z-7c2f8a41",
-    "main_sha": "a4460a4ef09ae6b5079d2c67fa4b21b941cd76b1",
-    "window": {
-      "start": "2026-08-28T03:57:09+00:00",
-      "end": "2026-08-29T03:57:09+00:00"
-    }
-  },
-  "durable_audit_status": "preserved_merge_deferred",
-  "durable_audit_artifact": "logs/latest-candidate-audit.json"
+  "candidate_audit_artifact": null,
+  "verification_artifact": null,
+  "map_decisions_artifact": null,
+  "image_evidence_artifact": null,
+  "durable_audit_status": "not_started",
+  "durable_audit_artifact": null
 }
