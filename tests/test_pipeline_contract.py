@@ -582,9 +582,10 @@ class PipelineContractTests(unittest.TestCase):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         self.assertIn("Instant", start)
-        self.assertIn("不要使用 Thinking 或 Pro", start)
-        self.assertIn("每天 06:00", start)
-        self.assertIn("建立後立即執行一次", start)
+        self.assertIn("scheduled-task-prompt-template.md", start)
+        self.assertIn("原樣設為 Scheduled Task instruction", start)
+        self.assertIn("每天 6 點循環排程", start)
+        self.assertIn("不得摘要、縮短", start)
         for requirement in ("十四天", "六項", "C 級以上", "圖片說明"):
             self.assertIn(requirement, daily)
         for forbidden in ("Codex", "powershell", "bootstrap capsule", "git clone"):
@@ -1373,6 +1374,52 @@ class PipelineContractTests(unittest.TestCase):
             )
             self.assertIn("DEFERRED", document)
             self.assertIn("不得標記整輪失敗", document)
+
+    def test_scheduled_task_uses_complete_canonical_instruction_not_thin_launcher(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        template_path = ROOT / "scheduled-task-prompt-template.md"
+
+        self.assertTrue(
+            template_path.is_file(),
+            "Scheduled Task must have one complete canonical instruction template",
+        )
+        template = template_path.read_text(encoding="utf-8")
+        capsule_builder = (ROOT / "scripts/build_bootstrap_capsule.py").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("SCHEDULED_TASK_FULL_INSTRUCTION_GATE", install)
+        self.assertIn("原樣完整複製", install)
+        self.assertNotIn("task prompt 不得內嵌圖片能力結論", install)
+        self.assertNotIn("task prompt 只是一個 bootstrap launcher", install)
+        self.assertGreater(len(template), 4000)
+        self.assertIn('"scheduled-task-prompt-template.md"', capsule_builder)
+
+        for marker in (
+            "FRESH_MAIN_AND_ENTRYPOINT_GATE",
+            "SCHEDULED_OCCURRENCE_SINGLE_RUN_GATE",
+            "GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE",
+            "PUBLIC_VALUE_V2_SELECTION_GATE",
+            "INDEPENDENT_VERIFICATION_GATE",
+            "DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE",
+            "IMAGE_FALLBACK_EXHAUSTION_GATE",
+            "IMAGE_READER_VISIBLE_DELIVERY_GATE",
+            "CANONICAL_THREE_PART_READER_LAYOUT_GATE",
+            "CURRENT_CONVERSATION_DELIVERY_GATE",
+        ):
+            self.assertIn(marker, template)
+
+        for requirement in (
+            "原引用來源 → 官方機關／當事組織 → 原始通訊社 → 其他可靠媒體",
+            "搜尋結果沒有 image ref",
+            "所有 C 級以上",
+            "## 今日總覽",
+            "## 逐條詳報",
+            "## 後續觀察",
+            "不得另開新對話",
+            "不得宣告 `NATIVE_MEDIA_UNAVAILABLE`",
+        ):
+            self.assertIn(requirement, template)
 
 
 if __name__ == "__main__":

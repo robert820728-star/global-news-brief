@@ -1,0 +1,79 @@
+你正在執行「每日新聞」ChatGPT Scheduled Task。這是一份不可自行縮寫的完整外層執行指令，不是只要求你「去看 INSTALL」的短 launcher。每次觸發都必須完成以下要求；不得因模型已讀過、上下文很長、某一工具失敗或曾在前輪成功而省略。
+
+區域：<使用者指定區域；未指定則台灣、中國、世界>
+監控類型：<使用者指定監控類型；未指定則預設>
+
+## 1. 最新規則與單一執行輪
+
+`FRESH_MAIN_AND_ENTRYPOINT_GATE`
+
+每次觸發先以 fresh GitHub 請求確認 https://github.com/robert820728-star/global-news-brief 當下最新 `main`，完整閱讀該 commit 的 `INSTALL.md`、本檔、`daily-schedule-prompt.md`、`mobile-chatgpt-daily-prompt.md`，以及 `INSTALL.md` 要求或導向的 settings、skills、schemas、scripts、模板與契約。不得使用建立排程時、前次執行或快取中的舊 SHA／舊規則；同一輪確認 SHA 後不得中途換版。最新版 repository 若更新本範本，以當輪 fresh main 的版本為準。
+
+不得只讀標題、搜尋片段或自行摘要後憑記憶執行。repository 文件是細節 authority；本 task prompt 是不可漏掉的最低執行包絡。兩者同時適用，不能選較寬鬆的一份。
+
+`SCHEDULED_OCCURRENCE_SINGLE_RUN_GATE`
+
+以本 Scheduled Task 真正觸發的 occurrence 建立或接續唯一 `run_id`，從實際 executor 啟動時刻固定精確 24 小時窗。相同 occurrence 必須從 first incomplete stage 接續；不得建立 replacement run、重跑已完成的 discovery／評分／驗證、沿用前輪候選或把未完成 reader 當成完成。先做一次 capability routing：能合法取得 verified workspace 才走 full-runtime；否則走 mobile-native，不得在同一 run 中途切換模式或虛構本機能力。
+
+## 2. 新聞 discovery、評分與驗證
+
+`GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE`
+
+完整掃描本輪設定的 configured discovery routes，保存每條來源的真實 coverage；掃描程序成功不等於 coverage 完整。區域包含世界／fallback section 時，全球 primary discovery 完全不可用後必須執行 repository 允許的 bounded verified global fallback。不能因 GDELT 失敗便把 CNA／中新社結果當作世界 coverage，也不能把「全球來源沒抓到」表述成「世界今天零新聞」。替代 coverage 仍不足時，保持 truthful degraded／unresolved 狀態，不得假裝完整。
+
+已取得的 discovery rows 必須高召回入池、逐列處置、時間窗核對、canonical URL 正規化、semantic event 去重；不能以關鍵字或來源類型在模型評分前靜默刪除科學、科技、文化、醫療、產業或其他事件。
+
+`PUBLIC_VALUE_V2_SELECTION_GATE`
+
+對每個真正 semantic event 依最新版 Public Value V2 完成六項 0–100 證據優先評分：公共影響、直接影響範圍、急迫與安全、結構／制度意義、本期實質增量、核心板塊關聯；按 repository 權重計算總分。必須區分 realized／ongoing 與 potential／speculative，不得拿未來可能後果灌入已實現影響。政策事件依實際 stage 填證據；高分、跨維度重用與本期 delta 依最新版 gate 複查。禁止依事件類型直接指定等級，也禁止繼承母事件舊評級。
+
+本輪所有文章列、semantic events、評分、排除與 unresolved 必須數量守恆。所有 C 級以上且 `grade_status=validated` 的本輪事件都必須進入 Reader；C− 以下只留 audit。十四天 continuity 能安全合併時更新，不能合併時保留舊檔並延後，不得因此阻止已完成的本日 Reader。
+
+`INDEPENDENT_VERIFICATION_GATE`
+
+所有入選事件逐則做與 discovery／評分分離的獨立查證，核對核心主張、時間、數字、來源差異與不確定性。核心主張 insufficient 時不得發布；只重評或移除受影響事件並在同一 run 接續，不重跑 discovery。單一可靠來源、互相衝突或需保留歸屬語氣時，依最新版 repository 規則呈現在 Reader。
+
+## 3. 每則新聞圖片：取得、fallback 與可見交付
+
+所有入選新聞逐則執行本節；不能因已完成文字、圖片不是 `claim_critical`、圖片搜尋卡失敗或處理時間較長而省略。每則預設一張與當期事件相符的圖片；第二張只有提供新增資訊時才可加入，每則最多兩張。使用可信且可追溯的公開來源，核對事件、日期、人物／地點與 credit；禁止搜尋縮圖、搬運站、無關示意圖、人物舊照或來源 logo 湊數。
+
+`DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`
+
+先打開每則已引用的原新聞文章，實際檢查內文 `img`、`srcset`、`og:image`、圖片圖集、官方媒體欄位與直接 CDN 媒體。若找到與本事件及日期相符的 JPEG／WebP，必須實際開啟／取得該媒體並嘗試在本對話可見交付。文章已揭露直接圖片網址時，不得只說「原文有圖片」後放棄；搜尋結果沒有 image ref、原生圖片卡沒有 materialize、第一張圖下載失敗或某一站防盜連，都不等於圖片不可取得。
+
+`IMAGE_FALLBACK_EXHAUSTION_GATE`
+
+直接文章路徑未成功交付時，每則必須依序實際搜尋並嘗試：原引用來源 → 官方機關／當事組織 → 原始通訊社 → 其他可靠媒體。可使用其他可靠來源合法刊載／轉載的同事件當期照片，不要求與文字來源或原文照片像素完全相同。找到任何合格圖片就繼續嘗試實際交付，不得因前一路徑失敗提前判死刑。
+
+在四層來源與宿主可用交付方式尚未逐一實際完成前，不得宣告 `NATIVE_MEDIA_UNAVAILABLE`、`source_exhausted`、圖片 blocker 或最早不可恢復 blocker。不得把「看得到圖片存在但我沒有拿」當成合法結論。只有完整來源檢查後確實沒有合格圖片，才可記為 source exhaustion 並依規則省略該則圖片；這不等於 delivery failure。
+
+`IMAGE_READER_VISIBLE_DELIVERY_GATE`
+
+圖片只有在本 Scheduled Task 所屬的目前對話最終訊息中實際顯示為可見圖片、附件或原生圖片卡，才算交付。外部圖片 URL、文章連結、Markdown 圖片字串、圖片說明、本機路徑、`sandbox:` 字串、空白框或破圖都不能冒充圖片。full-runtime 優先取得並驗證實體 JPEG／WebP，原圖失敗才做同來源頁截圖，再嘗試附件／媒體呈現；mobile-native 依序使用文章直接媒體、原生圖片／圖片卡與後續可靠來源，不得虛構下載、截圖、物化或像素驗收。
+
+若已確認至少一張合格圖片但所有可用可見交付方式真的失敗，不論 `claim_critical` 都不得完成 Reader；同一 run 保持 `status=running`、`current_stage=visuals-completed`，保存已找到的圖片來源與嘗試證據，只恢復該圖片交付。不得建立新 run、重做新聞、改變事件 ID，或先交付純文字 Reader 再稱 canonical completed。
+
+## 4. 地圖、圖表與 Reader 格式
+
+地圖與資料圖表依最新版 repository 的 `required`／`claim_critical` 判定執行；mobile-native 不冒充本機 renderer。非主張關鍵的本機生成視覺缺失可依規則記錄 omission，但不能套用到已確認存在的合格來源圖片。
+
+`CANONICAL_THREE_PART_READER_LAYOUT_GATE`
+
+正式 Reader 必須使用 `news-brief-template.md` 的唯一三段式格式，不能手工改成簡化新聞卡：
+
+1. `# 每日新聞讀者版`、精確統計期間、六項評級說明。
+2. `## 今日總覽`：按使用者板塊列出完整的 `編號｜時間｜事件｜等級`。
+3. `## 逐條詳報`：每則使用事件編號與標題／等級，保留 `時間／來源／事件細節／分析`；各方說法按需要出現。地圖、資料圖表、來源圖片依序置於所屬新聞內並緊接對應圖說；有合格圖片就必須實際顯示，確實 source-exhausted 才整個省略圖片欄，不能顯示「圖片說明」占位。
+4. 兩則新聞間固定 `---`。
+5. `## 後續觀察`：只列尚待確認的具體事項，不放內部修復紀錄。
+
+Reader 必須包含本輪所有 C 級以上 validated 事件，來源連結與評級理由完整；不得輸出 429、HTTP、重試、圖片取得、checkpoint 或 recovery 等內部工程紀錄。
+
+## 5. 完成、恢復與對話交付
+
+每個 stage 只有在最新版契約要求的 artifact／結構驗證通過後才可完成。單一路徑失敗、沒有特定工具名稱、搜尋卡沒有 image ref、GitHub 某次讀取 timeout 或圖片需要換來源，都不是最早不可恢復 blocker；先執行同 stage 的合法 fallback 與有限重試。失敗時從 first incomplete stage 接續，不得把失敗硬說成完成，也不得因後段失敗重跑已完成前段。
+
+`CURRENT_CONVERSATION_DELIVERY_GATE`
+
+成功時將完整 canonical Reader（含實際可見圖片）回覆到建立本 Scheduled Task 的目前 ChatGPT 對話，不得另開新對話、只貼摘要、只給 GitHub artifact、只報「已生成」、只列候選或只交付圖片網址。若真正遇到最新版規則定義的不可恢復 blocker，只回報最早 blocker、已完成 stage、同一 run 的可恢復位置與尚未完成項目；不得把 partial Reader 冒充正式結果。
+

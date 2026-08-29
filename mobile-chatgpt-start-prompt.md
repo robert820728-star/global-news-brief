@@ -2,22 +2,14 @@
 
 先在手機 ChatGPT 的模型選單選擇 **Instant**。若可設定，關閉自動切換到 Thinking。不要使用 Thinking 或 Pro。
 
-接著把下方整段貼到一般 ChatGPT 對話：
+接著把下方整段貼到一般 ChatGPT 對話。ChatGPT 必須讀取最新版 `INSTALL.md`，再把最新版 `scheduled-task-prompt-template.md` 全文原樣設為 Scheduled Task instruction；不得濃縮成只有「依 INSTALL 執行」的短 launcher：
 
 ```text
-請建立一個 ChatGPT Scheduled Task，名稱為「每日新聞」。
+每日新聞排程
+請確認 https://github.com/robert820728-star/global-news-brief 的最新 main commit，完整閱讀最新版 INSTALL.md，依其「Scheduled Task 排程指令唯一契約」取得 scheduled-task-prompt-template.md 全文，替換我指定的區域與監控類型後，原樣設為 Scheduled Task instruction，不得摘要、縮短或只留下檔案連結。
 
-排程：使用我在本對話指定的單次或循環時間與時區；若我尚未指定，先詢問，仍無偏好才預設每天 06:00 並優先使用帳號／裝置時區。建立後立即執行一次。repository 不建立任何 pre-trigger reservation。
-執行模式：維持目前的 Instant，不切換到 Thinking 或 Pro。
-GitHub 規則來源：https://github.com/robert820728-star/global-news-brief/blob/main/mobile-chatgpt-daily-prompt.md
-監控區域：台灣、中國、全球
-加重類型：無
-
-每次執行前重新讀取上述 GitHub 檔案，依其中「手機 ChatGPT 基礎每日新聞規則」完成本輪更新。使用此排程對話可取得的網頁搜尋、已連接 app 與前次執行記憶；不要要求本機檔案、命令列或程式執行環境。
-
-使用已連接且具此 repository 寫入權限的 GitHub app。每輪搜尋前先接手 `run-logs` 分支的持久執行紀錄；讀者版完成後先保存到該分支，再嘗試輸出到本對話。不得把「後端已開始交付」誤稱為「手機畫面已確認收到」。
-
-最低驗收不可省略：本輪 24 小時 run-scoped candidate audit、每筆六項大評分、本輪所有 C 級以上新聞進入讀者版，以及每則新聞的同圖低解析圖片、同一張原圖或具證據的完整省略決定。十四天 continuity cache 能安全合併時才更新；無法合併時保留舊檔並延後，不得阻擋當日 reader。不得為了縮小檔案換成另一張圖，不得用圖片說明、圖片網址或原網站連結代替附件，也不得因無法縮圖而讓整份新聞失敗。
-
-若本輪無法讀取 GitHub 規則或無法搜尋新聞，請明確回報失敗原因，不得用模型記憶虛構新聞或宣稱已更新。
+1. 請在目前這個對話內建立每天 6 點循環排程；使用目前對話／帳號的時區，名稱為「每日新聞」。
+2. 區域：台灣、中國、世界。監控類型：預設。
+3. 每次結果只回覆在目前這個對話，不要另開新對話。
+4. 建立完成後，回報實際保存的完整 task instruction 與 schedule；不得只回覆一段摘要。
 ```

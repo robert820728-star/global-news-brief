@@ -14,9 +14,15 @@
 
 ## 快速安裝
 
-在新的 ChatGPT 對話貼上本 repo 網址，並輸入：
+在新的 ChatGPT 對話貼上以下內容即可。ChatGPT 讀取 `INSTALL.md` 後，必須使用 [scheduled-task-prompt-template.md](scheduled-task-prompt-template.md) 全文建立排程，不得自行濃縮成短指令：
 
-> 請讀取此 GitHub repo 的 INSTALL.md，協助我設定個人偏好與每日新聞排程。任何建立或修改排程的動作都先取得我的確認。
+> 每日新聞排程
+>
+> 請確認 https://github.com/robert820728-star/global-news-brief 的最新 main commit，依 INSTALL.md 規定進行完整執行並完成排程設置。
+>
+> 1. 請在目前這個對話內建立每天 6 點循環排程。
+>
+> 2. 完成結果回覆在目前這個對話，不要另開新對話。
 
 安裝時確認兩項內容偏好與 Scheduled Task 自身的時間／時區：
 
@@ -30,7 +36,7 @@
 - 每份讀者版第一行固定為 `# 每日新聞讀者版`，下一個非空白行是 manifest 衍生的統計期間；其後依序使用 `## 今日總覽`、`## 逐條詳報`、`## 後續觀察`。總覽按板塊列事件，逐條詳報保留時間、來源、事件細節與分析欄位。
 - 地圖點位直接標示地名；圖說只解釋地點與事件的關係，不以 1、2、3 代碼或重複底圖描述增加閱讀負擔。
 
-詳細步驟請見 [INSTALL.md](INSTALL.md)，個人設定格式請見 [user-preferences.example.yaml](user-preferences.example.yaml)，排程執行提示詞請見 [daily-schedule-prompt.md](daily-schedule-prompt.md)。
+詳細步驟請見 [INSTALL.md](INSTALL.md)，可直接交給 Scheduled Task 的完整指令見 [scheduled-task-prompt-template.md](scheduled-task-prompt-template.md)，full-runtime 詳細執行契約見 [daily-schedule-prompt.md](daily-schedule-prompt.md)，個人設定格式請見 [user-preferences.example.yaml](user-preferences.example.yaml)。
 
 ## 不需要 GitHub 帳號
 
@@ -69,6 +75,7 @@ full-runtime 各 stage 共用 `schemas/news-event-manifest.schema.json`，欄位
 - `news-brief-examples.md`：正確與錯誤範例
 - `user-preferences.example.yaml`：使用者可覆寫的地區與主題偏好
 - `daily-schedule-prompt.md`：每日獨立排程的固定執行提示詞
+- `scheduled-task-prompt-template.md`：建立 Scheduled Task 時必須原樣使用的完整外層指令
 - `mobile-chatgpt-start-prompt.md`：手機一般 ChatGPT 建立低消耗排程的貼上指令
 - `mobile-chatgpt-daily-prompt.md`：手機排程每輪重新讀取的基礎新聞規則
 

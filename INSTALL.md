@@ -151,24 +151,20 @@
 
 ### Scheduled Task 排程指令唯一契約
 
-`SCHEDULE_PROMPT_AUTHORITY_GATE`
+`SCHEDULED_TASK_FULL_INSTRUCTION_GATE`
 
-ChatGPT Scheduled Task 的 task prompt 只是一個 bootstrap launcher，不是第二份新聞規則。所有 discovery、評分、驗證、圖片、地圖、reader、恢復、capability、validator 與發布規則都必須在 task 實際觸發時，從當下最新 `main` 的 `INSTALL.md` 及其引用文件取得；不得把這些規則複製、摘要、改寫或額外硬編碼進 Scheduled Task prompt。
+ChatGPT Scheduled Task 不得只收到「請讀 INSTALL」的短 launcher。建立或修正每日排程時，必須讀取當下最新 `main` 的 [scheduled-task-prompt-template.md](scheduled-task-prompt-template.md)，將該檔全文原樣完整複製為 task prompt；只有使用者明確指定的「區域」與「監控類型」兩個 placeholder 可以替換。排程時間與時區由 Scheduled Task 的 schedule 欄位保存，不寫進新聞規則文字。
 
-建立或修正每日排程時，task prompt 必須依下列模板生成；只有使用者明確指定的「區域」與「監控類型」可替換，排程時間與時區由 Scheduled Task 的 schedule 欄位保存，不寫入新聞規則文字：
-
-```text
-請確認 https://github.com/robert820728-star/global-news-brief 當下最新 main，完整閱讀該最新 main 的 INSTALL.md，並以 INSTALL.md 作為唯一執行入口，嚴格依 INSTALL.md 及其引用、要求或導向的 repository 規則、設定、skills、schemas、scripts、契約與流程完整執行。每次觸發都必須 fresh resolve 當下最新 main，不得使用建立排程時、前次執行或任何快取中的舊 SHA／舊規則；只有最新版 INSTALL.md 明確要求延續的持久化狀態才可接續。區域：<使用者指定區域；未指定則台灣、中國、世界>。監控類型：<使用者指定監控類型；未指定則預設>。執行進度、成功結果或最早不可恢復 blocker 都只回覆到建立此排程的目前 ChatGPT 對話，不得另開新對話。
-```
+這份完整 task prompt 直接攜帶不可省略的最低執行包絡，包括 fresh main、單一 run、全球 coverage、Public Value V2、獨立驗證、逐則圖片取得與四層 fallback、可見圖片交付、三段式 Reader、同 run 恢復及回覆原對話；同時每輪仍須讀取最新版 repository 取得完整細節。建立者不得摘要、縮短、重寫成一句「嚴格依 INSTALL 執行」，也不得只貼檔案連結。
 
 排程設定規則：
 
 1. task 標題固定為 `每日新聞`；若宿主為方便顯示時間而既有標題含時間，可在下一次修正時正規化回 `每日新聞`，時間只由 schedule 表示。
 2. 使用者指定明確鐘點時使用 exact schedule；未指定鐘點但只指定 morning／afternoon／evening 等日段時依宿主任務規則使用 flexible schedule。未指定任何時間時預設每日 06:00，優先採帳號／裝置時區。
 3. task prompt 不得固定 commit SHA、run id、workspace、checkpoint、reader、候選清單、圖片 ref、來源 URL、工具名稱或任何當輪產物。
-4. task prompt 不得內嵌圖片能力結論、圖片 fallback、discovery route、評分門檻、validator、stage 順序或其他執行細節；這些只能存在最新版 repository 規則中。
-5. 修正排程時必須「重新由本模板生成完整 prompt」，不得在舊 prompt 後追加 patch、例外條款或臨時 hotfix。若需要永久修正執行行為，先修改 repository 權責文件，再讓排程於下一次觸發 fresh resolve 新 main。
-6. task prompt 與本模板不一致時視為 configuration drift；應修正 task prompt，不得為了遷就 drift 修改新聞執行結果。
+4. task prompt 必須保留完整範本中的執行 gate；不得刪除圖片 fallback、全球 discovery、評分、Reader 格式、恢復或對話交付段落。
+5. 修正排程時必須「重新由最新版完整範本生成 task prompt」，不得在舊 prompt 後追加 patch、例外條款或臨時 hotfix。永久行為先改 repository 範本與權責文件，再用完整新範本取代舊 task prompt。
+6. task prompt 與最新版完整範本不一致時視為 configuration drift；應修正 task prompt，不得遷就 drift 或回退成短 launcher。
 
 單次與循環 Scheduled Task 都以該 task 真正觸發的 `scheduled_for` 作 occurrence key；04:00、06:00 或其他時間完全走同一流程。repository 不設 pre-trigger watchdog，也不得在 task 實際觸發前寫入 future `current.json`。每輪先 fresh-resolve `main` 並做一次 capability routing。只有本機執行／可寫能力與 `VERIFIED_BOOTSTRAP_SEED_ROUTE` 都成功，才以 `execution_mode=full-runtime` 建立／接續該輪執行狀態；本機執行不存在，或 pinned loader seed 無法取得且宿主也沒有 lossless connector-to-local handoff 時，必須在建立 occurrence 前選 `execution_mode=mobile-native`。bootstrap transport 不可用是 capability routing 結果，不得誤報成 repository materialization defect。mode 自 actual occurrence 的 `prepare` 起不可切換。兩種模式的 24 小時窗都從實際 executor 啟動時刻精確倒推，個人偏好不回寫公共 `main`。
 
