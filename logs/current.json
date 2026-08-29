@@ -1,22 +1,22 @@
 {
   "schema_version": "1.6.0",
   "execution_mode": "mobile-native",
-  "delivery_profile": "full-assets",
-  "native_media_status": "available",
-  "capability_limitations": [],
+  "delivery_profile": "reader-canonical-capability-degraded",
+  "native_media_status": "unavailable",
+  "capability_limitations": ["NATIVE_MEDIA_UNAVAILABLE"],
   "run_id": "gnb-20260829T215713Z-7c4e1a92",
   "scheduled_for": "2026-08-29T22:00:00+00:00",
   "status": "running",
-  "current_stage": "selection-verified",
-  "stage_index": 6,
-  "last_completed_stage": "candidate-audit",
+  "current_stage": "visuals-completed",
+  "stage_index": 7,
+  "last_completed_stage": "selection-verified",
   "main_sha": "36693b44e793e5b650ffe70ac2900aad8439568f",
   "window": {
     "start": "2026-08-28T21:57:13+00:00",
     "end": "2026-08-29T21:57:13+00:00",
     "timezone": "Asia/Shanghai"
   },
-  "updated_at": "2026-08-29T22:13:00+00:00",
+  "updated_at": "2026-08-29T22:25:00+00:00",
   "last_error": null,
   "delivery_status": "not_ready",
   "client_confirmation_supported": false,
@@ -37,8 +37,22 @@
     "main_sha": "36693b44e793e5b650ffe70ac2900aad8439568f",
     "window": {"start":"2026-08-28T21:57:13+00:00","end":"2026-08-29T21:57:13+00:00","timezone":"Asia/Shanghai"}
   },
-  "map_decisions_artifact": null,
-  "image_evidence_artifact": null,
+  "map_decisions_artifact": {
+    "branch": "run-logs",
+    "path": "logs/runs/gnb-20260829T215713Z-7c4e1a92/map-decisions.json",
+    "blob_sha": "81788108f691f6972cd1092ee7baba18dacc6205",
+    "run_id": "gnb-20260829T215713Z-7c4e1a92",
+    "main_sha": "36693b44e793e5b650ffe70ac2900aad8439568f",
+    "window": {"start":"2026-08-28T21:57:13+00:00","end":"2026-08-29T21:57:13+00:00","timezone":"Asia/Shanghai"}
+  },
+  "image_evidence_artifact": {
+    "branch": "run-logs",
+    "path": "logs/runs/gnb-20260829T215713Z-7c4e1a92/image-evidence.json",
+    "blob_sha": "960771ce5eb680ab999fe26b113f0039fea4015b",
+    "run_id": "gnb-20260829T215713Z-7c4e1a92",
+    "main_sha": "36693b44e793e5b650ffe70ac2900aad8439568f",
+    "window": {"start":"2026-08-28T21:57:13+00:00","end":"2026-08-29T21:57:13+00:00","timezone":"Asia/Shanghai"}
+  },
   "durable_audit_status": "not_started",
   "durable_audit_artifact": null
 }
