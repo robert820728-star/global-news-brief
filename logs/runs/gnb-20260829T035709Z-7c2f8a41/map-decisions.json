@@ -1,0 +1,20 @@
+{
+  "schema_version":"mobile-map-decisions-1.0",
+  "run_id":"gnb-20260829T035709Z-7c2f8a41",
+  "execution_mode":"mobile-native",
+  "decisions":[
+    {"event_id":"TWN-01","required":false,"claim_critical":false,"status":"not_required","rationale":"人口推估是全國統計與長期結構議題，地理位置、路線或空間範圍不是理解核心。"},
+    {"event_id":"TWN-02","required":false,"claim_critical":false,"status":"not_required","rationale":"全國性公投的核心是制度程序與投票日，地圖不增加理解。"},
+    {"event_id":"TWN-03","required":false,"claim_critical":false,"status":"not_required","rationale":"案件雖涉及台北與新北多家診所，但核心是起訴與隱私侵害，不需要空間關係來理解。"},
+    {"event_id":"CHN-01","required":true,"claim_critical":false,"status":"omitted_mobile_renderer_unavailable","rationale":"颱風影響浙江、福建並涉及撤離、交通停運與跨區風雨，空間範圍有助理解；mobile-native 不冒充本機 canonical renderer，因此僅記錄 omission。"},
+    {"event_id":"GLB-01","required":true,"claim_critical":false,"status":"omitted_mobile_renderer_unavailable","rationale":"災害跨越尼泊爾—西藏邊境並涉及河谷、堰塞湖與跨境救援，地理關係明顯有助理解；mobile-native 無 canonical renderer。"},
+    {"event_id":"GLB-02","required":true,"claim_critical":false,"status":"omitted_mobile_renderer_unavailable","rationale":"協議涉及委內瑞拉油田與美國能源供應，但地圖是輔助性地緣背景；mobile-native 無 canonical renderer。"},
+    {"event_id":"GLB-03","required":true,"claim_critical":false,"status":"omitted_mobile_renderer_unavailable","rationale":"伊朗戰爭與荷姆茲海峽通行爭議具強烈空間與航道訊號；mobile-native 無 canonical renderer。"},
+    {"event_id":"GLB-04","required":false,"claim_critical":false,"status":"not_required","rationale":"挪威王位承繼為憲制與人物事件，地圖不影響核心理解。"},
+    {"event_id":"GLB-05","required":false,"claim_critical":false,"status":"not_required","rationale":"柏林州政府網路攻擊的核心是資安與資料外洩，不需要空間關係。"},
+    {"event_id":"GLB-06","required":true,"claim_critical":false,"status":"omitted_mobile_renderer_unavailable","rationale":"攻擊涉及烏克蘭多地物流與配送節點，跨區供應鏈空間關係有助理解；mobile-native 無 canonical renderer。"},
+    {"event_id":"GLB-07","required":false,"claim_critical":false,"status":"not_required","rationale":"外匯干預為全國金融市場操作，地理位置不增加理解。"}
+  ],
+  "coverage":{"selected_event_count":11,"decision_count":11,"complete":true},
+  "validation_note":"Decision coverage completed in mobile-native mode; no local map files or pixel validation are claimed."
+}
