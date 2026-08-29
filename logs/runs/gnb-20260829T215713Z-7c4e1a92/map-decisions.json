@@ -1,0 +1,21 @@
+{
+  "schema_version":"mobile-map-decisions-1.0",
+  "run_id":"gnb-20260829T215713Z-7c4e1a92",
+  "execution_mode":"mobile-native",
+  "decisions":[
+    {"event_id":"TWN-01","required":false,"claim_critical":false,"status":"not_required","rationale":"藥品回收的核心是批號、回收數量、品質風險與替代藥供應，地理位置、路線或空間關係不影響理解。"},
+    {"event_id":"TWN-02","required":true,"claim_critical":false,"status":"omitted_mobile_renderer_unavailable","rationale":"豪雨農損集中於雲林、嘉義縣與高雄，縣市間受災分布有助理解影響範圍；mobile-native 不冒充本機 canonical renderer，因此記錄 omission。"},
+    {"event_id":"CHN-01","required":true,"claim_critical":false,"status":"omitted_mobile_renderer_unavailable","rationale":"沙德爾殘餘系統跨江西、湖南、廣西並伴隨河川超警與山洪風險，跨省空間關係直接有助理解；mobile-native 無 canonical renderer。"},
+    {"event_id":"CHN-02","required":false,"claim_critical":false,"status":"not_required","rationale":"外資企業戶數與實際使用外資是全國統計口徑比較，地圖不增加對統計差異的理解。"},
+    {"event_id":"CHN-03","required":true,"claim_critical":false,"status":"omitted_mobile_renderer_unavailable","rationale":"水庫漫壩位於中老邊境磨憨，涉及撤離村莊、水庫與跨境交通節點，位置與受影響區域有助理解；mobile-native 無 canonical renderer。"},
+    {"event_id":"GLB-01","required":true,"claim_critical":false,"status":"omitted_mobile_renderer_unavailable","rationale":"冰川崩塌洪災跨越尼泊爾與西藏邊境，涉及上游湖泊、河谷與跨境搜救，地理關係明顯有助理解；mobile-native 無 canonical renderer。"},
+    {"event_id":"GLB-02","required":true,"claim_critical":false,"status":"omitted_mobile_renderer_unavailable","rationale":"兵變集中在尼日首都尼亞美的機場、總統府與敏感據點，且尼日位置對理解薩赫勒安全外溢有幫助；mobile-native 無 canonical renderer。"},
+    {"event_id":"GLB-03","required":true,"claim_critical":false,"status":"omitted_mobile_renderer_unavailable","rationale":"襲擊發生於基輔州米拉並造成鄰近住宅與照護設施受損，戰區位置與周邊受影響區域有助理解；mobile-native 無 canonical renderer。"},
+    {"event_id":"GLB-04","required":false,"claim_critical":false,"status":"not_required","rationale":"美委石油合作的核心是權益、儲量、法律與執行條件，兩國地理位置不是理解交易結構的必要資訊。"},
+    {"event_id":"GLB-05","required":false,"claim_critical":false,"status":"not_required","rationale":"冰島公投核心是是否重啟歐盟談判的制度程序，地圖不影響投票問題與政治意義的理解。"},
+    {"event_id":"GLB-06","required":false,"claim_critical":false,"status":"not_required","rationale":"本輪核心是伊朗戰爭與制裁造成的貿易萎縮及跨境金融監管反應，主要資訊是經濟與金融措施，地圖不是必要理解條件。"},
+    {"event_id":"GLB-07","required":false,"claim_critical":false,"status":"not_required","rationale":"柴油出口禁令是全國能源政策與供應限制，沒有特定航線或空間範圍主張需要地圖才能理解。"}
+  ],
+  "coverage":{"selected_event_count":12,"decision_count":12,"complete":true},
+  "validation_note":"Decision coverage completed in mobile-native mode; no local map files or pixel validation are claimed."
+}
