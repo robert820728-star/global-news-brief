@@ -65,3 +65,8 @@
 `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`：原生圖片搜尋／圖片卡不是唯一圖片取得路徑。原引用文章的 `img`、`srcset`、`og:image` 或等價欄位若提供與當期事件相符的直接 JPEG／WebP URL，必須實際以宿主可用媒體路徑開啟／取得並嘗試可見交付；搜尋卡沒有 image ref 不等於圖片不可取得。外部 URL、Markdown 圖片字串或純文字連結本身不算可見交付。
 
 `IMAGE_FALLBACK_EXHAUSTION_GATE`：原引用來源、官方機關／當事組織、原始通訊社及其他可靠媒體的同事件合法刊載／轉載是四個依序必查層級。圖片可與文字驗證使用不同來源，也不必是原文同一張，但必須可信、合法公開刊載、可追溯，且事件、日期、人物／地點一致。每則 evidence 保存 `original_source_attempted`、`direct_media_url_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`；`delivery_unavailable` 或 source exhaustion 的 `direct_media_url_attempted` 必須為 `true`，任一來源層未實際搜尋時不得宣告 `NATIVE_MEDIA_UNAVAILABLE`、source exhaustion 或停止圖片 stage。直接文章原圖已成功可見交付時，不必再做後續 fallback。
+
+`IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE`：圖片代理／縮放 URL 必須解碼並嘗試其 `url`、`u`、`src`、`source` 或 `image` 參數中的原始媒體。代理 timeout 不能取代原圖嘗試。
+
+`NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE`：逐則處理所有入選事件；前一事件失敗不能跳過後續已有 native image ref 的事件。禁止以 prior-event blocker 取代實際 delivery attempt，最後才彙整完整恢復清單。
+

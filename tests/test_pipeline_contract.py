@@ -629,6 +629,8 @@ class PipelineContractTests(unittest.TestCase):
 
         for requirement in (
             "IMAGE_READER_VISIBLE_DELIVERY_GATE",
+            "IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE",
+            "NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE",
             "實際顯示",
             "破圖",
             "沿用前輪選圖",
@@ -1404,6 +1406,8 @@ class PipelineContractTests(unittest.TestCase):
             "DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE",
             "IMAGE_FALLBACK_EXHAUSTION_GATE",
             "IMAGE_READER_VISIBLE_DELIVERY_GATE",
+            "IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE",
+            "NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE",
             "CANONICAL_THREE_PART_READER_LAYOUT_GATE",
             "CURRENT_CONVERSATION_DELIVERY_GATE",
         ):
@@ -1418,9 +1422,14 @@ class PipelineContractTests(unittest.TestCase):
             "## 後續觀察",
             "不得另開新對話",
             "不得宣告 `NATIVE_MEDIA_UNAVAILABLE`",
+            "`url`、`u`、`src`、`source` 或 `image`",
+            "保留內嵌來源參數的最小代理 URL",
+            "不得因較早事件尚未交付就跳過後續事件",
+            "native_card_available_but_canonical_reader_blocked_by_prior_event",
         ):
             self.assertIn(requirement, template)
 
 
 if __name__ == "__main__":
     unittest.main()
+

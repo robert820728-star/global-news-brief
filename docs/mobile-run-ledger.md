@@ -2,6 +2,8 @@
 
 The mobile ChatGPT task remains the news executor. GitHub stores a compact, durable run envelope on the `run-logs` branch without triggering the bootstrap-capsule workflow.
 
+`IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE` requires resize/redirect/proxy URLs to be decoded through common `url`, `u`, `src`, `source`, or `image` parameters and the embedded original media to be attempted before `direct_media_url_attempted=true`. `NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE` requires every selected event to complete its own image acquisition/delivery attempt even when an earlier event remains unresolved; an available native image ref cannot be skipped because the canonical Reader is blocked. The final recovery set is aggregated only after every event is processed.
+
 ## Retention
 
 - `logs/current.json` is the active or most recently completed run.
@@ -35,3 +37,4 @@ Count receipts are derived data. If an event subtotal differs from the actual ru
 There is no pre-trigger watchdog or future reservation. Single-run and recurring Scheduled Tasks create or resume `current.json` only when the configured task occurrence actually fires, regardless of whether that time is 04:00, 06:00, or another configured clock time. Missing scheduled executions are therefore absence-of-execution evidence, not synthetic `awaiting_executor` runs.
 
 If `run-logs` writes are unavailable, durable mobile-native resume is unavailable and must fail closed before discovery. An Issue comment may record diagnostics, but it is not a substitute for `current.json` and must never be treated as durable occurrence state.
+

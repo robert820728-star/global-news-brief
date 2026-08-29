@@ -71,9 +71,11 @@ full-runtime 的 post-selection event exchange 必須遵守 `schemas/news-event-
 - 所有 C 級以上新聞仍完整納入，不以節省圖片成本縮減新聞或來源覆蓋。
 - `IMAGE_DEFAULT_ONE_ASSET`：每則事件預設一張來源圖片；`IMAGE_SECOND_ASSET_REQUIRES_INCREMENTAL_INFORMATION`：第二張必須提供第一張沒有的範圍、數字、現場或時間資訊，最多兩張。
 - `IMAGE_SOURCE_FILE_IDENTITY_GATE`：每張來源圖片同時保存文章頁 `source_url` 與實際媒體檔 `source_image_url`；實際圖片網址必須出現在同一來源頁的 `detected_image_urls` 且不得等於文章頁。full-runtime 必須再由 canonical materializer 的 `materialized-images.json` 綁定本機檔案、SHA-256 與尺寸；mobile-native 依 `MOBILE_NATIVE_IMAGE_EVIDENCE_ROUTE` 保存來源檢查、文章直接媒體 URL／原生圖片卡嘗試與宿主結構化結果，不得捏造本地物化或像素驗收。
+- `IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE`：來源頁圖片使用 resize／redirect／代理 URL 時，逐層解碼 `url`、`u`、`src`、`source` 或 `image` 參數並嘗試內嵌原始媒體；代理失敗而原圖未嘗試時，不得把 `direct_media_url_attempted` 設為 true。
 - `MOBILE_PER_STORY_VISIBLE_IMAGE_GATE`：mobile-native 對每一則本輪入選新聞逐則執行圖片搜尋與可見性驗收，一則新聞的圖片不得替其他新聞通過；先查已引用來源，再依序查官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導，可查多個來源而不限一個。每張候選圖都要保存來源頁並核對事件與日期，不要求完全相同像素；無法追溯的搬運站、搜尋縮圖、舊照或無關示意圖不合格。找到可用圖片但顯示失敗時只重做該則圖片取得／交付，不重跑新聞流程。
 - `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`：原生圖片搜尋／圖片卡不是唯一取得路徑。原引用文章的 `img`、`srcset`、`og:image` 或等價欄位若暴露當期直接 JPEG／WebP URL，必須以宿主可用媒體路徑開啟／取得並嘗試可見交付；搜尋卡沒有 image ref 不等於不可取得，URL／Markdown 本身不算可見交付。
 - `IMAGE_FALLBACK_EXHAUSTION_GATE`：上述四層是依序必查 checklist。每則 image evidence 保存 `original_source_attempted`、`direct_media_url_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`；宣告 `NATIVE_MEDIA_UNAVAILABLE` 或 source exhaustion 前，`direct_media_url_attempted` 必須為 `true`，任一來源層未實際搜尋時不得停止圖片 stage。圖片證據來源與文字驗證來源可以不同，且可使用另一張同事件合法刊載／轉載圖片，但必須可信、可追溯，並符合事件、日期、人物／地點。直接文章原圖已成功可見交付時，不必再做無增量的後續來源搜尋。
+- `NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE`：單一事件圖片失敗不得中斷其他入選事件。所有事件都要完成自己的圖片取得與交付嘗試；已有 native image ref 的後續事件不得因前一事件 blocker 而跳過，整輪只在逐則完成後彙整全部未交付事件。
 - `IMAGE_ONE_ASSET_MAY_SATISFY_BOTH_SOURCE_AND_PROFESSIONAL`：同一張合格官方／專業圖可同時滿足引用來源圖片與專業圖資要求，但兩組來源檢查紀錄都要保留。
 - `IMAGE_SHA256_REUSE`：同一輪以圖片內容 SHA-256 去重，相同內容沿用一次下載、一次 `640px` 縮圖與一次驗收結果。
 - `IMAGE_VISUAL_CHECK_ONCE_PER_HASH`：先做 MIME、解碼、尺寸與 SHA-256 程式檢查；每個唯一 hash 只開啟驗收一次，只有內容、日期或相關性不確定時才加深判讀。
@@ -277,4 +279,5 @@ full-runtime 的 post-selection event exchange 必須遵守 `schemas/news-event-
 - 板塊順序、表格、空行、分隔線與繁體中文格式正確。
 
 驗證失敗時只修正失敗欄位，再重新驗證；不得從頭重寫整份簡報。
+
 

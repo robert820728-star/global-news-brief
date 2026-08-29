@@ -18,6 +18,8 @@
 `IMAGE_FALLBACK_EXHAUSTION_GATE`
 
 - `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`：原生圖片搜尋／圖片卡不是唯一取得路徑。檢查原引用文章時，必須解析內文 `img`、`srcset`、`og:image` 或等價媒體欄位；若找到與事件及日期相符的直接 JPEG／WebP URL，實際以宿主可用媒體路徑開啟／取得並嘗試可見交付。搜尋卡沒有 image ref 不等於圖片不可取得；外部 URL、Markdown 圖片字串或純文字連結本身不算可見交付。
+- `IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE`：若圖片是 resize／redirect／代理 URL，逐層 URL-decode `url`、`u`、`src`、`source` 或 `image` 參數，並嘗試內嵌原始 JPEG／WebP及保留內嵌來源參數的最小代理 URL；代理失敗不能讓未嘗試候選被記成 `direct_media_url_attempted=true`。
+- `NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE`：較早事件圖片失敗時仍須處理全部後續入選事件。已有 native image ref／圖片卡者必須實際嘗試交付；禁止用 `native_card_available_but_canonical_reader_blocked_by_prior_event` 或同義結果跳過，最後才彙整全部未交付事件。
 - 圖片取得不得因原引用來源、原始圖片 URL、原生圖片卡或單一媒體交付失敗而停止。每則事件在宣告 `NATIVE_MEDIA_UNAVAILABLE`、`source_exhausted` 或任何圖片 blocker 前，必須依序實際搜尋：原引用來源 → 官方機關／當事組織 → 原始通訊社 → 其他可靠媒體的同事件合法刊載／轉載圖片；可使用不同但與同一事件、日期、人物／地點相符且可追溯的合格新聞照片。
 - 每則 image evidence 必須保存 `original_source_attempted`、`direct_media_url_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`。宣告 `NATIVE_MEDIA_UNAVAILABLE` 或 source exhaustion 前，`direct_media_url_attempted` 必須為 `true`；任一來源層尚未實際搜尋時不得宣告 fallback exhaustion、圖片不可取得或不可恢復 blocker。直接文章原圖已成功可見交付時，不必再做無增量的後續來源搜尋。
 - 找到原文中存在圖片，不代表圖片只能從該原文取得。圖片證據來源與文字驗證來源可以不同，但圖片來源必須可信、合法公開刊載、可追溯，且事件、日期、人物或地點一致。不得用搜尋縮圖、無法追溯的搬運站、舊照或無關示意圖。
@@ -316,3 +318,4 @@ The optional bundle contains these six logical artifacts:
 - `recovery/content-hydration-batches.json`
 
 If a handoff or workspace loss occurs, `restore` these artifacts from the same run's verified bundle and resume only the first incomplete batch. Never create a replacement run to conceal missing recovery inputs. Bundle creation failure is blocking only when the declared handoff or workspace-risk condition makes that bundle necessary.
+

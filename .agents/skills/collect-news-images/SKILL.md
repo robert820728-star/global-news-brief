@@ -23,7 +23,9 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 任一來源找到可信且相關圖片後，`images.status` 只能在至少一張附件通過驗收後改為 `ready`。
 - 每則事件必須明確設定 `images.claim_critical`。只有圖片本身是核心主張證據（例如唯一影像證據、衛星圖直接證明攻擊或官方圖是數據主張本體）才設為 `true`；一般新聞配圖、人物照或輔助專業圖設為 `false`。
 - `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`：檢查原引用文章的 `img`、`srcset`、`og:image` 或等價欄位。發現與當期事件相符的直接 JPEG／WebP URL 後，必須實際以宿主可用媒體路徑開啟／取得並嘗試可見交付；搜尋卡沒有 image ref 不等於圖片不可取得。URL／Markdown 本身仍不是可見附件。
+- `IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE`：圖片 URL 是 resize／redirect／縮圖／媒體代理時，逐層 URL-decode `url`、`u`、`src`、`source` 或 `image` 參數，並嘗試內嵌原始 JPEG／WebP及保留內嵌來源參數的最小代理 URL。代理失敗但這些候選未嘗試時，`direct_media_url_attempted` 不得為 `true`。
 - `IMAGE_FALLBACK_EXHAUSTION_GATE`：每則事件依序實際搜尋原引用來源、官方機關／當事組織、原始通訊社及其他可靠媒體的同事件合法刊載／轉載圖片。圖片證據來源與文字驗證來源可以不同；圖片可不是同一張，但必須可信、合法公開刊載、可追溯，且事件、日期、人物／地點一致。每則 image evidence 必須保存 `original_source_attempted`、`direct_media_url_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`。`delivery_unavailable` 或 source exhaustion 的 `direct_media_url_attempted` 必須為 `true`；任一來源層尚未實際搜尋時不得宣告 `NATIVE_MEDIA_UNAVAILABLE`、source exhaustion 或圖片 blocker。直接文章原圖已成功可見交付時，不必再做後續 fallback。
+- `NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE`：第一則或任何較早事件失敗時仍須繼續處理其餘全部入選事件；已有 native image ref／圖片卡者必須實際嘗試交付。禁止以 `native_card_available_but_canonical_reader_blocked_by_prior_event` 或同義狀態跳過後續事件，最後才彙整所有未交付事件供同一 run 恢復。
 - `NATIVE_MEDIA_CAPABILITY_FALLBACK`／`QUALIFIED_IMAGE_DELIVERY_INDEPENDENT_OF_CLAIM_CRITICAL`：full-runtime 已找到可用圖片時先下載原始媒體檔，下載失敗才依圖片政策截圖並驗證；mobile-native 依序實際嘗試文章直接媒體 URL、原生圖片／圖片卡與後續來源交付。直接 URL 與四層來源已搜完且確實沒有合格圖片時，可記 source exhaustion 並省略圖片；上述路徑已完成、已確認存在合格圖片但所有可用交付路徑失敗時，不論 `claim_critical` 都必須保持同一 run 的 `status=running`、`current_stage=visuals-completed`，只重試圖片交付，不得完成文字 reader。不得在未嘗試前預判。
 - 只有四層來源都已實際搜尋且均無可用圖片，才可使用 `omitted`，並保存具體後台原因與繁體中文 `reader_omission_note`；兩者只供內部 evidence／receipt，不得顯示於讀者版。
 - 圖片取得失敗不改變事件等級。
@@ -187,3 +189,4 @@ full-runtime 只寫入下列 manifest `images` 欄位；mobile-native 不建立�
 - `images.reader_omission_note`
 
 四層來源 fallback 全部實際搜尋後仍確實沒有合格圖片時，保存後台原因；讀者版完整省略圖片、caption 與占位文字。只要任一路徑找到合格圖片，無論 `claim_critical`，交付失敗都不得改寫成 omission 或完成文字 Reader。
+

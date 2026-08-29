@@ -1,5 +1,14 @@
 # Version Record / 版本紀錄
 
+## v0.6.0-rc.23 — Image proxy and non-short-circuit delivery / 圖片代理與不中斷逐則交付
+
+- Reason / 建立原因：Live run `gnb-20260829T035709Z-7c2f8a41` confirmed that the host could return native image references, yet the executor stopped at the first unresolved event, skipped later deliverable cards, and treated a timed-out transformed UDN proxy URL as if every direct-media route had been exhausted. The same article exposed a usable minimal proxy URL containing the original media parameter. / 真實 run `gnb-20260829T035709Z-7c2f8a41` 證明宿主能提供 native image references，但執行器在第一則未交付事件便停止、跳過後續可交付圖片卡，並把帶轉換參數而逾時的 UDN 圖片代理誤判為所有直接媒體路徑已窮盡；同一文章其實暴露了保留原始媒體參數即可使用的最小代理 URL。
+- Approach / 作法：Extend the existing direct-article route with `IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE`: decode common embedded-media parameters and try both the original media and a minimal proxy URL when lawful and applicable. Add `NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE`: every selected event completes its own acquisition and visible-delivery attempt before the run aggregates blockers; an earlier failure cannot suppress later native cards. / 在既有文章原圖路徑加入 `IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE`：解碼常見內嵌媒體參數，並在合法且適用時同時嘗試原始媒體及最小代理 URL。加入 `NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE`：整輪彙整 blocker 前，每則入選事件都完成自己的取得與可見交付嘗試，較早失敗不得壓掉後續 native cards。
+- Entry points / 入口：Existing complete Scheduled Task template, INSTALL, daily/mobile prompts, image settings/skill/reference, mobile ledger documentation, and existing pipeline contract tests. / 既有完整 Scheduled Task 範本、INSTALL、daily／mobile prompts、圖片設定／skill／reference、mobile ledger 文件與既有 pipeline contract tests。
+- Non-goals / 不修改：No new schema, validator, receipt, recovery state, execution mode, image proxy service, source class, scoring rule, Reader escape hatch, or relaxed image requirement. / 不新增 schema、validator、receipt、recovery state、execution mode、圖片代理服務、source class、評分規則、Reader 逃生門，也不放寬圖片要求。
+- Validation / 驗證：Red-green contract regressions require proxy unwrapping, minimal-proxy retry, and non-short-circuit per-event delivery. The observed UDN minimal proxy returned HTTP 200 `image/jpeg`; focused and full repository suites plus capsule binding and remote CI remain the release gate. / 紅綠契約回歸要求代理解碼、最小代理重試及逐則不中斷交付；實測 UDN 最小代理回傳 HTTP 200 `image/jpeg`。發布前仍須通過 focused／全庫測試、capsule 綁定與遠端 CI。
+- Result / 結果：Source candidate until the declared tests, final audit, capsule binding, and remote CI complete. / 在上述測試、最終稽核、capsule 綁定與遠端 CI 完成前，本版僅為 source candidate。
+
 ## v0.6.0-rc.22 — Complete Scheduled Task instruction / 完整排程執行指令
 
 - Reason / 建立原因：The newly added schedule authority explicitly reduced the task prompt to a thin INSTALL launcher and prohibited embedding image fallback, discovery, scoring, stage, and delivery requirements. Real runs showed that a model can compress that linked contract, observe a valid article image, and still stop before acquiring or delivering it. / 新增的排程權責明文把 task prompt 縮成只指向 INSTALL 的薄 launcher，並禁止內嵌圖片備援、discovery、評分、stage 與交付要求；真實執行已證明模型可能壓縮引用契約，看到有效文章圖片後仍在取得或交付前停止。
@@ -266,3 +275,4 @@ This file records the current installable contract. Earlier implementation attem
 - Approach / 作法：Use six normalized 0–100 dimensions, configured weights, realized-versus-potential consequence classes, policy stage, material delta, fact reuse rationale, high-score challenge, evidence confidence, and validated-only publication. / 採六項 0–100 正規化分數、設定權重、現況與潛在後果分類、政策階段、實質增量、事實重用理由、高分反向審查、證據信心及僅發布 validated grade。
 - Validation / 驗證：Schema, validator, calibrated fixtures, publisher checks, and full regression. / Schema、驗證器、校準 fixtures、發布檢查及完整回歸。
 - Result / 結果：Promoted into the current contract. / 已納入目前契約。
+

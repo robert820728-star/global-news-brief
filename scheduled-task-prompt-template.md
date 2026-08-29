@@ -41,9 +41,17 @@
 
 先打開每則已引用的原新聞文章，實際檢查內文 `img`、`srcset`、`og:image`、圖片圖集、官方媒體欄位與直接 CDN 媒體。若找到與本事件及日期相符的 JPEG／WebP，必須實際開啟／取得該媒體並嘗試在本對話可見交付。文章已揭露直接圖片網址時，不得只說「原文有圖片」後放棄；搜尋結果沒有 image ref、原生圖片卡沒有 materialize、第一張圖下載失敗或某一站防盜連，都不等於圖片不可取得。
 
+`IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE`
+
+文章圖片若指向縮圖、resize、redirect 或媒體代理 URL，必須檢查其 query／路徑內嵌的原始媒體位址；至少辨識並逐層 URL-decode 常見的 `url`、`u`、`src`、`source` 或 `image` 參數，直到位址穩定。代理端 timeout、拒絕或只回頁面時，必須同時嘗試內嵌原始 JPEG／WebP，以及在不移除必要授權的前提下、保留內嵌來源參數的最小代理 URL；不得只撞同一個帶過期／resize 參數的代理網址。未嘗試所有已偵測候選，不得把 `direct_media_url_attempted` 記為 `true`，也不得宣告 `NATIVE_MEDIA_UNAVAILABLE`。例如 `...photo.php?exp=...&w=930&u=https%3A%2F%2Fcdn.example%2Fphoto.jpg` 失敗後，下一步包含解碼原圖及嘗試 `...photo.php?u=https%3A%2F%2Fcdn.example%2Fphoto.jpg`，不是停止。
+
 `IMAGE_FALLBACK_EXHAUSTION_GATE`
 
 直接文章路徑未成功交付時，每則必須依序實際搜尋並嘗試：原引用來源 → 官方機關／當事組織 → 原始通訊社 → 其他可靠媒體。可使用其他可靠來源合法刊載／轉載的同事件當期照片，不要求與文字來源或原文照片像素完全相同。找到任何合格圖片就繼續嘗試實際交付，不得因前一路徑失敗提前判死刑。
+
+`NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE`
+
+圖片處理以事件為單位完成，不得因較早事件尚未交付就跳過後續事件。即使第一則仍需恢復，也必須繼續替其餘所有入選事件取得並實際嘗試可見圖片；已取得的 native image ref／圖片卡必須當場交付或保存為該事件可恢復的交付證據。禁止使用 `native_card_available_but_canonical_reader_blocked_by_prior_event` 或任何同義結果來取代 `delivery_attempted`。只有全部入選事件都完成各自的 delivered／source-exhausted／delivery-unavailable 判定後，才能決定整輪是否需要視覺恢復；恢復清單必須列出全部未交付事件，不能只報第一則後停止。
 
 在四層來源與宿主可用交付方式尚未逐一實際完成前，不得宣告 `NATIVE_MEDIA_UNAVAILABLE`、`source_exhausted`、圖片 blocker 或最早不可恢復 blocker。不得把「看得到圖片存在但我沒有拿」當成合法結論。只有完整來源檢查後確實沒有合格圖片，才可記為 source exhaustion 並依規則省略該則圖片；這不等於 delivery failure。
 
@@ -76,4 +84,5 @@ Reader 必須包含本輪所有 C 級以上 validated 事件，來源連結與�
 `CURRENT_CONVERSATION_DELIVERY_GATE`
 
 成功時將完整 canonical Reader（含實際可見圖片）回覆到建立本 Scheduled Task 的目前 ChatGPT 對話，不得另開新對話、只貼摘要、只給 GitHub artifact、只報「已生成」、只列候選或只交付圖片網址。若真正遇到最新版規則定義的不可恢復 blocker，只回報最早 blocker、已完成 stage、同一 run 的可恢復位置與尚未完成項目；不得把 partial Reader 冒充正式結果。
+
 

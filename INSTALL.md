@@ -300,6 +300,10 @@ reader 不顯示 run id、commit、後台 counts、十四天 audit 或修復紀�
 
 ### Media evidence and completion
 
+`IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE`：圖片 URL 若為 resize、redirect、縮圖或媒體代理，必須逐層 URL-decode 其 `url`、`u`、`src`、`source`、`image` 等常見參數，並嘗試內嵌原始 JPEG／WebP及保留內嵌來源參數的最小代理 URL。代理 URL timeout／拒絕不代表原圖失敗；所有已偵測候選尚未實際開啟前，`direct_media_url_attempted` 不得為 `true`，也不得進入圖片 blocker。
+
+`NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE`：較早事件的圖片未交付不得中止後續事件的圖片取得或交付嘗試。所有入選事件都必須各自完成 delivered、source exhaustion 或 delivery unavailable 判定；已有 native image ref／圖片卡的事件必須實際嘗試，禁止以 `native_card_available_but_canonical_reader_blocked_by_prior_event` 或同義狀態跳過。整輪 blocker 與恢復清單只能在逐則處理完成後彙整，且必須列出所有未交付事件。
+
 `MOBILE_NATIVE_IMAGE_EVIDENCE_ROUTE`：圖片證據依執行模式走兩條既有能力路徑，不新增狀態機。full-runtime 逐則完成來源檢查、下載、失敗後的同來源截圖、檔案驗收與附件交付；無本機 runtime 的 mobile-native 逐則完成來源檢查、文章直接媒體 URL、原生圖片搜尋／圖片卡及後續來源嘗試與宿主可提供的結構化交付結果。mobile-native 不得捏造本地路徑、下載、截圖、物化、附件或像素驗收。
 
 `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`：圖片搜尋結果／原生圖片卡不是唯一合法取得路徑。檢查原引用文章時，必須解析與核對內文 `img`、`srcset`、`og:image` 或等價媒體欄位；若其中存在與當期事件相符的直接 JPEG／WebP URL，必須實際以宿主可用的媒體路徑開啟／取得該媒體並嘗試可見交付。搜尋卡沒有 image ref 不等於圖片不可取得；已知原圖 URL 卻未實際嘗試此路徑時，不得宣告 `NATIVE_MEDIA_UNAVAILABLE` 或 source exhaustion。外部 URL、Markdown 圖片字串或純文字連結本身仍不算可見交付。
@@ -374,3 +378,4 @@ mobile-native 沒有 checkpoint 或 manifest。查證不足時依 `VERIFICATION_
 ## 分享方式
 
 接收者在自己的新對話貼上 repo 網址與啟動指令，各自授權建立排程並保存個人偏好。公開 repo 的讀取不要求 GitHub 帳號。full-runtime 的外部 diagnostic ledger 可依既有規則 best-effort 降級；但可恢復的 durable mobile-native Scheduled Task 必須具備 `run-logs` 寫入權限，缺少寫入權限時不得宣稱 durable resume／continuity。一次性 reader 可在當前執行完成，但不屬於 durable mobile profile。
+

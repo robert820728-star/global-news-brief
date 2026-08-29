@@ -134,6 +134,8 @@ The required order for every configured discovery route is: `canonical route -> 
    - 不使用需要登入、限制外站引用、防盜連、含短效簽名或到期 token 的圖片網址，也不使用 `data:` 或 `blob:` 網址。
    - `MOBILE_PER_STORY_VISIBLE_IMAGE_GATE`（取代整份層級的 `MOBILE_B_OR_HIGHER_VISIBLE_IMAGE_GATE`）：每一則本輪入選新聞都必須逐則執行圖片搜尋與顯示驗收，一則新聞的圖片不得替其他新聞通過。逐則先檢查已引用來源頁的內文圖片、`og:image`／`srcset`、縮圖欄位與官方圖資；仍無結果時，依序檢查官方機關／當事組織、原始通訊社及其他可靠媒體的同事件報導，可檢查多個來源，不限一個，也不要求必須是完全相同像素。每張候選圖都必須保存實際圖片來源頁並核對事件與日期；不得用無法追溯的搬運站、搜尋縮圖、無關示意圖、人物舊照或來源標誌湊數。找到可用圖片卻無法顯示時，只重做該則圖片取得／交付，不重跑 discovery、評分、驗證或 reader 文字。
    - `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`：原生圖片搜尋／圖片卡不是唯一取得路徑。逐則檢查原引用文章的 `img`、`srcset`、`og:image` 或等價媒體欄位；若找到與當期事件相符的直接 JPEG／WebP URL，實際以宿主可用媒體路徑開啟／取得並嘗試可見交付。搜尋卡沒有 image ref 不等於圖片不可取得；外部 URL、Markdown 圖片字串或純文字連結本身不算可見交付。
+   - `IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE`：若圖片是 resize／redirect／代理 URL，逐層 URL-decode `url`、`u`、`src`、`source` 或 `image` 參數，並嘗試內嵌原始 JPEG／WebP及保留內嵌來源參數的最小代理 URL。代理失敗而這些候選未嘗試時，不得記 `direct_media_url_attempted=true` 或宣告圖片 blocker。
+   - `NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE`：逐則完成全部入選事件的圖片取得與交付嘗試。前一事件未交付不得跳過後續已有 native image ref／圖片卡的事件；禁止以 `native_card_available_but_canonical_reader_blocked_by_prior_event` 或同義結果代替實際嘗試，最後才彙整所有未交付事件。
    - `IMAGE_FALLBACK_EXHAUSTION_GATE`：每則事件在宣告 `NATIVE_MEDIA_UNAVAILABLE`、source exhaustion 或任何圖片 blocker 前，依序實際搜尋原引用來源、官方機關／當事組織、原始通訊社及其他可靠媒體的同事件合法刊載／轉載圖片。圖片證據來源與文字驗證來源可以不同，也可不是原文同一張，但必須可信、合法公開刊載、可追溯，且事件、日期、人物／地點一致。每則 image evidence 保存 `original_source_attempted`、`direct_media_url_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`；`delivery_unavailable` 或 source exhaustion 的 `direct_media_url_attempted` 必須為 `true`，任一來源層未實際搜尋時不得停止圖片 stage。直接文章原圖已成功可見交付時，不必再做無增量的後續來源搜尋。
    - 同一張原圖不適合公開內嵌或完全沒有可確認圖片時，不換無關圖、不留下破圖、不輸出圖片網址，也不以文字描述畫面冒充附件；reader 直接省略整個圖片區塊，原因只保存於本輪 image evidence。
    - `IMAGE_READER_VISIBLE_DELIVERY_GATE`：宿主宣告具備原生媒體能力時，圖片只有在本輪排程對話的最終訊息中實際顯示為可見圖片或圖片卡，才算圖片交付成功。Markdown 圖片語法、本機絕對路徑、`sandbox:` 路徑、外部圖片網址、空白方框或破圖圖示都不算可見圖片。
@@ -148,3 +150,4 @@ The required order for every configured discovery route is: `canonical route -> 
 11. 十四天海選清單保留在 audit artifact，不附加到 canonical reader；每筆仍保存日期、區域、標題、六項評分、總分、等級、決定、理由與來源。
 
 只提供有來源支持的內容。GitHub 規則、搜尋或來源無法讀取時，回報實際缺口，不得假裝完成。
+
