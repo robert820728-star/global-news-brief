@@ -55,6 +55,10 @@
 
 在四層來源與宿主可用交付方式尚未逐一實際完成前，不得宣告 `NATIVE_MEDIA_UNAVAILABLE`、`source_exhausted`、圖片 blocker 或最早不可恢復 blocker。不得把「看得到圖片存在但我沒有拿」當成合法結論。只有完整來源檢查後確實沒有合格圖片，才可記為 source exhaustion 並依規則省略該則圖片；這不等於 delivery failure。
 
+`NO_EXTERNAL_IMAGE_URL_DELIVERY_GATE`
+
+禁止使用 `![替代文字](https://外部圖片網址)`、HTML 外部圖片標籤、圖片代理 URL、直接 CDN URL 或圖片來源頁連結作為 Reader 的圖片交付。外部網址只可保存為來源追溯與取得證據，不得直接放進最終 Reader 冒充附件。HTTP 200、MIME、尺寸與位元組只證明圖片已取得，不代表對話端已顯示；取得合格圖片後，必須轉成本機實體檔或宿主原生圖片／附件，並確認它在本 Scheduled Task 所屬對話中實際可見。若只能產生外部 Markdown 熱連結或破圖框，必須判為尚未交付並繼續同一 run 的圖片交付，不得把網址貼上後宣告完成。
+
 `IMAGE_READER_VISIBLE_DELIVERY_GATE`
 
 圖片只有在本 Scheduled Task 所屬的目前對話最終訊息中實際顯示為可見圖片、附件或原生圖片卡，才算交付。外部圖片 URL、文章連結、Markdown 圖片字串、圖片說明、本機路徑、`sandbox:` 字串、空白框或破圖都不能冒充圖片。full-runtime 優先取得並驗證實體 JPEG／WebP，原圖失敗才做同來源頁截圖，再嘗試附件／媒體呈現；mobile-native 依序使用文章直接媒體、原生圖片／圖片卡與後續可靠來源，不得虛構下載、截圖、物化或像素驗收。

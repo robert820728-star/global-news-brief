@@ -1408,6 +1408,7 @@ class PipelineContractTests(unittest.TestCase):
             "IMAGE_READER_VISIBLE_DELIVERY_GATE",
             "IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE",
             "NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE",
+            "NO_EXTERNAL_IMAGE_URL_DELIVERY_GATE",
             "CANONICAL_THREE_PART_READER_LAYOUT_GATE",
             "CURRENT_CONVERSATION_DELIVERY_GATE",
         ):
@@ -1426,6 +1427,9 @@ class PipelineContractTests(unittest.TestCase):
             "保留內嵌來源參數的最小代理 URL",
             "不得因較早事件尚未交付就跳過後續事件",
             "native_card_available_but_canonical_reader_blocked_by_prior_event",
+            "禁止使用 `![替代文字](https://外部圖片網址)`",
+            "HTTP 200、MIME、尺寸與位元組只證明圖片已取得",
+            "本機實體檔或宿主原生圖片／附件",
         ):
             self.assertIn(requirement, template)
 

@@ -1,5 +1,14 @@
 # Version Record / 版本紀錄
 
+## v0.6.0-rc.24 — No external image URL delivery / 禁止外部圖片網址交付
+
+- Reason / 建立原因：A rendered reply used a working UDN image proxy as remote Markdown. The acquisition probe returned HTTP 200 and a valid JPEG, but the conversation displayed a broken-image placeholder; this proved that remote retrieval success had again been confused with visible delivery. / 一次交付把可用的 UDN 圖片代理直接寫成遠端 Markdown；取得探測雖回傳 HTTP 200 與有效 JPEG，對話中卻只顯示破圖框，證明執行器再次把遠端取得成功誤當成可見交付。
+- Approach / 作法：Strengthen the existing complete Scheduled Task template with `NO_EXTERNAL_IMAGE_URL_DELIVERY_GATE`. External Markdown images, HTML hotlinks, proxy/CDN URLs, and source-page links are provenance only; HTTP/MIME/dimension checks prove acquisition only. A qualified image must be delivered as a local physical file or host-native image/attachment and visibly rendered in the owning conversation. / 在既有完整 Scheduled Task 範本加入 `NO_EXTERNAL_IMAGE_URL_DELIVERY_GATE`。外部 Markdown 圖片、HTML 熱連結、代理／CDN URL 與來源頁連結只能作為溯源；HTTP／MIME／尺寸只證明取得。合格圖片必須以本機實體檔或宿主原生圖片／附件交付，並在所屬對話中實際可見。
+- Entry points / 入口：Existing `scheduled-task-prompt-template.md` and existing pipeline contract regression. / 既有 `scheduled-task-prompt-template.md` 與既有 pipeline contract 回歸測試。
+- Non-goals / 不修改：No new schema, validator, receipt, recovery state, delivery mode, media proxy, or image escape hatch. Existing acquisition, fallback, image hard gate, and same-run visual recovery remain unchanged. / 不新增 schema、validator、receipt、recovery state、delivery mode、媒體代理或圖片逃生門；既有取得、fallback、圖片 hard gate 與同 run 視覺恢復均不變。
+- Validation / 驗證：The existing Scheduled Task contract test now requires the new gate and the explicit remote-Markdown prohibition, acquisition-versus-delivery distinction, and local/native delivery wording. Targeted and full repository suites plus capsule binding and remote CI remain the release gate. / 既有 Scheduled Task 契約測試新增要求：新 gate、明確禁止遠端 Markdown、區分取得與交付，以及本機／原生交付用語；發布前仍須通過 targeted／全庫測試、capsule 綁定與遠端 CI。
+- Result / 結果：Source candidate until the declared tests, capsule binding, and remote CI complete. / 在上述測試、capsule 綁定與遠端 CI 完成前，本版僅為 source candidate。
+
 ## v0.6.0-rc.23 — Image proxy and non-short-circuit delivery / 圖片代理與不中斷逐則交付
 
 - Reason / 建立原因：Live run `gnb-20260829T035709Z-7c2f8a41` confirmed that the host could return native image references, yet the executor stopped at the first unresolved event, skipped later deliverable cards, and treated a timed-out transformed UDN proxy URL as if every direct-media route had been exhausted. The same article exposed a usable minimal proxy URL containing the original media parameter. / 真實 run `gnb-20260829T035709Z-7c2f8a41` 證明宿主能提供 native image references，但執行器在第一則未交付事件便停止、跳過後續可交付圖片卡，並把帶轉換參數而逾時的 UDN 圖片代理誤判為所有直接媒體路徑已窮盡；同一文章其實暴露了保留原始媒體參數即可使用的最小代理 URL。
