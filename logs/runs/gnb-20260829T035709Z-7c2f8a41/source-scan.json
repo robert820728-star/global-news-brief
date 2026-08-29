@@ -1,0 +1,35 @@
+{
+  "schema_version": "mobile-source-scan-1.0",
+  "run_id": "gnb-20260829T035709Z-7c2f8a41",
+  "main_sha": "a4460a4ef09ae6b5079d2c67fa4b21b941cd76b1",
+  "window": {"start":"2026-08-28T03:57:09+00:00","end":"2026-08-29T03:57:09+00:00","timezone":"Asia/Shanghai"},
+  "section_scopes": [
+    {"code":"TWN","member_country_codes":["TWN"],"fallback":false},
+    {"code":"CHN","member_country_codes":["CHN"],"fallback":false},
+    {"code":"GLB","member_country_codes":[],"fallback":true}
+  ],
+  "coverage": [
+    {"source_id":"gdelt","role":"primary_aggregator","scan_status":"failed","coverage_complete":false,"coverage_status":"unavailable","coverage_reason":"Canonical GDELT archive/DOC route was not executable in the selected mobile-native host; no configured-route rows were fabricated.","within_window_count":0},
+    {"source_id":"cna","role":"regional_supplement","scan_status":"failed","coverage_complete":false,"coverage_status":"unavailable","coverage_reason":"Configured CNA POST pagination route was not executable with the available mobile-native web surface; CNA coverage is not claimed complete.","within_window_count":0},
+    {"source_id":"chinanews","role":"regional_supplement","scan_status":"completed","coverage_complete":false,"coverage_status":"degraded_partial","coverage_reason":"Current dated China News Service pages were directly verifiable, but the full two-day canonical index could not be exhaustively replayed in this host.","within_window_count":2},
+    {"source_id":"web_fallback","role":"global_fallback","scan_status":"completed","coverage_complete":false,"coverage_status":"degraded_partial","coverage_reason":"Bounded verified web fallback used only after the primary global route was unavailable; rows retain original URLs and do not satisfy configured-route completeness.","within_window_count":11}
+  ],
+  "rows": [
+    {"row_id":"R01","source_id":"web_fallback","section_hint":"TWN","title":"國發會發布中華民國人口推估（2026年至2075年）","published_at":"2026-08-28T15:00:00+08:00","url":"https://www.ndc.gov.tw/nc_27_40407"},
+    {"row_id":"R02","source_id":"chinanews","section_hint":"CHN","title":"中國房地產銷售制度迎重大調整 現房銷售優先","published_at":"2026-08-28T18:45:25+08:00","url":"https://bjlove02.chinanews.com.cn/cj/2026/08-28/10686054.shtml"},
+    {"row_id":"R03","source_id":"chinanews","section_hint":"CHN","title":"台風沙德爾在浙江登陸 或將深入影響中國內陸","published_at":"2026-08-28T15:09:47+08:00","url":"https://www.zj.chinanews.com.cn/yw/2026-08-28/detail-ihfirmti5854763.shtml"},
+    {"row_id":"R04","source_id":"web_fallback","section_hint":"CHN","title":"China removes two top generals from supreme military command body","published_at":"2026-08-28T00:00:00Z","url":"https://www.reuters.com/world/asia-pacific/china-removes-top-generals-state-central-military-commission-2026-08-28/"},
+    {"row_id":"R05","source_id":"web_fallback","section_hint":"GLB","title":"Ebola disease caused by Bundibugyo virus - Democratic Republic of the Congo","published_at":"2026-08-28T00:00:00Z","url":"https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON616"},
+    {"row_id":"R06","source_id":"web_fallback","section_hint":"GLB","title":"Over 90,000 affected by Himalayan landslide, Red Cross says","published_at":"2026-08-28T00:00:00Z","url":"https://www.reuters.com/business/environment/over-90000-affected-by-himalayan-landslide-red-cross-says-2026-08-28/"},
+    {"row_id":"R07","source_id":"web_fallback","section_hint":"GLB","title":"War weighs on Iran's economy as US intensifies sanctions","published_at":"2026-08-29T00:00:00Z","url":"https://www.reuters.com/world/asia-pacific/war-weighs-irans-economy-us-intensifies-sanctions-2026-08-29/"},
+    {"row_id":"R08","source_id":"web_fallback","section_hint":"GLB","title":"Russia devastates Ukrainian food storage in stepped up attacks on logistics","published_at":"2026-08-28T00:00:00Z","url":"https://www.reuters.com/world/ukraines-nova-poshta-says-depots-destroyed-russian-attacks-2026-08-28/"},
+    {"row_id":"R09","source_id":"web_fallback","section_hint":"GLB","title":"Trump says US is taking partial control of Venezuela's vast oil reserves","published_at":"2026-08-28T00:00:00Z","url":"https://www.reuters.com/business/energy/us-enters-into-oil-agreement-with-venezuela-trump-says-2026-08-28/"},
+    {"row_id":"R10","source_id":"web_fallback","section_hint":"GLB","title":"Pennsylvania measles outbreak reaches 460 cases","published_at":"2026-08-28T00:00:00-04:00","url":"https://www.pa.gov/agencies/health/diseases-conditions/infectious-disease/measles"},
+    {"row_id":"R11","source_id":"web_fallback","section_hint":"GLB","title":"Extensive power cuts hamper life in Sudan","published_at":"2026-08-28T00:00:00Z","url":"https://www.reuters.com/world/africa/extensive-power-cuts-hamper-life-sudan-2026-08-28/"},
+    {"row_id":"R12","source_id":"web_fallback","section_hint":"CHN","title":"S&P affirms China's A+ rating, sees growth above 4%","published_at":"2026-08-28T00:00:00Z","url":"https://www.reuters.com/world/asia-pacific/sp-affirms-chinas-a-rating-sees-growth-above-4-fiscal-support-continues-2026-08-28/"},
+    {"row_id":"R13","source_id":"web_fallback","section_hint":"GLB","title":"QatarEnergy cancels gas deliveries to Italy's Edison until early November over Iran war","published_at":"2026-08-28T00:00:00Z","url":"https://www.reuters.com/business/energy/qatarenergy-cancels-gas-deliveries-italys-edison-until-early-november-2026-08-28/"}
+  ],
+  "counts": {"configured_route_rows":2,"web_fallback_rows":11,"merged_article_row_count":13,"in_window_article_row_count":13,"canonical_url_count":13,"provisional_title_cluster_count":13},
+  "coverage_complete": false,
+  "coverage_note": "The fallback is intentionally partial; absence from this pool must not be interpreted as proof that no other qualifying event occurred."
+}
