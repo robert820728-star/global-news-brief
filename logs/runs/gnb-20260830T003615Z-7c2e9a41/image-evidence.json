@@ -1,0 +1,111 @@
+{
+  "schema_version":"1.1.0-mobile-equivalent",
+  "run_id":"gnb-20260830T003615Z-7c2e9a41",
+  "main_sha":"c44751f952059dd544598248c431de65261d97e1",
+  "window":{"start":"2026-08-29T00:36:15+00:00","end":"2026-08-30T00:36:15+00:00","timezone":"Asia/Shanghai"},
+  "execution_mode":"mobile-native",
+  "reader_visible_delivery_required":true,
+  "events":[
+    {
+      "event_id":"TWN-01","qualified_image_found":true,"delivery_attempted":true,"visible_delivery_confirmed":false,"final_image_state":"delivery-unavailable",
+      "attempts":[
+        {"layer":"original_cited_source","source":"https://health.ltn.com.tw/article/breakingnews/5556274","result":"qualified current product image confirmed in article; caption identifies BCLA91 and credits TFDA, but host did not materialize a native image ref or direct binary object"},
+        {"layer":"official_agency_or_party","source":"https://www.anxo.com.tw/","result":"manufacturer site recovered; no host-native card for the specific BCLA91 product image"},
+        {"layer":"original_wire","source":"Central News Agency reporting chain","result":"current CNA text recovered; available image result was a generic TFDA/file image rather than the BCLA91 product"},
+        {"layer":"other_reliable_media","source":"https://news.tvbs.com.tw/life/4014427","result":"same-event current product image from manufacturer is visibly described on source page, but no native image ref materialized"}
+      ],
+      "blocked_delivery_reason":"qualified same-event image exists, but available host routes produced only source-page image presence/text and no native image/attachment reference; external URL delivery is prohibited"
+    },
+    {
+      "event_id":"TWN-02","qualified_image_found":true,"delivery_attempted":true,"visible_delivery_confirmed":false,"final_image_state":"delivery-unavailable",
+      "attempts":[
+        {"layer":"original_cited_source","source":"https://udn.com/news/story/7327/9721959","result":"current report includes Pingtung Agriculture Department supplied crop-damage photos, but no native image ref materialized"},
+        {"layer":"official_agency_or_party","source":"Pingtung County government/disaster information","result":"official weather/disaster pages recovered; no native same-event photo card materialized"},
+        {"layer":"original_wire","source":"Central News Agency image search","result":"native image refs found only for older Pingtung agricultural disasters, rejected as wrong event/date"},
+        {"layer":"other_reliable_media","source":"web image fallback","result":"other native refs were older typhoon/rain events and were rejected as stale"}
+      ],
+      "blocked_delivery_reason":"current same-event photos exist at original source but host-native search returned only stale Pingtung damage images"
+    },
+    {
+      "event_id":"TWN-03","qualified_image_found":true,"delivery_attempted":true,"visible_delivery_confirmed":false,"final_image_state":"delivery-unavailable",
+      "attempts":[
+        {"layer":"original_cited_source","source":"https://newtalk.tw/news/view/2026-08-29/1056471","result":"current article visibly carries Coast Guard supplied photo of the Aug 29 incursion, but no native image ref materialized"},
+        {"layer":"official_agency_or_party","source":"Taiwan Coast Guard current press-release chain","result":"current Coast Guard media attribution confirmed through multiple same-day reports; no native card materialized"},
+        {"layer":"original_wire","source":"Central News Agency current report","result":"same-day event and supplied-image attribution confirmed; no current native image ref"},
+        {"layer":"other_reliable_media","source":"native image search","result":"native refs returned older Kinmen incursions, including hull 14608 and other patrols, rejected as wrong event/date"}
+      ],
+      "blocked_delivery_reason":"current event photo exists and is traceable to Coast Guard, but only stale native image refs were materialized"
+    },
+    {
+      "event_id":"CHN-01","qualified_image_found":true,"delivery_attempted":true,"visible_delivery_confirmed":false,"final_image_state":"delivery-unavailable",
+      "attempts":[
+        {"layer":"original_cited_source","source":"https://www.chinanews.com.cn/sh/2026/08-29/10686419.shtml","result":"article exposes image slots but no native binary/card was materialized"},
+        {"layer":"official_agency_or_party","source":"Guangxi Hydrology Center current data chain","result":"current hydrology figures and orange-warning updates recovered; no host-native same-event photo card"},
+        {"layer":"original_wire","source":"CCTV/ChinaNews current flood coverage","result":"same-day current flood reports recovered; no native same-event image ref"},
+        {"layer":"other_reliable_media","source":"https://gg.gxnews.com.cn/staticpages/20260829/newgx6a924761-21987611.shtml","result":"current Aug 28-29 Guangxi flood gallery visibly contains reporter photos, but native image search returned older Guigang flood photos only; stale refs rejected"}
+      ],
+      "blocked_delivery_reason":"qualified current flood gallery exists, but no current-event native image ref was materialized"
+    },
+    {
+      "event_id":"CHN-02","qualified_image_found":true,"delivery_attempted":true,"visible_delivery_confirmed":false,"final_image_state":"delivery-unavailable",
+      "attempts":[
+        {"layer":"original_cited_source","source":"https://www.thepaper.cn/newsDetail_forward_33971751","result":"current article visibly contains image credited to CXMT Weibo, but no native image ref materialized"},
+        {"layer":"official_agency_or_party","source":"CXMT/Xiaomi/Lei Jun Weibo announcement chain","result":"same-day official announcement and image-bearing posts recovered through search, but host did not provide a native image card"},
+        {"layer":"original_wire","source":"https://www.reuters.com/world/asia-pacific/chinas-cxmt-supply-memory-chip-xiaomis-upcoming-folding-phone-2026-08-29/","result":"Reuters current story recovered; no native image ref materialized"},
+        {"layer":"other_reliable_media","source":"https://www.ithome.com/0/995/869.htm","result":"current article exposes multiple official announcement images, but no native image ref materialized"}
+      ],
+      "blocked_delivery_reason":"qualified official announcement images exist, but no host-native image reference was produced"
+    },
+    {
+      "event_id":"GLB-01","qualified_image_found":true,"delivery_attempted":true,"visible_delivery_confirmed":false,"final_image_state":"recoverable-native-ref-ready",
+      "attempts":[
+        {"layer":"original_cited_source","source":"Reuters/Guardian current reports","result":"current event media exists; text and captions recovered"},
+        {"layer":"official_agency_or_party","source":"https://www.mofa.gov.np/content/1866/press-briefing-by-hon--minister-for-foreign/","result":"official Aug 29 flood briefing recovered; page itself reports no image"},
+        {"layer":"original_wire","source":"AFP/Getty current-event photo","result":"native image ref materialized for Aug 26 rescue in the same continuing flood disaster"},
+        {"layer":"other_reliable_media","source":"Guardian/Al Jazeera current rescue coverage","result":"additional same-event current images described"}
+      ],
+      "native_ref":"turn294977image4","native_ref_source":"Getty Images / AFP, Aug 26 2026 rescue in Nepal flood disaster","recoverable_delivery_evidence":true
+    },
+    {
+      "event_id":"GLB-02","qualified_image_found":true,"delivery_attempted":true,"visible_delivery_confirmed":false,"final_image_state":"recoverable-native-ref-ready",
+      "attempts":[
+        {"layer":"original_cited_source","source":"AP/Al Jazeera current reports","result":"current Niamey attack/airport coverage recovered; no AP/Al Jazeera native image ref materialized"},
+        {"layer":"official_agency_or_party","source":"Niger defence/state-broadcaster reporting chain","result":"government control claim and arrested-soldier footage described in current reporting; no direct native card"},
+        {"layer":"original_wire","source":"AP/Reuters current event chain","result":"current event confirmed but no native ref from these wires"},
+        {"layer":"other_reliable_media","source":"Erem News current airport attack coverage","result":"native current-event image ref materialized showing Niamey airport attack response"}
+      ],
+      "native_ref":"turn354951image1","native_ref_source":"Erem News, current Niamey airport attack scene","recoverable_delivery_evidence":true
+    },
+    {
+      "event_id":"GLB-03","qualified_image_found":true,"delivery_attempted":true,"visible_delivery_confirmed":false,"final_image_state":"delivery-unavailable",
+      "attempts":[
+        {"layer":"original_cited_source","source":"https://www.reuters.com/business/energy/russia-extends-ban-diesel-exports-until-september-30-2026-08-29/","result":"current Reuters article recovered; no native image ref materialized"},
+        {"layer":"official_agency_or_party","source":"Russian government decree/statement chain","result":"policy statement recovered via reliable reports; no same-day native photo card"},
+        {"layer":"original_wire","source":"Reuters/AFP current fuel-market coverage","result":"current AFP photos of Moscow fuel queues are visibly identified in same-day syndication, but no native ref materialized for those exact photos"},
+        {"layer":"other_reliable_media","source":"Asharq Al-Awsat/Türkiye Today current article","result":"same-day article visibly uses Aug 19-21 2026 Rosneft queue photos; native search produced older June/July shortage refs, rejected for event-date mismatch"}
+      ],
+      "blocked_delivery_reason":"qualified current-period fuel-shortage photos exist in same-day coverage, but no exact native ref materialized; stale native refs were rejected"
+    },
+    {
+      "event_id":"GLB-04","qualified_image_found":true,"delivery_attempted":true,"visible_delivery_confirmed":false,"final_image_state":"delivery-unavailable",
+      "attempts":[
+        {"layer":"original_cited_source","source":"https://www.reuters.com/world/asia-pacific/war-weighs-irans-economy-us-intensifies-sanctions-2026-08-29/","result":"current Reuters economic-war story recovered; no current native event image ref materialized"},
+        {"layer":"official_agency_or_party","source":"Iranian presidency/state-media Pezeshkian statement chain","result":"current presidential attribution recovered in reporting; no host-native same-day image card"},
+        {"layer":"original_wire","source":"Reuters current story","result":"current event verified, but image search did not materialize Reuters event media"},
+        {"layer":"other_reliable_media","source":"Dawn/Express Tribune and other current syndication","result":"current same-event articles recovered; native image search yielded older Hormuz charts or older Pezeshkian photos, rejected as stale or non-event-specific"}
+      ],
+      "blocked_delivery_reason":"current story has traceable contemporaneous political/economic coverage, but no qualifying same-event native image card was materialized"
+    },
+    {
+      "event_id":"GLB-05","qualified_image_found":true,"delivery_attempted":true,"visible_delivery_confirmed":false,"final_image_state":"delivery-unavailable",
+      "attempts":[
+        {"layer":"original_cited_source","source":"Reuters/AP Aug 29 referendum coverage","result":"current vote coverage recovered; no vote-day native image ref materialized"},
+        {"layer":"official_agency_or_party","source":"https://island.is/en/p/public-referendum-2026/news/public-referendum-29-august-2026","result":"official referendum page contains image content but no native image ref materialized"},
+        {"layer":"original_wire","source":"Getty/AFP referendum coverage","result":"native refs materialized for Aug 24-27 referendum campaign/listening sessions, outside the exact run window and therefore not used as the per-story current image"},
+        {"layer":"other_reliable_media","source":"Qazinform/other referendum coverage","result":"campaign imagery found, but not vote-day/current-window event media"}
+      ],
+      "blocked_delivery_reason":"same referendum has current official and wire imagery, but available native refs are pre-window campaign images rather than vote-day media"
+    }
+  ],
+  "summary":{"selected_event_count":10,"events_processed":10,"native_ref_ready_count":2,"delivery_unavailable_count":8,"source_exhausted_count":0,"visible_delivery_confirmed_count":0,"requires_visual_recovery":true,"earliest_blocker_event_id":"TWN-01"}
+}
