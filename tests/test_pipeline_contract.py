@@ -1402,6 +1402,8 @@ class PipelineContractTests(unittest.TestCase):
             "GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE",
             "PUBLIC_VALUE_V2_SELECTION_GATE",
             "INDEPENDENT_VERIFICATION_GATE",
+            "SCHEDULED_NATIVE_IMAGE_SEARCH_FIRST_GATE",
+            "FIXED_VISIBLE_IMAGE_TRANSPORT_SEQUENCE",
             "DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE",
             "IMAGE_FALLBACK_EXHAUSTION_GATE",
             "IMAGE_READER_VISIBLE_DELIVERY_GATE",
@@ -1415,6 +1417,11 @@ class PipelineContractTests(unittest.TestCase):
 
         for requirement in (
             "原引用來源 → 官方機關／當事組織 → 原始通訊社 → 其他可靠媒體",
+            "必須實際呼叫原生圖片搜尋",
+            "取得合格 image ref 後立即交付原生圖片卡",
+            "不得繼續撞已失敗的直接圖片網址",
+            "把該 ref 放入原生 image group／圖片卡",
+            "沒有截圖工具時立即進下一來源",
             "搜尋結果沒有 image ref",
             "所有 C 級以上",
             "## 今日總覽",
