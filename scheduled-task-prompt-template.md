@@ -5,7 +5,7 @@
 
 `VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`
 
-這個正式循環排程的產品 profile 強制交付實際可見圖片，只能在安裝時已通過 `VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE` 的 desktop/local-project `full-runtime` 執行。安裝實測必須把 verified workspace 的 `maps/generated/taiwan-counties-yellow-v2.png` 當作本機實體附件交付到目前對話並實際顯示；外部 URL、Markdown 熱連結、路徑字串或破圖不算。若本次 capability routing 只能得到 `mobile-native`，表示此排程建立在不合格宿主：不得建立或 resume occurrence、不得開始新聞 discovery、不得耗費整輪查圖後才回報媒體 blocker；直接要求在支援本機專案與附件的 desktop/local project 重新安裝。mobile-native 只供一次性診斷或候選整理，不是本正式循環排程的 fallback producer。
+`EVERY_DAILY_NEWS_EXECUTION_GATE`：manual, single-run, test, first-run, recurring, or resume 全部是同一每日新聞執行，不因觸發方式而有例外。每次執行只能在已通過 `VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE` 的 desktop/local-project `full-runtime` 開始。先把 verified workspace 的 `maps/generated/taiwan-counties-yellow-v2.png` 當作本機實體附件交付到目前對話並確認實際顯示；外部 URL、Markdown 熱連結、路徑字串或破圖不算。未通過時不得建立或 resume occurrence、不得開始新聞 discovery、must not begin discovery、must not create a canonical Reader；不得改走 mobile-native、不得整理候選或跑完整輪後才回報媒體 blocker。
 
 `VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE`
 
@@ -15,13 +15,13 @@
 
 `FRESH_MAIN_AND_ENTRYPOINT_GATE`
 
-每次觸發先以 fresh GitHub 請求確認 https://github.com/robert820728-star/global-news-brief 當下最新 `main`，完整閱讀該 commit 的 `INSTALL.md`、本檔、`daily-schedule-prompt.md`、`mobile-chatgpt-daily-prompt.md`，以及 `INSTALL.md` 要求或導向的 settings、skills、schemas、scripts、模板與契約。不得使用建立排程時、前次執行或快取中的舊 SHA／舊規則；同一輪確認 SHA 後不得中途換版。最新版 repository 若更新本範本，以當輪 fresh main 的版本為準。
+每次觸發先以 fresh GitHub 請求確認 https://github.com/robert820728-star/global-news-brief 當下最新 `main`，完整閱讀該 commit 的 `INSTALL.md`、本檔、`daily-schedule-prompt.md`，以及 `INSTALL.md` 要求或導向的 full-runtime settings、skills、schemas、scripts、模板與契約。`mobile-chatgpt-daily-prompt.md` 只供歷史紀錄解讀，不是執行規則，不得載入作為 fallback。不得使用建立排程時、前次執行或快取中的舊 SHA／舊規則；同一輪確認 SHA 後不得中途換版。
 
 不得只讀標題、搜尋片段或自行摘要後憑記憶執行。repository 文件是細節 authority；本 task prompt 是不可漏掉的最低執行包絡。兩者同時適用，不能選較寬鬆的一份。
 
 `SCHEDULED_OCCURRENCE_SINGLE_RUN_GATE`
 
-以本 Scheduled Task 真正觸發的 occurrence 建立或接續唯一 `run_id`，從實際 executor 啟動時刻固定精確 24 小時窗。相同 occurrence 必須從 first incomplete stage 接續；不得建立 replacement run、重跑已完成的 discovery／評分／驗證、沿用前輪候選或把未完成 reader 當成完成。先做一次 capability routing：能合法取得 verified workspace 才走 full-runtime；否則走 mobile-native，不得在同一 run 中途切換模式或虛構本機能力。
+以本 Scheduled Task 真正觸發的 occurrence 建立或接續唯一 `run_id`，從實際 executor 啟動時刻固定精確 24 小時窗。相同 occurrence 必須從 first incomplete stage 接續；不得建立 replacement run、重跑已完成的 discovery／評分／驗證、沿用前輪候選或把未完成 reader 當成完成。只有已通過前述 full-runtime 與附件 smoke test 才可建立或接續新聞 occurrence；沒有 mobile-native 新聞 fallback。
 
 ## 2. 新聞 discovery、評分與驗證
 
@@ -69,7 +69,7 @@
 
 `IMAGE_READER_VISIBLE_DELIVERY_GATE`
 
-圖片只有在本 Scheduled Task 所屬的目前對話最終訊息中實際顯示為可見圖片、附件或原生圖片卡，才算交付。外部圖片 URL、文章連結、Markdown 圖片字串、圖片說明、本機路徑、`sandbox:` 字串、空白框或破圖都不能冒充圖片。full-runtime 優先取得並驗證實體 JPEG／WebP，原圖失敗才做同來源頁截圖，再嘗試附件／媒體呈現；mobile-native 依序使用文章直接媒體、原生圖片／圖片卡與後續可靠來源，不得虛構下載、截圖、物化或像素驗收。
+圖片只有在本 Scheduled Task 所屬的目前對話最終訊息中實際顯示為可見圖片或附件，才算交付。外部圖片 URL、文章連結、Markdown 圖片字串、圖片說明、本機路徑、`sandbox:` 字串、空白框或破圖都不能冒充圖片。`VISIBLE_IMAGE_OVER_ORIGINAL_FILE_GATE`：不要求原圖或原畫質；full-runtime 可直接下載圖片，也可立即截取原文章、官方頁或可靠轉載頁中的同事件圖片區域並物化為附件，不必先等原圖／CDN 下載失敗。只要來源可追溯、事件與日期相符且附件實際可見即合格。
 
 若已確認至少一張合格圖片但所有可用可見交付方式真的失敗，不論 `claim_critical` 都不得完成 Reader；同一 run 保持 `status=running`、`current_stage=visuals-completed`，保存已找到的圖片來源與嘗試證據，只恢復該圖片交付。不得建立新 run、重做新聞、改變事件 ID，或先交付純文字 Reader 再稱 canonical completed。
 

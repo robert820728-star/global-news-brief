@@ -150,10 +150,17 @@ def materialize(inputs: list[dict[str, Any]], output_dir: Path) -> list[dict[str
         event_id = str(item.get("event_id", "")).strip()
         source_url = str(item.get("source_image_url", item.get("source_url", ""))).strip()
         source_page_url = str(item.get("source_page_url", "")).strip()
+        screenshot_path = str(item.get("screenshot_path", "")).strip()
         alt = str(item.get("alt", "")).strip()
         credit = str(item.get("credit", "")).strip()
         try:
-            raw = download_image(source_url)
+            if screenshot_path:
+                screenshot = Path(screenshot_path)
+                if not screenshot.is_absolute() or not screenshot.is_file():
+                    raise ValueError("screenshot_path must be an existing absolute local file")
+                raw = screenshot.read_bytes()
+            else:
+                raw = download_image(source_url)
         except (OSError, ValueError) as exc:
             records.append(
                 _failed_record(
@@ -162,7 +169,7 @@ def materialize(inputs: list[dict[str, Any]], output_dir: Path) -> list[dict[str
                     source_page_url=source_page_url,
                     alt=alt,
                     credit=credit,
-                    error=f"download failed: {exc}",
+                    error=f"image acquisition failed: {exc}",
                 )
             )
             continue

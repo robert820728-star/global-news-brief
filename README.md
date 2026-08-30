@@ -4,7 +4,7 @@
 
 ## 執行環境
 
-`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`：強制可見圖片的正式循環排程只能在 ChatGPT desktop／Codex 的 desktop/local project 或 worktree 以 full-runtime 建立。一般 web／mobile `mobile-native` 只供一次性診斷或候選整理，不得作為正式循環排程，也不得承諾一定能把新聞圖片轉成本機附件。
+`EVERY_DAILY_NEWS_EXECUTION_GATE`／`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`：manual, single-run, test, first-run, recurring, or resume 全部只能在 ChatGPT desktop／Codex 的 desktop/local project 或 worktree 以 full-runtime 執行。一般 web／mobile `mobile-native` 只可做流程外能力診斷或讀取既有歷史狀態，must not begin discovery、must not create a canonical Reader。
 
 `VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE`：啟用排程前，必須從 verified workspace 將 `maps/generated/taiwan-counties-yellow-v2.png` 以本機實體附件送到目前對話，並確認圖片在目前對話中實際可見。只貼外部 URL、Markdown 圖片、路徑字串、圖片說明或破圖框都不算；測試失敗時不得啟用排程。
 
@@ -42,7 +42,7 @@
 
 ## 不需要 GitHub 帳號
 
-公開 repo 的規則、技能、模板、地圖與圖片流程可在沒有 GitHub 帳號時直接讀取；但可恢復的 mobile-native 診斷或歷史 run recovery 必須使用具此 repository `run-logs` 寫入權限的 GitHub app。沒有寫入權限時最多只能在當前執行做一次性診斷，不得宣稱具備跨執行 resume、durable run identity、continuity 或正式循環排程能力。
+公開 repo 的規則、技能、模板、地圖與圖片流程可在沒有 GitHub 帳號時直接讀取；既有 mobile-native ledger 只供歷史狀態檢視。任何實際每日新聞執行或恢復都使用 full-runtime，不得以 mobile 診斷建立候選或 Reader。
 
 十四天候選回查採漸進式保存：優先使用可持久工作區，其次使用具寫入權限的 repository。若兩者皆不可用，系統仍完成本輪海選、D／E 內部分級、來源複查與讀者版，只是不保證跨日保存十四天歷史。此降級不得影響事件評級、入選、圖片、地圖或最終輸出。
 

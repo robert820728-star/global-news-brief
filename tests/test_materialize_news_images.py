@@ -5,7 +5,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from scripts.materialize_news_images import materialize_image_bytes
+from scripts.materialize_news_images import materialize, materialize_image_bytes
 
 
 def jpeg_bytes(size=(320, 240), color=(30, 90, 160)):
@@ -63,6 +63,30 @@ class MaterializeNewsImagesTests(unittest.TestCase):
             self.assertEqual("ready", record["status"])
             self.assertEqual(640, record["width"])
             self.assertEqual(400, record["height"])
+
+    def test_local_screenshot_may_be_materialized_without_downloading_original(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            screenshot = root / "captured-page-image.png"
+            Image.new("RGB", (420, 260), (20, 120, 70)).save(screenshot, format="PNG")
+
+            records = materialize(
+                [
+                    {
+                        "event_id": "TWN-01",
+                        "source_page_url": "https://news.example.test/story",
+                        "source_image_url": "https://cdn.example.test/story.jpg",
+                        "screenshot_path": str(screenshot),
+                        "alt": "Visible same-event screenshot",
+                        "credit": "Example News",
+                    }
+                ],
+                root / "assets",
+            )
+
+            self.assertEqual("ready", records[0]["status"])
+            self.assertTrue(Path(records[0]["local_path"]).is_file())
+            self.assertEqual("https://cdn.example.test/story.jpg", records[0]["source_image_url"])
 
 
 if __name__ == "__main__":

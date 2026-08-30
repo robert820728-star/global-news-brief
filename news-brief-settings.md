@@ -1,5 +1,7 @@
 # 新聞簡報設定
 
+`EVERY_DAILY_NEWS_EXECUTION_GATE`：本設定只可由已通過本機附件 smoke test 的 full-runtime 用於 manual, single-run, test, first-run, recurring, or resume。文件內既有 mobile 欄位僅供解析歷史 artifacts，不授權 mobile-native 開始或推進 discovery、評分、驗證、圖片或 Reader。
+
 ## Discovery and verification split
 
 `DISCOVERY_THEN_VERIFY`

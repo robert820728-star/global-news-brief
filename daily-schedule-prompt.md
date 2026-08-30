@@ -1,5 +1,9 @@
 # 每日新聞排程執行契約
 
+`EVERY_DAILY_NEWS_EXECUTION_GATE`
+
+Any daily-news invocation—manual, single-run, test, first-run, recurring, or resume—must use the verified desktop/local-project `full-runtime` and pass the repository local attachment smoke test before occurrence creation or discovery. A no-runtime/mobile execution must not begin discovery and must not create a canonical Reader; it may only report the capability mismatch outside the news workflow. Trigger type never relaxes image download, materialization, or visible attachment delivery.
+
 ## Discovery first, verification second
 
 `DISCOVERY_THEN_VERIFY`
@@ -17,7 +21,7 @@
 
 `IMAGE_FALLBACK_EXHAUSTION_GATE`
 
-- `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`：原生圖片搜尋／圖片卡不是唯一取得路徑。檢查原引用文章時，必須解析內文 `img`、`srcset`、`og:image` 或等價媒體欄位；若找到與事件及日期相符的直接 JPEG／WebP URL，實際以宿主可用媒體路徑開啟／取得並嘗試可見交付。搜尋卡沒有 image ref 不等於圖片不可取得；外部 URL、Markdown 圖片字串或純文字連結本身不算可見交付。
+- `VISIBLE_IMAGE_OVER_ORIGINAL_FILE_GATE`／`DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`：不要求原始檔或原畫質。檢查原引用文章時可解析 `img`、`srcset`、`og:image` 後下載，也可直接截取文章、官方頁或可靠轉載頁中的同事件圖片區域；兩者沒有固定先後，任一方法取得可追溯、事件與日期相符的本機圖片即可物化並嘗試可見附件交付。搜尋卡沒有 image ref 不等於圖片不可取得；外部 URL、Markdown 圖片字串或純文字連結本身不算可見交付。
 - `IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE`：若圖片是 resize／redirect／代理 URL，逐層 URL-decode `url`、`u`、`src`、`source` 或 `image` 參數，並嘗試內嵌原始 JPEG／WebP及保留內嵌來源參數的最小代理 URL；代理失敗不能讓未嘗試候選被記成 `direct_media_url_attempted=true`。
 - `NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE`：較早事件圖片失敗時仍須處理全部後續入選事件。已有 native image ref／圖片卡者必須實際嘗試交付；禁止用 `native_card_available_but_canonical_reader_blocked_by_prior_event` 或同義結果跳過，最後才彙整全部未交付事件。
 - 圖片取得不得因原引用來源、原始圖片 URL、原生圖片卡或單一媒體交付失敗而停止。每則事件在宣告 `NATIVE_MEDIA_UNAVAILABLE`、`source_exhausted` 或任何圖片 blocker 前，必須依序實際搜尋：原引用來源 → 官方機關／當事組織 → 原始通訊社 → 其他可靠媒體的同事件合法刊載／轉載圖片；可使用不同但與同一事件、日期、人物／地點相符且可追溯的合格新聞照片。
@@ -191,7 +195,7 @@ Stage -1 完成後，至少讀取並遵守：
 8. `build-news-charts`
 9. `collect-news-images`
    - `IMAGE_FALLBACK_EXHAUSTION_GATE` applies before every image blocker. `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE` first extracts article `img`, `srcset`, `og:image`, or equivalent media fields and actually opens/fetches a matching direct JPEG/WebP through the host media path; no search-card image ref is not exhaustion, and a bare URL is not delivery. Per event, then search original source → official/party → original wire → other reliable same-event publication/reprint, and save `original_source_attempted`, `direct_media_url_attempted`, `official_fallback_attempted`, `wire_fallback_attempted`, `reliable_media_fallback_attempted`, `qualified_image_found`, `delivery_attempted`, and `delivery_result`. Text verification and image provenance may use different reliable sources when the image is legal, traceable, and matches the same event/date/person/location.
-    - 對已選取且有候選來源圖片的事件，先建立只含 `event_id`、`source_page_url`、`source_image_url`、`alt`、`credit` 的 JSON 陣列；`source_image_url` 必須是來源頁實際檢出的 og:image、src/srcset 或官方媒體檔，不得等於文章頁網址。先下載原始媒體檔；下載失敗時才以同一來源頁或官方產品頁截圖補救，再執行 `<bundled-python> scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>` 驗證可取得的實體檔。已有 `status=ready`、可解碼且含 `local_path`、MIME、尺寸與 SHA-256 的 JPEG／WebP 時，必須先實際嘗試宿主支援的本機附件或本機媒體呈現方式；不得只因工具名稱中沒有特定 media API 就預判不可交付。實際交付嘗試失敗後套用 `NATIVE_MEDIA_CAPABILITY_FALLBACK`，保存嘗試證據並讓同一 run 停在 `visuals-completed`；它會阻擋 reader 正式交付與 `status=completed`，由既有 full-runtime 只接續圖片交付。
+    - 對已選取且有候選來源圖片的事件，建立包含 `event_id`、`source_page_url`、`source_image_url`、可選 `screenshot_path`、`alt`、`credit` 的 JSON 陣列。可直接下載 `source_image_url`，也可先將文章／官方／可靠轉載頁的同事件圖片區域截成實體檔並以 `screenshot_path` 交給 `<bundled-python> scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>`；截圖不必等待原圖下載失敗。已有 `status=ready`、可解碼且含 `local_path`、MIME、尺寸與 SHA-256 的 JPEG 時，必須實際嘗試宿主支援的本機附件呈現；不得預判不可交付。
    - 單張下載、解碼或寫檔失敗只影響該事件圖片，不得重跑 discovery、評分、驗證或 reader 文字；保留既有 checkpoint。沒有實際可見附件時，reader 完整省略圖片與圖說，只在內部 evidence 保存原因；需要補圖時只重做圖片交付。
    - 只有 checkpoint 的 `collect-news-images` completed 後，才可第一次執行 `scripts/validate_news_brief.py manifest --input <final-manifest>`；final-manifest validator 不得提前到 verify、map 或 chart 階段。
    - 若執行者誤在圖片階段完成前呼叫該命令，script 會輸出 `DEFERRED` 並以成功狀態返回；這不是 validator 通過，也不得標記整輪失敗。立即繼續原定 pipeline，並在 `collect-news-images` completed 後重新執行到真正輸出 `OK`。

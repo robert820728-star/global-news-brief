@@ -1,6 +1,6 @@
 # 手機 ChatGPT 基礎每日新聞規則
 
-`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`／`VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE`：本檔保留給 mobile-native 的一次性診斷、候選整理及既有歷史 run 讀取；mobile-native 不得作為正式循環排程的 canonical producer。強制可見圖片的「每日新聞」正式排程必須在 desktop/local project 以 full-runtime 建立，並在啟用前以 `maps/generated/taiwan-counties-yellow-v2.png` 完成本機附件實際可見測試。若正式循環排程誤進本模式，必須在 occurrence 建立與新聞 discovery 前停止並要求重新安裝，不得執行完整新聞後才回報圖片無法交付。
+`EVERY_DAILY_NEWS_EXECUTION_GATE`／`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`／`VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE`：本檔只保留給 mobile-native 的流程外能力診斷與既有歷史紀錄解讀，不是可執行的每日新聞路徑。manual, single-run, test, first-run, recurring, or resume 全部必須改由 desktop/local-project `full-runtime` 執行，並先以 `maps/generated/taiwan-counties-yellow-v2.png` 通過本機附件實際可見測試。mobile-native must not begin discovery、must not create a canonical Reader，也不得進行候選整理、評分、驗證或圖片搜尋後才回報不能下載／截圖／附檔。下方舊有 mobile artifact 欄位只供讀取既有歷史 run，不授權建立或推進新 run。
 
 ## 執行輸入正規化
 
@@ -144,7 +144,7 @@ The required order for every configured discovery route is: `canonical route -> 
    - `NATIVE_MEDIA_BLOCK_DELIVERY_GATE`：圖片先保存為實體 JPEG／WebP，完成 MIME、解碼、尺寸與內容驗收後，必須先實際嘗試宿主支援的本機附件、本機媒體呈現、`image/media content block` 或原生圖片卡。外部 HTTPS 網址與只有文字的 Markdown 不能冒充已交付圖片；但不得因工具清單中沒有某個特定名稱的 media API，就禁止已驗證的本機檔案或預先宣告無法交付。
    - `NATIVE_IMAGE_SEARCH_CARD_ROUTE`：mobile-native 對每則既有選圖使用 ChatGPT 原生圖片搜尋／媒體工具，查詢必須同時包含事件、發布者與日期，交付原生圖片卡；不得在 reader 內產生 `![alt](https://...)`。`read_thread` 可把這類原生卡表示為 `async_image_group`，但該標記本身仍不是像素驗收。
    - 若宿主提供結構化 `read_thread` 與唯讀畫面擷取，外部驗收器應確認存在非文字的 `image/media content block` 或原生 `async_image_group`，並確認實際 `rendered pixel` 區域寬高非零。若結構結果只有一般 `agentMessage text`，圖片仍未交付。沒有這些能力時必須明記 pixel machine verification 未執行；不得要求使用者目視補驗，也不得假稱已通過。
-   - `NATIVE_MEDIA_CAPABILITY_FALLBACK`：不得根據工具名稱、搜尋卡沒有 image ref 或預檢結果直接宣告 `NATIVE_MEDIA_UNAVAILABLE`。能執行 runtime 時先用 `scripts/materialize_news_images.py --input <image-candidates.json> --output-dir <materialized-image-dir> --manifest <materialized-images.json>`；原圖下載失敗才截圖，取得合格本機 JPEG／WebP 後實際嘗試附件或原生媒體交付。沒有 runtime 的 mobile-native 則先執行 `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`，再逐則執行 `NATIVE_IMAGE_SEARCH_CARD_ROUTE`、後續來源及宿主可提供的結構化交付檢查；不得捏造本地路徑、下載、截圖、物化、附件或像素驗收。完全找不到合格圖片必須記為 source exhaustion，不得冒充 `NATIVE_MEDIA_UNAVAILABLE`。若已確認存在合格來源圖片但仍需 full-runtime，保持 `status=running` 與 `current_stage=visuals-completed`，只把圖片交付切換到既有 full-runtime，不得標記 canonical completed。將 verified image evidence、取得／交付嘗試與內部 `reader_omission_note` 寫入本輪 `image-evidence.json`，並以 `image_evidence_artifact` 保存其 Git blob SHA；該 SHA只證明 evidence 已保存，不代表內容或像素已經 machine-verified。不得建立新 run或重跑新聞流程，也不得把未執行的媒體步驟寫成已完成。
+   - `VISIBLE_IMAGE_OVER_ORIGINAL_FILE_GATE`：任何具 runtime 的恢復執行都可直接下載圖片或直接截取文章／官方／可靠轉載頁的同事件圖片區域，再以 `scripts/materialize_news_images.py` 的 `source_image_url` 或 `screenshot_path` 物化並交付附件；不要求原始檔、原畫質或「下載先失敗」才准截圖。mobile-native 本身不得開始或繼續每日新聞執行，也不得捏造本地下載、截圖、物化或附件。
    - 若無法在送出前確認圖片可見，必須移除圖片標記及其 caption，reader 不留下圖片說明、沿用前輪選圖、前輪同圖、不重新驗收或圖片待補等占位文字。
 8. reader 只使用 `news-brief-template.md` 的「今日總覽＋逐條詳報＋後續觀察」三段式版型；逐條詳報必須保留事件編號與 `時間／來源／事件細節／分析` 必填欄位，不得改成簡化分區新聞卡。
 9. 每則新聞的地圖、資料圖表與來源圖片依序直向排列；每張附件的下一個非空白行必須是對應的地圖一／資料圖表一／圖一／圖二圖說。禁止圖廊、輪播、同列圖片、疊圖及新聞區塊外圖片。原生圖片卡只屬對話交付層，保存於既有 image evidence／ledger，不得寫入 `images.assets`，也不得在 reader 內以外部圖片網址或虛構附件冒充。

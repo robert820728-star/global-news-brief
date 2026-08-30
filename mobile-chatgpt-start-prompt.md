@@ -1,6 +1,6 @@
 # 每日新聞排程起始指令
 
-正式循環排程必須從 ChatGPT desktop／Codex 的 desktop/local project 對話建立，不能從只有 web／mobile `mobile-native` 能力的一般對話建立。`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE` 與 `VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE` 要求先把 verified workspace 的 `maps/generated/taiwan-counties-yellow-v2.png` 當作本機實體附件送到目前對話，並確認目前對話中實際可見；失敗時不得啟用排程或改建 production mobile-native 排程。
+`EVERY_DAILY_NEWS_EXECUTION_GATE`：manual, single-run, test, first-run, recurring, or resume 全部必須從 ChatGPT desktop／Codex 的 desktop/local project 對話以 `full-runtime` 執行。`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE` 與 `VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE` 要求先把 verified workspace 的 `maps/generated/taiwan-counties-yellow-v2.png` 當作本機實體附件送到目前對話並確認目前對話中實際可見；失敗時 must not begin discovery、must not create a canonical Reader，也不得改建 mobile-native 新聞流程。
 
 在已開啟 repository 的 desktop/local project 對話貼上下方整段。ChatGPT 必須讀取最新版 `INSTALL.md`，先完成真實本機附件實測，再把最新版 `scheduled-task-prompt-template.md` 全文原樣設為 Scheduled Task instruction；不得濃縮成只有「依 INSTALL 執行」的短 launcher：
 

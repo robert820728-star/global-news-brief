@@ -5,11 +5,11 @@ description: Orchestrate the complete daily news brief with verified runtime-cap
 
 # 每日新聞主控
 
-本技能只負責流程順序、欄位所有權與交付契約，並先依 execution mode 選擇唯一可執行路徑。正式循環排程必須先通過 `INSTALL.md` 的 `VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE` 與 `VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE`，因此只能走 desktop/local-project `full-runtime`；mobile-native 分支只供明確的一次性診斷、候選整理或歷史 run recovery，不是正式循環排程 fallback。full-runtime 在 manifest 建立後以 manifest 作唯一事件交換層，建立以前以同一份 `news-run-checkpoint.json` 保存 run 狀態；mobile-native 不建立 checkpoint 或 manifest，改以同一 occurrence ledger、run-scoped candidate audit 與既有 verification／map／image／Reader artifact bindings保存狀態。兩種模式都不得從搜尋結果直接跳到讀者版。
+`EVERY_DAILY_NEWS_EXECUTION_GATE`：本技能的 manual, single-run, test, first-run, recurring, or resume 全部必須先通過 `INSTALL.md` 的 `VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE` 與 `VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE`，並只走 desktop/local-project `full-runtime`。mobile-native 不得開始或推進 discovery、候選整理、評分、驗證、圖片或 Reader；它只可在本技能外回報能力不符或讀取既有歷史狀態。full-runtime 在 manifest 建立後以 manifest 作唯一事件交換層，建立以前以同一份 `news-run-checkpoint.json` 保存 run 狀態，不得從搜尋結果直接跳到讀者版。
 
 ## Execution-mode boundary
 
-下列 Stage -1、checkpoint、manifest、stage patch、Python validator 與 canonical publisher CLI 只適用 full-runtime。mobile-native 必須依 `mobile-chatgpt-daily-prompt.md` 的同一新聞、評分、驗證與 Reader 契約執行，不得冒充使用 full-runtime 工具；它只能同階段更新或前進至緊鄰下一 stage，並在進入 `selection-verified`／`visuals-completed`／`reader-rendered`／`github-result-saved` 前依序綁定 candidate audit／verification／map+image／Reader。不得建立 mobile checkpoint 或 manifest。
+Stage -1、checkpoint、manifest、stage patch、Python validator 與 canonical publisher CLI 構成唯一可執行的 full-runtime 新聞路徑。既有 mobile ledger 與 artifacts 只供歷史稽核；不得據此建立、恢復或完成新的每日新聞 Reader。
 
 ## Stage -1：可執行工作區
 

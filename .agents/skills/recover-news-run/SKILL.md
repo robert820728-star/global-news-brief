@@ -5,7 +5,7 @@ description: Recover interrupted or failed daily-news stages before or after a m
 
 # 每日新聞自主恢復
 
-把失敗視為可定位的工作項目，不把整份簡報當成只能從頭重跑的單一任務。先依 execution mode 選擇恢復 authority：full-runtime 使用同一份 `news-run-checkpoint.json`，manifest 前後使用不同入口；mobile-native 沒有 checkpoint 或 manifest，使用同一 occurrence ledger 與既有 run-scoped artifact bindings。**沒有 manifest 不是停止條件。**
+把失敗視為可定位的工作項目，不把整份簡報當成只能從頭重跑的單一任務。`EVERY_DAILY_NEWS_EXECUTION_GATE` 要求 manual, single-run, test, first-run, recurring, or resume 全部由具備下載、截圖、物化與可見附件能力的 full-runtime 執行。full-runtime 使用同一份 `news-run-checkpoint.json`，manifest 前後使用不同入口；既有 mobile ledger 只供讀取歷史狀態，不能用來主動恢復或完成每日新聞。
 
 ## 1. full-runtime：Manifest 前
 
@@ -60,7 +60,7 @@ python3 scripts/recover_news_run.py record \
 
 ## 3. mobile-native：同一 ledger 內恢復
 
-mobile-native 僅指一次性診斷或歷史 run recovery；它只可留在目前 stage 或前進至緊鄰的下一 stage，不得 stage regression 或跳級。進入各邊界前讀回並核對現有 Git blob binding：`selection-verified` 需要 candidate audit、`visuals-completed` 需要 verification、`reader-rendered` 需要 map decisions 與 image evidence、`github-result-saved` 需要 Reader。
+既有 mobile-native ledger 只供歷史狀態讀取，不能主動推進 stage。恢復工作必須由 full-runtime 讀回現有 Git blob bindings，從 first incomplete stage 接續。
 
 若核心主張在事件級驗證恢復後仍為 `insufficient`，保持 `current_stage=selection-verified` 且不得前進 visuals。更新同一 run 的 `candidate-audit.json`，將受影響候選重評或以 `unreliable_or_unverified` 排除，更新 `candidate_audit_artifact` 的 Git blob SHA，然後重新 verification；只有成功保存新的 `verification.json` 才可繼續。不得建立 mobile checkpoint 或 manifest，不得重跑 discovery、preprocess 或 semantic selection，也不得建立替代 run。
 
@@ -68,7 +68,7 @@ mobile-native 僅指一次性診斷或歷史 run recovery；它只可留在目�
 
 同一事件／stage 最多三次。第一輪修原路徑；第二輪切換同級合法替代來源或取得方法；第三輪仍失敗時，只有不可排除的硬性權限、網路、來源不存在等阻擋才可停止。`mobile-native` 的 `NATIVE_MEDIA_UNAVAILABLE` 是已完成實際交付嘗試後的能力限制，不寫入 `last_error`；但它是既有歷史／診斷 run 的視覺恢復條件，必須讓同一 run 保持 `status=running`、`current_stage=visuals-completed`、`execution_mode=mobile-native`。只有使用者明確在具能力的 full-runtime 環境接續時才只補圖片交付；不得假設或承諾未來會有自動 recovery worker，也不得完成 reader。這不是 mode switch。其他格式、證據或宣稱已交付之資產驗證失敗仍必須保留 `recovering/failed`。
 
-`VISUAL_DELIVERY_ONLY_RECOVERY`：已確認圖片但交付失敗時，外部 full-runtime visual-recovery executor 只讀同一 mobile-native run 已綁定的 candidate audit、verification、map decisions、image evidence 與 source image URL，只補下載、失敗後截圖、物化與可見附件；run.execution_mode 不變。禁止 discovery、scoring、verification、new run 或 event-ID 變更。
+`VISUAL_DELIVERY_ONLY_RECOVERY`：已確認圖片但交付失敗時，full-runtime 只讀既有新聞 artifacts 與來源頁，直接選擇下載或截圖中最快成功的方法完成物化與可見附件；截圖不必等待原圖失敗。禁止 discovery、scoring、verification、new run 或 event-ID 變更。
 
 恢復成功後重新跑該 stage 的驗證，再繼續後續 stage。若任何前置 artifact 在恢復期間被修改，full-runtime 必須重新綁定 checkpoint SHA-256；mobile-native 必須更新同一 ledger 的 Git blob SHA，不能沿用舊 binding。
 

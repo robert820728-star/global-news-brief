@@ -13,20 +13,20 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 
 ## 適用門檻
 
-`MOBILE_NATIVE_IMAGE_EVIDENCE_ROUTE`：以下本地 `evidence_path`、下載、截圖、`materialized-images.json`、檔案與像素驗收要求只適用於 full-runtime。沒有本機 runtime 的 mobile-native 仍須逐則檢查來源、核對事件與日期、先執行 `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`，再嘗試原生圖片搜尋／圖片卡及後續來源，並保存宿主可提供的結構化交付結果；不得捏造本地路徑、下載、截圖、物化、附件或像素驗收。原生圖片卡只屬對話交付層，保存於既有 image evidence／ledger，不得寫入 `images.assets` 或冒充通過 full-runtime manifest。完成直接媒體 URL 與 `IMAGE_FALLBACK_EXHAUSTION_GATE` 四層搜尋後仍沒有合格來源圖片才是 source exhaustion；只有上述路徑已搜完、找到合格圖片且該模式全部實際交付路徑失敗，才可記 `NATIVE_MEDIA_UNAVAILABLE`。兩條路徑沿用既有 `delivery_profile`、`native_media_status`、`capability_limitations` 與 `image_evidence_artifact`，不得新增狀態或 receipt。
+`EVERY_DAILY_NEWS_EXECUTION_GATE`：本技能只在 full-runtime 執行。manual, single-run, test, first-run, recurring, or resume 都不得改走 mobile-native；沒有本機下載／截圖／物化／附件能力時，必須在 discovery 前停止。既有 mobile image evidence 只供歷史稽核，不能授權新圖片流程。
 
 - 所有入選事件（SS 至 C）：`images.required` 固定為 `true`，逐一開啟 `verification.sources` 的來源頁檢查圖片；評級不得作為跳過圖片流程的條件。
 - 每個引用來源都必須寫入 `images.source_checks`；除是否找到可用圖片、嘗試次數與結果外，必須保存 `checked_at`、`inspection_method`、`detected_image_urls` 與 `failure_detail`。full-runtime 另保存本地 `evidence_path`；mobile-native 保存宿主結構化檢查結果。
 - full-runtime 的 `evidence_path` 必須是頁面截圖、保存頁面或可重現檢查結果的本地證據，發布器會確認檔案實際存在。mobile-native 宣告 `no_usable_image` 時不得只填布林值，仍須保存已檢查來源與具體理由，但不得假造本地檔案。
-- 偵測到官方或媒體圖片時，必須先嘗試下載來源頁中的實際媒體檔。`images.assets[].source_url` 保存文章頁，`images.assets[].source_image_url` 保存實際圖片網址；後者必須出現在同一文章頁檢查的 `detected_image_urls`，且不得等於文章頁網址。
-- full-runtime 的每張來源圖片必須由 `scripts/materialize_news_images.py` 對 `source_image_url` 下載、解碼與寫檔，並保存 `materialized-images.json`；不得手工產生同名檔或只憑 manifest 宣告來源。mobile-native 不執行或冒充此步驟。
+- `VISIBLE_IMAGE_OVER_ORIGINAL_FILE_GATE`：不要求原始檔或原畫質。偵測到官方或媒體圖片時，可直接下載來源頁中的實際媒體檔，也可立即截取文章、官方頁或可靠轉載頁中的同事件圖片區域；截圖不必等待下載失敗。`images.assets[].source_url` 保存來源頁，`images.assets[].source_image_url` 保存該頁可追溯的圖片網址。
+- full-runtime 的每張來源圖片必須由 `scripts/materialize_news_images.py` 對 `source_image_url` 下載，或以 `screenshot_path` 讀取既有本機截圖，再解碼、寫檔並保存 `materialized-images.json`；不得只憑 manifest 宣告來源。
 - 任一來源找到可信且相關圖片後，`images.status` 只能在至少一張附件通過驗收後改為 `ready`。
 - 每則事件必須明確設定 `images.claim_critical`。只有圖片本身是核心主張證據（例如唯一影像證據、衛星圖直接證明攻擊或官方圖是數據主張本體）才設為 `true`；一般新聞配圖、人物照或輔助專業圖設為 `false`。
 - `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`：檢查原引用文章的 `img`、`srcset`、`og:image` 或等價欄位。發現與當期事件相符的直接 JPEG／WebP URL 後，必須實際以宿主可用媒體路徑開啟／取得並嘗試可見交付；搜尋卡沒有 image ref 不等於圖片不可取得。URL／Markdown 本身仍不是可見附件。
 - `IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE`：圖片 URL 是 resize／redirect／縮圖／媒體代理時，逐層 URL-decode `url`、`u`、`src`、`source` 或 `image` 參數，並嘗試內嵌原始 JPEG／WebP及保留內嵌來源參數的最小代理 URL。代理失敗但這些候選未嘗試時，`direct_media_url_attempted` 不得為 `true`。
 - `IMAGE_FALLBACK_EXHAUSTION_GATE`：每則事件依序實際搜尋原引用來源、官方機關／當事組織、原始通訊社及其他可靠媒體的同事件合法刊載／轉載圖片。圖片證據來源與文字驗證來源可以不同；圖片可不是同一張，但必須可信、合法公開刊載、可追溯，且事件、日期、人物／地點一致。每則 image evidence 必須保存 `original_source_attempted`、`direct_media_url_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`。`delivery_unavailable` 或 source exhaustion 的 `direct_media_url_attempted` 必須為 `true`；任一來源層尚未實際搜尋時不得宣告 `NATIVE_MEDIA_UNAVAILABLE`、source exhaustion 或圖片 blocker。直接文章原圖已成功可見交付時，不必再做後續 fallback。
 - `NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE`：第一則或任何較早事件失敗時仍須繼續處理其餘全部入選事件；已有 native image ref／圖片卡者必須實際嘗試交付。禁止以 `native_card_available_but_canonical_reader_blocked_by_prior_event` 或同義狀態跳過後續事件，最後才彙整所有未交付事件供同一 run 恢復。
-- `NATIVE_MEDIA_CAPABILITY_FALLBACK`／`QUALIFIED_IMAGE_DELIVERY_INDEPENDENT_OF_CLAIM_CRITICAL`：full-runtime 已找到可用圖片時先下載原始媒體檔，下載失敗才依圖片政策截圖並驗證；mobile-native 依序實際嘗試文章直接媒體 URL、原生圖片／圖片卡與後續來源交付。直接 URL 與四層來源已搜完且確實沒有合格圖片時，可記 source exhaustion 並省略圖片；上述路徑已完成、已確認存在合格圖片但所有可用交付路徑失敗時，不論 `claim_critical` 都必須保持同一 run 的 `status=running`、`current_stage=visuals-completed`，只重試圖片交付，不得完成文字 reader。不得在未嘗試前預判。
+- `NATIVE_MEDIA_CAPABILITY_FALLBACK`／`QUALIFIED_IMAGE_DELIVERY_INDEPENDENT_OF_CLAIM_CRITICAL`：full-runtime 已找到可用圖片時，直接選擇下載或截圖中最快能產生可見附件的方法；不得以原圖／CDN 失敗阻止截圖。四層來源確實沒有合格圖片時才可記 source exhaustion 並省略；已確認存在合格圖片但所有本機下載、截圖、物化與附件方法均實際失敗時，不論 `claim_critical` 都不得完成文字 Reader。不得在未嘗試前預判。
 - 只有四層來源都已實際搜尋且均無可用圖片，才可使用 `omitted`，並保存具體後台原因與繁體中文 `reader_omission_note`；兩者只供內部 evidence／receipt，不得顯示於讀者版。
 - 圖片取得失敗不改變事件等級。
 - 原引用來源沒有可取得圖片時，依序搜尋官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導；可檢查多個來源，不限一個，也不要求找到完全相同像素。新來源必須加入事件的圖片證據與來源追溯，並核對發布日期、人物／地點與事件關聯；搜尋縮圖、無法追溯的搬運站、舊照或無關示意圖不得入選。
@@ -42,7 +42,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 每個查過的官方或專業頁面都寫入 `images.professional_source_checks`。至少涵蓋中央主管機關與主要受影響地區主管單位；跨國事件再查國際組織或受影響國官方來源。
 - 官方專業圖資檢查同樣必須保存檢查時間、方法、檢出的圖片網址與判定理由；full-runtime 另保存本地頁面證據，mobile-native 保存宿主結構化檢查結果。確實沒有合格專業圖時，只有 `claim_critical=true` 才阻擋；但已確認合格專業圖而交付失敗時，不論 `claim_critical` 都必須進入同一 run 的視覺恢復。
 - 找到與事件時間、地區及主張相符的專業圖時，full-runtime 至少一張 `kind` 為 `official_information` 或 `professional_information` 的本地附件通過視覺與時間驗收前，不得把 manifest 的 `images.professional_visual_status` 宣稱為 `ready`；mobile-native 只在 image evidence／ledger 記錄原生卡交付結果。已確認圖片尚未成功交付時不得完成整則事件；`claim_critical` 只決定來源確實無圖時能否省略。
-- full-runtime 專業圖下載或截圖失敗時，依「原始下載資產 → 官方產品頁截圖 → 官方歷史／存檔頁 → 地方主管機關 → 主要媒體引用的同一官方圖」重試；mobile-native 依同一來源優先序嘗試文章直接媒體 URL 與原生圖片／圖片卡。不得因第一次取得失敗就改用現場照結案。
+- full-runtime 專業圖可直接下載或直接截取官方產品頁；兩者沒有固定先後。若仍失敗，再依「官方歷史／存檔頁 → 地方主管機關 → 主要媒體引用的同一官方圖」重試；不得因第一次取得失敗就停止。
 - 只有完成上述搜尋且確實沒有符合事件階段的專業圖，才可把 `images.professional_visual_status` 設為 `not_available`，並在 `images.professional_omission_reason` 保存具體後台原因。
 - 自製定位地圖、自製資料圖表、普通新聞照片與頁首圖均不能滿足專業圖資硬閘門。若同一張 `official_information`／`professional_information` 圖確實出現在已引用來源或本身就是已引用官方來源，且通過時間與內容驗收，可同時滿足來源頁附件與專業圖資硬閘門；不得為形式另附重複照片。
 

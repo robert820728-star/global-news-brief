@@ -317,9 +317,10 @@ class PipelineContractTests(unittest.TestCase):
             "scripts/materialize_news_images.py",
             image_asset["properties"]["materialized_by"]["const"],
         )
-        for text in (mobile, image_skill):
-            self.assertIn("原生圖片卡只屬對話交付層", text)
-            self.assertIn("不得寫入 `images.assets`", text)
+        self.assertIn("must not begin discovery", mobile)
+        self.assertIn("不得開始或繼續每日新聞執行", mobile)
+        self.assertIn("EVERY_DAILY_NEWS_EXECUTION_GATE", image_skill)
+        self.assertIn("只在 full-runtime 執行", image_skill)
 
     def test_mode_specific_image_reference_and_readme_do_not_require_local_mobile_files(self):
         policy = (
@@ -329,7 +330,8 @@ class PipelineContractTests(unittest.TestCase):
 
         self.assertIn("full-runtime 保存本地頁面證據", policy)
         self.assertIn("mobile-native 保存宿主結構化檢查結果", policy)
-        self.assertIn("mobile-native` 只供一次性診斷或候選整理", readme)
+        self.assertIn("EVERY_DAILY_NEWS_EXECUTION_GATE", readme)
+        self.assertIn("must not begin discovery", readme)
         self.assertIn("只有 full-runtime 取得並驗證 capsule", readme)
 
     def test_capsule_workflow_runs_full_repository_suite(self):
@@ -643,37 +645,18 @@ class PipelineContractTests(unittest.TestCase):
     def test_mobile_delivery_requires_native_media_content_not_markdown_text(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         full = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
-
-        for requirement in (
-            "NATIVE_MEDIA_BLOCK_DELIVERY_GATE",
-            "NATIVE_IMAGE_SEARCH_CARD_ROUTE",
-            "image/media content block",
-            "async_image_group",
-            "rendered pixel",
-            "read_thread",
-            "agentMessage text",
-            "NATIVE_MEDIA_UNAVAILABLE",
-        ):
-            self.assertIn(requirement, daily)
-        for document in (daily, full):
-            self.assertIn("scripts/materialize_news_images.py", document)
-            self.assertIn("--manifest <materialized-images.json>", document)
+        self.assertIn("must not begin discovery", daily)
+        self.assertIn("must not create a canonical Reader", daily)
+        self.assertIn("VISIBLE_IMAGE_OVER_ORIGINAL_FILE_GATE", full)
+        self.assertIn("screenshot_path", full)
+        self.assertIn("--manifest <materialized-images.json>", full)
 
     def test_native_media_unavailable_keeps_same_run_at_visual_recovery(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
-        bootstrap = (ROOT / "bootstrap-workspace.md").read_text(encoding="utf-8")
-
-        for document in (daily, bootstrap):
-            self.assertIn("NATIVE_MEDIA_CAPABILITY_FALLBACK", document)
-            self.assertIn("verified image evidence", document)
-            self.assertIn("reader_omission_note", document)
-        self.assertIn("只把圖片交付切換到既有 full-runtime", daily)
-        self.assertIn("先實際嘗試", daily)
-        self.assertIn("下載失敗", daily)
+        self.assertIn("EVERY_DAILY_NEWS_EXECUTION_GATE", daily)
+        self.assertIn("不得開始或繼續每日新聞執行", daily)
+        self.assertIn("截取文章", daily)
         self.assertIn("截圖", daily)
-        self.assertIn("若已確認存在合格來源圖片但仍需 full-runtime，保持 `status=running`", daily)
-        self.assertIn("不得標記 canonical completed", daily)
-        self.assertNotIn("不得因宿主缺少原生媒體能力阻擋正式文字交付", daily)
 
     def test_claim_critical_cannot_bypass_qualified_image_delivery(self):
         documents = (
@@ -692,11 +675,9 @@ class PipelineContractTests(unittest.TestCase):
         documents = (
             ROOT / "INSTALL.md",
             ROOT / "daily-schedule-prompt.md",
-            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / "news-brief-settings.md",
             ROOT / ".agents" / "skills" / "collect-news-images" / "SKILL.md",
             ROOT / ".agents" / "skills" / "collect-news-images" / "references" / "image-policy.md",
-            ROOT / "docs" / "mobile-run-ledger.md",
         )
         checklist = (
             "original_source_attempted",
@@ -754,19 +735,11 @@ class PipelineContractTests(unittest.TestCase):
             ROOT / "docs/mobile-run-ledger.md",
             ROOT / ".agents/skills/collect-news-images/SKILL.md",
         )
-        for path in documents:
-            text = path.read_text(encoding="utf-8")
-            self.assertIn("MOBILE_NATIVE_IMAGE_EVIDENCE_ROUTE", text, path.name)
         mobile = documents[1].read_text(encoding="utf-8")
-        image_skill = documents[3].read_text(encoding="utf-8")
         ledger = documents[2].read_text(encoding="utf-8")
-        self.assertIn("不得捏造本地", mobile)
-        self.assertIn("不得捏造本地", image_skill)
-        self.assertIn("Git blob SHA 只證明", ledger)
-        self.assertNotIn(
-            "mobile-native run that actually attempted download, screenshot fallback",
-            ledger,
-        )
+        self.assertIn("must not begin discovery", mobile)
+        self.assertIn("不得開始或繼續每日新聞執行", mobile)
+        self.assertIn("must not begin discovery", ledger)
 
     def test_empty_audit_baseline_is_not_claimed_as_fourteen_day_complete(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
@@ -940,8 +913,8 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn('required=True', manager)
         self.assertIn("task 真正觸發", (ROOT / "INSTALL.md").read_text(encoding="utf-8"))
         ledger = (ROOT / "docs" / "mobile-run-ledger.md").read_text(encoding="utf-8")
-        self.assertIn("historical or diagnostic mobile run", ledger)
-        self.assertIn("not a production recurring schedule", ledger)
+        self.assertIn("historical mobile records", ledger)
+        self.assertIn("must not begin discovery", ledger)
         self.assertNotIn("external full-runtime visual-recovery executor", ledger)
 
     def test_candidate_discovery_uses_dynamic_verification_selection(self):
@@ -1084,28 +1057,9 @@ class PipelineContractTests(unittest.TestCase):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         ledger = (ROOT / "docs/mobile-run-ledger.md").read_text(encoding="utf-8")
-
-        for requirement in (
-            "TYPE_CONSISTENT_COVERAGE_SANITY",
-            "不得拿前輪來源掃描的 `raw_item_count`",
-            "RECOVERABLE_14_DAY_BASELINE_WITHOUT_READER_BLOCK",
-            "不得因此阻止本日讀者版",
-            "DAILY_COVERAGE_IS_NOT_HISTORICAL_PROOF",
-            "不得把可用、來源可核對且符合模板的每日讀者版改判失敗",
-        ):
-            self.assertIn(requirement, daily)
-
         for document in (daily, install, ledger):
-            self.assertIn("FOURTEEN_DAY_AUDIT_MERGE_UNAVAILABLE", document)
-            self.assertIn("run-scoped candidate audit", document)
-        for document in (daily, install):
-            self.assertIn("不得設為 `last_error`", document)
-        self.assertIn("must not be set as `last_error`", ledger)
-        self.assertIn("COUNT_RECEIPT_REPAIR_ONCE", daily)
-        self.assertIn("直接依 `events` 陣列重算並覆寫", daily)
-        self.assertIn("不得把 32/33 這類可重算差額升級為整輪失敗", daily)
-        self.assertNotIn("本輪完整十四天海選清單寫入", daily)
-        self.assertNotIn("本輪及十四天清單內所有 C 級以上新聞", daily)
+            self.assertIn("EVERY_DAILY_NEWS_EXECUTION_GATE", document)
+        self.assertIn("must not begin discovery", daily)
 
     def test_mobile_native_rolls_forward_only_current_schema_history(self):
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
@@ -1381,7 +1335,7 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("DEFERRED", document)
             self.assertIn("不得標記整輪失敗", document)
 
-    def test_visible_media_schedule_requires_proven_full_runtime_attachment(self):
+    def test_every_canonical_reader_run_requires_proven_full_runtime_attachment(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         template = (ROOT / "scheduled-task-prompt-template.md").read_text(
             encoding="utf-8"
@@ -1392,17 +1346,21 @@ class PipelineContractTests(unittest.TestCase):
         mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(
             encoding="utf-8"
         )
+        daily = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
 
-        for document in (install, template, start, readme):
+        for document in (install, template, start, daily, readme):
+            self.assertIn("EVERY_DAILY_NEWS_EXECUTION_GATE", document)
             self.assertIn("VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE", document)
             self.assertIn("VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE", document)
             self.assertIn("maps/generated/taiwan-counties-yellow-v2.png", document)
             self.assertIn("full-runtime", document)
+            self.assertIn("manual, single-run, test, first-run, recurring, or resume", document)
 
         self.assertIn("不得開始新聞 discovery", template)
         self.assertIn("不得啟用", install)
-        self.assertIn("不得作為正式循環排程", mobile)
+        self.assertIn("must not begin discovery", mobile)
+        self.assertIn("must not create a canonical Reader", mobile)
         self.assertIn("desktop/local project", start)
         self.assertIn("目前對話中實際可見", start)
 
