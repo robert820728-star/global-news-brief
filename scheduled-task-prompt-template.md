@@ -5,23 +5,23 @@
 
 `VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`
 
-`EVERY_DAILY_NEWS_EXECUTION_GATE`：manual, single-run, test, first-run, recurring, or resume 全部是同一每日新聞執行，不因觸發方式而有例外。每次執行只能在已通過 `VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE` 的 desktop/local-project `full-runtime` 開始。先把 verified workspace 的 `maps/generated/taiwan-counties-yellow-v2.png` 當作本機實體附件交付到目前對話並確認實際顯示；外部 URL、Markdown 熱連結、路徑字串或破圖不算。未通過時不得建立或 resume occurrence、不得開始新聞 discovery、must not begin discovery、must not create a canonical Reader；不得改走 mobile-native、不得整理候選或跑完整輪後才回報媒體 blocker。
+`EVERY_DAILY_NEWS_EXECUTION_GATE`：manual, single-run, test, first-run, recurring, or resume 全部是同一每日新聞執行，不因觸發方式而有圖片例外。full-runtime 可交付本機實體附件；ChatGPT Scheduled Task 宿主可交付原生圖片卡或頁面／圖片區域的原生截圖。兩者都必須逐則交付實際可見圖片；沒有本機 Python、verified workspace、原始檔或原畫質不等於沒有圖片能力。
 
-`VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE`
+`HOST_VISIBLE_SCREENSHOT_ROUTE`
 
-本 gate 是安裝資格，不是每日可省略圖片的例外。不得因本檔存在便自行假設實測通過；排程建立者必須在啟用 recurrence 前真的完成上述本機附件呈現。既有 `IMAGE_FALLBACK_EXHAUSTION_GATE` 與 `NO_EXTERNAL_IMAGE_URL_DELIVERY_GATE` 仍完整適用。
+對話宿主只要能開啟來源頁，就可直接截圖原文章、官方頁、通訊社或可靠轉載頁中的同事件圖片區域並作為可見圖片交付，不要求原始檔或原畫質，也不必等待原圖／CDN 下載失敗。外部 URL、Markdown 熱連結、路徑字串、圖說或破圖不算。排程安裝時已用同一 Scheduled Task 工具執行面完成一次 smoke；若實際 occurrence 的媒體工具臨時不可用，必須在 discovery 前停止，不得完成新聞後才宣告圖片能力不足。
 
 ## 1. 最新規則與單一執行輪
 
 `FRESH_MAIN_AND_ENTRYPOINT_GATE`
 
-每次觸發先以 fresh GitHub 請求確認 https://github.com/robert820728-star/global-news-brief 當下最新 `main`，完整閱讀該 commit 的 `INSTALL.md`、本檔、`daily-schedule-prompt.md`，以及 `INSTALL.md` 要求或導向的 full-runtime settings、skills、schemas、scripts、模板與契約。`mobile-chatgpt-daily-prompt.md` 只供歷史紀錄解讀，不是執行規則，不得載入作為 fallback。不得使用建立排程時、前次執行或快取中的舊 SHA／舊規則；同一輪確認 SHA 後不得中途換版。
+每次觸發先以 fresh GitHub 請求確認 https://github.com/robert820728-star/global-news-brief 當下最新 `main`，完整閱讀該 commit 的 `INSTALL.md`、本檔、`daily-schedule-prompt.md`，以及 `INSTALL.md` 要求或導向的 settings、skills、schemas、scripts、模板與契約。full-runtime 走本機 manifest／附件路徑；無本機 runtime 的 Scheduled Task 依 `mobile-chatgpt-daily-prompt.md` 走既有 ledger 與宿主原生截圖／圖片卡路徑，但交付門檻完全相同。不得使用建立排程時、前次執行或快取中的舊 SHA／舊規則；同一輪確認 SHA 後不得中途換版。
 
 不得只讀標題、搜尋片段或自行摘要後憑記憶執行。repository 文件是細節 authority；本 task prompt 是不可漏掉的最低執行包絡。兩者同時適用，不能選較寬鬆的一份。
 
 `SCHEDULED_OCCURRENCE_SINGLE_RUN_GATE`
 
-以本 Scheduled Task 真正觸發的 occurrence 建立或接續唯一 `run_id`，從實際 executor 啟動時刻固定精確 24 小時窗。相同 occurrence 必須從 first incomplete stage 接續；不得建立 replacement run、重跑已完成的 discovery／評分／驗證、沿用前輪候選或把未完成 reader 當成完成。只有已通過前述 full-runtime 與附件 smoke test 才可建立或接續新聞 occurrence；沒有 mobile-native 新聞 fallback。
+以本 Scheduled Task 真正觸發的 occurrence 建立或接續唯一 `run_id`，從實際 executor 啟動時刻固定精確 24 小時窗。相同 occurrence 必須從 first incomplete stage 接續；不得建立 replacement run、重跑已完成的 discovery／評分／驗證、沿用前輪候選或把未完成 reader 當成完成。安裝時的同宿主截圖 smoke 必須已通過；每次 occurrence 仍須在 discovery 前確認宿主原生圖片／截圖工具存在，不得等新聞做完才回報能力 blocker。
 
 ## 2. 新聞 discovery、評分與驗證
 
@@ -69,13 +69,13 @@
 
 `IMAGE_READER_VISIBLE_DELIVERY_GATE`
 
-圖片只有在本 Scheduled Task 所屬的目前對話最終訊息中實際顯示為可見圖片或附件，才算交付。外部圖片 URL、文章連結、Markdown 圖片字串、圖片說明、本機路徑、`sandbox:` 字串、空白框或破圖都不能冒充圖片。`VISIBLE_IMAGE_OVER_ORIGINAL_FILE_GATE`：不要求原圖或原畫質；full-runtime 可直接下載圖片，也可立即截取原文章、官方頁或可靠轉載頁中的同事件圖片區域並物化為附件，不必先等原圖／CDN 下載失敗。只要來源可追溯、事件與日期相符且附件實際可見即合格。
+圖片只有在本 Scheduled Task 所屬的目前對話最終訊息中實際顯示為可見圖片或附件，才算交付。外部圖片 URL、文章連結、Markdown 圖片字串、圖片說明、本機路徑、`sandbox:` 字串、空白框或破圖都不能冒充圖片。`VISIBLE_IMAGE_OVER_ORIGINAL_FILE_GATE`：不要求原始檔或原畫質；full-runtime 可直接下載或截圖後物化附件，Scheduled Task 宿主則可立即截取原文章、官方頁、通訊社或可靠轉載頁中的同事件圖片區域，或交付原生圖片卡，不必先等原圖／CDN 下載失敗。只要來源可追溯、事件與日期相符且圖片實際可見即合格。
 
 若已確認至少一張合格圖片但所有可用可見交付方式真的失敗，不論 `claim_critical` 都不得完成 Reader；同一 run 保持 `status=running`、`current_stage=visuals-completed`，保存已找到的圖片來源與嘗試證據，只恢復該圖片交付。不得建立新 run、重做新聞、改變事件 ID，或先交付純文字 Reader 再稱 canonical completed。
 
 ## 4. 地圖、圖表與 Reader 格式
 
-地圖與資料圖表依最新版 repository 的 `required`／`claim_critical` 判定，由 full-runtime 執行 renderer 與驗證。非主張關鍵的本機生成視覺缺失可依規則記錄 omission，但不能套用到已確認存在的合格來源圖片。
+地圖與資料圖表依最新版 repository 的 `required`／`claim_critical` 判定執行；mobile-native 不冒充本機 renderer。非主張關鍵的本機生成視覺缺失可依規則記錄 omission，但不能套用到已確認存在的合格來源圖片。
 
 `CANONICAL_THREE_PART_READER_LAYOUT_GATE`
 
@@ -96,5 +96,6 @@ Reader 必須包含本輪所有 C 級以上 validated 事件，來源連結與�
 `CURRENT_CONVERSATION_DELIVERY_GATE`
 
 成功時將完整 canonical Reader（含實際可見圖片）回覆到建立本 Scheduled Task 的目前 ChatGPT 對話，不得另開新對話、只貼摘要、只給 GitHub artifact、只報「已生成」、只列候選或只交付圖片網址。若真正遇到最新版規則定義的不可恢復 blocker，只回報最早 blocker、已完成 stage、同一 run 的可恢復位置與尚未完成項目；不得把 partial Reader 冒充正式結果。
+
 
 

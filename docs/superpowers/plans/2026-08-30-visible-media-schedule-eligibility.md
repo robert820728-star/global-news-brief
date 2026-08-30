@@ -55,3 +55,4 @@ Expected: all PASS.
 - [ ] **Step 5: Audit, version, and publish**
 
 Run exact-residue, reverse-contract, execution-path, generated-capsule, full-suite, and scoped-diff checks twice on one unchanged source fingerprint. Commit and push the source, wait for the capsule commit and CI, then confirm `capsule-manifest.json.source_commit` equals the source commit.
+

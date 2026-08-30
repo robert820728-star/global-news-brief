@@ -1121,7 +1121,7 @@ class MobileRunLogTests(unittest.TestCase):
                 stage="workspace-ready",
                 updated_at="2026-08-17T22:21:00Z",
             )
-        mobile_prompt = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        mobile_prompt = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         for stage in self.module.STAGES:
             self.assertIn(f"`{stage}`", mobile_prompt)
 
@@ -1138,7 +1138,7 @@ class MobileRunLogTests(unittest.TestCase):
                 delivery_status="client_confirmed",
                 client_ack=False,
             )
-        mobile_prompt = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        mobile_prompt = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         self.assertLess(
             mobile_prompt.index("`github-result-saved`"),
             mobile_prompt.index("`delivery-handoff`"),
@@ -1149,4 +1149,5 @@ class MobileRunLogTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
 

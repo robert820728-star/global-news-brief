@@ -5,7 +5,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 CONTRACT_FILES = [
     ROOT / "news-brief-settings.md",
-    ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+    ROOT / "mobile-chatgpt-daily-prompt.md",
     ROOT / ".agents/skills/select-news-events/references/severity-rubric.md",
 ]
 REQUIRED_RULES = [
@@ -36,3 +36,4 @@ class SeverityContractTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

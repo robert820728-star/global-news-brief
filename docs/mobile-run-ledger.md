@@ -1,6 +1,6 @@
 # Mobile diagnostic and historical-run ledger
 
-This ledger preserves historical mobile records on the `run-logs` branch. `EVERY_DAILY_NEWS_EXECUTION_GATE` requires manual, single-run, test, first-run, recurring, or resume executions to use the desktop/local-project `full-runtime` path. A no-runtime/mobile host must not begin discovery and must not create a canonical Reader; this ledger is not authority to create, advance, or complete a new daily-news run.
+This ledger preserves resumable ChatGPT Scheduled Task records on the `run-logs` branch. `EVERY_DAILY_NEWS_EXECUTION_GATE` applies the same news and reader-visible image requirements to manual, single-run, test, first-run, recurring, and resume executions. A no-local-Python Scheduled Task may create, advance, and complete a run only after the same host has passed the native image-card or direct page-screenshot smoke gate; it must not substitute URLs, captions, or broken placeholders for visible images.
 
 `IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE` requires resize/redirect/proxy URLs to be decoded through common `url`, `u`, `src`, `source`, or `image` parameters and the embedded original media to be attempted before `direct_media_url_attempted=true`. `NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE` requires every selected event to complete its own image acquisition/delivery attempt even when an earlier event remains unresolved; an available native image ref cannot be skipped because the canonical Reader is blocked. The final recovery set is aggregated only after every event is processed.
 
@@ -37,4 +37,5 @@ Count receipts are derived data. If an event subtotal differs from the actual ru
 There is no pre-trigger watchdog or future reservation. Single-run and recurring Scheduled Tasks create or resume `current.json` only when the configured task occurrence actually fires, regardless of whether that time is 04:00, 06:00, or another configured clock time. Missing scheduled executions are therefore absence-of-execution evidence, not synthetic `awaiting_executor` runs.
 
 If `run-logs` writes are unavailable, durable mobile-native resume is unavailable and must fail closed before discovery. An Issue comment may record diagnostics, but it is not a substitute for `current.json` and must never be treated as durable occurrence state.
+
 

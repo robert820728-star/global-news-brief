@@ -25,3 +25,4 @@ The existing source fallback order and the prohibition on external image URL del
 - The scheduled task template refuses to start a canonical news run when it is accidentally invoked without the proven full-runtime project surface.
 - Existing external-URL and image-fallback gates remain present.
 - Targeted and full repository tests pass, and the generated capsule binds the final source commit.
+

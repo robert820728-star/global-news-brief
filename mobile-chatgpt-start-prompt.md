@@ -1,15 +1,18 @@
 # 每日新聞排程起始指令
 
-`EVERY_DAILY_NEWS_EXECUTION_GATE`：manual, single-run, test, first-run, recurring, or resume 全部必須從 ChatGPT desktop／Codex 的 desktop/local project 對話以 `full-runtime` 執行。`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE` 與 `VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE` 要求先把 verified workspace 的 `maps/generated/taiwan-counties-yellow-v2.png` 當作本機實體附件送到目前對話並確認目前對話中實際可見；失敗時 must not begin discovery、must not create a canonical Reader，也不得改建 mobile-native 新聞流程。
+`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`／`EVERY_DAILY_NEWS_EXECUTION_GATE`：manual, single-run, test, first-run, recurring, or resume 使用相同新聞與逐則可見圖片門檻。建立或修正排程時先更新最新版完整 task prompt，再以同一 Scheduled Task／ChatGPT 工具執行面直接截圖公開頁面的圖片區域或交付原生圖片卡；不得要求先取得 verified workspace、台灣底圖、原始檔或原畫質。
 
-在已開啟 repository 的 desktop/local project 對話貼上下方整段。ChatGPT 必須讀取最新版 `INSTALL.md`，先完成真實本機附件實測，再把最新版 `scheduled-task-prompt-template.md` 全文原樣設為 Scheduled Task instruction；不得濃縮成只有「依 INSTALL 執行」的短 launcher：
+`SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`／`SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE`：先更新、讀回並核對完整 prompt；再做同宿主可見圖片 smoke。smoke 失敗時保留最新版 prompt 並暫停 task，禁止回復或繼續啟用舊 prompt。
+
+在建立排程的目前對話貼上下方整段。ChatGPT 必須讀取最新版 `INSTALL.md`，先把最新版 `scheduled-task-prompt-template.md` 全文原樣設為 Scheduled Task instruction並讀回核對，再完成同宿主原生圖片／直接截圖實測；不得濃縮成只有「依 INSTALL 執行」的短 launcher：
 
 ```text
 每日新聞排程
-請確認 https://github.com/robert820728-star/global-news-brief 的最新 main commit，完整閱讀最新版 INSTALL.md。先依 VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE 與 VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE，在目前 desktop/local project 取得 verified workspace，將 maps/generated/taiwan-counties-yellow-v2.png 以本機實體附件送到目前對話並確認實際可見；未通過時不得建立或啟用排程。通過後依「Scheduled Task 排程指令唯一契約」取得 scheduled-task-prompt-template.md 全文，替換我指定的區域與監控類型後，原樣設為 Scheduled Task instruction，不得摘要、縮短或只留下檔案連結。
+請確認 https://github.com/robert820728-star/global-news-brief 的最新 main commit，完整閱讀最新版 INSTALL.md。依「Scheduled Task 排程指令唯一契約」取得 scheduled-task-prompt-template.md 全文，替換我指定的區域與監控類型後，先原樣設為 Scheduled Task instruction 並讀回逐字核對，不得摘要、縮短或只留下檔案連結。完成 prompt 更新後，以同一 Scheduled Task／ChatGPT 工具執行面直接截圖一個公開頁面的圖片區域或交付原生圖片卡，確認目前對話實際可見後才啟用循環；不要求 verified workspace、原始檔或原畫質。若 smoke 失敗，保留最新版 prompt 並暫停 task，不得讓舊 prompt 繼續啟用。
 
 1. 請在目前這個對話內建立每天 6 點循環排程；使用目前對話／帳號的時區，名稱為「每日新聞」。
 2. 區域：台灣、中國、世界。監控類型：預設。
 3. 每次結果只回覆在目前這個對話，不要另開新對話。
-4. 排程必須綁定目前 desktop/local project 並使用 full-runtime；不得建立成 production mobile-native。建立完成後，回報實際可見的安裝測試圖片、實際保存的完整 task instruction 與 schedule；不得只回覆一段摘要。
+4. 建立完成後，回報實際可見的同宿主測試截圖／原生圖片、實際保存的完整 task instruction 與 schedule；不得只回覆一段摘要。
 ```
+

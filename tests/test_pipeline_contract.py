@@ -199,7 +199,7 @@ class PipelineContractTests(unittest.TestCase):
         documents = (
             ROOT / "news-brief-settings.md",
             ROOT / "daily-schedule-prompt.md",
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / ".agents/skills/select-news-events/SKILL.md",
         )
         for path in documents:
@@ -207,60 +207,72 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE", text, path.name)
             self.assertIn("validate_local_source_admission.py", text, path.name)
 
-        mobile = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         self.assertIn("MOBILE_STRUCTURAL_ADMISSION_EQUIVALENT", mobile)
         self.assertIn("只有可執行 runtime 時", mobile)
 
-        shared_documents = (ROOT / "news-brief-settings.md",)
+        shared_documents = (
+            ROOT / "news-brief-settings.md",
+            ROOT / ".agents/skills/select-news-events/SKILL.md",
+        )
         for path in shared_documents:
             text = path.read_text(encoding="utf-8")
-            self.assertNotIn("MOBILE_STRUCTURAL_ADMISSION_EQUIVALENT", text, path.name)
-            self.assertIn("驗證失敗不得繼續", text, path.name)
+            self.assertIn("MOBILE_STRUCTURAL_ADMISSION_EQUIVALENT", text, path.name)
+            self.assertIn("只有可執行 runtime 時", text, path.name)
 
-    def test_no_runtime_path_cannot_create_reader(self):
+    def test_mobile_reader_validation_does_not_require_python_runtime(self):
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        self.assertIn("MOBILE_READER_STRUCTURE_EQUIVALENT", mobile)
+        self.assertNotIn("送出前執行 `scripts/validate_news_brief.py brief", mobile)
         settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
-        schedule = (ROOT / "scheduled-task-prompt-template.md").read_text(
-            encoding="utf-8"
-        )
-        self.assertNotIn("MOBILE_READER_STRUCTURE_EQUIVALENT", settings)
-        self.assertIn("scripts/validate_news_brief.py", settings)
-        self.assertIn("must not begin discovery", schedule)
-        self.assertIn("must not create a canonical Reader", schedule)
+        self.assertIn("MOBILE_READER_STRUCTURE_EQUIVALENT", settings)
+        self.assertIn("只有可執行 runtime 時", settings)
 
-    def test_high_authority_flow_has_only_full_runtime_news_artifacts(self):
+    def test_high_authority_flow_routes_runtime_only_artifacts_by_execution_mode(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         schedule = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
-            "執行 canonical checkpoint CLI",
-            "物化並驗證 `news-event-manifest.json`",
-            "canonical publisher fail-closed",
+            "full-runtime 執行 canonical checkpoint CLI",
+            "mobile-native 在 capability routing 選定後建立或 resume",
+            "full-runtime 物化並驗證 `news-event-manifest.json`",
+            "mobile-native 不建立或聲稱通過 full-runtime manifest schema",
         ):
             self.assertIn(requirement, install)
-        self.assertNotIn("mobile-native 在 capability routing 選定後建立或 resume", install)
-        self.assertNotIn("mobile-native 保存 `verification.json`", install)
-        self.assertNotIn("mobile-native 保存 `map-decisions.json`", install)
-        self.assertIn("VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE", schedule)
-        self.assertIn("do not begin news discovery", schedule)
+        self.assertIn(
+            "overview 與 run-scoped candidate audit 的 selected event IDs 守恆",
+            mobile,
+        )
+        self.assertNotIn("overview 與 manifest 事件 ID 守恆", mobile)
+        self.assertNotIn("checkpoint、manifest 與 receipts", mobile)
+        self.assertIn("SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE", schedule)
+        self.assertIn("SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE", schedule)
+        self.assertIn("route this occurrence to `mobile-chatgpt-daily-prompt.md`", schedule)
         self.assertNotIn(
             "source-image download or screenshot acquisition has been tried", schedule
         )
 
-    def test_shared_settings_and_visual_stages_are_full_runtime_only(self):
+    def test_shared_settings_and_visual_stages_are_mode_aware(self):
         settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
 
         for requirement in (
-            "post-selection event exchange",
-            "full-runtime 可直接下載或直接截圖並視覺驗收",
-            "執行 `scripts/validate_news_brief.py`",
+            "full-runtime 的 post-selection event exchange",
+            "mobile-native 以 run-scoped candidate audit",
+            "依 execution mode 執行可用路徑",
+            "full-runtime 執行 `scripts/validate_news_brief.py`",
+            "mobile-native 執行 `MOBILE_READER_STRUCTURE_EQUIVALENT`",
         ):
             self.assertIn(requirement, settings)
-        self.assertNotIn("mobile-native 以 run-scoped candidate audit", settings)
-        self.assertNotIn("mobile-native 保存 `verification.json`", install)
-        self.assertNotIn("mobile-native 保存 `map-decisions.json`", install)
+        for requirement in (
+            "mobile-native 保存 `verification.json`",
+            "mobile-native 保存 `map-decisions.json`",
+            "mobile-native 不執行本機 renderer",
+        ):
+            self.assertIn(requirement, install)
 
-    def test_verification_recovery_uses_checkpoint_and_manifest(self):
+    def test_verification_recovery_is_mode_aware_without_mobile_checkpoint_or_manifest(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         daily = (ROOT / ".agents/skills/daily-news-brief/SKILL.md").read_text(
             encoding="utf-8"
@@ -272,11 +284,18 @@ class PipelineContractTests(unittest.TestCase):
             encoding="utf-8"
         )
         combined = "\n".join((install, daily, verify, recover))
-        self.assertIn("news_run_checkpoint.py rewind", combined)
-        self.assertIn("重新物化 manifest", combined)
-        self.assertNotIn("mobile-native 保持 `current_stage=selection-verified`", combined)
+        for requirement in (
+            "mobile-native 保持 `current_stage=selection-verified`",
+            "更新同一 run 的 `candidate-audit.json`",
+            "更新 `candidate_audit_artifact` 的 Git blob SHA",
+            "不得執行 stage regression",
+            "不得建立 mobile checkpoint 或 manifest",
+        ):
+            self.assertIn(requirement, combined)
         self.assertIn("full-runtime", verify)
+        self.assertIn("mobile-native", verify)
         self.assertIn("full-runtime", recover)
+        self.assertIn("mobile-native", recover)
 
     def test_release_source_and_version_record_precede_capsule_generation(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
@@ -289,7 +308,7 @@ class PipelineContractTests(unittest.TestCase):
         )
         source_check = schema["$defs"]["imageSourceCheck"]
         image_asset = schema["$defs"]["imageAsset"]
-        mobile = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         image_skill = (
             ROOT / ".agents/skills/collect-news-images/SKILL.md"
         ).read_text(encoding="utf-8")
@@ -299,10 +318,10 @@ class PipelineContractTests(unittest.TestCase):
             "scripts/materialize_news_images.py",
             image_asset["properties"]["materialized_by"]["const"],
         )
-        self.assertIn("must not begin discovery", mobile)
-        self.assertIn("不得開始或繼續每日新聞執行", mobile)
+        self.assertIn("SCHEDULED_HOST_VISIBLE_SCREENSHOT_ROUTE", mobile)
+        self.assertIn("不要求 verified workspace、原始檔或原畫質", mobile)
         self.assertIn("EVERY_DAILY_NEWS_EXECUTION_GATE", image_skill)
-        self.assertIn("只在 full-runtime 執行", image_skill)
+        self.assertIn("頁面圖片區域的原生截圖", image_skill)
 
     def test_mode_specific_image_reference_and_readme_do_not_require_local_mobile_files(self):
         policy = (
@@ -313,7 +332,7 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("full-runtime 保存本地頁面證據", policy)
         self.assertIn("mobile-native 保存宿主結構化檢查結果", policy)
         self.assertIn("EVERY_DAILY_NEWS_EXECUTION_GATE", readme)
-        self.assertIn("must not begin discovery", readme)
+        self.assertIn("SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE", readme)
         self.assertIn("只有 full-runtime 取得並驗證 capsule", readme)
 
     def test_capsule_workflow_runs_full_repository_suite(self):
@@ -325,7 +344,7 @@ class PipelineContractTests(unittest.TestCase):
     def test_short_run_instruction_normalizes_regions_and_monitoring_types(self):
         documents = (
             ROOT / "daily-schedule-prompt.md",
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / "news-brief-settings.md",
         )
         for path in documents:
@@ -336,7 +355,7 @@ class PipelineContractTests(unittest.TestCase):
 
     def test_contract_documents_require_the_restored_three_part_reader_outline(self):
         settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
-        mobile = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         for heading in ("## 今日總覽", "## 逐條詳報", "## 後續觀察"):
             self.assertIn(heading, settings)
             self.assertIn(heading, mobile)
@@ -366,18 +385,18 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("validate_canonical_reader", text)
             self.assertNotIn("validate_canonical_sectioned_layout", text)
 
-    def test_production_schedule_without_full_runtime_stops_before_discovery(self):
+    def test_production_schedule_without_full_runtime_uses_same_host_screenshot_route(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "SCHEDULED_HOST_CAPABILITY_ROUTING",
-            "VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE",
-            "VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE",
-            "maps/generated/taiwan-counties-yellow-v2.png",
-            "正式循環排程",
-            "do not begin news discovery",
+            "SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE",
+            "SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE",
+            "does not require a verified workspace",
+            "route this occurrence to `mobile-chatgpt-daily-prompt.md`",
         ):
             self.assertIn(requirement, prompt)
+        self.assertNotIn("maps/generated/taiwan-counties-yellow-v2.png", prompt)
         self.assertNotIn("Do not disable the daily schedule", prompt)
         self.assertLess(
             prompt.index("SCHEDULED_HOST_CAPABILITY_ROUTING"),
@@ -400,7 +419,7 @@ class PipelineContractTests(unittest.TestCase):
         documents = [
             ROOT / "news-brief-settings.md",
             ROOT / "daily-schedule-prompt.md",
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / ".agents/skills/acquire-news-candidates/SKILL.md",
         ]
         for path in documents:
@@ -434,7 +453,7 @@ class PipelineContractTests(unittest.TestCase):
         documents = [
             ROOT / "news-brief-settings.md",
             ROOT / "daily-schedule-prompt.md",
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / ".agents/skills/acquire-news-candidates/SKILL.md",
         ]
         for path in documents:
@@ -481,7 +500,7 @@ class PipelineContractTests(unittest.TestCase):
     def test_fresh_main_wrapper_does_not_create_an_impossible_run_id_order(self):
         daily = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         bootstrap = (ROOT / "bootstrap-workspace.md").read_text(encoding="utf-8")
-        mobile = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for document in (daily, bootstrap):
             self.assertIn("PRE_CONTRACT_MAIN_RESOLUTION", document)
@@ -560,26 +579,26 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("scripts/resolve_bundled_python.py", workflow)
         self.assertIn("scripts/fetch_source_routes.py", workflow)
 
-    def test_mobile_prompt_is_diagnostic_while_start_prompt_requires_desktop(self):
+    def test_mobile_prompt_and_start_prompt_require_same_host_visible_screenshot(self):
         start = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
-        self.assertIn("full-runtime", start)
         self.assertIn("scheduled-task-prompt-template.md", start)
         self.assertIn("原樣設為 Scheduled Task instruction", start)
         self.assertIn("每天 6 點循環排程", start)
         self.assertIn("不得摘要、縮短", start)
         for requirement in ("十四天", "六項", "C 級以上", "圖片說明"):
             self.assertIn(requirement, daily)
-        self.assertIn("desktop/local project", start)
-        self.assertIn("VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE", start)
+        self.assertIn("SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE", start)
+        self.assertIn("SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE", start)
+        self.assertIn("verified workspace", start)
         for forbidden in ("powershell", "bootstrap capsule", "git clone"):
             self.assertNotIn(forbidden, daily)
 
     def test_integrated_six_dimension_grading_and_conflict_context_are_explicit(self):
         settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
         severity = (ROOT / ".agents/skills/select-news-events/references/severity-rubric.md").read_text(encoding="utf-8")
-        mobile = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for document in (settings, severity, mobile):
             self.assertIn("重要性／嚴重程度", document)
@@ -590,7 +609,7 @@ class PipelineContractTests(unittest.TestCase):
         self.assertNotIn("死亡 100 人以上可列 A-", (ROOT / "news-brief-examples.md").read_text(encoding="utf-8"))
 
     def test_mobile_image_delivery_uses_small_stable_thumbnail_with_fallback(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "最多兩張",
@@ -610,7 +629,7 @@ class PipelineContractTests(unittest.TestCase):
         self.assertNotIn("**圖片來源頁：**", daily)
 
     def test_mobile_image_delivery_requires_reader_visible_result(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "IMAGE_READER_VISIBLE_DELIVERY_GATE",
@@ -625,18 +644,18 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("不算可見圖片", daily)
 
     def test_mobile_delivery_requires_native_media_content_not_markdown_text(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         full = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
-        self.assertIn("must not begin discovery", daily)
-        self.assertIn("must not create a canonical Reader", daily)
+        self.assertIn("SCHEDULED_HOST_VISIBLE_SCREENSHOT_ROUTE", daily)
+        self.assertIn("不得在 discovery 後宣告 NATIVE_MEDIA_UNAVAILABLE", daily)
         self.assertIn("VISIBLE_IMAGE_OVER_ORIGINAL_FILE_GATE", full)
         self.assertIn("screenshot_path", full)
         self.assertIn("--manifest <materialized-images.json>", full)
 
     def test_native_media_unavailable_keeps_same_run_at_visual_recovery(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         self.assertIn("EVERY_DAILY_NEWS_EXECUTION_GATE", daily)
-        self.assertIn("不得開始或繼續每日新聞執行", daily)
+        self.assertIn("不得在 discovery 後宣告 NATIVE_MEDIA_UNAVAILABLE", daily)
         self.assertIn("截取文章", daily)
         self.assertIn("截圖", daily)
 
@@ -644,7 +663,7 @@ class PipelineContractTests(unittest.TestCase):
         documents = (
             ROOT / "INSTALL.md",
             ROOT / "news-brief-settings.md",
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / ".agents/skills/collect-news-images/SKILL.md",
         )
         for path in documents:
@@ -686,7 +705,7 @@ class PipelineContractTests(unittest.TestCase):
     def test_visual_recovery_cannot_restart_news_pipeline(self):
         documents = (
             ROOT / "INSTALL.md",
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / ".agents/skills/recover-news-run/SKILL.md",
         )
         for path in documents:
@@ -698,7 +717,7 @@ class PipelineContractTests(unittest.TestCase):
     def test_global_section_requires_primary_or_bounded_verified_fallback(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
-        mobile = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         acquire = (
             ROOT / ".agents" / "skills" / "acquire-news-candidates" / "SKILL.md"
         ).read_text(encoding="utf-8")
@@ -713,25 +732,25 @@ class PipelineContractTests(unittest.TestCase):
     def test_mobile_native_image_route_does_not_require_local_materialization(self):
         documents = (
             ROOT / "INSTALL.md",
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / "docs/mobile-run-ledger.md",
             ROOT / ".agents/skills/collect-news-images/SKILL.md",
         )
         mobile = documents[1].read_text(encoding="utf-8")
         ledger = documents[2].read_text(encoding="utf-8")
-        self.assertIn("must not begin discovery", mobile)
-        self.assertIn("不得開始或繼續每日新聞執行", mobile)
-        self.assertIn("must not begin discovery", ledger)
+        self.assertIn("SCHEDULED_HOST_VISIBLE_SCREENSHOT_ROUTE", mobile)
+        self.assertIn("不要求 verified workspace", mobile)
+        self.assertIn("native image-card or direct page-screenshot smoke gate", ledger)
 
     def test_empty_audit_baseline_is_not_claimed_as_fourteen_day_complete(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         self.assertIn("FOURTEEN_DAY_AUDIT_COMPLETENESS_GATE", daily)
         self.assertIn("空的 `runs` 陣列", daily)
         self.assertIn("不得宣告十四天清單已完成", daily)
 
     def test_mobile_images_search_multiple_same_event_sources_before_degrading(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "MOBILE_PER_STORY_VISIBLE_IMAGE_GATE",
@@ -742,28 +761,29 @@ class PipelineContractTests(unittest.TestCase):
         ):
             self.assertIn(requirement, daily)
 
-    def test_full_runtime_images_are_gated_per_story(self):
-        documents = (ROOT / "news-brief-settings.md",)
+    def test_mobile_images_are_gated_per_story(self):
+        documents = (
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / "news-brief-settings.md",
+        )
         for path in documents:
             text = path.read_text(encoding="utf-8")
             for requirement in (
-                "PER_STORY_VISIBLE_IMAGE_GATE",
+                "MOBILE_PER_STORY_VISIBLE_IMAGE_GATE",
                 "每一則",
                 "不得替其他新聞通過",
                 "逐則",
             ):
                 self.assertIn(requirement, text, f"{path} missing {requirement}")
 
-        scheduled = (ROOT / "scheduled-task-prompt-template.md").read_text(
-            encoding="utf-8"
-        )
-        self.assertIn("og:image", scheduled)
-        self.assertIn("srcset", scheduled)
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        self.assertIn("og:image", daily)
+        self.assertIn("srcset", daily)
 
     def test_image_workload_is_bounded_without_reducing_news_coverage(self):
         documents = [
             ROOT / "news-brief-settings.md",
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / ".agents/skills/collect-news-images/SKILL.md",
         ]
         requirements = (
@@ -784,7 +804,7 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("所有 C 級以上", settings)
 
     def test_mobile_candidate_audit_has_one_time_bootstrap_without_daily_rescan(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "FIRST_RUN_14_DAY_AUDIT_BOOTSTRAP",
@@ -797,7 +817,7 @@ class PipelineContractTests(unittest.TestCase):
     def test_discovery_then_verify_replaces_all_source_gate(self):
         import json
 
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         scheduled = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
 
@@ -857,8 +877,8 @@ class PipelineContractTests(unittest.TestCase):
             "完整每日執行流程",
             "必填產物與驗證",
             "執行模式與完成條件",
-            "VISIBLE_IMAGE_OVER_ORIGINAL_FILE_GATE",
-            "實際可見附件",
+            "NATIVE_MEDIA_UNAVAILABLE",
+            "reader-canonical-capability-degraded",
             "# 每日新聞讀者版",
             "CONDITIONAL_RECOVERY_BUNDLE_POLICY",
             "recover_news_run.py plan",
@@ -881,7 +901,7 @@ class PipelineContractTests(unittest.TestCase):
             ROOT / "INSTALL.md",
             ROOT / "README.md",
             ROOT / "daily-schedule-prompt.md",
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / "docs" / "mobile-run-ledger.md",
         )
         for path in documents:
@@ -894,8 +914,8 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn('required=True', manager)
         self.assertIn("task 真正觸發", (ROOT / "INSTALL.md").read_text(encoding="utf-8"))
         ledger = (ROOT / "docs" / "mobile-run-ledger.md").read_text(encoding="utf-8")
-        self.assertIn("historical mobile records", ledger)
-        self.assertIn("must not begin discovery", ledger)
+        self.assertIn("resumable ChatGPT Scheduled Task records", ledger)
+        self.assertIn("may create, advance, and complete a run", ledger)
         self.assertNotIn("external full-runtime visual-recovery executor", ledger)
 
     def test_candidate_discovery_uses_dynamic_verification_selection(self):
@@ -945,7 +965,7 @@ class PipelineContractTests(unittest.TestCase):
         self.assertLessEqual(configured_routes, admissible_routes)
 
     def test_conversation_delivery_requires_complete_reader_not_summary(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "CONVERSATION_READER_BYTE_IDENTITY_GATE",
@@ -956,7 +976,7 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn(requirement, daily)
 
     def test_mobile_reader_must_follow_canonical_template_structure(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "READER_TEMPLATE_STRUCTURE_GATE",
@@ -974,7 +994,7 @@ class PipelineContractTests(unittest.TestCase):
         self.assertNotIn("--reader-layout canonical-sectioned", daily)
 
     def test_reader_excludes_internal_repair_log(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         template = (ROOT / "news-brief-template.md").read_text(encoding="utf-8")
 
         for document in (daily, template):
@@ -983,7 +1003,7 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("不得出現在讀者版", document)
 
     def test_reader_preserves_canonical_three_part_field_layout(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         scheduled = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         template = (ROOT / "news-brief-template.md").read_text(encoding="utf-8")
 
@@ -1035,15 +1055,15 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn(requirement, matrix)
 
     def test_mobile_increment_recovers_without_blocking_daily_reader(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         ledger = (ROOT / "docs/mobile-run-ledger.md").read_text(encoding="utf-8")
         for document in (daily, install, ledger):
             self.assertIn("EVERY_DAILY_NEWS_EXECUTION_GATE", document)
-        self.assertIn("must not begin discovery", daily)
+        self.assertIn("SCHEDULED_HOST_VISIBLE_SCREENSHOT_ROUTE", daily)
 
     def test_mobile_native_rolls_forward_only_current_schema_history(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         skill = (ROOT / ".agents/skills/audit-news-candidates/SKILL.md").read_text(
             encoding="utf-8"
         )
@@ -1085,7 +1105,7 @@ class PipelineContractTests(unittest.TestCase):
         }, required)
         for document_path in (
             ROOT / "daily-schedule-prompt.md",
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / ".agents/skills/audit-news-candidates/SKILL.md",
         ):
             document = document_path.read_text(encoding="utf-8")
@@ -1123,7 +1143,7 @@ class PipelineContractTests(unittest.TestCase):
         }.issubset(count_fields))
         for document_path in (
             ROOT / "daily-schedule-prompt.md",
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / ".agents/skills/daily-news-brief/SKILL.md",
             ROOT / ".agents/skills/select-news-events/SKILL.md",
             ROOT / ".agents/skills/audit-news-candidates/SKILL.md",
@@ -1152,7 +1172,7 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("old_restatement", temporal_review["properties"]["window_status"]["enum"])
         documents = (
             ROOT / "daily-schedule-prompt.md",
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / "news-brief-settings.md",
             ROOT / ".agents/skills/daily-news-brief/SKILL.md",
             ROOT / ".agents/skills/select-news-events/SKILL.md",
@@ -1181,7 +1201,7 @@ class PipelineContractTests(unittest.TestCase):
         documents = (
             ROOT / "news-brief-settings.md",
             ROOT / "daily-schedule-prompt.md",
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / ".agents/skills/select-news-events/SKILL.md",
         )
         for path in documents:
@@ -1193,7 +1213,7 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("未經證實", document, path.name)
 
     def test_mobile_native_durable_audit_uses_compact_profile_without_verbose_evidence(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         skill = (ROOT / ".agents/skills/audit-news-candidates/SKILL.md").read_text(
             encoding="utf-8"
         )
@@ -1224,14 +1244,14 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("full-runtime", document)
 
     def test_old_event_reentry_uses_current_v2_evidence_without_a_parallel_timer(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
         self.assertIn("IMPACT_DELTA_CONTINUITY_SCORING", daily)
         self.assertIn("本日可驗證的影響力變化", daily)
         self.assertNotIn("48_HOUR_REENTRY", daily)
 
     def test_continuing_events_are_scored_by_verified_impact_delta(self):
         documents = (
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / "news-brief-settings.md",
             ROOT / ".agents/skills/select-news-events/references/severity-rubric.md",
             ROOT / ".agents/skills/audit-news-candidates/SKILL.md",
@@ -1249,7 +1269,7 @@ class PipelineContractTests(unittest.TestCase):
                 self.assertIn(requirement, text, f"{path} missing {requirement}")
 
     def test_child_update_cannot_inherit_parent_event_grade(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "NO_PARENT_GRADE_INHERITANCE",
@@ -1259,7 +1279,7 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn(requirement, daily)
 
     def test_ceremonial_and_single_company_routine_events_score_below_reader(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "CEREMONIAL_AND_SINGLE_COMPANY_ROUTINE_LOW",
@@ -1270,7 +1290,7 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn(requirement, daily)
 
     def test_symbolic_cultural_name_dispute_scores_below_reader(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "SYMBOLIC_CULTURAL_DISPUTE_LOW",
@@ -1281,7 +1301,7 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn(requirement, daily)
 
     def test_announced_diplomatic_visit_without_outcome_scores_below_reader(self):
-        daily = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "ROUTINE_DIPLOMATIC_VISIT_LOW",
@@ -1316,7 +1336,7 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("DEFERRED", document)
             self.assertIn("不得標記整輪失敗", document)
 
-    def test_every_canonical_reader_run_requires_proven_full_runtime_attachment(self):
+    def test_every_canonical_reader_run_requires_same_host_visible_media(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         template = (ROOT / "scheduled-task-prompt-template.md").read_text(
             encoding="utf-8"
@@ -1324,7 +1344,7 @@ class PipelineContractTests(unittest.TestCase):
         start = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(
             encoding="utf-8"
         )
-        mobile = (ROOT / "docs/history/mobile-chatgpt-daily-prompt.md").read_text(
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(
             encoding="utf-8"
         )
         daily = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
@@ -1333,17 +1353,21 @@ class PipelineContractTests(unittest.TestCase):
         for document in (install, template, start, daily, readme):
             self.assertIn("EVERY_DAILY_NEWS_EXECUTION_GATE", document)
             self.assertIn("VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE", document)
-            self.assertIn("VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE", document)
-            self.assertIn("maps/generated/taiwan-counties-yellow-v2.png", document)
-            self.assertIn("full-runtime", document)
             self.assertIn("manual, single-run, test, first-run, recurring, or resume", document)
 
-        self.assertIn("不得開始新聞 discovery", template)
-        self.assertIn("不得啟用", install)
-        self.assertIn("must not begin discovery", mobile)
-        self.assertIn("must not create a canonical Reader", mobile)
-        self.assertIn("desktop/local project", start)
-        self.assertIn("目前對話中實際可見", start)
+        for document in (install, start, daily, readme):
+            self.assertIn("SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE", document)
+            self.assertIn("SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE", document)
+
+        self.assertIn("HOST_VISIBLE_SCREENSHOT_ROUTE", template)
+        self.assertIn("舊 prompt 不得繼續啟用", install)
+        self.assertIn("SCHEDULED_HOST_VISIBLE_SCREENSHOT_ROUTE", mobile)
+        self.assertIn("不得在 discovery 後宣告 NATIVE_MEDIA_UNAVAILABLE", mobile)
+        self.assertIn("直接截圖", start)
+        self.assertIn("實際可見", start)
+
+        for document in (install, template, start):
+            self.assertNotIn("maps/generated/taiwan-counties-yellow-v2.png", document)
 
         for marker in (
             "IMAGE_FALLBACK_EXHAUSTION_GATE",
@@ -1411,4 +1435,5 @@ class PipelineContractTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
 

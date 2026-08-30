@@ -5,11 +5,11 @@ description: Orchestrate the complete daily news brief with verified runtime-cap
 
 # 每日新聞主控
 
-`EVERY_DAILY_NEWS_EXECUTION_GATE`：本技能的 manual, single-run, test, first-run, recurring, or resume 全部必須先通過 `INSTALL.md` 的 `VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE` 與 `VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE`，並只走 desktop/local-project `full-runtime`。mobile-native 不得開始或推進 discovery、候選整理、評分、驗證、圖片或 Reader；它只可在本技能外回報能力不符或讀取既有歷史狀態。full-runtime 在 manifest 建立後以 manifest 作唯一事件交換層，建立以前以同一份 `news-run-checkpoint.json` 保存 run 狀態，不得從搜尋結果直接跳到讀者版。
+`EVERY_DAILY_NEWS_EXECUTION_GATE`：本技能的 manual, single-run, test, first-run, recurring, or resume 使用相同新聞與逐則可見圖片門檻。full-runtime 以本機附件交付；無本機 Python 的 ChatGPT Scheduled Task 在同一宿主通過原生圖片卡／頁面圖片區域截圖 smoke 後，依 `mobile-chatgpt-daily-prompt.md` 完整執行。不得把 URL、Markdown 熱連結、圖說或破圖框當成圖片，也不要求原始檔或原畫質。full-runtime 在 manifest 建立後以 manifest 作事件交換層；mobile-native 以同一 run 的 candidate audit 與 ledger bindings 作 publication authority。
 
 ## Execution-mode boundary
 
-Stage -1、checkpoint、manifest、stage patch、Python validator 與 canonical publisher CLI 構成唯一可執行的 full-runtime 新聞路徑。既有 mobile ledger 與 artifacts 只供歷史稽核；不得據此建立、恢復或完成新的每日新聞 Reader。
+Stage -1、checkpoint、manifest、stage patch、Python validator 與 canonical publisher CLI 構成 full-runtime 路徑。無本機 Python 的 Scheduled Task 走既有 mobile ledger、結構等價檢查與宿主原生截圖／圖片卡路徑；兩種模式不得互相冒充已執行對方專屬工具。
 
 ## Stage -1：可執行工作區
 
@@ -66,7 +66,7 @@ python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 
 只重跑失敗事件／stage 與必要的後續依賴。已完成且 SHA 綁定仍一致的工作不得清空。只有不可排除的硬性環境阻擋才可停止；一般來源失敗、圖片失敗、地圖失敗、格式失敗與驗證失敗都不是無聲結束理由。
 
-既有 mobile ledger 只能由 full-runtime 匯入以定位 first incomplete stage；不得由 mobile-native 推進或完成新聞。核心主張恢復後仍 `insufficient` 時，full-runtime 依 checkpoint rewind 到 audit，重評或排除受影響候選，再重新物化 manifest 與 verification；不得重跑 discovery 或建立替代 run。
+mobile-native 的核心主張在恢復後仍 `insufficient` 時，保持 `current_stage=selection-verified`，不得前進 visuals；更新同一 run 的 `candidate-audit.json`，重評或排除受影響候選，更新 `candidate_audit_artifact` 的 Git blob SHA，再重新 verification。成功保存新的 `verification.json` 後才可前進。不得執行 stage regression，不得建立 mobile checkpoint 或 manifest，也不得重跑 discovery 或建立替代 run。其他中斷由 ledger 讀回已綁定 artifact，從 first incomplete stage 接續。
 
 ## 交付不變式
 
@@ -77,7 +77,7 @@ Repository 內只能有一個 canonical publisher：`scripts/publish_news_brief.
 
 `CONDITIONAL_RECOVERY_BUNDLE_POLICY`
 
-After `preprocess-news-candidates` completes, record each artifact's local hash in the checkpoint. `FIRST_SELECT_NEWS_EVENTS_EXECUTION` may start immediately when the workspace is durable and the local hash/checkpoint binding validates. Do not make a remote recovery bundle a routine selection gate.
+For full-runtime only, after `preprocess-news-candidates` completes, record each artifact's local hash in the checkpoint. `FIRST_SELECT_NEWS_EVENTS_EXECUTION` may start immediately when the workspace is durable and the local hash/checkpoint binding validates. Do not make a remote recovery bundle a routine selection gate. Mobile-native does not create this checkpoint or bundle.
 
 Create and verify the recovery bundle only for a real `cross-host handoff`, an `ephemeral workspace`, or an approaching `warning or timeout boundary`:
 
@@ -97,3 +97,4 @@ The optional bundle contains these six logical artifacts:
 - `recovery/content-hydration-batches.json`
 
 If a handoff or workspace loss occurs, `restore` these artifacts from the same run's verified bundle and resume only the first incomplete batch. Never create a replacement run to conceal missing recovery inputs. Bundle creation failure is blocking only when the declared handoff or workspace-risk condition makes that bundle necessary.
+

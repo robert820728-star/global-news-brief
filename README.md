@@ -4,9 +4,9 @@
 
 ## 執行環境
 
-`EVERY_DAILY_NEWS_EXECUTION_GATE`／`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`：manual, single-run, test, first-run, recurring, or resume 全部只能在 ChatGPT desktop／Codex 的 desktop/local project 或 worktree 以 full-runtime 執行。一般 web／mobile `mobile-native` 只可做流程外能力診斷或讀取既有歷史狀態，must not begin discovery、must not create a canonical Reader。
+`EVERY_DAILY_NEWS_EXECUTION_GATE`／`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`：manual, single-run, test, first-run, recurring, or resume 使用相同新聞與逐則可見圖片門檻。full-runtime 交付本機附件；ChatGPT Scheduled Task 宿主可交付原生圖片卡或頁面圖片區域直接截圖。不要求原始檔或原畫質。
 
-`VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE`：啟用排程前，必須從 verified workspace 將 `maps/generated/taiwan-counties-yellow-v2.png` 以本機實體附件送到目前對話，並確認圖片在目前對話中實際可見。只貼外部 URL、Markdown 圖片、路徑字串、圖片說明或破圖框都不算；測試失敗時不得啟用排程。
+`SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`：建立或修正排程時先以最新版完整範本取代 saved prompt 並讀回核對，任何 bootstrap／smoke 失敗都不得讓舊 prompt 繼續啟用。其後 `SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE` 以同一 Scheduled Task 工具執行面直接截圖公開頁面的圖片區域或交付原生圖片卡；不需要 repository bootstrap 或台灣底圖。失敗時保留最新版 prompt 並暫停 task。
 
 完整本機工作流仍使用下方的安裝方式與 `daily-schedule-prompt.md`；兩種模式互不覆蓋。
 
@@ -20,7 +20,7 @@
 
 > 每日新聞排程
 >
-> 請確認 https://github.com/robert820728-star/global-news-brief 的最新 main commit，完整閱讀最新版 INSTALL.md。先依 VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE 與 VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE，在目前 desktop/local project 取得 verified workspace，將 maps/generated/taiwan-counties-yellow-v2.png 以本機實體附件送到目前對話並確認實際可見；未通過時不得啟用排程。通過後才使用 scheduled-task-prompt-template.md 全文建立 full-runtime 循環排程，不得摘要或改建 production mobile-native。
+> 請確認 https://github.com/robert820728-star/global-news-brief 的最新 main commit，完整閱讀最新版 INSTALL.md。先取得最新版 scheduled-task-prompt-template.md，將全文原樣寫入 Scheduled Task instruction 並讀回逐字核對；不得先做 bootstrap 或附件 smoke，也不得因測試失敗保留舊 prompt。更新完成後，以同一 Scheduled Task／ChatGPT 工具執行面直接截圖一個公開頁面的圖片區域或交付原生圖片卡，確認目前對話實際可見後才啟用循環；不要求 verified workspace、原始檔或原畫質。
 >
 > 1. 請在目前這個對話內建立每天 6 點循環排程。
 >
@@ -30,7 +30,7 @@
 
 1. 是否自訂監控板塊；可以是單一國家，也可以是區域，例如日本、歐盟、北美、非洲或東南亞。不自訂時使用台灣、中國、世界。
 2. 是否調整特別感興趣或降低權重的新聞主題。
-3. 單次或循環排程時間／時區由 Scheduled Task 自身決定；使用者指定 04:00、06:00 或其他時間都不需要修改 repository。未指定時才預設每日 06:00 並優先使用帳號／裝置時區。每次實際觸發前先完成 full-runtime 與本機可見附件 smoke test，通過後才建立 occurrence。
+3. 單次或循環排程時間／時區由 Scheduled Task 自身決定；使用者指定 04:00、06:00 或其他時間都不需要修改 repository。未指定時才預設每日 06:00 並優先使用帳號／裝置時區。每次實際觸發後先 probe capability，再以該輪選定的 full-runtime 或 mobile-native 建立 occurrence。
 
 完成後，每次排程都會重新讀取 repo 最新規則，並以獨立結果對話輸出當日新聞。完整版每輪會以兩個帶新 nonce 的 GitHub API 端點交叉確認當下 `main` SHA；同一輪固定使用確認後的 SHA，下一輪再重新解析，不會把安裝時或前一輪的 commit 永久釘住：
 
@@ -42,7 +42,7 @@
 
 ## 不需要 GitHub 帳號
 
-公開 repo 的規則、技能、模板、地圖與圖片流程可在沒有 GitHub 帳號時直接讀取；既有 mobile-native ledger 只供歷史狀態檢視。任何實際每日新聞執行或恢復都使用 full-runtime，不得以 mobile 診斷建立候選或 Reader。
+公開 repo 的規則、技能、模板、地圖與圖片流程可在沒有 GitHub 帳號時直接讀取。full-runtime 使用本機附件流程；無本機 Python 的 ChatGPT Scheduled Task 可使用宿主原生圖片卡或頁面圖片區域直接截圖，但仍必須完成相同的新聞、驗證與逐則可見圖片門檻。
 
 十四天候選回查採漸進式保存：優先使用可持久工作區，其次使用具寫入權限的 repository。若兩者皆不可用，系統仍完成本輪海選、D／E 內部分級、來源複查與讀者版，只是不保證跨日保存十四天歷史。此降級不得影響事件評級、入選、圖片、地圖或最終輸出。
 
@@ -62,7 +62,7 @@
 | 圖片 | `collect-news-images` | 官方資訊圖、新聞配圖、下載／截圖與視覺驗收 |
 | 恢復 | `recover-news-run` | 失敗偵測、局部重跑、重試上限與重新驗證 |
 
-各 stage 共用 `schemas/news-event-manifest.schema.json`，欄位所有權與最終讀者版由 `scripts/validate_news_brief.py` 檢查，因此新增地圖不會清空圖片，補圖片也不會覆蓋來源或評級。既有 mobile-native artifacts 只供 full-runtime 匯入稽核或局部恢復。
+full-runtime 各 stage 共用 `schemas/news-event-manifest.schema.json`，欄位所有權與最終讀者版由 `scripts/validate_news_brief.py` 檢查，因此新增地圖不會清空圖片，補圖片也不會覆蓋來源或評級。mobile-native 以既有 run-scoped audit、結構等價 Reader 檢查與 ledger 守恆，不宣稱通過 unavailable manifest validator。
 
 ## 核心文件
 
@@ -78,12 +78,12 @@
 - `user-preferences.example.yaml`：使用者可覆寫的地區與主題偏好
 - `daily-schedule-prompt.md`：每日獨立排程的固定執行提示詞
 - `scheduled-task-prompt-template.md`：建立 Scheduled Task 時必須原樣使用的完整外層指令
-- `mobile-chatgpt-start-prompt.md`：舊入口名稱；目前只導向 desktop/local-project full-runtime 安裝
-- `mobile-chatgpt-daily-prompt.md`：不可執行的歷史 mobile artifact 格式說明，不得作為排程規則
+- `mobile-chatgpt-start-prompt.md`：手機一般 ChatGPT 建立低消耗排程的貼上指令
+- `mobile-chatgpt-daily-prompt.md`：手機排程每輪重新讀取的基礎新聞規則
 
 ## 本地驗證
 
-只有 full-runtime 取得並驗證 capsule、建立本機 checkpoint 與必要時回退到分段 chunks；歷史 mobile-native ledger 只供 full-runtime 匯入，不能建立、恢復或完成新的每日新聞。full-runtime 的 external diagnostic ledger 失敗只降低診斷能力。 / Only full-runtime fetches and verifies the capsule and creates the local checkpoint. Historical mobile-native ledgers are import-only and cannot execute, resume, or complete a new daily-news run.
+只有 full-runtime 取得並驗證 capsule、建立本機 checkpoint 與必要時回退到分段 chunks；mobile-native 固定 fresh main 後直接沿用同一 `scheduled_for` 的 run ledger 與 run-scoped artifacts，不捏造 capsule、workspace 或 checkpoint。full-runtime 的 external diagnostic ledger 失敗只降低診斷能力；可恢復的 durable mobile-native 則必須具備 `run-logs` 寫入權限，不能套用這個降級。 / Only full-runtime fetches and verifies the capsule, creates a local checkpoint, and may degrade its external diagnostic ledger. Durable mobile-native pins fresh main and resumes through the writable `run-logs` ledger and run-scoped artifacts without claiming a capsule, workspace, or local checkpoint.
 
 ```bash
 python3 -m unittest discover -s tests -v
@@ -92,3 +92,4 @@ python3 scripts/validate_news_brief.py brief --manifest /path/to/news-event-mani
 ```
 
 上述 brief 命令驗證唯一 canonical 三段式版型；簡化的分區單項新聞版型不再是發布路徑。驗證器只依標準函式庫執行，不需要另裝 Python 套件。
+

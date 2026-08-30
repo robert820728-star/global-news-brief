@@ -38,7 +38,7 @@ class NoObsoleteContractsTests(unittest.TestCase):
     def test_active_execution_text_has_no_five_day_grade_ceiling(self):
         paths = [
             ROOT / "news-brief-settings.md",
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / ".agents" / "skills" / "audit-news-candidates" / "SKILL.md",
             ROOT / ".agents" / "skills" / "select-news-events" / "SKILL.md",
         ]
@@ -52,7 +52,7 @@ class NoObsoleteContractsTests(unittest.TestCase):
     def test_active_contracts_have_no_hard_reentry_or_event_type_grade(self):
         paths = [
             ROOT / "news-brief-settings.md",
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / ".agents" / "skills" / "select-news-events" / "SKILL.md",
             ROOT / ".agents" / "skills" / "select-news-events" / "references" / "severity-rubric.md",
         ]
@@ -84,7 +84,7 @@ class NoObsoleteContractsTests(unittest.TestCase):
         self.assertFalse(pool["acquisition_policy"]["cross_source_fallback_may_satisfy_source_completeness"])
 
         documents = (
-            ROOT / "docs/history/mobile-chatgpt-daily-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
             ROOT / ".agents/skills/acquire-news-candidates/SKILL.md",
         )
         for path in documents:
@@ -308,3 +308,4 @@ class NoObsoleteContractsTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
