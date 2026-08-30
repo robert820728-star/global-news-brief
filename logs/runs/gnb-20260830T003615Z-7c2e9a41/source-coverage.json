@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260830T003615Z-7c2e9a41",
+  "main_sha": "c44751f952059dd544598248c431de65261d97e1",
+  "window": {"start":"2026-08-29T00:36:15+00:00","end":"2026-08-30T00:36:15+00:00","timezone":"Asia/Shanghai"},
+  "routes": [
+    {"source_id":"gdelt","scan_status":"failed","coverage_complete":false,"coverage_status":"unavailable","coverage_reason":"configured archive/API/cache route could not be materialized by this mobile-native host","missing_segments":["configured_primary_route"],"missing_date_variants":[]},
+    {"source_id":"cna","scan_status":"completed","coverage_complete":false,"coverage_status":"degraded_partial","coverage_reason":"fresh same-source/current articles were recovered, but the configured structured full list could not be exhaustively materialized","missing_segments":["structured_direct_full_pagination"],"missing_date_variants":[]},
+    {"source_id":"chinanews","scan_status":"completed","coverage_complete":false,"coverage_status":"degraded_partial","coverage_reason":"fresh same-source articles were recovered, but both configured scroll-page variants could not be exhaustively materialized","missing_segments":["full_scroll_materialization"],"missing_date_variants":["2026-08-29","2026-08-30"]},
+    {"source_id":"web_fallback","scan_status":"completed","coverage_complete":false,"coverage_status":"degraded_partial","coverage_reason":"bounded verified global fallback used after configured global primary route exhaustion","missing_segments":["configured_route_completeness"],"missing_date_variants":[]}
+  ],
+  "global_section_coverage_complete": false,
+  "notes": "Fallback results are admitted only as verified web_fallback evidence and do not impersonate GDELT or configured-route completeness."
+}
