@@ -1,0 +1,19 @@
+{
+  "schema_version":"1.0.0-mobile-equivalent",
+  "run_id":"gnb-20260830T003615Z-7c2e9a41",
+  "main_sha":"c44751f952059dd544598248c431de65261d97e1",
+  "window":{"start":"2026-08-29T00:36:15+00:00","end":"2026-08-30T00:36:15+00:00","timezone":"Asia/Shanghai"},
+  "execution_mode":"mobile-native",
+  "decisions":[
+    {"event_id":"TWN-01","map_required":false,"claim_critical":false,"decision":"omit","reason":"product recall is not location-dependent"},
+    {"event_id":"TWN-02","map_required":true,"claim_critical":false,"decision":"omit_local_generated_visual","reason":"Pingtung crop-loss geography would add context, but mobile-native has no local map renderer and the map is not claim-critical"},
+    {"event_id":"TWN-03","map_required":true,"claim_critical":false,"decision":"omit_local_generated_visual","reason":"Kinmen maritime geography is useful but not claim-critical; mobile-native does not impersonate local rendering"},
+    {"event_id":"CHN-01","map_required":true,"claim_critical":false,"decision":"omit_local_generated_visual","reason":"Guangxi river geography is useful but the verified hydrology claims do not depend on a generated map"},
+    {"event_id":"CHN-02","map_required":false,"claim_critical":false,"decision":"omit","reason":"semiconductor product launch does not require map context"},
+    {"event_id":"GLB-01","map_required":true,"claim_critical":false,"decision":"omit_local_generated_visual","reason":"Nepal-Tibet cross-border flood geography is useful but a generated map is not necessary to establish the verified claims"},
+    {"event_id":"GLB-02","map_required":true,"claim_critical":false,"decision":"omit_local_generated_visual","reason":"Niamey airport/base geography is useful but not claim-critical"},
+    {"event_id":"GLB-03","map_required":false,"claim_critical":false,"decision":"omit","reason":"export-policy claim is not location-dependent"},
+    {"event_id":"GLB-04","map_required":true,"claim_critical":false,"decision":"omit_local_generated_visual","reason":"Iran/Hormuz geography adds context but the economic claims are independently understandable without a generated map"},
+    {"event_id":"GLB-05","map_required":false,"claim_critical":false,"decision":"omit","reason":"referendum process does not require a generated map"}
+  ]
+}
