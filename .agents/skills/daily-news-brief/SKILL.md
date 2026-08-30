@@ -5,7 +5,7 @@ description: Orchestrate the complete daily news brief with verified runtime-cap
 
 # 每日新聞主控
 
-本技能只負責流程順序、欄位所有權與交付契約，並先依 execution mode 選擇唯一可執行路徑。full-runtime 在 manifest 建立後以 manifest 作唯一事件交換層，建立以前以同一份 `news-run-checkpoint.json` 保存 run 狀態；mobile-native 不建立 checkpoint 或 manifest，改以同一 occurrence ledger、run-scoped candidate audit 與既有 verification／map／image／Reader artifact bindings 保存狀態。兩種模式都不得從搜尋結果直接跳到讀者版。
+本技能只負責流程順序、欄位所有權與交付契約，並先依 execution mode 選擇唯一可執行路徑。正式循環排程必須先通過 `INSTALL.md` 的 `VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE` 與 `VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE`，因此只能走 desktop/local-project `full-runtime`；mobile-native 分支只供明確的一次性診斷、候選整理或歷史 run recovery，不是正式循環排程 fallback。full-runtime 在 manifest 建立後以 manifest 作唯一事件交換層，建立以前以同一份 `news-run-checkpoint.json` 保存 run 狀態；mobile-native 不建立 checkpoint 或 manifest，改以同一 occurrence ledger、run-scoped candidate audit 與既有 verification／map／image／Reader artifact bindings保存狀態。兩種模式都不得從搜尋結果直接跳到讀者版。
 
 ## Execution-mode boundary
 

@@ -246,10 +246,8 @@ class PipelineContractTests(unittest.TestCase):
         )
         self.assertNotIn("overview 與 manifest 事件 ID 守恆", mobile)
         self.assertNotIn("checkpoint、manifest 與 receipts", mobile)
-        self.assertIn(
-            "the delivery path available to the selected execution mode has actually been attempted",
-            schedule,
-        )
+        self.assertIn("VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE", schedule)
+        self.assertIn("do not begin news discovery", schedule)
         self.assertNotIn(
             "source-image download or screenshot acquisition has been tried", schedule
         )
@@ -331,7 +329,7 @@ class PipelineContractTests(unittest.TestCase):
 
         self.assertIn("full-runtime 保存本地頁面證據", policy)
         self.assertIn("mobile-native 保存宿主結構化檢查結果", policy)
-        self.assertIn("mobile-native 依序嘗試文章直接媒體 URL、原生圖片搜尋／圖片卡與後續來源", readme)
+        self.assertIn("mobile-native` 只供一次性診斷或候選整理", readme)
         self.assertIn("只有 full-runtime 取得並驗證 capsule", readme)
 
     def test_capsule_workflow_runs_full_repository_suite(self):
@@ -384,18 +382,19 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("validate_canonical_reader", text)
             self.assertNotIn("validate_canonical_sectioned_layout", text)
 
-    def test_scheduled_host_without_python_uses_mobile_native_fallback(self):
+    def test_production_schedule_without_full_runtime_stops_before_discovery(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "SCHEDULED_HOST_CAPABILITY_ROUTING",
-            "host_execution_unavailable",
-            "mobile-chatgpt-daily-prompt.md",
-            "execution_mode=full-runtime",
-            "execution_mode=mobile-native",
-            "Do not disable the daily schedule",
+            "VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE",
+            "VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE",
+            "maps/generated/taiwan-counties-yellow-v2.png",
+            "正式循環排程",
+            "do not begin news discovery",
         ):
             self.assertIn(requirement, prompt)
+        self.assertNotIn("Do not disable the daily schedule", prompt)
         self.assertLess(
             prompt.index("SCHEDULED_HOST_CAPABILITY_ROUTING"),
             prompt.index("EARLY_DIAGNOSTIC_TREE_VERIFIED"),
@@ -577,18 +576,20 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("scripts/resolve_bundled_python.py", workflow)
         self.assertIn("scripts/fetch_source_routes.py", workflow)
 
-    def test_mobile_chatgpt_profile_is_low_cost_and_preserves_minimum_contract(self):
+    def test_mobile_prompt_is_diagnostic_while_start_prompt_requires_desktop(self):
         start = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
-        self.assertIn("Instant", start)
+        self.assertIn("full-runtime", start)
         self.assertIn("scheduled-task-prompt-template.md", start)
         self.assertIn("原樣設為 Scheduled Task instruction", start)
         self.assertIn("每天 6 點循環排程", start)
         self.assertIn("不得摘要、縮短", start)
         for requirement in ("十四天", "六項", "C 級以上", "圖片說明"):
             self.assertIn(requirement, daily)
-        for forbidden in ("Codex", "powershell", "bootstrap capsule", "git clone"):
+        self.assertIn("desktop/local project", start)
+        self.assertIn("VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE", start)
+        for forbidden in ("powershell", "bootstrap capsule", "git clone"):
             self.assertNotIn(forbidden, daily)
 
     def test_integrated_six_dimension_grading_and_conflict_context_are_explicit(self):
@@ -938,7 +939,10 @@ class PipelineContractTests(unittest.TestCase):
         self.assertNotIn("_is_pristine_reservation", manager)
         self.assertIn('required=True', manager)
         self.assertIn("task 真正觸發", (ROOT / "INSTALL.md").read_text(encoding="utf-8"))
-        self.assertIn("external full-runtime visual-recovery executor", (ROOT / "docs" / "mobile-run-ledger.md").read_text(encoding="utf-8"))
+        ledger = (ROOT / "docs" / "mobile-run-ledger.md").read_text(encoding="utf-8")
+        self.assertIn("historical or diagnostic mobile run", ledger)
+        self.assertIn("not a production recurring schedule", ledger)
+        self.assertNotIn("external full-runtime visual-recovery executor", ledger)
 
     def test_candidate_discovery_uses_dynamic_verification_selection(self):
         documents = {
@@ -1376,6 +1380,38 @@ class PipelineContractTests(unittest.TestCase):
             )
             self.assertIn("DEFERRED", document)
             self.assertIn("不得標記整輪失敗", document)
+
+    def test_visible_media_schedule_requires_proven_full_runtime_attachment(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        template = (ROOT / "scheduled-task-prompt-template.md").read_text(
+            encoding="utf-8"
+        )
+        start = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(
+            encoding="utf-8"
+        )
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(
+            encoding="utf-8"
+        )
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+
+        for document in (install, template, start, readme):
+            self.assertIn("VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE", document)
+            self.assertIn("VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE", document)
+            self.assertIn("maps/generated/taiwan-counties-yellow-v2.png", document)
+            self.assertIn("full-runtime", document)
+
+        self.assertIn("不得開始新聞 discovery", template)
+        self.assertIn("不得啟用", install)
+        self.assertIn("不得作為正式循環排程", mobile)
+        self.assertIn("desktop/local project", start)
+        self.assertIn("目前對話中實際可見", start)
+
+        for marker in (
+            "IMAGE_FALLBACK_EXHAUSTION_GATE",
+            "NO_EXTERNAL_IMAGE_URL_DELIVERY_GATE",
+        ):
+            self.assertIn(marker, install)
+            self.assertIn(marker, template)
 
     def test_scheduled_task_uses_complete_canonical_instruction_not_thin_launcher(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")

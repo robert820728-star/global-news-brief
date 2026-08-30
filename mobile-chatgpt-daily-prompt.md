@@ -1,5 +1,7 @@
 # 手機 ChatGPT 基礎每日新聞規則
 
+`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`／`VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE`：本檔保留給 mobile-native 的一次性診斷、候選整理及既有歷史 run 讀取；mobile-native 不得作為正式循環排程的 canonical producer。強制可見圖片的「每日新聞」正式排程必須在 desktop/local project 以 full-runtime 建立，並在啟用前以 `maps/generated/taiwan-counties-yellow-v2.png` 完成本機附件實際可見測試。若正式循環排程誤進本模式，必須在 occurrence 建立與新聞 discovery 前停止並要求重新安裝，不得執行完整新聞後才回報圖片無法交付。
+
 ## 執行輸入正規化
 
 `RUN_INPUT_NORMALIZATION_GATE`

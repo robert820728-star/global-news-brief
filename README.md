@@ -2,9 +2,11 @@
 
 可版本化、可分享、可個人化，而且能逐階段驗收的每日新聞簡報工作流。
 
-## 手機 ChatGPT 基礎排程
+## 執行環境
 
-若要在一般手機 ChatGPT 對話執行，不使用手機 Codex，請先選擇 `Instant` 並貼上 [mobile-chatgpt-start-prompt.md](mobile-chatgpt-start-prompt.md)。此低消耗版本不執行本機程式、地圖或圖表，但仍保存當輪海選、每筆六項大評分、當輪所有 C 級以上新聞的讀者版，以及可用時的十四天 continuity cache。十四天 merge 延後不會阻擋當日讀者版。mobile-native 依序嘗試文章直接媒體 URL、原生圖片搜尋／圖片卡與後續來源並保存結構化交付結果，不宣稱本機下載、縮圖或附件驗收；只有完整來源檢查後確實沒有合格圖片才可省略視覺區塊，已確認合格圖片但交付失敗時必須停在同一 run 的視覺恢復，不得完成 Reader，也不用圖片說明、圖片網址或原網站連結冒充附件。執行進度與最新讀者版會保存在 `run-logs` 分支；repository 不預占任何 future occurrence。單次或循環 Scheduled Task 都在實際觸發後才依 capability routing 建立該輪執行狀態，因此 04:00、06:00 或其他使用者設定時間都走相同流程。
+`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`：強制可見圖片的正式循環排程只能在 ChatGPT desktop／Codex 的 desktop/local project 或 worktree 以 full-runtime 建立。一般 web／mobile `mobile-native` 只供一次性診斷或候選整理，不得作為正式循環排程，也不得承諾一定能把新聞圖片轉成本機附件。
+
+`VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE`：啟用排程前，必須從 verified workspace 將 `maps/generated/taiwan-counties-yellow-v2.png` 以本機實體附件送到目前對話，並確認圖片在目前對話中實際可見。只貼外部 URL、Markdown 圖片、路徑字串、圖片說明或破圖框都不算；測試失敗時不得啟用排程。
 
 完整本機工作流仍使用下方的安裝方式與 `daily-schedule-prompt.md`；兩種模式互不覆蓋。
 
@@ -18,7 +20,7 @@
 
 > 每日新聞排程
 >
-> 請確認 https://github.com/robert820728-star/global-news-brief 的最新 main commit，依 INSTALL.md 規定進行完整執行並完成排程設置。
+> 請確認 https://github.com/robert820728-star/global-news-brief 的最新 main commit，完整閱讀最新版 INSTALL.md。先依 VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE 與 VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE，在目前 desktop/local project 取得 verified workspace，將 maps/generated/taiwan-counties-yellow-v2.png 以本機實體附件送到目前對話並確認實際可見；未通過時不得啟用排程。通過後才使用 scheduled-task-prompt-template.md 全文建立 full-runtime 循環排程，不得摘要或改建 production mobile-native。
 >
 > 1. 請在目前這個對話內建立每天 6 點循環排程。
 >
@@ -40,7 +42,7 @@
 
 ## 不需要 GitHub 帳號
 
-公開 repo 的規則、技能、模板、地圖與圖片流程可在沒有 GitHub 帳號時直接讀取；但可恢復的 durable mobile-native Scheduled Task 必須使用具此 repository `run-logs` 寫入權限的 GitHub app。沒有寫入權限時最多只能在當前執行做一次性 reader，不得宣稱具備跨執行 resume、durable run identity 或 continuity。
+公開 repo 的規則、技能、模板、地圖與圖片流程可在沒有 GitHub 帳號時直接讀取；但可恢復的 mobile-native 診斷或歷史 run recovery 必須使用具此 repository `run-logs` 寫入權限的 GitHub app。沒有寫入權限時最多只能在當前執行做一次性診斷，不得宣稱具備跨執行 resume、durable run identity、continuity 或正式循環排程能力。
 
 十四天候選回查採漸進式保存：優先使用可持久工作區，其次使用具寫入權限的 repository。若兩者皆不可用，系統仍完成本輪海選、D／E 內部分級、來源複查與讀者版，只是不保證跨日保存十四天歷史。此降級不得影響事件評級、入選、圖片、地圖或最終輸出。
 

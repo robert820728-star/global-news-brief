@@ -3,6 +3,14 @@
 區域：<使用者指定區域；未指定則台灣、中國、世界>
 監控類型：<使用者指定監控類型；未指定則預設>
 
+`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`
+
+這個正式循環排程的產品 profile 強制交付實際可見圖片，只能在安裝時已通過 `VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE` 的 desktop/local-project `full-runtime` 執行。安裝實測必須把 verified workspace 的 `maps/generated/taiwan-counties-yellow-v2.png` 當作本機實體附件交付到目前對話並實際顯示；外部 URL、Markdown 熱連結、路徑字串或破圖不算。若本次 capability routing 只能得到 `mobile-native`，表示此排程建立在不合格宿主：不得建立或 resume occurrence、不得開始新聞 discovery、不得耗費整輪查圖後才回報媒體 blocker；直接要求在支援本機專案與附件的 desktop/local project 重新安裝。mobile-native 只供一次性診斷或候選整理，不是本正式循環排程的 fallback producer。
+
+`VISIBLE_LOCAL_ATTACHMENT_INSTALL_SMOKE_GATE`
+
+本 gate 是安裝資格，不是每日可省略圖片的例外。不得因本檔存在便自行假設實測通過；排程建立者必須在啟用 recurrence 前真的完成上述本機附件呈現。既有 `IMAGE_FALLBACK_EXHAUSTION_GATE` 與 `NO_EXTERNAL_IMAGE_URL_DELIVERY_GATE` 仍完整適用。
+
 ## 1. 最新規則與單一執行輪
 
 `FRESH_MAIN_AND_ENTRYPOINT_GATE`
