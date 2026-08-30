@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0.0-mobile-equivalent",
+  "run_id": "gnb-20260830T003615Z-7c2e9a41",
+  "main_sha": "c44751f952059dd544598248c431de65261d97e1",
+  "window": {"start":"2026-08-29T00:36:15+00:00","end":"2026-08-30T00:36:15+00:00","timezone":"Asia/Shanghai"},
+  "validation_profile": "independent verification separated from discovery/scoring; no full-runtime validator claimed",
+  "events": [
+    {
+      "event_id":"TWN-01","status":"sufficient","grade_status":"validated",
+      "core_claims":["百肯膜衣錠5毫克批號BCLA91啟動回收，已銷售約58.6萬錠。","第31個月安定性試驗不純物達檢驗規格上限，可能影響品質與療效穩定性。","食藥署要求8月31日前完成回收；國內有10張以上相同成分、劑型、劑量許可證可替代，暫無缺藥疑慮。"],
+      "verification_sources":["https://health.ltn.com.tw/article/breakingnews/5556274","https://health.ltn.com.tw/article/breakingnews/5556171"],
+      "source_independence":"一篇為自由時報記者直接採訪食藥署官員，一篇為中央社稿件；兩者核心資訊均指向食藥署與廠商回收資料。",
+      "differences_or_uncertainty":"回收公告本身較早發布，但本輪8月29日有食藥署官員新增回收數量、原因與替代供應說明，屬本輪實質增量。",
+      "publication_guidance":"可發布；提醒持有該批號者向原醫療院所或藥局確認，不應自行停藥。"
+    },
+    {
+      "event_id":"TWN-02","status":"sufficient","grade_status":"validated",
+      "core_claims":["屏東8月下旬豪雨農損累計約2962萬元，被害面積約390.97公頃。","香蕉損失約542.8萬元，另有芭樂、蓮霧、紅龍果、苦瓜等作物受損。","8月29日至31日仍有局部陣雨或雷雨，山區仍有較大雨勢風險。"],
+      "verification_sources":["https://udn.com/news/story/7327/9721959","https://pteoc.pthg.gov.tw/CwbVideoText/Details/1686"],
+      "source_independence":"聯合報採訪縣府農業處提供農損統計；屏東縣官方氣象資訊提供後續天候風險。",
+      "differences_or_uncertainty":"農損金額會隨查報持續修訂，2962萬元是本輪視窗內的暫時累計值。",
+      "publication_guidance":"可發布，金額使用『截至8月29日查報』語氣。"
+    },
+    {
+      "event_id":"TWN-03","status":"sufficient","grade_status":"validated",
+      "core_claims":["台灣海巡稱4艘中國海警船14608、14531、14604、14530於8月29日上午進入金門限制水域。","海巡採一對一併航監控、蒐證、廣播及近迫拒止，約10時53分全數航離。","中國方面將行動描述為常態執法巡查，台灣海巡否定其管轄權主張。"],
+      "verification_sources":["https://www.worldjournal.com/wj/story/121475/9722144","https://newtalk.tw/news/view/2026-08-29/1056471"],
+      "source_independence":"兩家媒體均引用台灣海巡現場資料與照片；中國海警長期公開主張金門附近巡查屬其常態執法，但本輪未直接取得精確對應8月29日的中國官方原文。",
+      "differences_or_uncertainty":"雙方對限制水域與執法管轄權的法律立場互相衝突；中國側當日精確原始公告未直接恢復。",
+      "publication_guidance":"可發布，但中國側說法必須保留歸屬語氣，不得寫成已獲第三方認定的管轄事實。"
+    },
+    {
+      "event_id":"CHN-01","status":"sufficient","grade_status":"validated",
+      "core_claims":["8月29日8時廣西13條河流18個水文站超警0.01至5.17米。","郁江貴港站水位43.75米、超警2.55米，預測當晚洪峰約43.9米、超警2.7米。","未來24小時部分河流仍可能漲水2至6米並出現新的超警洪水。"],
+      "verification_sources":["https://www.chinanews.com.cn/sh/2026/08-29/10686419.shtml","https://gg.gxnews.com.cn/staticpages/20260829/newgx6a924761-21987611.shtml","https://www.eeo.com.cn/2026/0829/1016444.shtml"],
+      "source_independence":"中新社引廣西水文中心；廣西地方媒體與財經媒體分別補充同日水位、預警與後續變化，核心數字可交叉核對。",
+      "differences_or_uncertainty":"同日較晚統計的超警站數可隨水位變化從18站調整，不能把早上快照當全天最終值。",
+      "publication_guidance":"可發布；將水位與站數明確標示為8月29日8時快照，洪峰值標示為預測。"
+    },
+    {
+      "event_id":"CHN-02","status":"sufficient","grade_status":"validated",
+      "core_claims":["長鑫存儲8月29日宣布LPDDR6正式量產。","小米確認Xiaomi 18 Fold將首發搭載長鑫LPDDR6，預計9月發布。","長鑫此前披露LPDDR6峰值速率12800Mbps、最高容量16GB，已向關鍵客戶送樣。"],
+      "verification_sources":["https://www.thepaper.cn/newsDetail_forward_33971751","https://cn.investing.com/news/company-news/article-3543248","https://www.ithome.com/0/995/869.htm"],
+      "source_independence":"核心量產與首發搭載資訊可追溯至長鑫與小米/雷軍官方社群公告；澎湃、Reuters轉述及IT之家分別報導。",
+      "differences_or_uncertainty":"量產宣告與客戶搭載已足以確認，但實際大規模出貨量、良率與終端效能尚待產品上市後驗證。",
+      "publication_guidance":"可發布；性能數字註明為長鑫此前公布規格，避免當成獨立實測結果。"
+    },
+    {
+      "event_id":"GLB-01","status":"sufficient","grade_status":"validated",
+      "core_claims":["尼泊爾—西藏邊境冰川洪災造成大規模傷亡與失聯，8月29日救援持續。","路透本輪報尼泊爾至少669死、西藏7死、近3000人失聯；後續媒體更新的死亡總數更高。","尼泊爾估重建成本約40億至50億美元，部分水電隧道與上游堰塞湖仍是救援風險。"],
+      "verification_sources":["https://www.reuters.com/world/china/nepal-needs-help-technical-areas-not-search-rescue-foreign-minister-says-2026-08-29/","https://www.theguardian.com/world/2026/aug/29/nepal-tibet-chinese-rescue-team-finds-nothing-but-ruins-after-reaching-border-crossing-hit-by-deadly-flood","https://www.theguardian.com/world/live/2026/aug/29/nepal-tibet-floods-latest-updates-death-toll-missing-search-and-rescue"],
+      "source_independence":"Reuters與Guardian有獨立採訪/更新鏈，並引用尼泊爾政府、救援單位與中方資料；數字隨救援持續修訂。",
+      "differences_or_uncertainty":"死亡總數在不同更新時點存在差異；西藏資訊透明度較低。",
+      "publication_guidance":"可發布，但傷亡以來源與時間點歸屬，不宣稱單一最終總數。"
+    },
+    {
+      "event_id":"GLB-02","status":"sufficient","grade_status":"validated",
+      "core_claims":["尼亞美8月29日發生軍人兵變/奪權企圖，機場內Base 101與其他敏感地點遭攻擊。","尼日國營電視稱數十名軍人被擊斃或拘捕，安全部隊重新控制多數目標。","軍政府領導人Abdourahamane Tchiani的即時狀況一度不明，事件反映軍方內部分裂與薩赫勒安全壓力。"],
+      "verification_sources":["https://apnews.com/article/77d0c701e5729f2779580ea557e0a2c3","https://www.aljazeera.com/news/2026/8/29/gunfire-blasts-heard-in-several-areas-of-niger-capital-niamey","https://noticias.uol.com.br/internacional/ultimas-noticias/2026/08/29/niger-tiroteios-explosoes.ghtm"],
+      "source_independence":"AP、Al Jazeera與Reuters系報導均確認槍火、爆炸、機場基地與敏感地點遭攻擊；死傷與拘捕主要來自國營電視。",
+      "differences_or_uncertainty":"『數十人死亡或被捕』尚缺完整獨立核實；局勢是否完全受控與Tchiani狀況在本輪仍有不確定性。",
+      "publication_guidance":"可發布，國營電視的死傷/拘捕數字必須明確歸屬，控制情勢使用『政府稱』而非無條件事實。"
+    },
+    {
+      "event_id":"GLB-03","status":"sufficient","grade_status":"validated",
+      "core_claims":["俄羅斯8月29日宣布把俄羅斯生產商的柴油出口禁令延長至9月30日。","禁令同時涵蓋船用燃料與部分gas oils，政府稱目的是穩定國內燃料市場。","俄羅斯先前已對非生產商柴油、汽油及航空燃料設定更長期限的出口限制。"],
+      "verification_sources":["https://www.reuters.com/business/energy/russia-extends-ban-diesel-exports-until-september-30-2026-08-29/","https://www.brecorder.com/news/40437001/russia-extends-ban-on-diesel-exports-until-september-30"],
+      "source_independence":"Business Recorder為Reuters轉載，實際主要證據鏈是Reuters對俄政府聲明的報導；其對限制範圍與先前政策的描述一致。",
+      "differences_or_uncertainty":"本輪新訊息是生產商禁令由8月31延至9月30，不應與非生產商/汽油/航空燃料的更長期限混為一談。",
+      "publication_guidance":"單一可靠來源鏈可發布並註明政策範圍；避免泛化成所有柴油出口全面禁到9月底。"
+    },
+    {
+      "event_id":"GLB-04","status":"sufficient","grade_status":"validated",
+      "core_claims":["伊朗總統Pezeshkian稱外貿因美國制裁與海上封鎖縮減近35%。","Reuters報導伊朗年通膨升至66%，伊朗最高領袖要求政府處理通膨、失業與市場穩定。","美國在戰爭背景下持續加碼金融制裁，伊朗經濟壓力是本輪可衡量的持續影響。"],
+      "verification_sources":["https://www.reuters.com/world/asia-pacific/war-weighs-irans-economy-us-intensifies-sanctions-2026-08-29/","https://www.dawn.com/news/2025915/irans-foreign-trade-has-shrunk-by-35pc-due-to-us-sanctions-naval-blockade-pezeshkian"],
+      "source_independence":"Dawn主要轉述Pezeshkian與Reuters；35%屬伊朗總統可歸屬主張，66%通膨為Reuters報導的當期經濟數據。",
+      "differences_or_uncertainty":"35%外貿縮減未在本輪找到獨立統計機構完全核對；荷姆茲控制與封鎖的軍事/法律表述具爭議。",
+      "publication_guidance":"可發布，但35%明確寫成『Pezeshkian稱』，不把爭議海峽控制主張當成中立事實。"
+    },
+    {
+      "event_id":"GLB-05","status":"sufficient","grade_status":"validated",
+      "core_claims":["冰島8月29日舉行公投，問題是是否重啟加入歐盟談判，而非直接決定入盟。","約26.5萬名選民具投票資格，投票結束後開始計票。","本輪時間窗結束時未取得可確認的官方最終結果。"],
+      "verification_sources":["https://www.reuters.com/world/europe/iceland-votes-whether-start-eu-membership-talks-2026-08-29/","https://apnews.com/article/e08b367664056ba7d599e53e23dc2cf3","https://www.reuters.com/world/europe/poll-finds-icelandic-voters-swing-narrowly-opposing-eu-membership-2026-08-28/"],
+      "source_independence":"Reuters與AP獨立報導公投問題、背景與投票資格；兩者均指出即使贊成仍須談判並可能再有一次入盟決定。",
+      "differences_or_uncertainty":"本輪未取得官方最終計票結果，不能推測勝負。",
+      "publication_guidance":"可發布公投已舉行與計票中；最終結果列入後續觀察。"
+    }
+  ],
+  "validated_event_ids":["TWN-01","TWN-02","TWN-03","CHN-01","CHN-02","GLB-01","GLB-02","GLB-03","GLB-04","GLB-05"]
+}
