@@ -9,7 +9,7 @@
 
 `HOST_VISIBLE_SCREENSHOT_ROUTE`
 
-對話宿主只要能開啟來源頁，就可直接截圖原文章、官方頁、通訊社或可靠轉載頁中的同事件圖片區域並作為可見圖片交付，不要求原始檔或原畫質，也不必等待原圖／CDN 下載失敗。外部 URL、Markdown 熱連結、路徑字串、圖說或破圖不算。排程安裝時已用同一 Scheduled Task 工具執行面完成一次 smoke；若實際 occurrence 的媒體工具臨時不可用，必須在 discovery 前停止，不得完成新聞後才宣告圖片能力不足。
+原生圖片搜尋沒有合格 `image_ref`、且固定流程進入截圖步驟後，對話宿主只要能開啟來源頁，就可直接截圖原文章、官方頁、通訊社或可靠轉載頁中的同事件圖片區域並作為可見圖片交付，不要求原始檔或原畫質，也不必等待原圖／CDN 下載失敗。外部 URL、Markdown 熱連結、路徑字串、圖說或破圖不算。排程安裝時已用同一 Scheduled Task 工具執行面完成一次 smoke；若實際 occurrence 的媒體工具臨時不可用，必須在 discovery 前停止，不得完成新聞後才宣告圖片能力不足。
 
 ## 1. 最新規則與單一執行輪
 
@@ -55,7 +55,7 @@ ChatGPT Scheduled Task 對每一則入選事件必須實際呼叫原生圖片搜
 
 `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`
 
-先打開每則已引用的原新聞文章，實際檢查內文 `img`、`srcset`、`og:image`、圖片圖集、官方媒體欄位與直接 CDN 媒體。若找到與本事件及日期相符的 JPEG／WebP，必須實際開啟／取得該媒體並嘗試在本對話可見交付。文章已揭露直接圖片網址時，不得只說「原文有圖片」後放棄；搜尋結果沒有 image ref、原生圖片卡沒有 materialize、第一張圖下載失敗或某一站防盜連，都不等於圖片不可取得。
+原生圖片搜尋沒有合格 `image_ref` 時，才打開每則已引用的原新聞文章，實際檢查內文 `img`、`srcset`、`og:image`、圖片圖集、官方媒體欄位與直接 CDN 媒體。若找到與本事件及日期相符的 JPEG／WebP，必須實際開啟／取得該媒體並嘗試在本對話可見交付。文章已揭露直接圖片網址時，不得只說「原文有圖片」後放棄；搜尋結果沒有 image ref、原生圖片卡沒有 materialize、第一張圖下載失敗或某一站防盜連，都不等於圖片不可取得。
 
 `IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE`
 
@@ -104,6 +104,7 @@ Reader 必須包含本輪所有 C 級以上 validated 事件，來源連結與�
 `CURRENT_CONVERSATION_DELIVERY_GATE`
 
 成功時將完整 canonical Reader（含實際可見圖片）回覆到建立本 Scheduled Task 的目前 ChatGPT 對話，不得另開新對話、只貼摘要、只給 GitHub artifact、只報「已生成」、只列候選或只交付圖片網址。若真正遇到最新版規則定義的不可恢復 blocker，只回報最早 blocker、已完成 stage、同一 run 的可恢復位置與尚未完成項目；不得把 partial Reader 冒充正式結果。
+
 
 
 
