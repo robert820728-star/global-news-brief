@@ -66,7 +66,7 @@ python3 scripts/recover_news_run.py plan --input <manifest> --brief <brief>
 
 只重跑失敗事件／stage 與必要的後續依賴。已完成且 SHA 綁定仍一致的工作不得清空。只有不可排除的硬性環境阻擋才可停止；一般來源失敗、圖片失敗、地圖失敗、格式失敗與驗證失敗都不是無聲結束理由。
 
-mobile-native 的核心主張在恢復後仍 `insufficient` 時，保持 `current_stage=selection-verified`，不得前進 visuals；更新同一 run 的 `candidate-audit.json`，重評或排除受影響候選，更新 `candidate_audit_artifact` 的 Git blob SHA，再重新 verification。成功保存新的 `verification.json` 後才可前進。不得執行 stage regression，不得建立 mobile checkpoint 或 manifest，也不得重跑 discovery 或建立替代 run。其他中斷由 ledger 讀回已綁定 artifact，從 first incomplete stage 接續。
+既有 mobile ledger 只能由 full-runtime 匯入以定位 first incomplete stage；不得由 mobile-native 推進或完成新聞。核心主張恢復後仍 `insufficient` 時，full-runtime 依 checkpoint rewind 到 audit，重評或排除受影響候選，再重新物化 manifest 與 verification；不得重跑 discovery 或建立替代 run。
 
 ## 交付不變式
 
@@ -77,7 +77,7 @@ Repository 內只能有一個 canonical publisher：`scripts/publish_news_brief.
 
 `CONDITIONAL_RECOVERY_BUNDLE_POLICY`
 
-For full-runtime only, after `preprocess-news-candidates` completes, record each artifact's local hash in the checkpoint. `FIRST_SELECT_NEWS_EVENTS_EXECUTION` may start immediately when the workspace is durable and the local hash/checkpoint binding validates. Do not make a remote recovery bundle a routine selection gate. Mobile-native does not create this checkpoint or bundle.
+After `preprocess-news-candidates` completes, record each artifact's local hash in the checkpoint. `FIRST_SELECT_NEWS_EVENTS_EXECUTION` may start immediately when the workspace is durable and the local hash/checkpoint binding validates. Do not make a remote recovery bundle a routine selection gate.
 
 Create and verify the recovery bundle only for a real `cross-host handoff`, an `ephemeral workspace`, or an approaching `warning or timeout boundary`:
 

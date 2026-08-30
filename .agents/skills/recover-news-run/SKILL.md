@@ -58,30 +58,30 @@ python3 scripts/recover_news_run.py record \
 
 不要在 `recover_news_run.py` 上虛構 `--checkpoint` 參數；checkpoint 是由 `news_run_checkpoint.py` 維護。
 
-## 3. mobile-native：同一 ledger 內恢復
+## 3. 歷史 mobile ledger 匯入
 
-既有 mobile-native ledger 只供歷史狀態讀取，不能主動推進 stage。恢復工作必須由 full-runtime 讀回現有 Git blob bindings，從 first incomplete stage 接續。
+既有 mobile-native ledger 只供歷史狀態讀取，不能主動推進 stage。恢復工作必須由 full-runtime 讀回現有 Git blob bindings，核對事件身分後建立 canonical checkpoint／manifest，從 first incomplete stage 接續。
 
-若核心主張在事件級驗證恢復後仍為 `insufficient`，保持 `current_stage=selection-verified` 且不得前進 visuals。更新同一 run 的 `candidate-audit.json`，將受影響候選重評或以 `unreliable_or_unverified` 排除，更新 `candidate_audit_artifact` 的 Git blob SHA，然後重新 verification；只有成功保存新的 `verification.json` 才可繼續。不得建立 mobile checkpoint 或 manifest，不得重跑 discovery、preprocess 或 semantic selection，也不得建立替代 run。
+若歷史 artifact 顯示核心主張在事件級驗證後仍為 `insufficient`，full-runtime 依 `VERIFICATION_FEEDBACK_REWIND_GATE` 從 audit 重評或排除受影響候選，再重新物化 manifest 與 verification。不得重跑 discovery、preprocess 或 semantic selection，也不得建立替代 run。
 
 ## 4. 重試原則
 
-同一事件／stage 最多三次。第一輪修原路徑；第二輪切換同級合法替代來源或取得方法；第三輪仍失敗時，只有不可排除的硬性權限、網路、來源不存在等阻擋才可停止。`mobile-native` 的 `NATIVE_MEDIA_UNAVAILABLE` 是已完成實際交付嘗試後的能力限制，不寫入 `last_error`；但它是既有歷史／診斷 run 的視覺恢復條件，必須讓同一 run 保持 `status=running`、`current_stage=visuals-completed`、`execution_mode=mobile-native`。只有使用者明確在具能力的 full-runtime 環境接續時才只補圖片交付；不得假設或承諾未來會有自動 recovery worker，也不得完成 reader。這不是 mode switch。其他格式、證據或宣稱已交付之資產驗證失敗仍必須保留 `recovering/failed`。
+同一事件／stage 最多三次。第一輪修原路徑；第二輪切換同級合法替代來源或取得方法；第三輪仍失敗時，只有不可排除的硬性權限、網路、來源不存在等阻擋才可停止。圖片原檔、單一 CDN 或第一來源失敗不算不可排除 blocker；full-runtime 必須直接截圖或切換官方／通訊社／可靠轉載。其他格式、證據或宣稱已交付之資產驗證失敗仍必須保留 `recovering/failed`。
 
-`VISUAL_DELIVERY_ONLY_RECOVERY`：已確認圖片但交付失敗時，full-runtime 只讀既有新聞 artifacts 與來源頁，直接選擇下載或截圖中最快成功的方法完成物化與可見附件；截圖不必等待原圖失敗。禁止 discovery、scoring、verification、new run 或 event-ID 變更。
+`VISIBLE_IMAGE_OVER_ORIGINAL_FILE_GATE`／`VISUAL_DELIVERY_ONLY_RECOVERY`：已確認圖片但交付失敗時，full-runtime 只讀既有新聞 artifacts 與來源頁，直接選擇下載或截圖中最快成功的方法完成物化與可見附件；不要求原始檔或原畫質，截圖不必等待原圖失敗。禁止 discovery、scoring、verification、new run 或 event-ID 變更。
 
-恢復成功後重新跑該 stage 的驗證，再繼續後續 stage。若任何前置 artifact 在恢復期間被修改，full-runtime 必須重新綁定 checkpoint SHA-256；mobile-native 必須更新同一 ledger 的 Git blob SHA，不能沿用舊 binding。
+恢復成功後重新跑該 stage 的驗證，再繼續後續 stage。若任何前置 artifact 在恢復期間被修改，full-runtime 必須重新綁定 checkpoint SHA-256，不能沿用舊 binding。
 
 ## 5. 發布前條件
 
-full-runtime 只有所有 required stages 都為 `completed`、candidate audit 與 manifest selected ids 一一對應、讀者版與 manifest 一致、所有宣稱 ready 或 `claim_critical=true` 的附件存在且視覺驗證通過、沒有 unresolved recovery target 時，才可交給 `scripts/publish_news_brief.py`。mobile-native 則要求 run-scoped audit 的 selected ids 與 Reader 守恆、上述 artifact boundaries 已綁定、沒有 unresolved recovery target，才可進 `delivery-handoff`。來源確實沒有合格圖片時的非關鍵 omitted 視覺不是 recovery target；已確認圖片的交付失敗則是 recovery target，不論 `claim_critical`。恢復工具本身永遠不直接對使用者輸出草稿或 release。
+只有所有 required stages 都為 `completed`、candidate audit 與 manifest selected ids 一一對應、讀者版與 manifest 一致、所有宣稱 ready 或 `claim_critical=true` 的附件存在且視覺驗證通過、沒有 unresolved recovery target 時，才可交給 `scripts/publish_news_brief.py`。來源確實沒有合格圖片時的非關鍵 omitted 視覺不是 recovery target；已確認圖片的交付失敗則是 recovery target，不論 `claim_critical`。恢復工具本身永遠不直接對使用者輸出草稿或 release。
 
 
 ## Conditional pre-manifest recovery boundary
 
 `CONDITIONAL_RECOVERY_BUNDLE_POLICY`
 
-For full-runtime only, after `preprocess-news-candidates` completes, record each artifact's local hash in the checkpoint. `FIRST_SELECT_NEWS_EVENTS_EXECUTION` may start immediately when the workspace is durable and the local hash/checkpoint binding validates. Do not make a remote recovery bundle a routine selection gate. Mobile-native does not create this checkpoint or bundle.
+After `preprocess-news-candidates` completes, record each artifact's local hash in the checkpoint. `FIRST_SELECT_NEWS_EVENTS_EXECUTION` may start immediately when the workspace is durable and the local hash/checkpoint binding validates. Do not make a remote recovery bundle a routine selection gate.
 
 Create and verify the recovery bundle only for a real `cross-host handoff`, an `ephemeral workspace`, or an approaching `warning or timeout boundary`:
 

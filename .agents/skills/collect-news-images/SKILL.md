@@ -16,8 +16,8 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 `EVERY_DAILY_NEWS_EXECUTION_GATE`：本技能只在 full-runtime 執行。manual, single-run, test, first-run, recurring, or resume 都不得改走 mobile-native；沒有本機下載／截圖／物化／附件能力時，必須在 discovery 前停止。既有 mobile image evidence 只供歷史稽核，不能授權新圖片流程。
 
 - 所有入選事件（SS 至 C）：`images.required` 固定為 `true`，逐一開啟 `verification.sources` 的來源頁檢查圖片；評級不得作為跳過圖片流程的條件。
-- 每個引用來源都必須寫入 `images.source_checks`；除是否找到可用圖片、嘗試次數與結果外，必須保存 `checked_at`、`inspection_method`、`detected_image_urls` 與 `failure_detail`。full-runtime 另保存本地 `evidence_path`；mobile-native 保存宿主結構化檢查結果。
-- full-runtime 的 `evidence_path` 必須是頁面截圖、保存頁面或可重現檢查結果的本地證據，發布器會確認檔案實際存在。mobile-native 宣告 `no_usable_image` 時不得只填布林值，仍須保存已檢查來源與具體理由，但不得假造本地檔案。
+- 每個引用來源都必須寫入 `images.source_checks`；除是否找到可用圖片、嘗試次數與結果外，必須保存 `checked_at`、`inspection_method`、`detected_image_urls`、`failure_detail` 與本地 `evidence_path`。
+- `evidence_path` 必須是頁面截圖、保存頁面或可重現檢查結果的本地證據，發布器會確認檔案實際存在。
 - `VISIBLE_IMAGE_OVER_ORIGINAL_FILE_GATE`：不要求原始檔或原畫質。偵測到官方或媒體圖片時，可直接下載來源頁中的實際媒體檔，也可立即截取文章、官方頁或可靠轉載頁中的同事件圖片區域；截圖不必等待下載失敗。`images.assets[].source_url` 保存來源頁，`images.assets[].source_image_url` 保存該頁可追溯的圖片網址。
 - full-runtime 的每張來源圖片必須由 `scripts/materialize_news_images.py` 對 `source_image_url` 下載，或以 `screenshot_path` 讀取既有本機截圖，再解碼、寫檔並保存 `materialized-images.json`；不得只憑 manifest 宣告來源。
 - 任一來源找到可信且相關圖片後，`images.status` 只能在至少一張附件通過驗收後改為 `ready`。
@@ -40,8 +40,8 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 任何入選事件若屬氣象、災害、疫情、公共衛生、地震、海嘯、火山、野火、洪水、乾旱、熱浪、戰爭、軍事、航運、海峽／航道、漏油、油污、海洋污染、化學或核事故，`images.professional_visual_required` 固定為 `true`；此判定必須依事件內容完成，禁止使用評級門檻或事件編號白名單。
 - 先依事件類型與主要影響地區，主動搜尋主管機關、監測機構、地方政府或專業組織的圖資；不得只檢查新聞來源頁後就宣告沒有專業圖。
 - 每個查過的官方或專業頁面都寫入 `images.professional_source_checks`。至少涵蓋中央主管機關與主要受影響地區主管單位；跨國事件再查國際組織或受影響國官方來源。
-- 官方專業圖資檢查同樣必須保存檢查時間、方法、檢出的圖片網址與判定理由；full-runtime 另保存本地頁面證據，mobile-native 保存宿主結構化檢查結果。確實沒有合格專業圖時，只有 `claim_critical=true` 才阻擋；但已確認合格專業圖而交付失敗時，不論 `claim_critical` 都必須進入同一 run 的視覺恢復。
-- 找到與事件時間、地區及主張相符的專業圖時，full-runtime 至少一張 `kind` 為 `official_information` 或 `professional_information` 的本地附件通過視覺與時間驗收前，不得把 manifest 的 `images.professional_visual_status` 宣稱為 `ready`；mobile-native 只在 image evidence／ledger 記錄原生卡交付結果。已確認圖片尚未成功交付時不得完成整則事件；`claim_critical` 只決定來源確實無圖時能否省略。
+- 官方專業圖資檢查同樣必須保存檢查時間、方法、檢出的圖片網址、判定理由與本地頁面證據。確實沒有合格專業圖時，只有 `claim_critical=true` 才阻擋；但已確認合格專業圖而交付失敗時，不論 `claim_critical` 都必須進入同一 run 的視覺恢復。
+- 找到與事件時間、地區及主張相符的專業圖時，至少一張 `kind` 為 `official_information` 或 `professional_information` 的本地附件通過視覺與時間驗收前，不得把 manifest 的 `images.professional_visual_status` 宣稱為 `ready`。已確認圖片尚未成功交付時不得完成整則事件；`claim_critical` 只決定來源確實無圖時能否省略。
 - full-runtime 專業圖可直接下載或直接截取官方產品頁；兩者沒有固定先後。若仍失敗，再依「官方歷史／存檔頁 → 地方主管機關 → 主要媒體引用的同一官方圖」重試；不得因第一次取得失敗就停止。
 - 只有完成上述搜尋且確實沒有符合事件階段的專業圖，才可把 `images.professional_visual_status` 設為 `not_available`，並在 `images.professional_omission_reason` 保存具體後台原因。
 - 自製定位地圖、自製資料圖表、普通新聞照片與頁首圖均不能滿足專業圖資硬閘門。若同一張 `official_information`／`professional_information` 圖確實出現在已引用來源或本身就是已引用官方來源，且通過時間與內容驗收，可同時滿足來源頁附件與專業圖資硬閘門；不得為形式另附重複照片。
@@ -100,7 +100,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 同一輪遇到相同 SHA-256 時，沿用已下載檔案、`640px` 縮圖、轉檔結果及驗收結論；不得重複下載、縮圖或開圖。
 - 先以 MIME、實際解碼、寬高與 SHA-256 完成程式檢查，再進入內容驗收。
 - 每個唯一 SHA-256 只實際開啟並視覺驗收一次；只有事件相關性、日期、統計截止或畫面內容仍不確定時才加深判讀。`IMAGE_VISUAL_CHECK_ONCE_PER_HASH`
-- full-runtime 對行動對話優先沿用同圖最長邊 `640px`、JPEG／WebP 品質 `75–82`、目標 `200KB` 以下；mobile-native 不宣稱自行轉檔，改用宿主原生圖片卡可提供的版本。兩者都不因壓縮能力缺少而中止文字 reader。
+- 對行動對話可優先沿用最長邊 `640px`、JPEG／WebP 品質 `75–82`、目標 `200KB` 以下，但這只是傳輸優化，不是合格門檻；可讀的直接截圖可立即交付，不要求原畫質。
 
 ## 取得順序
 
@@ -151,7 +151,7 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 
 ## 輸出
 
-full-runtime 只寫入下列 manifest `images` 欄位；mobile-native 不建立該本機附件 manifest，只把來源檢查、文章直接媒體 URL、原生圖片卡、後續來源與交付結果寫入既有 `image-evidence.json`／ledger：
+只寫入下列 manifest `images` 欄位：
 
 只寫入：
 

@@ -30,7 +30,7 @@
 
 1. 是否自訂監控板塊；可以是單一國家，也可以是區域，例如日本、歐盟、北美、非洲或東南亞。不自訂時使用台灣、中國、世界。
 2. 是否調整特別感興趣或降低權重的新聞主題。
-3. 單次或循環排程時間／時區由 Scheduled Task 自身決定；使用者指定 04:00、06:00 或其他時間都不需要修改 repository。未指定時才預設每日 06:00 並優先使用帳號／裝置時區。每次實際觸發後先 probe capability，再以該輪選定的 full-runtime 或 mobile-native 建立 occurrence。
+3. 單次或循環排程時間／時區由 Scheduled Task 自身決定；使用者指定 04:00、06:00 或其他時間都不需要修改 repository。未指定時才預設每日 06:00 並優先使用帳號／裝置時區。每次實際觸發前先完成 full-runtime 與本機可見附件 smoke test，通過後才建立 occurrence。
 
 完成後，每次排程都會重新讀取 repo 最新規則，並以獨立結果對話輸出當日新聞。完整版每輪會以兩個帶新 nonce 的 GitHub API 端點交叉確認當下 `main` SHA；同一輪固定使用確認後的 SHA，下一輪再重新解析，不會把安裝時或前一輪的 commit 永久釘住：
 
@@ -62,7 +62,7 @@
 | 圖片 | `collect-news-images` | 官方資訊圖、新聞配圖、下載／截圖與視覺驗收 |
 | 恢復 | `recover-news-run` | 失敗偵測、局部重跑、重試上限與重新驗證 |
 
-full-runtime 各 stage 共用 `schemas/news-event-manifest.schema.json`，欄位所有權與最終讀者版由 `scripts/validate_news_brief.py` 檢查，因此新增地圖不會清空圖片，補圖片也不會覆蓋來源或評級。mobile-native 以既有 run-scoped audit、結構等價 Reader 檢查與 ledger 守恆，不宣稱通過 unavailable manifest validator。
+各 stage 共用 `schemas/news-event-manifest.schema.json`，欄位所有權與最終讀者版由 `scripts/validate_news_brief.py` 檢查，因此新增地圖不會清空圖片，補圖片也不會覆蓋來源或評級。既有 mobile-native artifacts 只供 full-runtime 匯入稽核或局部恢復。
 
 ## 核心文件
 
@@ -78,12 +78,12 @@ full-runtime 各 stage 共用 `schemas/news-event-manifest.schema.json`，欄位
 - `user-preferences.example.yaml`：使用者可覆寫的地區與主題偏好
 - `daily-schedule-prompt.md`：每日獨立排程的固定執行提示詞
 - `scheduled-task-prompt-template.md`：建立 Scheduled Task 時必須原樣使用的完整外層指令
-- `mobile-chatgpt-start-prompt.md`：手機一般 ChatGPT 建立低消耗排程的貼上指令
-- `mobile-chatgpt-daily-prompt.md`：手機排程每輪重新讀取的基礎新聞規則
+- `mobile-chatgpt-start-prompt.md`：舊入口名稱；目前只導向 desktop/local-project full-runtime 安裝
+- `mobile-chatgpt-daily-prompt.md`：不可執行的歷史 mobile artifact 格式說明，不得作為排程規則
 
 ## 本地驗證
 
-只有 full-runtime 取得並驗證 capsule、建立本機 checkpoint 與必要時回退到分段 chunks；mobile-native 固定 fresh main 後直接沿用同一 `scheduled_for` 的 run ledger 與 run-scoped artifacts，不捏造 capsule、workspace 或 checkpoint。full-runtime 的 external diagnostic ledger 失敗只降低診斷能力；可恢復的 durable mobile-native 則必須具備 `run-logs` 寫入權限，不能套用這個降級。 / Only full-runtime fetches and verifies the capsule, creates a local checkpoint, and may degrade its external diagnostic ledger. Durable mobile-native pins fresh main and resumes through the writable `run-logs` ledger and run-scoped artifacts without claiming a capsule, workspace, or local checkpoint.
+只有 full-runtime 取得並驗證 capsule、建立本機 checkpoint 與必要時回退到分段 chunks；歷史 mobile-native ledger 只供 full-runtime 匯入，不能建立、恢復或完成新的每日新聞。full-runtime 的 external diagnostic ledger 失敗只降低診斷能力。 / Only full-runtime fetches and verifies the capsule and creates the local checkpoint. Historical mobile-native ledgers are import-only and cannot execute, resume, or complete a new daily-news run.
 
 ```bash
 python3 -m unittest discover -s tests -v

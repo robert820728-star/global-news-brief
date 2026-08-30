@@ -75,7 +75,7 @@
 
 ## 4. 地圖、圖表與 Reader 格式
 
-地圖與資料圖表依最新版 repository 的 `required`／`claim_critical` 判定執行；mobile-native 不冒充本機 renderer。非主張關鍵的本機生成視覺缺失可依規則記錄 omission，但不能套用到已確認存在的合格來源圖片。
+地圖與資料圖表依最新版 repository 的 `required`／`claim_critical` 判定，由 full-runtime 執行 renderer 與驗證。非主張關鍵的本機生成視覺缺失可依規則記錄 omission，但不能套用到已確認存在的合格來源圖片。
 
 `CANONICAL_THREE_PART_READER_LAYOUT_GATE`
 
