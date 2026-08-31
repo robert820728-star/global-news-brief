@@ -1,5 +1,14 @@
 # Version Record / 版本紀錄
 
+## v0.6.0-rc.30 — Current-event context-photo qualification / 當期事件脈絡照片資格
+
+- Reason / 建立原因：A real full-flow Scheduled Task still blocked on the Niger Base 101 story even though an earlier bounded test had visibly delivered the AP image used by the same current report. The full flow applied a narrower interpretation and rejected a same-day Niamey context photo because it did not directly depict the mutiny itself. / 真實完整排程仍卡在尼日 Base 101 事件，但先前受控測試已實際顯示同一篇 AP 當期報導使用的圖片；完整流程採用更窄判定，因該張 Niamey 同日脈絡照片未直接拍到兵變本身而拒絕。
+- Approach / 作法：Treat a reliable source's photo used in the same current event report and verifiably tied to the same day and place as a qualified current-event context photo. Require exact-title/source/caption/photographer searches and truthful captions that do not claim the image directly captured the core action. Continue rejecting other years, other places, archival files, and generic illustrations. No schema, validator, receipt, recovery state, or new media path is added. / 將可靠來源在同一篇當期事件報導中使用、且可核對為同日同地的照片認定為合格當期事件脈絡照；要求以精確標題、來源、caption／攝影者搜尋，圖說不得冒稱直接拍到核心行動。其他年份、其他地點、歷史檔案與泛用示意圖仍拒絕；不新增 schema、validator、receipt、recovery state 或媒體路徑。
+- Entry points / 入口：Existing `INSTALL.md`, Scheduled Task template, mobile prompt, settings, image Skill, pipeline-contract tests, and version record. / 既有 `INSTALL.md`、Scheduled Task 範本、mobile prompt、settings、圖片 Skill、pipeline-contract tests 與版本紀錄。
+- Validation / 驗證：Red-green regressions require both the positive same-report/same-day/same-place qualification and the negative stale/unrelated exclusion. Release additionally requires the focused suite, full repository suite, regenerated capsule binding, remote CI, and the already scheduled full-flow occurrence. / 紅綠回歸同時要求接受同篇／同日／同地脈絡照，並持續拒絕過期或無關圖片；發布另須通過 focused suite、全庫測試、重建 capsule 綁定、遠端 CI 與已排定的完整流程 occurrence。
+- Result / 結果：Source candidate until all declared release gates pass. / 所有既定 release gates 通過前，本版僅為 source candidate。
+- Rollback / 回復：Revert the rc.30 source and generated-capsule commits together; the pre-change installable baseline is `8d52bbd995d903ff40d26522017656651b883c11`. / 一併回復 rc.30 source 與 generated-capsule commits；修改前可安裝基準為 `8d52bbd995d903ff40d26522017656651b883c11`。
+
 ## v0.6.0-rc.29 — Native query/capability separation and wire substitution / 原生查詢與能力分離及通訊社替代
 
 - Reason / 建立原因：A real full-flow Scheduled Task stopped before discovery with `HOST_VISIBLE_MEDIA_TRANSPORT_UNAVAILABLE` after one image query returned no usable ref, even though earlier tasks on the same host had visibly delivered same-event native image cards. A later full-flow run then stalled on Reuters-indexed events, while bounded retries found and visibly delivered both events immediately from AP same-event coverage. / 真實完整排程因單次圖片查詢沒有可用 ref，錯誤地在 discovery 前宣告 `HOST_VISIBLE_MEDIA_TRANSPORT_UNAVAILABLE`，但同一宿主先前已實際顯示同事件原生圖片卡；另一輪完整流程又卡在 Reuters 事件，而受控重試改查 AP 同事件報導後，兩則皆立即取得並顯示圖片。

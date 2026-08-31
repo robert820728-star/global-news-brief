@@ -1473,6 +1473,35 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("當地語言", document)
             self.assertIn("不得反覆查詢同一通訊社", document)
 
+    def test_current_report_same_day_same_place_context_photo_is_qualified(self):
+        paths = (
+            "INSTALL.md",
+            "scheduled-task-prompt-template.md",
+            "mobile-chatgpt-daily-prompt.md",
+            "news-brief-settings.md",
+            ".agents/skills/collect-news-images/SKILL.md",
+        )
+        documents = [(ROOT / path).read_text(encoding="utf-8") for path in paths]
+
+        for document in documents:
+            self.assertIn("CURRENT_EVENT_CONTEXT_PHOTO_GATE", document)
+            self.assertIn("同一篇當期事件報導", document)
+            self.assertIn("同日同地", document)
+            self.assertIn("不得描述成直接拍攝核心行動", document)
+
+    def test_current_event_context_photo_rule_still_rejects_stale_or_unrelated_images(self):
+        paths = (
+            "INSTALL.md",
+            "scheduled-task-prompt-template.md",
+            "mobile-chatgpt-daily-prompt.md",
+            "news-brief-settings.md",
+            ".agents/skills/collect-news-images/SKILL.md",
+        )
+        documents = [(ROOT / path).read_text(encoding="utf-8") for path in paths]
+
+        for document in documents:
+            self.assertIn("其他年份、其他地點、歷史檔案或泛用示意圖仍不得入選", document)
+
 
 if __name__ == "__main__":
     unittest.main()

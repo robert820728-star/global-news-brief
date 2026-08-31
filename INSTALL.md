@@ -330,6 +330,8 @@ reader 不顯示 run id、commit、後台 counts、十四天 audit 或修復紀�
 
 `WIRE_PROVIDER_SUBSTITUTION_GATE`：通訊社或媒體文章已確認有當期圖片、但其原生圖片查詢沒有合格 ref 時，不得反覆查詢同一通訊社、攝影者、caption 或 CDN。若第一來源是 Reuters，下一個通訊社查詢必須優先嘗試 AP 的同事件報導；其後依序嘗試官方／當事組織、事件所在地的當地可靠媒體與當地語言查詢，再嘗試其他可靠媒體。每次替換都以精確事件／地點／日期加新來源名稱，以及當地語言事件名稱／地點／日期重新呼叫原生圖片搜尋；取得合格 ref 後立即交付。
 
+`CURRENT_EVENT_CONTEXT_PHOTO_GATE`：可靠媒體在同一篇當期事件報導中使用、且拍攝或發布資訊可核對為同日同地的現場脈絡照片，屬合格的當期新聞圖片；不要求畫面必須直接拍到攻擊、兵變、救援或政策動作發生的一瞬間。搜尋時必須使用精確文章標題、來源名稱，以及可取得的 caption／攝影者／地點重新呼叫原生圖片搜尋。Reader 圖說必須如實描述畫面，不得描述成直接拍攝核心行動。其他年份、其他地點、歷史檔案或泛用示意圖仍不得入選。
+
 `FIXED_VISIBLE_IMAGE_TRANSPORT_SEQUENCE`：固定交付順序為 Scheduled Task 原生圖片搜尋（合格 `image_ref` 立即放入最終原生 image group／圖片卡）→ 原文章 `img`／`srcset`／`og:image`／圖集的直接媒體（必須取得實際媒體內容或 native ref）→ 宿主實際存在的頁面／圖片區域截圖（截圖結果直接作為原生圖片／附件）→ 官方／當事組織 → 原始通訊社 → 其他可靠媒體；每換一層來源都先重新執行同事件原生圖片搜尋，再試直接媒體與可用截圖。full-runtime 使用既有 `scripts/materialize_news_images.py` 下載實際 bytes，下載失敗立即改以該頁圖片區域的本機 `screenshot_path`，完成 MIME、解碼、尺寸、SHA-256 與內容核對後交付本機實體附件。成功即停止該事件重試；單一路徑失敗不得升格成整體 blocker。
 
 `IMAGE_FALLBACK_EXHAUSTION_GATE`：原引用來源、原始圖片 URL、原生圖片卡或單一媒體交付失敗都不是圖片 blocker。每則事件在宣告 `NATIVE_MEDIA_UNAVAILABLE`、`source_exhausted` 或停止視覺 stage 前，必須依序實際搜尋原引用來源、官方機關／當事組織、原始通訊社及其他可靠媒體的同事件合法刊載／轉載圖片。圖片可以不是原文同一張，只要來源可信、合法公開刊載、可追溯，且事件、日期、人物／地點一致；圖片證據來源與文字驗證來源不必相同。每則 `image-evidence.json` 必須保存 `original_source_attempted`、`direct_media_url_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`。`delivery_unavailable` 或 `source_exhausted` 的 `direct_media_url_attempted` 必須為 `true`；任一來源層尚未實際搜尋時，不得宣告 fallback exhaustion、圖片不可取得或不可恢復 blocker。直接文章原圖已成功可見交付時，不必再做無增量的後續來源搜尋。
