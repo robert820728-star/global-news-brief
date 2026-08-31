@@ -1,5 +1,14 @@
 # Version Record / 版本紀錄
 
+## v0.6.0-rc.29 — Native query/capability separation and wire substitution / 原生查詢與能力分離及通訊社替代
+
+- Reason / 建立原因：A real full-flow Scheduled Task stopped before discovery with `HOST_VISIBLE_MEDIA_TRANSPORT_UNAVAILABLE` after one image query returned no usable ref, even though earlier tasks on the same host had visibly delivered same-event native image cards. A later full-flow run then stalled on Reuters-indexed events, while bounded retries found and visibly delivered both events immediately from AP same-event coverage. / 真實完整排程因單次圖片查詢沒有可用 ref，錯誤地在 discovery 前宣告 `HOST_VISIBLE_MEDIA_TRANSPORT_UNAVAILABLE`，但同一宿主先前已實際顯示同事件原生圖片卡；另一輪完整流程又卡在 Reuters 事件，而受控重試改查 AP 同事件報導後，兩則皆立即取得並顯示圖片。
+- Approach / 作法：Separate tool capability from query results: a callable native image tool returning zero or unsuitable refs is not a transport failure and cannot stop discovery. Add a bounded wire-provider substitution rule: Reuters no-ref must switch to AP same-event coverage, then official/party sources, local reliable media with local-language queries, and other reliable media; do not loop the same provider, caption, or CDN. Keep the existing visible-image hard gate, no-external-URL rule, same-run recovery, and source/date verification unchanged. No schema, validator, receipt, recovery state, source class, or compatibility layer is added. / 將工具能力與查詢結果分離：原生圖片工具可呼叫但回傳零筆或不合格 refs，不是 transport failure，也不得阻止 discovery。新增受控通訊社替代：Reuters 無 ref 時必須切換 AP 同事件報導，再查官方／當事組織、當地可靠媒體與當地語言查詢，以及其他可靠媒體；禁止反覆撞同一來源、caption 或 CDN。既有可見圖片硬閘門、禁止外部網址、同 run 恢復及來源／日期核對均不變；不新增 schema、validator、receipt、recovery state、source class 或 compatibility layer。
+- Entry points / 入口：Existing `INSTALL.md`, complete Scheduled Task template, daily/start/mobile prompts, settings, image Skill, pipeline-contract tests, and version record. / 既有 `INSTALL.md`、完整 Scheduled Task 範本、daily／start／mobile prompts、settings、圖片 Skill、pipeline-contract tests 與版本紀錄。
+- Validation / 驗證：Red-green contract regressions cover query-result/capability separation and Reuters-to-AP/local-language substitution. Real Scheduled Task evidence includes the false-negative full-flow control and two formerly blocking events visibly delivered through AP native image refs. Release still requires targeted tests, full repository suite, final-state audit, regenerated capsule binding, remote CI, and one final full-flow Scheduled Task test before recurrence activation. / 紅綠契約回歸涵蓋查詢結果／能力分離，以及 Reuters 轉 AP／當地語言來源替代；真實 Scheduled Task 證據包含錯誤能力判定的完整流程對照，以及兩個原先阻塞事件透過 AP 原生圖片 refs 實際可見交付。啟用循環前仍須通過目標測試、全庫測試、final-state audit、重建 capsule 綁定、遠端 CI 與最後一次完整流程排程驗收。
+- Result / 結果：Source candidate until all declared release gates pass. / 所有既定 release gates 通過前，本版僅為 source candidate。
+- Rollback / 回復：Revert the rc.29 source and generated-capsule commits together; the pre-change installable baseline is `a7be2a83b96f2840ea3d75991a70d3570afa9c55`. / 一併回復 rc.29 source 與 generated-capsule commits；修改前可安裝基準為 `a7be2a83b96f2840ea3d75991a70d3570afa9c55`。
+
 ## v0.6.0-rc.28 — Native image-search-first visible delivery / 原生圖片搜尋優先的可見交付
 
 - Reason / 建立原因：Real Scheduled Task tests showed that the host could display same-event native image cards from image search, while opening a known-valid direct JPEG could still end in a fetch/cache miss. The active order nevertheless encouraged the executor to keep retrying article/CDN transport and to report a blocker after seeing a valid image instead of using the proven native search route. / 真實 Scheduled Task 測試證明，宿主可由原生圖片搜尋顯示同事件圖片卡，但直接開啟一張已知有效的 JPEG 仍可能遭遇 fetch／cache miss；既有順序卻仍容易讓執行器反覆撞文章／CDN 傳輸，看到有效圖片後仍回報 blocker，而未使用已實證可行的原生搜尋路徑。
@@ -320,5 +329,6 @@ This file records the current installable contract. Earlier implementation attem
 - Approach / 作法：Use six normalized 0–100 dimensions, configured weights, realized-versus-potential consequence classes, policy stage, material delta, fact reuse rationale, high-score challenge, evidence confidence, and validated-only publication. / 採六項 0–100 正規化分數、設定權重、現況與潛在後果分類、政策階段、實質增量、事實重用理由、高分反向審查、證據信心及僅發布 validated grade。
 - Validation / 驗證：Schema, validator, calibrated fixtures, publisher checks, and full regression. / Schema、驗證器、校準 fixtures、發布檢查及完整回歸。
 - Result / 結果：Promoted into the current contract. / 已納入目前契約。
+
 
 

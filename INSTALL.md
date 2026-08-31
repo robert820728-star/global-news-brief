@@ -326,6 +326,10 @@ reader 不顯示 run id、commit、後台 counts、十四天 audit 或修復紀�
 
 `SCHEDULED_NATIVE_IMAGE_SEARCH_FIRST_GATE`：真實 Scheduled Task 驗收已證明原生圖片搜尋可直接產生對話可見 image ref，而單一直接 JPEG URL 可能只得到 fetch/cache miss。因此 Scheduled Task 對每則入選事件的第一個可見交付動作必須是實際呼叫原生圖片搜尋，不是一般 web search。查詢順序固定為：精確標題／caption＋日期＋地點 → 事件＋日期＋官方／當事組織 → 事件＋日期＋適用的路徑圖、衛星圖、災情圖或現場照片 → 事件＋日期＋通訊社／可靠媒體。逐張核對同一 semantic event 與日期；取得合格 image ref 後立即交付原生圖片卡，不得繼續撞已失敗的直接圖片網址。沒有合格 image ref 時才進入 `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`、宿主實際可用的頁面／圖片區域截圖與 `IMAGE_FALLBACK_EXHAUSTION_GATE`；每次切換官方、通訊社或可靠媒體來源後，均須以同一事件重新呼叫原生圖片搜尋。
 
+`NATIVE_IMAGE_QUERY_RESULT_IS_NOT_CAPABILITY_GATE`：原生圖片搜尋工具已可呼叫、但某次查詢沒有回傳合格 `image_ref`，只代表該查詢或該來源沒有可用結果，不代表宿主缺少圖片交付能力。不得在 discovery 前、事件處理中或 Reader 前把單次零結果、錯圖、舊圖或某一媒體未被索引改判成 `HOST_VISIBLE_MEDIA_TRANSPORT_UNAVAILABLE`。只有工具本身不存在、呼叫被宿主拒絕或無法建立任何原生圖片結果物件時，才可判定 transport capability 不可用；查詢成功但沒有合格圖片時，必須繼續同事件的替代來源與替代查詢。
+
+`WIRE_PROVIDER_SUBSTITUTION_GATE`：通訊社或媒體文章已確認有當期圖片、但其原生圖片查詢沒有合格 ref 時，不得反覆查詢同一通訊社、攝影者、caption 或 CDN。若第一來源是 Reuters，下一個通訊社查詢必須優先嘗試 AP 的同事件報導；其後依序嘗試官方／當事組織、事件所在地的當地可靠媒體與當地語言查詢，再嘗試其他可靠媒體。每次替換都以精確事件／地點／日期加新來源名稱，以及當地語言事件名稱／地點／日期重新呼叫原生圖片搜尋；取得合格 ref 後立即交付。
+
 `FIXED_VISIBLE_IMAGE_TRANSPORT_SEQUENCE`：固定交付順序為 Scheduled Task 原生圖片搜尋（合格 `image_ref` 立即放入最終原生 image group／圖片卡）→ 原文章 `img`／`srcset`／`og:image`／圖集的直接媒體（必須取得實際媒體內容或 native ref）→ 宿主實際存在的頁面／圖片區域截圖（截圖結果直接作為原生圖片／附件）→ 官方／當事組織 → 原始通訊社 → 其他可靠媒體；每換一層來源都先重新執行同事件原生圖片搜尋，再試直接媒體與可用截圖。full-runtime 使用既有 `scripts/materialize_news_images.py` 下載實際 bytes，下載失敗立即改以該頁圖片區域的本機 `screenshot_path`，完成 MIME、解碼、尺寸、SHA-256 與內容核對後交付本機實體附件。成功即停止該事件重試；單一路徑失敗不得升格成整體 blocker。
 
 `IMAGE_FALLBACK_EXHAUSTION_GATE`：原引用來源、原始圖片 URL、原生圖片卡或單一媒體交付失敗都不是圖片 blocker。每則事件在宣告 `NATIVE_MEDIA_UNAVAILABLE`、`source_exhausted` 或停止視覺 stage 前，必須依序實際搜尋原引用來源、官方機關／當事組織、原始通訊社及其他可靠媒體的同事件合法刊載／轉載圖片。圖片可以不是原文同一張，只要來源可信、合法公開刊載、可追溯，且事件、日期、人物／地點一致；圖片證據來源與文字驗證來源不必相同。每則 `image-evidence.json` 必須保存 `original_source_attempted`、`direct_media_url_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`。`delivery_unavailable` 或 `source_exhausted` 的 `direct_media_url_attempted` 必須為 `true`；任一來源層尚未實際搜尋時，不得宣告 fallback exhaustion、圖片不可取得或不可恢復 blocker。直接文章原圖已成功可見交付時，不必再做無增量的後續來源搜尋。
@@ -399,5 +403,6 @@ mobile-native 沒有 checkpoint 或 manifest。查證不足時依 `VERIFICATION_
 ## 分享方式
 
 接收者在自己的 desktop/local-project 新對話貼上 repo 網址與啟動指令，各自授權建立排程並保存個人偏好。公開 repo 的讀取不要求 GitHub 帳號。full-runtime 的外部 diagnostic ledger 可依既有規則 best-effort 降級；可恢復的 durable mobile-native 診斷或歷史 run recovery 必須具備 `run-logs` 寫入權限，缺少寫入權限時不得宣稱 durable resume／continuity。一次性 reader 可在當前執行完成，但不屬於正式循環排程 profile。
+
 
 

@@ -76,6 +76,8 @@ full-runtime 的 post-selection event exchange 必須遵守 `schemas/news-event-
 - `IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE`：來源頁圖片使用 resize／redirect／代理 URL 時，逐層解碼 `url`、`u`、`src`、`source` 或 `image` 參數並嘗試內嵌原始媒體；代理失敗而原圖未嘗試時，不得把 `direct_media_url_attempted` 設為 true。
 - `MOBILE_PER_STORY_VISIBLE_IMAGE_GATE`：mobile-native 對每一則本輪入選新聞逐則執行圖片搜尋與可見性驗收，一則新聞的圖片不得替其他新聞通過；先查已引用來源，再依序查官方機關／當事組織、原始通訊社與其他可靠媒體的同事件報導，可查多個來源而不限一個。每張候選圖都要保存來源頁並核對事件與日期，不要求完全相同像素；無法追溯的搬運站、搜尋縮圖、舊照或無關示意圖不合格。找到可用圖片但顯示失敗時只重做該則圖片取得／交付，不重跑新聞流程。
 - `SCHEDULED_NATIVE_IMAGE_SEARCH_FIRST_GATE`：Scheduled Task 每則事件先實際呼叫原生圖片搜尋，依序使用精確標題／caption＋日期＋地點、事件＋官方來源、事件＋適用視覺類型、事件＋可靠媒體四類查詢。取得合格 image ref 後立即交付原生圖片卡，不得繼續撞已失敗的直接圖片網址；沒有合格 ref 才進入文章直接媒體、宿主可用截圖與四層來源 fallback。切換來源時以同一 semantic event 重新搜尋，禁止用其他年份或其他事件圖片。
+- `NATIVE_IMAGE_QUERY_RESULT_IS_NOT_CAPABILITY_GATE`：原生圖片搜尋工具已可呼叫、但某次查詢沒有回傳合格 `image_ref`，不代表宿主缺少圖片交付能力；不得在 discovery 前或後續 stage 因單次零結果、錯圖、舊圖或某來源未索引宣告 `HOST_VISIBLE_MEDIA_TRANSPORT_UNAVAILABLE`。只有工具本身不存在、呼叫被拒絕或無法建立任何原生圖片結果物件時才是 capability failure，其餘情況繼續替代來源與查詢。
+- `WIRE_PROVIDER_SUBSTITUTION_GATE`：通訊社／媒體有當期圖片但其查詢沒有合格 ref 時，不得反覆查詢同一通訊社、caption 或 CDN。第一來源為 Reuters 時，下一個通訊社查詢優先改用 AP 同事件報導，再查官方／當事組織、當地可靠媒體與當地語言查詢，最後查其他可靠媒體；每次以精確事件／地點／日期及新來源名稱重新搜尋，取得 ref 即交付。
 - `FIXED_VISIBLE_IMAGE_TRANSPORT_SEQUENCE`：Scheduled Task 固定走原生圖片搜尋並交付合格 `image_ref` → 原文章直接媒體 → 宿主實際存在的頁面圖片區域截圖 → 官方／當事組織 → 原始通訊社 → 其他可靠媒體；每換來源先重新做同事件原生圖片搜尋，再試直接媒體與截圖。full-runtime 固定以既有 materializer 下載實際 bytes，失敗即改用本機 `screenshot_path`，驗證後交付實體附件。單一路徑失敗不得停止。
 - `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`：原生圖片搜尋／圖片卡不是唯一取得路徑。原引用文章的 `img`、`srcset`、`og:image` 或等價欄位若暴露當期直接 JPEG／WebP URL，必須以宿主可用媒體路徑開啟／取得並嘗試可見交付；搜尋卡沒有 image ref 不等於不可取得，URL／Markdown 本身不算可見交付。
 - `IMAGE_FALLBACK_EXHAUSTION_GATE`：上述四層是依序必查 checklist。每則 image evidence 保存 `original_source_attempted`、`direct_media_url_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`；宣告 `NATIVE_MEDIA_UNAVAILABLE` 或 source exhaustion 前，`direct_media_url_attempted` 必須為 `true`，任一來源層未實際搜尋時不得停止圖片 stage。圖片證據來源與文字驗證來源可以不同，且可使用另一張同事件合法刊載／轉載圖片，但必須可信、可追溯，並符合事件、日期、人物／地點。直接文章原圖已成功可見交付時，不必再做無增量的後續來源搜尋。
@@ -283,6 +285,7 @@ full-runtime 的 post-selection event exchange 必須遵守 `schemas/news-event-
 - 板塊順序、表格、空行、分隔線與繁體中文格式正確。
 
 驗證失敗時只修正失敗欄位，再重新驗證；不得從頭重寫整份簡報。
+
 
 
 

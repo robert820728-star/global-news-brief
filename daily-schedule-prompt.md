@@ -6,6 +6,10 @@
 
 Any daily-news invocation—manual, single-run, test, first-run, recurring, or resume—uses the same news and visible-image requirements. full-runtime may download or directly screenshot and materialize local attachments. A no-local-Python ChatGPT Scheduled Task may use its native image card or direct page/image-region screenshot path after that same host passed the installation smoke. Trigger type never relaxes visible attachment delivery, but original files and original quality are not required.
 
+`NATIVE_IMAGE_QUERY_RESULT_IS_NOT_CAPABILITY_GATE`: A callable native image-search tool returning no qualified `image_ref` for one query is a content/query result, not proof that the host lacks image transport. It must not stop before discovery or become `HOST_VISIBLE_MEDIA_TRANSPORT_UNAVAILABLE`; continue the same-event alternate-source and alternate-query path.
+
+`WIRE_PROVIDER_SUBSTITUTION_GATE`: When a current wire-service article has an image but its query yields no qualified ref, do not repeat the same wire, caption, or CDN. For Reuters, try an AP same-event report next, then official/party sources, local reliable media with a local-language query, and other reliable media. Deliver the first verified same-event ref.
+
 ## Discovery first, verification second
 
 `DISCOVERY_THEN_VERIFY`
@@ -325,5 +329,6 @@ The optional bundle contains these six logical artifacts:
 - `recovery/content-hydration-batches.json`
 
 If a handoff or workspace loss occurs, `restore` these artifacts from the same run's verified bundle and resume only the first incomplete batch. Never create a replacement run to conceal missing recovery inputs. Bundle creation failure is blocking only when the declared handoff or workspace-risk condition makes that bundle necessary.
+
 
 

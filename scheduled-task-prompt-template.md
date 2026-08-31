@@ -9,7 +9,7 @@
 
 `HOST_VISIBLE_SCREENSHOT_ROUTE`
 
-原生圖片搜尋沒有合格 `image_ref`、且固定流程進入截圖步驟後，對話宿主只要能開啟來源頁，就可直接截圖原文章、官方頁、通訊社或可靠轉載頁中的同事件圖片區域並作為可見圖片交付，不要求原始檔或原畫質，也不必等待原圖／CDN 下載失敗。外部 URL、Markdown 熱連結、路徑字串、圖說或破圖不算。排程安裝時已用同一 Scheduled Task 工具執行面完成一次 smoke；若實際 occurrence 的媒體工具臨時不可用，必須在 discovery 前停止，不得完成新聞後才宣告圖片能力不足。
+原生圖片搜尋沒有合格 `image_ref`、且固定流程進入截圖步驟後，對話宿主只要能開啟來源頁，就可直接截圖原文章、官方頁、通訊社或可靠轉載頁中的同事件圖片區域並作為可見圖片交付，不要求原始檔或原畫質，也不必等待原圖／CDN 下載失敗。外部 URL、Markdown 熱連結、路徑字串、圖說或破圖不算。排程安裝時已用同一 Scheduled Task 工具執行面完成一次 smoke；只有媒體工具本身不存在或呼叫遭拒時，才可在 discovery 前停止。工具可呼叫但單次查詢零結果不是 capability failure，必須繼續新聞流程與後續逐則 fallback。
 
 ## 1. 最新規則與單一執行輪
 
@@ -21,7 +21,7 @@
 
 `SCHEDULED_OCCURRENCE_SINGLE_RUN_GATE`
 
-以本 Scheduled Task 真正觸發的 occurrence 建立或接續唯一 `run_id`，從實際 executor 啟動時刻固定精確 24 小時窗。相同 occurrence 必須從 first incomplete stage 接續；不得建立 replacement run、重跑已完成的 discovery／評分／驗證、沿用前輪候選或把未完成 reader 當成完成。安裝時的同宿主截圖 smoke 必須已通過；每次 occurrence 仍須在 discovery 前確認宿主原生圖片／截圖工具存在，不得等新聞做完才回報能力 blocker。
+以本 Scheduled Task 真正觸發的 occurrence 建立或接續唯一 `run_id`，從實際 executor 啟動時刻固定精確 24 小時窗。相同 occurrence 必須從 first incomplete stage 接續；不得建立 replacement run、重跑已完成的 discovery／評分／驗證、沿用前輪候選或把未完成 reader 當成完成。安裝時的同宿主截圖 smoke 必須已通過；每次 occurrence 在 discovery 前只確認宿主原生圖片／截圖工具本身仍可呼叫，不以任何單次新聞圖片查詢能否命中來判定 capability。
 
 ## 2. 新聞 discovery、評分與驗證
 
@@ -48,6 +48,14 @@
 `SCHEDULED_NATIVE_IMAGE_SEARCH_FIRST_GATE`
 
 ChatGPT Scheduled Task 對每一則入選事件必須實際呼叫原生圖片搜尋，並把它放在第一個可見圖片交付動作；不得只做一般 web search、只開文章頁或只解析圖片 URL。依序至少使用下列查詢：①事件正式名稱／精確標題或圖片 caption＋日期＋地點；②事件名稱＋日期＋官方機關／當事組織；③事件名稱＋日期＋「路徑圖／衛星圖／災情圖／現場照片」等適合該事件的視覺類型；④事件名稱＋日期＋原始通訊社或其他可靠媒體。逐張核對 image ref 的事件、日期、人物／地點與來源；其他年份、其他事件、只有關鍵字相似的舊圖全部淘汰。取得合格 image ref 後立即交付原生圖片卡，不得繼續撞已失敗的直接圖片網址，也不得因原文章圖片無法 materialize 而宣告 blocker。只有原生圖片搜尋沒有合格 image ref 時，才繼續下列文章直接媒體、頁面截圖與各層替代來源；每切換一個官方／通訊社／可靠媒體來源，都以同一事件身分重新執行原生圖片搜尋。
+
+`NATIVE_IMAGE_QUERY_RESULT_IS_NOT_CAPABILITY_GATE`
+
+原生圖片搜尋工具已可呼叫、但某次查詢沒有回傳合格 `image_ref`，只代表該查詢或該來源沒有可用結果，不代表宿主缺少圖片交付能力。不得在 discovery 前、事件處理中或 Reader 前把單次零結果、錯圖、舊圖或某一媒體未被索引改判成 `HOST_VISIBLE_MEDIA_TRANSPORT_UNAVAILABLE`。只有工具本身不存在、呼叫被宿主拒絕或無法建立任何原生圖片結果物件時，才可判定 transport capability 不可用；查詢成功但沒有合格圖片時，必須繼續同事件的替代來源與替代查詢。
+
+`WIRE_PROVIDER_SUBSTITUTION_GATE`
+
+通訊社或媒體的文章已確認有當期圖片、但其原生圖片查詢沒有合格 ref 時，不得反覆查詢同一通訊社、攝影者、caption 或 CDN。若第一來源是 Reuters，下一個通訊社查詢必須優先嘗試 AP 的同事件報導；其後依序嘗試官方／當事組織、事件所在地的當地可靠媒體與當地語言查詢，再嘗試其他可靠媒體。每次替換都使用「精確事件／地點／日期＋新來源名稱」及「當地語言事件名稱＋地點＋日期」重新呼叫原生圖片搜尋；任一合格 ref 出現後立即交付 image group／圖片卡。
 
 `FIXED_VISIBLE_IMAGE_TRANSPORT_SEQUENCE`
 
@@ -104,6 +112,7 @@ Reader 必須包含本輪所有 C 級以上 validated 事件，來源連結與�
 `CURRENT_CONVERSATION_DELIVERY_GATE`
 
 成功時將完整 canonical Reader（含實際可見圖片）回覆到建立本 Scheduled Task 的目前 ChatGPT 對話，不得另開新對話、只貼摘要、只給 GitHub artifact、只報「已生成」、只列候選或只交付圖片網址。若真正遇到最新版規則定義的不可恢復 blocker，只回報最早 blocker、已完成 stage、同一 run 的可恢復位置與尚未完成項目；不得把 partial Reader 冒充正式結果。
+
 
 
 

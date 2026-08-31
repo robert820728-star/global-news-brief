@@ -1439,8 +1439,43 @@ class PipelineContractTests(unittest.TestCase):
         ):
             self.assertIn(requirement, template)
 
+    def test_native_image_no_result_is_not_misclassified_as_host_capability_failure(self):
+        paths = (
+            "INSTALL.md",
+            "scheduled-task-prompt-template.md",
+            "mobile-chatgpt-daily-prompt.md",
+            "news-brief-settings.md",
+            ".agents/skills/collect-news-images/SKILL.md",
+        )
+        documents = [(ROOT / path).read_text(encoding="utf-8") for path in paths]
+
+        for document in documents:
+            self.assertIn("NATIVE_IMAGE_QUERY_RESULT_IS_NOT_CAPABILITY_GATE", document)
+            self.assertIn("查詢沒有回傳合格 `image_ref`", document)
+            self.assertIn("不代表宿主缺少圖片交付能力", document)
+            self.assertIn("不得在 discovery 前", document)
+
+    def test_wire_image_search_switches_provider_after_no_ref(self):
+        paths = (
+            "INSTALL.md",
+            "scheduled-task-prompt-template.md",
+            "mobile-chatgpt-daily-prompt.md",
+            "news-brief-settings.md",
+            ".agents/skills/collect-news-images/SKILL.md",
+        )
+        documents = [(ROOT / path).read_text(encoding="utf-8") for path in paths]
+
+        for document in documents:
+            self.assertIn("WIRE_PROVIDER_SUBSTITUTION_GATE", document)
+            self.assertIn("Reuters", document)
+            self.assertIn("AP", document)
+            self.assertIn("當地可靠媒體", document)
+            self.assertIn("當地語言", document)
+            self.assertIn("不得反覆查詢同一通訊社", document)
+
 
 if __name__ == "__main__":
     unittest.main()
+
 
 

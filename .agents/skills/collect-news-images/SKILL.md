@@ -23,6 +23,8 @@ description: Collect, download or screenshot, prioritize, visually inspect, and 
 - 任一來源找到可信且相關圖片後，`images.status` 只能在至少一張附件通過驗收後改為 `ready`。
 - 每則事件必須明確設定 `images.claim_critical`。只有圖片本身是核心主張證據（例如唯一影像證據、衛星圖直接證明攻擊或官方圖是數據主張本體）才設為 `true`；一般新聞配圖、人物照或輔助專業圖設為 `false`。
 - `SCHEDULED_NATIVE_IMAGE_SEARCH_FIRST_GATE`：Scheduled Task 對每則事件先實際呼叫原生圖片搜尋；一般 web search、文章 open 與圖片 URL 解析不能冒充 image search。固定查詢精確標題／caption＋日期＋地點、事件＋官方／當事組織、事件＋適用的官方資訊圖／現場照片、事件＋通訊社／可靠媒體。逐張核對 semantic event 與日期；取得合格 image ref 後立即交付原生圖片卡，不得繼續撞已失敗的直接圖片網址。沒有合格 ref 才進入直接文章媒體、宿主實際可用截圖與後續來源；切換來源後以同一事件重新搜尋。
+- `NATIVE_IMAGE_QUERY_RESULT_IS_NOT_CAPABILITY_GATE`：原生圖片搜尋工具已可呼叫、但某次查詢沒有回傳合格 `image_ref`，不代表宿主缺少圖片交付能力。不得在 discovery 前或後續 stage 把單次零結果、錯圖、舊圖或某來源未索引宣告為 `HOST_VISIBLE_MEDIA_TRANSPORT_UNAVAILABLE`；只有工具本身不存在、呼叫被拒絕或無法建立任何原生圖片結果物件時才是 capability failure，其餘情況繼續同事件替代來源與替代查詢。
+- `WIRE_PROVIDER_SUBSTITUTION_GATE`：通訊社／媒體文章有當期圖片但查詢沒有合格 ref 時，不得反覆查詢同一通訊社、攝影者、caption 或 CDN。第一來源為 Reuters 時，下一個通訊社查詢優先改用 AP 同事件報導，再查官方／當事組織、當地可靠媒體與當地語言查詢，最後查其他可靠媒體；每次以精確事件／地點／日期及新來源名稱重新搜尋，取得合格 ref 即交付。
 - `FIXED_VISIBLE_IMAGE_TRANSPORT_SEQUENCE`：Scheduled Task 固定執行原生圖片搜尋並把合格 `image_ref` 放入最終 image group／圖片卡 → 原文章直接媒體取得實際內容或 native ref → 宿主實際存在時截取頁面圖片區域並直接交付 → 官方／當事組織 → 原始通訊社 → 其他可靠媒體；每換來源先重新做同事件 image search，再試直接媒體與截圖。full-runtime 固定用既有 materializer 下載 bytes；下載失敗立即改用本機 `screenshot_path`，通過既有媒體驗證後交付本機實體附件。單一路徑失敗不得停止。
 - `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`：檢查原引用文章的 `img`、`srcset`、`og:image` 或等價欄位。發現與當期事件相符的直接 JPEG／WebP URL 後，必須實際以宿主可用媒體路徑開啟／取得並嘗試可見交付；搜尋卡沒有 image ref 不等於圖片不可取得。URL／Markdown 本身仍不是可見附件。
 - `IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE`：圖片 URL 是 resize／redirect／縮圖／媒體代理時，逐層 URL-decode `url`、`u`、`src`、`source` 或 `image` 參數，並嘗試內嵌原始 JPEG／WebP及保留內嵌來源參數的最小代理 URL。代理失敗但這些候選未嘗試時，`direct_media_url_attempted` 不得為 `true`。
@@ -191,5 +193,6 @@ full-runtime 只寫入下列 manifest `images` 欄位；mobile-native 不建立�
 - `images.reader_omission_note`
 
 四層來源 fallback 全部實際搜尋後仍確實沒有合格圖片時，保存後台原因；讀者版完整省略圖片、caption 與占位文字。只要任一路徑找到合格圖片，無論 `claim_critical`，交付失敗都不得改寫成 omission 或完成文字 Reader。
+
 
 
