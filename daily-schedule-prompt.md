@@ -8,6 +8,8 @@ Any daily-news invocation—manual, single-run, test, first-run, recurring, or r
 
 `NATIVE_IMAGE_QUERY_RESULT_IS_NOT_CAPABILITY_GATE`: A callable native image-search tool returning no qualified `image_ref` for one query is a content/query result, not proof that the host lacks image transport. It must not stop before discovery or become `HOST_VISIBLE_MEDIA_TRANSPORT_UNAVAILABLE`; continue the same-event alternate-source and alternate-query path.
 
+`NON_TEXT_MEDIA_CONTENT_BLOCK_GATE`: Literal `image_group`, `async_image_group`, `image_ref`, `turn...image...`, or JSON inside ordinary assistant text is never visible-image delivery. A Scheduled Task succeeds only when the host creates a non-text image/media content block and renders non-zero-size pixels. A structured readback containing only `agentMessage text` must fail image delivery and may not claim image PASS or canonical completion.
+
 `WIRE_PROVIDER_SUBSTITUTION_GATE`: When a current wire-service article has an image but its query yields no qualified ref, do not repeat the same wire, caption, or CDN. For Reuters, try an AP same-event report next, then official/party sources, local reliable media with a local-language query, and other reliable media. Deliver the first verified same-event ref.
 
 ## Discovery first, verification second

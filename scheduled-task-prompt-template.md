@@ -69,6 +69,10 @@ ChatGPT Scheduled Task 對每一則入選事件必須實際呼叫原生圖片搜
 
 原生 `image_ref` 必須由目前 occurrence 的實際圖片工具結果建立，並在同一最終訊息中真正出現在原生 image group／圖片卡。前一個 task、其他對話或其他 occurrence 的 `turn...image...` 文字不得作為可重用附件；只列 ref id、聲稱已建立 image group、或詢問「如果你看得到」都算未交付，必須在目前 occurrence 重新取得並實際渲染。
 
+`NON_TEXT_MEDIA_CONTENT_BLOCK_GATE`
+
+禁止自行把 `image_group`、`async_image_group`、`image_ref`、`turn...image...`、JSON 或任何等價標記寫進一般 assistant 文字後宣稱圖片已交付。這些字串即使語法正確也只是文字，不是圖片。Scheduled Task 的圖片成功條件是最終對話訊息實際包含由宿主媒體工具建立的非文字 image/media content block，且畫面呈現非零尺寸像素；只有一般 `agentMessage text`、沒有實際媒體內容塊時必須判定未交付，禁止輸出任何圖片 PASS 或 canonical completed。
+
 `FIXED_VISIBLE_IMAGE_TRANSPORT_SEQUENCE`
 
 圖片取得與交付順序固定如下，不得自行縮短或改以單一路徑判死刑：① Scheduled Task 依原引用來源 → 官方／當事組織 → 原始通訊社 → 當地可靠媒體與當地語言 → 其他可靠媒體逐層呼叫原生圖片搜尋；每換來源都用精確事件、日期、地點及新來源重新搜尋。②逐張核對後選取合格 `image_ref`，立即把該 ref 放入原生 image group／圖片卡並置於同一最終回覆；只把 ref 寫進證據不算交付。③全部跨來源原生搜尋仍無合格 ref，才進入各來源的直接媒體解析，檢查原文章或替代來源的 `img`／`srcset`／`og:image`／圖集及直接 JPEG／WebP；只有宿主媒體工具實際回傳可交付的圖片內容或 native ref 才可使用，URL 字串本身不算。④若宿主確實提供頁面或圖片區域截圖工具，截取同事件圖片區域並把截圖結果作為原生圖片／附件；沒有截圖工具時立即進下一來源／下一可用交付方式，不得把「應該截圖」記成已嘗試。⑤ full-runtime 可解析同樣媒體欄位後以現有 `scripts/materialize_news_images.py` 下載實際 bytes；直接下載失敗時立即改用來源頁圖片區域的本機 `screenshot_path`，通過 MIME、解碼、尺寸、SHA-256 與內容核對後，以本機實體附件交付。任一路徑成功後立即停止該事件的圖片重試並交付；任一路徑失敗只代表該路徑失敗。

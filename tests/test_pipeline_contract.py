@@ -1498,6 +1498,26 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("local reliable media with a local-language query", daily)
         self.assertIn("Only after those native-search tiers produce no qualified ref", daily)
 
+    def test_literal_image_group_text_never_counts_as_visible_media(self):
+        paths = (
+            "INSTALL.md",
+            "scheduled-task-prompt-template.md",
+            "daily-schedule-prompt.md",
+            "mobile-chatgpt-daily-prompt.md",
+            "news-brief-settings.md",
+            ".agents/skills/collect-news-images/SKILL.md",
+        )
+
+        for path in paths:
+            document = (ROOT / path).read_text(encoding="utf-8")
+            self.assertIn("NON_TEXT_MEDIA_CONTENT_BLOCK_GATE", document, path)
+            self.assertIn("agentMessage text", document, path)
+            self.assertIn("image/media content block", document, path)
+
+        template = (ROOT / "scheduled-task-prompt-template.md").read_text(encoding="utf-8")
+        self.assertIn("這些字串即使語法正確也只是文字，不是圖片", template)
+        self.assertIn("禁止輸出任何圖片 PASS 或 canonical completed", template)
+
     def test_current_report_same_day_same_place_context_photo_is_qualified(self):
         paths = (
             "INSTALL.md",

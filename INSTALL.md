@@ -346,6 +346,7 @@ reader 不顯示 run id、commit、後台 counts、十四天 audit 或修復紀�
 - full-runtime 可在下載實際媒體檔與截取來源頁／官方／可靠轉載頁的合規畫面之間直接選擇最快成功的方法；截圖不需要等待原圖下載失敗。取得的本機檔必須通過 MIME、解碼、尺寸、SHA-256、時間與內容相關性檢查，再實際使用宿主支援的附件／媒體路徑。
 - 圖片來源可與文字驗證來源不同；合格條件是可信、合法公開刊載、可追溯，且與同一事件、日期、人物或地點一致。找到某來源頁有圖，不代表後續只能從該頁取得；單一路徑失敗必須繼續下一層 fallback。
 - capability-degraded mobile recovery 必須保存逐則來源檢查與原生交付嘗試，`last_error=null`，並清楚表示未完成 pixel machine verification。`image_evidence_artifact` 的 Git blob SHA 只證明 evidence 已持久化，不證明內容已通過語義或像素機器驗證。
+- `NON_TEXT_MEDIA_CONTENT_BLOCK_GATE`：一般 assistant 文字中的 `image_group`、`async_image_group`、`image_ref`、`turn...image...` 或 JSON 只算字串，不能作為圖片成功證據。Scheduled Task 只有在最終訊息實際含宿主產生的非文字 image/media content block，且畫面呈現非零尺寸像素時才可宣稱圖片已交付；若結構化讀回只有 `agentMessage text`，必須判定未交付並禁止圖片 PASS／canonical completed。
 - manifest 對 `map` 與 `images` 都必須保存 `claim_critical`。來源確實沒有合格圖片時，一般配圖可 `omitted` 並只保存後台原因；但只要已確認存在合格來源圖片，是否 `claim_critical` 都不能把交付失敗降級成正式完成。
 
 ## 七、局部恢復指令

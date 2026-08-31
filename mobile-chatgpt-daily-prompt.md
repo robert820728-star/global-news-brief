@@ -150,6 +150,7 @@ The required order for every configured discovery route is: `canonical route -> 
    - `IMAGE_READER_VISIBLE_DELIVERY_GATE`：宿主宣告具備原生媒體能力時，圖片只有在本輪排程對話的最終訊息中實際顯示為可見圖片或圖片卡，才算圖片交付成功。Markdown 圖片語法、本機絕對路徑、`sandbox:` 路徑、外部圖片網址、空白方框或破圖圖示都不算可見圖片。
    - `NATIVE_MEDIA_BLOCK_DELIVERY_GATE`：圖片先保存為實體 JPEG／WebP，完成 MIME、解碼、尺寸與內容驗收後，必須先實際嘗試宿主支援的本機附件、本機媒體呈現、`image/media content block` 或原生圖片卡。外部 HTTPS 網址與只有文字的 Markdown 不能冒充已交付圖片；但不得因工具清單中沒有某個特定名稱的 media API，就禁止已驗證的本機檔案或預先宣告無法交付。
    - `NATIVE_IMAGE_SEARCH_CARD_ROUTE`：mobile-native 對每則既有選圖使用 ChatGPT 原生圖片搜尋／媒體工具，查詢必須同時包含事件、發布者與日期，交付原生圖片卡；不得在 reader 內產生 `![alt](https://...)`。`read_thread` 可把這類原生卡表示為 `async_image_group`，但該標記本身仍不是像素驗收。
+   - `NON_TEXT_MEDIA_CONTENT_BLOCK_GATE`：不得自行把 `image_group`、`async_image_group`、`image_ref`、`turn...image...` 或 JSON 序列化進一般 assistant 文字來模擬原生圖片卡。即使文字中出現上述標記，也必須視為未交付；只有宿主實際建立的非文字 image/media content block 與非零尺寸可見像素才算成功，否則禁止輸出圖片 PASS 或 canonical completed。
    - 若宿主提供結構化 `read_thread` 與唯讀畫面擷取，外部驗收器應確認存在非文字的 `image/media content block` 或原生 `async_image_group`，並確認實際 `rendered pixel` 區域寬高非零。若結構結果只有一般 `agentMessage text`，圖片仍未交付。沒有這些能力時必須明記 pixel machine verification 未執行；不得要求使用者目視補驗，也不得假稱已通過。
    - `VISIBLE_IMAGE_OVER_ORIGINAL_FILE_GATE`：full-runtime 可直接下載或直接截取文章／官方／可靠轉載頁的同事件圖片區域，再以 `scripts/materialize_news_images.py` 的 `source_image_url` 或 `screenshot_path` 物化附件；Scheduled Task 宿主可用 `SCHEDULED_HOST_VISIBLE_SCREENSHOT_ROUTE` 直接交付同一頁面圖片區域的原生截圖或原生圖片卡。不要求原始檔、原畫質或「下載先失敗」才准截圖；不得捏造本地下載、物化或附件。
    - 若無法在送出前確認圖片可見，必須移除圖片標記及其 caption，reader 不留下圖片說明、沿用前輪選圖、前輪同圖、不重新驗收或圖片待補等占位文字。
