@@ -1473,6 +1473,31 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("當地語言", document)
             self.assertIn("不得反覆查詢同一通訊社", document)
 
+    def test_scheduled_native_search_exhausts_source_tiers_before_direct_media(self):
+        paths = (
+            "INSTALL.md",
+            "scheduled-task-prompt-template.md",
+            "mobile-chatgpt-daily-prompt.md",
+            "news-brief-settings.md",
+            ".agents/skills/collect-news-images/SKILL.md",
+        )
+
+        for path in paths:
+            document = (ROOT / path).read_text(encoding="utf-8")
+            segment = document.rsplit("FIXED_VISIBLE_IMAGE_TRANSPORT_SEQUENCE", 1)[1]
+            segment = segment.split("DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE", 1)[0]
+            self.assertIn("原引用來源", segment, path)
+            self.assertIn("官方／當事組織", segment, path)
+            self.assertIn("原始通訊社", segment, path)
+            self.assertIn("當地可靠媒體", segment, path)
+            self.assertIn("直接媒體", segment, path)
+            self.assertLess(segment.index("其他可靠媒體"), segment.index("直接媒體"), path)
+
+        daily = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        self.assertIn("first runs same-event native image search across", daily)
+        self.assertIn("local reliable media with a local-language query", daily)
+        self.assertIn("Only after those native-search tiers produce no qualified ref", daily)
+
     def test_current_report_same_day_same_place_context_photo_is_qualified(self):
         paths = (
             "INSTALL.md",
