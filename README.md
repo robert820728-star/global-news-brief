@@ -6,7 +6,7 @@
 
 `EVERY_DAILY_NEWS_EXECUTION_GATE`／`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`：manual, single-run, test, first-run, recurring, or resume 使用相同新聞與逐則可見圖片門檻。full-runtime 交付本機附件；ChatGPT Scheduled Task 宿主可交付原生圖片卡或頁面圖片區域直接截圖。不要求原始檔或原畫質。
 
-`SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`：建立或修正排程時先以最新版完整範本取代 saved prompt 並讀回核對，任何 bootstrap／smoke 失敗都不得讓舊 prompt 繼續啟用。其後 `SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE` 以同一 Scheduled Task 工具執行面直接截圖公開頁面的圖片區域或交付原生圖片卡；不需要 repository bootstrap 或台灣底圖。失敗時保留最新版 prompt 並暫停 task。
+`SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`／`SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE`：建立或修正排程時先以最新版完整範本取代 saved prompt。控制面支援 saved-prompt readback 時必須讀回逐字核對；明確不提供 readback 時，由提交前核對證明完整 prompt payload，正式 create／update 結果核對 task ID、成功狀態、每天 06:00、時區及目前對話，不得盲建重複排程。其後 `SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE` 才以同一 Scheduled Task 工具執行面直接截圖公開頁面的圖片區域或交付原生圖片卡；不需要 repository bootstrap 或台灣底圖。失敗時保留最新版 prompt 並暫停 task。
 
 完整本機工作流仍使用下方的安裝方式與 `daily-schedule-prompt.md`；兩種模式互不覆蓋。
 
@@ -20,7 +20,7 @@
 
 > 每日新聞排程
 >
-> 請確認 https://github.com/robert820728-star/global-news-brief 的最新 main commit，完整閱讀最新版 INSTALL.md。先取得最新版 scheduled-task-prompt-template.md，將全文原樣寫入 Scheduled Task instruction 並讀回逐字核對；不得先做 bootstrap 或附件 smoke，也不得因測試失敗保留舊 prompt。更新完成後，以同一 Scheduled Task／ChatGPT 工具執行面直接截圖一個公開頁面的圖片區域或交付原生圖片卡，確認目前對話實際可見後才啟用循環；不要求 verified workspace、原始檔或原畫質。
+> 請確認 https://github.com/robert820728-star/global-news-brief 的最新 main commit，完整閱讀最新版 INSTALL.md。先取得最新版 scheduled-task-prompt-template.md，將全文原樣寫入 Scheduled Task instruction；控制面支援 saved-prompt readback 時讀回逐字核對，明確不提供時依 INSTALL.md 的 capability-aware 正式回傳驗證，不得把缺少非通用 readback 能力誤判為未建立，也不得盲建重複排程。不得先做 bootstrap 或附件 smoke，也不得因測試失敗保留舊 prompt。更新完成後，以同一 Scheduled Task／ChatGPT 工具執行面直接截圖一個公開頁面的圖片區域或交付原生圖片卡，確認目前對話實際可見後才啟用循環；不要求 verified workspace、原始檔或原畫質。
 >
 > 1. 請在目前這個對話內建立每天 6 點循環排程。
 >

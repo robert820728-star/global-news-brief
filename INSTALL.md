@@ -8,7 +8,7 @@
 2. 每輪重新解析最新 `main`，同一輪固定使用一個經雙端點確認的 commit。
 3. 任何每日新聞執行，不論手動、單次、測試、首次執行、循環 occurrence 或恢復，都使用相同的新聞與可見圖片門檻；full-runtime 以本機附件交付，無本機 runtime 的 ChatGPT Scheduled Task 以宿主原生圖片卡或頁面圖片區域直接截圖交付。
 4. 新聞發現使用 GDELT、中央社與中新社三條 discovery routes；事件驗證依事件與主張角色動態選取原始、官方／主要及真正獨立的證據。
-5. 首次安裝或修正時先更新並讀回最新完整 task prompt，再以同一 Scheduled Task 宿主完成原生圖片卡／頁面圖片區域截圖實測；通過後才啟用循環排程並執行一次完整測試。
+5. 首次安裝或修正時先完整提交最新 task prompt，並依 Scheduled Task 控制面實際提供的驗證能力確認保存結果；再以同一 Scheduled Task 宿主完成原生圖片卡／頁面圖片區域截圖實測，通過後才啟用循環排程並執行一次完整測試。
 
 ## 使用者啟動指令
 
@@ -141,11 +141,17 @@
 
 `SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`
 
-建立或修正 Scheduled Task 時，控制面第一步必須先把當下最新 `scheduled-task-prompt-template.md` 全文寫入 task instruction，再讀回並逐字比較；不得先 bootstrap repository、取得 verified workspace 或執行新聞流程。既有 task 若保存舊 prompt，舊 prompt 不得繼續啟用，也不得因任何 smoke／bootstrap 失敗而被保留。後續 smoke 失敗時保留最新版 prompt 並暫停 task，不得留下舊 prompt 繼續執行。
+建立或修正 Scheduled Task 時，控制面第一步必須先把當下最新 `scheduled-task-prompt-template.md` 全文寫入 task instruction，並依 `SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE` 驗證正式 create／update 結果；不得先 bootstrap repository、取得 verified workspace 或執行新聞流程。既有 task 若保存舊 prompt，舊 prompt 不得繼續啟用，也不得因任何 smoke／bootstrap 失敗而被保留。後續 smoke 失敗時保留最新版 prompt 並暫停 task，不得留下舊 prompt 繼續執行。
+
+`SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE`
+
+提交前必須只替換「區域」與「監控類型」兩個 placeholder，對替換後的完整 prompt 做全文、字元數與雜湊核對，並把該完整 prompt 作為單一 create／update payload；不得提交摘要、節錄、短 launcher 或只貼檔案連結。若控制面支援 saved-prompt readback，建立或更新後必須讀回並與提交全文逐字比較，只允許 CRLF／LF 與檔尾換行差異；不一致時更新同一 task 後重讀，仍不一致即失敗。若控制面明確不提供 saved-prompt readback，不得只因缺少這項非通用能力宣告失敗，也不得謊稱已逐字讀回；此時由提交前核對證明完整 prompt 已作為未摘要且未截斷的 outbound payload，正式 create／update 回傳則必須至少證明 task ID、成功建立或更新、每天 06:00、目前帳號／對話時區，以及 delivery destination 是目前對話。任何一項沒有上述相應證據可核對即失敗。若無法查找同名 task，且也沒有可識別 task ID 的正式 create／update 結果，不得盲建重複排程。
+
+這個分流只承認控制面實際提供的證據：create／update 回傳不能冒充 saved bytes 的逐字讀回；但在控制面明確不提供 readback 時，完整 outbound payload 的預先核對與正式成功回傳是允許的安裝驗證邊界。一般對話文字、自行聲稱「應該已保存」或只有排程名稱都不算正式結果。
 
 `SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE`
 
-prompt 寫入並讀回一致後，才以同一 Scheduled Task／ChatGPT 工具執行面做一次即時圖片 smoke：開啟一個可追溯的公開頁面，直接截圖頁面中的圖片區域或交付宿主原生圖片卡，並確認目前對話實際出現可見像素。不得要求 verified workspace、pinned loader、repository bootstrap、台灣底圖、原圖下載或原畫質。外部 URL、Markdown 熱連結、路徑字串、圖說或破圖框不算通過。成功後才啟用 recurrence；失敗時最新版 prompt 必須保留且 task 維持暫停，不得回退舊 prompt。
+prompt 已依控制面能力完成上述驗證後，才以同一 Scheduled Task／ChatGPT 工具執行面做一次即時圖片 smoke：開啟一個可追溯的公開頁面，直接截圖頁面中的圖片區域或交付宿主原生圖片卡，並確認目前對話實際出現可見像素。不得要求 verified workspace、pinned loader、repository bootstrap、台灣底圖、原圖下載或原畫質。外部 URL、Markdown 熱連結、路徑字串、圖說或破圖框不算通過。成功後才啟用 recurrence；失敗時最新版 prompt 必須保留且 task 維持暫停，不得回退舊 prompt。
 
 | 項目 | `full-runtime` | `mobile-native` |
 |---|---|---|
@@ -169,7 +175,7 @@ prompt 寫入並讀回一致後，才以同一 Scheduled Task／ChatGPT 工具�
 
 ChatGPT Scheduled Task 不得只收到「請讀 INSTALL」的短 launcher。建立或修正每日排程時，必須讀取當下最新 `main` 的 [scheduled-task-prompt-template.md](scheduled-task-prompt-template.md)，將該檔全文原樣完整複製為 task prompt；只有使用者明確指定的「區域」與「監控類型」兩個 placeholder 可以替換。排程時間與時區由 Scheduled Task 的 schedule 欄位保存，不寫進新聞規則文字。
 
-`SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`：不得用執行能力檢查阻擋 prompt 升級。先更新並讀回完整 task prompt，再依 `SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE` 測試同一 Scheduled Task 宿主的原生圖片／截圖交付；smoke 通過才啟用 recurrence。既有舊 prompt 必須先被取代，不能因 smoke 失敗繼續啟用。
+`SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`：不得用執行能力檢查阻擋 prompt 升級。先提交完整 task prompt 並依 `SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE` 驗證控制面結果，再依 `SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE` 測試同一 Scheduled Task 宿主的原生圖片／截圖交付；smoke 通過才啟用 recurrence。既有舊 prompt 必須先被取代，不能因 smoke 失敗繼續啟用。
 
 這份完整 task prompt 直接攜帶不可省略的最低執行包絡，包括 fresh main、單一 run、全球 coverage、Public Value V2、獨立驗證、逐則圖片取得與四層 fallback、可見圖片交付、三段式 Reader、同 run 恢復及回覆原對話；同時每輪仍須讀取最新版 repository 取得完整細節。建立者不得摘要、縮短、重寫成一句「嚴格依 INSTALL 執行」，也不得只貼檔案連結。
 
@@ -385,7 +391,7 @@ mobile-native 沒有 checkpoint 或 manifest。查證不足時依 `VERIFICATION_
 
 排程建立後立即手動執行一次，至少檢查：
 
-- `SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE` 已先更新並讀回最新版完整 prompt；`SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE` 再以同一 Scheduled Task／ChatGPT 工具執行面直接截圖公開頁面的圖片區域或交付原生圖片卡，且目前對話實際可見；失敗時最新版 prompt 保留、task 暫停，不得恢復舊 prompt。
+- `SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE` 已先提交最新版完整 prompt，且 `SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE` 已依控制面是否提供 saved-prompt readback 完成相應驗證；`SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE` 再以同一 Scheduled Task／ChatGPT 工具執行面直接截圖公開頁面的圖片區域或交付原生圖片卡，且目前對話實際可見；失敗時最新版 prompt 保留、task 暫停，不得恢復舊 prompt。
 
 - fresh main 經雙端點與 fresh nonce 解析，同輪沒有混用 SHA。
 - bootstrap receipt 在 checkpoint 前通過；checkpoint init 含 `--bootstrap-receipt`。

@@ -6,6 +6,39 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class SchedulePromptControlPlaneTests(unittest.TestCase):
+    def test_prompt_verification_is_capability_aware_without_becoming_best_effort(self):
+        documents = {
+            name: (ROOT / name).read_text(encoding="utf-8")
+            for name in (
+                "INSTALL.md",
+                "README.md",
+                "mobile-chatgpt-start-prompt.md",
+                "daily-schedule-prompt.md",
+            )
+        }
+
+        for name, document in documents.items():
+            with self.subTest(document=name):
+                self.assertIn(
+                    "SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE", document
+                )
+
+        install = documents["INSTALL.md"]
+        for requirement in (
+            "支援 saved-prompt readback",
+            "明確不提供 saved-prompt readback",
+            "task ID",
+            "完整 prompt",
+            "每天 06:00",
+            "目前對話",
+            "不得盲建重複排程",
+        ):
+            with self.subTest(requirement=requirement):
+                self.assertIn(requirement, install)
+
+        self.assertNotIn("再讀回並逐字比較；", install)
+        self.assertNotIn("先更新並讀回完整 task prompt", install)
+
     def test_prompt_is_updated_before_any_media_smoke(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         update = install.index("SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE")
