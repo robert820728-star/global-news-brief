@@ -39,6 +39,20 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
         self.assertNotIn("再讀回並逐字比較；", install)
         self.assertNotIn("先更新並讀回完整 task prompt", install)
 
+    def test_only_exact_id_same_control_plane_readback_can_negate_create_success(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        self.assertIn("SCHEDULE_PROMPT_EXACT_ID_READBACK_ONLY_GATE", install)
+        for requirement in (
+            "同一控制面",
+            "exact task ID",
+            "一般 list／search 回傳空集合",
+            "不得推翻正式 create／update 成功回傳",
+        ):
+            with self.subTest(requirement=requirement):
+                self.assertIn(requirement, install)
+
+        self.assertIn("只有 exact-ID view 明確回傳不存在或內容不一致", install)
+
     def test_prompt_is_updated_before_any_media_smoke(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         update = install.index("SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE")

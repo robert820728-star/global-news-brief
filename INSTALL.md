@@ -149,6 +149,10 @@
 
 這個分流只承認控制面實際提供的證據：create／update 回傳不能冒充 saved bytes 的逐字讀回；但在控制面明確不提供 readback 時，完整 outbound payload 的預先核對與正式成功回傳是允許的安裝驗證邊界。一般對話文字、自行聲稱「應該已保存」或只有排程名稱都不算正式結果。
 
+`SCHEDULE_PROMPT_EXACT_ID_READBACK_ONLY_GATE`
+
+只有與 create／update 相同帳號、workspace、task namespace 及同一控制面的 exact task ID view，才算可推翻正式建立結果的 saved-task readback。建立回傳若已提供 task ID 與成功狀態，另一個 scope 不明的一般 list／search 回傳空集合，不得推翻正式 create／update 成功回傳，也不得觸發第二次 create；它只能記為 readback scope 不一致。若相同控制面提供 exact-ID view，就必須以 create／update 回傳的 ID 查詢：只有 exact-ID view 明確回傳不存在或內容不一致，才判定持久化驗證失敗。若沒有 exact-ID view，則依前段 capability-aware 邊界完成安裝驗證，不得自行發明「獨立讀回機制」當成硬門檻。
+
 `SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE`
 
 prompt 已依控制面能力完成上述驗證後，才以同一 Scheduled Task／ChatGPT 工具執行面做一次即時圖片 smoke：開啟一個可追溯的公開頁面，直接截圖頁面中的圖片區域或交付宿主原生圖片卡，並確認目前對話實際出現可見像素。不得要求 verified workspace、pinned loader、repository bootstrap、台灣底圖、原圖下載或原畫質。外部 URL、Markdown 熱連結、路徑字串、圖說或破圖框不算通過。成功後才啟用 recurrence；失敗時最新版 prompt 必須保留且 task 維持暫停，不得回退舊 prompt。
