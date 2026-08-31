@@ -1402,7 +1402,7 @@ class PipelineContractTests(unittest.TestCase):
             "GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE",
             "PUBLIC_VALUE_V2_SELECTION_GATE",
             "INDEPENDENT_VERIFICATION_GATE",
-            "SCHEDULED_NATIVE_IMAGE_SEARCH_FIRST_GATE",
+            "LOCAL_ATTACHMENT_FIRST_WHEN_RUNTIME_AVAILABLE_GATE",
             "FIXED_VISIBLE_IMAGE_TRANSPORT_SEQUENCE",
             "DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE",
             "IMAGE_FALLBACK_EXHAUSTION_GATE",
@@ -1417,10 +1417,10 @@ class PipelineContractTests(unittest.TestCase):
 
         for requirement in (
             "原引用來源 → 官方機關／當事組織 → 原始通訊社 → 其他可靠媒體",
-            "必須實際呼叫原生圖片搜尋",
-            "取得合格 image ref 後立即交付原生圖片卡",
-            "不得繼續撞已失敗的直接圖片網址",
-            "把該 ref 放入原生 image group／圖片卡",
+            "可寫檔案系統與可執行 runtime",
+            "下載或截圖成實體圖片檔",
+            "以本機附件交付",
+            "原生圖片搜尋只可作為候選定位",
             "沒有截圖工具時立即進下一來源",
             "搜尋結果沒有 image ref",
             "所有 C 級以上",
@@ -1473,10 +1473,11 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("當地語言", document)
             self.assertIn("不得反覆查詢同一通訊社", document)
 
-    def test_scheduled_native_search_exhausts_source_tiers_before_direct_media(self):
+    def test_runtime_available_path_materializes_local_attachment_before_native_card(self):
         paths = (
             "INSTALL.md",
             "scheduled-task-prompt-template.md",
+            "daily-schedule-prompt.md",
             "mobile-chatgpt-daily-prompt.md",
             "news-brief-settings.md",
             ".agents/skills/collect-news-images/SKILL.md",
@@ -1484,19 +1485,19 @@ class PipelineContractTests(unittest.TestCase):
 
         for path in paths:
             document = (ROOT / path).read_text(encoding="utf-8")
-            segment = document.rsplit("FIXED_VISIBLE_IMAGE_TRANSPORT_SEQUENCE", 1)[1]
-            segment = segment.split("DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE", 1)[0]
-            self.assertIn("原引用來源", segment, path)
-            self.assertIn("官方／當事組織", segment, path)
-            self.assertIn("原始通訊社", segment, path)
-            self.assertIn("當地可靠媒體", segment, path)
-            self.assertIn("直接媒體", segment, path)
-            self.assertLess(segment.index("其他可靠媒體"), segment.index("直接媒體"), path)
+            self.assertIn("LOCAL_ATTACHMENT_FIRST_WHEN_RUNTIME_AVAILABLE_GATE", document, path)
+            if path == "daily-schedule-prompt.md":
+                self.assertIn("writable filesystem", document, path)
+                self.assertIn("local attachment", document, path)
+            else:
+                self.assertIn("可寫檔案系統", document, path)
+                self.assertIn("本機附件", document, path)
 
-        daily = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
-        self.assertIn("first runs same-event native image search across", daily)
-        self.assertIn("local reliable media with a local-language query", daily)
-        self.assertIn("Only after those native-search tiers produce no qualified ref", daily)
+        template = (ROOT / "scheduled-task-prompt-template.md").read_text(encoding="utf-8")
+        self.assertIn("下載或截圖成實體圖片檔", template)
+        self.assertIn("原生圖片搜尋只可作為候選定位", template)
+        self.assertNotIn("SCHEDULED_NATIVE_IMAGE_SEARCH_FIRST_GATE", template)
+        self.assertNotIn("取得合格 image ref 後立即交付原生圖片卡", template)
 
     def test_literal_image_group_text_never_counts_as_visible_media(self):
         paths = (
