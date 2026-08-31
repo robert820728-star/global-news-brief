@@ -1502,6 +1502,38 @@ class PipelineContractTests(unittest.TestCase):
         for document in documents:
             self.assertIn("其他年份、其他地點、歷史檔案或泛用示意圖仍不得入選", document)
 
+    def test_relative_article_image_urls_are_resolved_before_download(self):
+        paths = (
+            "INSTALL.md",
+            "scheduled-task-prompt-template.md",
+            "mobile-chatgpt-daily-prompt.md",
+            "news-brief-settings.md",
+            ".agents/skills/collect-news-images/SKILL.md",
+        )
+        documents = [(ROOT / path).read_text(encoding="utf-8") for path in paths]
+
+        for document in documents:
+            self.assertIn("RELATIVE_MEDIA_URL_RESOLUTION_GATE", document)
+            self.assertIn("重新導向後的文章 URL", document)
+            self.assertIn("`base href`", document)
+            self.assertIn("協定相對、根目錄相對或路徑相對", document)
+
+    def test_native_image_ref_must_be_created_and_rendered_in_the_same_occurrence(self):
+        paths = (
+            "INSTALL.md",
+            "scheduled-task-prompt-template.md",
+            "mobile-chatgpt-daily-prompt.md",
+            "news-brief-settings.md",
+            ".agents/skills/collect-news-images/SKILL.md",
+        )
+        documents = [(ROOT / path).read_text(encoding="utf-8") for path in paths]
+
+        for document in documents:
+            self.assertIn("SAME_OCCURRENCE_NATIVE_IMAGE_REF_GATE", document)
+            self.assertIn("前一個 task、其他對話或其他 occurrence", document)
+            self.assertIn("同一最終訊息", document)
+            self.assertIn("如果你看得到", document)
+
 
 if __name__ == "__main__":
     unittest.main()

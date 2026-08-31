@@ -24,6 +24,31 @@ DOWNLOAD_TIMEOUT_SECONDS = 15
 USER_AGENT = "global-news-brief-image-materializer/1.0"
 
 
+def resolve_source_image_url(
+    source_url: str,
+    *,
+    source_page_url: str = "",
+    source_base_url: str = "",
+) -> str:
+    """Resolve article-relative media URLs against the final page or its base href."""
+    source_url = source_url.strip()
+    if not source_url:
+        return source_url
+    parsed = urllib.parse.urlparse(source_url)
+    if parsed.scheme in {"http", "https"} and parsed.netloc:
+        return source_url
+
+    page_url = source_page_url.strip()
+    base_url = source_base_url.strip()
+    if base_url:
+        base_url = urllib.parse.urljoin(page_url, base_url)
+    else:
+        base_url = page_url
+    if not base_url:
+        return source_url
+    return urllib.parse.urljoin(base_url, source_url)
+
+
 def _safe_event_id(event_id: str) -> str:
     safe = re.sub(r"[^A-Za-z0-9._-]+", "-", event_id.strip()).strip(".-")
     return safe or "event"
@@ -150,6 +175,12 @@ def materialize(inputs: list[dict[str, Any]], output_dir: Path) -> list[dict[str
         event_id = str(item.get("event_id", "")).strip()
         source_url = str(item.get("source_image_url", item.get("source_url", ""))).strip()
         source_page_url = str(item.get("source_page_url", "")).strip()
+        source_base_url = str(item.get("source_base_url", "")).strip()
+        source_url = resolve_source_image_url(
+            source_url,
+            source_page_url=source_page_url,
+            source_base_url=source_base_url,
+        )
         screenshot_path = str(item.get("screenshot_path", "")).strip()
         alt = str(item.get("alt", "")).strip()
         credit = str(item.get("credit", "")).strip()

@@ -5,7 +5,11 @@ from pathlib import Path
 
 from PIL import Image
 
-from scripts.materialize_news_images import materialize, materialize_image_bytes
+from scripts.materialize_news_images import (
+    materialize,
+    materialize_image_bytes,
+    resolve_source_image_url,
+)
 
 
 def jpeg_bytes(size=(320, 240), color=(30, 90, 160)):
@@ -15,6 +19,34 @@ def jpeg_bytes(size=(320, 240), color=(30, 90, 160)):
 
 
 class MaterializeNewsImagesTests(unittest.TestCase):
+    def test_relative_image_url_is_resolved_against_article_url(self):
+        self.assertEqual(
+            "https://www.news.cn/politics/leaders/20260830/story/photo.jpg",
+            resolve_source_image_url(
+                "photo.jpg",
+                source_page_url="https://www.news.cn/politics/leaders/20260830/story/c.html",
+            ),
+        )
+
+    def test_protocol_relative_image_url_uses_article_scheme(self):
+        self.assertEqual(
+            "https://cdn.example.test/photo.jpg",
+            resolve_source_image_url(
+                "//cdn.example.test/photo.jpg",
+                source_page_url="https://news.example.test/story",
+            ),
+        )
+
+    def test_explicit_page_base_precedes_article_url(self):
+        self.assertEqual(
+            "https://media.example.test/gallery/photo.jpg",
+            resolve_source_image_url(
+                "photo.jpg",
+                source_page_url="https://news.example.test/story/c.html",
+                source_base_url="https://media.example.test/gallery/",
+            ),
+        )
+
     def test_valid_jpeg_creates_decodable_asset_and_manifest_record(self):
         with tempfile.TemporaryDirectory() as tmp:
             record = materialize_image_bytes(

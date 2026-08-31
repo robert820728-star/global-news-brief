@@ -332,6 +332,10 @@ reader 不顯示 run id、commit、後台 counts、十四天 audit 或修復紀�
 
 `CURRENT_EVENT_CONTEXT_PHOTO_GATE`：可靠媒體在同一篇當期事件報導中使用、且拍攝或發布資訊可核對為同日同地的現場脈絡照片，屬合格的當期新聞圖片；不要求畫面必須直接拍到攻擊、兵變、救援或政策動作發生的一瞬間。搜尋時必須使用精確文章標題、來源名稱，以及可取得的 caption／攝影者／地點重新呼叫原生圖片搜尋。Reader 圖說必須如實描述畫面，不得描述成直接拍攝核心行動。其他年份、其他地點、歷史檔案或泛用示意圖仍不得入選。
 
+`RELATIVE_MEDIA_URL_RESOLUTION_GATE`：文章的 `img`、`srcset`、`og:image` 或圖集若提供協定相對、根目錄相對或路徑相對的媒體位址，必須以重新導向後的文章 URL 為基準解析；頁面存在有效 `base href` 時先套用它，再產生絕對 HTTP(S) URL。不得把相對路徑本身當成下載失敗或來源無圖；解析後的每個候選再依既有代理拆解、下載與內容核對流程處理。
+
+`SAME_OCCURRENCE_NATIVE_IMAGE_REF_GATE`：Scheduled Task 的原生 `image_ref` 必須由目前 occurrence 的實際圖片工具結果建立，並在同一最終訊息中真正出現在原生 image group／圖片卡。前一個 task、其他對話或其他 occurrence 的 `turn...image...` 文字不得作為可重用附件；只列 ref id、聲稱已建立 image group、或詢問「如果你看得到」都算未交付，必須在目前 occurrence 重新取得並實際渲染。
+
 `FIXED_VISIBLE_IMAGE_TRANSPORT_SEQUENCE`：固定交付順序為 Scheduled Task 原生圖片搜尋（合格 `image_ref` 立即放入最終原生 image group／圖片卡）→ 原文章 `img`／`srcset`／`og:image`／圖集的直接媒體（必須取得實際媒體內容或 native ref）→ 宿主實際存在的頁面／圖片區域截圖（截圖結果直接作為原生圖片／附件）→ 官方／當事組織 → 原始通訊社 → 其他可靠媒體；每換一層來源都先重新執行同事件原生圖片搜尋，再試直接媒體與可用截圖。full-runtime 使用既有 `scripts/materialize_news_images.py` 下載實際 bytes，下載失敗立即改以該頁圖片區域的本機 `screenshot_path`，完成 MIME、解碼、尺寸、SHA-256 與內容核對後交付本機實體附件。成功即停止該事件重試；單一路徑失敗不得升格成整體 blocker。
 
 `IMAGE_FALLBACK_EXHAUSTION_GATE`：原引用來源、原始圖片 URL、原生圖片卡或單一媒體交付失敗都不是圖片 blocker。每則事件在宣告 `NATIVE_MEDIA_UNAVAILABLE`、`source_exhausted` 或停止視覺 stage 前，必須依序實際搜尋原引用來源、官方機關／當事組織、原始通訊社及其他可靠媒體的同事件合法刊載／轉載圖片。圖片可以不是原文同一張，只要來源可信、合法公開刊載、可追溯，且事件、日期、人物／地點一致；圖片證據來源與文字驗證來源不必相同。每則 `image-evidence.json` 必須保存 `original_source_attempted`、`direct_media_url_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`。`delivery_unavailable` 或 `source_exhausted` 的 `direct_media_url_attempted` 必須為 `true`；任一來源層尚未實際搜尋時，不得宣告 fallback exhaustion、圖片不可取得或不可恢復 blocker。直接文章原圖已成功可見交付時，不必再做無增量的後續來源搜尋。
