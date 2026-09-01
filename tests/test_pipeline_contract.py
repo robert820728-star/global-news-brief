@@ -190,11 +190,13 @@ class PipelineContractTests(unittest.TestCase):
     def test_all_discovery_rows_have_complete_model_admission_gate(self):
         pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
         policy = pool["model_admission_policy"]
-        self.assertTrue(policy["all_discovery_rows_admitted"])
-        self.assertTrue(policy["routing_only_controls_hydration_depth"])
+        self.assertTrue(policy["all_discovery_rows_preserved_in_gate"])
+        self.assertEqual(["content_hydration"], policy["model_input_routes"])
+        self.assertEqual(["regional_supplement"], policy["complete_source_roles"])
+        self.assertTrue(policy["routing_controls_model_admission"])
         self.assertTrue(policy["heat_is_recall_only"])
-        self.assertTrue(policy["absence_from_heat_never_excludes_any_discovery_row"])
-        self.assertNotIn("complete_source_roles", policy)
+        self.assertTrue(policy["absence_from_heat_never_excludes_regional_supplements"])
+        self.assertNotIn("all_discovery_rows_admitted", policy)
 
         documents = (
             ROOT / "news-brief-settings.md",
@@ -1583,6 +1585,7 @@ class PipelineContractTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
 
 
 

@@ -13,7 +13,7 @@ SPEC.loader.exec_module(MODULE)
 
 
 class BuildNewsRelevanceGateTests(unittest.TestCase):
-    def test_gate_is_lossless_uncapped_and_always_admits_regional_supplements(self):
+    def test_gate_is_lossless_while_model_input_uses_hydration_route(self):
         keyword_rows = [
             {
                 "candidate_id": f"gdelt-{index:04d}",
@@ -82,13 +82,72 @@ class BuildNewsRelevanceGateTests(unittest.TestCase):
         self.assertIn("cns-1", admitted)
         self.assertTrue(all(item["reasons"] for item in decisions))
         filtered = MODULE.build_admitted_candidates(source_candidates, result)
-        self.assertEqual(len(decisions), len(filtered["items"]))
+        self.assertEqual(1502, len(filtered["items"]))
         self.assertEqual(
-            {item["candidate_id"] for item in decisions},
+            admitted,
             {item["candidate_id"] for item in filtered["items"]},
         )
         self.assertEqual(len(decisions), filtered["discovery_article_row_count"])
-        self.assertEqual(len(decisions), filtered["admitted_article_row_count"])
+        self.assertEqual(1502, filtered["admitted_article_row_count"])
+
+    def test_live_scale_weak_gdelt_rows_remain_auditable_without_overloading_model_input(self):
+        weak_count = 19800
+        strong_count = 40
+        rows = [
+            {
+                "candidate_id": f"weak-{index:05d}",
+                "source_id": "gdelt",
+                "section": "GLB",
+                "title": f"Routine local report {index}",
+                "summary": f"Routine local report {index}",
+                "summary_quality": "title_only",
+                "discovery_signals": {"num_articles": 1, "num_sources": 1},
+                "canonical_url": f"https://example.test/weak/{index}",
+            }
+            for index in range(weak_count)
+        ] + [
+            {
+                "candidate_id": f"strong-{index:03d}",
+                "source_id": "gdelt",
+                "section": "GLB",
+                "title": f"Emergency conflict update {index}",
+                "summary": f"Emergency conflict update {index}",
+                "summary_quality": "structured_event_context",
+                "discovery_signals": {
+                    "event_root_code": "19",
+                    "num_articles": 8,
+                    "num_sources": 5,
+                    "num_mentions": 20,
+                },
+                "canonical_url": f"https://example.test/strong/{index}",
+            }
+            for index in range(strong_count)
+        ] + [
+            {
+                "candidate_id": f"regional-{index}",
+                "source_id": "cna" if index < 2 else "chinanews",
+                "section": "TWN" if index < 2 else "CHN",
+                "title": f"區域新聞 {index}",
+                "summary": f"區域新聞 {index}",
+                "summary_quality": "title_only",
+                "discovery_signals": {},
+                "canonical_url": f"https://example.test/regional/{index}",
+            }
+            for index in range(3)
+        ]
+        source_candidates = {"items": rows}
+
+        gate = MODULE.build_gate(source_candidates)
+        admitted = MODULE.build_admitted_candidates(source_candidates, gate)
+
+        self.assertEqual(19843, gate["input_article_row_count"])
+        self.assertEqual(19843, len(gate["decisions"]))
+        self.assertEqual(43, admitted["admitted_article_row_count"])
+        self.assertEqual(
+            {f"strong-{index:03d}" for index in range(strong_count)}
+            | {f"regional-{index}" for index in range(3)},
+            {item["candidate_id"] for item in admitted["items"]},
+        )
 
     def test_gate_requires_compound_evidence_instead_of_keyword_or_heat_alone(self):
         rows = [
@@ -130,7 +189,7 @@ class BuildNewsRelevanceGateTests(unittest.TestCase):
         }
 
         self.assertEqual("lightweight_semantic_review", decisions["keyword-only"]["route"])
-        self.assertEqual("lightweight_semantic_review", decisions["heat-only"]["route"])
+        self.assertEqual("content_hydration", decisions["heat-only"]["route"])
         self.assertEqual("content_hydration", decisions["compound"]["route"])
         self.assertEqual("content_hydration", decisions["high-impact"]["route"])
 
@@ -155,9 +214,31 @@ class BuildNewsRelevanceGateTests(unittest.TestCase):
         admitted = MODULE.build_admitted_candidates(source_candidates, gate)
 
         self.assertEqual("lightweight_semantic_review", gate["decisions"][0]["route"])
-        self.assertEqual(1, admitted["admitted_article_row_count"])
-        self.assertEqual(source_candidates["items"], admitted["items"])
+        self.assertEqual(0, admitted["admitted_article_row_count"])
+        self.assertEqual([], admitted["items"])
+
+    def test_corroborated_science_row_reaches_model_input(self):
+        row = {
+            "candidate_id": "science-corroborated",
+            "source_id": "gdelt",
+            "canonical_url": "https://example.test/semiconductor-breakthrough",
+            "title": "Scientists report a semiconductor technology breakthrough",
+            "summary": "Independent research groups report the measured result.",
+            "summary_quality": "structured_event_context",
+            "discovery_signals": {
+                "num_articles": 9,
+                "num_sources": 5,
+                "num_mentions": 22,
+            },
+        }
+
+        gate = MODULE.build_gate({"items": [row]})
+        admitted = MODULE.build_admitted_candidates({"items": [row]}, gate)
+
+        self.assertEqual("content_hydration", gate["decisions"][0]["route"])
+        self.assertEqual([row], admitted["items"])
 
 
 if __name__ == "__main__":
     unittest.main()
+

@@ -41,9 +41,11 @@ def route_item(item: dict) -> dict:
     strong_heat = num_articles >= 8 or num_sources >= 5 or num_mentions >= 20
     corroborated = num_articles >= 5 or num_sources >= 3 or num_mentions >= 10
     event_root_code = str(signals.get("event_root_code") or "")
-    if matched_terms and strong_heat:
+    if strong_heat:
+        reasons.append("strong_cross_source_signal")
+    elif matched_terms and corroborated:
         reasons.append(
-            "compound_relevance_and_heat:" + ",".join(matched_terms)
+            "compound_relevance_and_corroboration:" + ",".join(matched_terms)
         )
     if event_root_code in HIGH_IMPACT_EVENT_ROOT_CODES and corroborated:
         reasons.append("compound_high_impact_event_and_corroboration")
@@ -76,7 +78,11 @@ def build_gate(source_candidates: dict) -> dict:
 
 
 def build_admitted_candidates(source_candidates: dict, gate: dict) -> dict:
-    admitted_ids = {item["candidate_id"] for item in gate["decisions"]}
+    admitted_ids = {
+        item["candidate_id"]
+        for item in gate["decisions"]
+        if item.get("route") == "content_hydration"
+    }
     items = source_candidates.get("items", [])
     filtered = [item for item in items if item.get("candidate_id") in admitted_ids]
     if len(filtered) != len(admitted_ids):
@@ -118,3 +124,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

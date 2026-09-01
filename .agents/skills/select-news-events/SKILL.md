@@ -40,7 +40,7 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 
 小模型不得單獨排除候選。符合任一條件時必須送高階模型：暫定 B 以上、政治／選舉／軍事／外交／金融市場／重大企業／災害／疫情／公共安全、跨境或跨產業影響、來源互相矛盾、信心不足、十四天紀錄顯示狀態轉折，或規則命中「不可漏選」主題。
 
-採高召回原則：寧可把邊界候選送入下一階段，也不得為節省 Token 提前刪除。模型前只可排除超出時間窗或完全重複的 discovery rows；`lightweight_semantic_review` 仍必須完整進入 model input，其 route 只控制內容補齊深度與處理順序，不得當成 `non_news` 或省略語意審查。所有 gate decisions 必須保留原因與結構化訊號，且 discovery total 必須守恆。
+採高召回原則：完整 discovery rows 與逐列 gate decisions 必須守恆，不得以固定 top-N、相對名次或模型評級截斷。`MODEL_INPUT_SIGNAL_GATE`：本輪模型輸入只包含 `content_hydration` rows；`lightweight_semantic_review` rows 留在 relevance gate，明確代表尚未完成語意審查，不能當成 `non_news`、已評分事件或 Reader coverage。中央社與中新社等 regional supplements 仍全部是 `content_hydration`，不得省略。
 
 
 ### 一、廣泛海選
@@ -142,4 +142,5 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 - D／E 不配置事件編號、不進入最終事件資料、不出現在讀者版。
 - 不得以篇數、同級過多或版面長度排除候選。
 - 暫定 B 以上未入選而沒有理由時，本階段不得標示完成。
+
 

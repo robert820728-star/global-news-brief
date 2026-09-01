@@ -1,5 +1,13 @@
 # Version Record / �蝝��
 
+## v0.6.0-rc.38 — Bounded model admission for full GDELT evidence / GDELT 完整證據的可執行模型准入
+
+- Reason / 原因：A real Scheduled Task occurrence preserved 19,843 GDELT article rows and then attempted to send all 16,228 provisional groups through semantic selection. The occurrence could not reach audit, images, or Reader delivery. / 真實 Scheduled Task occurrence 保存 19,843 筆 GDELT 文章列後，嘗試把 16,228 個暫定群組全部送入語意選稿，導致無法進入稽核、圖片或 Reader 交付。
+- Approach / 方法：Keep every discovery row and routing decision in the source pool and relevance gate. Send only non-relative `content_hydration` rows to the current model input while preserving all regional supplements. `lightweight_semantic_review` remains explicit, unscored coverage evidence and cannot be mislabeled as `non_news` or a reviewed event. No fixed top-N is introduced. / 所有 discovery rows 與逐列 routing decisions 仍完整保存在 source pool 與 relevance gate；本輪模型僅接收以非相對訊號判定的 `content_hydration` rows，區域補充來源則完整保留。`lightweight_semantic_review` 明確維持為未評分的 coverage evidence，不得冒充 `non_news` 或已審查事件；未加入固定 top-N。
+- Entry points / 入口：Existing relevance-gate script, source-pool policy, active discovery contracts, existing regressions, and this record only. No new source, schema, validator, receipt, recovery state, or compatibility layer. / 僅修改既有 relevance-gate script、source-pool policy、現行 discovery contracts、既有回歸與本紀錄；不新增來源、schema、validator、receipt、recovery state 或 compatibility layer。
+- Validation / 驗證：A live-scale regression preserves all 19,843 gate decisions while admitting only 40 corroborated GDELT rows plus 3 regional rows; corroborated science/technology coverage is a positive control. Targeted and full repository suites are required before promotion. / live-scale 回歸確認 19,843 筆 gate decisions 全部保留，模型輸入只包含 40 筆具交叉訊號的 GDELT rows 與 3 筆區域 rows；另以具交叉證據的科學／科技新聞作正向控制。推送前必須通過 targeted 與完整 repository tests。
+- Rollback / 回復：Revert the rc.38 source and generated-capsule commits together; rc.37 remains the prior installable baseline. / 一併回復 rc.38 source 與 generated-capsule commits；rc.37 為上一個可安裝基線。
+
 ## v0.6.0-rc.37 �� Paste-ready installer verification alignment / �舐�亥票銝�摰��誘撽�銝�游�
 
 - Reason / 撱箇���嚗 real ChatGPT retry read rc.36 and created a visible daily 06:00 task card, yet still returned only `撠撽�摰�` because the user-facing paste-ready instruction separately imposed an unconditional post-save readback failure rule. After the concise rc.37 path fixed readback and destination assumptions, a genuinely fresh conversation exposed one remaining ambiguity: �he same Scheduled Task/ChatGPT execution surface�� was interpreted as requiring an immediate occurrence trigger by exact task ID, even though installation smoke is meant to run directly in the setup conversation. / �祕 ChatGPT �岫撌脰��� rc.36 銝衣�閬�瘥 06:00 task �∠�嚗隞�����芷�霅������臭蝙�刻祕�票銝�韏瑕��誘�西�閬��瘜��憭望��移蝪� rc.37 靽格迤霈�� destination �身敺��冽撠店��脫�敺��郁蝢抬���銝 Scheduled Task嚗hatGPT �瑁��Ｕ◤閫�����誑 exact task ID 蝡閫貊 occurrence嚗祕��鋆� smoke ��亙撱箇������閰勗銵�
@@ -231,6 +239,7 @@
 - Approach / 雿�嚗se six normalized 0��100 dimensions, configured weights, realized-versus-potential consequence classes, policy stage, material delta, fact reuse rationale, high-score challenge, evidence confidence, and validated-only publication. / �∪�� 0��100 甇�����詻身摰��瘜�瞏敺����蝑�畾萸祕鞈芸���撖阡��函��晞����祟�乓��縑敹��撣� validated grade��
 - Validation / 撽�嚗chema, validator, calibrated fixtures, publisher checks, and full regression. / Schema��霅�皞� fixtures�撣炎�亙�摰�飛��
 - Result / 蝯�嚗romoted into the current contract. / 撌脩��亦��蝝�
+
 
 
 
