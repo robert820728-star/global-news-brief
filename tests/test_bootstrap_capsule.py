@@ -38,6 +38,7 @@ class BootstrapCapsuleTests(unittest.TestCase):
         self.assertIn("bootstrap/bootstrap_progress.py", runtime_paths)
         self.assertIn("bootstrap/bootstrap-progress.schema.json", runtime_paths)
         self.assertIn("bootstrap/RUN_LEDGER_PROTOCOL.md", runtime_paths)
+        self.assertIn("mobile-chatgpt-daily-prompt.md", runtime_paths)
         self.assertNotIn("scripts/resolve_bundled_python.ps1", runtime_paths)
         self.assertNotIn("scripts/fetch_source_routes.ps1", runtime_paths)
 

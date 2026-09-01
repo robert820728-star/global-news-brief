@@ -29,6 +29,7 @@ MATERIALIZATION_SCOPE = "verified-runtime-capsule"
 
 RUNTIME_FILES = (
     "bootstrap-workspace.md",
+    "mobile-chatgpt-daily-prompt.md",
     "scheduled-task-prompt-template.md",
     "daily-schedule-prompt.md",
     "news-brief-settings.md",
