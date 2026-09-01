@@ -1,0 +1,15 @@
+{
+  "schema_version": "mobile-source-scan-v1",
+  "run_id": "gnb-20260901T055813Z-6e3a91c4",
+  "main_sha": "aa4f324bde20fcfdaba103a1c6c4667b4b498c12",
+  "window": {"start":"2026-08-31T05:58:13+00:00","end":"2026-09-01T05:58:13+00:00","timezone":"Asia/Shanghai"},
+  "routes": [
+    {"source_id":"gdelt","status":"unavailable","coverage_complete":false,"coverage_status":"unavailable","reason":"官方15分鐘export feed可見，但mobile-native宿主無法驗證或解析ZIP payload；DOC與有效快取未取得可驗證列。"},
+    {"source_id":"cna","status":"completed_degraded","coverage_complete":false,"coverage_status":"degraded_partial","verified_rows_used":3,"reason":"公開列表可取得部分窗內列，但無法重現原生POST完整分頁；已取得列全部納入。"},
+    {"source_id":"china_news_service","status":"completed_degraded","coverage_complete":false,"coverage_status":"degraded_partial","verified_rows_used":4,"reason":"8/31日索引可讀、9/1原日索引路徑異常；以同站精確搜尋恢復部分當日列並全部納入。"},
+    {"source_id":"web_fallback","status":"completed_degraded","coverage_complete":false,"coverage_status":"degraded_partial","verified_rows_used":8,"reason":"GDELT live chain不可用後啟用受控全球web fallback；逐筆保留來源並不得冒充GDELT完整覆蓋。"}
+  ],
+  "materialized_event_rows": 15,
+  "coverage_truthfulness": "degraded_partial",
+  "global_zero_event_claim_forbidden": true
+}
