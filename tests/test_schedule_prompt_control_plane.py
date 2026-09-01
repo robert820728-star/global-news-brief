@@ -53,6 +53,25 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
 
         self.assertIn("只有 exact-ID view 明確回傳不存在或內容不一致", install)
 
+    def test_paste_ready_starter_is_concise_and_capability_aware(self):
+        starter = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
+        prompt = starter.split("```text", 1)[1].split("```", 1)[0].strip()
+
+        self.assertLess(len(prompt), 1400)
+        for requirement in (
+            "每天 06:00",
+            "台灣、中國、世界",
+            "監控類型：預設",
+            "目前這個對話",
+            "更新同名既有排程",
+        ):
+            self.assertIn(requirement, starter)
+
+        self.assertIn("同一控制面的 exact task ID", prompt)
+        self.assertIn("正式 create／update 回傳", prompt)
+        self.assertIn("一般 list／search 空結果", prompt)
+        self.assertNotIn("仍不一致或無法讀回時，不得宣稱排程設置完成", starter)
+
     def test_prompt_is_updated_before_any_media_smoke(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         update = install.index("SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE")

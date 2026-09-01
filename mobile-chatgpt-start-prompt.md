@@ -10,12 +10,14 @@
 
 ```text
 每日新聞排程
-請確認 https://github.com/robert820728-star/global-news-brief 的最新 main commit，完整閱讀最新版 INSTALL.md。依「Scheduled Task 排程指令唯一契約」取得 scheduled-task-prompt-template.md 全文，替換我指定的區域與監控類型後，先原樣設為 Scheduled Task instruction，不得摘要、縮短或只留下檔案連結。同一控制面支援 exact task ID readback 時，使用 create／update 回傳的 task ID 讀回並逐字核對；沒有 exact-ID view 時，依 INSTALL.md 的 capability-aware 規則核對正式 create／update 結果。不得以 scope 不明的一般 list 空結果推翻 create 成功，也不得盲建重複排程。完成 prompt 更新驗證後，以同一 Scheduled Task／ChatGPT 工具執行面直接截圖一個公開頁面的圖片區域或交付原生圖片卡，確認目前對話實際可見後才啟用循環；不要求 verified workspace、原始檔或原畫質。若 smoke 失敗，保留最新版 prompt 並暫停 task，不得讓舊 prompt 繼續啟用。
 
-1. 請在目前這個對話內建立每天 6 點循環排程；使用目前對話／帳號的時區，名稱為「每日新聞」。
-2. 區域：台灣、中國、世界。監控類型：預設。
-3. 每次結果只回覆在目前這個對話，不要另開新對話。
-4. 建立完成後，回報實際可見的同宿主測試截圖／原生圖片、實際保存的完整 task instruction 與 schedule；不得只回覆一段摘要。
+請 fresh resolve https://github.com/robert820728-star/global-news-brief 當下最新 main，完整閱讀最新版 INSTALL.md，依「Scheduled Task 排程指令唯一契約」取得 scheduled-task-prompt-template.md 全文。只替換「區域：台灣、中國、世界」及「監控類型：預設」兩個 placeholder，將完整全文原樣設為 saved prompt；不得摘要、刪節或只保存連結。
+
+在目前這個對話建立每天 06:00、使用目前對話／帳號時區、結果只回覆目前對話的「每日新聞」循環排程；優先更新同名既有排程，不得重複建立。
+
+提交前先全文核對 create／update payload。若同一控制面的 exact task ID view 可用，建立或更新後以回傳的 task ID 讀回並比較完整 prompt（只容許 CRLF／LF 與檔尾換行差異）；只有該 exact-ID view 明確回傳不存在或內容不一致，才更新同一排程後重試並在再次失敗時判定未完成。若沒有 exact-ID view，依 INSTALL.md 核對正式 create／update 回傳中的 task ID、成功狀態、每天 06:00、時區及目前對話 destination；一般 list／search 空結果不得推翻成功回傳、不得觸發重複建立，也不得自行發明另一套讀回機制。
+
+prompt 驗證後，依 INSTALL.md 以同一 ChatGPT／Scheduled Task 執行面完成可見圖片 smoke，確認圖片在目前對話實際可見；通過才啟用循環並回覆排程已完成，失敗則保留最新版 prompt、暫停同一 task 並回報實際失敗步驟。
 ```
 
 
