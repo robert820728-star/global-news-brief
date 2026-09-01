@@ -217,7 +217,7 @@ class BuildNewsRelevanceGateTests(unittest.TestCase):
             },
             {
                 "candidate_id": "high-impact", "source_id": "gdelt",
-                "title": "Regional developments", "summary": "Regional developments",
+                "title": "Regional conflict developments", "summary": "Regional conflict developments",
                 "summary_quality": "structured_event_context",
                 "discovery_signals": {
                     "event_root_code": "19", "num_sources": 3, "num_mentions": 10,

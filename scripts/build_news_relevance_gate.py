@@ -11,6 +11,11 @@ from pathlib import Path
 
 REGIONAL_SUPPLEMENT_IDS = {"cna", "chinanews"}
 HIGH_IMPACT_EVENT_ROOT_CODES = {"13", "14", "17", "18", "19", "20"}
+SEVERE_EVENT_TERMS = {
+    "attack", "ceasefire", "conflict", "crisis", "disease", "earthquake",
+    "evacuation", "explosion", "fire", "flood", "military", "missile",
+    "outbreak", "protest", "sanction", "typhoon", "war",
+}
 RELEVANCE_TERMS = {
     "accident", "attack", "bank", "bill", "border", "budget", "ceasefire",
     "breakthrough", "climate", "conflict", "court", "crisis", "currency",
@@ -42,13 +47,15 @@ def route_item(item: dict) -> dict:
     num_mentions = _number(signals, "num_mentions")
     corroborated = num_articles >= 5 or num_sources >= 3 or num_mentions >= 10
     event_root_code = str(signals.get("event_root_code") or "")
-    if matched_terms and corroborated:
+    severe_term = bool(set(matched_terms) & SEVERE_EVENT_TERMS)
+    multi_term = len(matched_terms) >= 2
+    if corroborated and (severe_term or multi_term):
         reasons.append(
             "compound_relevance_and_corroboration:" + ",".join(matched_terms)
         )
-    if event_root_code in HIGH_IMPACT_EVENT_ROOT_CODES and corroborated:
+    if reasons and event_root_code in HIGH_IMPACT_EVENT_ROOT_CODES:
         reasons.append("compound_high_impact_event_and_corroboration")
-    if abs(_number(signals, "goldstein_scale")) >= 5 and corroborated:
+    if reasons and abs(_number(signals, "goldstein_scale")) >= 5:
         reasons.append("compound_goldstein_and_corroboration")
     admitted = regional_supplement or bool(reasons)
     return {
