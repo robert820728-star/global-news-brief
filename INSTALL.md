@@ -157,6 +157,10 @@
 
 prompt 已依控制面能力完成上述驗證後，才在建立或更新排程的目前對話直接執行一次即時圖片 smoke：使用目前 ChatGPT 可用的原生圖片卡，或開啟可追溯的公開頁面後直接截圖其中的圖片區域，並確認目前對話實際出現可見像素。這是安裝期宿主能力測試，不是 Scheduled Task occurrence；不要求立即觸發指定 task ID，也不得因控制面沒有「立即執行 occurrence」介面而判定 smoke 無法執行。不得要求 verified workspace、pinned loader、repository bootstrap、台灣底圖、原圖下載或原畫質。外部 URL、Markdown 熱連結、路徑字串、圖說或破圖框不算通過。成功後才啟用 recurrence；失敗時最新版 prompt 必須保留且 task 維持暫停，不得回退舊 prompt。
 
+`NON_TEXT_SMOKE_OUTPUT_GATE`
+
+安裝 smoke 的同一則 assistant 回覆必須實際包含可見的非文字 image/media content block 或真實附件。若回覆只有字面序列化的 `!:chatgpt-content-reference{...}`、`image_ref`、Markdown、URL、圖說或路徑，或可觀測結果為 `attachments=[]`，一律不得宣稱 smoke 通過；必須更正為失敗、保持同一 task 暫停，並改用真正的原生圖片卡或公開頁面圖片區域直接截圖重試。不得把文字 token、工具內部 reference 或「畫面如下」當成可見像素。
+
 | 項目 | `full-runtime` | `mobile-native` |
 |---|---|---|
 | 適用環境 | 可執行 bundled Python、物化檔案與 canonical publisher | 無本機 runtime、但能以宿主原生圖片卡或直接截圖交付可見圖片的 ChatGPT Scheduled Task |

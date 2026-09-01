@@ -113,6 +113,22 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
 
         self.assertNotIn("等待 Scheduled Task occurrence", starter)
 
+    def test_install_smoke_rejects_serialized_content_references(self):
+        documents = {
+            name: (ROOT / name).read_text(encoding="utf-8")
+            for name in (
+                "INSTALL.md",
+                "mobile-chatgpt-start-prompt.md",
+            )
+        }
+
+        for name, document in documents.items():
+            with self.subTest(document=name):
+                self.assertIn("NON_TEXT_SMOKE_OUTPUT_GATE", document)
+                self.assertIn("!:chatgpt-content-reference", document)
+                self.assertIn("attachments=[]", document)
+                self.assertIn("不得宣稱 smoke 通過", document)
+
     def test_saved_task_template_accepts_native_screenshot_route(self):
         prompt = (ROOT / "scheduled-task-prompt-template.md").read_text(encoding="utf-8")
         self.assertIn("HOST_VISIBLE_SCREENSHOT_ROUTE", prompt)
