@@ -72,6 +72,16 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
         self.assertIn("一般 list／search 空結果", prompt)
         self.assertNotIn("仍不一致或無法讀回時，不得宣稱排程設置完成", starter)
 
+    def test_current_conversation_binding_uses_available_control_plane_evidence(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        starter = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
+
+        for document in (install, starter):
+            self.assertIn("目前對話內的正式 task 回傳或 task 卡", document)
+            self.assertIn("不要求不存在的 destination 欄位", document)
+
+        self.assertNotIn("沒有回傳 destination 欄位即失敗", install)
+
     def test_prompt_is_updated_before_any_media_smoke(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         update = install.index("SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE")

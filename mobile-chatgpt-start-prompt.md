@@ -15,7 +15,7 @@
 
 在目前這個對話建立每天 06:00、使用目前對話／帳號時區、結果只回覆目前對話的「每日新聞」循環排程；優先更新同名既有排程，不得重複建立。
 
-提交前先全文核對 create／update payload。若同一控制面的 exact task ID view 可用，建立或更新後以回傳的 task ID 讀回並比較完整 prompt（只容許 CRLF／LF 與檔尾換行差異）；只有該 exact-ID view 明確回傳不存在或內容不一致，才更新同一排程後重試並在再次失敗時判定未完成。若沒有 exact-ID view，依 INSTALL.md 核對正式 create／update 回傳中的 task ID、成功狀態、每天 06:00、時區及目前對話 destination；一般 list／search 空結果不得推翻成功回傳、不得觸發重複建立，也不得自行發明另一套讀回機制。
+提交前先全文核對 create／update payload。若同一控制面的 exact task ID view 可用，建立或更新後以回傳的 task ID 讀回並比較完整 prompt（只容許 CRLF／LF 與檔尾換行差異）；只有該 exact-ID view 明確回傳不存在或內容不一致，才更新同一排程後重試並在再次失敗時判定未完成。若沒有 exact-ID view，依 INSTALL.md 核對正式 create／update 回傳中的 task ID、成功狀態、每天 06:00 與時區；在目前對話發出 create／update，且目前對話內的正式 task 回傳或 task 卡顯示相同 exact task ID，即證明 destination 是目前對話，不要求不存在的 destination 欄位。一般 list／search 空結果不得推翻成功回傳、不得觸發重複建立，也不得自行發明另一套讀回機制。
 
 prompt 驗證後，依 INSTALL.md 以同一 ChatGPT／Scheduled Task 執行面完成可見圖片 smoke，確認圖片在目前對話實際可見；通過才啟用循環並回覆排程已完成，失敗則保留最新版 prompt、暫停同一 task 並回報實際失敗步驟。
 ```
