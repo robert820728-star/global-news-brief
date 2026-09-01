@@ -1,4 +1,1260 @@
-YªçŠx-®éÜj×¢ëiºÚ+Š§j[h‘éÜ¢éíÛ9á:-jZ.¶›­–)Ş³V–×÷'B§6öàĞ¦–×÷'BVæ—GFW7@Ğ¦g&öÒF†Æ–"–×÷'BF€Ğ Ğ Ğ¥$ôõBÒF‚…õöf–ÆUõò’ç&W6öÇfR‚’ç&VçG5³ĞĞ Ğ Ğ¦6Æ72—VÆ–æT6öçG&7EFW7G2‡Væ—GFW7BåFW7D66R“ Ğ¢FVbFW7Eö–ç7FÆÅöFö7VÖVçG5÷F†Uö7GVÅ÷V&Æ—6†W%ö6Æ’‡6VÆb“ Ğ¢–ç7FÆÂÒ…$ôõBò$”å5DÄÂæÖB"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ Ğ¢6VÆbæ76W'D–â€Ğ¢#Æ'VæFÆVB×—F†öãâ67&—G2÷V&Æ—6…öæWw5ö'&–Vbç’ÒÖ6†V6·ö–çBÆ6†V6·ö–çCâ Ğ¢"ÒÖÖæ–fW7BÆf–æÂÖÖæ–fW7CâÒÖVF—BÆ6æF–FFRÖVF—Câ Ğ¢"Ò×6÷W&6R×ööÂæWw2×6÷W&6R×ööÂæ§6öâÒÖ'&–VbÇ&VFW#â Ğ¢"ÒÖ÷WGWBÖF—"Ç&VÆV6RÖF—#â"ÀĞ¢–ç7FÆÂÀĞ¢Ğ¢6VÆbæ76W'D–â€Ğ¢#Æ'VæFÆVB×—F†öãâ67&—G2÷V&Æ—6…öæWw5ö'&–Vbç’ÒÖFVÆ—fW"×&V6V—B Ğ¢#Ç&VÆV6RÖF—#â÷&VÆV6R×&V6V—Bæ§6öâÒÖ6†V6·ö–çBÆ6†V6·ö–çCâ Ğ¢"ÒÖ6öçfW'6F–öâ×G&ç7÷'B"ÀĞ¢–ç7FÆÂÀĞ¢Ğ Ğ¢FVbFW7E÷3U÷'VÆUöÖG&—…ö—5÷66÷VEö5÷G&6V&–Æ—G•öæ÷Eö6ö×ÆWFUöWF†÷&—G’‡6VÆb“ Ğ¢ÖG&—‚Ò§6öâæÆöG2€Ğ¢…$ôõBò&Fö72öæWw2×'VÆRÖÖG&—‚æ§6öâ"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢Ğ Ğ¢6VÆbæ76W'DWVÂ‚'G&6V&–Æ—G•÷6æ6†÷B"ÂÖG&—…²&WF†÷&—G•÷7FGW2%ÒĞ¢6VÆbæ76W'DfÇ6R†ÖG&—…²&W††W7F—fR%ÒĞ¢6VÆbæ76W'D–â‚$”å5DÄÂæÖB"ÂÖG&—…²'66÷UöVâ%ÒĞ Ğ¢FVbFW7E÷V&Æ–5÷fÇVU÷c%÷W6W5öæ÷&ÖÆ—¦VE÷vV–v‡FVEöF–ÖVç6–öç2‡6VÆb“ Ğ¢ööÂÒ§6öâæÆöG2€Ğ¢…$ôõBò&æWw2×6÷W&6R×ööÂæ§6öâ"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢Ğ¢&æ¶–ærÒööÅ²'&æ¶–ær%ĞĞ Ğ¢6VÆbæ76W'DWVÂ‚'V&Æ–5÷fÇVU÷c""Â&æ¶–æu²&ÖWF†öB%ÒĞ¢6VÆbæ76W'DWVÂƒRÂ&æ¶–æu²&ÆÆ÷vVE÷66÷&U÷7FW%ÒĞ¢6VÆbæ76W'DWVÂ€Ğ¢ÀĞ¢7VÒ†—FVÕ²'vV–v‡E÷W&6VçB%Òf÷"—FVÒ–â&æ¶–æu²&F–ÖVç6–öç2%ÒçfÇVW2‚’’ÀĞ¢Ğ¢6VÆbæ76W'EG'VR€Ğ¢ÆÂ†—FVÕ²&Ö†–×VÒ%ÒÓÒf÷"—FVÒ–â&æ¶–æu²&F–ÖVç6–öç2%ÒçfÇVW2‚’Ğ¢Ğ Ğ¢FVbFW7Eö6æF–FFU÷66†VÖ÷&WV—&W5÷V&Æ–5÷fÇVU÷c%öWf–FVæ6R‡6VÆb“ Ğ¢66†VÖÒ§6öâæÆöG2€Ğ¢…$ôõBò'66†VÖ2öæWw2Ö6æF–FFRÖVF—Bç66†VÖæ§6öâ"’ç&VE÷FW‡B€Ğ¢Væ6öF–æsÒ'WFbÓ‚ Ğ¢Ğ¢Ğ¢6æF–FFRÒ66†VÖ²"FFVg2%Õ²'c$6æF–FFR%ĞĞ¢&WV—&VBÒ°Ğ¢'66÷&–æuöÖWF†öB"ÀĞ¢'vV–v‡FVE÷66÷&R"ÀĞ¢&6öç6WVVæ6UöWf–FVæ6R"ÀĞ¢&Wf–FVæ6Uöf7G2"ÀĞ¢'öÆ–7•÷7FvR"ÀĞ¢&FVÇFöf7G2"ÀĞ¢&†–v…÷66÷&Uö6†ÆÆVævW2"ÀĞ¢&÷fW&ÆÅö†–v…÷66÷&Uö6†ÆÆVævR"ÀĞ¢&7&÷75öF–ÖVç6–öå÷&F–öæÆW2"ÀĞ¢&Ö–Gö–çE÷&F–öæÆW2"ÀĞ¢&Wf–FVæ6Uö6öæf–FVæ6R"ÀĞ¢&6öæf–FVæ6Uö&æB"ÀĞ¢&w&FU÷7FGW2"ÀĞ¢ĞĞ Ğ¢6VÆbæ76W'EG'VR‡&WV—&VBæ—77V'6WB†6æF–FFU²'&WV—&VB%Ò’Ğ¢f÷"F–ÖVç6–öâ–â66†VÖ²"FFVg2%Õ²&–×÷'Fæ6T'&V¶F÷vâ%Õ²'&÷W'F–W2%ÒçfÇVW2‚“ Ğ¢6VÆbæ76W'DWVÂƒÂF–ÖVç6–öå²&Ö†–×VÒ%ÒĞ Ğ¢6VÆbæ76W'DWVÂ€Ğ¢&F—66÷fW'•÷&–÷&—G•÷c"ÀĞ¢66†VÖ²"FFVg2%Õ²'6÷W&6T6÷fW&vR%Õ²'&÷W'F–W2%Õ²&F—66÷fW'•÷&æ¶–æuöÖWF†öB%Õ²&6öç7B%ÒÀĞ¢Ğ¢6VÆbæ76W'DWVÂƒ"ÂÆVâ‡66†VÖ²"FFVg2%Õ²&6æF–FFR%Õ²&ç”öb%Ò’Ğ Ğ¢FVbFW7Eö†—7F÷&–6Å÷6÷W&6U÷66å÷&V6V—G5öFõöæ÷E÷&WV—&Uö7W'&VçE÷'Våöf–ÆW2‡6VÆb“ Ğ¢66†VÖÒ§6öâæÆöG2€Ğ¢…$ôõBò'66†VÖ2öæWw2Ö6æF–FFRÖVF—Bç66†VÖæ§6öâ"’ç&VE÷FW‡B€Ğ¢Væ6öF–æsÒ'WFbÓ‚ Ğ¢Ğ¢Ğ Ğ¢&WV—&VBÒ6WB‡66†VÖ²"FFVg2%Õ²'6÷W&6T6÷fW&vR%Õ²'&WV—&VB%ÒĞ¢6VÆbæ76W'EG'VR€Ğ¢²'66å÷v–æF÷u÷7F'B"Â'66å÷v–æF÷uöVæB"Â'66åöWf–FVæ6U÷F‚'Òæ—77V'6WB€Ğ¢&WV—&V@Ğ¢Ğ¢Ğ¢&÷W'F–W2Ò66†VÖ²"FFVg2%Õ²'6÷W&6T6÷fW&vR%Õ²'&÷W'F–W2%ĞĞ¢f÷"f–VÆB–â‚'66å÷v–æF÷u÷7F'B"Â'66å÷v–æF÷uöVæB"Â'66åöWf–FVæ6U÷F‚"“ Ğ¢6VÆbæ76W'D–â‚&çVÆÂ"Â&÷W'F–W5¶f–VÆEÕ²'G—R%ÒĞ Ğ¢FVbFW7Eö6æF–FFU÷66†VÖö66WG5öÖö&–ÆUö6ö×7Eö†—7F÷'•÷&öf–ÆR‡6VÆb“ Ğ¢66†VÖÒ§6öâæÆöG2€Ğ¢…$ôõBò'66†VÖ2öæWw2Ö6æF–FFRÖVF—Bç66†VÖæ§6öâ"’ç&VE÷FW‡B€Ğ¢Væ6öF–æsÒ'WFbÓ‚ Ğ¢Ğ¢Ğ Ğ¢6VÆbæ76W'D–â€Ğ¢²"G&Vb#¢"2òFFVg2ö6ö×7D†—7F÷&–6Ä6æF–FFR'ÒÀĞ¢66†VÖ²"FFVg2%Õ²&6æF–FFR%Õ²&ç”öb%ÒÀĞ¢Ğ¢6ö×7BÒ66†VÖ²"FFVg2%Õ²&6ö×7D†—7F÷&–6Ä6æF–FFR%ĞĞ¢6VÆbæ76W'Dæ÷D–â‚&w&F–æuöWf–FVæ6R"Â6ö×7E²'&WV—&VB%ÒĞ¢6VÆbæ76W'Dæ÷D–â‚'6÷W&6UöVF—B"Â6ö×7E²'&WV—&VB%ÒĞ¢6VÆbæ76W'Dæ÷D–â‚&6æF–FFU÷W&Ç2"Â6ö×7E²'&WV—&VB%ÒĞ Ğ¢FVbFW7E÷&ö×E÷6÷W&6U÷66åö6†V6·ö–çEöÖF6†W5÷'VçF–ÖUö6öçG&7B‡6VÆb“ Ğ¢&ö×BÒ…$ôõBò&F–Ç’×66†VGVÆR×&ö×BæÖB"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ Ğ¢6VÆbæ76W'D–â€Ğ¢'Â6÷W&6R×66æÂ6÷W&6Uö6æF–FFW6Â&VÆWfæ6UövFVÂ Ğ¢&ÖöFVÅ÷6÷W&6Uö6æF–FFW6Â"ÀĞ¢&ö×BÀĞ¢Ğ Ğ¢FVbFW7EöÖæ–fW7E÷66†VÖ÷&WV—&W5÷fÆ–FFVE÷V&Æ–5÷fÇVU÷c%öf–VÆG2‡6VÆb“ Ğ¢66†VÖÒ§6öâæÆöG2€Ğ¢…$ôõBò'66†VÖ2öæWw2ÖWfVçBÖÖæ–fW7Bç66†VÖæ§6öâ"’ç&VE÷FW‡B€Ğ¢Væ6öF–æsÒ'WFbÓ‚ Ğ¢Ğ¢Ğ¢WfVçBÒ66†VÖ²"FFVg2%Õ²&WfVçB%ĞĞ¢6VÆbæ76W'EG'VR€Ğ¢°Ğ¢'66÷&–æuöÖWF†öB"ÀĞ¢'fÆ–FFVEö–×÷'Fæ6U÷66÷&R"ÀĞ¢'fÆ–FFVEöw&FR"ÀĞ¢&w&FU÷7FGW2"ÀĞ¢&Wf–FVæ6Uö6öæf–FVæ6R"ÀĞ¢&6öæf–FVæ6Uö&æB"ÀĞ¢Òæ—77V'6WB†WfVçE²'&WV—&VB%ÒĞ¢Ğ Ğ¢FVbFW7Eö–ç7FÆÅö—5ö6ö×ÆWFU÷V&Æ–5÷fÇVU÷c%öVçG'—ö–çB‡6VÆb“ Ğ¢–ç7FÆÂÒ…$ôõBò$”å5DÄÂæÖB"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢6öçG&7BÒ–ç7FÆÅ¶–ç7FÆÂæ–æFW‚‚"222V&Æ–2fÇVRc"Z¾Zú¾ˆˆ~š™~ŠØšn[¨ò"“¥ĞĞ¢÷&FW&VE÷&WV—&VÖVçG2Ò€Ğ¢'6VÖçF–5öWfVçEö–B"ÀĞ¢&6öç6WVVæ6UöWf–FVæ6Rç&VÆ—¦VB"ÀĞ¢&F–ÖVç6–öåöWf–FVæ6R"ÀĞ¢&Ö–Gö–çE÷&F–öæÆW2"ÀĞ¢&FVÇFöf7G2"ÀĞ¢&7&÷75öF–ÖVç6–öå÷&F–öæÆW2"ÀĞ¢&†–v…÷66÷&Uö6†ÆÆVævW2"ÀĞ¢'öÆ–7•÷7FvR"ÀĞ¢&Wf–FVæ6Uö6öæf–FVæ6R"ÀĞ¢&w&FU÷7FGW3×fÆ–FFVB"ÀĞ¢'fÆ–FFVEö–×÷'Fæ6U÷66÷&R"ÀĞ¢Ğ¢÷6—F–öç2Ò¶6öçG&7Bæ–æFW‚‡&WV—&VÖVçB’f÷"&WV—&VÖVçB–â÷&FW&VE÷&WV—&VÖVçG5ĞĞ¢6VÆbæ76W'DWVÂ‡6÷'FVB‡÷6—F–öç2’Â÷6—F–öç2Ğ¢6VÆbæ76W'D–â‚#3^ûÈó#^ûÈóR^ûÈóR^ûÈó^ûÈóR"Â–ç7FÆÂĞ¢6VÆbæ76W'D–â‚%&VFW.8Öæ–fW7BˆˆrV&Æ—6†W"Xú®hê^XùrfÆ–FFVB"Â–ç7FÆÂĞ Ğ¢FVbFW7E÷&UöÖæ–fW7E÷&V6÷fW'•ö'VæFÆUö—5ö6öæF—F–öæÅöæ÷Eö÷6VÆV7F–öåövFR‡6VÆb“ Ğ¢Fö7VÖVçG2Ò€Ğ¢$ôõBò&F–Ç’×66†VGVÆR×&ö×BæÖB"ÀĞ¢$ôõBò"ævVçG2÷6¶–ÆÇ2öF–Ç’ÖæWw2Ö'&–Vbõ4´”ÄÂæÖB"ÀĞ¢$ôõBò"ævVçG2÷6¶–ÆÇ2÷&V6÷fW"ÖæWw2×'Vâõ4´”ÄÂæÖB"ÀĞ¢Ğ¢f÷"F‚–âFö7VÖVçG3 Ğ¢FW‡BÒF‚ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢f÷"Ö&¶W"–â€Ğ¢$4ôäD•D”ôäÅõ$T4õdU%•ô%TäDÄUõôÄ”5’"ÀĞ¢'6²×&V6÷fW'’"ÀĞ¢'&W7F÷&R"ÀĞ¢$d•%5Eõ4TÄT5EôäUu5ôUdTåE5ôU„T5UD”ôâ"ÀĞ¢&7&÷72Ö†÷7B†æFöfb"ÀĞ¢&W†VÖW&Âv÷&·76R"ÀĞ¢'v&æ–ær÷"F–ÖV÷WB&÷VæF'’"ÀĞ¢“ Ğ¢6VÆbæ76W'D–â†Ö&¶W"ÂFW‡BÂF‚ææÖRĞ¢6VÆbæ76W'Dæ÷D–â‚%$UôÔä”dU5Eõ$T4õdU%•ô%TäDÄUôtDR"ÂFW‡BÂF‚ææÖRĞ¢6VÆbæ76W'D–â‚&Æö6Â†6‚"ÂFW‡BÂF‚ææÖRĞ Ğ¢6†V6·ö–çBÒ…$ôõBò'67&—G2öæWw5÷'Våö6†V6·ö–çBç’"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢6VÆbæ76W'D–â‚r'67&—G2öÖævUö6æöæ–6Å÷'Våö'VæFÆRç’"rÂ6†V6·ö–çBĞ Ğ¢FVbFW7EöÆÅöF—66÷fW'•÷&÷w5ö†fUö6ö×ÆWFUöÖöFVÅöFÖ—76–öåövFR‡6VÆb“ Ğ¢ööÂÒ§6öâæÆöG2‚…$ôõBò&æWw2×6÷W&6R×ööÂæ§6öâ"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"’Ğ¢öÆ–7’ÒööÅ²&ÖöFVÅöFÖ—76–öå÷öÆ–7’%ĞĞ¢6VÆbæ76W'EG'VR‡öÆ–7•²&ÆÅöF—66÷fW'•÷&÷w5öFÖ—GFVB%ÒĞ¢6VÆbæ76W'EG'VR‡öÆ–7•²'&÷WF–æuööæÇ•ö6öçG&öÇ5ö‡–G&F–öåöFWF‚%ÒĞ¢6VÆbæ76W'EG'VR‡öÆ–7•²&†VEö—5÷&V6ÆÅööæÇ’%ÒĞ¢6VÆbæ76W'EG'VR‡öÆ–7•²&'6Væ6Uög&öÕö†VEöæWfW%öW†6ÇVFW5öç•öF—66÷fW'•÷&÷r%ÒĞ¢6VÆbæ76W'Dæ÷D–â‚&6ö×ÆWFU÷6÷W&6U÷&öÆW2"ÂöÆ–7’Ğ Ğ¢Fö7VÖVçG2Ò€Ğ¢$ôõBò&æWw2Ö'&–Vb×6WGF–æw2æÖB"ÀĞ¢$ôõBò&F–Ç’×66†VGVÆR×&ö×BæÖB"ÀĞ¢$ôõBò&Öö&–ÆRÖ6†FwBÖF–Ç’×&ö×BæÖB"ÀĞ¢$ôõBò"ævVçG2÷6¶–ÆÇ2÷6VÆV7BÖæWw2ÖWfVçG2õ4´”ÄÂæÖB"ÀĞ¢Ğ¢f÷"F‚–âFö7VÖVçG3 Ğ¢FW‡BÒF‚ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢6VÆbæ76W'D–â‚%$Tt”ôäÅõ5UÄTÔTåEô4ôÕÄUDUôÔôDTÅôDÔ•54”ôåôtDR"ÂFW‡BÂF‚ææÖRĞ¢6VÆbæ76W'D–â‚'fÆ–FFUöÆö6Å÷6÷W&6UöFÖ—76–öâç’"ÂFW‡BÂF‚ææÖRĞ Ğ¢Öö&–ÆRÒ…$ôõBò&Öö&–ÆRÖ6†FwBÖF–Ç’×&ö×BæÖB"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢6VÆbæ76W'D–â‚$Ôô$”ÄUõ5E%T5EU$ÅôDÔ•54”ôåôUT•dÄTåB"ÂÖö&–ÆRĞ¢6VÆbæ76W'D–â‚.Xú®iÈXúşYû~ŠÂ'VçF–ÖRi˜""ÂÖö&–ÆRĞ Ğ¢6†&VEöFö7VÖVçG2Ò€Ğ¢$ôõBò&æWw2Ö'&–Vb×6WGF–æw2æÖB"ÀĞ¢$ôõBò"ævVçG2÷6¶–ÆÇ2÷6VÆV7BÖæWw2ÖWfVçG2õ4´”ÄÂæÖB"ÀĞ¢Ğ¢f÷"F‚–â6†&VEöFö7VÖVçG3 Ğ¢FW‡BÒF‚ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢6VÆbæ76W'D–â‚$Ôô$”ÄUõ5E%T5EU$ÅôDÔ•54”ôåôUT•dÄTåB"ÂFW‡BÂF‚ææÖRĞ¢6VÆbæ76W'D–â‚.Xú®iÈXúşYû~ŠÂ'VçF–ÖRi˜""ÂFW‡BÂF‚ææÖRĞ Ğ¢FVbFW7EöÖö&–ÆU÷&VFW%÷fÆ–FF–öåöFöW5öæ÷E÷&WV—&U÷—F†öå÷'VçF–ÖR‡6VÆb“ Ğ¢Öö&–ÆRÒ…$ôõBò&Öö&–ÆRÖ6†FwBÖF–Ç’×&ö×BæÖB"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢6VÆbæ76W'D–â‚$Ôô$”ÄUõ$TDU%õ5E%T5EU$UôUT•dÄTåB"ÂÖö&–ÆRĞ¢6VÆbæ76W'Dæ÷D–â‚.˜X{®X˜ŞYû~ŠÂ67&—G2÷fÆ–FFUöæWw5ö'&–Vbç’'&–Vb"ÂÖö&–ÆRĞ¢6WGF–æw2Ò…$ôõBò&æWw2Ö'&–Vb×6WGF–æw2æÖB"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢6VÆbæ76W'D–â‚$Ôô$”ÄUõ$TDU%õ5E%T5EU$UôUT•dÄTåB"Â6WGF–æw2Ğ¢6VÆbæ76W'D–â‚.Xú®iÈXúşYû~ŠÂ'VçF–ÖRi˜""Â6WGF–æw2Ğ Ğ¢FVbFW7Eö†–v…öWF†÷&—G•öfÆ÷u÷&÷WFW5÷'VçF–ÖUööæÇ•ö'F–f7G5ö'•öW†V7WF–öåöÖöFR‡6VÆb“ Ğ¢–ç7FÆÂÒ…$ôõBò$”å5DÄÂæÖB"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢Öö&–ÆRÒ…$ôõBò&Öö&–ÆRÖ6†FwBÖF–Ç’×&ö×BæÖB"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢66†VGVÆRÒ…$ôõBò&F–Ç’×66†VGVÆR×&ö×BæÖB"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ Ğ¢f÷"&WV—&VÖVçB–â€Ğ¢&gVÆÂ×'VçF–ÖRYû~ŠÂ6æöæ–6Â6†V6·ö–çB4Ä’"ÀĞ¢&Öö&–ÆRÖæF—fRYÊ‚6&–Æ—G’&÷WF–ær˜Zé®[èÎ[»®z¸¾h‰b&W7VÖR"ÀĞ¢&gVÆÂ×'VçF–ÖRxšXÉnKŠnš™~ŠØ’æWw2ÖWfVçBÖÖæ–fW7Bæ§6öæ"ÀĞ¢&Öö&–ÆRÖæF—fRKˆŞ[»®z¸¾h‰nˆ.z‹˜	®˜âgVÆÂ×'VçF–ÖRÖæ–fW7B66†VÖ"ÀĞ¢“ Ğ¢6VÆbæ76W'D–â‡&WV—&VÖVçBÂ–ç7FÆÂĞ¢6VÆbæ76W'D–â€Ğ¢&÷fW'f–Wrˆˆr'Vâ×66÷VB6æF–FFRVF—By¨B6VÆV7FVBWfVçB”G2Zèhb"ÀĞ¢Öö&–ÆRÀĞ¢Ğ¢6VÆbæ76W'Dæ÷D–â‚&÷fW'f–WrˆˆrÖæ–fW7BK¨¾K»b”BZèhb"ÂÖö&–ÆRĞ¢6VÆbæ76W'Dæ÷D–â‚&6†V6·ö–çN8Öæ–fW7Bˆˆr&V6V—G2"ÂÖö&–ÆRĞ¢6VÆbæ76W'D–â‚%44„TETÄUõ$ôÕEõUDDUõ$T4TDU5õ4Ôô´UôtDR"Â66†VGVÆR¢6VÆbæ76W'D–â‚%4ÔUõ44„TETÄTEô„õ5Eõd•4”$ÄUõ45$TTå4„õEõ4Ôô´UôtDR"Â66†VGVÆR¢6VÆbæ76W'D–â‚'&÷WFRF†—2ö67W'&Væ6RFòÖö&–ÆRÖ6†FwBÖF–Ç’×&ö×BæÖF"Â66†VGVÆR¢6VÆbæ76W'Dæ÷D–â€Ğ¢'6÷W&6RÖ–ÖvRF÷væÆöB÷"67&VVç6†÷B7V—6—F–öâ†2&VVâG&–VB"Â66†VGVÆPĞ¢Ğ Ğ¢FVbFW7E÷6†&VE÷6WGF–æw5öæE÷f—7VÅ÷7FvW5ö&UöÖöFUöv&R‡6VÆb“ Ğ¢6WGF–æw2Ò…$ôõBò&æWw2Ö'&–Vb×6WGF–æw2æÖB"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢–ç7FÆÂÒ…$ôõBò$”å5DÄÂæÖB"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ Ğ¢f÷"&WV—&VÖVçB–â€Ğ¢&gVÆÂ×'VçF–ÖRy¨B÷7B×6VÆV7F–öâWfVçBW†6†ævR"ÀĞ¢&Öö&–ÆRÖæF—fRKºR'Vâ×66÷VB6æF–FFRVF—B"ÀĞ¢.KéÒW†V7WF–öâÖöFRYû~ŠÎXúşyJ‹zş[é"ÀĞ¢&gVÆÂ×'VçF–ÖRYû~ŠÂ67&—G2÷fÆ–FFUöæWw5ö'&–Vbç–"ÀĞ¢&Öö&–ÆRÖæF—fRYû~ŠÂÔô$”ÄUõ$TDU%õ5E%T5EU$UôUT•dÄTåF"ÀĞ¢“ Ğ¢6VÆbæ76W'D–â‡&WV—&VÖVçBÂ6WGF–æw2Ğ¢f÷"&WV—&VÖVçB–â€Ğ¢&Öö&–ÆRÖæF—fRKùŞZÙ‚fW&–f–6F–öâæ§6öæ"ÀĞ¢&Öö&–ÆRÖæF—fRKùŞZÙ‚ÖÖFV6—6–öç2æ§6öæ"ÀĞ¢&Öö&–ÆRÖæF—fRKˆŞYû~ŠÎiÊÎj™ò&VæFW&W""ÀĞ¢“ Ğ¢6VÆbæ76W'D–â‡&WV—&VÖVçBÂ–ç7FÆÂĞ Ğ¢FVbFW7E÷fW&–f–6F–öå÷&V6÷fW'•ö—5öÖöFUöv&U÷v—F†÷WEöÖö&–ÆUö6†V6·ö–çEö÷%öÖæ–fW7B‡6VÆb“ Ğ¢–ç7FÆÂÒ…$ôõBò$”å5DÄÂæÖB"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢F–Ç’Ò…$ôõBò"ævVçG2÷6¶–ÆÇ2öF–Ç’ÖæWw2Ö'&–Vbõ4´”ÄÂæÖB"’ç&VE÷FW‡B€Ğ¢Væ6öF–æsÒ'WFbÓ‚ Ğ¢Ğ¢fW&–g’Ò…$ôõBò"ævVçG2÷6¶–ÆÇ2÷fW&–g’ÖæWw2ÖWfVçG2õ4´”ÄÂæÖB"’ç&VE÷FW‡B€Ğ¢Væ6öF–æsÒ'WFbÓ‚ Ğ¢Ğ¢&V6÷fW"Ò…$ôõBò"ævVçG2÷6¶–ÆÇ2÷&V6÷fW"ÖæWw2×'Vâõ4´”ÄÂæÖB"’ç&VE÷FW‡B€Ğ¢Væ6öF–æsÒ'WFbÓ‚ Ğ¢Ğ¢6öÖ&–æVBÒ%Æâ"æ¦ö–â‚†–ç7FÆÂÂF–Ç’ÂfW&–g’Â&V6÷fW"’Ğ¢f÷"&WV—&VÖVçB–â€Ğ¢&Öö&–ÆRÖæF—fRKùŞhÈ7W'&VçE÷7FvS×6VÆV7F–öâ×fW&–f–VF"ÀĞ¢.i»NikYÎKˆ'Vây¨B6æF–FFRÖVF—Bæ§6öæ"ÀĞ¢.i»Nik6æF–FFUöVF—Eö'F–f7Fy¨Bv—B&Æö"4„"ÀĞ¢.KˆŞ[é~Yû~ŠÂ7FvR&Vw&W76–öâ"ÀĞ¢.KˆŞ[é~[»®z¸²Öö&–ÆR6†V6·ö–çBh‰bÖæ–fW7B"ÀĞ¢“ Ğ¢6VÆbæ76W'D–â‡&WV—&VÖVçBÂ6öÖ&–æVBĞ¢6VÆbæ76W'D–â‚&gVÆÂ×'VçF–ÖR"ÂfW&–g’Ğ¢6VÆbæ76W'D–â‚&Öö&–ÆRÖæF—fR"ÂfW&–g’Ğ¢6VÆbæ76W'D–â‚&gVÆÂ×'VçF–ÖR"Â&V6÷fW"Ğ¢6VÆbæ76W'D–â‚&Öö&–ÆRÖæF—fR"Â&V6÷fW"Ğ Ğ¢FVbFW7E÷&VÆV6U÷6÷W&6UöæE÷fW'6–öå÷&V6÷&E÷&V6VFUö67VÆUövVæW&F–öâ‡6VÆb“ Ğ¢–ç7FÆÂÒ…$ôõBò$”å5DÄÂæÖB"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢6VÆbæ76W'D–â‚%4õU$4Uô$Tdõ$Uô45TÄUõ$TÄT4Uôõ$DU""Â–ç7FÆÂĞ¢6VÆbæ76W'D–â‚.KˆŞ[é~YÊ‚67VÆR6öÖÖ—B[èÎXhŞKúîiK’7F—fRG&6¶VB6÷W&6R"Â–ç7FÆÂĞ Ğ¢FVbFW7EöÖö&–ÆUöæF—fUö6&G5÷7F•ö÷WG6–FU÷7G&–7EöÆö6ÅöÖæ–fW7Eö76WG2‡6VÆb“ ¢66†VÖÒ§6öâæÆöG2€Ğ¢…$ôõBò'66†VÖ2öæWw2ÖWfVçBÖÖæ–fW7Bç66†VÖæ§6öâ"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢Ğ¢6÷W&6Uö6†V6²Ò66†VÖ²"FFVg2%Õ²&–ÖvU6÷W&6T6†V6²%ĞĞ¢–ÖvUö76WBÒ66†VÖ²"FFVg2%Õ²&–ÖvT76WB%ĞĞ¢Öö&–ÆRÒ…$ôõBò&Öö&–ÆRÖ6†FwBÖF–Ç’×&ö×BæÖB"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢–ÖvU÷6¶–ÆÂÒ€Ğ¢$ôõBò"ævVçG2÷6¶–ÆÇ2ö6öÆÆV7BÖæWw2Ö–ÖvW2õ4´”ÄÂæÖB Ğ¢’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ Ğ¢6VÆbæ76W'D–â‚&Wf–FVæ6U÷F‚"Â6÷W&6Uö6†V6µ²'&WV—&VB%ÒĞ¢6VÆbæ76W'DWVÂ€Ğ¢'67&—G2öÖFW&–Æ—¦UöæWw5ö–ÖvW2ç’"ÀĞ¢–ÖvUö76WE²'&÷W'F–W2%Õ²&ÖFW&–Æ—¦VEö'’%Õ²&6öç7B%ÒÀĞ¢Ğ¢6VÆbæ76W'D–â‚%44„TETÄTEô„õ5Eõd•4”$ÄUõ45$TTå4„õEõ$õUDR"ÂÖö&–ÆR¢6VÆbæ76W'D–â‚.KˆŞŠhk"fW&–f–VBv÷&·76^8XéşZx¾j©Nh‰nXéşyZ¾‹:¢"ÂÖö&–ÆR¢6VÆbæ76W'D–â‚$UdU%•ôD”Å•ôäUu5ôU„T5UD”ôåôtDR"Â–ÖvU÷6¶–ÆÂ¢6VÆbæ76W'D–â‚.š™Ú.YÉnx˜~XØYùşy¨NXéşyIşhŠ®YÉb"Â–ÖvU÷6¶–ÆÂ Ğ¢FVbFW7EöÖöFU÷7V6–f–5ö–ÖvU÷&VfW&Væ6UöæE÷&VFÖUöFõöæ÷E÷&WV—&UöÆö6ÅöÖö&–ÆUöf–ÆW2‡6VÆb“ ¢öÆ–7’Ò€Ğ¢$ôõBò"ævVçG2÷6¶–ÆÇ2ö6öÆÆV7BÖæWw2Ö–ÖvW2÷&VfW&Væ6W2ö–ÖvR×öÆ–7’æÖB Ğ¢’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ¢&VFÖRÒ…$ôõBò%$TDÔRæÖB"’ç&VE÷FW‡B†Væ6öF–æsÒ'WFbÓ‚"Ğ Ğ¢6VÆbæ76W'D–â‚&gVÆÂ×'VçF–ÖRKùŞZÙiÊÎYËš™Ú.ŠØi9¢"ÂıyÓ-¢G§²ÚîÆ­yÕs/SKILL.md",
+import json
+import unittest
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+class PipelineContractTests(unittest.TestCase):
+    def test_install_documents_the_actual_publisher_cli(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+
+        self.assertIn(
+            "<bundled-python> scripts/publish_news_brief.py --checkpoint <checkpoint> "
+            "--manifest <final-manifest> --audit <candidate-audit> "
+            "--source-pool news-source-pool.json --brief <reader> "
+            "--output-dir <release-dir>",
+            install,
+        )
+        self.assertIn(
+            "<bundled-python> scripts/publish_news_brief.py --deliver-receipt "
+            "<release-dir>/release-receipt.json --checkpoint <checkpoint> "
+            "--conversation-transport",
+            install,
+        )
+
+    def test_s5_rule_matrix_is_scoped_as_traceability_not_complete_authority(self):
+        matrix = json.loads(
+            (ROOT / "docs/news-rule-matrix.json").read_text(encoding="utf-8")
+        )
+
+        self.assertEqual("traceability_snapshot", matrix["authority_status"])
+        self.assertFalse(matrix["exhaustive"])
+        self.assertIn("INSTALL.md", matrix["scope_en"])
+
+    def test_public_value_v2_uses_normalized_weighted_dimensions(self):
+        pool = json.loads(
+            (ROOT / "news-source-pool.json").read_text(encoding="utf-8")
+        )
+        ranking = pool["ranking"]
+
+        self.assertEqual("public_value_v2", ranking["method"])
+        self.assertEqual(5, ranking["allowed_score_step"])
+        self.assertEqual(
+            100,
+            sum(item["weight_percent"] for item in ranking["dimensions"].values()),
+        )
+        self.assertTrue(
+            all(item["maximum"] == 100 for item in ranking["dimensions"].values())
+        )
+
+    def test_candidate_schema_requires_public_value_v2_evidence(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-candidate-audit.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        candidate = schema["$defs"]["v2Candidate"]
+        required = {
+            "scoring_method",
+            "weighted_score",
+            "consequence_evidence",
+            "evidence_facts",
+            "policy_stage",
+            "delta_facts",
+            "high_score_challenges",
+            "overall_high_score_challenge",
+            "cross_dimension_rationales",
+            "midpoint_rationales",
+            "evidence_confidence",
+            "confidence_band",
+            "grade_status",
+        }
+
+        self.assertTrue(required.issubset(candidate["required"]))
+        for dimension in schema["$defs"]["importanceBreakdown"]["properties"].values():
+            self.assertEqual(100, dimension["maximum"])
+
+        self.assertEqual(
+            "discovery_priority_v1",
+            schema["$defs"]["sourceCoverage"]["properties"]["discovery_ranking_method"]["const"],
+        )
+        self.assertEqual(2, len(schema["$defs"]["candidate"]["anyOf"]))
+
+    def test_historical_source_scan_receipts_do_not_require_current_run_files(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-candidate-audit.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+        required = set(schema["$defs"]["sourceCoverage"]["required"])
+        self.assertTrue(
+            {"scan_window_start", "scan_window_end", "scan_evidence_path"}.issubset(
+                required
+            )
+        )
+        properties = schema["$defs"]["sourceCoverage"]["properties"]
+        for field in ("scan_window_start", "scan_window_end", "scan_evidence_path"):
+            self.assertIn("null", properties[field]["type"])
+
+    def test_candidate_schema_accepts_mobile_compact_history_profile(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-candidate-audit.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+        self.assertIn(
+            {"$ref": "#/$defs/compactHistoricalCandidate"},
+            schema["$defs"]["candidate"]["anyOf"],
+        )
+        compact = schema["$defs"]["compactHistoricalCandidate"]
+        self.assertNotIn("grading_evidence", compact["required"])
+        self.assertNotIn("source_audit", compact["required"])
+        self.assertNotIn("candidate_urls", compact["required"])
+
+    def test_prompt_source_scan_checkpoint_matches_runtime_contract(self):
+        prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+
+        self.assertIn(
+            "| `source-scan` | `source_candidates`, `relevance_gate`, "
+            "`model_source_candidates` |",
+            prompt,
+        )
+
+    def test_manifest_schema_requires_validated_public_value_v2_fields(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-event-manifest.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        event = schema["$defs"]["event"]
+        self.assertTrue(
+            {
+                "scoring_method",
+                "validated_importance_score",
+                "validated_grade",
+                "grade_status",
+                "evidence_confidence",
+                "confidence_band",
+            }.issubset(event["required"])
+        )
+
+    def test_install_is_complete_public_value_v2_entrypoint(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        contract = install[install.index("### Public Value V2 å¡«å¯«èˆ‡é©—è­‰é †åº"):]
+        ordered_requirements = (
+            "semantic_event_id",
+            "consequence_evidence.realized",
+            "dimension_evidence",
+            "midpoint_rationales",
+            "delta_facts",
+            "cross_dimension_rationales",
+            "high_score_challenges",
+            "policy_stage",
+            "evidence_confidence",
+            "grade_status=validated",
+            "validated_importance_score",
+        )
+        positions = [contract.index(requirement) for requirement in ordered_requirements]
+        self.assertEqual(sorted(positions), positions)
+        self.assertIn("30%ï¼20%ï¼15%ï¼15%ï¼10%ï¼10%", install)
+        self.assertIn("Readerã€manifest èˆ‡ publisher åªæ¥å— validated", install)
+
+    def test_pre_manifest_recovery_bundle_is_conditional_not_a_selection_gate(self):
+        documents = (
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / ".agents/skills/daily-news-brief/SKILL.md",
+            ROOT / ".agents/skills/recover-news-run/SKILL.md",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            for marker in (
+                "CONDITIONAL_RECOVERY_BUNDLE_POLICY",
+                "pack-recovery",
+                "restore",
+                "FIRST_SELECT_NEWS_EVENTS_EXECUTION",
+                "cross-host handoff",
+                "ephemeral workspace",
+                "warning or timeout boundary",
+            ):
+                self.assertIn(marker, text, path.name)
+            self.assertNotIn("PRE_MANIFEST_RECOVERY_BUNDLE_GATE", text, path.name)
+            self.assertIn("local hash", text, path.name)
+
+        checkpoint = (ROOT / "scripts/news_run_checkpoint.py").read_text(encoding="utf-8")
+        self.assertIn('"scripts/manage_canonical_run_bundle.py"', checkpoint)
+
+    def test_all_discovery_rows_have_complete_model_admission_gate(self):
+        pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
+        policy = pool["model_admission_policy"]
+        self.assertTrue(policy["all_discovery_rows_admitted"])
+        self.assertTrue(policy["routing_only_controls_hydration_depth"])
+        self.assertTrue(policy["heat_is_recall_only"])
+        self.assertTrue(policy["absence_from_heat_never_excludes_any_discovery_row"])
+        self.assertNotIn("complete_source_roles", policy)
+
+        documents = (
+            ROOT / "news-brief-settings.md",
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/select-news-events/SKILL.md",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE", text, path.name)
+            self.assertIn("validate_local_source_admission.py", text, path.name)
+
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        self.assertIn("MOBILE_STRUCTURAL_ADMISSION_EQUIVALENT", mobile)
+        self.assertIn("åªæœ‰å¯åŸ·è¡Œ runtime æ™‚", mobile)
+
+        shared_documents = (
+            ROOT / "news-brief-settings.md",
+            ROOT / ".agents/skills/select-news-events/SKILL.md",
+        )
+        for path in shared_documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("MOBILE_STRUCTURAL_ADMISSION_EQUIVALENT", text, path.name)
+            self.assertIn("åªæœ‰å¯åŸ·è¡Œ runtime æ™‚", text, path.name)
+
+    def test_mobile_reader_validation_does_not_require_python_runtime(self):
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        self.assertIn("MOBILE_READER_STRUCTURE_EQUIVALENT", mobile)
+        self.assertNotIn("é€å‡ºå‰åŸ·è¡Œ `scripts/validate_news_brief.py brief", mobile)
+        settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
+        self.assertIn("MOBILE_READER_STRUCTURE_EQUIVALENT", settings)
+        self.assertIn("åªæœ‰å¯åŸ·è¡Œ runtime æ™‚", settings)
+
+    def test_high_authority_flow_routes_runtime_only_artifacts_by_execution_mode(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        schedule = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "full-runtime åŸ·è¡Œ canonical checkpoint CLI",
+            "mobile-native åœ¨ capability routing é¸å®šå¾Œå»ºç«‹æˆ– resume",
+            "full-runtime ç‰©åŒ–ä¸¦é©—è­‰ `news-event-manifest.json`",
+            "mobile-native ä¸å»ºç«‹æˆ–è²ç¨±é€šé full-runtime manifest schema",
+        ):
+            self.assertIn(requirement, install)
+        self.assertIn(
+            "overview èˆ‡ run-scoped candidate audit çš„ selected event IDs å®ˆæ†",
+            mobile,
+        )
+        self.assertNotIn("overview èˆ‡ manifest äº‹ä»¶ ID å®ˆæ†", mobile)
+        self.assertNotIn("checkpointã€manifest èˆ‡ receipts", mobile)
+        self.assertIn("SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE", schedule)
+        self.assertIn("SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE", schedule)
+        self.assertIn("route this occurrence to `mobile-chatgpt-daily-prompt.md`", schedule)
+        self.assertNotIn(
+            "source-image download or screenshot acquisition has been tried", schedule
+        )
+
+    def test_shared_settings_and_visual_stages_are_mode_aware(self):
+        settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "full-runtime çš„ post-selection event exchange",
+            "mobile-native ä»¥ run-scoped candidate audit",
+            "ä¾ execution mode åŸ·è¡Œå¯ç”¨è·¯å¾‘",
+            "full-runtime åŸ·è¡Œ `scripts/validate_news_brief.py`",
+            "mobile-native åŸ·è¡Œ `MOBILE_READER_STRUCTURE_EQUIVALENT`",
+        ):
+            self.assertIn(requirement, settings)
+        for requirement in (
+            "mobile-native ä¿å­˜ `verification.json`",
+            "mobile-native ä¿å­˜ `map-decisions.json`",
+            "mobile-native ä¸åŸ·è¡Œæœ¬æ©Ÿ renderer",
+        ):
+            self.assertIn(requirement, install)
+
+    def test_verification_recovery_is_mode_aware_without_mobile_checkpoint_or_manifest(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        daily = (ROOT / ".agents/skills/daily-news-brief/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        verify = (ROOT / ".agents/skills/verify-news-events/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        recover = (ROOT / ".agents/skills/recover-news-run/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        combined = "\n".join((install, daily, verify, recover))
+        for requirement in (
+            "mobile-native ä¿æŒ `current_stage=selection-verified`",
+            "æ›´æ–°åŒä¸€ run çš„ `candidate-audit.json`",
+            "æ›´æ–° `candidate_audit_artifact` çš„ Git blob SHA",
+            "ä¸å¾—åŸ·è¡Œ stage regression",
+            "ä¸å¾—å»ºç«‹ mobile checkpoint æˆ– manifest",
+        ):
+            self.assertIn(requirement, combined)
+        self.assertIn("full-runtime", verify)
+        self.assertIn("mobile-native", verify)
+        self.assertIn("full-runtime", recover)
+        self.assertIn("mobile-native", recover)
+
+    def test_release_source_and_version_record_precede_capsule_generation(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        self.assertIn("SOURCE_BEFORE_CAPSULE_RELEASE_ORDER", install)
+        self.assertIn("ä¸å¾—åœ¨ capsule commit å¾Œå†ä¿®æ”¹ active tracked source", install)
+
+    def test_mobile_native_cards_stay_outside_strict_local_manifest_assets(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-event-manifest.schema.json").read_text(encoding="utf-8")
+        )
+        source_check = schema["$defs"]["imageSourceCheck"]
+        image_asset = schema["$defs"]["imageAsset"]
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        image_skill = (
+            ROOT / ".agents/skills/collect-news-images/SKILL.md"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("evidence_path", source_check["required"])
+        self.assertEqual(
+            "scripts/materialize_news_images.py",
+            image_asset["properties"]["materialized_by"]["const"],
+        )
+        self.assertIn("SCHEDULED_HOST_VISIBLE_SCREENSHOT_ROUTE", mobile)
+        self.assertIn("ä¸è¦æ±‚ verified workspaceã€åŸå§‹æª”æˆ–åŸç•«è³ª", mobile)
+        self.assertIn("EVERY_DAILY_NEWS_EXECUTION_GATE", image_skill)
+        self.assertIn("é é¢åœ–ç‰‡å€åŸŸçš„åŸç”Ÿæˆªåœ–", image_skill)
+
+    def test_mode_specific_image_reference_and_readme_do_not_require_local_mobile_files(self):
+        policy = (
+            ROOT / ".agents/skills/collect-news-images/references/image-policy.md"
+        ).read_text(encoding="utf-8")
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+
+        self.assertIn("full-runtime ä¿å­˜æœ¬åœ°é é¢è­‰æ“š", policy)
+        self.assertIn("mobile-native ä¿å­˜å®¿ä¸»çµæ§‹åŒ–æª¢æŸ¥çµæœ", policy)
+        self.assertIn("EVERY_DAILY_NEWS_EXECUTION_GATE", readme)
+        self.assertIn("SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE", readme)
+        self.assertIn("åªæœ‰ full-runtime å–å¾—ä¸¦é©—è­‰ capsule", readme)
+
+    def test_capsule_workflow_runs_full_repository_suite(self):
+        workflow = (
+            ROOT / ".github" / "workflows" / "build-bootstrap-capsule.yml"
+        ).read_text(encoding="utf-8")
+        self.assertIn("python3 -m unittest discover -s tests -v", workflow)
+
+    def test_short_run_instruction_normalizes_regions_and_monitoring_types(self):
+        documents = (
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / "news-brief-settings.md",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("RUN_INPUT_NORMALIZATION_GATE", text, path.name)
+            self.assertIn("sections", text, path.name)
+            self.assertIn("topic_weights", text, path.name)
+
+    def test_contract_documents_require_the_restored_three_part_reader_outline(self):
+        settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        for heading in ("## ä»Šæ—¥ç¸½è¦½", "## é€æ¢è©³å ±", "## å¾ŒçºŒè§€å¯Ÿ"):
+            self.assertIn(heading, settings)
+            self.assertIn(heading, mobile)
+        self.assertNotRegex(mobile, r"(?m)^## åŸºç¤è®€è€…ç‰ˆ$")
+
+    def test_manifest_schema_allows_reader_image_omission_note(self):
+        schema = json.loads(
+            (ROOT / "schemas" / "news-event-manifest.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        image_properties = schema["$defs"]["imageResult"]["properties"]
+        self.assertIn("reader_omission_note", image_properties)
+
+    def test_template_uses_claim_critical_map_gate_and_no_image_placeholder(self):
+        template = (ROOT / "news-brief-template.md").read_text(encoding="utf-8")
+        self.assertIn("map.claim_critical=true", template)
+        self.assertNotIn("`map.required=true` æ™‚å¿…é ˆé™„ä¸Š", template)
+        self.assertNotIn("**åœ–ç‰‡èªªæ˜ï¼š**", template)
+
+    def test_publisher_uses_only_canonical_three_part_reader_validator(self):
+        for relative in (
+            "scripts/publish_news_brief.py",
+            "scripts/check_unique_delivery_gate.py",
+        ):
+            text = (ROOT / relative).read_text(encoding="utf-8")
+            self.assertIn("validate_canonical_reader", text)
+            self.assertNotIn("validate_canonical_sectioned_layout", text)
+
+    def test_production_schedule_without_full_runtime_uses_same_host_screenshot_route(self):
+        prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "SCHEDULED_HOST_CAPABILITY_ROUTING",
+            "SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE",
+            "SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE",
+            "does not require a verified workspace",
+            "route this occurrence to `mobile-chatgpt-daily-prompt.md`",
+        ):
+            self.assertIn(requirement, prompt)
+        self.assertNotIn("maps/generated/taiwan-counties-yellow-v2.png", prompt)
+        self.assertNotIn("Do not disable the daily schedule", prompt)
+        self.assertLess(
+            prompt.index("SCHEDULED_HOST_CAPABILITY_ROUTING"),
+            prompt.index("EARLY_DIAGNOSTIC_TREE_VERIFIED"),
+        )
+
+    def test_pre_probe_metadata_read_is_recoverable_before_news_access(self):
+        prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "PRE_PROBE_METADATA_READ_RECOVERY",
+            "must not fail the run",
+            "discard the pre-read metadata",
+            "must not reuse any pre-read tree, manifest, helper, payload, or chunk",
+            "before any news source or prior result is read",
+        ):
+            self.assertIn(requirement, prompt)
+
+    def test_same_source_recovery_uses_browser_only_as_final_fallback(self):
+        documents = [
+            ROOT / "news-brief-settings.md",
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/acquire-news-candidates/SKILL.md",
+        ]
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("SAME_SOURCE_RECOVERY_ORDER", text)
+            self.assertIn(
+                "canonical route -> same-site direct fetch -> same-site alternate non-browser route -> browser-rendered snapshot",
+                text,
+            )
+            self.assertIn("browser is the final fallback only", text)
+            self.assertIn("recover_same_source_leads.py", text)
+
+    def test_taiwan_domestic_discovery_supplement_is_bounded_and_scored(self):
+        import json
+
+        pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
+        self.assertIn("taiwan_coverage_sweeps", pool)
+        sweeps = pool["taiwan_coverage_sweeps"]
+        self.assertEqual(
+            {
+                "economy_trade_industry",
+                "health_food_consumer",
+                "central_policy_institutions",
+            },
+            {item["sweep_id"] for item in sweeps},
+        )
+        self.assertTrue(all(item["result_limit"] == 5 for item in sweeps))
+        self.assertTrue(all(item["window_hours"] == 24 for item in sweeps))
+        self.assertEqual("all_verified_in_window", pool["candidate_transfer_policy"])
+
+        documents = [
+            ROOT / "news-brief-settings.md",
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/acquire-news-candidates/SKILL.md",
+        ]
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("TAIWAN_DOMESTIC_COVERAGE_GUARD", text)
+            self.assertIn("5 results", text)
+            self.assertIn("è©•åˆ†", text)
+
+    def test_taiwan_domestic_grading_requires_consequences_not_topic(self):
+        severity = (ROOT / ".agents/skills/select-news-events/references/severity-rubric.md").read_text(encoding="utf-8")
+        examples = (ROOT / "news-brief-examples.md").read_text(encoding="utf-8")
+        for marker in (
+            "broad_business_operating_impact",
+            "nationwide_consumer_recall",
+            "central_budget_constitutional_consequence",
+            "rhetoric_without_new_consequence",
+        ):
+            self.assertIn(marker, severity)
+            self.assertIn(marker, examples)
+
+    def test_run_started_ledger_precedes_high_pressure_bootstrap_reads(self):
+        prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        bootstrap = (ROOT / "bootstrap-workspace.md").read_text(encoding="utf-8")
+
+        for document in (prompt, bootstrap):
+            ordered_markers = (
+                "PRE_CONTRACT_MAIN_RESOLUTION",
+                "EARLY_DIAGNOSTIC_MAIN_PINNED",
+                "EARLY_DIAGNOSTIC_RUN_ID",
+                "EARLY_DIAGNOSTIC_RUN_STARTED",
+                "EARLY_DIAGNOSTIC_TREE_VERIFIED",
+                "EARLY_DIAGNOSTIC_MANIFEST_VERIFIED",
+            )
+            for marker in ordered_markers:
+                self.assertIn(marker, document)
+            positions = [document.index(marker) for marker in ordered_markers]
+            self.assertEqual(positions, sorted(positions))
+            self.assertIn("before any recursive tree read", document)
+            self.assertIn("update the same comment", document)
+            self.assertIn("VERIFIED_BOOTSTRAP_SEED_ROUTE", document)
+            self.assertIn("lossless connector-to-local byte handoff", document)
+            self.assertNotIn("EARLY_DIAGNOSTIC_HELPERS_VERIFIED", document)
+
+    def test_fresh_main_wrapper_does_not_create_an_impossible_run_id_order(self):
+        daily = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        bootstrap = (ROOT / "bootstrap-workspace.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for document in (daily, bootstrap):
+            self.assertIn("PRE_CONTRACT_MAIN_RESOLUTION", document)
+            self.assertIn("only permitted pre-contract GitHub reads", document)
+            self.assertIn("without a tool call", document)
+            self.assertLess(
+                document.index("EARLY_DIAGNOSTIC_MAIN_PINNED"),
+                document.index("EARLY_DIAGNOSTIC_RUN_ID"),
+            )
+        self.assertIn("external latest-main resolution", mobile)
+        self.assertIn("first runtime GitHub action", mobile)
+
+    def test_external_ledger_is_debounced_and_never_blocks_news(self):
+        prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        protocol = (ROOT / "bootstrap" / "RUN_LEDGER_PROTOCOL.md").read_text(
+            encoding="utf-8"
+        )
+
+        for document in (prompt, protocol):
+            self.assertIn("one comment per run_id", document)
+            self.assertIn("every 8 completed chunks", document)
+            self.assertIn("at most once every 3 minutes", document)
+            self.assertIn("best-effort", document)
+            self.assertIn("must never block the news pipeline", document)
+            self.assertIn("external_ledger: unavailable", document)
+
+    def test_mobile_bootstrap_has_bounded_diagnostic_transport(self):
+        prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        bootstrap = (ROOT / "bootstrap-workspace.md").read_text(encoding="utf-8")
+
+        for document in (prompt, bootstrap):
+            self.assertIn("bootstrap/bootstrap_progress.py", document)
+            self.assertIn("16-line", document)
+            self.assertIn("one initial attempt plus at most three retries", document)
+            self.assertRegex(document, r"2\D+5\D+10")
+            self.assertIn("RUN_RECEIPT", document)
+            self.assertIn("external_ledger: unavailable", document)
+
+    def test_each_run_resolves_fresh_main_and_pins_only_that_run(self):
+        prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        bootstrap = (ROOT / "bootstrap-workspace.md").read_text(encoding="utf-8")
+
+        for document in (prompt, bootstrap):
+            for requirement in (
+                "/branches/main?cache_bust=",
+                "/commits/main?cache_bust=",
+                "fresh UTC nonce",
+                "single named `main` branch lookup",
+                "must not enumerate repository branches",
+                "must not reuse a commit SHA",
+                "same SHA",
+            ):
+                self.assertIn(requirement, document)
+            self.assertNotIn("/git/ref/heads/main?cache_bust=", document)
+
+        self.assertIn("pin all repository reads for this run", bootstrap)
+        self.assertIn("resolve fresh `main` again on the next run", bootstrap)
+
+    def test_schedule_uses_cross_platform_python_runtime_tools(self):
+        prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "å®¿ä¸»æä¾›çš„ bundled-runtime",
+            "python3 scripts/resolve_bundled_python.py",
+            "fetch_source_routes.py",
+        ):
+            self.assertIn(requirement, prompt)
+        self.assertNotIn("powershell.exe", prompt)
+
+    def test_linux_ci_exercises_cross_platform_runtime_paths(self):
+        workflow = (ROOT / ".github/workflows/build-bootstrap-capsule.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("tests/test_workspace_python_resolver.py", workflow)
+        self.assertIn("tests/test_source_route_fetcher.py", workflow)
+        self.assertIn("scripts/resolve_bundled_python.py", workflow)
+        self.assertIn("scripts/fetch_source_routes.py", workflow)
+
+    def test_mobile_prompt_and_start_prompt_require_same_host_visible_screenshot(self):
+        start = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        self.assertIn("scheduled-task-prompt-template.md", start)
+        self.assertIn("scheduled-task-prompt-template.md` å…¨æ–‡åŸæ¨£è¨­ç‚º Scheduled Task instruction", start)
+        self.assertIn("æ¯å¤© 06:00", start)
+        self.assertIn("ä¸å¾—æ‘˜è¦ã€åˆªç¯€", start)
+        for requirement in ("åå››å¤©", "å…­é …", "C ç´šä»¥ä¸Š", "åœ–ç‰‡"):
+            self.assertIn(requirement, daily)
+        self.assertIn("SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE", start)
+        self.assertIn("SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE", start)
+        self.assertIn("verified workspace", start)
+        for forbidden in ("powershell", "bootstrap capsule", "git clone"):
+            self.assertNotIn(forbidden, daily)
+
+    def test_integrated_six_dimension_grading_and_conflict_context_are_explicit(self):
+        settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
+        severity = (ROOT / ".agents/skills/select-news-events/references/severity-rubric.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for document in (settings, severity, mobile):
+            self.assertIn("é‡è¦æ€§ï¼åš´é‡ç¨‹åº¦", document)
+            self.assertIn("å…­é …", document)
+            self.assertIn("è»äº‹ï¼è¡çª", document)
+            self.assertIn("INTEGRATED_SIX_DIMENSION_NO_HARD_CAP", document)
+        self.assertIn("local_disaster_review", severity)
+        self.assertNotIn("æ­»äº¡ 100 äººä»¥ä¸Šå¯åˆ— A-", (ROOT / "news-brief-examples.md").read_text(encoding="utf-8"))
+
+    def test_mobile_image_delivery_uses_small_stable_thumbnail_with_fallback(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "æœ€å¤šå…©å¼µ",
+            "åŒä¸€å¼µåœ–",
+            "srcset",
+            "640px",
+            "200KB",
+            "75â€“82",
+            "æ”¹æ”¾åŒä¸€å¼µåŸåœ–",
+            "æ›¿ä»£æ–‡å­—",
+            "çŸ­æ•ˆç°½å",
+            "ç™»å…¥",
+            "`data:`",
+            "`blob:`",
+        ):
+            self.assertIn(requirement, daily)
+        self.assertNotIn("**åœ–ç‰‡ä¾†æºé ï¼š**", daily)
+
+    def test_mobile_image_delivery_requires_reader_visible_result(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "IMAGE_READER_VISIBLE_DELIVERY_GATE",
+            "IMAGE_PROXY_ORIGINAL_URL_UNWRAP_GATE",
+            "NON_SHORT_CIRCUIT_IMAGE_DELIVERY_GATE",
+            "å¯¦éš›é¡¯ç¤º",
+            "ç ´åœ–",
+            "æ²¿ç”¨å‰è¼ªé¸åœ–",
+            "åœ–ç‰‡èªªæ˜",
+        ):
+            self.assertIn(requirement, daily)
+        self.assertIn("ä¸ç®—å¯è¦‹åœ–ç‰‡", daily)
+
+    def test_mobile_delivery_requires_native_media_content_not_markdown_text(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        full = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        self.assertIn("SCHEDULED_HOST_VISIBLE_SCREENSHOT_ROUTE", daily)
+        self.assertIn("ä¸å¾—åœ¨ discovery å¾Œå®£å‘Š NATIVE_MEDIA_UNAVAILABLE", daily)
+        self.assertIn("VISIBLE_IMAGE_OVER_ORIGINAL_FILE_GATE", full)
+        self.assertIn("screenshot_path", full)
+        self.assertIn("--manifest <materialized-images.json>", full)
+
+    def test_native_media_unavailable_keeps_same_run_at_visual_recovery(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        self.assertIn("EVERY_DAILY_NEWS_EXECUTION_GATE", daily)
+        self.assertIn("ä¸å¾—åœ¨ discovery å¾Œå®£å‘Š NATIVE_MEDIA_UNAVAILABLE", daily)
+        self.assertIn("æˆªå–æ–‡ç« ", daily)
+        self.assertIn("æˆªåœ–", daily)
+
+    def test_claim_critical_cannot_bypass_qualified_image_delivery(self):
+        documents = (
+            ROOT / "INSTALL.md",
+            ROOT / "news-brief-settings.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/collect-news-images/SKILL.md",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("QUALIFIED_IMAGE_DELIVERY_INDEPENDENT_OF_CLAIM_CRITICAL", text)
+            self.assertNotIn("claim_critical=false â†’ delivery failure may omit", text)
+            self.assertNotIn("éé—œéµåœ–ç‰‡äº¤ä»˜å¤±æ•—å¯ç›´æ¥å®Œæˆæ–‡å­— Reader", text)
+
+    def test_image_fallback_exhaustion_is_a_first_class_outer_gate(self):
+        documents = (
+            ROOT / "INSTALL.md",
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "news-brief-settings.md",
+            ROOT / ".agents" / "skills" / "collect-news-images" / "SKILL.md",
+            ROOT / ".agents" / "skills" / "collect-news-images" / "references" / "image-policy.md",
+        )
+        checklist = (
+            "original_source_attempted",
+            "direct_media_url_attempted",
+            "official_fallback_attempted",
+            "wire_fallback_attempted",
+            "reliable_media_fallback_attempted",
+            "qualified_image_found",
+            "delivery_attempted",
+            "delivery_result",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("IMAGE_FALLBACK_EXHAUSTION_GATE", text, path)
+            self.assertIn("DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE", text, path)
+            for field in checklist:
+                self.assertIn(field, text, path)
+        image_skill = documents[4].read_text(encoding="utf-8")
+        self.assertNotIn(
+            "ä¾†æºæœ‰åœ–ä½†å–å¾—å¤±æ•—æ™‚ï¼Œéä¸»å¼µé—œéµåœ–ç‰‡å¯ä¾ omission contract çœç•¥",
+            image_skill,
+        )
+
+    def test_visual_recovery_cannot_restart_news_pipeline(self):
+        documents = (
+            ROOT / "INSTALL.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/recover-news-run/SKILL.md",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("VISUAL_DELIVERY_ONLY_RECOVERY", text)
+            for forbidden_action in ("discovery", "scoring", "verification", "new run"):
+                self.assertIn(forbidden_action, text)
+
+    def test_global_section_requires_primary_or_bounded_verified_fallback(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        settings = (ROOT / "news-brief-settings.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        acquire = (
+            ROOT / ".agents" / "skills" / "acquire-news-candidates" / "SKILL.md"
+        ).read_text(encoding="utf-8")
+        for document in (install, settings, mobile, acquire):
+            self.assertIn("GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE", document)
+            self.assertIn("web_fallback", document)
+        for document in (install, settings, acquire):
+            self.assertIn("primary_aggregator", document)
+        self.assertIn("ä¸å¾—å®£ç¨±å®Œæ•´ coverage", mobile)
+        self.assertIn("æ‰è®“åŒä¸€ run ä¿æŒ `status=running`ã€`current_stage=source-scan`", mobile)
+
+    def test_mobile_native_image_route_does_not_require_local_materialization(self):
+        documents = (
+            ROOT / "INSTALL.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / "docs/mobile-run-ledger.md",
+            ROOT / ".agents/skills/collect-news-images/SKILL.md",
+        )
+        mobile = documents[1].read_text(encoding="utf-8")
+        ledger = documents[2].read_text(encoding="utf-8")
+        self.assertIn("SCHEDULED_HOST_VISIBLE_SCREENSHOT_ROUTE", mobile)
+        self.assertIn("ä¸è¦æ±‚ verified workspace", mobile)
+        self.assertIn("native image-card or direct page-screenshot smoke gate", ledger)
+
+    def test_empty_audit_baseline_is_not_claimed_as_fourteen_day_complete(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        self.assertIn("FOURTEEN_DAY_AUDIT_COMPLETENESS_GATE", daily)
+        self.assertIn("ç©ºçš„ `runs` é™£åˆ—", daily)
+        self.assertIn("ä¸å¾—å®£å‘Šåå››å¤©æ¸…å–®å·²å®Œæˆ", daily)
+
+    def test_mobile_images_search_multiple_same_event_sources_before_degrading(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "MOBILE_PER_STORY_VISIBLE_IMAGE_GATE",
+            "å¯æª¢æŸ¥å¤šå€‹ä¾†æº",
+            "ä¸é™ä¸€å€‹",
+            "å…¶ä»–å¯é åª’é«”",
+            "åªé‡åšè©²å‰‡åœ–ç‰‡å–å¾—ï¼äº¤ä»˜",
+        ):
+            self.assertIn(requirement, daily)
+
+    def test_mobile_images_are_gated_per_story(self):
+        documents = (
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / "news-brief-settings.md",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            for requirement in (
+                "MOBILE_PER_STORY_VISIBLE_IMAGE_GATE",
+                "æ¯ä¸€å‰‡",
+                "ä¸å¾—æ›¿å…¶ä»–æ–°èé€šé",
+                "é€å‰‡",
+            ):
+                self.assertIn(requirement, text, f"{path} missing {requirement}")
+
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        self.assertIn("og:image", daily)
+        self.assertIn("srcset", daily)
+
+    def test_image_workload_is_bounded_without_reducing_news_coverage(self):
+        documents = [
+            ROOT / "news-brief-settings.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/collect-news-images/SKILL.md",
+        ]
+        requirements = (
+            "IMAGE_DEFAULT_ONE_ASSET",
+            "IMAGE_SECOND_ASSET_REQUIRES_INCREMENTAL_INFORMATION",
+            "IMAGE_SHA256_REUSE",
+            "IMAGE_VISUAL_CHECK_ONCE_PER_HASH",
+            "IMAGE_ONE_ASSET_MAY_SATISFY_BOTH_SOURCE_AND_PROFESSIONAL",
+            "640px",
+        )
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            for requirement in requirements:
+                self.assertIn(requirement, text, f"{path} missing {requirement}")
+
+        settings = documents[0].read_text(encoding="utf-8")
+        self.assertIn("browser is the final fallback only", settings)
+        self.assertIn("æ‰€æœ‰ C ç´šä»¥ä¸Š", settings)
+
+    def test_mobile_candidate_audit_has_one_time_bootstrap_without_daily_rescan(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "FIRST_RUN_14_DAY_AUDIT_BOOTSTRAP",
+            "å¾æœªä¿å­˜çš„å‰è¼ªæ·˜æ±°å€™é¸",
+            "ç´”æ–‡å­—åå››å¤©å›å¡«",
+            "ä¸å¾—æ¯å¤©é‡è·‘åå››å¤©",
+        ):
+            self.assertIn(requirement, daily)
+
+    def test_discovery_then_verify_replaces_all_source_gate(self):
+        import json
+
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        scheduled = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
+
+        for document in (daily, scheduled):
+            for requirement in (
+                "DISCOVERY_THEN_VERIFY",
+                "GDELT",
+                "regional-supplement discovery failure does not block another covered section",
+                "GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE",
+                "score and deduplicate before independent verification",
+                "collect images only after verification",
+                "TECH_SCIENCE_EVIDENCE_ROUTE",
+                "CONFLICT_MULTI_SIDE_EVIDENCE_ROUTE",
+                "DISASTER_OFFICIAL_STATISTICS_ROUTE",
+                "OFFICIAL_SOURCE_BIAS_GUARD",
+                "CATEGORY_APPROPRIATE_EVIDENCE_ROUTE",
+                "MEDIA_TRANSCRIPTION_IS_NOT_VERIFICATION",
+                "DOMAIN_EXPERTISE_MATCH",
+                "TIMELINESS_WITH_SOURCE_LIMIT_NOTE",
+            ):
+                self.assertIn(requirement, document)
+            self.assertNotIn("FIRST_RUN_SOURCE_COVERAGE_COMPLETENESS_GATE", document)
+
+        discovery = pool["discovery_sources"]
+        self.assertEqual(["gdelt", "cna", "chinanews"], [item["source_id"] for item in discovery])
+        for retired_key in ("sources", "section_sources", "primary_sources_per_section"):
+            self.assertNotIn(retired_key, pool)
+        self.assertFalse((ROOT / "source-health-profile.json").exists())
+        self.assertEqual(1, pool["discovery_policy"]["minimum_ready_sources"])
+        self.assertNotIn("source_failure_policy", pool["discovery_policy"])
+        self.assertNotIn("stop_only_when_no_verifiable_candidates", pool["discovery_policy"])
+        self.assertEqual("all_verified_in_window", pool["candidate_transfer_policy"])
+        self.assertTrue(pool["verification_policy"]["after_scoring"])
+        self.assertTrue(pool["verification_policy"]["images_after_verification"])
+
+        route_config = json.loads(
+            (ROOT / "source-route-config.json").read_text(encoding="utf-8")
+        )
+        gdelt = next(
+            route for route in route_config["routes"] if route["source_id"] == "gdelt"
+        )
+        self.assertEqual(1, gdelt["max_attempts"])
+        self.assertEqual(
+            ["gdelt_export_24h", "doc_api_optional", "last_known_good_cache"],
+            gdelt["acquisition_order"],
+        )
+        self.assertEqual("gdelt_export_24h", gdelt["fallback"]["type"])
+        for document in (daily, scheduled):
+            self.assertIn("GDELT_RESILIENT_ACQUISITION", document)
+            self.assertIn("FULL_DISCOVERY_POOL_UNCAPPED", document)
+            self.assertIn("15-minute", document)
+
+    def test_install_is_the_complete_and_consistent_entry_point(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        for requirement in (
+            "æ–‡ä»¶æ¬Šè²¬èˆ‡è®€å–é †åº",
+            "å®Œæ•´æ¯æ—¥åŸ·è¡Œæµç¨‹",
+            "å¿…å¡«ç”¢ç‰©èˆ‡é©—è­‰",
+            "åŸ·è¡Œæ¨¡å¼èˆ‡å®Œæˆæ¢ä»¶",
+            "NATIVE_MEDIA_UNAVAILABLE",
+            "reader-canonical-capability-degraded",
+            "# æ¯æ—¥æ–°èè®€è€…ç‰ˆ",
+            "CONDITIONAL_RECOVERY_BUNDLE_POLICY",
+            "recover_news_run.py plan",
+            "--bootstrap-receipt",
+        ):
+            self.assertIn(requirement, install)
+        for skill in (
+            "acquire-news-candidates", "select-news-events", "audit-news-candidates",
+            "verify-news-events", "build-news-maps", "build-news-charts",
+            "collect-news-images", "recover-news-run", "daily-news-brief",
+        ):
+            self.assertIn(f".agents/skills/{skill}/SKILL.md", install)
+        self.assertNotIn("YYYY/MM/DD æ¯æ—¥æ–°è`ï¼›ä¸‹ä¸€è¡Œ", install)
+
+    def test_trigger_owned_occurrence_contract_has_no_future_reservation(self):
+        self.assertFalse(
+            (ROOT / ".github" / "workflows" / "prepare-mobile-run-ledger.yml").exists()
+        )
+        documents = (
+            ROOT / "INSTALL.md",
+            ROOT / "README.md",
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / "docs" / "mobile-run-ledger.md",
+        )
+        for path in documents:
+            content = path.read_text(encoding="utf-8")
+            self.assertNotIn("PRISTINE_RESERVATION_REPLACEMENT_GATE", content, path.name)
+            self.assertNotIn("05:58 watchdog", content, path.name)
+            self.assertNotIn("05:58 å®ˆæœ›", content, path.name)
+        manager = (ROOT / "scripts" / "manage_mobile_run_log.py").read_text(encoding="utf-8")
+        self.assertNotIn("_is_pristine_reservation", manager)
+        self.assertIn('required=True', manager)
+        self.assertIn("task çœŸæ­£è§¸ç™¼", (ROOT / "INSTALL.md").read_text(encoding="utf-8"))
+        ledger = (ROOT / "docs" / "mobile-run-ledger.md").read_text(encoding="utf-8")
+        self.assertIn("resumable ChatGPT Scheduled Task records", ledger)
+        self.assertIn("may create, advance, and complete a run", ledger)
+        self.assertNotIn("external full-runtime visual-recovery executor", ledger)
+
+    def test_candidate_discovery_uses_dynamic_verification_selection(self):
+        documents = {
+            "settings": (ROOT / "news-brief-settings.md").read_text(encoding="utf-8"),
+            "acquisition skill": (
+                ROOT / ".agents" / "skills" / "acquire-news-candidates" / "SKILL.md"
+            ).read_text(encoding="utf-8"),
+            "image skill": (
+                ROOT / ".agents" / "skills" / "collect-news-images" / "SKILL.md"
+            ).read_text(encoding="utf-8"),
+        }
+        forbidden = (
+            "ä»»ä¸€ä¾†æºæœªå®Œæˆ",
+            "ä»»ä¸€ä¾†æºæœªå®Œæˆã€æœªæŒ‰ç«™å…§å‰ 30 å‰‡",
+            "prevalidated daily-news sources",
+        )
+        for label, document in documents.items():
+            for phrase in forbidden:
+                self.assertNotIn(phrase, document, f"{label} retains a retired gate")
+
+        schema = json.loads(
+            (ROOT / "schemas" / "news-source-candidate-list.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual({"type": "integer", "minimum": 1}, schema["properties"]["source_count"])
+        self.assertEqual(1, schema["properties"]["sources"]["minItems"])
+        self.assertNotIn("maxItems", schema["properties"]["sources"])
+
+    def test_configured_discovery_routes_are_candidate_schema_admissible(self):
+        route_config = json.loads(
+            (ROOT / "source-route-config.json").read_text(encoding="utf-8")
+        )
+        schema = json.loads(
+            (ROOT / "schemas" / "news-source-candidate-list.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+        configured_routes = {route["route"] for route in route_config["routes"]}
+        admissible_routes = set(
+            schema["properties"]["items"]["items"]["properties"]
+            ["acquisition_route"]["enum"]
+        )
+
+        self.assertLessEqual(configured_routes, admissible_routes)
+
+    def test_conversation_delivery_requires_complete_reader_not_summary(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "CONVERSATION_READER_BYTE_IDENTITY_GATE",
+            "å®Œæ•´å…§å®¹",
+            "ä¸å¾—æ”¹æˆæ‘˜è¦",
+            "ä¸å¾—ä»¥ receipt å–ä»£è®€è€…ç‰ˆ",
+        ):
+            self.assertIn(requirement, daily)
+
+    def test_mobile_reader_must_follow_canonical_template_structure(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+
+        for requirement in (
+            "READER_TEMPLATE_STRUCTURE_GATE",
+            "CANONICAL_TODAY_OVERVIEW_NO_OMISSION_GATE",
+            "CANONICAL_THREE_PART_READER_LAYOUT_GATE",
+            "news-brief-template.md",
+            "æ¯æ—¥æ–°èè®€è€…ç‰ˆ",
+            "ç·¨è™Ÿï½œæ™‚é–“ï½œäº‹ä»¶ï½œç­‰ç´š",
+            "## é€æ¢è©³å ±",
+            "## å¾ŒçºŒè§€å¯Ÿ",
+            "ä¸å¾—çœç•¥ã€è·¨å€é›†ä¸­æˆ–é‡æ–°è¨­è¨ˆ",
+            "MOBILE_READER_STRUCTURE_EQUIVALENT",
+        ):
+            self.assertIn(requirement, daily)
+        self.assertNotIn("--reader-layout canonical-sectioned", daily)
+
+    def test_reader_excludes_internal_repair_log(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        template = (ROOT / "news-brief-template.md").read_text(encoding="utf-8")
+
+        for document in (daily, template):
+            self.assertIn("READER_INTERNAL_REPAIR_LOG_EXCLUSION_GATE", document)
+            self.assertIn("ä¿®å¾©ç´€éŒ„", document)
+            self.assertIn("ä¸å¾—å‡ºç¾åœ¨è®€è€…ç‰ˆ", document)
+
+    def test_reader_preserves_canonical_three_part_field_layout(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        scheduled = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        template = (ROOT / "news-brief-template.md").read_text(encoding="utf-8")
+
+        for document in (daily, scheduled):
+            self.assertIn("CANONICAL_THREE_PART_READER_LAYOUT_GATE", document)
+            self.assertIn("æ™‚é–“ï¼ä¾†æºï¼äº‹ä»¶ç´°ç¯€ï¼åˆ†æ", document)
+        for requirement in (
+            "# æ¯æ—¥æ–°èè®€è€…ç‰ˆ",
+            "çµ±è¨ˆæœŸé–“ï¼š",
+            "è©•ç´šç¶œåˆè€ƒé‡ï¼š",
+            "## ä»Šæ—¥ç¸½è¦½",
+            "## é€æ¢è©³å ±",
+            "## å¾ŒçºŒè§€å¯Ÿ",
+            "| ç·¨è™Ÿ | æ™‚é–“ | äº‹ä»¶ | ç­‰ç´š |",
+            "### TWN-01. äº‹ä»¶åç¨± - A",
+            "**æ™‚é–“ï¼š**æ–°èæ™‚é–“ï¼š",
+            "**ä¾†æºï¼š**",
+            "**äº‹ä»¶ç´°ç¯€ï¼š**èªªæ˜ç™¼ç”Ÿä»€éº¼",
+            "**åˆ†æï¼š**èªªæ˜çœŸæ­£å€¼å¾—æ³¨æ„",
+        ):
+            self.assertIn(requirement, template)
+        for forbidden_example in (
+            "## ğŸ‡¹ğŸ‡¼ å°ç£æ–°è",
+            "--reader-layout canonical-sectioned",
+        ):
+            self.assertNotIn(forbidden_example, template)
+        self.assertNotRegex(template, r"(?m)^### äº‹ä»¶åç¨±ï½œA$")
+
+    def test_canonical_run_bundle_persists_recomputable_audit_and_image_evidence(self):
+        scheduled = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
+        matrix = (ROOT / "docs/news-rule-matrix.json").read_text(encoding="utf-8")
+        for requirement in (
+            "CANONICAL_RUN_BUNDLE_GATE",
+            "candidate-audit.json",
+            "article_dispositions",
+            "image-evidence/",
+            "materialized-images.json",
+            "logs/current.json",
+            "byte identity",
+        ):
+            self.assertIn(requirement, scheduled)
+        for requirement in (
+            "scripts/manage_canonical_run_bundle.py",
+            "storage.mode=chunked",
+            "encoding=base64",
+            "atomic tree/commit",
+        ):
+            self.assertIn(requirement, scheduled)
+            self.assertIn(requirement, matrix)
+
+    def test_mobile_increment_recovers_without_blocking_daily_reader(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        ledger = (ROOT / "docs/mobile-run-ledger.md").read_text(encoding="utf-8")
+        for document in (daily, install, ledger):
+            self.assertIn("EVERY_DAILY_NEWS_EXECUTION_GATE", document)
+        self.assertIn("SCHEDULED_HOST_VISIBLE_SCREENSHOT_ROUTE", daily)
+
+    def test_mobile_native_rolls_forward_only_current_schema_history(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        skill = (ROOT / ".agents/skills/audit-news-candidates/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+
+        for document in (daily, skill):
+            for requirement in (
+                "MOBILE_NATIVE_AUDIT_ROLLING_MERGE",
+                "CURRENT_SCHEMA_ONLY_DURABLE_AUDIT",
+                "ä¸ç›¸å®¹ç‰©ä»¶ä¸åˆä½µ",
+                "GitHub contents API æ•´æª” replacement",
+                "ä¸å¾—å› æ­¤é˜»æ­¢æœ¬æ—¥è®€è€…ç‰ˆ",
+            ):
+                self.assertIn(requirement, document)
+        self.assertIn("åªé‡è©•æœ¬è¼ªæ–°å¢æˆ–æœ‰å¯¦è³ªæ›´æ–°çš„å€™é¸", daily)
+        self.assertIn("full-runtime", skill)
+        self.assertIn("mobile-native", skill)
+
+    def test_candidate_audit_schema_has_unbounded_raw_count_and_stage_receipt(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-candidate-audit.schema.json").read_text(encoding="utf-8")
+        )
+        run = schema["$defs"]["run"]
+        self.assertNotIn("maximum", run["properties"]["raw_item_count"])
+        self.assertNotIn("processing_counts", run["required"])
+        required = set(run["properties"]["processing_counts"]["required"])
+        self.assertEqual({
+            "merged_article_row_count",
+            "in_window_article_row_count",
+            "canonical_url_count",
+            "provisional_title_cluster_count",
+            "semantic_event_count",
+            "scored_event_count",
+            "c_or_higher_scored_event_count",
+            "selected_event_count",
+            "event_evidence_article_row_count",
+            "non_news_article_row_count",
+            "unresolved_article_row_count",
+            "unresolved_exhausted_article_row_count",
+        }, required)
+        for document_path in (
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/audit-news-candidates/SKILL.md",
+        ):
+            document = document_path.read_text(encoding="utf-8")
+            self.assertIn("PIPELINE_COUNT_RECEIPT", document)
+            self.assertNotIn("PIPELINE_COUNT_RECEIPT_" + "V1", document)
+            self.assertIn("æ–‡ç« åˆ—æ•¸ä¸å¾—ç¨±ç‚ºèªæ„äº‹ä»¶æ•¸", document)
+            for field in required:
+                self.assertIn(f"`{field}`", document)
+
+    def test_semantic_event_ledger_schema_contract(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-candidate-audit.schema.json").read_text(encoding="utf-8")
+        )
+        run = schema["$defs"]["run"]
+        dispositions = run["properties"]["article_dispositions"]
+        self.assertEqual("#/$defs/articleDisposition", dispositions["items"]["$ref"])
+        self.assertEqual(
+            ["event_evidence", "non_news", "unresolved", "unresolved_exhausted"],
+            schema["$defs"]["articleDisposition"]["properties"]["disposition"]["enum"],
+        )
+        candidate_required = set(schema["$defs"]["v2Candidate"]["required"])
+        self.assertNotIn("semantic_event_id", candidate_required)
+        self.assertNotIn("event_identity", candidate_required)
+        self.assertIn("semantic_event_id", schema["$defs"]["v2Candidate"]["properties"])
+        self.assertIn("event_identity", schema["$defs"]["v2Candidate"]["properties"])
+        self.assertEqual({
+            "who_or_what", "what_happened", "where", "when", "semantic_merge_basis"
+        }, set(schema["$defs"]["eventIdentity"]["required"]))
+        count_fields = set(run["properties"]["processing_counts"]["required"])
+        self.assertTrue({
+            "event_evidence_article_row_count",
+            "non_news_article_row_count",
+            "unresolved_article_row_count",
+            "unresolved_exhausted_article_row_count",
+        }.issubset(count_fields))
+        for document_path in (
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/daily-news-brief/SKILL.md",
+            ROOT / ".agents/skills/select-news-events/SKILL.md",
+            ROOT / ".agents/skills/audit-news-candidates/SKILL.md",
+        ):
+            document = document_path.read_text(encoding="utf-8")
+            self.assertIn("SEMANTIC_EVENT_LEDGER_GATE", document)
+            self.assertIn("åªæœ‰èªæ„äº‹ä»¶æ‰ç®—æ–°è", document)
+            self.assertIn("`article_dispositions`", document)
+            self.assertIn("`semantic_event_id`", document)
+            self.assertIn("`event_identity`", document)
+
+    def test_event_region_and_time_identity_gate_contract(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-candidate-audit.schema.json").read_text(encoding="utf-8")
+        )
+        identity = schema["$defs"]["eventIdentity"]
+        structured_fields = {
+            "country_codes", "primary_country_code", "location_evidence",
+            "event_occurred_at", "material_update_at", "material_update_type",
+            "material_update_evidence",
+        }
+        self.assertTrue(structured_fields.issubset(identity["properties"]))
+        temporal_review = identity["properties"]["temporal_review"]
+        self.assertEqual("model_content_comparison", temporal_review["properties"]["review_method"]["const"])
+        self.assertIn("ongoing_current_impact", temporal_review["properties"]["window_status"]["enum"])
+        self.assertIn("old_restatement", temporal_review["properties"]["window_status"]["enum"])
+        documents = (
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / "news-brief-settings.md",
+            ROOT / ".agents/skills/daily-news-brief/SKILL.md",
+            ROOT / ".agents/skills/select-news-events/SKILL.md",
+            ROOT / ".agents/skills/audit-news-candidates/SKILL.md",
+        )
+        for path in documents:
+            document = path.read_text(encoding="utf-8")
+            self.assertIn("EVENT_REGION_AND_TIME_IDENTITY_GATE", document)
+            self.assertIn("ä¾†æºåˆ†æ¡¶", document)
+            self.assertIn("`event_occurred_at`", document)
+            self.assertIn("`material_update_at`", document)
+            self.assertIn("èˆŠäº‹ä»¶", document)
+            self.assertIn("æ¨¡å‹", document)
+            self.assertIn("`temporal_review`", document)
+
+    def test_policy_governance_evidence_gate_contract(self):
+        schema = json.loads(
+            (ROOT / "schemas/news-candidate-audit.schema.json").read_text(encoding="utf-8")
+        )
+        review = schema["$defs"]["policyGovernanceReview"]
+        self.assertIn("score_consistency_review", review["properties"])
+        self.assertIn(
+            "policy_governance_review",
+            schema["$defs"]["v2Candidate"]["properties"]["grading_evidence"]["properties"],
+        )
+        documents = (
+            ROOT / "news-brief-settings.md",
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / ".agents/skills/select-news-events/SKILL.md",
+        )
+        for path in documents:
+            document = path.read_text(encoding="utf-8")
+            self.assertIn("POLICY_GOVERNANCE_EVIDENCE_GATE", document, path.name)
+            self.assertIn("`policy_governance_review`", document, path.name)
+            self.assertIn("`why_not_b`", document, path.name)
+            self.assertIn("å¿…é ˆé€€å›é‡å¯©", document, path.name)
+            self.assertIn("æœªç¶“è­‰å¯¦", document, path.name)
+
+    def test_mobile_native_durable_audit_uses_compact_profile_without_verbose_evidence(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        skill = (ROOT / ".agents/skills/audit-news-candidates/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+
+        required_fields = (
+            "candidate_id",
+            "dedup_key",
+            "event_date",
+            "section",
+            "title",
+            "importance_breakdown",
+            "importance_score",
+            "dimension_evidence",
+            "provisional_grade",
+            "decision",
+            "reason",
+            "source_ids",
+            "selected_event_id",
+            "continuity",
+        )
+        for document in (daily, skill):
+            self.assertIn("MOBILE_NATIVE_COMPACT_DURABLE_AUDIT", document)
+            for field in required_fields:
+                self.assertIn(f"`{field}`", document)
+            self.assertIn("MUST_OMIT_VERBOSE_GRADING_EVIDENCE", document)
+            self.assertIn("`grading_evidence`", document)
+            self.assertIn("`source_audit`", document)
+            self.assertIn("full-runtime", document)
+
+    def test_old_event_reentry_uses_current_v2_evidence_without_a_parallel_timer(self):
+        daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        self.assertIn("IMPACT_DELTA_CONTINUITY_SCORING", daily)
+        self.assertIn("æœ¬æ—¥å¯é©—è­‰çš„å½±éŸ¿åŠ›è®ŠåŒ–", daily)
+        self.assertNotIn("48_HOUR_REENTRY", daily)
+
+    def test_continuing_events_are_scored_by_verified_impact_delta(self):
+        documents = (
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / "news-brief-settings.md",
+            ROOT / ".agents/skills/select-news-events/references/severity-rubric.md",
+            ROOT / ".agents/skills/audit-news-candidates/SKILL.md",
         )
         for path in documents:
             text = path.read_text(encoding="utf-8")
