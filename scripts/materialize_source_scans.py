@@ -394,6 +394,7 @@ def materialize_source(source: dict, route: dict, window_start: str, window_end:
     }] + list(route.get("page_snapshots") or [])
     pages = []
     parsed = {}
+    seen_urls = set()
     page_texts = []
     for position, entry in enumerate(snapshots):
         snapshot = Path(entry["snapshot_path"])
@@ -415,6 +416,11 @@ def materialize_source(source: dict, route: dict, window_start: str, window_end:
             if evidence_in_snapshot(item["url_evidence"], utf8_view)
             and evidence_in_snapshot(item["published_evidence"], utf8_view)
         }
+        page_items = {
+            url: item for url, item in page_items.items()
+            if url not in seen_urls
+        }
+        seen_urls.update(page_items)
         parsed.update(page_items)
         ordered = sorted(
             page_items.values(), key=lambda item: item["published_at"], reverse=True

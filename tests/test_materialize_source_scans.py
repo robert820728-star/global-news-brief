@@ -393,6 +393,68 @@ class MaterializeSourceScansTests(unittest.TestCase):
             self.assertEqual(3, coverage["within_window_count"])
             self.assertEqual([], VALIDATOR.validate_scan(scan, coverage, source))
 
+    def test_cross_page_duplicate_url_is_materialized_once(self):
+        first_page = """<html><body>
+<time>2026-08-17 21:40</time>
+<a href="/news/story/1/1001" title="首頁最新報導">首頁最新報導</a>
+</body></html>"""
+        second_page = """<html><body>
+<time>2026-08-17 21:40</time>
+<a href="/news/story/1/1001" title="跨頁重複報導">跨頁重複報導</a>
+<time>2026-08-16 21:30</time>
+<a href="/news/story/1/1002" title="跨過時間邊界">跨過時間邊界</a>
+</body></html>"""
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+
+            def snapshot(name, body, page_index, request_url):
+                path = root / name
+                raw = body.encode("utf-8")
+                path.write_bytes(raw)
+                return {
+                    "page_index": page_index,
+                    "request_url": request_url,
+                    "http_status": 200,
+                    "content_type": "text/html; charset=utf-8",
+                    "snapshot_path": str(path),
+                    "sha256": hashlib.sha256(raw).hexdigest(),
+                }
+
+            first = snapshot(
+                "page-1.html", first_page, 1,
+                "https://regional.example.com/news/latest",
+            )
+            route = {
+                "source_id": "regional_a", "route": "html_direct",
+                "route_ready": True,
+                **{key: value for key, value in first.items() if key != "page_index"},
+                "page_snapshots": [snapshot(
+                    "page-2.html", second_page, 2,
+                    "https://regional.example.com/news?page=2",
+                )],
+            }
+            source = {
+                "source_id": "regional_a",
+                "homepage": "https://regional.example.com/",
+                "section": "TWN",
+            }
+
+            scan, coverage = MODULE.materialize_source(
+                source, route, "2026-08-16T22:00:00+08:00",
+                "2026-08-17T22:00:00+08:00", root,
+            )
+
+            self.assertEqual(
+                ["https://regional.example.com/news/story/1/1001"],
+                [item["url"] for item in scan["pages"][0]["extracted_items"]],
+            )
+            self.assertEqual(
+                ["https://regional.example.com/news/story/1/1002"],
+                [item["url"] for item in scan["pages"][1]["extracted_items"]],
+            )
+            self.assertEqual(1, coverage["within_window_count"])
+            self.assertEqual([], VALIDATOR.validate_scan(scan, coverage, source))
+
     def test_serialized_article_props_are_materialized(self):
         html = """<html><body><astro-island props="{&quot;article&quot;:[0,{&quot;articleId&quot;:[0,4008088],&quot;title&quot;:[0,&quot;重大政策更新&quot;],&quot;articleUrl&quot;:[0,&quot;https://regional.example.com/politics/4008088&quot;],&quot;firstParagraph&quot;:[0,&quot;全國政策今日生效。&quot;],&quot;publishedAt&quot;:[0,1786878175]}]}"></astro-island></body></html>"""
         with tempfile.TemporaryDirectory() as directory:
