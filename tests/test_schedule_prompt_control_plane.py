@@ -100,6 +100,19 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
         self.assertIn("不得要求 verified workspace", block)
         self.assertIn("直接截圖", block)
 
+    def test_install_smoke_is_not_a_scheduled_occurrence_trigger(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        starter = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(
+            encoding="utf-8"
+        )
+
+        for document in (install, starter):
+            self.assertIn("在建立或更新排程的目前對話直接執行", document)
+            self.assertIn("不是 Scheduled Task occurrence", document)
+            self.assertIn("不要求立即觸發指定 task ID", document)
+
+        self.assertNotIn("等待 Scheduled Task occurrence", starter)
+
     def test_saved_task_template_accepts_native_screenshot_route(self):
         prompt = (ROOT / "scheduled-task-prompt-template.md").read_text(encoding="utf-8")
         self.assertIn("HOST_VISIBLE_SCREENSHOT_ROUTE", prompt)
