@@ -1,0 +1,104 @@
+{
+  "schema_version": "mobile-verification-v1",
+  "run_id": "gnb-20260901T055813Z-6e3a91c4",
+  "main_sha": "aa4f324bde20fcfdaba103a1c6c4667b4b498c12",
+  "window": {"start":"2026-08-31T05:58:13+00:00","end":"2026-09-01T05:58:13+00:00","timezone":"Asia/Shanghai"},
+  "events": [
+    {
+      "event_id":"TWN-01","finding":"sufficient","confidence":88,
+      "core_claim":"沙德爾殘餘系統在本窗口仍造成南台灣與台東豪雨風險。",
+      "evidence":[
+        {"role":"current_official","url":"https://ocean.cwa.gov.tw/V2/safe_see","note":"中央氣象署9月1日即時海象／颱風警示頁仍更新沙德爾相關風險。"},
+        {"role":"independent_reporting","url":"https://www.businesstoday.com.tw/article/category/183030/post/202608310017/","note":"8月31日報導指出殘餘系統重新發展，南部及台東持續有大雨或豪雨風險。"}
+      ],
+      "limitations":"中央氣象署公開可抓取頁面未完整暴露所有降雨文字細節，採官方即時警示與可靠媒體報導交叉確認。"
+    },
+    {
+      "event_id":"TWN-02","finding":"sufficient","confidence":90,
+      "core_claim":"陸軍116至122年度規劃編列約570.7億元量產178輛105公厘輪型戰砲車。",
+      "evidence":[
+        {"role":"wire_reporting","url":"https://news.m.pchome.com.tw/politics/cna/20260831/index-17881617379417818001.html","note":"中央社轉載內容列出570億7156萬元、178輛及2027年首批8輛。"},
+        {"role":"background_primary_context","url":"https://www.cna.com.tw/news/aipl/202605250074.aspx","note":"軍備局長5月已公開說明D3測評通過、116年啟動量產。"}
+      ],
+      "limitations":"本輪網頁搜尋未直接取得國防部116年度預算書原始PDF頁，數額以中央社對預算書的當日報導為主。"
+    },
+    {
+      "event_id":"CHN-01","finding":"sufficient","confidence":96,
+      "core_claim":"截至2026年7月底，中國光伏裝機12.86億千瓦，首次超過煤電12.85億千瓦。",
+      "evidence":[
+        {"role":"nea_attribution","url":"https://www.chinanews.com.cn/cj/2026/09-01/10687699.shtml","note":"中國新聞網直接引述國家能源局數據，並列出發電量及占比。"},
+        {"role":"xinhua","url":"https://www.news.cn/politics/20260901/6ab72835fd464ebd9127e9b092a6ac14/c.html","note":"新華社獨立刊載同一國家能源局數據。"},
+        {"role":"english_xinhua","url":"https://english.news.cn/20260901/91ff8ca7913043a991ee465123fd7a77/c.html","note":"英文新華社再次確認1.286bn kW對1.285bn kW。"}
+      ],
+      "limitations":"主要數據均源自中國國家能源局；事件本身是裝機統計，不代表光伏實際發電量已超過煤電。"
+    },
+    {
+      "event_id":"CHN-02","finding":"sufficient","confidence":96,
+      "core_claim":"沙德爾9月1日凌晨再度增強為熱帶風暴級颱風，中國南方多地未來三天有強降雨。",
+      "evidence":[
+        {"role":"cma_attribution","url":"https://www.chinanews.com.cn/sh/2026/09-01/10687762.shtml","note":"中新社引述中國氣象局與中央氣象台，列出藍色颱風預警、暴雨黃色預警及250至280毫米局地雨量預報。"},
+        {"role":"regional_meteorology","url":"https://www.chinanews.com.cn/sh/2026/09-01/10687741.shtml","note":"海南省氣象台確認沙德爾在海南島東部海面再度發展為熱帶風暴級並帶來大風暴雨。"}
+      ],
+      "limitations":"雨量為預報值，不得寫成已實現災情；Reader須區分已發布警報與未來風險。"
+    },
+    {
+      "event_id":"CHN-03","finding":"sufficient","confidence":96,
+      "core_claim":"中國與吉爾吉斯斯坦8月31日正式簽署永久睦鄰友好合作條約。",
+      "evidence":[
+        {"role":"china_government","url":"https://english.www.gov.cn/news/202608/31/content_WS6a952c42c6d00ca5f9a0ce17.html","note":"中國政府網／新華社確認兩國元首簽署條約。"},
+        {"role":"independent_reporting","url":"https://www.aa.com.tr/en/politics/china-kyrgyzstan-sign-eternal-good-neighborliness-treaty-as-xi-visits-bishkek-for-sco-summit/4042605","note":"Anadolu獨立確認簽約及吉爾吉斯總統府聲明。"},
+        {"role":"chinese_reporting","url":"https://www.chinanews.com.cn/gn/2026/08-31/10687578.shtml","note":"中國新聞網／新華社報導同一簽署事件。"}
+      ],
+      "limitations":"條約建立長期法律與政治框架，但當日尚未證明大規模直接民生效果。"
+    },
+    {
+      "event_id":"GLB-01","finding":"sufficient","confidence":95,
+      "core_claim":"尼泊爾與中國西藏交界冰川／岩體崩塌引發洪災，最新AP統計死亡已超過1000人且數千人失蹤。",
+      "evidence":[
+        {"role":"latest_wire","url":"https://apnews.com/article/835459b2978adcd2b3bcf6e0595aee6c","note":"AP 9月1日：尼泊爾987死、3916人失蹤，中國16死；至少11814人獲救，約900名水電工人失聯。"},
+        {"role":"independent_wire","url":"https://www.reuters.com/world/asia-pacific/","note":"Reuters同日報導較早統計及持續隧道救援，死亡數因更新時間不同低於AP。"}
+      ],
+      "limitations":"不同通訊社採用的官方更新時間不同，死亡與失蹤總數仍在變動；Reader採最新AP分列數字並明示統計差異。"
+    },
+    {
+      "event_id":"GLB-02","finding":"sufficient","confidence":95,
+      "core_claim":"美伊在霍爾木茲周邊恢復直接軍事交火，阿聯又攔截伊朗無人機，能源與航運風險升高。",
+      "evidence":[
+        {"role":"ap_current","url":"https://apnews.com/article/iran-us-war-uea-august-31-2026-9f34873bad9a928574c36ee984c3f96b","note":"AP確認阿聯8月31日攔截伊朗無人機，並回顧美軍拉拉克島打擊與伊朗反擊。"},
+        {"role":"ap_prior_action","url":"https://apnews.com/article/6b098da673ac3161a266ee459d5eff44","note":"AP確認8月30日美軍打擊伊朗火箭發射器，是約一個月來首度軍事行動。"},
+        {"role":"market_crosscheck","url":"https://www.reuters.com/world/china/global-markets-global-markets-2026-09-01/","note":"Reuters確認油價逾90美元及全球市場對波斯灣升級的反應。"}
+      ],
+      "limitations":"交戰各方對軍事正當性與戰果敘述不同；Reader只寫可由多來源核對的攻擊、攔截與市場後果。"
+    },
+    {
+      "event_id":"GLB-03","finding":"sufficient","confidence":95,
+      "core_claim":"全球長債遭拋售，日本10年債殖利率升至3%，美歐殖利率亦升至多年高位。",
+      "evidence":[
+        {"role":"reuters_market","url":"https://www.reuters.com/world/china/global-markets-global-markets-2026-09-01/","note":"Reuters：日本10年債殖利率升至3%，美國10年期約4.78%，歐洲長債殖利率接近15年高位。"},
+        {"role":"reuters_fx_crosscheck","url":"https://www.reuters.com/world/asia-pacific/yen-hangs-near-160-amid-boj-rate-hike-bets-dollar-wobbles-2026-09-01/","note":"Reuters外匯稿獨立確認日債與美債同步上行、油價及升息預期。"}
+      ],
+      "limitations":"殖利率為即時市場價格，會隨交易變動；Reader以報導時點呈現，不描述為永久水準。"
+    },
+    {
+      "event_id":"GLB-04","finding":"sufficient","confidence":92,
+      "core_claim":"俄軍連續第六天攻擊基輔及周邊，至少9人死亡、逾十人受傷，並影響烏羅邊境交通。",
+      "evidence":[
+        {"role":"reuters_current","url":"https://www.reuters.com/world/europe/explosions-heard-ukraines-kyiv-four-people-injured-2026-09-01/","note":"Reuters確認9死、14傷、第六天連續攻擊及Orlivka過境點中斷。"},
+        {"role":"conflict_context","url":"https://apnews.com/hub/russia-ukraine","note":"AP持續報導俄烏空襲背景，作為獨立戰爭脈絡來源。"}
+      ],
+      "limitations":"俄烏雙方對各自攻擊目標與損害的部分主張無法獨立核實；Reader只採可核對的傷亡與設施／交通後果。"
+    },
+    {
+      "event_id":"GLB-05","finding":"sufficient","confidence":92,
+      "core_claim":"波蘭檢方針對WB Electronics無人機工廠8月31日蓄意縱火啟動外國情報活動與恐怖犯罪方向調查。",
+      "evidence":[
+        {"role":"prosecutor_statement_via_media","url":"https://www.euronews.com/my-europe/2026/08/31/polish-prosecutors-launch-terrorism-investigation-following-fire-at-drone-makers-factory","note":"Euronews引述檢方正式立案內容，並列出至少1500萬茲羅提損失。"},
+        {"role":"independent_reporting","url":"https://notesfrompoland.com/2026/08/31/poland-investigates-potential-foreign-intelligence-involvement-in-fire-at-drone-plant/","note":"Notes from Poland獨立報導檢方與安全部門調查。"}
+      ],
+      "limitations":"官方尚未將責任歸於俄羅斯或任何特定國家；任何國家歸因都不得寫成既定事實。"
+    }
+  ],
+  "selected_event_count":10,
+  "sufficient_count":10,
+  "insufficient_count":0
+}
