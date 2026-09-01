@@ -90,9 +90,10 @@ def build_admitted_candidates(source_candidates: dict, gate: dict) -> dict:
         if item.get("route") == "content_hydration"
     }
     items = source_candidates.get("items", [])
-    filtered = [item for item in items if item.get("candidate_id") in admitted_ids]
-    if len(filtered) != len(admitted_ids):
+    source_ids = {item.get("candidate_id") for item in items}
+    if admitted_ids - source_ids:
         raise ValueError("gate references candidate ids absent from source candidates")
+    filtered = [item for item in items if item.get("candidate_id") in admitted_ids]
     output = dict(source_candidates)
     output["discovery_article_row_count"] = len(items)
     output["admitted_article_row_count"] = len(filtered)

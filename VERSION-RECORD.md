@@ -1,5 +1,12 @@
 # Version Record / �蝝��
 
+## v0.6.0-rc.40 — Duplicate candidate-row admission fix / 重複候選列准入修正
+
+- Reason / 原因：The first rc.39 Scheduled Task run fetched all three configured routes but stopped in `source-scan`: 20,698 article rows contained 20,680 unique candidate IDs because adjacent China News Service indexes repeated 18 rows. `build_admitted_candidates()` incorrectly compared the number of retained rows with the number of unique admitted IDs and reported a false missing-ID error. / rc.39 第一輪 Scheduled Task 已成功抓取三條設定來源，卻停在 `source-scan`：20,698 筆文章列因中新社相鄰日期索引重複 18 列，只包含 20,680 個唯一 candidate IDs。`build_admitted_candidates()` 錯把保留列數與唯一准入 ID 數比較，誤報 ID 不存在。
+- Approach / 方法：Preserve every discovery row and its gate decision. Validate actual referential integrity with the set difference between admitted IDs and source IDs, while retaining repeated source rows for the later canonical deduplication stage. No schema, validator, receipt, recovery state, or compatibility layer is added. / 保留每筆 discovery row 與 gate decision；以准入 IDs 與來源 IDs 的集合差驗證真正的參照完整性，同時保留重複來源列，交由後續 canonical deduplication stage 處理。未新增 schema、validator、receipt、recovery state 或 compatibility layer。
+- Validation / 驗證：A regression with two admitted rows sharing one candidate ID must preserve both rows without a false missing-ID failure. Targeted tests, bundled full suite, final-state semantic audit, capsule binding, remote CI, and a fresh Scheduled Task run remain required before LIVE_PASS. / 以兩筆共享同一 candidate ID 的准入列建立回歸，必須保留兩列且不得誤報 ID 缺失。LIVE_PASS 前仍須通過 targeted tests、bundled full suite、final-state 語義稽核、capsule 綁定、遠端 CI 與 fresh Scheduled Task 實跑。
+- Rollback / 回復：Revert the rc.40 source and generated capsule together; rc.39 remains the prior installable baseline but is known to reject repeated source rows falsely. / 一併回復 rc.40 source 與 generated capsule；rc.39 為前一個可安裝基線，但已知會誤拒重複來源列。
+
 ## v0.6.0-rc.39 — Heat-only admission rollback / 單一熱度准入回退
 
 - Reason / 原因：The first real Scheduled Task run after rc.38 preserved 20,650 discovery rows but admitted 9,967 `content_hydration` rows and stopped in `select-news-events`; rc.38's synthetic live-scale fixture understated how often ordinary GDELT rows meet the low article/source/mention thresholds. / rc.38 後第一輪真實 Scheduled Task 保存 20,650 筆 discovery rows，卻把 9,967 筆送入 `content_hydration`，最後停在 `select-news-events`；rc.38 的合成 live-scale fixture 低估了一般 GDELT rows 達到低文章數／來源數／提及數門檻的頻率。

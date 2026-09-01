@@ -280,6 +280,25 @@ class BuildNewsRelevanceGateTests(unittest.TestCase):
         self.assertEqual("content_hydration", gate["decisions"][0]["route"])
         self.assertEqual([row], admitted["items"])
 
+    def test_duplicate_admitted_candidate_ids_preserve_rows_without_false_missing_error(self):
+        row = {
+            "candidate_id": "chinanews-duplicate",
+            "source_id": "chinanews",
+            "canonical_url": "https://www.chinanews.com.cn/example.shtml",
+            "title": "同一篇文章由相鄰日期索引重複列出",
+            "summary": "同一篇文章由相鄰日期索引重複列出",
+            "summary_quality": "title_only",
+            "discovery_signals": {},
+        }
+        source_candidates = {"items": [dict(row), dict(row)]}
+
+        gate = MODULE.build_gate(source_candidates)
+        admitted = MODULE.build_admitted_candidates(source_candidates, gate)
+
+        self.assertEqual(2, gate["content_hydration_count"])
+        self.assertEqual(2, admitted["admitted_article_row_count"])
+        self.assertEqual([row, row], admitted["items"])
+
 
 if __name__ == "__main__":
     unittest.main()
