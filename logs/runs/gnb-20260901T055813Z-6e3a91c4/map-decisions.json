@@ -1,0 +1,17 @@
+{
+  "schema_version":"mobile-map-decisions-v1",
+  "run_id":"gnb-20260901T055813Z-6e3a91c4",
+  "main_sha":"aa4f324bde20fcfdaba103a1c6c4667b4b498c12",
+  "events":[
+    {"event_id":"TWN-01","required":false,"claim_critical":false,"reason":"降雨風險可由氣象來源與文字地區範圍完整表達。"},
+    {"event_id":"TWN-02","required":false,"claim_critical":false,"reason":"國防預算與裝備量產事件無空間主張依賴。"},
+    {"event_id":"CHN-01","required":false,"claim_critical":false,"reason":"能源裝機統計不依賴地理位置。"},
+    {"event_id":"CHN-02","required":false,"claim_critical":false,"reason":"官方預警已直接列出受影響省區與雨量。"},
+    {"event_id":"CHN-03","required":false,"claim_critical":false,"reason":"雙邊條約簽署地點明確，地圖不影響核心主張。"},
+    {"event_id":"GLB-01","required":false,"claim_critical":false,"reason":"跨境災害位置由AP／官方敘述足以支持核心主張；本輪mobile-native不冒充本機renderer。"},
+    {"event_id":"GLB-02","required":false,"claim_critical":false,"reason":"霍爾木茲與拉拉克島位置可由來源文字完整辨識。"},
+    {"event_id":"GLB-03","required":false,"claim_critical":false,"reason":"全球債市價格事件不需要地圖。"},
+    {"event_id":"GLB-04","required":false,"claim_critical":false,"reason":"基輔與Orlivka地名可由來源文字完整辨識。"},
+    {"event_id":"GLB-05","required":false,"claim_critical":false,"reason":"單一工廠縱火調查不需要地圖支撐核心主張。"}
+  ]
+}
