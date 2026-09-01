@@ -1,0 +1,79 @@
+{
+  "schema_version":"mobile-image-evidence-v1",
+  "run_id":"gnb-20260901T055813Z-6e3a91c4",
+  "main_sha":"aa4f324bde20fcfdaba103a1c6c4667b4b498c12",
+  "host_transport":{"native_image_search_callable":true,"qualified_native_image_ref_observed":false,"local_attachment_runtime_available":false,"page_image_region_screenshot_available":false,"result":"visible_media_transport_blocked_after_source_recovery"},
+  "events":[
+    {
+      "event_id":"TWN-01","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,
+      "qualified_image_found":true,"delivery_attempted":true,"delivery_result":"delivery_unavailable",
+      "qualified_source":"https://tw.news.yahoo.com/%E6%98%8E%E5%A4%A9%E5%A4%A9%E6%B0%A3%E4%B8%AD%E5%8D%97%E9%83%A8%E3%80%81%E5%8F%B0%E6%9D%B1%E9%98%B2%E8%B1%AA%E9%9B%A8-%E9%A2%B1%E9%A2%A8%E6%B2%99%E5%BE%B7%E7%88%BE%E6%9C%80%E5%BF%AB%E4%BB%8A%E5%A4%A9%E6%B7%B1%E5%A4%9C%E5%BE%A9%E6%B4%BB-094836177.html",
+      "image_identity":"2026-08-31報導所附中央氣象署當期天氣／沙德爾圖像。",
+      "transport_note":"原生圖片查詢無合格image_ref；來源頁有當期圖，但宿主無頁面圖片區域截圖或本機附件路徑。"
+    },
+    {
+      "event_id":"TWN-02","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,
+      "qualified_image_found":false,"delivery_attempted":false,"delivery_result":"source_exhausted",
+      "qualified_source":null,"image_identity":null,
+      "transport_note":"當日預算報導未找到可核對為同事件當期拍攝／製作的圖片；搜尋所得戰砲車圖多為2024至2026年5月檔案照，依規則淘汰。"
+    },
+    {
+      "event_id":"CHN-01","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,
+      "qualified_image_found":false,"delivery_attempted":false,"delivery_result":"source_exhausted",
+      "qualified_source":null,"image_identity":null,
+      "transport_note":"9月1日新華社正文附圖拍攝於8月19、8月27或更早，屬產業脈絡照而非同日同地事件影像；未找到可核對為9月1日統計發布事件本身的合格當期圖。"
+    },
+    {
+      "event_id":"CHN-02","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,
+      "qualified_image_found":false,"delivery_attempted":false,"delivery_result":"source_exhausted",
+      "qualified_source":null,"image_identity":null,
+      "transport_note":"中新社正文可見的直接Image連結實際為網站QR碼；原生圖片查詢未返回當期颱風路徑／降雨圖ref，後續官方與可靠媒體搜尋亦未形成可交付的合格當期圖。"
+    },
+    {
+      "event_id":"CHN-03","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,
+      "qualified_image_found":true,"delivery_attempted":true,"delivery_result":"delivery_unavailable",
+      "qualified_source":"https://english.www.gov.cn/news/202608/31/content_WS6a952beec6d00ca5f9a0ce14.html",
+      "image_identity":"2026-08-31比什凱克，習近平與薩德爾·扎帕羅夫簽署聯合聲明與永久睦鄰友好合作條約的現場新華社照片。",
+      "transport_note":"來源頁直接圖片可定位，但直接媒體fetch為cache miss；原生圖片查詢無合格image_ref，且宿主無頁面圖片區域截圖路徑。"
+    },
+    {
+      "event_id":"GLB-01","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,
+      "qualified_image_found":true,"delivery_attempted":true,"delivery_result":"delivery_unavailable",
+      "qualified_source":"https://apnews.com/article/nepal-flash-floods-death-toll-tibet-china-835459b2978adcd2b3bcf6e0595aee6c",
+      "image_identity":"2026-09-01尼泊爾軍人自Upper Trishuli水電工程現場搬運罹難工人遺體；AP Photo/Kaslai Dine。",
+      "transport_note":"AP正文確認多張9月1日當期照片；原生圖片查詢無合格image_ref，宿主無本機附件或頁面圖片區域截圖輸出。"
+    },
+    {
+      "event_id":"GLB-02","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,
+      "qualified_image_found":true,"delivery_attempted":true,"delivery_result":"delivery_unavailable",
+      "qualified_source":"https://apnews.com/article/iran-us-war-uea-august-31-2026-9f34873bad9a928574c36ee984c3f96b",
+      "image_identity":"2026-08-31霍爾木茲海峽Bandar Abbas外海商船錨泊現場；Razieh Poudat/ISNA via AP。",
+      "transport_note":"AP正文確認同日同地現場圖；原生圖片查詢無合格image_ref，宿主無本機附件或頁面圖片區域截圖輸出。"
+    },
+    {
+      "event_id":"GLB-03","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,
+      "qualified_image_found":false,"delivery_attempted":false,"delivery_result":"source_exhausted",
+      "qualified_source":null,"image_identity":null,
+      "transport_note":"Reuters主圖為2026-04-27東京行情看板，非本事件當期影像；替代來源未找到9月1日同事件可核對的當期新聞照或官方圖表，依規則省略。"
+    },
+    {
+      "event_id":"GLB-04","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,
+      "qualified_image_found":true,"delivery_attempted":true,"delivery_result":"delivery_unavailable",
+      "qualified_source":"https://www.reuters.com/world/europe/explosions-heard-ukraines-kyiv-four-people-injured-2026-09-01/",
+      "image_identity":"2026-08-31基輔遭俄軍無人機攻擊時城市升起濃煙；REUTERS/Gleb Garanich。",
+      "transport_note":"Reuters正文確認7張圖中的當期現場照；原生圖片查詢無合格image_ref，且來源媒體只能在分析頁顯示，無法形成最終對話非文字媒體塊。"
+    },
+    {
+      "event_id":"GLB-05","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,
+      "qualified_image_found":false,"delivery_attempted":false,"delivery_result":"source_exhausted",
+      "qualified_source":null,"image_identity":null,
+      "transport_note":"Euronews主圖為2022年烏克蘭使用FlyEye無人機檔案照，淘汰；Notes from Poland主圖未提供可核對的本次火災拍攝日期／事件身分，未作合格圖。"
+    }
+  ],
+  "qualified_found_count":5,
+  "source_exhausted_count":5,
+  "delivery_unavailable_count":5,
+  "all_selected_events_processed":true,
+  "canonical_reader_blocked":true,
+  "earliest_blocker":"IMAGE_READER_VISIBLE_DELIVERY_GATE / NON_TEXT_MEDIA_CONTENT_BLOCK_GATE"
+}
