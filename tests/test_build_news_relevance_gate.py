@@ -13,6 +13,48 @@ SPEC.loader.exec_module(MODULE)
 
 
 class BuildNewsRelevanceGateTests(unittest.TestCase):
+    def test_live_scale_heat_only_rows_do_not_create_an_unbounded_model_workload(self):
+        rows = [
+            {
+                "candidate_id": f"heat-{index:05d}",
+                "source_id": "gdelt",
+                "section": "GLB",
+                "title": f"Routine bilateral statement {index}",
+                "summary": f"Routine bilateral statement {index}",
+                "summary_quality": "structured_event_context",
+                "discovery_signals": {
+                    "event_root_code": "04",
+                    "num_articles": 8,
+                    "num_sources": 5,
+                    "num_mentions": 20,
+                },
+                "canonical_url": f"https://example.test/heat/{index}",
+            }
+            for index in range(9967)
+        ] + [{
+            "candidate_id": "high-impact-1",
+            "source_id": "gdelt",
+            "section": "GLB",
+            "title": "Regional conflict emergency",
+            "summary": "Regional conflict emergency",
+            "summary_quality": "structured_event_context",
+            "discovery_signals": {
+                "event_root_code": "19",
+                "num_articles": 5,
+                "num_sources": 3,
+                "num_mentions": 10,
+            },
+            "canonical_url": "https://example.test/high-impact",
+        }]
+
+        gate = MODULE.build_gate({"items": rows})
+        admitted = MODULE.build_admitted_candidates({"items": rows}, gate)
+
+        self.assertEqual(9968, gate["input_article_row_count"])
+        self.assertEqual(9968, len(gate["decisions"]))
+        self.assertEqual(1, admitted["admitted_article_row_count"])
+        self.assertEqual("high-impact-1", admitted["items"][0]["candidate_id"])
+
     def test_gate_is_lossless_while_model_input_uses_hydration_route(self):
         keyword_rows = [
             {
@@ -189,7 +231,7 @@ class BuildNewsRelevanceGateTests(unittest.TestCase):
         }
 
         self.assertEqual("lightweight_semantic_review", decisions["keyword-only"]["route"])
-        self.assertEqual("content_hydration", decisions["heat-only"]["route"])
+        self.assertEqual("lightweight_semantic_review", decisions["heat-only"]["route"])
         self.assertEqual("content_hydration", decisions["compound"]["route"])
         self.assertEqual("content_hydration", decisions["high-impact"]["route"])
 

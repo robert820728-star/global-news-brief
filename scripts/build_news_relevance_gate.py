@@ -13,12 +13,14 @@ REGIONAL_SUPPLEMENT_IDS = {"cna", "chinanews"}
 HIGH_IMPACT_EVENT_ROOT_CODES = {"13", "14", "17", "18", "19", "20"}
 RELEVANCE_TERMS = {
     "accident", "attack", "bank", "bill", "border", "budget", "ceasefire",
-    "climate", "conflict", "court", "crisis", "currency", "defense", "disease",
+    "breakthrough", "climate", "conflict", "court", "crisis", "currency",
+    "cyber", "defense", "disease",
     "earthquake", "economy", "election", "emergency", "energy", "evacuation",
     "explosion", "fire", "flood", "government", "inflation", "law", "military",
-    "minister", "missile", "parliament", "policy", "president", "protest",
-    "regulation", "sanction", "security", "strike", "tariff", "trade", "treaty",
-    "typhoon", "war",
+    "medicine", "minister", "missile", "outbreak", "parliament", "policy",
+    "president", "protest", "regulation", "research", "sanction", "science",
+    "scientist", "scientists", "security", "semiconductor", "space", "strike",
+    "tariff", "technology", "trade", "treaty", "typhoon", "vaccine", "war",
 }
 def _number(signals: dict, key: str) -> float:
     value = signals.get(key)
@@ -38,12 +40,9 @@ def route_item(item: dict) -> dict:
     num_articles = _number(signals, "num_articles")
     num_sources = _number(signals, "num_sources")
     num_mentions = _number(signals, "num_mentions")
-    strong_heat = num_articles >= 8 or num_sources >= 5 or num_mentions >= 20
     corroborated = num_articles >= 5 or num_sources >= 3 or num_mentions >= 10
     event_root_code = str(signals.get("event_root_code") or "")
-    if strong_heat:
-        reasons.append("strong_cross_source_signal")
-    elif matched_terms and corroborated:
+    if matched_terms and corroborated:
         reasons.append(
             "compound_relevance_and_corroboration:" + ",".join(matched_terms)
         )
