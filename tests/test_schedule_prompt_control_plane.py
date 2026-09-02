@@ -129,6 +129,23 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
                 self.assertIn("attachments=[]", document)
                 self.assertIn("不得宣稱 smoke 通過", document)
 
+    def test_relative_one_time_schedule_is_anchored_after_install_smoke(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+
+        self.assertIn("RELATIVE_ONE_TIME_SCHEDULE_ANCHOR_GATE", install)
+        for requirement in (
+            "對話開始時間",
+            "安裝 smoke 完成後",
+            "啟用前",
+            "當下控制面時間",
+            "next_run_time",
+            "非 null",
+            "仍晚於讀回當下時間",
+            "不得等待已錯過的時間點",
+        ):
+            with self.subTest(requirement=requirement):
+                self.assertIn(requirement, install)
+
     def test_saved_task_template_accepts_native_screenshot_route(self):
         prompt = (ROOT / "scheduled-task-prompt-template.md").read_text(encoding="utf-8")
         self.assertIn("HOST_VISIBLE_SCREENSHOT_ROUTE", prompt)

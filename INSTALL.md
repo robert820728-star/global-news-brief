@@ -161,6 +161,10 @@ prompt 已依控制面能力完成上述驗證後，才在建立或更新排程�
 
 安裝 smoke 的同一則 assistant 回覆必須實際包含可見的非文字 image/media content block 或真實附件。若回覆只有字面序列化的 `!:chatgpt-content-reference{...}`、`image_ref`、Markdown、URL、圖說或路徑，或可觀測結果為 `attachments=[]`，一律不得宣稱 smoke 通過；必須更正為失敗、保持同一 task 暫停，並改用真正的原生圖片卡或公開頁面圖片區域直接截圖重試。不得把文字 token、工具內部 reference 或「畫面如下」當成可見像素。
 
+`RELATIVE_ONE_TIME_SCHEDULE_ANCHOR_GATE`
+
+建立「五分鐘後」等相對時間的單次 Scheduled Task 時，延遲不得從對話開始時間、開始讀取 repository 或開始安裝時計算。必須先完成完整 prompt 提交與驗證，並在上述安裝 smoke 完成後，只於啟用前取得當下控制面時間，將同一 exact task ID 的執行時間更新為「當下控制面時間＋使用者指定延遲」後再啟用。create／enable 後立刻依同一控制面讀回 exact task ID；若控制面提供 `next_run_time`，它必須為非 null 且仍晚於讀回當下時間。若讀回為 null、已在過去或未保存，安裝尚未完成，必須先更新同一未執行 task 的未來時間並重讀；不得等待已錯過的時間點、宣稱會自動觸發或把對話靜默當成背景執行。只有控制面已將該單次 task 標示為完成且無法重排時，才可改用新的 bounded 測試 task，且不得與舊 task 重疊或修改正式每日 06:00 排程。
+
 | 項目 | `full-runtime` | `mobile-native` |
 |---|---|---|
 | 適用環境 | 可執行 bundled Python、物化檔案與 canonical publisher | 無本機 runtime、但能以宿主原生圖片卡或直接截圖交付可見圖片的 ChatGPT Scheduled Task |
