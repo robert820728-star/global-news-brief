@@ -129,7 +129,7 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
                 self.assertIn("attachments=[]", document)
                 self.assertIn("不得宣稱 smoke 通過", document)
 
-    def test_relative_one_time_schedule_is_anchored_after_install_smoke(self):
+    def test_relative_one_time_schedule_tolerates_nullable_next_run_time_with_runtime_evidence(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
 
         self.assertIn("RELATIVE_ONE_TIME_SCHEDULE_ANCHOR_GATE", install)
@@ -139,8 +139,12 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
             "啟用前",
             "當下控制面時間",
             "next_run_time",
-            "非 null",
+            "非 null 時",
             "仍晚於讀回當下時間",
+            "為 null 時不得停用",
+            "durable ledger",
+            "同一 occurrence",
+            "不得把 null 單獨判定為觸發失敗",
             "不得等待已錯過的時間點",
         ):
             with self.subTest(requirement=requirement):
