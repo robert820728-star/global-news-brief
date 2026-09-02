@@ -129,7 +129,7 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
                 self.assertIn("attachments=[]", document)
                 self.assertIn("不得宣稱 smoke 通過", document)
 
-    def test_relative_one_time_schedule_tolerates_nullable_next_run_time_with_runtime_evidence(self):
+    def test_relative_one_time_schedule_requires_persisted_future_trigger_evidence(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
 
         self.assertIn("RELATIVE_ONE_TIME_SCHEDULE_ANCHOR_GATE", install)
@@ -141,14 +141,21 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
             "next_run_time",
             "非 null 時",
             "仍晚於讀回當下時間",
-            "為 null 時不得停用",
-            "durable ledger",
-            "同一 occurrence",
-            "不得把 null 單獨判定為觸發失敗",
+            "為 null 時，安裝尚未驗證",
+            "不得宣稱排程已完成",
+            "停用同一 exact task ID",
+            "一次 fresh-create fallback",
+            "最終絕對執行時間",
+            "再次讀回",
+            "仍為 null",
+            "trigger／persistence failure",
             "不得等待已錯過的時間點",
         ):
             with self.subTest(requirement=requirement):
                 self.assertIn(requirement, install)
+
+        self.assertNotIn("為 null 時不得停用", install)
+        self.assertNotIn("不得把 null 單獨判定為觸發失敗", install)
 
     def test_saved_task_template_accepts_native_screenshot_route(self):
         prompt = (ROOT / "scheduled-task-prompt-template.md").read_text(encoding="utf-8")
