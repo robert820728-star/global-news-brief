@@ -250,7 +250,7 @@ class PipelineContractTests(unittest.TestCase):
         self.assertNotIn("checkpoint、manifest 與 receipts", mobile)
         self.assertIn("SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE", schedule)
         self.assertIn("SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE", schedule)
-        self.assertIn("route this occurrence to `mobile-chatgpt-daily-prompt.md`", schedule)
+        self.assertIn("route the same occurrence to `mobile-chatgpt-daily-prompt.md`", schedule)
         self.assertNotIn(
             "source-image download or screenshot acquisition has been tried", schedule
         )
@@ -395,7 +395,7 @@ class PipelineContractTests(unittest.TestCase):
             "SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE",
             "SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE",
             "does not require a verified workspace",
-            "route this occurrence to `mobile-chatgpt-daily-prompt.md`",
+            "route the same occurrence to `mobile-chatgpt-daily-prompt.md`",
         ):
             self.assertIn(requirement, prompt)
         self.assertNotIn("maps/generated/taiwan-counties-yellow-v2.png", prompt)
@@ -1361,7 +1361,7 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE", document)
             self.assertIn("SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE", document)
 
-        self.assertIn("HOST_VISIBLE_SCREENSHOT_ROUTE", template)
+        self.assertIn("INDEPENDENT_VISIBLE_MEDIA_CAPABILITY_PROBE", template)
         self.assertIn("舊 prompt 不得繼續啟用", install)
         self.assertIn("SCHEDULED_HOST_VISIBLE_SCREENSHOT_ROUTE", mobile)
         self.assertIn("不得在 discovery 後宣告 NATIVE_MEDIA_UNAVAILABLE", mobile)
@@ -1404,7 +1404,7 @@ class PipelineContractTests(unittest.TestCase):
             "GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE",
             "PUBLIC_VALUE_V2_SELECTION_GATE",
             "INDEPENDENT_VERIFICATION_GATE",
-            "LOCAL_ATTACHMENT_FIRST_WHEN_RUNTIME_AVAILABLE_GATE",
+            "VERIFIED_LOCAL_MEDIA_PIPELINE_ROUTE",
             "FIXED_VISIBLE_IMAGE_TRANSPORT_SEQUENCE",
             "DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE",
             "IMAGE_FALLBACK_EXHAUSTION_GATE",
@@ -1419,11 +1419,11 @@ class PipelineContractTests(unittest.TestCase):
 
         for requirement in (
             "原引用來源 → 官方機關／當事組織 → 原始通訊社 → 其他可靠媒體",
-            "可寫檔案系統與可執行 runtime",
-            "下載或截圖成實體圖片檔",
-            "以本機附件交付",
-            "原生圖片搜尋只可作為候選定位",
-            "沒有截圖工具時立即進下一來源",
+            "INDEPENDENT_VISIBLE_MEDIA_CAPABILITY_PROBE",
+            "source_media_byte_fetch",
+            "local_attachment_media_handoff",
+            "有 Python／可寫檔案系統不等於此鏈完成",
+            "只有 `webpage_region_screenshot` 已獨立實測成功時",
             "搜尋結果沒有 image ref",
             "所有 C 級以上",
             "## 今日總覽",
@@ -1475,7 +1475,7 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("當地語言", document)
             self.assertIn("不得反覆查詢同一通訊社", document)
 
-    def test_runtime_available_path_materializes_local_attachment_before_native_card(self):
+    def test_complete_verified_local_media_pipeline_precedes_native_card(self):
         paths = (
             "INSTALL.md",
             "scheduled-task-prompt-template.md",
@@ -1487,17 +1487,17 @@ class PipelineContractTests(unittest.TestCase):
 
         for path in paths:
             document = (ROOT / path).read_text(encoding="utf-8")
-            self.assertIn("LOCAL_ATTACHMENT_FIRST_WHEN_RUNTIME_AVAILABLE_GATE", document, path)
+            self.assertIn("VERIFIED_LOCAL_MEDIA_PIPELINE_ROUTE", document, path)
             if path == "daily-schedule-prompt.md":
-                self.assertIn("writable filesystem", document, path)
-                self.assertIn("local attachment", document, path)
+                self.assertIn("source_media_byte_fetch", document, path)
+                self.assertIn("local_attachment_media_handoff", document, path)
             else:
-                self.assertIn("可寫檔案系統", document, path)
-                self.assertIn("本機附件", document, path)
+                self.assertIn("source_media_byte_fetch", document, path)
+                self.assertIn("local_attachment_media_handoff", document, path)
 
         template = (ROOT / "scheduled-task-prompt-template.md").read_text(encoding="utf-8")
-        self.assertIn("下載或截圖成實體圖片檔", template)
-        self.assertIn("原生圖片搜尋只可作為候選定位", template)
+        self.assertIn("解碼／尺寸／雜湊驗證", template)
+        self.assertIn("另一條已驗證的原生媒體路徑", template)
         self.assertNotIn("SCHEDULED_NATIVE_IMAGE_SEARCH_FIRST_GATE", template)
         self.assertNotIn("取得合格 image ref 後立即交付原生圖片卡", template)
 

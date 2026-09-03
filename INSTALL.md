@@ -6,9 +6,9 @@
 
 1. 只詢問必要偏好，建立名為「每日新聞」的每日獨立排程。
 2. 每輪重新解析最新 `main`，同一輪固定使用一個經雙端點確認的 commit。
-3. 任何每日新聞執行，不論手動、單次、測試、首次執行、循環 occurrence 或恢復，都使用相同的新聞與可見圖片門檻；full-runtime 以本機附件交付，無本機 runtime 的 ChatGPT Scheduled Task 以宿主原生圖片卡或頁面圖片區域直接截圖交付。
+3. 任何每日新聞執行，不論手動、單次、測試、首次執行、循環 occurrence 或恢復，都使用相同的新聞與可見圖片門檻；依本輪獨立 capability probe，完整本機媒體鏈可交付本機附件，否則 ChatGPT Scheduled Task 使用另一條已驗證的原生媒體路徑。頁面可開啟不得推導頁面圖片區域可截圖。
 4. 新聞發現使用 GDELT、中央社與中新社三條 discovery routes；事件驗證依事件與主張角色動態選取原始、官方／主要及真正獨立的證據。
-5. 首次安裝或修正時先完整提交最新 task prompt，並依 Scheduled Task 控制面實際提供的驗證能力確認保存結果；再在建立或更新排程的目前對話直接執行原生圖片卡／頁面圖片區域截圖實測，通過後才啟用循環排程並執行一次完整測試。這是安裝期宿主能力測試，不是 Scheduled Task occurrence，也不要求立即觸發指定 task ID。
+5. 首次安裝或修正時先完整提交最新 task prompt，並依 Scheduled Task 控制面實際提供的驗證能力確認保存結果；再在建立或更新排程的目前對話，以獨立 capability probe 完成至少一條來源 bytes→本機媒體交付、原生圖片卡或已實測可用的頁面圖片區域截圖端到端路徑，通過後才啟用循環排程並執行一次完整測試。這是安裝期宿主能力測試，不是 Scheduled Task occurrence，也不要求立即觸發指定 task ID。
 
 ## 使用者啟動指令
 
@@ -139,6 +139,8 @@
 
 `EVERY_DAILY_NEWS_EXECUTION_GATE`：本產品所有每日新聞執行——manual, single-run, test, first-run, recurring, or resume——都要求每則已確認存在合格圖片的入選事件完成實際可見圖片交付。full-runtime 可交付本機實體附件；ChatGPT Scheduled Task 宿主可交付原生圖片卡或頁面／圖片區域的原生截圖。排程型態不是圖片要求的例外，但也不得把「沒有本機 Python／verified workspace」誤判成「沒有圖片能力」。任一模式都可直接截圖，不要求原始檔或原畫質；外部 URL、Markdown 熱連結、路徑字串、圖說與破圖框仍不算交付。
 
+`INDEPENDENT_VISIBLE_MEDIA_CAPABILITY_PROBE`：`page_open`、`native_image_search`、`webpage_region_screenshot`、`source_media_byte_fetch` 與 `local_attachment_media_handoff` 必須分別以實際呼叫驗證；任一項成功不得推導另一項可用。能開來源頁不代表能截取 HTML 圖片區域；有 Python／可寫檔案系統也不代表能取得外部媒體 bytes 或把本機檔交付成可見附件。安裝 smoke 只需證明其中一條端到端可見媒體路徑，但 occurrence 必須依本輪實測能力選路。
+
 `SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`
 
 建立或修正 Scheduled Task 時，控制面第一步必須先把當下最新 `scheduled-task-prompt-template.md` 全文寫入 task instruction，並依 `SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE` 驗證正式 create／update 結果；不得先 bootstrap repository、取得 verified workspace 或執行新聞流程。既有 task 若保存舊 prompt，舊 prompt 不得繼續啟用，也不得因任何 smoke／bootstrap 失敗而被保留。後續 smoke 失敗時保留最新版 prompt 並暫停 task，不得留下舊 prompt 繼續執行。
@@ -159,7 +161,7 @@ prompt 已依控制面能力完成上述驗證後，才在建立或更新排程�
 
 `NON_TEXT_SMOKE_OUTPUT_GATE`
 
-安裝 smoke 的同一則 assistant 回覆必須實際包含可見的非文字 image/media content block 或真實附件。若回覆只有字面序列化的 `!:chatgpt-content-reference{...}`、`image_ref`、Markdown、URL、圖說或路徑，或可觀測結果為 `attachments=[]`，一律不得宣稱 smoke 通過；必須更正為失敗、保持同一 task 暫停，並改用真正的原生圖片卡或公開頁面圖片區域直接截圖重試。不得把文字 token、工具內部 reference 或「畫面如下」當成可見像素。
+安裝 smoke 的同一則 assistant 回覆必須實際包含可見的非文字 image/media content block 或真實附件。若回覆只有字面序列化的 `!:chatgpt-content-reference{...}`、`image_ref`、Markdown、URL、圖說或路徑，一律不得宣稱 smoke 通過。`attachments=[]` 僅是 metadata，不能單獨否定 exact-thread PrintWindow 已證明的真正圖片像素；若 metadata 為空且也沒有可見像素證據，才必須更正為失敗、保持同一 task 暫停，並改用另一條已驗證媒體路徑。不得把文字 token、工具內部 reference 或「畫面如下」當成可見像素。
 
 `RELATIVE_ONE_TIME_SCHEDULE_ANCHOR_GATE`
 
@@ -215,7 +217,7 @@ ChatGPT Scheduled Task 不得只收到「請讀 INSTALL」的短 launcher。建�
 
 | 階段 | 必讀／輸入 | 必填產物與驗證 | 完成或恢復條件 |
 |---|---|---|---|
-| -1 fresh main 與 bootstrap | `bootstrap-workspace.md`、雙端點 current main、fresh nonce、pinned loader seed／capsule manifest／payload | full-runtime 必須由已核對 Git blob SHA 的 loader seed 開始，產生經 manifest blob、payload SHA-256、runtime fingerprint 驗證的 workspace 與 `bootstrap-receipt.json`，再完成本機附件 smoke test | 任一每日新聞執行未通過前不得建立 checkpoint、occurrence 或開始 discovery；不得改走 mobile-native。既有歷史 mobile run 也只能由 full-runtime 讀取其 first incomplete stage 接續 |
+| -1 fresh main 與 bootstrap | `bootstrap-workspace.md`、雙端點 current main、fresh nonce、pinned loader seed／capsule manifest／payload | `local_execution_capable` 只證明本機執行；取得並驗證 seed 才是 `bootstrap_transport_capable`；capsule 與 receipt 完成才是 `verified_workspace_ready` | `BOOTSTRAP_TRANSPORT_DOWNGRADE_GATE`：full-runtime transport 不成立但安裝 smoke 已證明可見媒體路徑時，same occurrence 直接轉 `mobile-native`；不得建立 replacement run。只有仍選 full-runtime 後的 capsule／workspace 失敗才是 repository materialization failure |
 | 0 checkpoint init | run id、精確 24 小時窗；full-runtime 另需 bootstrap receipt | full-runtime 執行 canonical checkpoint CLI：`<bundled-python> scripts/news_run_checkpoint.py init ...`；mobile-native 在 capability routing 選定後建立或 resume `logs/current.json`，保存 run id、窗、main 與 first incomplete stage | 兩種模式都綁定同一輪 main 與時間窗；mobile-native 不宣稱執行 `news_run_checkpoint.py` |
 | 1 source-scan | `news-source-pool.json`、`source-route-config.json` | 三條 configured discovery route 的 snapshots、scan evidence、truthful coverage；必要時另有受控 `web_fallback` row；`source-candidates.json`、`news-relevance-gate.json`、`model-source-candidates.json` | `SOURCE_SCAN_COVERAGE_SEPARATION`：`scan_status` 只表示掃描程序是否完成，`coverage_status`／`coverage_complete` 另表示來源覆蓋是否完整；每條 configured route 都留在 audit。`GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE`：本輪有 fallback／全球板塊時，優先要求 `primary_aggregator` 成功；GDELT 的 archive、一次 DOC、有效 cache 全部不可用後，只有保存可重算搜尋快照、精確時間窗、原始文章網址與逐列處置的 `web_fallback` 可恢復全球召回。它永遠是 `degraded_partial`，不得冒充 GDELT 或補足 configured-route completeness；primary 與備援都無可核實候選時才停在 source-scan。`FULL_DISCOVERY_POOL_UNCAPPED`：已取得列全部保存在 source pool 與逐列 gate，不設固定 top-N；`MODEL_INPUT_SIGNAL_GATE`：只有 `content_hydration` 列進入本輪模型輸入，`lightweight_semantic_review` 列仍保存在 gate 供 coverage 稽核，不得冒充已完成語意事件評分；中央社與中新社等 regional supplements 仍全部進模型。 |
 | 2 preprocess | model-admitted rows | `preprocessed-candidates.json`；時間窗、canonical URL、provisional article groups | 這些群組不是語意事件；失敗只重跑 preprocess |
@@ -230,6 +232,8 @@ ChatGPT Scheduled Task 不得只收到「請讀 INSTALL」的短 launcher。建�
 | 11 final authority 與 render | collect stage 已 completed／依 profile 合法 omission | full-runtime 首次執行 `validate_news_brief.py manifest` 到 `OK`，由 manifest 渲染 reader 並執行 brief validator；mobile-native 由 run-scoped selected events 與已驗證事實渲染 reader，再執行既有 `MOBILE_READER_STRUCTURE_EQUIVALENT` | full-runtime 提前取得 `DEFERRED` 時繼續原 stage；mobile-native 不宣稱 script 或 manifest schema 已通過，結構錯誤只重做 render |
 | 12 publish 與 bundle | final checkpoint、manifest、audit、source pool、reader、map decisions、宣稱交付的附件 | 依下方實際 CLI 由 `publish_news_brief.py` 建立 release／receipt；再以 `manage_canonical_run_bundle.py pack` 建立 transport，與 `logs/current.json` 一次 atomic 發布後執行 `verify`／`restore` 核對 byte identity | full-runtime 由 canonical publisher fail-closed；mobile-native 依 mobile ledger schema 保存 reader/audit 與 delivery profile |
 | 13 conversation delivery | release receipt 或 mobile saved reader | 完整 reader bytes、附件／能力限制 receipt、`delivery-handoff` | 不能只交摘要或驗收報告；`client_confirmed` 只有外部明確回執才可使用 |
+
+`MULTIMODAL_READER_ORDERED_BLOCK_CONTRACT`：對話交付可由 ordered text／media blocks 組成；串接所有 text blocks（忽略 media blocks 本身）必須逐 byte 等於 `logs/latest-reader.md`。每個原生圖片／附件 block 必須插在該事件於 Reader 文字中明示的 `media anchor`，不得漂移到其他事件或文末。caption 屬 canonical Reader text，緊接對應 anchor；媒體 metadata 不得另造或改寫 caption。這個 block placement 不改變 saved Reader bytes。
 
 `SCHEDULED_OCCURRENCE_SINGLE_RUN_GATE`：mobile ledger 以 Scheduled Task 真正觸發的 `scheduled_for` 作 occurrence key；repository 不預建 future key。同一 occurrence 的 `current.json` 只要存在，就沿用原 `run_id` 並從 first incomplete stage 接續；即使 reader 已保存但尚未 `delivery-handoff`，也不得 rotate、建立 replacement run 或重跑新聞階段。只有 `scheduled_for` 嚴格較晚的下一個實際觸發 occurrence 才可 rotate，且非 terminal 前輪才標為 `interrupted_by_next_run`；相同 key resume、較舊 key 一律拒絕。同一 run 只能留在原 stage 或前進至緊鄰的下一 stage，不得跳級，也不得執行 stage regression。
 
@@ -342,9 +346,9 @@ reader 不顯示 run id、commit、後台 counts、十四天 audit 或修復紀�
 
 `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`：圖片搜尋結果／原生圖片卡不是唯一合法取得路徑。檢查原引用文章時，必須解析與核對內文 `img`、`srcset`、`og:image` 或等價媒體欄位；若其中存在與當期事件相符的直接 JPEG／WebP URL，必須實際以宿主可用的媒體路徑開啟／取得該媒體並嘗試可見交付。搜尋卡沒有 image ref 不等於圖片不可取得；已知原圖 URL 卻未實際嘗試此路徑時，不得宣告 `NATIVE_MEDIA_UNAVAILABLE` 或 source exhaustion。外部 URL、Markdown 圖片字串或純文字連結本身仍不算可見交付。
 
-`LOCAL_ATTACHMENT_FIRST_WHEN_RUNTIME_AVAILABLE_GATE`：只要執行宿主具備可寫檔案系統與可執行 runtime，來源圖片的正式交付路徑固定為「解析原文章／官方／可靠轉載媒體 → 下載或截圖成實體圖片檔 → 解碼、尺寸與雜湊驗證 → 以本機附件交付」。原生圖片搜尋只可作為候選定位與來源追溯，不能取代本機附件，也不得因已有 `image_ref` 就跳過下載／截圖。原來源失敗時依序改查官方／當事組織、原始通訊社、當地可靠媒體與其他可靠媒體；任一來源可開啟的合格圖片都必須直接取得或截圖，不得退回純文字 ref。
+`VERIFIED_LOCAL_MEDIA_PIPELINE_ROUTE`：只有本輪已分別證明 `source_media_byte_fetch`（或真正可用的 `webpage_region_screenshot`）、解碼／尺寸／雜湊驗證及 `local_attachment_media_handoff` 全部成立時，才優先走本機附件。可寫檔案系統與可執行 runtime 本身不足以強制此路徑；鏈上任一能力缺失時，立即改走另一條已實測可用的原生媒體路徑。原生圖片搜尋可協助定位，但純文字 ref 永遠不算交付。
 
-`MOBILE_NATIVE_IMAGE_SEARCH_FALLBACK_GATE`：只有確實沒有可寫檔案系統或可執行 runtime 的 Scheduled Task 才使用原生圖片卡。原生圖片搜尋成功也必須由宿主建立真正的非文字媒體內容塊；若結果被序列化成 `image_group`／`image_ref` 文字，立即視為該交付路徑失敗，改走同一來源頁圖片區域截圖，再依既有跨來源順序重試。不得反覆輸出或保存 ref 文字後等待。
+`MOBILE_NATIVE_IMAGE_SEARCH_FALLBACK_GATE`：當完整 `VERIFIED_LOCAL_MEDIA_PIPELINE_ROUTE` 不成立時，Scheduled Task 應使用本輪已實測可用的原生圖片卡或其他媒體輸出。原生圖片搜尋成功也必須由宿主建立真正的非文字媒體內容塊；若結果被序列化成 `image_group`／`image_ref` 文字，立即視為該交付路徑失敗。只有 `webpage_region_screenshot` 已獨立實測成功時才改走同一來源頁圖片區域截圖；否則依既有跨來源順序繼續下一個已驗證路徑。不得反覆輸出或保存 ref 文字後等待。
 
 `NATIVE_IMAGE_QUERY_RESULT_IS_NOT_CAPABILITY_GATE`：原生圖片搜尋工具已可呼叫、但某次查詢沒有回傳合格 `image_ref`，只代表該查詢或該來源沒有可用結果，不代表宿主缺少圖片交付能力。不得在 discovery 前、事件處理中或 Reader 前把單次零結果、錯圖、舊圖或某一媒體未被索引改判成 `HOST_VISIBLE_MEDIA_TRANSPORT_UNAVAILABLE`。只有工具本身不存在、呼叫被宿主拒絕或無法建立任何原生圖片結果物件時，才可判定 transport capability 不可用；查詢成功但沒有合格圖片時，必須繼續同事件的替代來源與替代查詢。
 
@@ -356,7 +360,7 @@ reader 不顯示 run id、commit、後台 counts、十四天 audit 或修復紀�
 
 `SAME_OCCURRENCE_NATIVE_IMAGE_REF_GATE`：Scheduled Task 的原生 `image_ref` 必須由目前 occurrence 的實際圖片工具結果建立，並在同一最終訊息中真正出現在原生 image group／圖片卡。前一個 task、其他對話或其他 occurrence 的 `turn...image...` 文字不得作為可重用附件；只列 ref id、聲稱已建立 image group、或詢問「如果你看得到」都算未交付，必須在目前 occurrence 重新取得並實際渲染。
 
-`FIXED_VISIBLE_IMAGE_TRANSPORT_SEQUENCE`：先依能力選路徑，不得把較弱路徑放在較強路徑前。具可寫檔案系統與 runtime 時，固定對原引用來源 → 官方／當事組織 → 原始通訊社 → 當地可靠媒體與當地語言 → 其他可靠媒體逐層解析直接媒體，下載或截圖成實體檔，經既有 materializer 驗證後交付本機附件；原生圖片搜尋只輔助定位候選。確實無本機能力時才使用原生圖片卡，卡片未形成非文字內容塊便立即改用頁面圖片區域截圖並繼續下一來源。成功即停止該事件重試；單一路徑失敗不得升格成整體 blocker，等待或重複輸出文字 ref 也不是恢復動作。
+`FIXED_VISIBLE_IMAGE_TRANSPORT_SEQUENCE`：先執行 `INDEPENDENT_VISIBLE_MEDIA_CAPABILITY_PROBE`，再依實際可完成的端到端路徑選擇。完整 `VERIFIED_LOCAL_MEDIA_PIPELINE_ROUTE` 成立時，依原引用來源 → 官方／當事組織 → 原始通訊社 → 當地可靠媒體與當地語言 → 其他可靠媒體逐層取得 bytes 或真正截圖、驗證並交付本機附件；否則跳過缺失能力，使用已驗證的原生圖片卡或其他媒體輸出。`page_open` 不得推導 `webpage_region_screenshot`，任何單一路徑失敗也不得升格成整體 blocker。
 
 `IMAGE_FALLBACK_EXHAUSTION_GATE`：原引用來源、原始圖片 URL、原生圖片卡或單一媒體交付失敗都不是圖片 blocker。每則事件在宣告 `NATIVE_MEDIA_UNAVAILABLE`、`source_exhausted` 或停止視覺 stage 前，必須依序實際搜尋原引用來源、官方機關／當事組織、原始通訊社及其他可靠媒體的同事件合法刊載／轉載圖片。圖片可以不是原文同一張，只要來源可信、合法公開刊載、可追溯，且事件、日期、人物／地點一致；圖片證據來源與文字驗證來源不必相同。每則 `image-evidence.json` 必須保存 `original_source_attempted`、`direct_media_url_attempted`、`official_fallback_attempted`、`wire_fallback_attempted`、`reliable_media_fallback_attempted`、`qualified_image_found`、`delivery_attempted` 與 `delivery_result`。`delivery_unavailable` 或 `source_exhausted` 的 `direct_media_url_attempted` 必須為 `true`；任一來源層尚未實際搜尋時，不得宣告 fallback exhaustion、圖片不可取得或不可恢復 blocker。直接文章原圖已成功可見交付時，不必再做無增量的後續來源搜尋。
 

@@ -7,9 +7,9 @@
 
 `EVERY_DAILY_NEWS_EXECUTION_GATE`：manual, single-run, test, first-run, recurring, or resume 全部是同一每日新聞執行，不因觸發方式而有圖片例外。full-runtime 可交付本機實體附件；ChatGPT Scheduled Task 宿主可交付原生圖片卡或頁面／圖片區域的原生截圖。兩者都必須逐則交付實際可見圖片；沒有本機 Python、verified workspace、原始檔或原畫質不等於沒有圖片能力。
 
-`HOST_VISIBLE_SCREENSHOT_ROUTE`
+`INDEPENDENT_VISIBLE_MEDIA_CAPABILITY_PROBE`
 
-原生圖片搜尋沒有合格 `image_ref`、且固定流程進入截圖步驟後，對話宿主只要能開啟來源頁，就可直接截圖原文章、官方頁、通訊社或可靠轉載頁中的同事件圖片區域並作為可見圖片交付，不要求原始檔或原畫質，也不必等待原圖／CDN 下載失敗。外部 URL、Markdown 熱連結、路徑字串、圖說或破圖不算。排程安裝時已用同一 Scheduled Task 工具執行面完成一次 smoke；只有媒體工具本身不存在或呼叫遭拒時，才可在 discovery 前停止。工具可呼叫但單次查詢零結果不是 capability failure，必須繼續新聞流程與後續逐則 fallback。
+分別實測 `page_open`、`native_image_search`、`webpage_region_screenshot`、`source_media_byte_fetch` 與 `local_attachment_media_handoff`；任一成功不得推導另一項可用，尤其 `page_open` 不得推導 HTML 截圖能力。排程安裝 smoke 只證明當時成功的端到端路徑；occurrence 依本輪實測結果跳過不可用路徑。外部 URL、Markdown 熱連結、路徑字串、圖說或破圖不算交付。
 
 ## 1. 最新規則與單一執行輪
 
@@ -45,13 +45,13 @@
 
 所有入選新聞逐則執行本節；不能因已完成文字、圖片不是 `claim_critical`、圖片搜尋卡失敗或處理時間較長而省略。每則預設一張與當期事件相符的圖片；第二張只有提供新增資訊時才可加入，每則最多兩張。使用可信且可追溯的公開來源，核對事件、日期、人物／地點與 credit；禁止搜尋縮圖、搬運站、無關示意圖、人物舊照或來源 logo 湊數。
 
-`LOCAL_ATTACHMENT_FIRST_WHEN_RUNTIME_AVAILABLE_GATE`
+`VERIFIED_LOCAL_MEDIA_PIPELINE_ROUTE`
 
-若 capability probe 顯示可寫檔案系統與可執行 runtime，逐則第一交付路徑必須是：從原引用文章、官方頁或可靠轉載解析直接媒體，下載或截圖成實體圖片檔，完成解碼、尺寸與雜湊驗證，再以本機附件交付。原生圖片搜尋只可作為候選定位；即使取得 ref，也不能取代下載／截圖與本機附件。原來源失敗時依序改查官方／當事組織、原始通訊社、當地可靠媒體與其他可靠媒體，不得回退成純文字 ref。
+只有本輪已證明 `source_media_byte_fetch`（或真正可用的 `webpage_region_screenshot`）、解碼／尺寸／雜湊驗證與 `local_attachment_media_handoff` 全部成立時，才優先從原引用文章、官方頁或可靠轉載取得實體圖片並交付本機附件。有 Python／可寫檔案系統不等於此鏈完成；任一環節缺失時立即改走另一條已驗證的原生媒體路徑，不得退回純文字 ref。
 
 `MOBILE_NATIVE_IMAGE_SEARCH_FALLBACK_GATE`
 
-只有確實沒有可寫檔案系統或可執行 runtime 時才使用原生圖片搜尋／圖片卡。卡片成功必須是宿主建立的非文字媒體內容塊；若輸出變成 `image_group`、`image_ref` 或 JSON 文字，立即判該路徑失敗，改用同一來源頁圖片區域截圖，再依既有來源順序繼續；沒有截圖工具時立即進下一來源。禁止重複輸出 ref、等待或把文字化卡片保存成成功證據。
+當完整 `VERIFIED_LOCAL_MEDIA_PIPELINE_ROUTE` 不成立時，才使用本輪已實測可用的原生圖片搜尋／圖片卡或其他媒體輸出。卡片成功必須是宿主建立的非文字媒體內容塊；若輸出變成 `image_group`、`image_ref` 或 JSON 文字，立即判該路徑失敗。只有 `webpage_region_screenshot` 已獨立實測成功時才改用同一來源頁圖片區域截圖；沒有截圖工具時立即進下一個已驗證路徑或下一來源。禁止重複輸出 ref、等待或把文字化卡片保存成成功證據。
 
 `NATIVE_IMAGE_QUERY_RESULT_IS_NOT_CAPABILITY_GATE`
 
@@ -79,7 +79,7 @@
 
 `FIXED_VISIBLE_IMAGE_TRANSPORT_SEQUENCE`
 
-圖片取得與交付順序固定如下：①有可寫檔案系統與 runtime 時，依原引用來源 → 官方／當事組織 → 原始通訊社 → 當地可靠媒體與當地語言 → 其他可靠媒體逐層解析 `img`／`srcset`／`og:image`／圖集；下載或截圖成實體圖片檔，以 `scripts/materialize_news_images.py` 完成 MIME、解碼、尺寸、SHA-256 與內容核對後，以本機附件交付。②只有無本機能力時才用原生圖片搜尋定位並嘗試非文字圖片卡；文字化的 ref 立即失敗，改用頁面圖片區域截圖，再進下一來源。③任一路徑成功後立即停止該事件重試；任一路徑失敗只代表該路徑失敗。禁止乾等、重複輸出 ref，或把候選定位當作交付。
+圖片取得與交付順序固定如下：①先做獨立能力探測。②完整 `VERIFIED_LOCAL_MEDIA_PIPELINE_ROUTE` 成立時，依原引用來源 → 官方／當事組織 → 原始通訊社 → 當地可靠媒體與當地語言 → 其他可靠媒體逐層取得、驗證並交付本機附件。③否則跳過缺失能力，使用已實測可用的原生圖片卡或其他媒體輸出；只有 `webpage_region_screenshot` 實測成功才走頁面截圖。④任一路徑成功即停止該事件重試；單一路徑失敗不代表整體失敗。
 
 `DIRECT_ARTICLE_MEDIA_DELIVERY_ROUTE`
 
@@ -124,6 +124,8 @@
 5. `## 後續觀察`：只列尚待確認的具體事項，不放內部修復紀錄。
 
 Reader 必須包含本輪所有 C 級以上 validated 事件，來源連結與評級理由完整；不得輸出 429、HTTP、重試、圖片取得、checkpoint 或 recovery 等內部工程紀錄。
+
+`MULTIMODAL_READER_ORDERED_BLOCK_CONTRACT`：最終訊息是 ordered text／media blocks；串接所有 text blocks（忽略 media blocks）必須逐 byte 等於 `logs/latest-reader.md`。每個媒體 block 插在其事件文字中的 `media anchor`，不得漂移；caption 是 canonical Reader text，緊接該 anchor，媒體 metadata 不得另寫不同 caption。
 
 ## 5. 完成、恢復與對話交付
 

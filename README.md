@@ -4,9 +4,11 @@
 
 ## 執行環境
 
-`EVERY_DAILY_NEWS_EXECUTION_GATE`／`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`：manual, single-run, test, first-run, recurring, or resume 使用相同新聞與逐則可見圖片門檻。full-runtime 交付本機附件；ChatGPT Scheduled Task 宿主可交付原生圖片卡或頁面圖片區域直接截圖。不要求原始檔或原畫質。
+`SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE`：名稱保留作相容識別；實際門檻是同一 Scheduled Task 宿主完成任一條已獨立驗證的端到端可見媒體路徑，並非強制使用 screenshot。
 
-`SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`／`SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE`／`SCHEDULE_PROMPT_EXACT_ID_READBACK_ONLY_GATE`：建立或修正排程時先以最新版完整範本取代 saved prompt。控制面支援同一 namespace 的 exact task ID readback 時必須讀回逐字核對；沒有 exact-ID view 時，由提交前核對證明完整 prompt payload，正式 create／update 結果核對 task ID、成功狀態、每天 06:00、時區及目前對話。scope 不明的一般 list 空結果不得推翻 create 成功，也不得盲建重複排程。其後 `SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE` 才以同一 Scheduled Task 工具執行面直接截圖公開頁面的圖片區域或交付原生圖片卡；不需要 repository bootstrap 或台灣底圖。失敗時保留最新版 prompt 並暫停 task。
+`EVERY_DAILY_NEWS_EXECUTION_GATE`／`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`：manual, single-run, test, first-run, recurring, or resume 使用相同新聞與逐則可見圖片門檻。依獨立 capability probe，完整本機媒體鏈可交付本機附件；ChatGPT Scheduled Task 也可使用原生圖片卡或已實測可用的頁面圖片區域截圖。不要求原始檔或原畫質，且不得由能開頁面推導能截圖。
+
+`SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`／`SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE`／`SCHEDULE_PROMPT_EXACT_ID_READBACK_ONLY_GATE`：建立或修正排程時先以最新版完整範本取代 saved prompt。控制面支援同一 namespace 的 exact task ID readback 時必須讀回逐字核對；沒有 exact-ID view 時，由提交前核對證明完整 prompt payload，正式 create／update 結果核對 task ID、成功狀態、排程時間、時區及目前對話。scope 不明的一般 list 空結果不得推翻 create 成功，也不得盲建重複排程。其後以同一 Scheduled Task 工具執行面獨立探測並完成至少一條端到端可見媒體路徑：可驗證的來源 bytes→解碼／雜湊→本機媒體交付、原生圖片卡，或已實測可用的頁面圖片區域截圖；不需要 repository bootstrap 或台灣底圖。失敗時保留最新版 prompt 並暫停 task。
 
 完整本機工作流仍使用下方的安裝方式與 `daily-schedule-prompt.md`；兩種模式互不覆蓋。
 

@@ -127,6 +127,7 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
                 self.assertIn("NON_TEXT_SMOKE_OUTPUT_GATE", document)
                 self.assertIn("!:chatgpt-content-reference", document)
                 self.assertIn("attachments=[]", document)
+                self.assertIn("不能單獨否定", document)
                 self.assertIn("不得宣稱 smoke 通過", document)
 
     def test_relative_one_time_schedule_requires_persisted_future_trigger_evidence(self):
@@ -157,9 +158,12 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
         self.assertNotIn("為 null 時不得停用", install)
         self.assertNotIn("不得把 null 單獨判定為觸發失敗", install)
 
-    def test_saved_task_template_accepts_native_screenshot_route(self):
+    def test_saved_task_template_probes_media_routes_independently(self):
         prompt = (ROOT / "scheduled-task-prompt-template.md").read_text(encoding="utf-8")
-        self.assertIn("HOST_VISIBLE_SCREENSHOT_ROUTE", prompt)
+        self.assertIn("INDEPENDENT_VISIBLE_MEDIA_CAPABILITY_PROBE", prompt)
+        self.assertIn("page_open", prompt)
+        self.assertIn("webpage_region_screenshot", prompt)
+        self.assertIn("不得推導", prompt)
         self.assertIn("不要求原始檔或原畫質", prompt)
         self.assertNotIn("maps/generated/taiwan-counties-yellow-v2.png", prompt)
         self.assertNotIn("只能在已通過", prompt)
