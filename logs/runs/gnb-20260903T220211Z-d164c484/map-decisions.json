@@ -1,0 +1,15 @@
+{
+  "schema_version": "mobile-map-decisions-v1",
+  "run_id": "gnb-20260903T220211Z-d164c484",
+  "main_sha": "8417e198468e2ebb64147f180ce3f4a717d6a2ab",
+  "events": [
+    {"event_id":"CHN-01","required":false,"claim_critical":false,"reason":"官方/通訊社文字已精確描述登陸點、降雨省區與防汛影響；mobile-native不冒充本機地圖renderer。"},
+    {"event_id":"GLB-01","required":false,"claim_critical":false,"reason":"波灣各國與霍爾木茲位置可由來源文字辨識，核心主張不依賴自製地圖。"},
+    {"event_id":"GLB-02","required":false,"claim_critical":false,"reason":"跨境洪災位置由尼泊爾來源與Reuters文字充分支持；核心傷亡/搜救主張不需自製地圖。"},
+    {"event_id":"GLB-03","required":false,"claim_critical":false,"reason":"聯合國調查重點是外國支援、無人機與國際人道法責任，地圖非核心證據。"},
+    {"event_id":"GLB-04","required":false,"claim_critical":false,"reason":"化武銷毀與OPCW核查是制度/操作事件，地圖不影響核心主張。"},
+    {"event_id":"GLB-05","required":false,"claim_critical":false,"reason":"企業收購及AI平台控制權事件不依賴地理位置。"},
+    {"event_id":"GLB-06","required":false,"claim_critical":false,"reason":"RKI全國熱死亡統計以官方表格/圖表與方法為核心，地圖無必要。"},
+    {"event_id":"GLB-07","required":false,"claim_critical":false,"reason":"WMO ENSO更新可由官方預報與文字說明支持；本輪不需要自製地圖。"}
+  ]
+}
