@@ -7,21 +7,32 @@
   "run_id": "gnb-20260903T220211Z-d164c484",
   "scheduled_for": "2026-09-03T22:00:00+00:00",
   "status": "running",
-  "current_stage": "source-scan",
-  "stage_index": 4,
-  "last_completed_stage": "workspace-ready",
+  "current_stage": "candidate-audit",
+  "stage_index": 5,
+  "last_completed_stage": "source-scan",
   "main_sha": "8417e198468e2ebb64147f180ce3f4a717d6a2ab",
   "window": {
     "start": "2026-09-02T22:02:11+00:00",
     "end": "2026-09-03T22:02:11+00:00",
     "timezone": "Asia/Shanghai"
   },
-  "updated_at": "2026-09-03T22:51:00+00:00",
+  "updated_at": "2026-09-03T22:53:00+00:00",
   "last_error": null,
   "delivery_status": "not_ready",
   "client_confirmation_supported": false,
   "reader_artifact": null,
-  "candidate_audit_artifact": null,
+  "candidate_audit_artifact": {
+    "branch": "run-logs",
+    "path": "logs/runs/gnb-20260903T220211Z-d164c484/candidate-audit.json",
+    "blob_sha": "2c8e2e8ef526b2ce5056ecbab2648ecf2dce5759",
+    "run_id": "gnb-20260903T220211Z-d164c484",
+    "main_sha": "8417e198468e2ebb64147f180ce3f4a717d6a2ab",
+    "window": {
+      "start": "2026-09-02T22:02:11+00:00",
+      "end": "2026-09-03T22:02:11+00:00",
+      "timezone": "Asia/Shanghai"
+    }
+  },
   "verification_artifact": null,
   "map_decisions_artifact": null,
   "image_evidence_artifact": null,
