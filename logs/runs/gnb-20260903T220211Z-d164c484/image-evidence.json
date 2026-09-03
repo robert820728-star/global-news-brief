@@ -1,0 +1,26 @@
+{
+  "schema_version": "mobile-image-evidence-v1",
+  "run_id": "gnb-20260903T220211Z-d164c484",
+  "main_sha": "8417e198468e2ebb64147f180ce3f4a717d6a2ab",
+  "window": {"start":"2026-09-02T22:02:11+00:00","end":"2026-09-03T22:02:11+00:00","timezone":"Asia/Shanghai"},
+  "host_capabilities": {"page_open":true,"native_image_search":true,"webpage_region_screenshot":false,"source_media_byte_fetch":false,"local_attachment_media_handoff":true,"verified_local_media_pipeline":false},
+  "events": [
+    {"event_id":"CHN-01","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,"qualified_image_found":true,"delivery_attempted":true,"delivery_result":"delivery_unavailable","qualified_source":"https://www.chinanews.com.cn/tp/2026/09-03/10689774.shtml","image_identity":"2026-09-03福州閩侯積水／救援現場，中新社同日圖集。","transport_note":"同日來源頁可確認合格現場圖片；精確原生圖片搜尋只回傳舊圖，HTML頁面區域截圖不可用，來源媒體bytes亦無可用本機取得路徑。"},
+    {"event_id":"GLB-01","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,"qualified_image_found":true,"delivery_attempted":true,"delivery_result":"delivery_unavailable","qualified_source":"https://www.reuters.com/world/middle-east/iran-war-escalation-raises-concern-over-civilian-death-toll-2026-09-03/","image_identity":"Reuters當期報導所附2026-09-02伊朗Kuhestak受襲後瓦礫現場照片。","transport_note":"來源頁可確認當期同事件圖片；本輪原生圖片搜尋未回傳可安全核對為當期同事件的ref，且無來源bytes→本機附件或HTML區域截圖閉環。"},
+    {"event_id":"GLB-02","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,"qualified_image_found":true,"delivery_attempted":true,"delivery_result":"delivery_unavailable","qualified_source":"https://www.reuters.com/business/environment/nepal-must-rebuild-thousands-homes-no-let-up-search-missing-2026-09-03/","image_identity":"2026-09-03尼泊爾Rasuwa Timure Bazar洪災空拍現場，REUTERS/Navesh Chitrakar。","transport_note":"Reuters來源頁存在同日同事件照片；原生圖片搜尋結果為較早日期同災害圖片，依當期規則淘汰；來源bytes與HTML區域截圖路徑不可用。"},
+    {"event_id":"GLB-03","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,"qualified_image_found":false,"delivery_attempted":false,"delivery_result":"source_exhausted","qualified_source":null,"image_identity":null,"transport_note":"Reuters主圖為2025-11-22檔案照；其他來源未找到可核對為本輪聯合國調查發布事件本身的同日／當期合格圖片。"},
+    {"event_id":"GLB-04","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,"qualified_image_found":false,"delivery_attempted":false,"delivery_result":"source_exhausted","qualified_source":null,"image_identity":null,"transport_note":"Reuters主圖為2024-12-16阿薩德時代看板檔案照；官方與可靠媒體替代來源亦未找到可核對為2026-09-03銷毀行動本身的當期圖片。"},
+    {"event_id":"GLB-05","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,"qualified_image_found":true,"delivery_attempted":true,"delivery_result":"delivery_unavailable","qualified_source":"https://blogs.nvidia.com/blog/nvidia-to-acquire-hugging-face/","qualified_media_url":"https://blogs.nvidia.com/wp-content/uploads/2026/09/hf-nvidia-partner_hf-nvidia-partner-press-1920x1080-2-1280x720.png","image_identity":"NVIDIA 2026-09-03收購Hugging Face官方公告同日收購圖。","transport_note":"官方當日媒體可在頁面層開啟，但本輪沒有把外部來源像素／bytes轉成最終事件錨點非文字媒體塊的可用橋接。"},
+    {"event_id":"GLB-06","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,"qualified_image_found":true,"delivery_attempted":true,"delivery_result":"delivery_unavailable","qualified_source":"https://edoc.rki.de/handle/176904/13891","image_identity":"RKI 2026-09-03官方熱死亡週報內當期表格／曲線圖。","transport_note":"官方PDF頁面可見當期圖表；PDF工具截圖存在於分析層，但本輪無已驗證路徑將該來源截圖嵌入canonical Reader的事件媒體anchor。"},
+    {"event_id":"GLB-07","original_source_attempted":true,"direct_media_url_attempted":true,"official_fallback_attempted":true,"wire_fallback_attempted":true,"reliable_media_fallback_attempted":true,"qualified_image_found":true,"delivery_attempted":true,"delivery_result":"native_ref_ready_for_same_occurrence_recovery","qualified_source":"https://wmo.int/news/media-centre/el-nino-set-become-very-strong-raising-risks-of-extreme-weather-2027","image_identity":"2026-09-03日內瓦WMO發布會，WMO秘書長Celeste Saulo當期照片。","native_result_observed":true,"transport_note":"本輪原生圖片搜尋取得可核對為當日同事件的原生結果；其他已確認圖片仍未交付，因此只保留為同一occurrence可恢復證據。"}
+  ],
+  "all_selected_events_processed": true,
+  "qualified_found_count": 6,
+  "source_exhausted_count": 2,
+  "delivery_unavailable_count": 5,
+  "native_ref_ready_count": 1,
+  "undelivered_event_ids": ["CHN-01","GLB-01","GLB-02","GLB-05","GLB-06","GLB-07"],
+  "source_exhausted_event_ids": ["GLB-03","GLB-04"],
+  "canonical_reader_blocked": true,
+  "earliest_blocker": "IMAGE_READER_VISIBLE_DELIVERY_GATE / NON_TEXT_MEDIA_CONTENT_BLOCK_GATE"
+}
