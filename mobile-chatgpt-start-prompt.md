@@ -1,5 +1,7 @@
 # 每日新聞排程起始指令
 
+可存取 repository 執行面時，先用 `scripts/build_scheduled_task_install_payload.py` 產生 `saved-prompt.txt` 與收據；安裝 smoke／診斷只放在獨立的 `install-extension.json`，**不得寫入 saved-prompt.txt**。若目前 ChatGPT 宿主不能執行 script，仍須以 fresh main 模板全文與控制面 readback 完成同一 canonical identity，不得以短 launcher 代替。
+
 `VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`／`EVERY_DAILY_NEWS_EXECUTION_GATE`：manual, single-run, test, first-run, recurring, or resume 使用相同新聞與逐則可見圖片門檻。建立或修正排程時先更新最新版完整 task prompt，再於目前對話依獨立 capability probe 完成至少一條端到端可見媒體路徑：可驗證的來源 bytes→解碼／雜湊→本機媒體交付、原生圖片卡，或已實測可用的公開頁面圖片區域截圖。這不是 Scheduled Task occurrence，不要求立即觸發指定 task ID，也不得等待 occurrence 執行介面；不得由 `page_open` 推導 `webpage_region_screenshot`。不得要求先取得 verified workspace、台灣底圖、原始檔或原畫質。
 
 `SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`／`SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE`／`SCHEDULE_PROMPT_EXACT_ID_READBACK_ONLY_GATE`／`SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE`：先核對並提交完整 prompt；同一控制面支援 exact task ID readback 時讀回逐字核對，沒有 exact-ID view 時以提交前核對證明完整 outbound payload，再核對正式 create／update 結果中的 task ID、成功狀態、每天 06:00、時區與目前對話。scope 不明的一般 list 空結果不得推翻 create 成功，且不得盲建重複排程；再做同宿主可見圖片 smoke。smoke 失敗時保留最新版 prompt 並暫停 task，禁止回復或繼續啟用舊 prompt。

@@ -1,3 +1,4 @@
+import hashlib
 import io
 import tempfile
 import unittest
@@ -49,8 +50,9 @@ class MaterializeNewsImagesTests(unittest.TestCase):
 
     def test_valid_jpeg_creates_decodable_asset_and_manifest_record(self):
         with tempfile.TemporaryDirectory() as tmp:
+            raw = jpeg_bytes()
             record = materialize_image_bytes(
-                jpeg_bytes(),
+                raw,
                 output_dir=Path(tmp),
                 event_id="GLB-01",
                 source_url="https://images.example.test/event.jpg",
@@ -63,6 +65,15 @@ class MaterializeNewsImagesTests(unittest.TestCase):
             self.assertEqual("scripts/materialize_news_images.py", record["materialized_by"])
             self.assertEqual("image/jpeg", record["mime_type"])
             self.assertEqual(64, len(record["sha256"]))
+            self.assertEqual(len(raw), record["source_byte_size"])
+            self.assertEqual(
+                hashlib.sha256(raw).hexdigest(),
+                record["source_sha256"],
+            )
+            self.assertEqual(320, record["source_width"])
+            self.assertEqual(240, record["source_height"])
+            self.assertEqual("JPEG", record["source_format"])
+            self.assertEqual("provided_source_bytes", record["acquisition_method"])
             asset = Path(record["local_path"])
             self.assertTrue(asset.is_file())
             with Image.open(asset) as image:
@@ -119,6 +130,58 @@ class MaterializeNewsImagesTests(unittest.TestCase):
             self.assertEqual("ready", records[0]["status"])
             self.assertTrue(Path(records[0]["local_path"]).is_file())
             self.assertEqual("https://cdn.example.test/story.jpg", records[0]["source_image_url"])
+            self.assertEqual(
+                "webpage_region_screenshot", records[0]["acquisition_method"]
+            )
+
+    def test_complete_source_bytes_path_has_distinct_verified_acquisition_receipt(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            raw = jpeg_bytes(size=(1024, 478))
+            source = root / "source.jpg"
+            source.write_bytes(raw)
+            records = materialize(
+                [
+                    {
+                        "event_id": "TWN-SMOKE",
+                        "source_page_url": "https://www.example.test/story",
+                        "source_image_url": "https://img.example.test/source.jpg",
+                        "source_bytes_path": str(source.resolve()),
+                        "expected_source_byte_size": len(raw),
+                        "expected_source_sha256": hashlib.sha256(raw).hexdigest(),
+                        "expected_source_width": 1024,
+                        "expected_source_height": 478,
+                    }
+                ],
+                root / "assets",
+            )
+
+            self.assertEqual("ready", records[0]["status"])
+            self.assertEqual("source_bytes_path", records[0]["acquisition_method"])
+            self.assertEqual(len(raw), records[0]["source_byte_size"])
+            self.assertEqual(1024, records[0]["source_width"])
+            self.assertEqual(478, records[0]["source_height"])
+
+    def test_expected_source_integrity_mismatch_creates_no_asset(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "source.jpg"
+            source.write_bytes(jpeg_bytes())
+            records = materialize(
+                [
+                    {
+                        "event_id": "GLB-BAD",
+                        "source_image_url": "https://img.example.test/source.jpg",
+                        "source_bytes_path": str(source.resolve()),
+                        "expected_source_sha256": "0" * 64,
+                    }
+                ],
+                root / "assets",
+            )
+
+            self.assertEqual("failed", records[0]["status"])
+            self.assertIn("source_sha256 mismatch", records[0]["error"])
+            self.assertEqual([], list((root / "assets").glob("*.*")))
 
 
 if __name__ == "__main__":

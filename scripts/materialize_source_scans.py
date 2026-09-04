@@ -452,9 +452,6 @@ def materialize_source(source: dict, route: dict, window_start: str, window_end:
             for text in page_texts
             if json_exhaustion_marker(text, route.get("json_exhaustion_path")) is not None
         ), None)
-        explicit_marker = route.get("source_exhaustion_marker")
-        if marker is None:
-            marker = explicit_marker if isinstance(explicit_marker, str) and any(explicit_marker in text for text in page_texts) else None
         if marker is None and route.get("pagination_exhausted"):
             marker = "pagination source exhausted"
         if marker is None:

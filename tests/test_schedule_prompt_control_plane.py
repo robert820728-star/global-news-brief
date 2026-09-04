@@ -1,3 +1,4 @@
+import json
 import unittest
 from pathlib import Path
 
@@ -6,6 +7,32 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class SchedulePromptControlPlaneTests(unittest.TestCase):
+    def test_install_payload_builder_keeps_diagnostics_outside_saved_prompt(self):
+        documents = {
+            name: (ROOT / name).read_text(encoding="utf-8")
+            for name in ("INSTALL.md", "README.md", "mobile-chatgpt-start-prompt.md")
+        }
+        for name, document in documents.items():
+            with self.subTest(document=name):
+                self.assertIn("build_scheduled_task_install_payload.py", document)
+                self.assertIn("install-extension.json", document)
+                self.assertIn("不得寫入 saved-prompt.txt", document)
+
+        example = json.loads(
+            (ROOT / "scheduled-task-test-extension.example.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual("installation_only", example["scope"])
+        self.assertFalse(example["saved_prompt_mutation_allowed"])
+        self.assertEqual(171909, example["smoke_fixture"]["expected_byte_size"])
+        self.assertEqual(1024, example["smoke_fixture"]["expected_width"])
+        self.assertEqual(478, example["smoke_fixture"]["expected_height"])
+        self.assertEqual(
+            "6262c2e8d26f1881e8a2aeb800a13820f23c6192f42d5d7e8152709f7ccbb8c1",
+            example["smoke_fixture"]["expected_sha256"],
+        )
+
     def test_prompt_verification_is_capability_aware_without_becoming_best_effort(self):
         documents = {
             name: (ROOT / name).read_text(encoding="utf-8")

@@ -55,7 +55,7 @@ class MaterializeSourceScansTests(unittest.TestCase):
                 "http_status": 200, "content_type": "application/json",
                 "snapshot_path": str(snapshot),
                 "sha256": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
-                "route_ready": True, "source_exhaustion_marker": '"articles"',
+                "route_ready": True, "pagination_exhausted": True,
             }
             source = {
                 "source_id": "gdelt", "homepage": "https://api.gdeltproject.org/",
@@ -242,6 +242,7 @@ class MaterializeSourceScansTests(unittest.TestCase):
             snapshot.write_bytes(html.encode("utf-8"))
             route = {
                 "source_id": "wire", "route": "html_direct",
+                "source_exhaustion_marker": "</html>",
                 "request_url": "https://example.com/latest", "http_status": 200,
                 "content_type": "text/html; charset=utf-8", "bytes": len(html.encode()),
                 "snapshot_path": str(snapshot),
@@ -461,13 +462,26 @@ class MaterializeSourceScansTests(unittest.TestCase):
             root = Path(directory)
             snapshot = root / "route.bin"
             snapshot.write_bytes(html.encode("utf-8"))
+            older_html = """<html><body><time>2026-08-15 11:00</time><a href="/news/20260815/123456.shtml" title="邊界前舊聞">邊界前舊聞</a></body></html>"""
+            older_snapshot = root / "older.bin"
+            older_snapshot.write_bytes(older_html.encode("utf-8"))
             route = {
                 "source_id": "regional_b", "route": "html_direct",
-                "source_exhaustion_marker": "</html>",
                 "request_url": "https://regional.example.com/", "http_status": 200,
                 "content_type": "text/html; charset=utf-8", "bytes": len(html.encode()),
                 "snapshot_path": str(snapshot),
                 "sha256": hashlib.sha256(html.encode()).hexdigest(), "route_ready": True,
+                "page_snapshots": [{
+                    "page_index": 2,
+                    "request_url": "https://regional.example.com/archive",
+                    "http_status": 200,
+                    "content_type": "text/html; charset=utf-8",
+                    "bytes": len(older_html.encode("utf-8")),
+                    "snapshot_path": str(older_snapshot),
+                    "sha256": hashlib.sha256(older_html.encode("utf-8")).hexdigest(),
+                    "retry_count": 0,
+                    "error": None,
+                }],
             }
             source = {"source_id": "regional_b", "homepage": "https://regional.example.com/", "section": "TWN"}
             scan, coverage = MODULE.materialize_source(

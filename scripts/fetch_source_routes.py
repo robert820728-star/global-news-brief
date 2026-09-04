@@ -84,6 +84,39 @@ def value_at_path(value, path):
     return value
 
 
+def path_exists(value, path) -> bool:
+    """Return whether every configured JSON key exists, even when its value is null."""
+    for key in path:
+        if not isinstance(value, dict) or key not in value:
+            return False
+        value = value[key]
+    return True
+
+
+def exhaustion_proof_error(route: Mapping, body: bytes) -> str | None:
+    """Validate configured source-boundary evidence before admitting a snapshot."""
+    json_path = route.get("json_exhaustion_path")
+    if json_path is not None:
+        if not isinstance(json_path, list) or not json_path:
+            return "json_exhaustion_path must be a non-empty key list"
+        try:
+            payload = json.loads(body.decode("utf-8-sig"))
+        except (UnicodeDecodeError, json.JSONDecodeError) as error:
+            return f"json_exhaustion_path proof failed: response is not valid JSON: {error}"
+        if not path_exists(payload, json_path):
+            return f"json_exhaustion_path proof failed: missing path {json_path}"
+
+    marker = route.get("response_integrity_marker")
+    if marker is not None:
+        marker = str(marker)
+        if not marker:
+            return "response_integrity_marker must not be empty"
+        text = body.decode("utf-8-sig", errors="replace")
+        if marker not in text:
+            return f"response_integrity_marker proof failed: marker not found: {marker}"
+    return None
+
+
 def parse_page_time(value: str, boundary: datetime) -> datetime | None:
     try:
         parsed = datetime.fromisoformat(
@@ -140,7 +173,8 @@ def fetch_one(route: Mapping, snapshot_dir: Path, timeout_seconds: int) -> dict:
             last_status = status
             last_content_type = response_headers.get("Content-Type")
             ready = 200 <= status < 300 and bool(response_body)
-            if ready:
+            proof_error = exhaustion_proof_error(route, response_body) if ready else None
+            if ready and proof_error is None:
                 snapshot_path.write_bytes(response_body)
                 return {
                     "source_id": str(route["source_id"]), "route": str(route["route"]),
@@ -149,6 +183,7 @@ def fetch_one(route: Mapping, snapshot_dir: Path, timeout_seconds: int) -> dict:
                     "bytes": len(response_body), "snapshot_path": str(snapshot_path),
                     "sha256": hashlib.sha256(response_body).hexdigest(), "route_ready": True,
                     "json_exhaustion_path": route.get("json_exhaustion_path"),
+                    "response_integrity_marker": route.get("response_integrity_marker"),
                     "source_exhaustion_marker": route.get("source_exhaustion_marker"),
                     "retry_count": attempt, "error": None,
                     "acquisition_mode": (
@@ -156,7 +191,7 @@ def fetch_one(route: Mapping, snapshot_dir: Path, timeout_seconds: int) -> dict:
                         else "primary_route"
                     ),
                 }
-            last_error = "HTTP response was not successful or body was empty"
+            last_error = proof_error or "HTTP response was not successful or body was empty"
         except Exception as error:  # noqa: BLE001 - record each route failure.
             last_error = str(error)
         finally:
@@ -172,6 +207,7 @@ def fetch_one(route: Mapping, snapshot_dir: Path, timeout_seconds: int) -> dict:
         "http_status": last_status, "content_type": last_content_type,
         "bytes": 0, "snapshot_path": None, "sha256": None, "route_ready": False,
         "json_exhaustion_path": route.get("json_exhaustion_path"),
+        "response_integrity_marker": route.get("response_integrity_marker"),
         "source_exhaustion_marker": route.get("source_exhaustion_marker"),
         "retry_count": max_attempts - 1, "error": last_error,
         "acquisition_mode": "unavailable",
@@ -320,6 +356,7 @@ def fetch_gdelt_export_fallback(route: Mapping, snapshot_dir: Path,
         "bytes": len(payload), "snapshot_path": str(snapshot_path),
         "sha256": hashlib.sha256(payload).hexdigest(), "route_ready": True,
         "json_exhaustion_path": route.get("json_exhaustion_path"),
+        "response_integrity_marker": route.get("response_integrity_marker"),
         "source_exhaustion_marker": route.get("source_exhaustion_marker"),
         "retry_count": 0, "error": None, "acquisition_mode": "gdelt_export_24h",
         "gdelt_live_ready": archive_complete,
@@ -360,6 +397,7 @@ def reuse_recent_gdelt_snapshot(route: Mapping, snapshot_dir: Path,
                 "bytes": len(body), "snapshot_path": str(snapshot_path),
                 "sha256": hashlib.sha256(body).hexdigest(), "route_ready": True,
                 "json_exhaustion_path": route.get("json_exhaustion_path"),
+                "response_integrity_marker": route.get("response_integrity_marker"),
                 "source_exhaustion_marker": route.get("source_exhaustion_marker"),
                 "retry_count": 0, "error": None,
                 "acquisition_mode": "last_known_good_cache",

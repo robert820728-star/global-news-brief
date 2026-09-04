@@ -32,7 +32,7 @@ The builder rejects missing or duplicate placeholders, malformed SHA values, unk
 
 ### Discovery proof
 
-`fetch_source_routes.py` validates the initial response before it writes or admits a snapshot. `json_exhaustion_path` is proven by JSON parsing and key existence, including a present `null` value. `source_exhaustion_marker` is proven by decoded text containment. Failed proof is reported as `route_ready=false` with a bounded error and no admitted snapshot.
+`fetch_source_routes.py` validates the initial response before it writes or admits a snapshot. `json_exhaustion_path` is proven by JSON parsing and key existence, including a present `null` value. `response_integrity_marker` proves only that a response is structurally complete; it is never reused as a source-exhaustion claim. Source exhaustion requires an empty terminal cursor, an explicit pagination-exhausted receipt, or an article at/before the window boundary. Failed proof is reported as `route_ready=false` with a bounded error and no admitted snapshot.
 
 ### Source-media receipt
 
@@ -57,4 +57,3 @@ Every successful materialization records the source byte count, SHA-256, decoded
 - The published CNA smoke fixture records 171909 source bytes, 1024×478 and SHA-256 `6262c2e8d26f1881e8a2aeb800a13820f23c6192f42d5d7e8152709f7ccbb8c1` when transport is available.
 - Expected-source mismatch creates no asset.
 - Focused tests, full suite, capsule verification, and final-state audit pass before completion is claimed.
-

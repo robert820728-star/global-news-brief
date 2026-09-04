@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "scope": "installation_only",
+  "saved_prompt_mutation_allowed": false,
+  "one_time_delay_minutes": 5,
+  "smoke_fixture": {
+    "source_media_url": "https://imgcdn.cna.com.tw/www/WebPhotos/1024/20260901/1645x768_wmkn_0_C20260901000210.jpg",
+    "source_page_url": "https://www.cna.com.tw/news/aloc/202609010375.aspx",
+    "expected_byte_size": 171909,
+    "expected_width": 1024,
+    "expected_height": 478,
+    "expected_sha256": "6262c2e8d26f1881e8a2aeb800a13820f23c6192f42d5d7e8152709f7ccbb8c1"
+  }
+}

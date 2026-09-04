@@ -31,6 +31,7 @@ RUNTIME_FILES = (
     "bootstrap-workspace.md",
     "mobile-chatgpt-daily-prompt.md",
     "scheduled-task-prompt-template.md",
+    "scheduled-task-test-extension.example.json",
     "daily-schedule-prompt.md",
     "news-brief-settings.md",
     "news-brief-template.md",

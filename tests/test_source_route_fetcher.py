@@ -8,6 +8,8 @@ import unittest
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
+from scripts.fetch_source_routes import fetch_one
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PYTHON_FETCHER = ROOT / "scripts" / "fetch_source_routes.py"
@@ -91,6 +93,90 @@ class _RateLimitedThenReadyHandler(BaseHTTPRequestHandler):
 
 
 class SourceRouteFetcherTests(unittest.TestCase):
+    def test_http_2xx_without_configured_text_exhaustion_marker_is_rejected(self):
+        class Handler(BaseHTTPRequestHandler):
+            def do_GET(self):
+                body = b"<html><body>WAF challenge, incomplete document"
+                self.send_response(200)
+                self.send_header("Content-Type", "text/html; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+
+            def log_message(self, _format, *_args):
+                return
+
+        server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        worker = threading.Thread(target=server.serve_forever, daemon=True)
+        worker.start()
+        try:
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                result = fetch_one(
+                    {
+                        "source_id": "chinanews",
+                        "route": "html_direct",
+                        "request_url_template": (
+                            f"http://127.0.0.1:{server.server_port}/scroll-news/news1.html"
+                        ),
+                        "snapshot_name": "chinanews.html",
+                        "response_integrity_marker": "</html>",
+                        "max_attempts": 1,
+                    },
+                    root,
+                    5,
+                )
+
+                self.assertFalse(result["route_ready"])
+                self.assertIn("response_integrity_marker", result["error"])
+                self.assertIsNone(result["snapshot_path"])
+                self.assertFalse((root / "chinanews.html").exists())
+        finally:
+            server.shutdown()
+            server.server_close()
+
+    def test_http_2xx_json_without_configured_exhaustion_path_is_rejected(self):
+        class Handler(BaseHTTPRequestHandler):
+            def do_GET(self):
+                body = json.dumps({"ResultData": {"Items": []}}).encode("utf-8")
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+
+            def log_message(self, _format, *_args):
+                return
+
+        server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        worker = threading.Thread(target=server.serve_forever, daemon=True)
+        worker.start()
+        try:
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                result = fetch_one(
+                    {
+                        "source_id": "cna",
+                        "route": "structured_direct",
+                        "request_url_template": (
+                            f"http://127.0.0.1:{server.server_port}/api/WNewsList"
+                        ),
+                        "snapshot_name": "cna.json",
+                        "json_exhaustion_path": ["ResultData", "NextPageIdx"],
+                        "max_attempts": 1,
+                    },
+                    root,
+                    5,
+                )
+
+                self.assertFalse(result["route_ready"])
+                self.assertIn("json_exhaustion_path", result["error"])
+                self.assertIsNone(result["snapshot_path"])
+                self.assertFalse((root / "cna.json").exists())
+        finally:
+            server.shutdown()
+            server.server_close()
+
     def test_route_config_covers_every_primary_source(self):
         pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8-sig"))
         config = json.loads(ROUTES.read_text(encoding="utf-8-sig"))
@@ -106,6 +192,8 @@ class SourceRouteFetcherTests(unittest.TestCase):
         self.assertIn("format=json", gdelt["request_url_template"])
         self.assertEqual(1, gdelt["max_attempts"])
         self.assertEqual(0, gdelt["retry_interval_seconds"])
+        self.assertEqual('"articles"', gdelt["response_integrity_marker"])
+        self.assertNotIn("source_exhaustion_marker", gdelt)
         self.assertEqual(
             ["gdelt_export_24h", "doc_api_optional", "last_known_good_cache"],
             gdelt["acquisition_order"],
@@ -117,6 +205,11 @@ class SourceRouteFetcherTests(unittest.TestCase):
         self.assertEqual("POST", cna["request_method"])
         self.assertEqual(500, cna["request_json"]["pagesize"])
         self.assertEqual(["ResultData", "NextPageIdx"], cna["json_exhaustion_path"])
+        chinanews = next(
+            route for route in config["routes"] if route["source_id"] == "chinanews"
+        )
+        self.assertEqual("</html>", chinanews["response_integrity_marker"])
+        self.assertNotIn("source_exhaustion_marker", chinanews)
 
     def test_partial_discovery_success_does_not_fail_entire_fetch(self):
         server = ThreadingHTTPServer(("127.0.0.1", 0), _Handler)

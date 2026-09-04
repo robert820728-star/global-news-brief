@@ -55,9 +55,10 @@ def _safe_event_id(event_id: str) -> str:
 
 
 def _failed_record(
-    *, event_id: str, source_url: str, source_page_url: str = "", alt: str, credit: str, error: str
+    *, event_id: str, source_url: str, source_page_url: str = "", alt: str,
+    credit: str, error: str, acquisition_method: str = ""
 ) -> dict[str, Any]:
-    return {
+    record = {
         "event_id": event_id,
         "source_url": source_url,
         "source_image_url": source_url,
@@ -68,6 +69,9 @@ def _failed_record(
         "credit": credit,
         "error": error[:240],
     }
+    if acquisition_method:
+        record["acquisition_method"] = acquisition_method
+    return record
 
 
 def materialize_image_bytes(
@@ -80,11 +84,20 @@ def materialize_image_bytes(
     index: int = 1,
     alt: str = "",
     credit: str = "",
+    acquisition_method: str = "provided_source_bytes",
+    expected_source_byte_size: int | None = None,
+    expected_source_sha256: str | None = None,
+    expected_source_width: int | None = None,
+    expected_source_height: int | None = None,
 ) -> dict[str, Any]:
     """Decode, normalize, resize, and atomically persist one JPEG asset."""
+    source_byte_size = len(raw)
+    source_sha256 = hashlib.sha256(raw).hexdigest()
     try:
         with Image.open(io.BytesIO(raw)) as decoded:
             decoded.load()
+            source_width, source_height = decoded.size
+            source_format = str(decoded.format or "UNKNOWN")
             image = ImageOps.exif_transpose(decoded).convert("RGB")
     except (UnidentifiedImageError, OSError, ValueError) as exc:
         return _failed_record(
@@ -94,7 +107,26 @@ def materialize_image_bytes(
             alt=alt,
             credit=credit,
             error=f"decode failed: {exc}",
+            acquisition_method=acquisition_method,
         )
+
+    expected_values = {
+        "source_byte_size": (expected_source_byte_size, source_byte_size),
+        "source_sha256": (expected_source_sha256, source_sha256),
+        "source_width": (expected_source_width, source_width),
+        "source_height": (expected_source_height, source_height),
+    }
+    for field, (expected, actual) in expected_values.items():
+        if expected is not None and expected != actual:
+            return _failed_record(
+                event_id=event_id,
+                source_url=source_url,
+                source_page_url=source_page_url,
+                alt=alt,
+                credit=credit,
+                error=f"{field} mismatch: expected {expected}, got {actual}",
+                acquisition_method=acquisition_method,
+            )
 
     if image.width < 1 or image.height < 1:
         return _failed_record(
@@ -104,6 +136,7 @@ def materialize_image_bytes(
             alt=alt,
             credit=credit,
             error="decode failed: image has zero-sized dimensions",
+            acquisition_method=acquisition_method,
         )
 
     if max(image.size) > MAX_EDGE:
@@ -132,6 +165,7 @@ def materialize_image_bytes(
             alt=alt,
             credit=credit,
             error=f"write failed: {exc}",
+            acquisition_method=acquisition_method,
         )
 
     payload = asset_path.read_bytes()
@@ -148,6 +182,12 @@ def materialize_image_bytes(
         "height": image.height,
         "byte_size": len(payload),
         "sha256": hashlib.sha256(payload).hexdigest(),
+        "source_byte_size": source_byte_size,
+        "source_sha256": source_sha256,
+        "source_width": source_width,
+        "source_height": source_height,
+        "source_format": source_format,
+        "acquisition_method": acquisition_method,
         "alt": alt,
         "credit": credit,
     }
@@ -182,14 +222,25 @@ def materialize(inputs: list[dict[str, Any]], output_dir: Path) -> list[dict[str
             source_base_url=source_base_url,
         )
         screenshot_path = str(item.get("screenshot_path", "")).strip()
+        source_bytes_path = str(item.get("source_bytes_path", "")).strip()
         alt = str(item.get("alt", "")).strip()
         credit = str(item.get("credit", "")).strip()
+        acquisition_method = "direct_url"
         try:
+            if screenshot_path and source_bytes_path:
+                raise ValueError("screenshot_path and source_bytes_path are mutually exclusive")
             if screenshot_path:
                 screenshot = Path(screenshot_path)
                 if not screenshot.is_absolute() or not screenshot.is_file():
                     raise ValueError("screenshot_path must be an existing absolute local file")
                 raw = screenshot.read_bytes()
+                acquisition_method = "webpage_region_screenshot"
+            elif source_bytes_path:
+                source_bytes = Path(source_bytes_path)
+                if not source_bytes.is_absolute() or not source_bytes.is_file():
+                    raise ValueError("source_bytes_path must be an existing absolute local file")
+                raw = source_bytes.read_bytes()
+                acquisition_method = "source_bytes_path"
             else:
                 raw = download_image(source_url)
         except (OSError, ValueError) as exc:
@@ -201,6 +252,7 @@ def materialize(inputs: list[dict[str, Any]], output_dir: Path) -> list[dict[str
                     alt=alt,
                     credit=credit,
                     error=f"image acquisition failed: {exc}",
+                    acquisition_method=acquisition_method,
                 )
             )
             continue
@@ -214,6 +266,11 @@ def materialize(inputs: list[dict[str, Any]], output_dir: Path) -> list[dict[str
                 index=index,
                 alt=alt,
                 credit=credit,
+                acquisition_method=acquisition_method,
+                expected_source_byte_size=item.get("expected_source_byte_size"),
+                expected_source_sha256=item.get("expected_source_sha256"),
+                expected_source_width=item.get("expected_source_width"),
+                expected_source_height=item.get("expected_source_height"),
             )
         )
     return records

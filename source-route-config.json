@@ -9,7 +9,7 @@
       "acquisition_order": ["gdelt_export_24h", "doc_api_optional", "last_known_good_cache"],
       "request_url_template": "https://api.gdeltproject.org/api/v2/doc/doc?query=(sourcelang%3Aenglish%20OR%20sourcelang%3Achinese)&mode=artlist&maxrecords=250&timespan=24h&sort=datedesc&format=json",
       "snapshot_name": "gdelt.discovery.json",
-      "source_exhaustion_marker": "\"articles\"",
+      "response_integrity_marker": "\"articles\"",
       "max_attempts": 1,
       "retry_interval_seconds": 0,
       "fallback": {
@@ -44,7 +44,7 @@
       "date_offsets_days": [0, -1],
       "minimum_ready_variants": 2,
       "snapshot_name": "chinanews.discovery.html",
-      "source_exhaustion_marker": "</html>"
+      "response_integrity_marker": "</html>"
     }
   ]
 }

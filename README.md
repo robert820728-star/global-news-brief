@@ -18,6 +18,8 @@
 
 ## 快速安裝
 
+若執行面可以存取 repository，使用 `scripts/build_scheduled_task_install_payload.py` 產生可驗證的 `saved-prompt.txt`，再把該檔全文作為 Scheduled Task instruction。測試 fixture 只可透過 `scheduled-task-test-extension.example.json` 輸出為獨立 `install-extension.json`，**不得寫入 saved-prompt.txt**。這可避免縮短 launcher 或診斷文字污染 canonical task prompt；無本機執行面時仍依 `INSTALL.md` 的 capability-aware 控制面核對流程完成同一要求。
+
 在新的 ChatGPT 對話貼上以下內容即可。ChatGPT 讀取 `INSTALL.md` 後，必須使用 [scheduled-task-prompt-template.md](scheduled-task-prompt-template.md) 全文建立排程，不得自行濃縮成短指令：
 
 > 每日新聞排程

@@ -12,6 +12,14 @@
 
 ## 使用者啟動指令
 
+### 可執行的 canonical prompt 安裝包
+
+控制面可取得 repository 檔案時，先執行 `scripts/build_scheduled_task_install_payload.py`，以 fresh resolved main SHA、區域及監控類型產生 `saved-prompt.txt` 與 `install-receipt.json`。建立或更新 Scheduled Task 時，task instruction 只能使用 `saved-prompt.txt` 的完整內容。一次性 smoke 或診斷資料使用 `scheduled-task-test-extension.example.json` 產生獨立的 `install-extension.json`；extension 僅屬安裝控制面資料，**不得寫入 saved-prompt.txt**，也不得附加、縮寫或替換 canonical prompt。宿主若無法執行此 script，仍須依下方 capability-aware readback 契約逐字建立與核對，不能降級成短 launcher。
+
+```bash
+python scripts/build_scheduled_task_install_payload.py --template scheduled-task-prompt-template.md --output-dir /tmp/news-task-install --region "台灣、中國、世界" --monitor-type "預設" --main-sha <fresh-40-character-main-sha> --test-extension scheduled-task-test-extension.example.json
+```
+
 在全新對話貼上：
 
 > 請使用以下 GitHub 專案建立我的每日新聞簡報：
@@ -65,6 +73,7 @@
 - `news-brief-template.md`
 - `news-brief-examples.md`
 - `user-preferences.example.yaml`
+- `scheduled-task-test-extension.example.json`
 - `news-source-pool.json`
 - `source-route-config.json`
 - `schemas/news-event-manifest.schema.json`
@@ -76,6 +85,7 @@
 ### 核心工具與地圖資產
 
 - `scripts/news_run_checkpoint.py`
+- `scripts/build_scheduled_task_install_payload.py`
 - `scripts/fetch_source_routes.py`
 - `scripts/materialize_source_scans.py`
 - `scripts/validate_source_scan_evidence.py`
