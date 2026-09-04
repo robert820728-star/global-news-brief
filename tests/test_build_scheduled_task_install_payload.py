@@ -19,6 +19,8 @@ class BuildScheduledTaskInstallPayloadTests(unittest.TestCase):
         paths = {path.relative_to(root).as_posix() for path in collect_runtime_paths(root)}
         self.assertIn("scripts/build_scheduled_task_install_payload.py", paths)
         self.assertIn("scheduled-task-test-extension.example.json", paths)
+        attributes = (root / ".gitattributes").read_text(encoding="utf-8")
+        self.assertIn("/scheduled-task-test-extension.example.json -text", attributes)
 
     def _template(self, root: Path, text: str | None = None) -> Path:
         path = root / "scheduled-task-prompt-template.md"

@@ -11,5 +11,6 @@
 /schemas/** -text
 /scripts/** -text
 /source-route-config.json -text
+/scheduled-task-test-extension.example.json -text
 /state/candidate-audit.json -text
 /user-preferences.example.yaml -text
