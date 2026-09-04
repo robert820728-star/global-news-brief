@@ -129,6 +129,7 @@ class SourceRouteFetcherTests(unittest.TestCase):
 
                 self.assertFalse(result["route_ready"])
                 self.assertIn("response_integrity_marker", result["error"])
+                self.assertNotIn("source_exhaustion_marker", result)
                 self.assertIsNone(result["snapshot_path"])
                 self.assertFalse((root / "chinanews.html").exists())
         finally:
