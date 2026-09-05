@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.1.0",
+  "description": "Discovery routes only. After scoring, verification dynamically selects original, official/primary, and genuinely independent evidence appropriate to each event and claim.",
+  "minimum_ready_routes": 2,
+  "routes": [
+    {
+      "source_id": "cna",
+      "route": "structured_direct",
+      "request_url_template": "https://www.cna.com.tw/cna2018api/api/WNewsList",
+      "request_method": "POST",
+      "request_json": {
+        "action": "0",
+        "category": "aall",
+        "pagesize": 500,
+        "pageidx": 1
+      },
+      "request_headers": {
+        "Referer": "https://www.cna.com.tw/list/aall.aspx"
+      },
+      "json_exhaustion_path": [
+        "ResultData",
+        "NextPageIdx"
+      ],
+      "pagination": {
+        "request_method": "POST",
+        "page_field": "pageidx",
+        "start_page": 2,
+        "max_pages": 60,
+        "items_path": [
+          "ResultData",
+          "Items"
+        ],
+        "published_path": [
+          "CreateTime"
+        ],
+        "next_page_path": [
+          "ResultData",
+          "NextPageIdx"
+        ]
+      },
+      "snapshot_name": "cna.discovery.json"
+    },
+    {
+      "source_id": "chinanews",
+      "route": "html_direct",
+      "request_url_template": "https://www.chinanews.com.cn/scroll-news/{yyyy}/{MMdd}/news.shtml",
+      "date_offsets_days": [
+        0,
+        -1
+      ],
+      "minimum_ready_variants": 2,
+      "snapshot_name": "chinanews.discovery.html",
+      "response_integrity_marker": "</html>"
+    }
+  ]
+}

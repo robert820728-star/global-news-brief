@@ -1,0 +1,446 @@
+{
+  "schema_version": "1.3.0",
+  "window_hours": 24,
+  "candidate_transfer_policy": "all_verified_in_window",
+  "model_admission_policy": {
+    "all_discovery_rows_preserved_in_gate": true,
+    "model_input_routes": [
+      "content_hydration"
+    ],
+    "complete_source_roles": [
+      "regional_supplement"
+    ],
+    "routing_controls_model_admission": true,
+    "heat_is_recall_only": true,
+    "absence_from_heat_never_excludes_regional_supplements": true,
+    "validator": "scripts/validate_local_source_admission.py"
+  },
+  "source_scan_evidence_required": true,
+  "source_row_admission_required": true,
+  "discovery_policy": {
+    "strategy": "aggregate_then_regional_supplements",
+    "minimum_ready_sources": 2,
+    "deduplicate_before_scoring": true
+  },
+  "discovery_sources": [
+    {
+      "source_id": "cna",
+      "name": "Central News Agency",
+      "homepage": "https://www.cna.com.tw/",
+      "sections": [
+        "TWN"
+      ],
+      "role": "regional_supplement",
+      "allow_external_article_urls": false
+    },
+    {
+      "source_id": "chinanews",
+      "name": "China News Service",
+      "homepage": "https://www.chinanews.com.cn/",
+      "sections": [
+        "CHN"
+      ],
+      "role": "regional_supplement",
+      "allow_external_article_urls": false
+    }
+  ],
+  "verification_policy": {
+    "after_scoring": true,
+    "minimum_grade": "C",
+    "verify_against_original_or_independent_reliable_source": true,
+    "single_reliable_source_allowed_with_note": true,
+    "verification_must_not_expand_candidate_pool_without_scoring": true,
+    "images_after_verification": true,
+    "category_routes": {
+      "science_technology_medicine": [
+        "paper_or_journal_record",
+        "peer_review_status",
+        "independent_expert_or_follow_up"
+      ],
+      "war_military": [
+        "party_a_account",
+        "party_b_account",
+        "independent_or_third_party_when_available"
+      ],
+      "disaster_accident": [
+        "timestamped_official_statistics",
+        "emergency_or_medical_record",
+        "discrepancy_note_when_counts_conflict"
+      ],
+      "economy_business": [
+        "official_statistics",
+        "regulatory_filing",
+        "market_or_company_primary_data"
+      ],
+      "law_policy_election": [
+        "judgment_statute_or_signed_text",
+        "responsible_authority",
+        "plural_independent_observation"
+      ],
+      "public_health": [
+        "health_authority",
+        "international_body",
+        "research_evidence"
+      ]
+    },
+    "official_source_bias_guard": {
+      "official_claim_is_not_automatic_truth": true,
+      "china_requires_non_official_comparison_for_contested_claims": true,
+      "disclose_possible_omission_or_concealment": true
+    },
+    "media_evidence_guard": {
+      "syndicated_or_copied_reports_count_as_one_chain": true,
+      "trace_to_earliest_attributable_record": true,
+      "domain_expertise_and_method_required_for_expert_weight": true,
+      "general_media_cannot_replace_domain_evidence": true,
+      "timely_reporting_without_official_record_allowed": true,
+      "missing_primary_record_requires_reader_note": true,
+      "unverified_details_remain_provisional": true
+    }
+  },
+  "acquisition_policy": {
+    "route_order": [
+      "aggregate_api",
+      "structured_direct",
+      "html_direct",
+      "browser_rendered_final_fallback"
+    ],
+    "browser_fallback_triggers": [
+      "dynamic_content_missing",
+      "parse_failure"
+    ],
+    "cross_source_fallback_may_add_candidates": true,
+    "cross_source_fallback_may_satisfy_source_completeness": false,
+    "browser_snapshot_required_when_used": true,
+    "browser_must_not_be_a_runtime_dependency": true,
+    "configured_discovery_routes_must_record_health": true
+  },
+  "conflict_evidence_policy": {
+    "routine_incident_requires_current_consequence_review": true,
+    "material_change_requires_regrading": true,
+    "parent_conflict_grade_inheritance_forbidden": true,
+    "source_count_must_not_change_grade": true
+  },
+  "taiwan_coverage_sweeps": [
+    {
+      "sweep_id": "economy_trade_industry",
+      "topics": [
+        "economy",
+        "trade",
+        "industry",
+        "business_costs",
+        "supply_chain"
+      ],
+      "window_hours": 24,
+      "result_limit": 5
+    },
+    {
+      "sweep_id": "health_food_consumer",
+      "topics": [
+        "food_safety",
+        "medicine",
+        "consumer_safety",
+        "recall",
+        "public_health"
+      ],
+      "window_hours": 24,
+      "result_limit": 5
+    },
+    {
+      "sweep_id": "central_policy_institutions",
+      "topics": [
+        "central_budget",
+        "legislation",
+        "constitutional_action",
+        "public_service_operation"
+      ],
+      "window_hours": 24,
+      "result_limit": 5
+    }
+  ],
+  "ranking": {
+    "method": "public_value_v2",
+    "score_range": [
+      0,
+      100
+    ],
+    "allowed_score_step": 5,
+    "high_score_threshold": 70,
+    "material_delta_threshold": 70,
+    "cross_dimension_reuse_threshold": 3,
+    "dimensions": {
+      "public_impact": {
+        "minimum": 0,
+        "maximum": 100,
+        "weight_percent": 30
+      },
+      "geographic_or_population_scope": {
+        "minimum": 0,
+        "maximum": 100,
+        "weight_percent": 20
+      },
+      "urgency_and_safety": {
+        "minimum": 0,
+        "maximum": 100,
+        "weight_percent": 15
+      },
+      "structural_or_policy_significance": {
+        "minimum": 0,
+        "maximum": 100,
+        "weight_percent": 15
+      },
+      "material_new_development": {
+        "minimum": 0,
+        "maximum": 100,
+        "weight_percent": 10
+      },
+      "core_section_relevance": {
+        "minimum": 0,
+        "maximum": 100,
+        "weight_percent": 10
+      }
+    },
+    "grade_minimum_scores": {
+      "E": 0,
+      "D": 20,
+      "C-": 40,
+      "C": 45,
+      "C+": 50,
+      "B-": 55,
+      "B": 60,
+      "B+": 65,
+      "A-": 70,
+      "A": 75,
+      "A+": 80,
+      "S-": 85,
+      "S": 90,
+      "S+": 94,
+      "SS": 97
+    },
+    "grading_principles": {
+      "combined_evidence_no_single_dimension_hard_cap": true,
+      "importance_severity_is_public_impact": true,
+      "scope_is_one_weighted_dimension": true
+    },
+    "casualty_public_impact_floors": {
+      "1-9": 30,
+      "10-49": 45,
+      "50-99": 60,
+      "100-249": 75,
+      "250-2499": 90,
+      "2500+": 100
+    },
+    "dimension_anchors": {
+      "public_impact": [
+        {
+          "score": 0,
+          "meaning": "no demonstrated public consequence"
+        },
+        {
+          "score": 20,
+          "meaning": "symbolic, administrative, or extremely small consequence"
+        },
+        {
+          "score": 40,
+          "meaning": "limited, local, and reversible consequence"
+        },
+        {
+          "score": 60,
+          "meaning": "clear and material but bounded consequence"
+        },
+        {
+          "score": 80,
+          "meaning": "major consequence to life, rights, livelihood, industry, or public systems"
+        },
+        {
+          "score": 90,
+          "meaning": "severe casualties, broad dysfunction, or major irreversible loss"
+        },
+        {
+          "score": 100,
+          "meaning": "catastrophic, state-survival, or civilization-scale consequence"
+        }
+      ],
+      "geographic_or_population_scope": [
+        {
+          "score": 0,
+          "meaning": "no demonstrated direct public reach"
+        },
+        {
+          "score": 20,
+          "meaning": "individual or single facility"
+        },
+        {
+          "score": 40,
+          "meaning": "locality or one city"
+        },
+        {
+          "score": 60,
+          "meaning": "one important first-level region or several localities"
+        },
+        {
+          "score": 80,
+          "meaning": "multiple first-level regions or a major national public system"
+        },
+        {
+          "score": 90,
+          "meaning": "multiple countries or regions"
+        },
+        {
+          "score": 100,
+          "meaning": "global direct impact"
+        }
+      ],
+      "urgency_and_safety": [
+        {
+          "score": 0,
+          "meaning": "event ended or no immediate risk"
+        },
+        {
+          "score": 20,
+          "meaning": "limited precaution"
+        },
+        {
+          "score": 40,
+          "meaning": "local response required"
+        },
+        {
+          "score": 60,
+          "meaning": "major danger remains active"
+        },
+        {
+          "score": 80,
+          "meaning": "rescue window, essential-service stress, or expanding risk"
+        },
+        {
+          "score": 100,
+          "meaning": "uncontrolled threat requiring broad immediate action"
+        }
+      ],
+      "structural_or_policy_significance": [
+        {
+          "score": 0,
+          "meaning": "no institutional significance"
+        },
+        {
+          "score": 20,
+          "meaning": "one-off administrative measure"
+        },
+        {
+          "score": 40,
+          "meaning": "material organizational or industry rule change"
+        },
+        {
+          "score": 60,
+          "meaning": "major regulatory, governance, or business-model change"
+        },
+        {
+          "score": 80,
+          "meaning": "national institution, core industry, or major diplomatic-security architecture change"
+        },
+        {
+          "score": 100,
+          "meaning": "fundamental regime, institutional, or global-order change"
+        }
+      ],
+      "material_new_development": [
+        {
+          "score": 0,
+          "meaning": "republication or background only"
+        },
+        {
+          "score": 20,
+          "meaning": "wording or minor numerical update"
+        },
+        {
+          "score": 40,
+          "meaning": "new reliable confirmation"
+        },
+        {
+          "score": 60,
+          "meaning": "new policy, operational, or disaster milestone"
+        },
+        {
+          "score": 80,
+          "meaning": "formal effect, major expansion, or measurable effect"
+        },
+        {
+          "score": 100,
+          "meaning": "irreversible major turning point"
+        }
+      ],
+      "core_section_relevance": [
+        {
+          "score": 0,
+          "meaning": "only categorically belongs in the section"
+        },
+        {
+          "score": 30,
+          "meaning": "weak section relevance"
+        },
+        {
+          "score": 50,
+          "meaning": "normally important section news"
+        },
+        {
+          "score": 70,
+          "meaning": "directly concerns a major public, economic, or security issue"
+        },
+        {
+          "score": 90,
+          "meaning": "core major event for the section"
+        },
+        {
+          "score": 100,
+          "meaning": "fundamental event for the section"
+        }
+      ]
+    },
+    "dimension_fact_eligibility": {
+      "public_impact": [
+        "realized",
+        "ongoing"
+      ],
+      "geographic_or_population_scope": [
+        "realized",
+        "ongoing"
+      ],
+      "urgency_and_safety": [
+        "realized",
+        "ongoing"
+      ],
+      "structural_or_policy_significance": [
+        "realized",
+        "ongoing",
+        "potential"
+      ],
+      "material_new_development": [
+        "realized",
+        "ongoing"
+      ],
+      "core_section_relevance": [
+        "realized",
+        "ongoing"
+      ]
+    },
+    "confidence_bands": {
+      "high": [
+        80,
+        100
+      ],
+      "medium": [
+        60,
+        79
+      ],
+      "low": [
+        0,
+        59
+      ]
+    },
+    "tie_breakers": [
+      "newer_published_at",
+      "more_direct_primary_evidence",
+      "stable_url"
+    ]
+  }
+}
