@@ -2,48 +2,298 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://example.invalid/schemas/news-source-row-admissions.schema.json",
   "type": "object",
-  "required": ["schema_version", "run_id", "window_start", "window_end", "source_row_count", "admitted_row_count", "rows"],
+  "required": [
+    "schema_version",
+    "run_id",
+    "window_start",
+    "window_end",
+    "source_row_count",
+    "admitted_row_count",
+    "content_ready_row_count",
+    "outside_window_row_count",
+    "unresolved_exhausted_row_count",
+    "rows"
+  ],
   "properties": {
-    "schema_version": {"const": "1.0.0"},
-    "run_id": {"type": "string", "minLength": 1},
-    "window_start": {"type": "string", "format": "date-time"},
-    "window_end": {"type": "string", "format": "date-time"},
-    "source_row_count": {"type": "integer", "minimum": 0},
-    "admitted_row_count": {"type": "integer", "minimum": 0},
+    "schema_version": {
+      "const": "1.1.0"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "window_start": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "window_end": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_row_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "admitted_row_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "content_ready_row_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "outside_window_row_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "unresolved_exhausted_row_count": {
+      "type": "integer",
+      "minimum": 0
+    },
     "rows": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["row_id", "candidate_id", "provisional_group_id", "source_id", "section", "url", "canonical_url", "listing_published_at", "listing_timestamp_evidence", "article_body_published_at", "article_body_timestamp_evidence", "article_body_evidence_url", "content_sha256", "relevance_route", "relevance_reasons", "admission_status", "model_evidence"],
+        "required": [
+          "row_id",
+          "candidate_id",
+          "provisional_group_id",
+          "source_id",
+          "section",
+          "url",
+          "canonical_url",
+          "listing_published_at",
+          "listing_timestamp_evidence",
+          "article_body_published_at",
+          "article_body_timestamp_evidence",
+          "article_body_evidence_url",
+          "content_sha256",
+          "relevance_route",
+          "relevance_reasons",
+          "admission_status",
+          "model_evidence"
+        ],
         "properties": {
-          "row_id": {"type": "string", "pattern": "^row-[0-9a-f]{24}$"},
-          "candidate_id": {"type": "string", "minLength": 1},
-          "provisional_group_id": {"type": "string", "minLength": 1},
-          "source_id": {"type": "string", "minLength": 1},
-          "section": {"type": "string", "pattern": "^[A-Z]{3}$"},
-          "url": {"type": "string", "format": "uri"},
-          "canonical_url": {"type": "string", "format": "uri"},
-          "listing_published_at": {"type": "string", "format": "date-time"},
-          "listing_timestamp_evidence": {"type": "string", "minLength": 1},
-          "article_body_published_at": {"type": "string", "format": "date-time"},
-          "article_body_timestamp_evidence": {"type": "string", "minLength": 1},
-          "article_body_evidence_url": {"type": "string", "format": "uri"},
-          "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-          "relevance_route": {"enum": ["content_hydration", "lightweight_semantic_review"]},
-          "relevance_reasons": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
-          "admission_status": {"enum": ["content_ready", "unresolved_exhausted"]},
+          "row_id": {
+            "type": "string",
+            "pattern": "^row-[0-9a-f]{24}$"
+          },
+          "candidate_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "provisional_group_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "section": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "canonical_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "listing_published_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "listing_timestamp_evidence": {
+            "type": "string",
+            "minLength": 1
+          },
+          "article_body_published_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "article_body_timestamp_evidence": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "article_body_evidence_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "content_sha256": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "relevance_route": {
+            "enum": [
+              "content_hydration",
+              "lightweight_semantic_review"
+            ]
+          },
+          "relevance_reasons": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "admission_status": {
+            "enum": [
+              "content_ready",
+              "outside_window",
+              "unresolved_exhausted"
+            ]
+          },
           "model_evidence": {
             "type": "object",
-            "required": ["review_status", "reason", "evidence_refs"],
+            "required": [
+              "review_status",
+              "reason",
+              "evidence_refs"
+            ],
             "properties": {
-              "review_status": {"enum": ["pending_semantic_review", "unresolved_exhausted"]},
-              "reason": {"type": "string", "minLength": 1},
-              "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+              "review_status": {
+                "enum": [
+                  "pending_semantic_review",
+                  "outside_window",
+                  "unresolved_exhausted"
+                ]
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidence_refs": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
             },
             "additionalProperties": false
+          },
+          "hydration_attempts": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "admission_status": {
+                  "const": "content_ready"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "article_body_published_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "article_body_timestamp_evidence": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "content_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "model_evidence": {
+                  "properties": {
+                    "review_status": {
+                      "const": "pending_semantic_review"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "admission_status": {
+                  "const": "outside_window"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "article_body_published_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "article_body_timestamp_evidence": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "content_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "model_evidence": {
+                  "properties": {
+                    "review_status": {
+                      "const": "outside_window"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "admission_status": {
+                  "const": "unresolved_exhausted"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "model_evidence": {
+                  "properties": {
+                    "review_status": {
+                      "const": "unresolved_exhausted"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
       }
     }
   },
