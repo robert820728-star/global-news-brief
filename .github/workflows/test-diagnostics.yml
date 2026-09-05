@@ -1,0 +1,39 @@
+name: Test diagnostics
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: runtime}
+      - uses: actions/checkout@v4
+        with:
+          ref: run-logs
+          path: runlogs
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Run full suite and preserve output
+        shell: bash
+        run: |
+          set +e
+          cd runtime
+          python3 -m unittest discover -s tests -v > ../test-output.txt 2>&1
+          code=$?
+          cd ..
+          mkdir -p runlogs/logs/diagnostics
+          cp test-output.txt runlogs/logs/diagnostics/full-suite-${GITHUB_SHA}.txt
+          echo "$code" > runlogs/logs/diagnostics/full-suite-${GITHUB_SHA}.exit
+          exit 0
+      - name: Commit diagnostic output
+        working-directory: runlogs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add logs/diagnostics
+          git commit -m "Store full-suite diagnostics for ${{ github.sha }}"
+          git pull --rebase origin run-logs
+          git push origin HEAD:run-logs
