@@ -29,15 +29,16 @@
           "article_body_timestamp_evidence": {"type": ["string", "null"]},
           "article_body_evidence_url": {"type": ["string", "null"], "format": "uri"},
           "content_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
-          "failure_evidence": {"type": ["object", "null"], "properties": {"attempted_url": {"type":"string","format":"uri"}, "error": {"type":"string","minLength":1}}, "required": ["attempted_url","error"], "additionalProperties": true},
+          "failure_evidence": {"type": ["object", "null"], "properties": {"attempted_url": {"type":"string","format":"uri"}, "error": {"type":"string","minLength":1}, "recovery_evidence": {"type":"array","items":{"type":"string","minLength":1}}}, "required": ["attempted_url","error"], "additionalProperties": true},
           "relevance_route": {"enum": ["content_hydration", "lightweight_semantic_review"]},
           "relevance_reasons": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
-          "admission_status": {"enum": ["content_ready", "unresolved_exhausted"]},
-          "model_evidence": {"type":"object","required":["review_status","reason","evidence_refs"],"properties":{"review_status":{"enum":["pending_semantic_review","unresolved_exhausted"]},"reason":{"type":"string","minLength":1},"evidence_refs":{"type":"array","minItems":1,"items":{"type":"string","minLength":1}}},"additionalProperties":false}
+          "admission_status": {"enum": ["content_ready", "outside_window", "unresolved_exhausted"]},
+          "model_evidence": {"type":"object","required":["review_status","reason","evidence_refs"],"properties":{"review_status":{"enum":["pending_semantic_review","outside_window","unresolved_exhausted"]},"reason":{"type":"string","minLength":1},"evidence_refs":{"type":"array","minItems":1,"items":{"type":"string","minLength":1}}},"additionalProperties":false}
         },
         "allOf": [
-          {"if":{"properties":{"admission_status":{"const":"content_ready"}}},"then":{"properties":{"article_body_published_at":{"type":"string"},"article_body_timestamp_evidence":{"type":"string","minLength":1},"article_body_evidence_url":{"type":"string","format":"uri"},"content_sha256":{"type":"string","pattern":"^[0-9a-f]{64}$"},"failure_evidence":{"type":"null"}}}},
-          {"if":{"properties":{"admission_status":{"const":"unresolved_exhausted"}}},"then":{"properties":{"article_body_published_at":{"type":"null"},"article_body_timestamp_evidence":{"type":"null"},"article_body_evidence_url":{"type":"null"},"content_sha256":{"type":"null"},"failure_evidence":{"type":"object"}}}}
+          {"if":{"properties":{"admission_status":{"const":"content_ready"}}},"then":{"properties":{"article_body_published_at":{"type":"string","format":"date-time"},"article_body_timestamp_evidence":{"type":"string","minLength":1},"article_body_evidence_url":{"type":"string","format":"uri"},"content_sha256":{"type":"string","pattern":"^[0-9a-f]{64}$"},"failure_evidence":{"type":"null"},"model_evidence":{"properties":{"review_status":{"const":"pending_semantic_review"}}}}}},
+          {"if":{"properties":{"admission_status":{"const":"outside_window"}}},"then":{"properties":{"article_body_published_at":{"type":"string","format":"date-time"},"article_body_timestamp_evidence":{"type":"string","minLength":1},"article_body_evidence_url":{"type":"string","format":"uri"},"content_sha256":{"type":"string","pattern":"^[0-9a-f]{64}$"},"failure_evidence":{"type":"null"},"model_evidence":{"properties":{"review_status":{"const":"outside_window"}}}}}},
+          {"if":{"properties":{"admission_status":{"const":"unresolved_exhausted"}}},"then":{"properties":{"failure_evidence":{"type":"object"},"model_evidence":{"properties":{"review_status":{"const":"unresolved_exhausted"}}}}}}
         ],
         "additionalProperties": false
       }
