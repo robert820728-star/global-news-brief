@@ -19,7 +19,10 @@ SPEC.loader.exec_module(MODULE)
 
 
 def source_pool():
-    return MODULE.load(ROOT / "news-source-pool.json")
+    pool = MODULE.load(ROOT / "news-source-pool.json")
+    # Most tests isolate legacy audit rules. Dedicated row-ledger tests opt in.
+    pool["source_row_admission_required"] = False
+    return pool
 
 
 def importance_breakdown(score=100):
@@ -339,7 +342,94 @@ def replace_gdelt_with_verified_web_fallback(audit):
     return fallback
 
 
+def row_ledger_for(audit):
+    run = audit["runs"][-1]
+    rows = []
+    disposition_by_url = {
+        (item["source_id"], item["url"]): item
+        for item in run["article_dispositions"]
+    }
+    for index, coverage in enumerate(run["source_coverage"]):
+        for url_index, url in enumerate(coverage["selected_item_urls"]):
+            row_id = f"row-{(index * 100000 + url_index):024x}"
+            disposition = disposition_by_url[(coverage["source_id"], url)]
+            candidate = next(
+                item for item in run["candidates"]
+                if disposition["semantic_event_id"] == item.get("semantic_event_id")
+            )
+            admission = {
+                "row_id": row_id,
+                "candidate_id": candidate["candidate_id"],
+                "provisional_group_id": f"group-{candidate['candidate_id']}",
+                "source_id": coverage["source_id"],
+                "section": candidate["section"],
+                "url": url,
+                "canonical_url": url,
+                "listing_published_at": coverage["ranked_items"][url_index]["published_at"],
+                "listing_timestamp_evidence": coverage["ranked_items"][url_index]["published_at"],
+                "article_body_published_at": coverage["ranked_items"][url_index]["published_at"],
+                "article_body_timestamp_evidence": "article body timestamp fixture",
+                "article_body_evidence_url": url,
+                "content_sha256": "a" * 64,
+                "relevance_route": "content_hydration",
+                "relevance_reasons": ["fixture"],
+                "admission_status": "content_ready",
+                "model_evidence": {
+                    "review_status": "pending_semantic_review",
+                    "reason": "Persisted for same-run review.",
+                    "evidence_refs": [url],
+                },
+            }
+            rows.append(admission)
+            disposition.update({
+                "row_id": row_id,
+                "candidate_id": candidate["candidate_id"],
+                "provisional_group_id": admission["provisional_group_id"],
+                "canonical_url": url,
+                "article_body_published_at": admission["article_body_published_at"],
+                "article_body_timestamp_evidence": admission["article_body_timestamp_evidence"],
+                "model_evidence": {
+                    "review_status": "event_evidence",
+                    "reason": disposition["reason"],
+                    "evidence_refs": [url],
+                },
+            })
+    return {
+        "schema_version": "1.0.0",
+        "run_id": run["run_id"],
+        "window_start": run["window_start"],
+        "window_end": run["window_end"],
+        "source_row_count": len(rows),
+        "admitted_row_count": len(rows),
+        "rows": rows,
+    }
+
+
 class CandidateAuditTests(unittest.TestCase):
+    def test_132_source_rows_are_conserved_by_terminal_dispositions(self):
+        audit = valid_audit(per_source_count=44)
+        ledger = row_ledger_for(audit)
+
+        self.assertEqual(132, ledger["source_row_count"])
+        self.assertEqual([], MODULE.validate(audit, source_pool(), ledger))
+
+    def test_row_ledger_identity_mismatch_is_rejected(self):
+        audit = valid_audit()
+        ledger = row_ledger_for(audit)
+        audit["runs"][-1]["article_dispositions"][0]["candidate_id"] = "invented"
+
+        errors = MODULE.validate(audit, source_pool(), ledger)
+
+        self.assertTrue(any("source-row admission identity" in error for error in errors))
+
+    def test_missing_row_ledger_is_rejected_when_policy_requires_it(self):
+        pool = source_pool()
+        pool["source_row_admission_required"] = True
+
+        errors = MODULE.validate(valid_audit(), pool)
+
+        self.assertTrue(any("source-row admissions" in error for error in errors))
+
     def test_shipped_empty_audit_seed_uses_current_schema(self):
         seed = json.loads(
             (ROOT / "state/candidate-audit.json").read_text(encoding="utf-8")
@@ -1195,9 +1285,14 @@ class CandidateAuditTests(unittest.TestCase):
         audit = valid_audit()
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
+            ledger = row_ledger_for(audit)
             run_path = root / "current-run.json"
             run_path.write_text(
                 json.dumps(audit["runs"][0], ensure_ascii=False), encoding="utf-8"
+            )
+            row_path = root / "source-row-admissions.json"
+            row_path.write_text(
+                json.dumps(ledger, ensure_ascii=False), encoding="utf-8"
             )
             output_path = root / "new-state" / "candidate-audit.json"
             result = subprocess.run(
@@ -1206,6 +1301,7 @@ class CandidateAuditTests(unittest.TestCase):
                     "append", "--history", str(root / "missing-history.json"),
                     "--run", str(run_path), "--output", str(output_path),
                     "--source-pool", str(ROOT / "news-source-pool.json"),
+                    "--source-row-admissions", str(row_path),
                 ],
                 capture_output=True, text=True, check=False,
             )

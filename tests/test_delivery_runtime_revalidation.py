@@ -23,7 +23,13 @@ class DeliveryRuntimeRevalidationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             files = {}
-            for name in ("checkpoint", "manifest", "audit", "source_pool"):
+            for name in (
+                "checkpoint",
+                "manifest",
+                "audit",
+                "source_pool",
+                "source_row_admissions",
+            ):
                 path = root / f"{name}.json"
                 path.write_text("{}", encoding="utf-8")
                 files[name] = path

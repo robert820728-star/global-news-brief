@@ -123,6 +123,22 @@
         "disposition": {"enum": ["event_evidence", "non_news", "unresolved", "unresolved_exhausted"]},
         "semantic_event_id": {"type": ["string", "null"]},
         "reason": {"type": "string", "minLength": 1}
+        ,"row_id": {"type": "string", "minLength": 1}
+        ,"candidate_id": {"type": "string", "minLength": 1}
+        ,"provisional_group_id": {"type": "string", "minLength": 1}
+        ,"canonical_url": {"type": "string", "format": "uri"}
+        ,"article_body_published_at": {"type": "string", "format": "date-time"}
+        ,"article_body_timestamp_evidence": {"type": "string", "minLength": 1}
+        ,"model_evidence": {
+          "type": "object",
+          "required": ["review_status", "reason", "evidence_refs"],
+          "properties": {
+            "review_status": {"enum": ["event_evidence", "non_news", "unresolved", "unresolved_exhausted"]},
+            "reason": {"type": "string", "minLength": 1},
+            "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+          },
+          "additionalProperties": false
+        }
       },
       "additionalProperties": false
     },

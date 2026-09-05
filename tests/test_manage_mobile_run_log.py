@@ -100,6 +100,9 @@ class MobileRunLogTests(unittest.TestCase):
         self.write_image_evidence(self.delivered_image_event())
         return {
             "candidate-audit": {
+                "source_row_admissions_artifact": artifact_reference(
+                    f"logs/runs/{RUN_1}/source-row-admissions.json", "c" * 40
+                ),
                 "candidate_audit_artifact": artifact_reference(
                     f"logs/runs/{RUN_1}/candidate-audit.json", "a" * 40
                 )
@@ -236,6 +239,7 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertEqual(current["capability_limitations"], [])
         self.assertIsNone(current["window"])
         self.assertIsNone(current["candidate_audit_artifact"])
+        self.assertIsNone(current["source_row_admissions_artifact"])
         self.assertIsNone(current["verification_artifact"])
         self.assertIsNone(current["map_decisions_artifact"])
         self.assertIsNone(current["image_evidence_artifact"])
@@ -268,18 +272,34 @@ class MobileRunLogTests(unittest.TestCase):
         artifact = artifact_reference(
             f"logs/runs/{RUN_1}/candidate-audit.json", "a" * 40
         )
+        row_artifact = artifact_reference(
+            f"logs/runs/{RUN_1}/source-row-admissions.json", "c" * 40
+        )
         self.advance_to(
             "candidate-audit",
             stage_kwargs={
                 "candidate-audit": {
                     "execution_mode": "mobile-native",
+                    "source_row_admissions_artifact": row_artifact,
                     "candidate_audit_artifact": artifact,
                 }
             },
         )
         current = self.read("current.json")
         self.assertEqual(current["execution_mode"], "mobile-native")
+        self.assertEqual(current["source_row_admissions_artifact"], row_artifact)
         self.assertEqual(current["candidate_audit_artifact"], artifact)
+
+    def test_mobile_native_requires_source_row_admissions_before_candidate_audit(self):
+        self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for="2026-08-18T06:00:00+08:00",
+            updated_at="2026-08-17T21:58:00Z",
+            execution_mode="mobile-native",
+        )
+        with self.assertRaisesRegex(ValueError, "source row admissions artifact"):
+            self.advance_to("candidate-audit")
 
     def test_mobile_native_requires_verification_binding_after_verification_stage(self):
         self.module.prepare_run(
@@ -308,7 +328,16 @@ class MobileRunLogTests(unittest.TestCase):
             updated_at="2026-08-17T21:58:00Z",
             execution_mode="mobile-native",
         )
-        self.advance_to("candidate-audit")
+        self.advance_to(
+            "candidate-audit",
+            stage_kwargs={
+                "candidate-audit": {
+                    "source_row_admissions_artifact": artifact_reference(
+                        f"logs/runs/{RUN_1}/source-row-admissions.json", "c" * 40
+                    )
+                }
+            },
+        )
         with self.assertRaisesRegex(ValueError, "candidate audit artifact"):
             self.module.advance_run(
                 self.ledger_dir,

@@ -23,6 +23,7 @@
     "delivery_status",
     "client_confirmation_supported",
     "reader_artifact",
+    "source_row_admissions_artifact",
     "candidate_audit_artifact",
     "verification_artifact",
     "map_decisions_artifact",
@@ -31,7 +32,7 @@
     "durable_audit_artifact"
   ],
   "properties": {
-    "schema_version": { "const": "1.6.0" },
+    "schema_version": { "const": "1.7.0" },
     "execution_mode": { "enum": ["full-runtime", "mobile-native"] },
     "delivery_profile": {
       "enum": ["full-assets", "reader-canonical-capability-degraded"]
@@ -113,6 +114,27 @@
       "enum": ["not_ready", "reader_saved", "handoff_started", "client_confirmed"]
     },
     "client_confirmation_supported": { "type": "boolean" },
+    "source_row_admissions_artifact": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["branch", "path", "blob_sha", "run_id", "main_sha", "window"],
+          "properties": {
+            "branch": { "const": "run-logs" },
+            "path": {
+              "type": "string",
+              "pattern": "^logs/runs/gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}/source-row-admissions\\.json$"
+            },
+            "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "run_id": { "type": "string", "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$" },
+            "main_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "window": { "$ref": "#/properties/window/oneOf/1" }
+          }
+        }
+      ]
+    },
     "candidate_audit_artifact": {
       "oneOf": [
         { "type": "null" },

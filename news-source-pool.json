@@ -12,6 +12,7 @@
     "validator": "scripts/validate_local_source_admission.py"
   },
   "source_scan_evidence_required": true,
+  "source_row_admission_required": true,
   "discovery_policy": {
     "strategy": "aggregate_then_regional_supplements",
     "minimum_ready_sources": 1,

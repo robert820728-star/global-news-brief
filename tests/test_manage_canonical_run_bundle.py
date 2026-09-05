@@ -26,10 +26,12 @@ class CanonicalRunBundleTests(unittest.TestCase):
             "gate": root / "news-relevance-gate.json",
             "admitted": root / "model-source-candidates.json",
             "preprocessed": root / "preprocessed-candidates.json",
+            "row_admissions": root / "source-row-admissions.json",
             "batch_index": root / "content-hydration-batches.json",
         }
         candidates = [
             {
+                "row_id": f"row-{index:024x}",
                 "candidate_id": f"candidate-{index:03d}",
                 "source_id": "source-a",
                 "canonical_url": f"https://example.test/news/{index}",
@@ -61,6 +63,18 @@ class CanonicalRunBundleTests(unittest.TestCase):
                 "window_start": window_start,
                 "window_end": window_end,
                 "normalized_articles": candidates,
+            },
+            "row_admissions": {
+                "schema_version": "1.0.0",
+                "run_id": run_id,
+                "window_start": window_start,
+                "window_end": window_end,
+                "source_row_count": candidate_count,
+                "admitted_row_count": candidate_count,
+                "rows": [
+                    {"row_id": f"row-{index:03d}"}
+                    for index in range(candidate_count)
+                ],
             },
         }
         for name, payload in payloads.items():
@@ -157,6 +171,7 @@ class CanonicalRunBundleTests(unittest.TestCase):
                 relevance_gate_path=paths["gate"],
                 admitted_candidates_path=paths["admitted"],
                 preprocessed_candidates_path=paths["preprocessed"],
+                source_row_admissions_path=paths["row_admissions"],
                 batch_index_path=paths["batch_index"],
                 transport_dir=transport,
                 manifest_path=manifest_path,
@@ -168,6 +183,10 @@ class CanonicalRunBundleTests(unittest.TestCase):
             batch_data = json.loads(paths["batch_index"].read_text(encoding="utf-8"))
             self.assertEqual([20, 20, 3], [item["article_row_count"] for item in batch_data["batches"]])
             self.assertEqual(43, batch_data["candidate_count"])
+            self.assertTrue(any(
+                item["logical_path"] == "recovery/source-row-admissions.json"
+                for item in manifest["artifacts"]
+            ))
             originals = {
                 artifact["logical_path"]: (root / Path(artifact["logical_path"]).name).read_bytes()
                 for artifact in manifest["artifacts"]
@@ -185,7 +204,31 @@ class CanonicalRunBundleTests(unittest.TestCase):
             for logical_path, original in originals.items():
                 self.assertEqual(original, (restored / logical_path).read_bytes())
 
-    def test_pre_manifest_recovery_bundle_rejects_duplicate_candidate_ids(self):
+    def test_pre_manifest_recovery_bundle_rejects_duplicate_row_ids(self):
+        module = load_module()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run_id = "gnb-20260823T085530Z-7f3c9a12"
+            paths = self._write_recovery_inputs(root, run_id=run_id, candidate_count=2)
+            admitted = json.loads(paths["admitted"].read_text(encoding="utf-8"))
+            admitted["items"][1]["row_id"] = admitted["items"][0]["row_id"]
+            paths["admitted"].write_text(json.dumps(admitted), encoding="utf-8")
+
+            with self.assertRaisesRegex(ValueError, "row ids must be non-empty and unique"):
+                module.pack_pre_manifest_recovery_bundle(
+                    run_id=run_id,
+                    checkpoint_path=paths["checkpoint"],
+                    source_candidates_path=paths["source"],
+                    relevance_gate_path=paths["gate"],
+                    admitted_candidates_path=paths["admitted"],
+                    preprocessed_candidates_path=paths["preprocessed"],
+                    source_row_admissions_path=paths["row_admissions"],
+                    batch_index_path=paths["batch_index"],
+                    transport_dir=root / "transport",
+                    manifest_path=root / "manifest.json",
+                )
+
+    def test_pre_manifest_recovery_preserves_repeated_candidate_ids_by_row_id(self):
         module = load_module()
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -195,18 +238,24 @@ class CanonicalRunBundleTests(unittest.TestCase):
             admitted["items"][1]["candidate_id"] = admitted["items"][0]["candidate_id"]
             paths["admitted"].write_text(json.dumps(admitted), encoding="utf-8")
 
-            with self.assertRaisesRegex(ValueError, "non-empty and unique"):
-                module.pack_pre_manifest_recovery_bundle(
-                    run_id=run_id,
-                    checkpoint_path=paths["checkpoint"],
-                    source_candidates_path=paths["source"],
-                    relevance_gate_path=paths["gate"],
-                    admitted_candidates_path=paths["admitted"],
-                    preprocessed_candidates_path=paths["preprocessed"],
-                    batch_index_path=paths["batch_index"],
-                    transport_dir=root / "transport",
-                    manifest_path=root / "manifest.json",
-                )
+            module.pack_pre_manifest_recovery_bundle(
+                run_id=run_id,
+                checkpoint_path=paths["checkpoint"],
+                source_candidates_path=paths["source"],
+                relevance_gate_path=paths["gate"],
+                admitted_candidates_path=paths["admitted"],
+                preprocessed_candidates_path=paths["preprocessed"],
+                source_row_admissions_path=paths["row_admissions"],
+                batch_index_path=paths["batch_index"],
+                transport_dir=root / "transport",
+                manifest_path=root / "manifest.json",
+            )
+
+            batch = json.loads(paths["batch_index"].read_text(encoding="utf-8"))
+            self.assertEqual(2, batch["candidate_count"])
+            self.assertEqual(2, len({
+                item["row_id"] for group in batch["batches"] for item in group["items"]
+            }))
 
     def test_pre_manifest_recovery_bundle_rejects_run_or_window_mismatch(self):
         module = load_module()
@@ -226,6 +275,7 @@ class CanonicalRunBundleTests(unittest.TestCase):
                     relevance_gate_path=paths["gate"],
                     admitted_candidates_path=paths["admitted"],
                     preprocessed_candidates_path=paths["preprocessed"],
+                    source_row_admissions_path=paths["row_admissions"],
                     batch_index_path=paths["batch_index"],
                     transport_dir=root / "transport",
                     manifest_path=root / "manifest.json",

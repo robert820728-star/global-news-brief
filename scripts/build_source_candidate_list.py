@@ -79,7 +79,7 @@ def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
         completed.append(source_id)
         pages = list(scan.get("pages", [])) + list(scan.get("supplemental_pages", []))
         for page_index, page in enumerate(pages, 1):
-            for raw in page.get("extracted_items", []):
+            for item_index, raw in enumerate(page.get("extracted_items", []), 1):
                 published = parse_time(str(raw.get("published_at", "")))
                 if published < start or published > end:
                     continue
@@ -101,8 +101,19 @@ def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
                     raise ValueError(f"{source_id} 候選缺少有效板塊：{title}")
                 seed = hashlib.sha256(f"{norm}|{published.date().isoformat()}".encode()).hexdigest()[:24]
                 cid = hashlib.sha256(f"{source_id}|{canon}|{published.isoformat()}".encode()).hexdigest()[:20]
+                row_seed = "|".join((
+                    source_id,
+                    str(page.get("snapshot_path", "")),
+                    str(page_index),
+                    str(item_index),
+                    canon,
+                    published.isoformat(),
+                ))
+                row_id = "row-" + hashlib.sha256(row_seed.encode()).hexdigest()[:24]
                 output.append({
+                    "row_id": row_id,
                     "candidate_id": cid,
+                    "provisional_group_id": "group-" + seed,
                     "source_id": source_id,
                     "source_name": source["name"],
                     "section": section,
@@ -113,6 +124,9 @@ def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
                     ),
                     "discovery_signals": raw.get("discovery_signals") or {},
                     "published_at": published.isoformat(),
+                    "listing_timestamp_evidence": str(
+                        raw.get("published_evidence") or raw.get("published_at") or ""
+                    ).strip(),
                     "url": url,
                     "categories": raw.get("categories") or source.get("categories", []),
                     "discovery_priority_reason": hint,
@@ -127,7 +141,12 @@ def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
                     "snapshot_path": page.get("snapshot_path", ""),
                     "page_index": page_index
                 })
-    output.sort(key=lambda item: (item["published_at"], item["source_id"], item["canonical_url"]), reverse=True)
+    output.sort(
+        key=lambda item: (
+            item["published_at"], item["source_id"], item["canonical_url"], item["row_id"]
+        ),
+        reverse=True,
+    )
     return {
         "schema_version": "1.0.0",
         "window_start": start.isoformat(),

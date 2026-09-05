@@ -19,10 +19,11 @@
       "items": {
         "type": "object",
         "required": [
-          "candidate_id", "source_id", "canonical_url", "route", "reasons",
+          "row_id", "candidate_id", "source_id", "canonical_url", "route", "reasons",
           "matched_discovery_signals"
         ],
         "properties": {
+          "row_id": {"type": "string", "minLength": 1},
           "candidate_id": {"type": "string", "minLength": 1},
           "source_id": {"type": "string", "minLength": 1},
           "canonical_url": {"type": "string", "format": "uri"},

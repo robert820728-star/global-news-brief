@@ -71,7 +71,7 @@ class NewsRunCheckpointTests(unittest.TestCase):
 
     def test_source_scan_completion_requires_all_canonical_artifacts(self):
         self.assertEqual(
-            ("source_candidates", "relevance_gate", "model_source_candidates"),
+            ("source_candidates", "relevance_gate", "model_source_candidates", "source_row_admissions"),
             MODULE.REQUIRED_STAGE_ARTIFACTS["source-scan"],
         )
 

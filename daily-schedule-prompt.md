@@ -183,6 +183,7 @@ Stage -1 完成後，至少讀取並遵守：
    - 來源擷取必須以 Stage -1 回傳的 `<bundled-python> scripts/fetch_source_routes.py --route-config source-route-config.json --output-dir <run-work-dir> --window-start <window-start>` 執行；此跨平台 canonical fetcher 保存逐站及已設定分頁的原始 bytes、SHA-256、page chain 與 `source-route-coverage.json`。不得改用 PowerShell web cmdlet、Node `fetch` 或臨時 helper 重試同一批路由。
    - `source-route-config.json` 只定義 GDELT、中央社與中新社三個 discovery routes；`minimum_ready_routes=1`。中新社抓執行日與前一日日索引；中央社依 `NextPageIdx` 翻頁至跨過窗起點或耗盡。GDELT 只有預期 archive 分片全部成功才是 `coverage_complete`，部分成功必須標 `degraded_partial`；archive 不可用時才可發送一次不阻塞的 DOC API 補充請求，最後才使用有效快取。`FULL_DISCOVERY_POOL_UNCAPPED` 要求每個成功 route 的完整窗內清單與逐列 gate decision 全部保存，不設固定 top-N。`MODEL_INPUT_SIGNAL_GATE` 只把 `content_hydration` rows 送入本輪模型，`lightweight_semantic_review` rows 留作未完成語意審查的 coverage 證據；不得偽裝成 `non_news` 或已評分事件。`REGIONAL_SUPPLEMENT_COMPLETE_MODEL_ADMISSION_GATE` 仍要求 regional supplements 全數進模型。語意合併與六項評分前執行 `validate_local_source_admission.py`，失敗不得繼續。
    - route fetch 完成後必須執行 `scripts/materialize_source_scans.py --checkpoint <checkpoint> --source-pool news-source-pool.json --route-coverage <route-coverage> --output-dir <source-scans-dir> --coverage-output <source-coverage.json>`；只有此 canonical materializer 產生的逐站 scans、terminal proof、完整 ranked_items 與 discovery priority 可進入 candidate audit。不得改用 run 目錄內的臨時 helper。
+   - source candidates 與 relevance gate 完成後，必須逐列取得文章本體 authoritative timestamp 與內容證據，寫入 `<source-row-article-evidence.json>`，再執行 `<bundled-python> scripts/materialize_source_row_admissions.py build --source-candidates <source-candidates.json> --relevance-gate <news-relevance-gate.json> --article-evidence <source-row-article-evidence.json> --run-id <run-id> --output <source-row-admissions.json>` 及同 script 的 `validate`。`SOURCE_ROW_ADMISSION_LEDGER_GATE` 要求每個 discovery row 唯一保存 `row_id`、candidate/group ID、source/section、canonical URL、listing 與 article-body timestamp evidence、content SHA、route 與 model evidence；所有 raw rows 必須一對一入 ledger。此 artifact 未完成不得把 `source-scan` 標為 completed。後續 candidate audit 只消費此 ledger 並補寫 terminal disposition，不得重跑已完成 discovery。
    - materializer 必須為每條 configured discovery route 產生 source coverage row。`scan_status=completed` 只表示已取得頁面成功物化；coverage 是否完整另由 `coverage_complete`／`coverage_status` 決定。部分來源的已驗證列可繼續入池，失敗來源以 `scan_status=failed`、零 counts 與 `coverage_status=unavailable` 保留；不得在 candidate audit 或 release receipt 洗成完整 coverage。`GLOBAL_SECTION_PRIMARY_DISCOVERY_GATE`：本輪有 fallback／全球板塊時，優先要求 `primary_aggregator` 成功；GDELT 的 archive、一次 DOC 與有效 cache 全部不可用後，必須嘗試受控 `web_fallback`。只有逐筆可重算且固定為 `coverage_complete=false`／`degraded_partial` 的備援候選可繼續，不能用區域補充把世界零筆當成正常完成；primary 與備援都無可核實候選才停在 source-scan。
    - 每個站內海選條目只保存 `discovery_priority_score`、`discovery_signals` 與 `discovery_priority_reason`；這是 discovery 排序提示，不是 `public_value_v2`、`importance_score` 或正式等級。正式 V2 只在語意事件階段產生。
    - 直接 API／RSS／HTML 失敗時先切同站替代入口；只有目前工具契約明確允許時才可用完整瀏覽器渲染並保存 DOM。瀏覽器不得是完成排程的必要依賴，不得用別站冒充該站本輪掃描完成。
@@ -221,7 +222,7 @@ Stage -1 完成後，至少讀取並遵守：
 
 | Stage | completed 必要 artifact 名稱 |
 |---|---|
-| `source-scan` | `source_candidates`, `relevance_gate`, `model_source_candidates` |
+| `source-scan` | `source_candidates`, `relevance_gate`, `model_source_candidates`, `source_row_admissions` |
 | `preprocess-news-candidates` | `preprocessed_candidates` |
 | `select-news-events` | `selection_results` |
 | `audit-news-candidates` | `candidate_audit` |
@@ -318,18 +319,19 @@ After `preprocess-news-candidates` completes, record each artifact's local hash 
 Create and verify the recovery bundle only for a real `cross-host handoff`, an `ephemeral workspace`, or an approaching `warning or timeout boundary`:
 
 ```powershell
-python scripts/manage_canonical_run_bundle.py pack-recovery --run-id <run-id> --checkpoint <checkpoint> --source-candidates <source-candidates> --relevance-gate <relevance-gate> --admitted-candidates <model-source-candidates> --preprocessed-candidates <preprocessed-candidates> --batch-index <content-hydration-batches> --transport-dir <transport-dir> --manifest <recovery-bundle-manifest>
+python scripts/manage_canonical_run_bundle.py pack-recovery --run-id <run-id> --checkpoint <checkpoint> --source-candidates <source-candidates> --relevance-gate <relevance-gate> --admitted-candidates <model-source-candidates> --preprocessed-candidates <preprocessed-candidates> --source-row-admissions <source-row-admissions> --batch-index <content-hydration-batches> --transport-dir <transport-dir> --manifest <recovery-bundle-manifest>
 python scripts/manage_canonical_run_bundle.py verify --manifest <recovery-bundle-manifest> --transport-dir <transport-dir>
 python scripts/manage_canonical_run_bundle.py restore --manifest <recovery-bundle-manifest> --transport-dir <transport-dir> --output-dir <restore-proof-dir>
 ```
 
-The optional bundle contains these six logical artifacts:
+The optional bundle contains these seven logical artifacts:
 
 - `recovery/checkpoint.json`
 - `recovery/source-candidates.json`
 - `recovery/news-relevance-gate.json`
 - `recovery/model-source-candidates.json`
 - `recovery/preprocessed-candidates.json`
+- `recovery/source-row-admissions.json`
 - `recovery/content-hydration-batches.json`
 
 If a handoff or workspace loss occurs, `restore` these artifacts from the same run's verified bundle and resume only the first incomplete batch. Never create a replacement run to conceal missing recovery inputs. Bundle creation failure is blocking only when the declared handoff or workspace-risk condition makes that bundle necessary.

@@ -35,6 +35,7 @@ BOOTSTRAP_REQUIRED_PATHS = (
     "schemas/news-candidate-audit.schema.json",
     "schemas/news-source-candidate-list.schema.json",
     "schemas/news-relevance-gate.schema.json",
+    "schemas/news-source-row-admissions.schema.json",
     "schemas/mobile-run-log.schema.json",
     ".agents/skills/daily-news-brief/SKILL.md",
     ".agents/skills/acquire-news-candidates/SKILL.md",
@@ -52,6 +53,7 @@ BOOTSTRAP_REQUIRED_PATHS = (
     "scripts/validate_source_scan_evidence.py",
     "scripts/build_source_candidate_list.py",
     "scripts/build_news_relevance_gate.py",
+    "scripts/materialize_source_row_admissions.py",
     "scripts/validate_local_source_admission.py",
     "scripts/preprocess_news_candidates.py",
     "scripts/manage_canonical_run_bundle.py",
@@ -86,7 +88,10 @@ POST_MANIFEST_STAGES = (
 )
 RELEASE_REQUIRED_STAGES = PRE_MANIFEST_STAGES + POST_MANIFEST_STAGES
 REQUIRED_STAGE_ARTIFACTS = {
-    "source-scan": ("source_candidates", "relevance_gate", "model_source_candidates"),
+    "source-scan": (
+        "source_candidates", "relevance_gate", "model_source_candidates",
+        "source_row_admissions",
+    ),
     "preprocess-news-candidates": ("preprocessed_candidates",),
     "select-news-events": ("selection_results",),
     "audit-news-candidates": ("candidate_audit",),

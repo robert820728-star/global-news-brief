@@ -127,17 +127,21 @@ def build_hydration_batch_index(*, run_id: str, admitted: dict, max_batch_rows: 
     items = admitted.get("items")
     if not isinstance(items, list):
         raise ValueError("admitted candidate items must be an array")
-    seen: set[str] = set()
+    seen_rows: set[str] = set()
     rows: list[dict] = []
     for item in items:
         if not isinstance(item, dict):
             raise ValueError("admitted candidate items must be objects")
+        row_id = str(item.get("row_id", ""))
         candidate_id = str(item.get("candidate_id", ""))
-        if not candidate_id or candidate_id in seen:
-            raise ValueError("admitted candidate ids must be non-empty and unique")
-        seen.add(candidate_id)
+        if not row_id or row_id in seen_rows:
+            raise ValueError("admitted candidate row ids must be non-empty and unique")
+        if not candidate_id:
+            raise ValueError("admitted candidate ids must be non-empty")
+        seen_rows.add(row_id)
         rows.append(
             {
+                "row_id": row_id,
                 "candidate_id": candidate_id,
                 "source_id": str(item.get("source_id", "")),
                 "canonical_url": str(item.get("canonical_url") or item.get("url") or ""),
@@ -178,6 +182,7 @@ def pack_pre_manifest_recovery_bundle(
     relevance_gate_path: Path,
     admitted_candidates_path: Path,
     preprocessed_candidates_path: Path,
+    source_row_admissions_path: Path,
     batch_index_path: Path,
     transport_dir: Path,
     manifest_path: Path,
@@ -191,6 +196,7 @@ def pack_pre_manifest_recovery_bundle(
         "relevance gate": _read_json_object(relevance_gate_path, "relevance gate"),
         "admitted candidates": _read_json_object(admitted_candidates_path, "admitted candidates"),
         "preprocessed candidates": _read_json_object(preprocessed_candidates_path, "preprocessed candidates"),
+        "source row admissions": _read_json_object(source_row_admissions_path, "source row admissions"),
     }
     checkpoint = inputs["checkpoint"]
     expected_identity = (
@@ -225,6 +231,7 @@ def pack_pre_manifest_recovery_bundle(
             ("recovery/news-relevance-gate.json", Path(relevance_gate_path)),
             ("recovery/model-source-candidates.json", Path(admitted_candidates_path)),
             ("recovery/preprocessed-candidates.json", Path(preprocessed_candidates_path)),
+            ("recovery/source-row-admissions.json", Path(source_row_admissions_path)),
             ("recovery/content-hydration-batches.json", Path(batch_index_path)),
         ],
         transport_dir=Path(transport_dir),
@@ -311,6 +318,7 @@ def _parser() -> argparse.ArgumentParser:
     recovery.add_argument("--relevance-gate", type=Path, required=True)
     recovery.add_argument("--admitted-candidates", type=Path, required=True)
     recovery.add_argument("--preprocessed-candidates", type=Path, required=True)
+    recovery.add_argument("--source-row-admissions", type=Path, required=True)
     recovery.add_argument("--batch-index", type=Path, required=True)
     recovery.add_argument("--transport-dir", type=Path, required=True)
     recovery.add_argument("--manifest", type=Path, required=True)
@@ -343,6 +351,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             relevance_gate_path=args.relevance_gate,
             admitted_candidates_path=args.admitted_candidates,
             preprocessed_candidates_path=args.preprocessed_candidates,
+            source_row_admissions_path=args.source_row_admissions,
             batch_index_path=args.batch_index,
             transport_dir=args.transport_dir,
             manifest_path=args.manifest,

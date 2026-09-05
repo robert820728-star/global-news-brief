@@ -24,6 +24,12 @@
 
 每篇 `extracted_items` 除既有網址、標題與時間證據外，必須保存可供 hydration 排序與查重的 `summary`、`discovery_priority_reason`、`acquisition_route`；摘要不足時進入單篇文章頁或瀏覽器補齊。此欄位不是事件重要性評分。
 
+## Source row admission ledger
+
+來源掃描完成前，必須將全部時間窗內列物化為 `source-row-admissions.json`。每列使用獨立且穩定的 `row_id`，不得用可能重複的 candidate ID 或 canonical URL 代替 row identity；並保存 source/section、candidate/provisional-group ID、canonical URL、listing timestamp evidence、文章本體 authoritative timestamp evidence、content SHA-256、relevance route 與 model evidence。`scripts/materialize_source_row_admissions.py validate` 必須通過，checkpoint 才能綁定 `source_row_admissions` 並完成 source-scan。
+
+這個 ledger 是 same-run recovery 的唯一 row universe。後續 selection/candidate audit 對每列補寫 terminal `article_dispositions` 時必須沿用相同 row identity；不得由 17 個 threshold events 倒推其餘 raw rows，也不得為補齊 disposition 重跑已完成的 discovery。
+
 ## 驗證方式
 
 `scripts/validate_source_scan_evidence.py` 必須重新驗證快照雜湊、翻頁鏈、停止證據，並從快照中的全部文章重算時間窗清單。重算結果必須與 `ranked_items` 及 `within_window_count` 完全一致。

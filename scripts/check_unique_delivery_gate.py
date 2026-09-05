@@ -78,7 +78,10 @@ def _runtime_revalidation_errors(root: Path) -> list[str]:
     artifacts = receipt.get("artifacts")
     if not isinstance(artifacts, dict):
         return errors + ["release receipt.artifacts 必須是物件"]
-    required = ("checkpoint", "manifest", "audit", "source_pool", "brief", "release")
+    required = (
+        "checkpoint", "manifest", "audit", "source_pool",
+        "source_row_admissions", "brief", "release",
+    )
     paths: dict[str, Path] = {}
     for name in required:
         item = artifacts.get(name)
@@ -104,12 +107,15 @@ def _runtime_revalidation_errors(root: Path) -> list[str]:
     manifest = _json(paths["manifest"], "manifest", errors)
     audit = _json(paths["audit"], "candidate audit", errors)
     pool = _json(paths["source_pool"], "source pool", errors)
+    row_admissions = _json(
+        paths["source_row_admissions"], "source-row admissions", errors
+    )
     try:
         brief = paths["brief"].read_text(encoding="utf-8")
     except (OSError, UnicodeError) as e:
         errors.append(f"reader brief 無法讀取：{e}")
         brief = ""
-    if errors or None in (cp, manifest, audit, pool):
+    if errors or None in (cp, manifest, audit, pool, row_admissions):
         return errors
 
     publisher = sys.modules.get("__main__")
@@ -117,7 +123,7 @@ def _runtime_revalidation_errors(root: Path) -> list[str]:
     if publisher is None or any(not hasattr(publisher, name) for name in required_helpers):
         return ["delivery revalidation 無法取得 canonical publisher validators"]
     errors += publisher.checkpoint_errors(cp, manifest, audit, paths)
-    errors += publisher.candidate_errors(audit, manifest, pool)
+    errors += publisher.candidate_errors(audit, manifest, pool, row_admissions)
     errors += publisher.attachment_errors(manifest)
     errors += publisher.validate_map_decisions.validate(manifest)
     errors += publisher.validate_news_brief.validate_canonical_reader(manifest, brief)

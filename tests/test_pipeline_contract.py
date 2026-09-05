@@ -120,7 +120,7 @@ class PipelineContractTests(unittest.TestCase):
 
         self.assertIn(
             "| `source-scan` | `source_candidates`, `relevance_gate`, "
-            "`model_source_candidates` |",
+            "`model_source_candidates`, `source_row_admissions` |",
             prompt,
         )
 

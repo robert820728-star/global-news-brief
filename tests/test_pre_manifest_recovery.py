@@ -32,6 +32,18 @@ class PreManifestRecoveryTests(unittest.TestCase):
             self.assertEqual(plan[0]["target_stage"], "preprocess-news-candidates")
             self.assertTrue(plan[0]["continue_required"])
 
+    def test_completed_source_scan_binds_row_admissions_for_no_rescan_recovery(self):
+        with tempfile.TemporaryDirectory() as directory:
+            cp = MODULE.create_checkpoint("run", "a", "b")
+            MODULE.mark_stage(cp, "source-scan", "running")
+            MODULE.mark_stage(
+                cp, "source-scan", "completed",
+                self.source_scan_artifacts(directory),
+            )
+            artifacts = cp["stage_evidence"]["source-scan"]["artifacts"]
+            self.assertIn("source_row_admissions", artifacts)
+            self.assertTrue(artifacts["source_row_admissions"]["sha256"])
+
     def test_failed_source_scan_is_recoverable_without_manifest(self):
         cp = MODULE.create_checkpoint("run", "a", "b")
         MODULE.mark_stage(cp, "source-scan", "running")

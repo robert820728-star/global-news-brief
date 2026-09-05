@@ -42,6 +42,8 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 
 採高召回原則：完整 discovery rows 與逐列 gate decisions 必須守恆，不得以固定 top-N、相對名次或模型評級截斷。`MODEL_INPUT_SIGNAL_GATE`：本輪模型輸入只包含 `content_hydration` rows；`lightweight_semantic_review` rows 留在 relevance gate，明確代表尚未完成語意審查，不能當成 `non_news`、已評分事件或 Reader coverage。中央社與中新社等 regional supplements 仍全部是 `content_hydration`，不得省略。
 
+`SOURCE_ROW_ADMISSION_LEDGER_GATE`：`source-scan` completed 前，全部 raw discovery rows 必須由 `scripts/materialize_source_row_admissions.py` 一對一物化，保存唯一 row ID、candidate/provisional-group ID、來源與板塊、canonical URL、listing 與文章本體 timestamp evidence、content SHA、relevance route 與 model evidence，並綁定 checkpoint 的 `source_row_admissions`。selection 與 candidate audit 必須沿用這個 row universe 寫 terminal dispositions；same-run recovery 只讀既有 ledger，不得重跑 discovery。
+
 
 ### 一、廣泛海選
 

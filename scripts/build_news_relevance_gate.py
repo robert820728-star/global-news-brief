@@ -59,6 +59,7 @@ def route_item(item: dict) -> dict:
         reasons.append("compound_goldstein_and_corroboration")
     admitted = regional_supplement or bool(reasons)
     return {
+        "row_id": str(item.get("row_id") or item["candidate_id"]),
         "candidate_id": item["candidate_id"],
         "source_id": source_id,
         "canonical_url": item["canonical_url"],
@@ -85,15 +86,20 @@ def build_gate(source_candidates: dict) -> dict:
 
 def build_admitted_candidates(source_candidates: dict, gate: dict) -> dict:
     admitted_ids = {
-        item["candidate_id"]
+        str(item.get("row_id") or item["candidate_id"])
         for item in gate["decisions"]
         if item.get("route") == "content_hydration"
     }
     items = source_candidates.get("items", [])
-    source_ids = {item.get("candidate_id") for item in items}
+    source_ids = {
+        str(item.get("row_id") or item.get("candidate_id")) for item in items
+    }
     if admitted_ids - source_ids:
         raise ValueError("gate references candidate ids absent from source candidates")
-    filtered = [item for item in items if item.get("candidate_id") in admitted_ids]
+    filtered = [
+        item for item in items
+        if str(item.get("row_id") or item.get("candidate_id")) in admitted_ids
+    ]
     output = dict(source_candidates)
     output["discovery_article_row_count"] = len(items)
     output["admitted_article_row_count"] = len(filtered)

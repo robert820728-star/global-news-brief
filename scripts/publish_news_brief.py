@@ -144,8 +144,11 @@ def attachment_errors(manifest: dict) -> list[str]:
     return errors
 
 
-def candidate_errors(audit: dict, manifest: dict, source_pool: dict) -> list[str]:
-    errors = manage_candidate_audit.validate(audit, source_pool)
+def candidate_errors(
+    audit: dict, manifest: dict, source_pool: dict,
+    source_row_admissions: dict | None = None,
+) -> list[str]:
+    errors = manage_candidate_audit.validate(audit, source_pool, source_row_admissions)
     runs = audit.get("runs", [])
     if not runs: return errors + ["候選稽核沒有本輪紀錄"]
     scope_codes = [
@@ -267,9 +270,22 @@ def publish(args) -> int:
         brief_bytes = paths["brief"].read_bytes(); brief = brief_bytes.decode("utf-8")
     except (OSError, UnicodeError, ValueError, json.JSONDecodeError) as error:
         print(f"RELEASE BLOCKED: {error}", file=sys.stderr); return 2
+    row_admissions = None
+    row_binding = (
+        cp.get("stage_evidence", {}).get("source-scan", {})
+        .get("artifacts", {}).get("source_row_admissions")
+    )
+    if isinstance(row_binding, dict):
+        row_path = Path(str(row_binding.get("path", "")))
+        try:
+            row_admissions = validate_news_brief.load_json(row_path)
+            paths["source_row_admissions"] = row_path
+        except (OSError, ValueError, json.JSONDecodeError) as error:
+            print(f"RELEASE BLOCKED: source-row admissions: {error}", file=sys.stderr)
+            return 2
     errors = gate_check.validate_repository(ROOT)
     errors += checkpoint_errors(cp, manifest, audit, paths)
-    errors += candidate_errors(audit, manifest, pool)
+    errors += candidate_errors(audit, manifest, pool, row_admissions)
     errors += attachment_errors(manifest)
     errors += validate_map_decisions.validate(manifest)
     errors += validate_news_brief.validate_canonical_reader(manifest, brief)
@@ -309,7 +325,7 @@ def validate_receipt(path: Path, expected_cp: Path | None) -> tuple[list[str], d
         if not isinstance(coverage.get("degraded_source_ids"), list): errors.append("receipt.discovery_coverage.degraded_source_ids 必須是陣列")
         if not isinstance(coverage.get("sources"), list) or not coverage["sources"]: errors.append("receipt.discovery_coverage.sources 必須是非空陣列")
     artifacts = receipt.get("artifacts", {}); release_bytes = None
-    required = ("gate","delivery_contract","checkpoint","manifest","audit","source_pool","brief","release")
+    required = ("gate","delivery_contract","checkpoint","manifest","audit","source_pool","source_row_admissions","brief","release")
     for name in required:
         item = artifacts.get(name) if isinstance(artifacts, dict) else None
         if not isinstance(item, dict): errors.append(f"receipt 缺少 artifact：{name}"); continue

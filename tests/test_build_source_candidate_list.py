@@ -122,6 +122,52 @@ class CandidateListTests(unittest.TestCase):
         self.assertEqual("web_fallback", result["items"][0]["source_id"])
         self.assertEqual("web_search_fallback", result["items"][0]["acquisition_route"])
 
+    def test_repeated_discovery_rows_receive_distinct_stable_row_ids(self):
+        pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
+        raw = {
+            "title": "Repeated regional listing row",
+            "summary": "The same source row appears in adjacent index pages.",
+            "discovery_priority_reason": "Regional complete admission.",
+            "published_at": "2026-08-16T01:00:00+00:00",
+            "published_evidence": "2026-08-16 09:00",
+            "url": "https://example.com/repeated?utm_source=index",
+            "url_evidence": "/repeated?utm_source=index",
+            "section": "GLB",
+            "acquisition_route": "aggregate_api",
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            scan_dir = Path(tmp)
+            (scan_dir / "gdelt.json").write_text(json.dumps({
+                "source_id": "gdelt",
+                "collector": "aggregate_api",
+                "pages": [
+                    {"snapshot_path": "snapshots/page-1.json", "extracted_items": [raw]},
+                    {"snapshot_path": "snapshots/page-2.json", "extracted_items": [raw]},
+                ],
+            }), encoding="utf-8")
+            first = builder.build(
+                pool, scan_dir,
+                builder.parse_time("2026-08-15T02:00:00+00:00"),
+                builder.parse_time("2026-08-16T02:00:00+00:00"),
+            )
+            second = builder.build(
+                pool, scan_dir,
+                builder.parse_time("2026-08-15T02:00:00+00:00"),
+                builder.parse_time("2026-08-16T02:00:00+00:00"),
+            )
+
+        self.assertEqual(2, len(first["items"]))
+        self.assertEqual(2, len({item["row_id"] for item in first["items"]}))
+        self.assertEqual(
+            [item["row_id"] for item in first["items"]],
+            [item["row_id"] for item in second["items"]],
+        )
+        self.assertEqual(
+            {"2026-08-16 09:00"},
+            {item["listing_timestamp_evidence"] for item in first["items"]},
+        )
+        self.assertEqual(1, len({item["provisional_group_id"] for item in first["items"]}))
+
 
 if __name__ == "__main__":
     unittest.main()

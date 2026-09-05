@@ -14,7 +14,7 @@ from typing import Any
 import run_identity
 
 
-SCHEMA_VERSION = "1.6.0"
+SCHEMA_VERSION = "1.7.0"
 EXECUTION_MODES = {"full-runtime", "mobile-native"}
 DELIVERY_PROFILES = {"full-assets", "reader-canonical-capability-degraded"}
 NATIVE_MEDIA_STATUSES = {"available", "unavailable"}
@@ -116,6 +116,7 @@ def validate_record(record: dict[str, Any]) -> None:
         "delivery_status",
         "client_confirmation_supported",
         "reader_artifact",
+        "source_row_admissions_artifact",
         "candidate_audit_artifact",
         "verification_artifact",
         "map_decisions_artifact",
@@ -193,6 +194,7 @@ def validate_record(record: dict[str, Any]) -> None:
     ):
         raise ValueError("client delivery cannot be confirmed without an external acknowledgement")
     future_artifact_boundaries = (
+        ("source_row_admissions_artifact", "source-scan", "source row admissions artifact"),
         ("candidate_audit_artifact", "candidate-audit", "candidate audit artifact"),
         ("verification_artifact", "selection-verified", "verification artifact"),
         ("map_decisions_artifact", "visuals-completed", "map decisions artifact"),
@@ -206,6 +208,13 @@ def validate_record(record: dict[str, Any]) -> None:
         if record.get(field) is not None:
             _validate_artifact_identity(record, field, label)
     if record["execution_mode"] == "mobile-native":
+        if record["stage_index"] >= STAGE_INDEX["candidate-audit"]:
+            _require_run_artifact(
+                record,
+                "source_row_admissions_artifact",
+                "source-row-admissions.json",
+                "source row admissions artifact",
+            )
         if record["stage_index"] >= STAGE_INDEX["selection-verified"]:
             _require_run_artifact(
                 record,
@@ -473,6 +482,7 @@ def prepare_run(
         "delivery_status": "not_ready",
         "client_confirmation_supported": False,
         "reader_artifact": None,
+        "source_row_admissions_artifact": None,
         "candidate_audit_artifact": None,
         "verification_artifact": None,
         "map_decisions_artifact": None,
@@ -502,6 +512,7 @@ def advance_run(
     delivery_profile: str | None = None,
     native_media_status: str | None = None,
     capability_limitations: list[str] | None = None,
+    source_row_admissions_artifact: dict[str, str] | None = None,
     candidate_audit_artifact: dict[str, str] | None = None,
     verification_artifact: dict[str, str] | None = None,
     map_decisions_artifact: dict[str, str] | None = None,
@@ -585,6 +596,8 @@ def advance_run(
         current["native_media_status"] = native_media_status
     if capability_limitations is not None:
         current["capability_limitations"] = list(capability_limitations)
+    if source_row_admissions_artifact is not None:
+        current["source_row_admissions_artifact"] = source_row_admissions_artifact
     if candidate_audit_artifact is not None:
         current["candidate_audit_artifact"] = candidate_audit_artifact
     if verification_artifact is not None:
@@ -642,6 +655,7 @@ def build_parser() -> argparse.ArgumentParser:
     advance.add_argument("--delivery-profile", choices=sorted(DELIVERY_PROFILES))
     advance.add_argument("--native-media-status", choices=sorted(NATIVE_MEDIA_STATUSES))
     advance.add_argument("--capability-limitation", action="append", choices=sorted(KNOWN_CAPABILITY_LIMITATIONS))
+    advance.add_argument("--source-row-admissions-artifact", type=Path)
     advance.add_argument("--candidate-audit-artifact", type=Path)
     advance.add_argument("--verification-artifact", type=Path)
     advance.add_argument("--map-decisions-artifact", type=Path)
@@ -700,6 +714,10 @@ def main() -> int:
             delivery_profile=args.delivery_profile,
             native_media_status=args.native_media_status,
             capability_limitations=args.capability_limitation,
+            source_row_admissions_artifact=(
+                _read_artifact_reference(args.source_row_admissions_artifact)
+                if args.source_row_admissions_artifact else None
+            ),
             candidate_audit_artifact=(
                 _read_artifact_reference(args.candidate_audit_artifact)
                 if args.candidate_audit_artifact else None

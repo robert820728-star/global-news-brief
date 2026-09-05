@@ -299,6 +299,26 @@ class BuildNewsRelevanceGateTests(unittest.TestCase):
         self.assertEqual(2, admitted["admitted_article_row_count"])
         self.assertEqual([row, row], admitted["items"])
 
+    def test_gate_conserves_distinct_row_ids_when_candidate_ids_repeat(self):
+        rows = [{
+            "row_id": f"row-{index:03d}",
+            "candidate_id": "shared-candidate",
+            "source_id": "chinanews",
+            "canonical_url": f"https://www.chinanews.com.cn/example-{index}.shtml",
+            "title": "區域補充來源文章",
+            "summary": "區域補充來源完整入池",
+            "discovery_signals": {},
+        } for index in range(132)]
+
+        gate = MODULE.build_gate({"items": rows})
+
+        self.assertEqual(132, gate["input_article_row_count"])
+        self.assertEqual(
+            {row["row_id"] for row in rows},
+            {decision["row_id"] for decision in gate["decisions"]},
+        )
+        self.assertEqual(132, len(gate["decisions"]))
+
 
 if __name__ == "__main__":
     unittest.main()

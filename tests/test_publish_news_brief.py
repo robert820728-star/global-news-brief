@@ -217,17 +217,62 @@ def write_valid_audit(root: Path):
                 "unresolved_exhausted_article_row_count": 0,
             },
             "article_dispositions": [{
+                "row_id": f"row-{index:024x}",
+                "candidate_id": "cand-1",
+                "provisional_group_id": "group-test-event",
                 "source_id": item["source_id"],
                 "url": item["selected_item_urls"][0],
+                "canonical_url": item["selected_item_urls"][0],
+                "article_body_published_at": item["ranked_items"][0]["published_at"],
+                "article_body_timestamp_evidence": "article body timestamp fixture",
                 "disposition": "event_evidence",
                 "semantic_event_id": "semantic-event-1",
                 "reason": "文章內容已對應至同一語意事件",
-            } for item in coverage],
+                "model_evidence": {
+                    "review_status": "event_evidence",
+                    "reason": "文章內容已對應至同一語意事件",
+                    "evidence_refs": [item["selected_item_urls"][0]],
+                },
+            } for index, item in enumerate(coverage)],
             "deduplicated_candidate_count": 1, "candidates": [candidate],
         }],
     }
     path = root / "audit.json"
     path.write_text(json.dumps(audit, ensure_ascii=False), encoding="utf-8")
+    row_admissions = {
+        "schema_version": "1.0.0",
+        "run_id": RUN_ID,
+        "window_start": "2026-08-13T06:00:00+08:00",
+        "window_end": "2026-08-14T06:00:00+08:00",
+        "source_row_count": len(coverage),
+        "admitted_row_count": len(coverage),
+        "rows": [{
+            "row_id": disposition["row_id"],
+            "candidate_id": disposition["candidate_id"],
+            "provisional_group_id": disposition["provisional_group_id"],
+            "source_id": disposition["source_id"],
+            "section": "TWN",
+            "url": disposition["url"],
+            "canonical_url": disposition["canonical_url"],
+            "listing_published_at": disposition["article_body_published_at"],
+            "listing_timestamp_evidence": disposition["article_body_published_at"],
+            "article_body_published_at": disposition["article_body_published_at"],
+            "article_body_timestamp_evidence": disposition["article_body_timestamp_evidence"],
+            "article_body_evidence_url": disposition["url"],
+            "content_sha256": "a" * 64,
+            "relevance_route": "content_hydration",
+            "relevance_reasons": ["fixture"],
+            "admission_status": "content_ready",
+            "model_evidence": {
+                "review_status": "pending_semantic_review",
+                "reason": "Persisted for candidate audit.",
+                "evidence_refs": [disposition["url"]],
+            },
+        } for disposition in audit["runs"][0]["article_dispositions"]],
+    }
+    (root / "source-row-admissions.json").write_text(
+        json.dumps(row_admissions, ensure_ascii=False), encoding="utf-8"
+    )
     return path
 
 
@@ -290,6 +335,8 @@ def prepare_inputs(root: Path):
                 path = manifest_path
             elif name == "brief":
                 path = brief_path
+            elif name == "source_row_admissions":
+                path = root / "source-row-admissions.json"
             else:
                 path = root / f"{stage}-{name}.json"
                 path.write_text("{}", encoding="utf-8")

@@ -9,6 +9,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import validate_source_scan_evidence
+import materialize_source_row_admissions
 
 GRADE_ORDER = {
     "E": 0, "D": 1, "C-": 2, "C": 3, "C+": 4,
@@ -702,7 +703,84 @@ def fourteen_day_completeness_errors(data):
     return []
 
 
-def validate(data, source_pool=None, require_fourteen_day_complete=False):
+def validate_source_row_conservation(run, ledger):
+    errors = [
+        "source-row admissions: " + item
+        for item in materialize_source_row_admissions.validate(ledger)
+    ]
+    for field in ("run_id", "window_start", "window_end"):
+        if ledger.get(field) != run.get(field):
+            errors.append(f"source-row admissions {field} must match the audit run")
+    rows = ledger.get("rows") if isinstance(ledger.get("rows"), list) else []
+    dispositions = run.get("article_dispositions")
+    if not isinstance(dispositions, list):
+        return errors + ["article dispositions are required for source-row conservation"]
+    admission_by_id = {
+        item.get("row_id"): item for item in rows if isinstance(item, dict)
+    }
+    disposition_ids = [
+        item.get("row_id") for item in dispositions if isinstance(item, dict)
+    ]
+    if len(disposition_ids) != len(dispositions) or any(not item for item in disposition_ids):
+        errors.append("every article disposition must preserve a source-row row_id")
+        return errors
+    if len(set(disposition_ids)) != len(disposition_ids):
+        errors.append("article disposition row_id values must be unique")
+    if Counter(disposition_ids) != Counter(admission_by_id.keys()):
+        errors.append("article dispositions must conserve the source-row admission universe exactly")
+    terminal_statuses = {
+        "event_evidence", "non_news", "unresolved", "unresolved_exhausted"
+    }
+    identity_fields = (
+        "candidate_id", "provisional_group_id", "source_id", "canonical_url",
+        "article_body_published_at", "article_body_timestamp_evidence",
+    )
+    for index, disposition in enumerate(dispositions, 1):
+        if not isinstance(disposition, dict):
+            continue
+        admission = admission_by_id.get(disposition.get("row_id"))
+        if not isinstance(admission, dict):
+            continue
+        if any(disposition.get(field) != admission.get(field) for field in identity_fields):
+            errors.append(
+                f"article_dispositions[{index}] source-row admission identity mismatch"
+            )
+        model = disposition.get("model_evidence")
+        outcome = disposition.get("disposition")
+        if not isinstance(model, dict):
+            errors.append(f"article_dispositions[{index}] missing terminal model_evidence")
+            continue
+        if model.get("review_status") != outcome or outcome not in terminal_statuses:
+            errors.append(
+                f"article_dispositions[{index}] model review_status must equal disposition"
+            )
+        if not str(model.get("reason", "")).strip():
+            errors.append(f"article_dispositions[{index}] model evidence reason is required")
+        refs = model.get("evidence_refs")
+        if not isinstance(refs, list) or not refs or not all(str(item).strip() for item in refs):
+            errors.append(f"article_dispositions[{index}] model evidence_refs are required")
+    coverage_rows = Counter(
+        (item.get("source_id"), url)
+        for item in run.get("source_coverage", []) if isinstance(item, dict)
+        for url in item.get("selected_item_urls", [])
+    )
+    ledger_rows = Counter(
+        (item.get("source_id"), item.get("url"))
+        for item in rows if isinstance(item, dict)
+    )
+    if ledger_rows != coverage_rows:
+        errors.append("source-row admissions must match all discovery coverage rows exactly")
+    if run.get("raw_item_count") != len(rows):
+        errors.append("source-row admission count must equal raw_item_count")
+    return errors
+
+
+def validate(
+    data,
+    source_pool=None,
+    source_row_admissions=None,
+    require_fourteen_day_complete=False,
+):
     errors = []
     if data.get("schema_version") != "1.2.0":
         errors.append("schema_version 必須是 1.2.0")
@@ -710,6 +788,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
         errors.append("retention_days 必須固定為 14")
 
     source_scan_evidence_required = False
+    source_row_admission_required = False
     source_by_id = {}
     discovery_source_ids = []
     primary_aggregator_ids = []
@@ -743,6 +822,7 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
         if web_fallback_enabled:
             all_configured_source_ids.add(WEB_FALLBACK_SOURCE_ID)
         source_scan_evidence_required = source_pool.get("source_scan_evidence_required") is True
+        source_row_admission_required = source_pool.get("source_row_admission_required") is True
         source_by_id = {
             item["source_id"]: item
             for item in source_pool.get("discovery_sources", [])
@@ -776,9 +856,13 @@ def validate(data, source_pool=None, require_fourteen_day_complete=False):
             errors.append("news-source-pool.json 必須鎖定六項綜合評級且不得設單項硬上限")
 
     runs = data.get("runs", [])
+    if source_pool and source_row_admission_required and source_row_admissions is None and runs:
+        errors.append("latest run requires durable source-row admissions")
     for run_index, run in enumerate(runs, 1):
         run_label = f"runs[{run_index}]"
         is_latest_run = run_index == len(runs)
+        if is_latest_run and source_row_admissions is not None:
+            errors.extend(validate_source_row_conservation(run, source_row_admissions))
         coverage = run.get("source_coverage", [])
         if not isinstance(coverage, list):
             errors.append(run_label + ".source_coverage 必須是陣列")
@@ -1471,17 +1555,19 @@ def main():
     append_parser.add_argument("--run", required=True)
     append_parser.add_argument("--output", required=True)
     append_parser.add_argument("--source-pool", required=True)
+    append_parser.add_argument("--source-row-admissions", required=True)
     append_parser.add_argument("--retention-days", type=int, default=14)
     validate_parser = subparsers.add_parser("validate")
     validate_parser.add_argument("--input", required=True)
     validate_parser.add_argument("--source-pool", required=True)
+    validate_parser.add_argument("--source-row-admissions", required=True)
     validate_parser.add_argument("--require-fourteen-day-complete", action="store_true")
     args = parser.parse_args()
     try:
         source_pool = load(args.source_pool)
         if args.cmd == "validate":
             errors = validate(
-                load(args.input), source_pool,
+                load(args.input), source_pool, load(args.source_row_admissions),
                 require_fourteen_day_complete=args.require_fourteen_day_complete,
             )
             for error in errors:
@@ -1505,7 +1591,7 @@ def main():
             "updated_at": parse_datetime(current_run["generated_at"]).isoformat(),
             "runs": runs,
         }
-        errors = validate(output, source_pool)
+        errors = validate(output, source_pool, load(args.source_row_admissions))
         if errors:
             raise ValueError("；".join(errors))
         output_path = Path(args.output)
