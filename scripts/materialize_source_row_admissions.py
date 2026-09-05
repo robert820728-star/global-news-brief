@@ -10,7 +10,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-SCHEMA_VERSION = "1.1.0"
+SCHEMA_VERSION = "1.0.0"
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 ROW_ID = re.compile(r"^row-[0-9a-f]{24}$")
 STATUSES = {"content_ready", "outside_window", "unresolved_exhausted"}
