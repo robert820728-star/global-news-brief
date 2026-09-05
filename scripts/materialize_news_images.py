@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import argparse
+import base64
+import binascii
 import hashlib
 import io
 import json
@@ -223,12 +225,14 @@ def materialize(inputs: list[dict[str, Any]], output_dir: Path) -> list[dict[str
         )
         screenshot_path = str(item.get("screenshot_path", "")).strip()
         source_bytes_path = str(item.get("source_bytes_path", "")).strip()
+        source_bytes_base64 = str(item.get("source_bytes_base64", "")).strip()
         alt = str(item.get("alt", "")).strip()
         credit = str(item.get("credit", "")).strip()
         acquisition_method = "direct_url"
         try:
-            if screenshot_path and source_bytes_path:
-                raise ValueError("screenshot_path and source_bytes_path are mutually exclusive")
+            supplied = sum(bool(value) for value in (screenshot_path, source_bytes_path, source_bytes_base64))
+            if supplied > 1:
+                raise ValueError("screenshot_path, source_bytes_path and source_bytes_base64 are mutually exclusive")
             if screenshot_path:
                 screenshot = Path(screenshot_path)
                 if not screenshot.is_absolute() or not screenshot.is_file():
@@ -241,6 +245,16 @@ def materialize(inputs: list[dict[str, Any]], output_dir: Path) -> list[dict[str
                     raise ValueError("source_bytes_path must be an existing absolute local file")
                 raw = source_bytes.read_bytes()
                 acquisition_method = "source_bytes_path"
+            elif source_bytes_base64:
+                if len(source_bytes_base64) > MAX_DOWNLOAD_BYTES * 2:
+                    raise ValueError("base64 source image exceeds the maximum encoded size")
+                try:
+                    raw = base64.b64decode(source_bytes_base64, validate=True)
+                except (binascii.Error, ValueError) as exc:
+                    raise ValueError(f"invalid base64 source image: {exc}") from exc
+                if len(raw) > MAX_DOWNLOAD_BYTES:
+                    raise ValueError("image exceeds the maximum download size")
+                acquisition_method = "connector_base64"
             else:
                 raw = download_image(source_url)
         except (OSError, ValueError) as exc:

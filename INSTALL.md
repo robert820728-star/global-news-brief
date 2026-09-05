@@ -18,7 +18,12 @@
 
 ```bash
 python scripts/build_scheduled_task_install_payload.py --template scheduled-task-prompt-template.md --output-dir /tmp/news-task-install --region "台灣、中國、世界" --monitor-type "預設" --main-sha <fresh-40-character-main-sha> --test-extension scheduled-task-test-extension.example.json
+python scripts/verify_scheduled_task_install.py --template scheduled-task-prompt-template.md --saved-prompt /tmp/news-task-install/saved-prompt.txt --receipt /tmp/news-task-install/install-receipt.json --expected-main-sha <fresh-40-character-main-sha>
 ```
+
+若控制面提供 exact task ID readback，另把完整 readback 存成 UTF-8 純文字並加上 `--readback <path>` 再驗一次；verifier 非零退出時禁止啟用 task。這個 verifier 使縮短 launcher、截斷、extension 污染、錯 main 或錯 readback 在 occurrence 前即被拒絕。
+
+`REMOTE_ACQUISITION_BRIDGE_GATE`：Scheduled Task 已證明 GitHub issue #3 寫入、Actions 與 `run-logs` 讀取能力，但缺少 CNA POST／中新社日索引或來源圖片 bytes transport 時，可在 issue #3 建立唯一 `gnb-remote-acquisition:v1` JSON request。request 必須綁定同一 `run_id`、fresh `main_sha` 與精確 24 小時 window；GitHub Actions 只以 default-branch 同 SHA 執行 canonical source/media scripts，結果只寫入 `run-logs/logs/runs/<run_id>/remote-acquisition/`。來源 scan 只接受 `cna`／`chinanews`，結果回到同一 source-scan 繼續文章本體 hydration；GDELT 維持既有 truthful degraded fallback，避免把完整 24h archive 大量資料塞入 connector。圖片以 GitHub connector `encoding=base64` 讀回，重新做 decode/hash 後才交給已實測成功的 local attachment handoff。Actions 成功、artifact URL、base64 字串或本機檔案本身都不得直接算圖片交付；最終仍須非文字 media block 與可見像素。任何橋接能力缺失都保持原 stage fail-closed。
 
 在全新對話貼上：
 

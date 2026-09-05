@@ -1,5 +1,6 @@
 import hashlib
 import io
+import base64
 import tempfile
 import unittest
 from pathlib import Path
@@ -161,6 +162,27 @@ class MaterializeNewsImagesTests(unittest.TestCase):
             self.assertEqual(len(raw), records[0]["source_byte_size"])
             self.assertEqual(1024, records[0]["source_width"])
             self.assertEqual(478, records[0]["source_height"])
+
+    def test_connector_base64_source_bytes_are_decoded_and_verified(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            raw = jpeg_bytes(size=(1024, 478))
+            records = materialize(
+                [{
+                    "event_id": "TWN-BRIDGE",
+                    "source_page_url": "https://www.cna.com.tw/news/ahel/202609050001.aspx",
+                    "source_image_url": "https://imgcdn.cna.com.tw/example.jpg",
+                    "source_bytes_base64": base64.b64encode(raw).decode("ascii"),
+                    "expected_source_byte_size": len(raw),
+                    "expected_source_sha256": hashlib.sha256(raw).hexdigest(),
+                    "expected_source_width": 1024,
+                    "expected_source_height": 478,
+                }],
+                root / "assets",
+            )
+            self.assertEqual("ready", records[0]["status"])
+            self.assertEqual("connector_base64", records[0]["acquisition_method"])
+            self.assertTrue(Path(records[0]["local_path"]).is_file())
 
     def test_expected_source_integrity_mismatch_creates_no_asset(self):
         with tempfile.TemporaryDirectory() as tmp:

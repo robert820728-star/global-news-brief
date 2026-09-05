@@ -10,6 +10,23 @@ def read(path: str) -> str:
 
 
 class FaultPenetrationContractTests(unittest.TestCase):
+    def test_remote_acquisition_bridge_is_bound_and_never_bypasses_visible_media(self):
+        root = Path(__file__).resolve().parents[1]
+        workflow = (root / ".github/workflows/remote-acquisition-bridge.yml").read_text(encoding="utf-8")
+        mobile = (root / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
+        template = (root / "scheduled-task-prompt-template.md").read_text(encoding="utf-8")
+        for token in (
+            "issue_comment", "issue.number == 3", "COLLABORATOR", "run-logs",
+            "github.sha", "PYTHONPATH", "--expected-main-sha",
+        ):
+            self.assertIn(token, workflow)
+        for document in (mobile, template):
+            self.assertIn("REMOTE_ACQUISITION_BRIDGE_GATE", document)
+            self.assertIn("encoding=base64", document)
+            self.assertIn("同一 `run_id`", document)
+            self.assertIn("不得直接算圖片交付", document)
+            self.assertRegex(document, r"GDELT[^\n]*(?:不得|維持既有 truthful degraded fallback)")
+
     def test_bootstrap_transport_failure_routes_same_occurrence_to_mobile(self):
         daily = read("daily-schedule-prompt.md")
         install = read("INSTALL.md")
