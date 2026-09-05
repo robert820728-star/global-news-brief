@@ -11,11 +11,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-SCHEMA_VERSION = "1.0.0"
+SCHEMA_VERSION = "1.1.0"
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 ROW_ID = re.compile(r"^row-[0-9a-f]{24}$")
-ADMISSION_STATUSES = {"content_ready", "unresolved_exhausted"}
-REVIEW_STATUSES = {"pending_semantic_review", "unresolved_exhausted"}
+ADMISSION_STATUSES = {"content_ready", "outside_window", "unresolved_exhausted"}
+REVIEW_STATUSES = {"pending_semantic_review", "outside_window", "unresolved_exhausted"}
 
 
 def _unique_rows(value: Any, label: str) -> tuple[list[dict], dict[str, dict]]:
@@ -25,6 +25,11 @@ def _unique_rows(value: Any, label: str) -> tuple[list[dict], dict[str, dict]]:
     if any(not item for item in ids) or len(set(ids)) != len(ids):
         raise ValueError(f"{label} row_id values must be non-empty and unique")
     return value, dict(zip(ids, value))
+
+
+def _optional_string(value: Any) -> str | None:
+    text = str(value).strip() if value is not None else ""
+    return text or None
 
 
 def build(
@@ -68,27 +73,49 @@ def build(
             raise ValueError(f"relevance decision source mismatch for {row_id}")
         if decision.get("canonical_url") != candidate.get("canonical_url"):
             raise ValueError(f"relevance decision canonical URL mismatch for {row_id}")
-        for field in (
-            "article_body_published_at", "article_body_timestamp_evidence",
-            "article_body_evidence_url", "content_sha256", "admission_status",
-        ):
-            if not str(evidence.get(field, "")).strip():
-                raise ValueError(f"article evidence {row_id} missing {field}")
-        if not HEX64.fullmatch(str(evidence["content_sha256"]).lower()):
-            raise ValueError(f"article evidence {row_id} content_sha256 must be 64 lowercase hex")
-        if evidence["admission_status"] not in ADMISSION_STATUSES:
+
+        status = evidence.get("admission_status")
+        if status not in ADMISSION_STATUSES:
             raise ValueError(f"article evidence {row_id} admission_status is invalid")
+
+        body_time = _optional_string(evidence.get("article_body_published_at"))
+        timestamp_evidence = _optional_string(evidence.get("article_body_timestamp_evidence"))
+        evidence_url = _optional_string(evidence.get("article_body_evidence_url"))
+        content_sha = _optional_string(evidence.get("content_sha256"))
+
+        if status in {"content_ready", "outside_window"}:
+            if not body_time:
+                raise ValueError(f"article evidence {row_id} missing article_body_published_at")
+            if not timestamp_evidence:
+                raise ValueError(f"article evidence {row_id} missing article_body_timestamp_evidence")
+            if not evidence_url:
+                raise ValueError(f"article evidence {row_id} missing article_body_evidence_url")
+            if not content_sha or not HEX64.fullmatch(content_sha.lower()):
+                raise ValueError(f"article evidence {row_id} content_sha256 must be 64 lowercase hex")
+        else:
+            if content_sha and not HEX64.fullmatch(content_sha.lower()):
+                raise ValueError(f"article evidence {row_id} content_sha256 must be 64 lowercase hex when present")
+            if not evidence_url:
+                evidence_url = candidate["canonical_url"]
+
         model = evidence.get("model_evidence")
         if not isinstance(model, dict):
             raise ValueError(f"article evidence {row_id} missing model_evidence")
         if model.get("review_status") not in REVIEW_STATUSES:
             raise ValueError(f"article evidence {row_id} model review_status is invalid")
+        if status == "content_ready" and model.get("review_status") != "pending_semantic_review":
+            raise ValueError(f"article evidence {row_id} ready row must await semantic review")
+        if status == "outside_window" and model.get("review_status") != "outside_window":
+            raise ValueError(f"article evidence {row_id} outside-window row must preserve outside-window review")
+        if status == "unresolved_exhausted" and model.get("review_status") != "unresolved_exhausted":
+            raise ValueError(f"article evidence {row_id} exhausted row must preserve exhausted review")
         if not str(model.get("reason", "")).strip():
             raise ValueError(f"article evidence {row_id} model reason is required")
         refs = model.get("evidence_refs")
         if not isinstance(refs, list) or not refs or not all(str(item).strip() for item in refs):
             raise ValueError(f"article evidence {row_id} model evidence_refs are required")
-        rows.append({
+
+        row = {
             "row_id": row_id,
             "candidate_id": candidate["candidate_id"],
             "provisional_group_id": candidate["provisional_group_id"],
@@ -98,16 +125,21 @@ def build(
             "canonical_url": candidate["canonical_url"],
             "listing_published_at": candidate["published_at"],
             "listing_timestamp_evidence": candidate["listing_timestamp_evidence"],
-            "article_body_published_at": evidence["article_body_published_at"],
-            "article_body_timestamp_evidence": evidence["article_body_timestamp_evidence"],
-            "article_body_evidence_url": evidence["article_body_evidence_url"],
-            "content_sha256": str(evidence["content_sha256"]).lower(),
+            "article_body_published_at": body_time,
+            "article_body_timestamp_evidence": timestamp_evidence,
+            "article_body_evidence_url": evidence_url,
+            "content_sha256": content_sha.lower() if content_sha else None,
             "relevance_route": decision["route"],
             "relevance_reasons": decision["reasons"],
-            "admission_status": evidence["admission_status"],
+            "admission_status": status,
             "model_evidence": model,
-        })
+        }
+        attempts = evidence.get("hydration_attempts")
+        if isinstance(attempts, list) and attempts:
+            row["hydration_attempts"] = attempts
+        rows.append(row)
 
+    status_counts = Counter(row["admission_status"] for row in rows)
     result = {
         "schema_version": SCHEMA_VERSION,
         "run_id": run_id,
@@ -115,6 +147,9 @@ def build(
         "window_end": source_candidates.get("window_end"),
         "source_row_count": len(candidates),
         "admitted_row_count": len(rows),
+        "content_ready_row_count": status_counts["content_ready"],
+        "outside_window_row_count": status_counts["outside_window"],
+        "unresolved_exhausted_row_count": status_counts["unresolved_exhausted"],
         "rows": rows,
     }
     errors = validate(result)
@@ -135,6 +170,14 @@ def validate(data: dict) -> list[str]:
         errors.append("every admission row must be an object with row_id")
     elif len(set(ids)) != len(ids):
         errors.append("admission row_id values must be unique")
+
+    try:
+        start = datetime.fromisoformat(str(data.get("window_start", "")).replace("Z", "+00:00"))
+        end = datetime.fromisoformat(str(data.get("window_end", "")).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        start = end = None
+        errors.append("run window timestamps are invalid")
+
     for index, item in enumerate(rows, 1):
         label = f"rows[{index}]"
         if not isinstance(item, dict):
@@ -144,13 +187,43 @@ def validate(data: dict) -> list[str]:
         for field in (
             "candidate_id", "provisional_group_id", "source_id", "section", "url",
             "canonical_url", "listing_published_at", "listing_timestamp_evidence",
-            "article_body_published_at", "article_body_timestamp_evidence",
-            "article_body_evidence_url", "content_sha256",
+            "article_body_evidence_url",
         ):
             if not str(item.get(field, "")).strip():
                 errors.append(f"{label}.{field} is required")
-        if not HEX64.fullmatch(str(item.get("content_sha256", ""))):
-            errors.append(f"{label}.content_sha256 must be 64 lowercase hex characters")
+        status = item.get("admission_status")
+        if status not in ADMISSION_STATUSES:
+            errors.append(f"{label}.admission_status is invalid")
+
+        body_time = item.get("article_body_published_at")
+        timestamp_evidence = item.get("article_body_timestamp_evidence")
+        content_sha = item.get("content_sha256")
+        if status in {"content_ready", "outside_window"}:
+            if not str(body_time or "").strip():
+                errors.append(f"{label}.article_body_published_at is required")
+            if not str(timestamp_evidence or "").strip():
+                errors.append(f"{label}.article_body_timestamp_evidence is required")
+            if not HEX64.fullmatch(str(content_sha or "")):
+                errors.append(f"{label}.content_sha256 must be 64 lowercase hex characters")
+            try:
+                parsed = datetime.fromisoformat(str(body_time).replace("Z", "+00:00"))
+                if start is not None and end is not None:
+                    inside = start <= parsed <= end
+                    if status == "content_ready" and not inside:
+                        errors.append(f"{label}.content_ready timestamp must be inside the run window")
+                    if status == "outside_window" and inside:
+                        errors.append(f"{label}.outside_window timestamp must be outside the run window")
+            except (TypeError, ValueError):
+                errors.append(f"{label}.article_body_published_at is invalid")
+        else:
+            if content_sha is not None and not HEX64.fullmatch(str(content_sha)):
+                errors.append(f"{label}.content_sha256 must be null or 64 lowercase hex characters")
+            if body_time is not None:
+                try:
+                    datetime.fromisoformat(str(body_time).replace("Z", "+00:00"))
+                except (TypeError, ValueError):
+                    errors.append(f"{label}.article_body_published_at must be null or a valid timestamp")
+
         if item.get("relevance_route") not in {
             "content_hydration", "lightweight_semantic_review"
         }:
@@ -158,9 +231,6 @@ def validate(data: dict) -> list[str]:
         reasons = item.get("relevance_reasons")
         if not isinstance(reasons, list) or not reasons or not all(str(value).strip() for value in reasons):
             errors.append(f"{label}.relevance_reasons are required")
-        status = item.get("admission_status")
-        if status not in ADMISSION_STATUSES:
-            errors.append(f"{label}.admission_status is invalid")
         model = item.get("model_evidence")
         if not isinstance(model, dict):
             errors.append(f"{label}.model_evidence is required")
@@ -168,30 +238,40 @@ def validate(data: dict) -> list[str]:
             review = model.get("review_status")
             if review not in REVIEW_STATUSES:
                 errors.append(f"{label}.model_evidence.review_status is invalid")
-            if status == "unresolved_exhausted" and review != "unresolved_exhausted":
-                errors.append(f"{label} exhausted admission must preserve exhausted model evidence")
+            expected_review = {
+                "content_ready": "pending_semantic_review",
+                "outside_window": "outside_window",
+                "unresolved_exhausted": "unresolved_exhausted",
+            }.get(status)
+            if expected_review and review != expected_review:
+                errors.append(f"{label}.model_evidence.review_status must be {expected_review}")
             if not str(model.get("reason", "")).strip():
                 errors.append(f"{label}.model_evidence.reason is required")
             refs = model.get("evidence_refs")
             if not isinstance(refs, list) or not refs or not all(str(value).strip() for value in refs):
                 errors.append(f"{label}.model_evidence.evidence_refs are required")
-        try:
-            start = datetime.fromisoformat(str(data.get("window_start", "")).replace("Z", "+00:00"))
-            end = datetime.fromisoformat(str(data.get("window_end", "")).replace("Z", "+00:00"))
-            body_time = datetime.fromisoformat(
-                str(item.get("article_body_published_at", "")).replace("Z", "+00:00")
-            )
-            if not start <= body_time <= end:
-                errors.append(f"{label}.article_body_published_at must be inside the run window")
-        except (TypeError, ValueError):
-            errors.append(f"{label} contains an invalid run or article-body timestamp")
+        attempts = item.get("hydration_attempts")
+        if attempts is not None and (
+            not isinstance(attempts, list)
+            or not all(isinstance(value, dict) for value in attempts)
+        ):
+            errors.append(f"{label}.hydration_attempts must be an array of objects")
+
     for field in ("source_row_count", "admitted_row_count"):
         if data.get(field) != len(rows):
             errors.append(f"{field} must equal the durable row count {len(rows)}")
-    status_counts = Counter(
+    counts = Counter(
         item.get("admission_status") for item in rows if isinstance(item, dict)
     )
-    if sum(status_counts.values()) != len(rows):
+    expected_counts = {
+        "content_ready_row_count": counts["content_ready"],
+        "outside_window_row_count": counts["outside_window"],
+        "unresolved_exhausted_row_count": counts["unresolved_exhausted"],
+    }
+    for field, expected in expected_counts.items():
+        if data.get(field) != expected:
+            errors.append(f"{field} must equal {expected}")
+    if sum(counts.values()) != len(rows):
         errors.append("admission status count must conserve all rows")
     return errors
 
