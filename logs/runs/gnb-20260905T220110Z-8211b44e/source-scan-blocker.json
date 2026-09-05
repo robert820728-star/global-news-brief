@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "run_id": "gnb-20260905T220110Z-8211b44e",
+  "main_sha": "252afa9e276e490d1546fe13c0739f8095396a41",
+  "window": {
+    "start": "2026-09-04T22:01:10+00:00",
+    "end": "2026-09-05T22:01:10+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "stage": "source-scan",
+  "status": "blocked",
+  "regional_listing_coverage": {
+    "cna": {"coverage_complete": true, "within_window_rows": 179},
+    "chinanews": {"coverage_complete": true, "within_window_rows": 378},
+    "total_rows": 557,
+    "remote_receipt": "logs/runs/gnb-20260905T220110Z-8211b44e/remote-acquisition/receipt.json",
+    "remote_coverage": "logs/runs/gnb-20260905T220110Z-8211b44e/remote-acquisition/source-coverage.json"
+  },
+  "blocker": {
+    "code": "mobile_article_hydration_bridge_unavailable",
+    "message": "Regional listing acquisition completed, but the Scheduled Task host has no canonical <=20-row article-body hydration transport with append-only batch receipts for the exact remote row universe. The existing remote-acquisition bridge supports only source_scan and media_fetch. Without article-body timestamps, body evidence URLs, content SHA-256 values, relevance decisions, and model evidence for all 557 rows, source-row-admissions.json cannot be materialized without fabrication."
+  },
+  "required_recovery": "Add a run/SHA/window-bound article hydration bridge (or extend source_scan) that produces row-conserved article evidence and source-row-admissions.json, then resume the same source-scan contract in a future occurrence."
+}
