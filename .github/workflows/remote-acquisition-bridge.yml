@@ -24,21 +24,17 @@ jobs:
         with:
           ref: ${{ github.sha }}
           path: runtime
-
       - name: Checkout durable run logs
         uses: actions/checkout@v4
         with:
           ref: run-logs
           path: runlogs
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
       - name: Install media dependency
         run: python -m pip install --disable-pip-version-check pillow
-
       - name: Validate issue request
         env:
           BRIDGE_COMMENT: ${{ github.event.comment.body }}
@@ -49,7 +45,6 @@ jobs:
           --comment-env BRIDGE_COMMENT
           --expected-main-sha "$EXPECTED_MAIN_SHA"
           --output request.json
-
       - name: Prepare append-only hydration receipt
         env:
           EXPECTED_MAIN_SHA: ${{ github.sha }}
@@ -59,19 +54,17 @@ jobs:
           --request request.json
           --expected-main-sha "$EXPECTED_MAIN_SHA"
           --run-logs-root runlogs
-
       - name: Persist running hydration receipt
         working-directory: runlogs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if ! git diff --quiet -- logs/runs; then
+          if [ -n "$(git status --porcelain -- logs/runs)" ]; then
             git add logs/runs
             git commit -m "Start remote hydration batch for issue comment ${{ github.event.comment.id }}"
             git pull --rebase origin run-logs
             git push origin HEAD:run-logs
           fi
-
       - name: Execute bounded acquisition
         env:
           EXPECTED_MAIN_SHA: ${{ github.sha }}
@@ -82,7 +75,6 @@ jobs:
           --expected-main-sha "$EXPECTED_MAIN_SHA"
           --runtime-root runtime
           --run-logs-root runlogs
-
       - name: Commit run-scoped result
         working-directory: runlogs
         run: |
