@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate and execute a run-bound remote acquisition request."""
+"""Validate and execute run-bound remote source, article, and media acquisition."""
 
 from __future__ import annotations
 
@@ -35,9 +35,10 @@ MEDIA_KEYS = {
 }
 ARTICLE_KEYS = {
     "row_id", "candidate_id", "source_id", "canonical_url", "title",
-    "listing_published_at",
+    "listing_published_at", "fetch_url", "exhaustion_confirmed", "exhaustion_evidence",
 }
 ARTICLE_SOURCE_IDS = {"cna", "chinanews"}
+TERMINAL_ADMISSION_STATUSES = {"content_ready", "outside_window", "unresolved_exhausted"}
 
 
 def extract_request_from_comment(body: str) -> dict[str, Any]:
@@ -88,6 +89,17 @@ def _require_public_https_url(value: Any, field: str) -> None:
         return
     if not address.is_global:
         raise ValueError(f"{field} must be a public HTTPS URL")
+
+
+def _require_source_host(value: Any, source_id: str, field: str) -> None:
+    _require_public_https_url(value, field)
+    host = str(urlsplit(str(value)).hostname or "").rstrip(".").lower()
+    allowed_root = {
+        "cna": "cna.com.tw",
+        "chinanews": "chinanews.com.cn",
+    }[source_id]
+    if host != allowed_root and not host.endswith("." + allowed_root):
+        raise ValueError(f"{field} must remain on the configured {source_id} source site")
 
 
 def validate_request(value: dict[str, Any], *, expected_main_sha: str) -> dict[str, Any]:
@@ -141,7 +153,7 @@ def validate_request(value: dict[str, Any], *, expected_main_sha: str) -> dict[s
     if operation == "article_hydration":
         if source_ids is not None or inputs is not None:
             raise ValueError("article_hydration must not contain source_ids/media_inputs")
-        if not isinstance(batch_sequence, int) or batch_sequence < 1:
+        if not isinstance(batch_sequence, int) or isinstance(batch_sequence, bool) or batch_sequence < 1:
             raise ValueError("article_hydration batch_sequence must be a positive integer")
         if not isinstance(article_inputs, list) or not 1 <= len(article_inputs) <= 20:
             raise ValueError("article_hydration requires 1 to 20 article_inputs")
@@ -155,10 +167,12 @@ def validate_request(value: dict[str, Any], *, expected_main_sha: str) -> dict[s
             row_ids.append(row_id)
             if not str(item.get("candidate_id", "")).strip():
                 raise ValueError(f"article_inputs[{index}].candidate_id is required")
-            if item.get("source_id") not in ARTICLE_SOURCE_IDS:
+            source_id = str(item.get("source_id", ""))
+            if source_id not in ARTICLE_SOURCE_IDS:
                 raise ValueError(f"article_inputs[{index}].source_id must be cna or chinanews")
-            _require_public_https_url(
+            _require_source_host(
                 item.get("canonical_url"),
+                source_id,
                 f"article_inputs[{index}].canonical_url",
             )
             if not str(item.get("title", "")).strip():
@@ -169,6 +183,30 @@ def validate_request(value: dict[str, Any], *, expected_main_sha: str) -> dict[s
             )
             if not start <= listing_time <= end:
                 raise ValueError(f"article_inputs[{index}].listing_published_at must be inside window")
+
+            fetch_url = item.get("fetch_url")
+            exhausted = item.get("exhaustion_confirmed", False)
+            exhaustion_evidence = item.get("exhaustion_evidence")
+            if not isinstance(exhausted, bool):
+                raise ValueError(f"article_inputs[{index}].exhaustion_confirmed must be boolean")
+            if exhausted:
+                if fetch_url is not None:
+                    raise ValueError(f"article_inputs[{index}] exhaustion confirmation must not contain fetch_url")
+                if (
+                    not isinstance(exhaustion_evidence, list)
+                    or not exhaustion_evidence
+                    or not all(str(entry).strip() for entry in exhaustion_evidence)
+                ):
+                    raise ValueError(f"article_inputs[{index}].exhaustion_evidence is required")
+            else:
+                if exhaustion_evidence is not None:
+                    raise ValueError(f"article_inputs[{index}] exhaustion_evidence requires exhaustion_confirmed=true")
+                if fetch_url is not None:
+                    _require_source_host(
+                        fetch_url,
+                        source_id,
+                        f"article_inputs[{index}].fetch_url",
+                    )
         if len(row_ids) != len(set(row_ids)):
             raise ValueError("article_hydration row_id values must be unique")
     return value
@@ -237,38 +275,40 @@ def _validate_article_batch_against_canonical(output: Path, request: dict[str, A
     return validated
 
 
-def _existing_hydrated_row_ids(evidence_dir: Path) -> set[str]:
-    row_ids: set[str] = set()
+def _latest_hydration_evidence(evidence_dir: Path) -> tuple[dict[str, dict], dict[str, list[dict]]]:
+    latest: dict[str, dict] = {}
+    history: dict[str, list[dict]] = {}
     for path in sorted(evidence_dir.glob("batch-*.jsonl")):
         for row in _load_jsonl(path):
             row_id = str(row.get("row_id", ""))
-            if row_id in row_ids:
-                raise ValueError(f"duplicate hydrated row across batches: {row_id}")
-            row_ids.add(row_id)
-    return row_ids
+            if not ROW_ID_RE.fullmatch(row_id):
+                raise ValueError(f"invalid hydrated row_id in {path.name}: {row_id}")
+            prior = latest.get(row_id)
+            if prior is not None and prior.get("admission_status") != "unresolved":
+                raise ValueError(f"terminal hydrated row was repeated in a later batch: {row_id}")
+            history.setdefault(row_id, []).append(row)
+            latest[row_id] = row
+    return latest, history
 
 
 def _try_materialize_regional_ledger(output: Path, run_id: str) -> tuple[Path | None, int]:
     source_candidates = _load_json(output / "source-candidates.json")
     relevance_gate = _load_json(output / "news-relevance-gate.json")
     expected_ids = {str(row["row_id"]) for row in source_candidates.get("items", [])}
-    evidence_dir = output / "content-evidence"
-    evidence_rows: list[dict] = []
-    seen: set[str] = set()
-    for path in sorted(evidence_dir.glob("batch-*.jsonl")):
-        for row in _load_jsonl(path):
-            row_id = str(row.get("row_id", ""))
-            if row_id in seen:
-                raise ValueError(f"duplicate hydrated row across batches: {row_id}")
-            seen.add(row_id)
-            evidence_rows.append(row)
-    unexpected = seen - expected_ids
+    latest, _ = _latest_hydration_evidence(output / "content-evidence")
+    unexpected = set(latest) - expected_ids
     if unexpected:
         raise ValueError(f"article hydration contains rows outside regional source universe: {sorted(unexpected)[:3]}")
-    remaining = len(expected_ids - seen)
-    if remaining:
-        return None, remaining
+    terminal = {
+        row_id: row
+        for row_id, row in latest.items()
+        if row.get("admission_status") in TERMINAL_ADMISSION_STATUSES
+    }
+    remaining_ids = expected_ids - set(terminal)
+    if remaining_ids:
+        return None, len(remaining_ids)
 
+    evidence_rows = [terminal[row_id] for row_id in sorted(expected_ids)]
     article_evidence = {
         "schema_version": "1.0.0",
         "row_count": len(evidence_rows),
@@ -286,15 +326,66 @@ def _try_materialize_regional_ledger(output: Path, run_id: str) -> tuple[Path | 
     return destination, 0
 
 
+def _finalize_exhausted(row: dict, history: list[dict]) -> dict:
+    if not history or history[-1].get("admission_status") != "unresolved":
+        raise RuntimeError(
+            f"exhaustion confirmation requires prior unresolved hydration evidence: {row['row_id']}"
+        )
+    prior_attempts: list[dict] = []
+    refs: list[str] = []
+    content_sha: str | None = None
+    evidence_url = str(row["canonical_url"])
+    for item in history:
+        attempts = item.get("hydration_attempts")
+        if isinstance(attempts, list):
+            prior_attempts.extend(attempt for attempt in attempts if isinstance(attempt, dict))
+        model = item.get("model_evidence")
+        if isinstance(model, dict) and isinstance(model.get("evidence_refs"), list):
+            refs.extend(str(ref) for ref in model["evidence_refs"] if str(ref).strip())
+        if item.get("content_sha256"):
+            content_sha = str(item["content_sha256"])
+        if item.get("article_body_evidence_url"):
+            evidence_url = str(item["article_body_evidence_url"])
+    exhaustion_evidence = [str(entry).strip() for entry in row["exhaustion_evidence"]]
+    prior_attempts.append({
+        "status": "exhaustion_confirmed",
+        "route": "host_final_fallback",
+        "evidence": exhaustion_evidence,
+    })
+    refs.extend(exhaustion_evidence)
+    refs = list(dict.fromkeys(refs)) or [str(row["canonical_url"])]
+    return {
+        "row_id": row["row_id"],
+        "article_body_published_at": None,
+        "article_body_timestamp_evidence": None,
+        "article_body_evidence_url": evidence_url,
+        "content_sha256": content_sha,
+        "admission_status": "unresolved_exhausted",
+        "model_evidence": {
+            "review_status": "unresolved_exhausted",
+            "reason": "Canonical article hydration remained unresolved and the host confirmed the configured same-source/final fallback chain was exhausted.",
+            "evidence_refs": refs,
+        },
+        "hydration_attempts": prior_attempts,
+    }
+
+
 def execute_request(request: dict[str, Any], *, runtime_root: Path, run_logs_root: Path) -> Path:
     run_id = request["run_id"]
     output = run_logs_root / "logs" / "runs" / run_id / "remote-acquisition"
     output.mkdir(parents=True, exist_ok=True)
 
     if request["operation"] == "media_fetch":
-        _write_json_atomic(output / "request.json", request)
-        records = materialize(request["media_inputs"], output / "media")
-        _write_json_atomic(output / "materialized-images.json", records)
+        request_hash = _request_sha256(request)
+        media_dir = output / "media"
+        media_dir.mkdir(parents=True, exist_ok=True)
+        request_path = media_dir / f"request-{request_hash[:16]}.json"
+        receipt_path = media_dir / f"receipt-{request_hash[:16]}.json"
+        if receipt_path.is_file():
+            return output
+        _write_json_atomic(request_path, request)
+        records = materialize(request["media_inputs"], media_dir)
+        _write_json_atomic(media_dir / f"materialized-images-{request_hash[:16]}.json", records)
         ready = sum(item.get("status") == "ready" for item in records)
         receipt = {
             "schema_version": "1.0",
@@ -302,11 +393,12 @@ def execute_request(request: dict[str, Any], *, runtime_root: Path, run_logs_roo
             "run_id": run_id,
             "main_sha": request["main_sha"],
             "window": request["window"],
+            "request_sha256": request_hash,
             "status": "completed" if ready == len(records) else "failed",
             "requested_count": len(records),
             "ready_count": ready,
         }
-        _write_json_atomic(output / "receipt.json", receipt)
+        _write_json_atomic(receipt_path, receipt)
         if receipt["status"] != "completed":
             raise RuntimeError("one or more remote media inputs failed")
         return output
@@ -331,10 +423,15 @@ def execute_request(request: dict[str, Any], *, runtime_root: Path, run_logs_roo
             raise RuntimeError("article hydration batch has partial durable state; do not overwrite it")
 
         canonical_inputs = _validate_article_batch_against_canonical(output, request)
-        prior_ids = _existing_hydrated_row_ids(evidence_dir)
-        duplicate = prior_ids & {row["row_id"] for row in canonical_inputs}
-        if duplicate:
-            raise RuntimeError(f"article hydration rows already completed in another batch: {sorted(duplicate)[:3]}")
+        latest, history = _latest_hydration_evidence(evidence_dir)
+        for row in canonical_inputs:
+            prior = latest.get(row["row_id"])
+            if prior is not None and prior.get("admission_status") != "unresolved":
+                raise RuntimeError(f"article hydration row is already terminal: {row['row_id']}")
+            if row.get("exhaustion_confirmed") and prior is None:
+                raise RuntimeError(
+                    f"article hydration exhaustion cannot be confirmed before a failed/unresolved attempt: {row['row_id']}"
+                )
 
         _write_json_atomic(request_path, {
             **request,
@@ -343,12 +440,26 @@ def execute_request(request: dict[str, Any], *, runtime_root: Path, run_logs_roo
         })
         start = _parse_time(request["window"]["start"], "window.start")
         end = _parse_time(request["window"]["end"], "window.end")
-        records = hydrate_rows(canonical_inputs, window_start=start, window_end=end)
+        fetch_inputs = [row for row in canonical_inputs if not row.get("exhaustion_confirmed")]
+        hydrated_by_id = {
+            row["row_id"]: result
+            for row, result in zip(
+                fetch_inputs,
+                hydrate_rows(fetch_inputs, window_start=start, window_end=end),
+                strict=True,
+            )
+        }
+        records: list[dict] = []
+        for row in canonical_inputs:
+            if row.get("exhaustion_confirmed"):
+                records.append(_finalize_exhausted(row, history.get(row["row_id"], [])))
+            else:
+                records.append(hydrated_by_id[row["row_id"]])
         _write_jsonl_atomic(batch_path, records)
 
         counts = {
             status: sum(row.get("admission_status") == status for row in records)
-            for status in ("content_ready", "outside_window", "unresolved_exhausted")
+            for status in ("content_ready", "outside_window", "unresolved", "unresolved_exhausted")
         }
         ledger_path, remaining = _try_materialize_regional_ledger(output, run_id)
         receipt = {
@@ -375,7 +486,14 @@ def execute_request(request: dict[str, Any], *, runtime_root: Path, run_logs_roo
         })
         return output
 
-    _write_json_atomic(output / "request.json", request)
+    source_request_path = output / "source-scan-request.json"
+    source_receipt_path = output / "receipt.json"
+    if source_receipt_path.is_file():
+        existing_request = _load_json(source_request_path) if source_request_path.is_file() else None
+        if existing_request != request:
+            raise RuntimeError("source_scan already completed with a different run-bound request")
+        return output
+    _write_json_atomic(source_request_path, request)
     checkpoint = output / "checkpoint-window.json"
     _write_json_atomic(checkpoint, {
         "window_start": request["window"]["start"],
@@ -440,7 +558,7 @@ def execute_request(request: dict[str, Any], *, runtime_root: Path, run_logs_roo
     relevance_gate = _load_json(output / "news-relevance-gate.json")
     row_count = len(source_candidates.get("items", []))
     hydration_count = int(relevance_gate.get("content_hydration_count", 0))
-    _write_json_atomic(output / "receipt.json", {
+    _write_json_atomic(source_receipt_path, {
         "schema_version": "1.0",
         "operation": "source_scan",
         "run_id": run_id,
