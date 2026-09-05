@@ -1,26 +1,21 @@
 #!/usr/bin/env python3
 """Build and validate the immutable, lossless source-row admission universe."""
 from __future__ import annotations
-
 import argparse, json, re
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
 from typing import Any
-
-SCHEMA_VERSION="1.1.0"; HEX64=re.compile(r"^[0-9a-f]{64}$"); ROW_ID=re.compile(r"^row-[0-9a-f]{24}$")
+SCHEMA_VERSION="1.1.0"; COMPAT_SCHEMA_VERSIONS={"1.0.0","1.1.0"}; HEX64=re.compile(r"^[0-9a-f]{64}$"); ROW_ID=re.compile(r"^row-[0-9a-f]{24}$")
 STATUSES={"content_ready","unresolved_exhausted"}; REVIEWS={"pending_semantic_review","unresolved_exhausted"}
-
 def _rows(v:Any,label:str):
     if not isinstance(v,list) or not all(isinstance(x,dict) for x in v): raise ValueError(f"{label} rows must be an array of objects")
     ids=[str(x.get("row_id","")) for x in v]
     if any(not x for x in ids) or len(ids)!=len(set(ids)): raise ValueError(f"{label} row_id values must be non-empty and unique")
     return v,dict(zip(ids,v))
-
 def _required(v:dict,fields:tuple[str,...],label:str):
     for f in fields:
         if not str(v.get(f,"")).strip(): raise ValueError(f"{label} missing {f}")
-
 def build(source_candidates:dict,relevance_gate:dict,article_evidence:dict,*,run_id:str)->dict:
     candidates,cmap=_rows(source_candidates.get("items"),"source candidate"); decisions,dmap=_rows(relevance_gate.get("decisions"),"relevance decision"); evidence,emap=_rows(article_evidence.get("rows"),"article evidence")
     expected=set(cmap)
@@ -48,10 +43,9 @@ def build(source_candidates:dict,relevance_gate:dict,article_evidence:dict,*,run
     errors=validate(result)
     if errors: raise ValueError("; ".join(errors))
     return result
-
 def validate(data:dict)->list[str]:
     errors=[]
-    if data.get("schema_version")!=SCHEMA_VERSION: errors.append(f"schema_version must be {SCHEMA_VERSION}")
+    if data.get("schema_version") not in COMPAT_SCHEMA_VERSIONS: errors.append(f"schema_version must be one of {sorted(COMPAT_SCHEMA_VERSIONS)}")
     rows=data.get("rows")
     if not isinstance(rows,list): return errors+["rows must be an array"]
     ids=[x.get("row_id") for x in rows if isinstance(x,dict)]
@@ -59,6 +53,7 @@ def validate(data:dict)->list[str]:
     try:
         start=datetime.fromisoformat(str(data.get("window_start","")).replace("Z","+00:00")); end=datetime.fromisoformat(str(data.get("window_end","")).replace("Z","+00:00"))
     except ValueError: start=end=None; errors.append("run window is invalid")
+    legacy=data.get("schema_version")=="1.0.0"
     for i,x in enumerate(rows,1):
         if not isinstance(x,dict): continue
         label=f"rows[{i}]"; status=x.get("admission_status")
@@ -69,7 +64,7 @@ def validate(data:dict)->list[str]:
         if status not in STATUSES: errors.append(f"{label}.admission_status is invalid")
         m=x.get("model_evidence")
         if not isinstance(m,dict) or m.get("review_status") not in REVIEWS or not str(m.get("reason","")).strip() or not isinstance(m.get("evidence_refs"),list) or not m.get("evidence_refs"): errors.append(f"{label}.model_evidence is invalid")
-        if status=="content_ready":
+        if status=="content_ready" or legacy:
             for f in ("article_body_published_at","article_body_timestamp_evidence","article_body_evidence_url","content_sha256"):
                 if not str(x.get(f,"")).strip(): errors.append(f"{label}.{f} is required for content_ready")
             if not HEX64.fullmatch(str(x.get("content_sha256",""))): errors.append(f"{label}.content_sha256 is invalid")
@@ -85,14 +80,12 @@ def validate(data:dict)->list[str]:
     if data.get("source_row_count")!=len(rows) or data.get("admitted_row_count")!=len(rows): errors.append("row counts must equal durable row count")
     if sum(Counter(x.get("admission_status") for x in rows if isinstance(x,dict)).values())!=len(rows): errors.append("admission status count must conserve all rows")
     return errors
-
 def load(path:str)->dict:
     v=json.loads(Path(path).read_text(encoding="utf-8"));
     if not isinstance(v,dict): raise ValueError(f"{path} must contain a JSON object")
     return v
-
 def main()->int:
-    p=argparse.ArgumentParser(); s=p.add_subparsers(dest="command",required=True); b=s.add_parser("build");
+    p=argparse.ArgumentParser(); s=p.add_subparsers(dest="command",required=True); b=s.add_parser("build")
     for n in ("source-candidates","relevance-gate","article-evidence","run-id","output"): b.add_argument("--"+n,required=True)
     v=s.add_parser("validate"); v.add_argument("--input",required=True); a=p.parse_args()
     try:
