@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch and terminally classify bounded article-body hydration rows."""
+"""Fetch bounded article-body hydration rows without prematurely declaring exhaustion."""
 
 from __future__ import annotations
 
@@ -17,7 +17,6 @@ from urllib.parse import urlsplit
 MAX_RESPONSE_BYTES = 8 * 1024 * 1024
 DEFAULT_TIMEOUT_SECONDS = 20
 LOCAL_TZ = timezone(timedelta(hours=8))
-ROW_ID_RE = re.compile(r"^row-[0-9a-f]{24}$")
 
 META_DATE_KEYS = {
     "article:published_time",
@@ -226,60 +225,69 @@ def _fetch(url: str, timeout: int = DEFAULT_TIMEOUT_SECONDS) -> tuple[bytes, str
         return data, final_url, status, content_type
 
 
-def _terminal_unresolved(row: dict, reason: str, attempts: list[dict]) -> dict:
-    url = str(row["canonical_url"])
+def _unresolved(
+    row: dict,
+    reason: str,
+    attempts: list[dict],
+    *,
+    evidence_url: str,
+    content_sha256: str | None = None,
+) -> dict:
     return {
         "row_id": row["row_id"],
         "article_body_published_at": None,
         "article_body_timestamp_evidence": None,
-        "article_body_evidence_url": url,
-        "content_sha256": None,
-        "admission_status": "unresolved_exhausted",
+        "article_body_evidence_url": evidence_url,
+        "content_sha256": content_sha256,
+        "admission_status": "unresolved",
         "model_evidence": {
-            "review_status": "unresolved_exhausted",
+            "review_status": "unresolved",
             "reason": reason,
-            "evidence_refs": [url],
+            "evidence_refs": [evidence_url],
         },
         "hydration_attempts": attempts,
     }
 
 
 def hydrate_row(row: dict, *, window_start: datetime, window_end: datetime) -> dict:
-    url = str(row["canonical_url"])
+    canonical_url = str(row["canonical_url"])
+    fetch_url = str(row.get("fetch_url") or canonical_url)
     attempts: list[dict] = []
     try:
-        data, final_url, status, content_type = _fetch(url)
+        data, final_url, status, content_type = _fetch(fetch_url)
         content_hash = hashlib.sha256(data).hexdigest()
         attempts.append({
-            "url": url,
+            "url": fetch_url,
             "actual_url": final_url,
             "status": "fetched",
             "http_status": status,
             "content_sha256": content_hash,
+            "route": "canonical" if fetch_url == canonical_url else "same_source_alternate",
         })
     except (OSError, ValueError, urllib.error.URLError) as exc:
         attempts.append({
-            "url": url,
+            "url": fetch_url,
             "status": "failed",
             "error": f"{type(exc).__name__}: {exc}",
+            "route": "canonical" if fetch_url == canonical_url else "same_source_alternate",
         })
-        return _terminal_unresolved(
+        return _unresolved(
             row,
-            "Article body could not be fetched through the bounded hydration transport.",
+            "This hydration route failed; same-source recovery remains eligible and exhaustion is not yet proven.",
             attempts,
+            evidence_url=fetch_url,
         )
 
     html_text = _decode_html(data, content_type)
     published_at, timestamp_evidence = extract_article_timestamp(html_text)
     if published_at is None or timestamp_evidence is None:
-        result = _terminal_unresolved(
+        return _unresolved(
             row,
-            "Article body was fetched, but no attributable publication/update timestamp could be established.",
+            "Article body was fetched, but no attributable publication/update timestamp could be established; another same-source route or final browser evidence is still required before exhaustion.",
             attempts,
+            evidence_url=final_url,
+            content_sha256=content_hash,
         )
-        result["article_body_evidence_url"] = final_url
-        result["content_sha256"] = content_hash
-        return result
 
     published_at = published_at.astimezone(window_start.tzinfo or timezone.utc)
     inside = window_start <= published_at <= window_end
