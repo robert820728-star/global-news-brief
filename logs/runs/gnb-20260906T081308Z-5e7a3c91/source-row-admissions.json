@@ -3,8 +3,8 @@
   "run_id": "gnb-20260906T081308Z-5e7a3c91",
   "window_start": "2026-09-05T08:13:08+00:00",
   "window_end": "2026-09-06T08:13:08+00:00",
-  "source_row_count": 555,
-  "admitted_row_count": 555,
+  "source_row_count": 575,
+  "admitted_row_count": 575,
   "rows": [
     {
       "row_id": "row-083c5c4e330738750a8baeb6",
@@ -7259,6 +7259,34 @@
       "failure_evidence": null
     },
     {
+      "row_id": "row-5de85d7421ab66531a3dfd80",
+      "candidate_id": "f256a89af67abd8cc208",
+      "provisional_group_id": "group-2fc68d94f0d041676fc23ba6",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://apnews.com/article/44bba3b57b480560d9f48dba7d28534e",
+      "canonical_url": "https://apnews.com/article/44bba3b57b480560d9f48dba7d28534e",
+      "listing_published_at": "2026-09-06T07:53:56+00:00",
+      "listing_timestamp_evidence": "AP result timestamp: Sun Sep 6 07:53:56 2026 UTC",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "content_ready",
+      "model_evidence": {
+        "review_status": "pending_semantic_review",
+        "reason": "article body fetched and authoritative timestamp bound to this row",
+        "evidence_refs": [
+          "https://apnews.com/article/russia-ukraine-war-witkoff-kushner-zelenskyy-putin-44bba3b57b480560d9f48dba7d28534e"
+        ]
+      },
+      "article_body_published_at": "2026-09-06T07:53:57+00:00",
+      "article_body_timestamp_evidence": "2026-09-06T07:53:57Z",
+      "article_body_evidence_url": "https://apnews.com/article/russia-ukraine-war-witkoff-kushner-zelenskyy-putin-44bba3b57b480560d9f48dba7d28534e",
+      "content_sha256": "393291fd97e385b3b6a844722b4cc1db23e158ad7f23594964c17c0a6c4884a7",
+      "failure_evidence": null
+    },
+    {
       "row_id": "row-d92fd6e908802fa90bb87a45",
       "candidate_id": "0a4dd5be2dfc61153185",
       "provisional_group_id": "group-c054a53bd0c29d3cebcae6aa",
@@ -7285,6 +7313,72 @@
       "article_body_evidence_url": "https://www.cna.com.tw/news/aopl/202609060009.aspx",
       "content_sha256": "d0bec0f0295737c68a30eec206c3ee5d01bb4892a1388f39e7249a6e25304e9f",
       "failure_evidence": null
+    },
+    {
+      "row_id": "row-5128efaaac4252c75996f046",
+      "candidate_id": "b3abe1fddbd3be2523e5",
+      "provisional_group_id": "group-38904361de1f0ff2494ee99c",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.thenationalnews.com/business/energy/2026/09/06/opec-keeps-oil-output-policy-unchanged-for-october-amid-iran-war-uncertainty/",
+      "canonical_url": "https://www.thenationalnews.com/business/energy/2026/09/06/opec-keeps-oil-output-policy-unchanged-for-october-amid-iran-war-uncertainty",
+      "listing_published_at": "2026-09-06T07:37:33+00:00",
+      "listing_timestamp_evidence": "Same-event original Reuters decision report timestamp 07:37:33 UTC; The National article is dated September 06 2026",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "outside_window",
+      "model_evidence": {
+        "review_status": "outside_window",
+        "reason": "article-body timestamp proves this listing lead is outside the exact run window",
+        "evidence_refs": [
+          "https://www.thenationalnews.com/business/energy/2026/09/06/opec-keeps-oil-output-policy-unchanged-for-october-amid-iran-war-uncertainty/"
+        ]
+      },
+      "article_body_published_at": "2026-09-06T11:48:21.347000+00:00",
+      "article_body_timestamp_evidence": "2026-09-06T11:48:21.347Z",
+      "article_body_evidence_url": "https://www.thenationalnews.com/business/energy/2026/09/06/opec-keeps-oil-output-policy-unchanged-for-october-amid-iran-war-uncertainty/",
+      "content_sha256": "360e3aaf0fac01f7e98b8db36e04337e7e440d7fb0fd41007d195af6580e6f1c",
+      "failure_evidence": null
+    },
+    {
+      "row_id": "row-c6ba5f26cb9b9cec19790bea",
+      "candidate_id": "07ec63a51b135be12955",
+      "provisional_group_id": "group-0987c77bb9b2112d3c3c6391",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/business/energy/opec-set-keep-oil-output-policy-unchanged-sunday-sources-say-2026-09-06/",
+      "canonical_url": "https://www.reuters.com/business/energy/opec-set-keep-oil-output-policy-unchanged-sunday-sources-say-2026-09-06",
+      "listing_published_at": "2026-09-06T07:37:33+00:00",
+      "listing_timestamp_evidence": "Reuters result timestamp: Sun Sep 6 07:37:33 2026 UTC",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "host web search retrieved the exact Reuters OPEC+ report; The National same-event substitute was hydrated but its article-body timestamp proved it outside this occurrence window"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/business/energy/opec-set-keep-oil-output-policy-unchanged-sunday-sources-say-2026-09-06/",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "host web search retrieved the exact Reuters OPEC+ report; The National same-event substitute was hydrated but its article-body timestamp proved it outside this occurrence window"
+        ]
+      }
     },
     {
       "row_id": "row-11ebc75a923a235d8019bc94",
@@ -7340,6 +7434,34 @@
       "article_body_timestamp_evidence": "2026-09-06T07:27:00+08:00",
       "article_body_evidence_url": "https://www.cna.com.tw/news/ahel/202609065001.aspx",
       "content_sha256": "23caf414580b9ec3c87f76ffc3ebaafd3e4eb7075788c602c6bb367df72357b8",
+      "failure_evidence": null
+    },
+    {
+      "row_id": "row-ad9e18305095f0e3bb56a5e1",
+      "candidate_id": "308c6338268433d5f058",
+      "provisional_group_id": "group-9685d4c575daa1f3124c30c2",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://apnews.com/article/a52beec77dc90af3d040d0553837ad20",
+      "canonical_url": "https://apnews.com/article/a52beec77dc90af3d040d0553837ad20",
+      "listing_published_at": "2026-09-06T07:03:35+00:00",
+      "listing_timestamp_evidence": "AP result timestamp: Sun Sep 6 07:03:35 2026 UTC",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "content_ready",
+      "model_evidence": {
+        "review_status": "pending_semantic_review",
+        "reason": "article body fetched and authoritative timestamp bound to this row",
+        "evidence_refs": [
+          "https://apnews.com/article/iran-us-war-strait-hormuz-ship-attack-a52beec77dc90af3d040d0553837ad20"
+        ]
+      },
+      "article_body_published_at": "2026-09-06T07:03:36+00:00",
+      "article_body_timestamp_evidence": "2026-09-06T07:03:36Z",
+      "article_body_evidence_url": "https://apnews.com/article/iran-us-war-strait-hormuz-ship-attack-a52beec77dc90af3d040d0553837ad20",
+      "content_sha256": "1266db8132c3c5f731ded6084380d44e3df5e68e081b4e25bf9b2837a277d2b4",
       "failure_evidence": null
     },
     {
@@ -7455,6 +7577,34 @@
       "failure_evidence": null
     },
     {
+      "row_id": "row-4d237493c9e3938bf8aaa8a6",
+      "candidate_id": "63b4ec5ea6606c2ea93c",
+      "provisional_group_id": "group-e87fa256727320c1cfeae57f",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://apnews.com/article/c538060710a2495c72425b6468df0d40",
+      "canonical_url": "https://apnews.com/article/c538060710a2495c72425b6468df0d40",
+      "listing_published_at": "2026-09-06T06:08:23+00:00",
+      "listing_timestamp_evidence": "AP article timestamp: Sun Sep 6 06:08:23 2026 UTC",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "content_ready",
+      "model_evidence": {
+        "review_status": "pending_semantic_review",
+        "reason": "article body fetched and authoritative timestamp bound to this row",
+        "evidence_refs": [
+          "https://apnews.com/article/germany-saxony-anhalt-election-far-right-afd-c538060710a2495c72425b6468df0d40"
+        ]
+      },
+      "article_body_published_at": "2026-09-06T06:08:24+00:00",
+      "article_body_timestamp_evidence": "2026-09-06T06:08:24Z",
+      "article_body_evidence_url": "https://apnews.com/article/germany-saxony-anhalt-election-far-right-afd-c538060710a2495c72425b6468df0d40",
+      "content_sha256": "780a0010179a7be454a5de080b9a33ab9b8986747c1e9110fd6d2ba4aa8729a5",
+      "failure_evidence": null
+    },
+    {
       "row_id": "row-4b553947ccf0d6e9ac15bd9a",
       "candidate_id": "2abdcb7c81e6a5439e8b",
       "provisional_group_id": "group-7950d8aa52882fb5fc765f74",
@@ -7481,6 +7631,82 @@
       "article_body_evidence_url": "https://www.cna.com.tw/news/aopl/202609060006.aspx",
       "content_sha256": "23a60d1e622a32d66ace54dd2c548820a32377b677d13f21467e40acac4b8b8d",
       "failure_evidence": null
+    },
+    {
+      "row_id": "row-95be2ec9b831b6644ce2df0c",
+      "candidate_id": "75da91e2f1e4477820c2",
+      "provisional_group_id": "group-b3cf6414c1dc79613cad4e67",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.streetinsider.com/Reuters/Israeli%2Bstrikes%2Bkill%2Bfour%2Bin%2Bsouthern%2BLebanon/27031165.html",
+      "canonical_url": "https://www.streetinsider.com/Reuters/Israeli%2Bstrikes%2Bkill%2Bfour%2Bin%2Bsouthern%2BLebanon/27031165.html",
+      "listing_published_at": "2026-09-06T04:15:36+00:00",
+      "listing_timestamp_evidence": "Original Reuters timestamp 04:15:36 UTC; syndication page displays Sep 6 2026 12:15 AM EDT",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "StreetInsider Reuters syndication returned HTTP 403 in canonical hydration",
+          "host web search retrieved the syndicated Reuters body and timestamp",
+          "original Reuters row had already failed canonical and same-host hydration with HTTP 401"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.streetinsider.com/Reuters/Israeli%2Bstrikes%2Bkill%2Bfour%2Bin%2Bsouthern%2BLebanon/27031165.html",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "StreetInsider Reuters syndication returned HTTP 403 in canonical hydration",
+          "host web search retrieved the syndicated Reuters body and timestamp",
+          "original Reuters row had already failed canonical and same-host hydration with HTTP 401"
+        ]
+      }
+    },
+    {
+      "row_id": "row-dc4098e7ffaad62dcb634594",
+      "candidate_id": "2db504b96e2c7cd0c346",
+      "provisional_group_id": "group-b3cf6414c1dc79613cad4e67",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/world/middle-east/israeli-military-says-it-strikes-southern-lebanon-after-hezbollah-launched-2026-09-06/",
+      "canonical_url": "https://www.reuters.com/world/middle-east/israeli-military-says-it-strikes-southern-lebanon-after-hezbollah-launched-2026-09-06",
+      "listing_published_at": "2026-09-06T04:15:36+00:00",
+      "listing_timestamp_evidence": "Reuters result timestamp: Sun Sep 6 04:15:36 2026 UTC",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "host web search retrieved the Reuters Lebanon report; StreetInsider Reuters syndication was separately attempted and returned HTTP 403"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/world/middle-east/israeli-military-says-it-strikes-southern-lebanon-after-hezbollah-launched-2026-09-06/",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "host web search retrieved the Reuters Lebanon report; StreetInsider Reuters syndication was separately attempted and returned HTTP 403"
+        ]
+      }
     },
     {
       "row_id": "row-00727159cc74eceab2f5b1d4",
@@ -7595,6 +7821,34 @@
       "failure_evidence": null
     },
     {
+      "row_id": "row-6bd9c6775eee9c80930c16b7",
+      "candidate_id": "c8b94050b6fb63479e10",
+      "provisional_group_id": "group-17426ff8ed95c546ea3f224c",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://apnews.com/article/12c3cb67859b2c51054b378d60148d33",
+      "canonical_url": "https://apnews.com/article/12c3cb67859b2c51054b378d60148d33",
+      "listing_published_at": "2026-09-06T01:46:14+00:00",
+      "listing_timestamp_evidence": "AP article timestamp: Sun Sep 6 01:46:14 2026 UTC",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "content_ready",
+      "model_evidence": {
+        "review_status": "pending_semantic_review",
+        "reason": "article body fetched and authoritative timestamp bound to this row",
+        "evidence_refs": [
+          "https://apnews.com/article/indonesia-volcano-eruption-airport-flights-cancel-12c3cb67859b2c51054b378d60148d33"
+        ]
+      },
+      "article_body_published_at": "2026-09-06T01:46:15+00:00",
+      "article_body_timestamp_evidence": "2026-09-06T01:46:15Z",
+      "article_body_evidence_url": "https://apnews.com/article/indonesia-volcano-eruption-airport-flights-cancel-12c3cb67859b2c51054b378d60148d33",
+      "content_sha256": "741fdb39f61ebc42e6103c21deeb93906b2be5a9f60322595b47d86298748992",
+      "failure_evidence": null
+    },
+    {
       "row_id": "row-6c5ea39cde68402117f0f029",
       "candidate_id": "6305b87cc09ff845158a",
       "provisional_group_id": "group-13e200c164b013d524127d66",
@@ -7649,6 +7903,44 @@
       "article_body_evidence_url": "https://www.cna.com.tw/news/acul/202609060002.aspx",
       "content_sha256": "4f14c57d7ffe92c6515611bf1e373f4b1653dba795d19b6b50427cc63694a306",
       "failure_evidence": null
+    },
+    {
+      "row_id": "row-9f603cd9957915e7b3de68f4",
+      "candidate_id": "977f04cf4dad4e4bdfc5",
+      "provisional_group_id": "group-a82f7a572bda64f40b7c556d",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06/",
+      "canonical_url": "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06",
+      "listing_published_at": "2026-09-06T00:27:19+00:00",
+      "listing_timestamp_evidence": "Reuters result timestamp: Sun Sep 6 00:27:19 2026 UTC",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "same-event AP Anak Krakatau article was hydrated successfully as a separate content-ready row"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06/",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "same-event AP Anak Krakatau article was hydrated successfully as a separate content-ready row"
+        ]
+      }
     },
     {
       "row_id": "row-5968f03d5faf97e895fb0af5",
@@ -7789,6 +8081,44 @@
       "article_body_evidence_url": "https://www.chinanews.com.cn/dwq/2026/09-06/10691221.shtml",
       "content_sha256": "6b3284c9956b87bd84f55e3b1fa192139bc0b8cc8fc5d44ef287520cb4ae13db",
       "failure_evidence": null
+    },
+    {
+      "row_id": "row-cd3a33e1faa109d5f2bd7733",
+      "candidate_id": "d12c90b77487fe99ebb9",
+      "provisional_group_id": "group-191b4ebf56c72654d15a1162",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/world/germanys-far-right-afd-seeks-landmark-state-victory-saxony-anhalt-votes-2026-09-06/",
+      "canonical_url": "https://www.reuters.com/world/germanys-far-right-afd-seeks-landmark-state-victory-saxony-anhalt-votes-2026-09-06",
+      "listing_published_at": "2026-09-06T00:06:07+00:00",
+      "listing_timestamp_evidence": "Reuters result timestamp: Sun Sep 6 00:06:07 2026 UTC",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "same-event AP Saxony-Anhalt election article was hydrated successfully as a separate content-ready row"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/world/germanys-far-right-afd-seeks-landmark-state-victory-saxony-anhalt-votes-2026-09-06/",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "same-event AP Saxony-Anhalt election article was hydrated successfully as a separate content-ready row"
+        ]
+      }
     },
     {
       "row_id": "row-dad7340c67782e7c2bd68114",
@@ -12971,6 +13301,82 @@
       "failure_evidence": null
     },
     {
+      "row_id": "row-bf8c2b2b698bdd8d33d6ad26",
+      "candidate_id": "99e79e9e0ab015f130c6",
+      "provisional_group_id": "group-b541bfa4cf1d596a2b97d4c4",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/business/energy/milei-finds-unity-pushback-against-falkland-islands-oil-project-2026-09-05/",
+      "canonical_url": "https://www.reuters.com/business/energy/milei-finds-unity-pushback-against-falkland-islands-oil-project-2026-09-05",
+      "listing_published_at": "2026-09-05T18:34:55+00:00",
+      "listing_timestamp_evidence": "Reuters result timestamp: Sat Sep 5 18:34:55 2026 UTC",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "host web search retrieved the exact Reuters report; Investing.com Reuters syndication was then attempted and returned HTTP 403"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/business/energy/milei-finds-unity-pushback-against-falkland-islands-oil-project-2026-09-05/",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "host web search retrieved the exact Reuters report; Investing.com Reuters syndication was then attempted and returned HTTP 403"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2b33e93e7e67c1757ccb9ae2",
+      "candidate_id": "b30dd22a617d4c6b51e0",
+      "provisional_group_id": "group-b541bfa4cf1d596a2b97d4c4",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.investing.com/news/stock-market-news/milei-finds-unity-in-pushback-against-falkland-islands-oil-project-4890233",
+      "canonical_url": "https://www.investing.com/news/stock-market-news/milei-finds-unity-in-pushback-against-falkland-islands-oil-project-4890233",
+      "listing_published_at": "2026-09-05T18:34:55+00:00",
+      "listing_timestamp_evidence": "Original Reuters timestamp 18:34:55 UTC; syndication page displays Sep 05 2026 02:34 PM",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Investing.com Reuters syndication returned HTTP 403 in canonical hydration",
+          "host web search retrieved the syndication body and Reuters attribution",
+          "original Reuters row had already failed canonical and same-host hydration with HTTP 401"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.investing.com/news/stock-market-news/milei-finds-unity-in-pushback-against-falkland-islands-oil-project-4890233",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Investing.com Reuters syndication returned HTTP 403 in canonical hydration",
+          "host web search retrieved the syndication body and Reuters attribution",
+          "original Reuters row had already failed canonical and same-host hydration with HTTP 401"
+        ]
+      }
+    },
+    {
       "row_id": "row-ae7df6f6e8540387d37b3496",
       "candidate_id": "45daa2e7608597d48e08",
       "provisional_group_id": "group-b41652cc466bf67173a4cb74",
@@ -13417,6 +13823,82 @@
       "article_body_evidence_url": "https://www.chinanews.com.cn/gn/2026/09-05/10691016.shtml",
       "content_sha256": "4c86924df3d1aa0512947ceddaaa63f4002d735980352438719d9d23ffa0d4c6",
       "failure_evidence": null
+    },
+    {
+      "row_id": "row-4fbb3f079b7938100983ccf0",
+      "candidate_id": "3ebf7ebf72212bb743e5",
+      "provisional_group_id": "group-30d49d4aca42e1f610adb32a",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/world/europe/putin-says-us-russia-contacts-beneficial-talks-begin-with-witkoff-kushner-2026-09-05/",
+      "canonical_url": "https://www.reuters.com/world/europe/putin-says-us-russia-contacts-beneficial-talks-begin-with-witkoff-kushner-2026-09-05",
+      "listing_published_at": "2026-09-05T17:52:13+00:00",
+      "listing_timestamp_evidence": "Reuters result timestamp: Sat Sep 5 17:52:13 2026 UTC",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "host web search independently retrieved the Reuters report; same-event AP Kyiv coverage is content-ready and Investing.com Reuters syndication was separately attempted"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/world/europe/putin-says-us-russia-contacts-beneficial-talks-begin-with-witkoff-kushner-2026-09-05/",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "host web search independently retrieved the Reuters report; same-event AP Kyiv coverage is content-ready and Investing.com Reuters syndication was separately attempted"
+        ]
+      }
+    },
+    {
+      "row_id": "row-dc190ca9afe81ed8ff2685f3",
+      "candidate_id": "2916d514987c61b689b3",
+      "provisional_group_id": "group-30d49d4aca42e1f610adb32a",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.investing.com/news/world-news/putin-says-usrussia-contacts-beneficial-as-talks-begin-with-witkoff-and-kushner-4890226",
+      "canonical_url": "https://www.investing.com/news/world-news/putin-says-usrussia-contacts-beneficial-as-talks-begin-with-witkoff-and-kushner-4890226",
+      "listing_published_at": "2026-09-05T17:52:13+00:00",
+      "listing_timestamp_evidence": "Original Reuters timestamp 17:52:13 UTC; syndication page displays Sep 05 2026 01:52 PM",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Investing.com Reuters syndication returned HTTP 403 in canonical hydration",
+          "host web search retrieved the syndication body and Reuters attribution",
+          "same diplomatic sequence also has content-ready AP coverage in this global fallback"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.investing.com/news/world-news/putin-says-usrussia-contacts-beneficial-as-talks-begin-with-witkoff-and-kushner-4890226",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Investing.com Reuters syndication returned HTTP 403 in canonical hydration",
+          "host web search retrieved the syndication body and Reuters attribution",
+          "same diplomatic sequence also has content-ready AP coverage in this global fallback"
+        ]
+      }
     },
     {
       "row_id": "row-d693859735a738bf8a474d48",
@@ -15239,6 +15721,72 @@
       "failure_evidence": null
     },
     {
+      "row_id": "row-8c7833a071c355f9846e574a",
+      "candidate_id": "19ab7cedafde0ad5a42a",
+      "provisional_group_id": "group-a3fb9a266063b39c181c16e6",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/business/energy/brokered-ceasefire-takes-effect-repairs-zaporizhzhia-nuclear-plant-2026-09-05/",
+      "canonical_url": "https://www.reuters.com/business/energy/brokered-ceasefire-takes-effect-repairs-zaporizhzhia-nuclear-plant-2026-09-05",
+      "listing_published_at": "2026-09-05T16:23:57+00:00",
+      "listing_timestamp_evidence": "Reuters result timestamp: Sat Sep 5 16:23:57 2026 UTC",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "same-event MarketScreener Reuters syndication was hydrated successfully as a separate content-ready row"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/business/energy/brokered-ceasefire-takes-effect-repairs-zaporizhzhia-nuclear-plant-2026-09-05/",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "same-event MarketScreener Reuters syndication was hydrated successfully as a separate content-ready row"
+        ]
+      }
+    },
+    {
+      "row_id": "row-02df2dcd24f22fbb7f12350d",
+      "candidate_id": "b8fb256c25c35e1ef905",
+      "provisional_group_id": "group-a3fb9a266063b39c181c16e6",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://hk.marketscreener.com/news/brokered-ceasefire-takes-effect-for-repairs-at-zaporizhzhia-nuclear-plant-ce785bdbda8cf121",
+      "canonical_url": "https://hk.marketscreener.com/news/brokered-ceasefire-takes-effect-for-repairs-at-zaporizhzhia-nuclear-plant-ce785bdbda8cf121",
+      "listing_published_at": "2026-09-05T16:23:57+00:00",
+      "listing_timestamp_evidence": "Original Reuters timestamp 16:23:57 UTC; syndication page displays Sep 6 00:20 HKT",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "content_ready",
+      "model_evidence": {
+        "review_status": "pending_semantic_review",
+        "reason": "article body fetched and authoritative timestamp bound to this row",
+        "evidence_refs": [
+          "https://hk.marketscreener.com/news/brokered-ceasefire-takes-effect-for-repairs-at-zaporizhzhia-nuclear-plant-ce785bdbda8cf121"
+        ]
+      },
+      "article_body_published_at": "2026-09-05T18:20:15+02:00",
+      "article_body_timestamp_evidence": "2026-09-05T18:20:15+02:00",
+      "article_body_evidence_url": "https://hk.marketscreener.com/news/brokered-ceasefire-takes-effect-for-repairs-at-zaporizhzhia-nuclear-plant-ce785bdbda8cf121",
+      "content_sha256": "45644cd15bd9045ba4b01b800580d4ef2fb727eb8e5644be7aec966de5da973c",
+      "failure_evidence": null
+    },
+    {
       "row_id": "row-35dde839375dac1802477bfa",
       "candidate_id": "8f51b37e53ceef964b59",
       "provisional_group_id": "group-7dec0d03258e065c3ced4b50",
@@ -15545,6 +16093,158 @@
       "article_body_evidence_url": "https://www.chinanews.com.cn/gn/2026/09-05/10690952.shtml",
       "content_sha256": "7f740c1949be2a2610a609f36f5672181a71c21d5fbcd79874f625bd44479c41",
       "failure_evidence": null
+    },
+    {
+      "row_id": "row-d3bd432e07fb1c5d7a6f0d79",
+      "candidate_id": "66257028a9d986ea106d",
+      "provisional_group_id": "group-efcefb143b29ec28cafb0ef8",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/world/nato-will-not-tolerate-hybrid-actions-against-members-us-envoy-says-2026-09-05/",
+      "canonical_url": "https://www.reuters.com/world/nato-will-not-tolerate-hybrid-actions-against-members-us-envoy-says-2026-09-05",
+      "listing_published_at": "2026-09-05T15:15:23+00:00",
+      "listing_timestamp_evidence": "Reuters result timestamp: Sat Sep 5 15:15:23 2026 UTC",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "host web search retrieved the Reuters NATO report; Investing.com syndication was separately attempted and returned HTTP 403"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/world/nato-will-not-tolerate-hybrid-actions-against-members-us-envoy-says-2026-09-05/",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "host web search retrieved the Reuters NATO report; Investing.com syndication was separately attempted and returned HTTP 403"
+        ]
+      }
+    },
+    {
+      "row_id": "row-b6ff087bab2060fa2d93a785",
+      "candidate_id": "80d0b6e78408c8579fa9",
+      "provisional_group_id": "group-efcefb143b29ec28cafb0ef8",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.investing.com/news/world-news/nato-will-not-tolerate-hybrid-actions-against-members-us-envoy-says-4890214",
+      "canonical_url": "https://www.investing.com/news/world-news/nato-will-not-tolerate-hybrid-actions-against-members-us-envoy-says-4890214",
+      "listing_published_at": "2026-09-05T15:15:23+00:00",
+      "listing_timestamp_evidence": "Original Reuters timestamp 15:15:23 UTC; syndication page displays Sep 05 2026 11:15 AM",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Investing.com Reuters syndication returned HTTP 403 in canonical hydration",
+          "host web search retrieved the syndication body and Reuters attribution",
+          "original Reuters row had already failed canonical and same-host hydration with HTTP 401"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.investing.com/news/world-news/nato-will-not-tolerate-hybrid-actions-against-members-us-envoy-says-4890214",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Investing.com Reuters syndication returned HTTP 403 in canonical hydration",
+          "host web search retrieved the syndication body and Reuters attribution",
+          "original Reuters row had already failed canonical and same-host hydration with HTTP 401"
+        ]
+      }
+    },
+    {
+      "row_id": "row-06e378418543329b7a33d805",
+      "candidate_id": "cda04aaccfadc3c50dbb",
+      "provisional_group_id": "group-3a09e9aa97027fa0eaefef7e",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/world/americas/border-with-horse-smugglers-screwworm-2026-09-05/",
+      "canonical_url": "https://www.reuters.com/world/americas/border-with-horse-smugglers-screwworm-2026-09-05",
+      "listing_published_at": "2026-09-05T10:00:01+00:00",
+      "listing_timestamp_evidence": "Reuters result timestamp: Sat Sep 5 10:00:01 2026 UTC",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "host web search independently retrieved the Reuters article and timestamp; Investing.com substitute was attempted separately and returned HTTP 403 in canonical hydration"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/world/americas/border-with-horse-smugglers-screwworm-2026-09-05/",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Reuters canonical article hydration returned HTTP 401 in batch 29",
+          "same-host trailing-slash Reuters retry returned HTTP 401 in batch 30",
+          "host web search independently retrieved the Reuters article and timestamp; Investing.com substitute was attempted separately and returned HTTP 403 in canonical hydration"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2219dcf0bc0c2cba9366d61c",
+      "candidate_id": "44e0c4aa88bb90f79499",
+      "provisional_group_id": "group-adaa7450980d3b86757a32a5",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.investing.com/news/commodities-news/horse-smuggling-exposes-cracks-in-us-defenses-against-screwworm-4890188",
+      "canonical_url": "https://www.investing.com/news/commodities-news/horse-smuggling-exposes-cracks-in-us-defenses-against-screwworm-4890188",
+      "listing_published_at": "2026-09-05T10:00:01+00:00",
+      "listing_timestamp_evidence": "Original Reuters timestamp 10:00:01 UTC; syndication page displays Sep 05 2026 06:07 AM",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Investing.com Reuters syndication returned HTTP 403 in canonical hydration",
+          "host web search retrieved the syndication body and Reuters attribution",
+          "original Reuters row had already failed canonical and same-host hydration with HTTP 401"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.investing.com/news/commodities-news/horse-smuggling-exposes-cracks-in-us-defenses-against-screwworm-4890188",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Investing.com Reuters syndication returned HTTP 403 in canonical hydration",
+          "host web search retrieved the syndication body and Reuters attribution",
+          "original Reuters row had already failed canonical and same-host hydration with HTTP 401"
+        ]
+      }
     }
   ]
 }
