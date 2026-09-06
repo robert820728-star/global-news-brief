@@ -18,10 +18,10 @@
     "row-dc4098e7ffaad62dcb634594"
   ],
   "status_counts": {
-    "unresolved_exhausted": 0,
+    "unresolved": 9,
     "content_ready": 548,
-    "outside_window": 9,
-    "unresolved": 9
+    "unresolved_exhausted": 0,
+    "outside_window": 9
   },
   "complete": false
 }
