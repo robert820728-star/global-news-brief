@@ -70,6 +70,24 @@ jobs:
           --request request.json
           --expected-main-sha "$EXPECTED_MAIN_SHA"
           --run-logs-root runlogs
+      - name: Invalidate stale source-row finalization before universe expansion
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          request = json.loads(Path("request.json").read_text(encoding="utf-8"))
+          if request.get("operation") == "web_fallback_materialize":
+              run_root = Path("runlogs/logs/runs") / request["run_id"]
+              stale = [
+                  run_root / "source-row-admissions.json",
+                  run_root / "remote-acquisition" / "article-evidence.json",
+              ]
+              for path in stale:
+                  if path.exists():
+                      path.unlink()
+                      print(f"invalidated stale source-universe artifact: {path}")
+          PY
       - name: Persist running acquisition receipt
         working-directory: runlogs
         run: |
