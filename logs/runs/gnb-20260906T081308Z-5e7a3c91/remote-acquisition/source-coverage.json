@@ -8378,8 +8378,8 @@
       "configured_primary_aggregator_unavailable"
     ],
     "missing_date_variants": [],
-    "within_window_count": 11,
-    "ranked_count": 11,
+    "within_window_count": 20,
+    "ranked_count": 20,
     "ranked_items": [
       {
         "url": "https://apnews.com/article/a52beec77dc90af3d040d0553837ad20",
@@ -8457,9 +8457,72 @@
         "published_at": "2026-09-05T10:00:01+00:00",
         "discovery_priority_score": 989,
         "discovery_priority_reason": "Cross-border animal-health and agricultural biosecurity risk; admitted for semantic review only."
+      },
+      {
+        "url": "https://apnews.com/article/12c3cb67859b2c51054b378d60148d33",
+        "title": "Indonesia cancels flights at Jakarta airport and others as Anak Krakatau volcano erupts",
+        "published_at": "2026-09-06T01:46:14+00:00",
+        "discovery_priority_score": 988,
+        "discovery_priority_reason": "Alternative reliable same-event source for the Reuters Krakatau row blocked by transport; semantic deduplication required later."
+      },
+      {
+        "url": "https://apnews.com/article/c538060710a2495c72425b6468df0d40",
+        "title": "German region votes in election that could bring first far-right state government to power",
+        "published_at": "2026-09-06T06:08:23+00:00",
+        "discovery_priority_score": 987,
+        "discovery_priority_reason": "Alternative reliable same-event source for the Reuters Saxony-Anhalt row blocked by transport."
+      },
+      {
+        "url": "https://www.investing.com/news/world-news/putin-says-usrussia-contacts-beneficial-as-talks-begin-with-witkoff-and-kushner-4890226",
+        "title": "Putin says US-Russia contacts beneficial as talks begin with Witkoff and Kushner",
+        "published_at": "2026-09-05T17:52:13+00:00",
+        "discovery_priority_score": 986,
+        "discovery_priority_reason": "Reliable syndication recovery for a transport-blocked original wire URL; semantic deduplication required later."
+      },
+      {
+        "url": "https://hk.marketscreener.com/news/brokered-ceasefire-takes-effect-for-repairs-at-zaporizhzhia-nuclear-plant-ce785bdbda8cf121",
+        "title": "Brokered ceasefire takes effect for repairs at Zaporizhzhia nuclear plant",
+        "published_at": "2026-09-05T16:23:57+00:00",
+        "discovery_priority_score": 985,
+        "discovery_priority_reason": "Reliable syndication recovery for nuclear-safety event blocked at Reuters origin."
+      },
+      {
+        "url": "https://www.investing.com/news/stock-market-news/milei-finds-unity-in-pushback-against-falkland-islands-oil-project-4890233",
+        "title": "Milei finds unity in pushback against Falkland Islands oil project",
+        "published_at": "2026-09-05T18:34:55+00:00",
+        "discovery_priority_score": 984,
+        "discovery_priority_reason": "Reliable syndication recovery for the transport-blocked Falklands energy-sovereignty report."
+      },
+      {
+        "url": "https://www.investing.com/news/commodities-news/horse-smuggling-exposes-cracks-in-us-defenses-against-screwworm-4890188",
+        "title": "Horse smuggling exposes cracks in US defenses against screwworm",
+        "published_at": "2026-09-05T10:00:01+00:00",
+        "discovery_priority_score": 983,
+        "discovery_priority_reason": "Reliable syndication recovery for the transport-blocked animal-health investigation."
+      },
+      {
+        "url": "https://www.investing.com/news/world-news/nato-will-not-tolerate-hybrid-actions-against-members-us-envoy-says-4890214",
+        "title": "NATO will not tolerate hybrid actions against members, US envoy says",
+        "published_at": "2026-09-05T15:15:23+00:00",
+        "discovery_priority_score": 982,
+        "discovery_priority_reason": "Reliable syndication recovery for the transport-blocked NATO hybrid-security report."
+      },
+      {
+        "url": "https://www.streetinsider.com/Reuters/Israeli%2Bstrikes%2Bkill%2Bfour%2Bin%2Bsouthern%2BLebanon/27031165.html",
+        "title": "Israeli strikes kill four in southern Lebanon",
+        "published_at": "2026-09-06T04:15:36+00:00",
+        "discovery_priority_score": 981,
+        "discovery_priority_reason": "Syndicated same-event recovery for transport-blocked Reuters Lebanon report."
+      },
+      {
+        "url": "https://www.thenationalnews.com/business/energy/2026/09/06/opec-keeps-oil-output-policy-unchanged-for-october-amid-iran-war-uncertainty/",
+        "title": "Opec+ keeps oil output policy unchanged for October amid Iran war uncertainty",
+        "published_at": "2026-09-06T07:37:33+00:00",
+        "discovery_priority_score": 980,
+        "discovery_priority_reason": "Independent regional energy-media recovery for the transport-blocked Reuters OPEC+ decision row."
       }
     ],
-    "selected_for_pool_count": 11,
+    "selected_for_pool_count": 20,
     "selected_item_urls": [
       "https://apnews.com/article/a52beec77dc90af3d040d0553837ad20",
       "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06/",
@@ -8471,7 +8534,16 @@
       "https://www.reuters.com/world/nato-will-not-tolerate-hybrid-actions-against-members-us-envoy-says-2026-09-05/",
       "https://www.reuters.com/business/energy/brokered-ceasefire-takes-effect-repairs-zaporizhzhia-nuclear-plant-2026-09-05/",
       "https://www.reuters.com/business/energy/milei-finds-unity-pushback-against-falkland-islands-oil-project-2026-09-05/",
-      "https://www.reuters.com/world/americas/border-with-horse-smugglers-screwworm-2026-09-05/"
+      "https://www.reuters.com/world/americas/border-with-horse-smugglers-screwworm-2026-09-05/",
+      "https://apnews.com/article/12c3cb67859b2c51054b378d60148d33",
+      "https://apnews.com/article/c538060710a2495c72425b6468df0d40",
+      "https://www.investing.com/news/world-news/putin-says-usrussia-contacts-beneficial-as-talks-begin-with-witkoff-and-kushner-4890226",
+      "https://hk.marketscreener.com/news/brokered-ceasefire-takes-effect-for-repairs-at-zaporizhzhia-nuclear-plant-ce785bdbda8cf121",
+      "https://www.investing.com/news/stock-market-news/milei-finds-unity-in-pushback-against-falkland-islands-oil-project-4890233",
+      "https://www.investing.com/news/commodities-news/horse-smuggling-exposes-cracks-in-us-defenses-against-screwworm-4890188",
+      "https://www.investing.com/news/world-news/nato-will-not-tolerate-hybrid-actions-against-members-us-envoy-says-4890214",
+      "https://www.streetinsider.com/Reuters/Israeli%2Bstrikes%2Bkill%2Bfour%2Bin%2Bsouthern%2BLebanon/27031165.html",
+      "https://www.thenationalnews.com/business/energy/2026/09/06/opec-keeps-oil-output-policy-unchanged-for-october-amid-iran-war-uncertainty/"
     ],
     "discovery_ranking_completed": true,
     "discovery_ranking_method": "bounded_host_search_rank_v1",

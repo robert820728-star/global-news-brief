@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0",
+  "operation": "web_fallback_materialize",
+  "run_id": "gnb-20260906T081308Z-5e7a3c91",
+  "main_sha": "4162e5a1b2352d0ccd285c5b4aec09421f2e8757",
+  "window": {
+    "start": "2026-09-05T08:13:08+00:00",
+    "end": "2026-09-06T08:13:08+00:00"
+  },
+  "batch_sequence": 2,
+  "search_provider": "host_web_search",
+  "search_query": "same-event alternative-source recovery for Reuters rows blocked by 401 in GitHub Actions",
+  "search_evidence_url": "https://apnews.com/article/12c3cb67859b2c51054b378d60148d33",
+  "searched_at": "2026-09-06T14:42:00+00:00",
+  "primary_failure_evidence": [
+    "configured GDELT primary aggregator unavailable in mobile-native host",
+    "nine admitted Reuters global fallback URLs returned HTTP 401 in canonical GitHub Actions hydration and again on same-host trailing-slash retry"
+  ],
+  "terminal_reason": "bounded_source_substitution_complete",
+  "results": [
+    {
+      "result_id": "result-012",
+      "search_rank": 12,
+      "url": "https://apnews.com/article/12c3cb67859b2c51054b378d60148d33",
+      "title": "Indonesia cancels flights at Jakarta airport and others as Anak Krakatau volcano erupts",
+      "summary": "AP reported widespread airport closures and flight disruption after Anak Krakatau erupted and ash spread across western Indonesia.",
+      "published_at": "2026-09-06T01:46:14+00:00",
+      "url_evidence": "AP canonical article URL returned by host web search",
+      "published_evidence": "AP article timestamp: Sun Sep 6 01:46:14 2026 UTC",
+      "discovery_priority_reason": "Alternative reliable same-event source for the Reuters Krakatau row blocked by transport; semantic deduplication required later.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "result-013",
+      "search_rank": 13,
+      "url": "https://apnews.com/article/c538060710a2495c72425b6468df0d40",
+      "title": "German region votes in election that could bring first far-right state government to power",
+      "summary": "AP covered Saxony-Anhalt's election and the possibility of the AfD forming Germany's first far-right state government since World War II.",
+      "published_at": "2026-09-06T06:08:23+00:00",
+      "url_evidence": "AP canonical article URL returned by host web search",
+      "published_evidence": "AP article timestamp: Sun Sep 6 06:08:23 2026 UTC",
+      "discovery_priority_reason": "Alternative reliable same-event source for the Reuters Saxony-Anhalt row blocked by transport.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "result-014",
+      "search_rank": 14,
+      "url": "https://www.investing.com/news/world-news/putin-says-usrussia-contacts-beneficial-as-talks-begin-with-witkoff-and-kushner-4890226",
+      "title": "Putin says US-Russia contacts beneficial as talks begin with Witkoff and Kushner",
+      "summary": "Investing.com carries the Reuters report on Putin meeting U.S. envoys in Moscow over efforts to end the Ukraine war.",
+      "published_at": "2026-09-05T17:52:13+00:00",
+      "url_evidence": "Investing.com Reuters syndication page returned by host web search",
+      "published_evidence": "Original Reuters timestamp 17:52:13 UTC; syndication page displays Sep 05 2026 01:52 PM",
+      "discovery_priority_reason": "Reliable syndication recovery for a transport-blocked original wire URL; semantic deduplication required later.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "result-015",
+      "search_rank": 15,
+      "url": "https://hk.marketscreener.com/news/brokered-ceasefire-takes-effect-for-repairs-at-zaporizhzhia-nuclear-plant-ce785bdbda8cf121",
+      "title": "Brokered ceasefire takes effect for repairs at Zaporizhzhia nuclear plant",
+      "summary": "MarketScreener carries the Reuters report that an IAEA-brokered local ceasefire began to permit critical external-power repairs at Zaporizhzhia nuclear plant.",
+      "published_at": "2026-09-05T16:23:57+00:00",
+      "url_evidence": "MarketScreener Reuters syndication page returned by host web search",
+      "published_evidence": "Original Reuters timestamp 16:23:57 UTC; syndication page displays Sep 6 00:20 HKT",
+      "discovery_priority_reason": "Reliable syndication recovery for nuclear-safety event blocked at Reuters origin.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "result-016",
+      "search_rank": 16,
+      "url": "https://www.investing.com/news/stock-market-news/milei-finds-unity-in-pushback-against-falkland-islands-oil-project-4890233",
+      "title": "Milei finds unity in pushback against Falkland Islands oil project",
+      "summary": "Investing.com carries the Reuters report on Argentina's push for tougher sanctions against firms drilling near the Falklands.",
+      "published_at": "2026-09-05T18:34:55+00:00",
+      "url_evidence": "Investing.com Reuters syndication page returned by host web search",
+      "published_evidence": "Original Reuters timestamp 18:34:55 UTC; syndication page displays Sep 05 2026 02:34 PM",
+      "discovery_priority_reason": "Reliable syndication recovery for the transport-blocked Falklands energy-sovereignty report.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "result-017",
+      "search_rank": 17,
+      "url": "https://www.investing.com/news/commodities-news/horse-smuggling-exposes-cracks-in-us-defenses-against-screwworm-4890188",
+      "title": "Horse smuggling exposes cracks in US defenses against screwworm",
+      "summary": "Investing.com carries the Reuters investigation into livestock smuggling and New World screwworm biosecurity risk on the U.S.-Mexico border.",
+      "published_at": "2026-09-05T10:00:01+00:00",
+      "url_evidence": "Investing.com Reuters syndication page returned by host web search",
+      "published_evidence": "Original Reuters timestamp 10:00:01 UTC; syndication page displays Sep 05 2026 06:07 AM",
+      "discovery_priority_reason": "Reliable syndication recovery for the transport-blocked animal-health investigation.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "result-018",
+      "search_rank": 18,
+      "url": "https://www.investing.com/news/world-news/nato-will-not-tolerate-hybrid-actions-against-members-us-envoy-says-4890214",
+      "title": "NATO will not tolerate hybrid actions against members, US envoy says",
+      "summary": "Investing.com carries the Reuters report of the U.S. NATO ambassador warning against deliberate hybrid attacks after the Leipzig drone incident.",
+      "published_at": "2026-09-05T15:15:23+00:00",
+      "url_evidence": "Investing.com Reuters syndication page returned by host web search",
+      "published_evidence": "Original Reuters timestamp 15:15:23 UTC; syndication page displays Sep 05 2026 11:15 AM",
+      "discovery_priority_reason": "Reliable syndication recovery for the transport-blocked NATO hybrid-security report.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "result-019",
+      "search_rank": 19,
+      "url": "https://www.streetinsider.com/Reuters/Israeli%2Bstrikes%2Bkill%2Bfour%2Bin%2Bsouthern%2BLebanon/27031165.html",
+      "title": "Israeli strikes kill four in southern Lebanon",
+      "summary": "StreetInsider carries the Reuters report on Israeli strikes in southern Lebanon that killed four people amid retaliation for alleged Hezbollah drone attacks.",
+      "published_at": "2026-09-06T04:15:36+00:00",
+      "url_evidence": "StreetInsider Reuters syndication page returned by host web search",
+      "published_evidence": "Original Reuters timestamp 04:15:36 UTC; syndication page displays Sep 6 2026 12:15 AM EDT",
+      "discovery_priority_reason": "Syndicated same-event recovery for transport-blocked Reuters Lebanon report.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "result-020",
+      "search_rank": 20,
+      "url": "https://www.thenationalnews.com/business/energy/2026/09/06/opec-keeps-oil-output-policy-unchanged-for-october-amid-iran-war-uncertainty/",
+      "title": "Opec+ keeps oil output policy unchanged for October amid Iran war uncertainty",
+      "summary": "The National reported that OPEC+ kept October oil output unchanged after six consecutive monthly increases, amid uncertainty from the Iran war.",
+      "published_at": "2026-09-06T07:37:33+00:00",
+      "url_evidence": "The National same-event article returned by host web search",
+      "published_evidence": "Same-event original Reuters decision report timestamp 07:37:33 UTC; The National article is dated September 06 2026",
+      "discovery_priority_reason": "Independent regional energy-media recovery for the transport-blocked Reuters OPEC+ decision row.",
+      "section": "GLB"
+    }
+  ]
+}

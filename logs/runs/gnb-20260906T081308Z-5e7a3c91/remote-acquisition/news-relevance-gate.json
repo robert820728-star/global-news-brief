@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
-  "input_article_row_count": 566,
+  "input_article_row_count": 575,
   "content_hydration_count": 555,
-  "lightweight_semantic_review_count": 11,
+  "lightweight_semantic_review_count": 20,
   "decisions": [
     {
       "row_id": "row-083c5c4e330738750a8baeb6",
@@ -2876,6 +2876,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-5128efaaac4252c75996f046",
+      "candidate_id": "b3abe1fddbd3be2523e5",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.thenationalnews.com/business/energy/2026/09/06/opec-keeps-oil-output-policy-unchanged-for-october-amid-iran-war-uncertainty",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-c6ba5f26cb9b9cec19790bea",
       "candidate_id": "07ec63a51b135be12955",
       "source_id": "web_fallback",
@@ -2964,6 +2975,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-4d237493c9e3938bf8aaa8a6",
+      "candidate_id": "63b4ec5ea6606c2ea93c",
+      "source_id": "web_fallback",
+      "canonical_url": "https://apnews.com/article/c538060710a2495c72425b6468df0d40",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-4b553947ccf0d6e9ac15bd9a",
       "candidate_id": "2abdcb7c81e6a5439e8b",
       "source_id": "cna",
@@ -2971,6 +2993,17 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-95be2ec9b831b6644ce2df0c",
+      "candidate_id": "75da91e2f1e4477820c2",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.streetinsider.com/Reuters/Israeli%2Bstrikes%2Bkill%2Bfour%2Bin%2Bsouthern%2BLebanon/27031165.html",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     },
@@ -3026,6 +3059,17 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-6bd9c6775eee9c80930c16b7",
+      "candidate_id": "c8b94050b6fb63479e10",
+      "source_id": "web_fallback",
+      "canonical_url": "https://apnews.com/article/12c3cb67859b2c51054b378d60148d33",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     },
@@ -5175,6 +5219,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-2b33e93e7e67c1757ccb9ae2",
+      "candidate_id": "b30dd22a617d4c6b51e0",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.investing.com/news/stock-market-news/milei-finds-unity-in-pushback-against-falkland-islands-oil-project-4890233",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-ae7df6f6e8540387d37b3496",
       "candidate_id": "45daa2e7608597d48e08",
       "source_id": "chinanews",
@@ -5355,6 +5410,17 @@
       "candidate_id": "3ebf7ebf72212bb743e5",
       "source_id": "web_fallback",
       "canonical_url": "https://www.reuters.com/world/europe/putin-says-us-russia-contacts-beneficial-talks-begin-with-witkoff-kushner-2026-09-05",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-dc190ca9afe81ed8ff2685f3",
+      "candidate_id": "2916d514987c61b689b3",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.investing.com/news/world-news/putin-says-usrussia-contacts-beneficial-as-talks-begin-with-witkoff-and-kushner-4890226",
       "route": "lightweight_semantic_review",
       "reasons": [
         "no_relevance_or_heat_signal"
@@ -6088,6 +6154,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-02df2dcd24f22fbb7f12350d",
+      "candidate_id": "b8fb256c25c35e1ef905",
+      "source_id": "web_fallback",
+      "canonical_url": "https://hk.marketscreener.com/news/brokered-ceasefire-takes-effect-for-repairs-at-zaporizhzhia-nuclear-plant-ce785bdbda8cf121",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-35dde839375dac1802477bfa",
       "candidate_id": "8f51b37e53ceef964b59",
       "source_id": "cna",
@@ -6220,10 +6297,32 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-b6ff087bab2060fa2d93a785",
+      "candidate_id": "80d0b6e78408c8579fa9",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.investing.com/news/world-news/nato-will-not-tolerate-hybrid-actions-against-members-us-envoy-says-4890214",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-06e378418543329b7a33d805",
       "candidate_id": "cda04aaccfadc3c50dbb",
       "source_id": "web_fallback",
       "canonical_url": "https://www.reuters.com/world/americas/border-with-horse-smugglers-screwworm-2026-09-05",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-2219dcf0bc0c2cba9366d61c",
+      "candidate_id": "44e0c4aa88bb90f79499",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.investing.com/news/commodities-news/horse-smuggling-exposes-cracks-in-us-defenses-against-screwworm-4890188",
       "route": "lightweight_semantic_review",
       "reasons": [
         "no_relevance_or_heat_signal"
