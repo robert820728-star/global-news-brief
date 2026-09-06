@@ -8367,5 +8367,117 @@
     "scan_window_start": "2026-09-05T08:13:08+00:00",
     "scan_window_end": "2026-09-06T08:13:08+00:00",
     "scan_evidence_path": "/home/runner/work/global-news-brief/global-news-brief/runlogs/logs/runs/gnb-20260906T081308Z-5e7a3c91/remote-acquisition/source-scans/chinanews.json"
+  },
+  {
+    "source_id": "web_fallback",
+    "scan_status": "completed",
+    "coverage_complete": false,
+    "coverage_status": "degraded_partial",
+    "coverage_reason": "configured primary aggregator unavailable; bounded verified host web fallback materialized",
+    "missing_segments": [
+      "configured_primary_aggregator_unavailable"
+    ],
+    "missing_date_variants": [],
+    "within_window_count": 11,
+    "ranked_count": 11,
+    "ranked_items": [
+      {
+        "url": "https://apnews.com/article/a52beec77dc90af3d040d0553837ad20",
+        "title": "Iran claims a strike on a US ship in the Strait of Hormuz but the US denies it",
+        "published_at": "2026-09-06T07:03:35+00:00",
+        "discovery_priority_score": 999,
+        "discovery_priority_reason": "Major interstate military escalation affecting a globally critical shipping chokepoint; admitted for semantic review only, not pre-scored."
+      },
+      {
+        "url": "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06/",
+        "title": "Indonesia's Anak Krakatau eruption halts flights, schools, fishing",
+        "published_at": "2026-09-06T00:27:19+00:00",
+        "discovery_priority_score": 998,
+        "discovery_priority_reason": "Large natural hazard with aviation and public-safety disruption; admitted for semantic review only."
+      },
+      {
+        "url": "https://www.reuters.com/business/energy/opec-set-keep-oil-output-policy-unchanged-sunday-sources-say-2026-09-06/",
+        "title": "OPEC+ keeps oil output policy unchanged for October",
+        "published_at": "2026-09-06T07:37:33+00:00",
+        "discovery_priority_score": 997,
+        "discovery_priority_reason": "Global energy-market policy decision with broad economic relevance; admitted for semantic review only."
+      },
+      {
+        "url": "https://www.reuters.com/world/germanys-far-right-afd-seeks-landmark-state-victory-saxony-anhalt-votes-2026-09-06/",
+        "title": "Germany's AfD chases historic breakthrough as Saxony-Anhalt votes",
+        "published_at": "2026-09-06T00:06:07+00:00",
+        "discovery_priority_score": 996,
+        "discovery_priority_reason": "Potentially structural electoral event in a major EU state; admitted for semantic review only."
+      },
+      {
+        "url": "https://apnews.com/article/44bba3b57b480560d9f48dba7d28534e",
+        "title": "US envoys Witkoff and Kushner arrive in Kyiv after talks with Putin in Moscow",
+        "published_at": "2026-09-06T07:53:56+00:00",
+        "discovery_priority_score": 995,
+        "discovery_priority_reason": "Current diplomatic effort concerning the Russia-Ukraine war; admitted for semantic review only."
+      },
+      {
+        "url": "https://www.reuters.com/world/middle-east/israeli-military-says-it-strikes-southern-lebanon-after-hezbollah-launched-2026-09-06/",
+        "title": "Israeli strikes kill four in southern Lebanon",
+        "published_at": "2026-09-06T04:15:36+00:00",
+        "discovery_priority_score": 994,
+        "discovery_priority_reason": "Renewed lethal cross-border escalation despite ceasefire; admitted for semantic review only."
+      },
+      {
+        "url": "https://www.reuters.com/world/europe/putin-says-us-russia-contacts-beneficial-talks-begin-with-witkoff-kushner-2026-09-05/",
+        "title": "Putin says US-Russia contacts beneficial as talks begin with Witkoff and Kushner",
+        "published_at": "2026-09-05T17:52:13+00:00",
+        "discovery_priority_score": 993,
+        "discovery_priority_reason": "High-level Russia-U.S. diplomacy concerning Ukraine; admitted for later semantic deduplication and review."
+      },
+      {
+        "url": "https://www.reuters.com/world/nato-will-not-tolerate-hybrid-actions-against-members-us-envoy-says-2026-09-05/",
+        "title": "NATO will not tolerate hybrid actions against members, US envoy says",
+        "published_at": "2026-09-05T15:15:23+00:00",
+        "discovery_priority_score": 992,
+        "discovery_priority_reason": "Alliance security and hybrid-threat policy signal; admitted for semantic review only."
+      },
+      {
+        "url": "https://www.reuters.com/business/energy/brokered-ceasefire-takes-effect-repairs-zaporizhzhia-nuclear-plant-2026-09-05/",
+        "title": "Brokered ceasefire takes effect for repairs at Zaporizhzhia nuclear plant",
+        "published_at": "2026-09-05T16:23:57+00:00",
+        "discovery_priority_score": 991,
+        "discovery_priority_reason": "Nuclear-safety event at Europe's largest nuclear power plant; admitted for semantic review only."
+      },
+      {
+        "url": "https://www.reuters.com/business/energy/milei-finds-unity-pushback-against-falkland-islands-oil-project-2026-09-05/",
+        "title": "Milei finds unity in pushback against Falkland Islands oil project",
+        "published_at": "2026-09-05T18:34:55+00:00",
+        "discovery_priority_score": 990,
+        "discovery_priority_reason": "Cross-border sovereignty, sanctions and energy-policy development; admitted for semantic review only."
+      },
+      {
+        "url": "https://www.reuters.com/world/americas/border-with-horse-smugglers-screwworm-2026-09-05/",
+        "title": "On the border with horse smugglers and screwworm",
+        "published_at": "2026-09-05T10:00:01+00:00",
+        "discovery_priority_score": 989,
+        "discovery_priority_reason": "Cross-border animal-health and agricultural biosecurity risk; admitted for semantic review only."
+      }
+    ],
+    "selected_for_pool_count": 11,
+    "selected_item_urls": [
+      "https://apnews.com/article/a52beec77dc90af3d040d0553837ad20",
+      "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06/",
+      "https://www.reuters.com/business/energy/opec-set-keep-oil-output-policy-unchanged-sunday-sources-say-2026-09-06/",
+      "https://www.reuters.com/world/germanys-far-right-afd-seeks-landmark-state-victory-saxony-anhalt-votes-2026-09-06/",
+      "https://apnews.com/article/44bba3b57b480560d9f48dba7d28534e",
+      "https://www.reuters.com/world/middle-east/israeli-military-says-it-strikes-southern-lebanon-after-hezbollah-launched-2026-09-06/",
+      "https://www.reuters.com/world/europe/putin-says-us-russia-contacts-beneficial-talks-begin-with-witkoff-kushner-2026-09-05/",
+      "https://www.reuters.com/world/nato-will-not-tolerate-hybrid-actions-against-members-us-envoy-says-2026-09-05/",
+      "https://www.reuters.com/business/energy/brokered-ceasefire-takes-effect-repairs-zaporizhzhia-nuclear-plant-2026-09-05/",
+      "https://www.reuters.com/business/energy/milei-finds-unity-pushback-against-falkland-islands-oil-project-2026-09-05/",
+      "https://www.reuters.com/world/americas/border-with-horse-smugglers-screwworm-2026-09-05/"
+    ],
+    "discovery_ranking_completed": true,
+    "discovery_ranking_method": "bounded_host_search_rank_v1",
+    "failure_reason": null,
+    "scan_window_start": "2026-09-05T08:13:08+00:00",
+    "scan_window_end": "2026-09-06T08:13:08+00:00",
+    "scan_evidence_path": "/home/runner/work/global-news-brief/global-news-brief/runlogs/logs/runs/gnb-20260906T081308Z-5e7a3c91/remote-acquisition/source-scans/web_fallback.json"
   }
 ]

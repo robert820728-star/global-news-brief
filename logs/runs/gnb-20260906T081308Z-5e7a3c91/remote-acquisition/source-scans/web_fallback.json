@@ -1,0 +1,175 @@
+{
+  "schema_version": "1.0.0",
+  "source_id": "web_fallback",
+  "collector": "verified-web-search-fallback",
+  "generated_at": "2026-09-06T14:31:30+00:00",
+  "window_start": "2026-09-05T08:13:08+00:00",
+  "window_end": "2026-09-06T08:13:08+00:00",
+  "coverage_complete": false,
+  "coverage_status": "degraded_partial",
+  "coverage_reason": "configured primary aggregator unavailable; bounded verified host web fallback materialized",
+  "missing_segments": [
+    "configured_primary_aggregator_unavailable"
+  ],
+  "missing_date_variants": [],
+  "pages": [
+    {
+      "request_url": "https://apnews.com/article/a52beec77dc90af3d040d0553837ad20",
+      "fetched_at": "2026-09-06T14:31:30+00:00",
+      "http_status": 200,
+      "snapshot_path": "/home/runner/work/global-news-brief/global-news-brief/runlogs/logs/runs/gnb-20260906T081308Z-5e7a3c91/remote-acquisition/web-fallback/batch-0001-snapshot.json",
+      "sha256": "d7cc7bc59e2d14a2fb7a26f8d1514971b9b76c59160c9b100f9c49bf60191235",
+      "next_url": null,
+      "extracted_items": [
+        {
+          "result_id": "result-001",
+          "search_rank": 1,
+          "url": "https://apnews.com/article/a52beec77dc90af3d040d0553837ad20",
+          "title": "Iran claims a strike on a US ship in the Strait of Hormuz but the US denies it",
+          "summary": "Iran said it struck an unmanned U.S. vessel trying to enter the Strait of Hormuz; the U.S. military denied the claim amid renewed maritime escalation.",
+          "published_at": "2026-09-06T07:03:35+00:00",
+          "url_evidence": "AP article canonical URL verified by host web search",
+          "published_evidence": "AP result timestamp: Sun Sep 6 07:03:35 2026 UTC",
+          "discovery_priority_reason": "Major interstate military escalation affecting a globally critical shipping chokepoint; admitted for semantic review only, not pre-scored.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-002",
+          "search_rank": 2,
+          "url": "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06/",
+          "title": "Indonesia's Anak Krakatau eruption halts flights, schools, fishing",
+          "summary": "Anak Krakatau's eruption suspended operations at six airports and disrupted hundreds of flights while ash affected schools and fishing.",
+          "published_at": "2026-09-06T00:27:19+00:00",
+          "url_evidence": "Reuters canonical article URL verified by host web search",
+          "published_evidence": "Reuters result timestamp: Sun Sep 6 00:27:19 2026 UTC",
+          "discovery_priority_reason": "Large natural hazard with aviation and public-safety disruption; admitted for semantic review only.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-003",
+          "search_rank": 3,
+          "url": "https://www.reuters.com/business/energy/opec-set-keep-oil-output-policy-unchanged-sunday-sources-say-2026-09-06/",
+          "title": "OPEC+ keeps oil output policy unchanged for October",
+          "summary": "OPEC+ kept October output policy unchanged while war-related disruptions continue to constrain physical oil supply and exports through Hormuz.",
+          "published_at": "2026-09-06T07:37:33+00:00",
+          "url_evidence": "Reuters canonical article URL verified by host web search",
+          "published_evidence": "Reuters result timestamp: Sun Sep 6 07:37:33 2026 UTC",
+          "discovery_priority_reason": "Global energy-market policy decision with broad economic relevance; admitted for semantic review only.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-004",
+          "search_rank": 4,
+          "url": "https://www.reuters.com/world/germanys-far-right-afd-seeks-landmark-state-victory-saxony-anhalt-votes-2026-09-06/",
+          "title": "Germany's AfD chases historic breakthrough as Saxony-Anhalt votes",
+          "summary": "Saxony-Anhalt voted in a closely watched state election in which the AfD had a realistic chance of a historic state-government breakthrough.",
+          "published_at": "2026-09-06T00:06:07+00:00",
+          "url_evidence": "Reuters canonical article URL verified by host web search",
+          "published_evidence": "Reuters result timestamp: Sun Sep 6 00:06:07 2026 UTC",
+          "discovery_priority_reason": "Potentially structural electoral event in a major EU state; admitted for semantic review only.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-005",
+          "search_rank": 5,
+          "url": "https://apnews.com/article/44bba3b57b480560d9f48dba7d28534e",
+          "title": "US envoys Witkoff and Kushner arrive in Kyiv after talks with Putin in Moscow",
+          "summary": "U.S. envoys arrived in Kyiv for their first official Ukraine visit after talks with Vladimir Putin ended without a major announced breakthrough.",
+          "published_at": "2026-09-06T07:53:56+00:00",
+          "url_evidence": "AP article canonical URL verified by host web search",
+          "published_evidence": "AP result timestamp: Sun Sep 6 07:53:56 2026 UTC",
+          "discovery_priority_reason": "Current diplomatic effort concerning the Russia-Ukraine war; admitted for semantic review only.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-006",
+          "search_rank": 6,
+          "url": "https://www.reuters.com/world/middle-east/israeli-military-says-it-strikes-southern-lebanon-after-hezbollah-launched-2026-09-06/",
+          "title": "Israeli strikes kill four in southern Lebanon",
+          "summary": "Israeli strikes killed four people in southern Lebanon amid retaliation for alleged Hezbollah drone attacks despite a June ceasefire.",
+          "published_at": "2026-09-06T04:15:36+00:00",
+          "url_evidence": "Reuters canonical article URL verified by host web search",
+          "published_evidence": "Reuters result timestamp: Sun Sep 6 04:15:36 2026 UTC",
+          "discovery_priority_reason": "Renewed lethal cross-border escalation despite ceasefire; admitted for semantic review only.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-007",
+          "search_rank": 7,
+          "url": "https://www.reuters.com/world/europe/putin-says-us-russia-contacts-beneficial-talks-begin-with-witkoff-kushner-2026-09-05/",
+          "title": "Putin says US-Russia contacts beneficial as talks begin with Witkoff and Kushner",
+          "summary": "Vladimir Putin met U.S. envoys Steve Witkoff and Jared Kushner in Moscow for talks focused on ending the war in Ukraine.",
+          "published_at": "2026-09-05T17:52:13+00:00",
+          "url_evidence": "Reuters canonical article URL verified by host web search",
+          "published_evidence": "Reuters result timestamp: Sat Sep 5 17:52:13 2026 UTC",
+          "discovery_priority_reason": "High-level Russia-U.S. diplomacy concerning Ukraine; admitted for later semantic deduplication and review.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-008",
+          "search_rank": 8,
+          "url": "https://www.reuters.com/world/nato-will-not-tolerate-hybrid-actions-against-members-us-envoy-says-2026-09-05/",
+          "title": "NATO will not tolerate hybrid actions against members, US envoy says",
+          "summary": "The U.S. ambassador to NATO said members should not tolerate deliberate hybrid warfare, citing the Leipzig airport drone incident attributed by Germany to Russia.",
+          "published_at": "2026-09-05T15:15:23+00:00",
+          "url_evidence": "Reuters canonical article URL verified by host web search",
+          "published_evidence": "Reuters result timestamp: Sat Sep 5 15:15:23 2026 UTC",
+          "discovery_priority_reason": "Alliance security and hybrid-threat policy signal; admitted for semantic review only.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-009",
+          "search_rank": 9,
+          "url": "https://www.reuters.com/business/energy/brokered-ceasefire-takes-effect-repairs-zaporizhzhia-nuclear-plant-2026-09-05/",
+          "title": "Brokered ceasefire takes effect for repairs at Zaporizhzhia nuclear plant",
+          "summary": "An IAEA-brokered local ceasefire took effect to enable repairs restoring external power to the Russian-controlled Zaporizhzhia nuclear plant.",
+          "published_at": "2026-09-05T16:23:57+00:00",
+          "url_evidence": "Reuters canonical article URL verified by host web search",
+          "published_evidence": "Reuters result timestamp: Sat Sep 5 16:23:57 2026 UTC",
+          "discovery_priority_reason": "Nuclear-safety event at Europe's largest nuclear power plant; admitted for semantic review only.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-010",
+          "search_rank": 10,
+          "url": "https://www.reuters.com/business/energy/milei-finds-unity-pushback-against-falkland-islands-oil-project-2026-09-05/",
+          "title": "Milei finds unity in pushback against Falkland Islands oil project",
+          "summary": "Argentina's president pushed tougher sanctions against companies involved in Falkland Islands oil drilling, escalating a longstanding sovereignty and energy dispute with Britain.",
+          "published_at": "2026-09-05T18:34:55+00:00",
+          "url_evidence": "Reuters canonical article URL verified by host web search",
+          "published_evidence": "Reuters result timestamp: Sat Sep 5 18:34:55 2026 UTC",
+          "discovery_priority_reason": "Cross-border sovereignty, sanctions and energy-policy development; admitted for semantic review only.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-011",
+          "search_rank": 11,
+          "url": "https://www.reuters.com/world/americas/border-with-horse-smugglers-screwworm-2026-09-05/",
+          "title": "On the border with horse smugglers and screwworm",
+          "summary": "Reuters reported that livestock smuggling across the U.S.-Mexico border is raising concern about spread of New World screwworm and biosecurity gaps.",
+          "published_at": "2026-09-05T10:00:01+00:00",
+          "url_evidence": "Reuters canonical article URL verified by host web search",
+          "published_evidence": "Reuters result timestamp: Sat Sep 5 10:00:01 2026 UTC",
+          "discovery_priority_reason": "Cross-border animal-health and agricultural biosecurity risk; admitted for semantic review only.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        }
+      ]
+    }
+  ],
+  "terminal_proof": {
+    "type": "source_exhausted",
+    "page_index": 1,
+    "terminal_marker": "bounded_search_complete"
+  }
+}
