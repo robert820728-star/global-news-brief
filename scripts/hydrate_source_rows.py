@@ -18,6 +18,7 @@ from urllib.parse import urlsplit
 
 UA = "Mozilla/5.0 CodexNewsValidation/1.0"
 MAX_RESPONSE_BYTES = 8_000_000
+MAX_MODEL_EXCERPT_CHARS = 800
 DATE_KEYS = {
     "article:published_time", "article:modified_time", "datepublished", "datemodified",
     "pubdate", "publishdate", "date", "dcterms.date", "parsely-pub-date",
@@ -38,6 +39,61 @@ class MetaParser(HTMLParser):
                 self.dates.append(a["content"])
         if tag.lower() == "time" and a.get("datetime"):
             self.dates.append(a["datetime"])
+
+
+class EvidenceTextParser(HTMLParser):
+    """Extract a bounded, model-safe article excerpt without storing full HTML."""
+
+    CAPTURE_TAGS = {"h1", "h2", "p"}
+    SKIP_TAGS = {"script", "style", "noscript", "svg", "template"}
+
+    def __init__(self):
+        super().__init__()
+        self.capture_depth = 0
+        self.skip_depth = 0
+        self.parts: list[str] = []
+
+    def handle_starttag(self, tag, attrs):
+        lower = tag.lower()
+        a = {str(k).lower(): str(v or "") for k, v in attrs}
+        if lower in self.SKIP_TAGS:
+            self.skip_depth += 1
+        if lower in self.CAPTURE_TAGS:
+            self.capture_depth += 1
+        if lower == "meta":
+            key = (a.get("property") or a.get("name") or "").lower()
+            if key in {"description", "og:description", "twitter:description"} and a.get("content"):
+                self.parts.append(a["content"])
+
+    def handle_endtag(self, tag):
+        lower = tag.lower()
+        if lower in self.CAPTURE_TAGS and self.capture_depth:
+            self.capture_depth -= 1
+        if lower in self.SKIP_TAGS and self.skip_depth:
+            self.skip_depth -= 1
+
+    def handle_data(self, data):
+        if self.capture_depth and not self.skip_depth:
+            self.parts.append(data)
+
+
+def model_excerpt(text: str) -> str:
+    parser = EvidenceTextParser()
+    try:
+        parser.feed(text)
+    except Exception:
+        pass
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for raw in parser.parts:
+        value = re.sub(r"\s+", " ", html.unescape(str(raw))).strip()
+        if not value or value in seen:
+            continue
+        seen.add(value)
+        normalized.append(value)
+        if sum(len(part) + 1 for part in normalized) >= MAX_MODEL_EXCERPT_CHARS:
+            break
+    return " ".join(normalized)[:MAX_MODEL_EXCERPT_CHARS].strip()
 
 
 def parse_dt(raw: str) -> datetime | None:
@@ -92,8 +148,7 @@ def _same_source(url: str, source_id: str) -> bool:
     return bool(
         public_fallback or (
         root and parts.scheme.lower() == "https"
-        and parts.username is None
-        and parts.password is None
+        and parts.username is None and parts.password is None
         and port in {None, 443}
         and (host == root or host.endswith("." + root))
         )
@@ -207,6 +262,7 @@ def hydrate(
             data, final, ctype = fetch(requested_url, source_id)
             content_hash = hashlib.sha256(data).hexdigest()
             text = _decode(data, ctype)
+            excerpt = model_excerpt(text)
             d, raw = body_date(text)
             if d is None:
                 out.append({
@@ -218,6 +274,7 @@ def hydrate(
                     "article_body_published_at": None,
                     "article_body_timestamp_evidence": None,
                     "article_body_evidence_url": final,
+                    "model_excerpt": excerpt,
                     "error": "authoritative article-body publication timestamp not found; same-source recovery remains",
                 })
                 continue
@@ -229,6 +286,7 @@ def hydrate(
                 "article_body_published_at": d.isoformat(),
                 "article_body_timestamp_evidence": raw,
                 "article_body_evidence_url": final,
+                "model_excerpt": excerpt,
                 "error": None,
             }
             record["status"] = "content_ready" if start <= d <= end else "outside_window"
@@ -243,6 +301,7 @@ def hydrate(
                 "article_body_published_at": None,
                 "article_body_timestamp_evidence": None,
                 "article_body_evidence_url": None,
+                "model_excerpt": None,
                 "error": f"{type(e).__name__}: {e}"[:1000],
             })
     return out
