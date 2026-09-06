@@ -7092,5 +7092,157 @@
     "scan_window_start": "2026-09-05T22:27:28Z",
     "scan_window_end": "2026-09-06T22:27:28Z",
     "scan_evidence_path": "/home/runner/work/global-news-brief/global-news-brief/runlogs/logs/runs/gnb-20260906T222728Z-9f3c7a21/remote-acquisition/source-scans/chinanews.json"
+  },
+  {
+    "source_id": "web_fallback",
+    "scan_status": "completed",
+    "coverage_complete": false,
+    "coverage_status": "degraded_partial",
+    "coverage_reason": "configured primary aggregator unavailable; bounded verified host web fallback materialized",
+    "missing_segments": [
+      "configured_primary_aggregator_unavailable"
+    ],
+    "missing_date_variants": [],
+    "within_window_count": 16,
+    "ranked_count": 16,
+    "ranked_items": [
+      {
+        "url": "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06/",
+        "title": "Indonesia's Anak Krakatau eruption halts flights, schools, fishing",
+        "published_at": "2026-09-06T00:27:00Z",
+        "discovery_priority_score": 999,
+        "discovery_priority_reason": "Large aviation disruption, active volcanic hazard and public-safety effects."
+      },
+      {
+        "url": "https://www.reuters.com/world/germanys-far-right-afd-seeks-landmark-state-victory-saxony-anhalt-votes-2026-09-06/",
+        "title": "Far-right AfD wins historic victory in German state election",
+        "published_at": "2026-09-06T00:06:00Z",
+        "discovery_priority_score": 998,
+        "discovery_priority_reason": "Historic electoral shift with national institutional and coalition implications."
+      },
+      {
+        "url": "https://www.reuters.com/business/aerospace-defense/amazon-prime-air-boeing-767-overruns-runway-miami-airport-2026-09-06/",
+        "title": "At least 5 killed in Amazon Prime Air cargo plane crash in Miami",
+        "published_at": "2026-09-06T19:36:00Z",
+        "discovery_priority_score": 997,
+        "discovery_priority_reason": "Fatal aviation accident at a major international airport with operational disruption."
+      },
+      {
+        "url": "https://www.reuters.com/world/china/flood-destroyed-china-nepal-border-no-sign-once-busy-port-reuters-witnesses-2026-09-06/",
+        "title": "At flood-destroyed border, China teams scour ruins of once-busy port",
+        "published_at": "2026-09-06T07:31:00Z",
+        "discovery_priority_score": 996,
+        "discovery_priority_reason": "Material rescue and casualty update in an ongoing mass-casualty cross-border disaster."
+      },
+      {
+        "url": "https://www.reuters.com/world/middle-east/iran-tackle-economic-issues-says-further-attacks-will-be-more-painful-2026-09-06/",
+        "title": "Iran to tackle economic issues, says further attacks will be 'more painful'",
+        "published_at": "2026-09-06T11:42:00Z",
+        "discovery_priority_score": 995,
+        "discovery_priority_reason": "Active interstate military escalation and potential disruption around a globally important energy chokepoint."
+      },
+      {
+        "url": "https://www.reuters.com/world/middle-east/israeli-military-says-it-strikes-southern-lebanon-after-hezbollah-launched-2026-09-06/",
+        "title": "Israeli strikes kill seven in southern Lebanon",
+        "published_at": "2026-09-06T04:15:00Z",
+        "discovery_priority_score": 994,
+        "discovery_priority_reason": "Fatal military escalation during an active ceasefire framework."
+      },
+      {
+        "url": "https://www.reuters.com/business/aerospace-defense/us-envoys-make-first-kyiv-visit-amid-ukraine-war-peace-push-2026-09-06/",
+        "title": "US envoys hope for new Ukraine-Russia talks soon after visits to both capitals",
+        "published_at": "2026-09-06T11:09:00Z",
+        "discovery_priority_score": 993,
+        "discovery_priority_reason": "Fresh diplomatic initiative in an ongoing major war, with a limited operational de-escalation signal."
+      },
+      {
+        "url": "https://www.reuters.com/legal/government/trump-administration-renews-supreme-court-bid-limit-mail-in-voting-2026-09-06/",
+        "title": "Trump administration renews Supreme Court bid to limit mail-in voting",
+        "published_at": "2026-09-06T16:28:00Z",
+        "discovery_priority_score": 992,
+        "discovery_priority_reason": "National election-administration dispute before voting begins broadly, with Supreme Court intervention sought."
+      },
+      {
+        "url": "https://www.reuters.com/world/india/six-rescued-after-multi-storey-building-collapses-indias-delhi-ani-reports-2026-09-06/",
+        "title": "Six rescued after multi-storey building collapses in India's Delhi, ANI reports",
+        "published_at": "2026-09-06T13:52:00Z",
+        "discovery_priority_score": 991,
+        "discovery_priority_reason": "Active urban rescue operation with uncertain remaining occupancy."
+      },
+      {
+        "url": "https://www.reuters.com/business/energy/opec-set-keep-oil-output-policy-unchanged-sunday-sources-say-2026-09-06/",
+        "title": "OPEC+ keeps oil output policy unchanged for October",
+        "published_at": "2026-09-06T07:37:00Z",
+        "discovery_priority_score": 990,
+        "discovery_priority_reason": "Global oil-supply governance decision during an active regional war affecting energy markets."
+      },
+      {
+        "url": "https://www.reuters.com/world/middle-east/israeli-strike-kills-two-people-gaza-medics-say-2026-09-06/",
+        "title": "Israeli strike kills a man and his daughter in Gaza, medics say",
+        "published_at": "2026-09-06T15:00:00Z",
+        "discovery_priority_score": 989,
+        "discovery_priority_reason": "Fatal ceasefire-period military incident with civilian casualties."
+      },
+      {
+        "url": "https://www.reuters.com/business/energy/irans-government-raise-fuel-price-heavy-users-2026-09-06/",
+        "title": "Iran's government to raise fuel price for heavy users",
+        "published_at": "2026-09-06T19:13:00Z",
+        "discovery_priority_score": 988,
+        "discovery_priority_reason": "Domestic energy-price policy change under wartime economic pressure."
+      },
+      {
+        "url": "https://www.reuters.com/world/china/nepali-woman-found-alive-days-after-family-began-mourning-rites-2026-09-06/",
+        "title": "Nepali woman found alive days after family began mourning rites",
+        "published_at": "2026-09-06T13:15:00Z",
+        "discovery_priority_score": 987,
+        "discovery_priority_reason": "New rescue milestone within an ongoing mass-casualty disaster."
+      },
+      {
+        "url": "https://www.reuters.com/world/asia-pacific/china-pump-47-bln-into-state-banks-insurers-capital-boosting-push-2026-09-06/",
+        "title": "China to pump $54 billion into state banks, insurers in capital-boosting push",
+        "published_at": "2026-09-06T09:12:00Z",
+        "discovery_priority_score": 986,
+        "discovery_priority_reason": "Large coordinated state recapitalisation across systemically important banks and insurers."
+      },
+      {
+        "url": "https://www.reuters.com/business/media-telecom/germany-plans-anti-sabotage-shield-after-airport-drone-attack-bild-reports-2026-09-06/",
+        "title": "Germany plans anti-sabotage shield after airport drone attack",
+        "published_at": "2026-09-06T07:15:00Z",
+        "discovery_priority_score": 985,
+        "discovery_priority_reason": "National critical-infrastructure and cybersecurity policy response to alleged hybrid threats."
+      },
+      {
+        "url": "https://www.reuters.com/business/media-telecom/south-koreas-lee-chang-dong-tackles-labour-trauma-venice-comeback-2026-09-06/",
+        "title": "South Korea's Lee Chang-dong tackles labour trauma in Venice comeback",
+        "published_at": "2026-09-06T14:06:00Z",
+        "discovery_priority_score": 984,
+        "discovery_priority_reason": "Cultural event with explicit labour-history and social-impact relevance; retained for later model scoring rather than prefiltered by category."
+      }
+    ],
+    "selected_for_pool_count": 16,
+    "selected_item_urls": [
+      "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06/",
+      "https://www.reuters.com/world/germanys-far-right-afd-seeks-landmark-state-victory-saxony-anhalt-votes-2026-09-06/",
+      "https://www.reuters.com/business/aerospace-defense/amazon-prime-air-boeing-767-overruns-runway-miami-airport-2026-09-06/",
+      "https://www.reuters.com/world/china/flood-destroyed-china-nepal-border-no-sign-once-busy-port-reuters-witnesses-2026-09-06/",
+      "https://www.reuters.com/world/middle-east/iran-tackle-economic-issues-says-further-attacks-will-be-more-painful-2026-09-06/",
+      "https://www.reuters.com/world/middle-east/israeli-military-says-it-strikes-southern-lebanon-after-hezbollah-launched-2026-09-06/",
+      "https://www.reuters.com/business/aerospace-defense/us-envoys-make-first-kyiv-visit-amid-ukraine-war-peace-push-2026-09-06/",
+      "https://www.reuters.com/legal/government/trump-administration-renews-supreme-court-bid-limit-mail-in-voting-2026-09-06/",
+      "https://www.reuters.com/world/india/six-rescued-after-multi-storey-building-collapses-indias-delhi-ani-reports-2026-09-06/",
+      "https://www.reuters.com/business/energy/opec-set-keep-oil-output-policy-unchanged-sunday-sources-say-2026-09-06/",
+      "https://www.reuters.com/world/middle-east/israeli-strike-kills-two-people-gaza-medics-say-2026-09-06/",
+      "https://www.reuters.com/business/energy/irans-government-raise-fuel-price-heavy-users-2026-09-06/",
+      "https://www.reuters.com/world/china/nepali-woman-found-alive-days-after-family-began-mourning-rites-2026-09-06/",
+      "https://www.reuters.com/world/asia-pacific/china-pump-47-bln-into-state-banks-insurers-capital-boosting-push-2026-09-06/",
+      "https://www.reuters.com/business/media-telecom/germany-plans-anti-sabotage-shield-after-airport-drone-attack-bild-reports-2026-09-06/",
+      "https://www.reuters.com/business/media-telecom/south-koreas-lee-chang-dong-tackles-labour-trauma-venice-comeback-2026-09-06/"
+    ],
+    "discovery_ranking_completed": true,
+    "discovery_ranking_method": "bounded_host_search_rank_v1",
+    "failure_reason": null,
+    "scan_window_start": "2026-09-05T22:27:28Z",
+    "scan_window_end": "2026-09-06T22:27:28Z",
+    "scan_evidence_path": "/home/runner/work/global-news-brief/global-news-brief/runlogs/logs/runs/gnb-20260906T222728Z-9f3c7a21/remote-acquisition/source-scans/web_fallback.json"
   }
 ]

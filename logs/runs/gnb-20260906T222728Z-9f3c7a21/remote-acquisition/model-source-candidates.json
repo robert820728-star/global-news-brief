@@ -2,10 +2,11 @@
   "schema_version": "1.0.0",
   "window_start": "2026-09-05T22:27:28+00:00",
   "window_end": "2026-09-06T22:27:28+00:00",
-  "source_count": 2,
+  "source_count": 3,
   "sources": [
     "chinanews",
-    "cna"
+    "cna",
+    "web_fallback"
   ],
   "items": [
     {
@@ -10819,7 +10820,7 @@
       "page_index": 1
     }
   ],
-  "discovery_article_row_count": 470,
+  "discovery_article_row_count": 486,
   "admitted_article_row_count": 470,
   "relevance_gate_schema_version": "1.0.0"
 }
