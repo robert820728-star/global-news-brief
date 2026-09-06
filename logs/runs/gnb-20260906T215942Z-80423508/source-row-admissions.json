@@ -3,8 +3,8 @@
   "run_id": "gnb-20260906T215942Z-80423508",
   "window_start": "2026-09-05T21:59:42+00:00",
   "window_end": "2026-09-06T21:59:42+00:00",
-  "source_row_count": 471,
-  "admitted_row_count": 471,
+  "source_row_count": 483,
+  "admitted_row_count": 483,
   "rows": [
     {
       "row_id": "row-29deef612c7b1d95b41dc5bf",
@@ -1575,6 +1575,42 @@
       "failure_evidence": null
     },
     {
+      "row_id": "row-1ed718ba5a00c710d88096e1",
+      "candidate_id": "c2112dd486feaba025a6",
+      "provisional_group_id": "group-b033da25229bb0a79ffe20d7",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/world/asia-pacific/north-koreas-kim-jong-un-says-new-destroyer-will-be-part-nuclear-response-system-2026-09-06/",
+      "canonical_url": "https://www.reuters.com/world/asia-pacific/north-koreas-kim-jong-un-says-new-destroyer-will-be-part-nuclear-response-system-2026-09-06",
+      "listing_published_at": "2026-09-06T21:32:00+00:00",
+      "listing_timestamp_evidence": "Reuters publication timestamp: 2026-09-06 21:32 UTC.",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/world/asia-pacific/north-koreas-kim-jong-un-says-new-destroyer-will-be-part-nuclear-response-system-2026-09-06",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      }
+    },
+    {
       "row_id": "row-6963ebaabec7d1b2268c7ba7",
       "candidate_id": "743dc3fe655f9c631e72",
       "provisional_group_id": "group-9bfddbdff6e60baa7ecc958f",
@@ -2889,6 +2925,42 @@
       "article_body_evidence_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691550.shtml",
       "content_sha256": "9b16c83bd13426d7874d3b6e12096ac4a4c32b40db4333cb9f13fce6a38030ea",
       "failure_evidence": null
+    },
+    {
+      "row_id": "row-1083d228b54e6d9ea49b62b7",
+      "candidate_id": "29b22aae6bb48f3ded2d",
+      "provisional_group_id": "group-42aab9f6d8dd33926f4d79b9",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/business/aerospace-defense/amazon-prime-air-boeing-767-overruns-runway-miami-airport-2026-09-06/",
+      "canonical_url": "https://www.reuters.com/business/aerospace-defense/amazon-prime-air-boeing-767-overruns-runway-miami-airport-2026-09-06",
+      "listing_published_at": "2026-09-06T19:36:00+00:00",
+      "listing_timestamp_evidence": "Reuters publication timestamp: 2026-09-06 19:36 UTC.",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/business/aerospace-defense/amazon-prime-air-boeing-767-overruns-runway-miami-airport-2026-09-06",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      }
     },
     {
       "row_id": "row-55b7d69b147e87b25673c288",
@@ -6363,6 +6435,42 @@
       "failure_evidence": null
     },
     {
+      "row_id": "row-6e49b15d209ba9e208b95574",
+      "candidate_id": "693e31ea840d6ce8d7ab",
+      "provisional_group_id": "group-df5bbc4da64a10e657db5e68",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/legal/government/trump-administration-renews-supreme-court-bid-limit-mail-in-voting-2026-09-06/",
+      "canonical_url": "https://www.reuters.com/legal/government/trump-administration-renews-supreme-court-bid-limit-mail-in-voting-2026-09-06",
+      "listing_published_at": "2026-09-06T16:28:00+00:00",
+      "listing_timestamp_evidence": "Reuters publication timestamp: 2026-09-06 16:28 UTC.",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/legal/government/trump-administration-renews-supreme-court-bid-limit-mail-in-voting-2026-09-06",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      }
+    },
+    {
       "row_id": "row-095c1131457e618fd11e7a13",
       "candidate_id": "980f74938e24720ee58c",
       "provisional_group_id": "group-1fe87917f479658c500c6934",
@@ -8209,6 +8317,42 @@
       "article_body_evidence_url": "https://www.cna.com.tw/news/amov/202609060094.aspx",
       "content_sha256": "2b9c6e5f4d267cd62014b5d4f793a117a1fa6d13fd958a558e607c15327844b0",
       "failure_evidence": null
+    },
+    {
+      "row_id": "row-4c123baf7aeef03cc973cde4",
+      "candidate_id": "0981e01c0baa3f5a8c1f",
+      "provisional_group_id": "group-60f268a258cb2e95c36880fc",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/world/middle-east/israeli-strike-kills-two-people-gaza-medics-say-2026-09-06/",
+      "canonical_url": "https://www.reuters.com/world/middle-east/israeli-strike-kills-two-people-gaza-medics-say-2026-09-06",
+      "listing_published_at": "2026-09-06T15:00:00+00:00",
+      "listing_timestamp_evidence": "Reuters publication timestamp: 2026-09-06 15:00 UTC.",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/world/middle-east/israeli-strike-kills-two-people-gaza-medics-say-2026-09-06",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      }
     },
     {
       "row_id": "row-3c0f62aa2af5b51a82678685",
@@ -10815,6 +10959,42 @@
       "failure_evidence": null
     },
     {
+      "row_id": "row-127e51f69b7a6f4cb37322d0",
+      "candidate_id": "dcf2cad3014aacb58711",
+      "provisional_group_id": "group-1fc611c4e6dc8148649c5443",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/world/middle-east/iran-tackle-economic-issues-says-further-attacks-will-be-more-painful-2026-09-06/",
+      "canonical_url": "https://www.reuters.com/world/middle-east/iran-tackle-economic-issues-says-further-attacks-will-be-more-painful-2026-09-06",
+      "listing_published_at": "2026-09-06T11:42:00+00:00",
+      "listing_timestamp_evidence": "Reuters publication timestamp: 2026-09-06 11:42 UTC.",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/world/middle-east/iran-tackle-economic-issues-says-further-attacks-will-be-more-painful-2026-09-06",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      }
+    },
+    {
       "row_id": "row-7374600e9af52c9df8d0cc2a",
       "candidate_id": "981257d9c2ee7865f326",
       "provisional_group_id": "group-f27dfefd7a6b30b28ecb1125",
@@ -11401,6 +11581,42 @@
       "article_body_evidence_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691300.shtml",
       "content_sha256": "d27243893ff221b5267bbfd9af17e8157b01cf0e33593b1919bbb908388f83af",
       "failure_evidence": null
+    },
+    {
+      "row_id": "row-0bc210736801c5b839987b02",
+      "candidate_id": "de63c328a149ca19e76d",
+      "provisional_group_id": "group-2d39555207a644884e8b4cf1",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/business/aerospace-defense/us-envoys-make-first-kyiv-visit-amid-ukraine-war-peace-push-2026-09-06/",
+      "canonical_url": "https://www.reuters.com/business/aerospace-defense/us-envoys-make-first-kyiv-visit-amid-ukraine-war-peace-push-2026-09-06",
+      "listing_published_at": "2026-09-06T11:09:00+00:00",
+      "listing_timestamp_evidence": "Reuters publication timestamp: 2026-09-06 11:09 UTC.",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/business/aerospace-defense/us-envoys-make-first-kyiv-visit-amid-ukraine-war-peace-push-2026-09-06",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      }
     },
     {
       "row_id": "row-46a86cd435b7804c7ff2c68b",
@@ -12747,6 +12963,42 @@
       "failure_evidence": null
     },
     {
+      "row_id": "row-c02c1ee7e8d92e9c1d7f795d",
+      "candidate_id": "7c04226a80041a157136",
+      "provisional_group_id": "group-c94172ba4be641500c9f4312",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/world/asia-pacific/china-pump-47-bln-into-state-banks-insurers-capital-boosting-push-2026-09-06/",
+      "canonical_url": "https://www.reuters.com/world/asia-pacific/china-pump-47-bln-into-state-banks-insurers-capital-boosting-push-2026-09-06",
+      "listing_published_at": "2026-09-06T09:12:00+00:00",
+      "listing_timestamp_evidence": "Reuters publication timestamp: 2026-09-06 09:12 UTC.",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/world/asia-pacific/china-pump-47-bln-into-state-banks-insurers-capital-boosting-push-2026-09-06",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      }
+    },
+    {
       "row_id": "row-7fb274505d388deffc2161cc",
       "candidate_id": "fc60524494147ef34c73",
       "provisional_group_id": "group-068c0bc04f44c3ae55eb01b5",
@@ -13055,6 +13307,42 @@
       "failure_evidence": null
     },
     {
+      "row_id": "row-ebd024d7410efde291fbbacf",
+      "candidate_id": "86ba8a12961950084156",
+      "provisional_group_id": "group-492eaf4f09a651a6aed122fb",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/business/energy/opec-keep-october-policy-unchanged-sources-say-2026-09-06/",
+      "canonical_url": "https://www.reuters.com/business/energy/opec-keep-october-policy-unchanged-sources-say-2026-09-06",
+      "listing_published_at": "2026-09-06T07:37:00+00:00",
+      "listing_timestamp_evidence": "Reuters publication timestamp: 2026-09-06 07:37 UTC.",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/business/energy/opec-keep-october-policy-unchanged-sources-say-2026-09-06",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      }
+    },
+    {
       "row_id": "row-75403a0a3400991fa6529e05",
       "candidate_id": "455ae02459826a6612c4",
       "provisional_group_id": "group-2838245fcc2bd208c3dcfba3",
@@ -13081,6 +13369,42 @@
       "article_body_evidence_url": "https://www.chinanews.com.cn/hr/2026/09-06/10691230.shtml",
       "content_sha256": "ab7db3903a514b509dd6860ddf7e7b5ddc848ac58116c175a2ae389537b8e255",
       "failure_evidence": null
+    },
+    {
+      "row_id": "row-981f4b005c8af5449871eff6",
+      "candidate_id": "554ae6a288249edd6de7",
+      "provisional_group_id": "group-cb0a56bf4dea6df626ec5f64",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/world/china/flood-destroyed-china-nepal-border-no-sign-once-busy-port-reuters-witnesses-2026-09-06/",
+      "canonical_url": "https://www.reuters.com/world/china/flood-destroyed-china-nepal-border-no-sign-once-busy-port-reuters-witnesses-2026-09-06",
+      "listing_published_at": "2026-09-06T07:31:00+00:00",
+      "listing_timestamp_evidence": "Reuters publication timestamp: 2026-09-06 07:31 UTC.",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/world/china/flood-destroyed-china-nepal-border-no-sign-once-busy-port-reuters-witnesses-2026-09-06",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      }
     },
     {
       "row_id": "row-310fe7608bb218b4ba847c88",
@@ -13193,6 +13517,114 @@
       "article_body_evidence_url": "https://www.cna.com.tw/news/aopl/202609060007.aspx",
       "content_sha256": "6cccd9f48b0cb31a3f9783d3c8b7333bb060b08fcf2931c9ff80f6d14761f30d",
       "failure_evidence": null
+    },
+    {
+      "row_id": "row-51fdddfd620c6d54dee725fb",
+      "candidate_id": "6d33a606e3422577987e",
+      "provisional_group_id": "group-6a49c8f956a358fdcaca3217",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/world/middle-east/israeli-military-says-it-strikes-southern-lebanon-after-hezbollah-launched-2026-09-06/",
+      "canonical_url": "https://www.reuters.com/world/middle-east/israeli-military-says-it-strikes-southern-lebanon-after-hezbollah-launched-2026-09-06",
+      "listing_published_at": "2026-09-06T04:15:00+00:00",
+      "listing_timestamp_evidence": "Reuters publication timestamp: 2026-09-06 04:15 UTC.",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/world/middle-east/israeli-military-says-it-strikes-southern-lebanon-after-hezbollah-launched-2026-09-06",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      }
+    },
+    {
+      "row_id": "row-c817a0724b93f117a105fd5c",
+      "candidate_id": "07601e545112732aee07",
+      "provisional_group_id": "group-6d705dcee8e57a1b1c50fe34",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06/",
+      "canonical_url": "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06",
+      "listing_published_at": "2026-09-06T00:27:00+00:00",
+      "listing_timestamp_evidence": "Reuters publication timestamp: 2026-09-06 00:27 UTC.",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      }
+    },
+    {
+      "row_id": "row-daf9ce66e87de7ca53b4f956",
+      "candidate_id": "cc8d07a006c234e3ed98",
+      "provisional_group_id": "group-51c929517dd002f6f5f52dd5",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "url": "https://www.reuters.com/world/germanys-far-right-afd-seeks-landmark-state-victory-saxony-anhalt-votes-2026-09-06/",
+      "canonical_url": "https://www.reuters.com/world/germanys-far-right-afd-seeks-landmark-state-victory-saxony-anhalt-votes-2026-09-06",
+      "listing_published_at": "2026-09-06T00:06:00+00:00",
+      "listing_timestamp_evidence": "Reuters publication timestamp: 2026-09-06 00:06 UTC.",
+      "relevance_route": "lightweight_semantic_review",
+      "relevance_reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "admission_status": "unresolved_exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "configured article-body recovery chain exhausted without fabricating evidence",
+        "evidence_refs": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      },
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/world/germanys-far-right-afd-seeks-landmark-state-victory-saxony-anhalt-votes-2026-09-06",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Actions article hydration of canonical Reuters URL returned HTTP 401 Forbidden in batch-0038-result.json",
+          "Host browser recovery searched the exact Reuters event/URL in this occurrence; no same-host public alternate URL could be materialized and direct Reuters page open remained unavailable/cache-miss"
+        ]
+      }
     }
   ]
 }
