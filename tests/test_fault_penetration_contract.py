@@ -17,9 +17,11 @@ class FaultPenetrationContractTests(unittest.TestCase):
         template = (root / "scheduled-task-prompt-template.md").read_text(encoding="utf-8")
         for token in (
             "issue_comment", "issue.number == 3", "COLLABORATOR", "run-logs",
-            "github.sha", "PYTHONPATH", "--expected-main-sha",
+            "steps.pin.outputs.main_sha", "PYTHONPATH", "--expected-main-sha",
+            "exactly one canonical main_sha", "Checkout pinned default-branch runtime",
         ):
             self.assertIn(token, workflow)
+        self.assertNotIn('EXPECTED_MAIN_SHA: ${{ github.sha }}', workflow)
         for document in (mobile, template):
             self.assertIn("REMOTE_ACQUISITION_BRIDGE_GATE", document)
             self.assertIn("encoding=base64", document)
