@@ -58,6 +58,9 @@ jobs:
             runtime/scripts/remote_acquisition_bridge_v2.py \
             runtime/scripts/hydrate_source_rows.py \
             runtime/scripts/materialize_source_row_admissions.py
+          if [ -f runtime/scripts/materialize_mobile_audit_input.py ]; then
+            python -m py_compile runtime/scripts/materialize_mobile_audit_input.py
+          fi
       - name: Validate issue request
         env:
           BRIDGE_COMMENT: ${{ github.event.comment.body }}
@@ -98,6 +101,7 @@ jobs:
               stale = [
                   run_root / "source-row-admissions.json",
                   run_root / "remote-acquisition" / "article-evidence.json",
+                  run_root / "audit-input" / "manifest.json",
               ]
               for path in stale:
                   if path.exists():
@@ -125,6 +129,33 @@ jobs:
           --expected-main-sha "$EXPECTED_MAIN_SHA"
           --runtime-root runtime
           --run-logs-root runlogs
+      - name: Materialize bounded mobile audit input when available
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+          import sys
+          from pathlib import Path
+
+          request = json.loads(Path("request.json").read_text(encoding="utf-8"))
+          helper = Path("runtime/scripts/materialize_mobile_audit_input.py")
+          run_root = Path("runlogs/logs/runs") / request["run_id"]
+          admissions = run_root / "source-row-admissions.json"
+          if helper.is_file() and admissions.is_file():
+              remote = run_root / "remote-acquisition"
+              subprocess.run([
+                  sys.executable,
+                  str(helper),
+                  "--source-candidates", str(remote / "source-candidates.json"),
+                  "--source-row-admissions", str(admissions),
+                  "--content-evidence-dir", str(remote / "content-evidence"),
+                  "--output-dir", str(run_root / "audit-input"),
+                  "--main-sha", request["main_sha"],
+                  "--timezone", "Asia/Shanghai",
+              ], check=True)
+          else:
+              print("Pinned runtime has no audit-input helper or source scan is not terminal; skipping")
+          PY
       - name: Commit run-scoped result
         working-directory: runlogs
         run: |
