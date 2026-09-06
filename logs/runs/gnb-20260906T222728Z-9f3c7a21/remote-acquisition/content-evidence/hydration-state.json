@@ -1,31 +1,11 @@
 {
   "schema_version": "1.0",
   "source_row_count": 486,
-  "seen_row_count": 120,
-  "terminal_row_count": 117,
-  "missing_row_count": 366,
-  "unresolved_row_count": 3,
+  "seen_row_count": 140,
+  "terminal_row_count": 135,
+  "missing_row_count": 346,
+  "unresolved_row_count": 5,
   "missing_row_ids": [
-    "row-44713f5896d6bad5c6bd91f7",
-    "row-4489aea6b0caf4dd053e987a",
-    "row-45775b0847ae392021715d80",
-    "row-464bceef7eff76cf8b2090f1",
-    "row-467dd8e441d8a18448d873bc",
-    "row-468a13ff97f16eedb764547b",
-    "row-46bd7d077960b5d5c558b542",
-    "row-46eaf96ed04a881bfe16342f",
-    "row-473fd34dd919a938dd210f6d",
-    "row-47be069565d9236902af36b6",
-    "row-48191315ef63ad1678334d7b",
-    "row-48b2b4cb8b0739c22edef26f",
-    "row-4940bfaadf89e8e8323eaeff",
-    "row-49800dcff08ae94f6cee981b",
-    "row-4a7e9084c2361d62f0fa686a",
-    "row-4c9311f0b5f0614212e2b47b",
-    "row-4cb9c465e9c7031a1bddc700",
-    "row-4d32f6b9f0c00e7ea02e35e6",
-    "row-4d811d549d0fa1f50aa69080",
-    "row-4dc3c82bf4fea3db4f56d664",
     "row-50472698629079a251a9b395",
     "row-51dde5f7c279fb2729567207",
     "row-51dfbdb5441588288a4f1ed6",
@@ -376,13 +356,15 @@
   "unresolved_row_ids": [
     "row-0b983c557533545637c03c8e",
     "row-1508d9372d2841871eeabc54",
-    "row-2953f855a99c172ad32f8be5"
+    "row-2953f855a99c172ad32f8be5",
+    "row-4c9311f0b5f0614212e2b47b",
+    "row-4d811d549d0fa1f50aa69080"
   ],
   "status_counts": {
     "outside_window": 1,
-    "content_ready": 116,
-    "unresolved": 3,
-    "unresolved_exhausted": 0
+    "unresolved_exhausted": 0,
+    "content_ready": 134,
+    "unresolved": 5
   },
   "complete": false
 }
