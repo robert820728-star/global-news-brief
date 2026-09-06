@@ -1,0 +1,5189 @@
+{
+  "schema_version": "1.0.0",
+  "input_article_row_count": 471,
+  "content_hydration_count": 471,
+  "lightweight_semantic_review_count": 0,
+  "decisions": [
+    {
+      "row_id": "row-29deef612c7b1d95b41dc5bf",
+      "candidate_id": "fc284144940e57ec5221",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609070009.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-bec9b2eede951ebe4e85593a",
+      "candidate_id": "bb26312570d92de2aadc",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/hd2011/2026/09-06/1203352.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ef9d19b6c6b4ce699b9469ca",
+      "candidate_id": "94191e18d926708ed561",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/hd2011/2026/09-06/1203341.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-86bdb3701aa2af23c57a22e1",
+      "candidate_id": "2210b5fccba624fce8e5",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/hd2011/2026/09-06/1203335.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9fe97e2d653b1087352ed1cd",
+      "candidate_id": "99984354a4843b4cebf6",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/hd2011/2026/09-06/1203324.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-24d881cea4adda27f5844abc",
+      "candidate_id": "3ff65dad647eb7460972",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/hd2011/2026/09-06/1203309.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-4fcc83003b03cfa69e21aeb9",
+      "candidate_id": "4d697e7bfce73ca7618c",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/shipin/cns/2026/09-06/news1067925.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-8d6c1553c99b7d40ebbd587d",
+      "candidate_id": "5c88c422064b4eeae870",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/shipin/2026/09-06/news1067922.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-51c55da0606aa57dd2791865",
+      "candidate_id": "be20241244bf13bdf62c",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/shipin/2026/09-06/news1067906.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-91860fd0fae40e55a6138ef3",
+      "candidate_id": "ad7c9000521120c3e2e8",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/shipin/cns/2026/09-06/news1067923.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-db19ef8ed5288d5081d1bcf6",
+      "candidate_id": "8ca3a2c1ebc3e91d0266",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/shipin/cns-d/2026/09-06/news1067924.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-28ab2b5c711f9d74bcb321cf",
+      "candidate_id": "536ff47002ff5aa02d68",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/hd2011/2026/09-06/1203318.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-23f6fed20d9e2f742dd255f2",
+      "candidate_id": "b7f3d1029ef2fc3c9d70",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/hd2011/2026/09-06/1203317.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-00ef5ac03002905a682f10cc",
+      "candidate_id": "2208e4f1f33196d7efdc",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/hd2011/2026/09-06/1203301.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-bd31fd5af382a455a4c01552",
+      "candidate_id": "4f2a41a00db0b6329577",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/hd2011/2026/09-06/1203294.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-10ca5397bb17178562816421",
+      "candidate_id": "8a230ab96d1b78680ae4",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/hd2011/2026/09-06/1203286.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-6c30701de4ee1669ce74c70f",
+      "candidate_id": "2a10f0d8f721b9b241c6",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/common/footer/intro.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-4541beb3cbd6e224c32d9175",
+      "candidate_id": "11e1b3d6424d9c514ed4",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/common/footer/contact.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9157e9e46ba1efc3effbba1f",
+      "candidate_id": "2a615160d4aaa35850b1",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/common/footer/aboutus.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c1a49639b99fc3472ab1286f",
+      "candidate_id": "696cdf9d3a55db1b13fd",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609070008.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-4e409b43894d57a1b13cc34c",
+      "candidate_id": "bf9036b57362f233c8c6",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609070007.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-212623f71fe12e27c60c5c19",
+      "candidate_id": "d93253c49f8952fa30f9",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609070006.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9081aabad6571330ccee658b",
+      "candidate_id": "003f1b1b99493c751e51",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609070005.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d65425d3f7dd9cc52bad3b7d",
+      "candidate_id": "d3935e6ce69c61aceb4c",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609070004.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-792bdb9f53864fca96979bfb",
+      "candidate_id": "d1fcdf1bfb2b065d6bb9",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609070003.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c5f32e7de91fce53e2153352",
+      "candidate_id": "2e2013b55b21fe1126e8",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609070002.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-4b00dbca78b52edf4d2aac94",
+      "candidate_id": "25295513aa1647a4bc56",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691620.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-4c5ffb80a320ed6c4b4255bd",
+      "candidate_id": "934da523ed6d7574a410",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691621.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-129d50a8212cae8daca195b9",
+      "candidate_id": "6ba469f331995ebce454",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/dwq/2026/09-06/10691617.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-52a97c595ed92032c12193e5",
+      "candidate_id": "6ed467d0b3a17371998f",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cul/2026/09-06/10691618.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7f07161fa8e26b0fd733fc19",
+      "candidate_id": "024fac916cb6d04ec916",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691619.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ecf453bac22592a9f8a010e5",
+      "candidate_id": "16da84bfb6bd81a6e40c",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691614.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-57f281ee2d94595541b41079",
+      "candidate_id": "3e86f8407332018e402c",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691616.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-92023dbba7480829946cf75f",
+      "candidate_id": "491c7db246cb4ee1b1df",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691613.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-f885d609054adb556e481944",
+      "candidate_id": "26e43ae58a404dca236c",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691612.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-cd02272e12404368f821d25c",
+      "candidate_id": "506f74469f14b1e7b29a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691611.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-fdec147b810a2a9eb8c51eee",
+      "candidate_id": "a2d61b85f8fdcd597eaa",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691609.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c6c9e9123c1e3240b91bdf5c",
+      "candidate_id": "dc8081a786e0ec026c09",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691610.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-86b41bedd4df634f5ce6954d",
+      "candidate_id": "70fc3a3932fada3e9ace",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060192.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7527bcdd36e0c69b18929947",
+      "candidate_id": "ca771c2aef77bca90598",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691607.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-566d788a61822718376401a5",
+      "candidate_id": "f6d916d9888fe8faecd5",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691605.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-31b00e5468d7a64aaca55e44",
+      "candidate_id": "3e63e8b6c3e3853ed361",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691604.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-8b48b67c0f4166770210cf5f",
+      "candidate_id": "881ecac4ee3c4d8e9f24",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691602.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-86a4fff933e0d06bda46ae77",
+      "candidate_id": "1c15ae0c98d8e9d72e9c",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aipl/202609060191.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-6687c1131c26918fd51c0000",
+      "candidate_id": "2aa67857c9a3018938d9",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060189.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-730c62de9aeee2bff668a863",
+      "candidate_id": "043e43e4548688651f4e",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060190.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-38cebcb7854c3b1c36195aff",
+      "candidate_id": "307f7e2ea8a7bdb969e9",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691600.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-17950d886e6c150e856ec1d2",
+      "candidate_id": "132af8feeb5b0d18f74b",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691598.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7f61994a200ce311377ba0ba",
+      "candidate_id": "4bb15ab1b9171ee4b8c6",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691597.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-cd74dcb034a9aaee65813337",
+      "candidate_id": "da3d45ca08bd7ce25b5c",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/acn/202609060188.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-b9b89d11464ac2973b0d6259",
+      "candidate_id": "14680d9554564b6f0ba1",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060187.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7122ffdf5618a0e1ca1c86e7",
+      "candidate_id": "2ef1f5e841eba2912294",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/afe/202609060186.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a2a27b641755fa7c01bf1031",
+      "candidate_id": "f56650fe23e59f8db71a",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060185.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-8dfea9b18ffe7285dd8db45c",
+      "candidate_id": "7c4210819c8642db55d1",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/amov/202609060184.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-00aab312f43da9f7aaa181f8",
+      "candidate_id": "d8421560fafd62d969a1",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691594.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-fbf9c75fc2d3a684199bd07a",
+      "candidate_id": "57623a22e66442f38df6",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691593.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-6963ebaabec7d1b2268c7ba7",
+      "candidate_id": "743dc3fe655f9c631e72",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aipl/202609060183.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-58a433b0e090ec076df86edb",
+      "candidate_id": "435ae549af751cda761e",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691591.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e0398773abeb1fdebdae7bf5",
+      "candidate_id": "7fe1c6953b6c1c49a1d7",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060182.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a58cc1a9d963f7507efd57c0",
+      "candidate_id": "a40e3b0d74038e910d8c",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691589.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-916868b2dd5315781390f6f4",
+      "candidate_id": "b6ab161988c63208a5dd",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aipl/202609060181.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-781323dd2b18a501c95df7b2",
+      "candidate_id": "b534054a2c2b53ef61cb",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060179.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7385446d9e2e6eae0c702a26",
+      "candidate_id": "9f210e2396da374cfe46",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060180.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-55244bc3430f72a2361b3351",
+      "candidate_id": "dd76f526fd430b921f74",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/dwq/2026/09-06/10691586.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-8b776e84a73ec82f42ac53d5",
+      "candidate_id": "dd4cf7bb8c83d0640c1f",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691574.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-078491212131add41168eed7",
+      "candidate_id": "25c2f37326f6dbd5dd6b",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691571.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e6fe326bb16cf7a9b6c28247",
+      "candidate_id": "11e832fc6055295fad41",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060178.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e9e4150b9ff5195976008270",
+      "candidate_id": "0bc2a138e8a70a73fa21",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691581.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-eb4174b3e8ab35d01bf91f0a",
+      "candidate_id": "dbf6d68aa10c3aea0cca",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060177.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-2d39ab7b2aa6364211b6c645",
+      "candidate_id": "3d142354175ac9b5ad65",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/hd2011/2026/09-06/1203362.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7e74f6cae8bea54620fda4b8",
+      "candidate_id": "c9e83175ec1d4f5b9b15",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691579.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-f0a5ac5fc1dd4ad91d15900b",
+      "candidate_id": "e74e7f5719d0bd3f61e3",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/txy/2026/09-06/10691578.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d72c07388db9eb7bf3d7a9ef",
+      "candidate_id": "5f3459fc22c5475b8314",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ll/2026/09-06/10691580.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-1f5d0d9e3f68af3afa5ba192",
+      "candidate_id": "fe70481043bb65bbb9e3",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/acn/202609060176.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-0fbd021e3bc1633eeb6f4765",
+      "candidate_id": "2a0b1988dcbdf23d3eaa",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691576.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-3fb2b0344df14aeab4b5decd",
+      "candidate_id": "9a9396468c1c20121cd6",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691575.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e527beb89281f7828e3a93c9",
+      "candidate_id": "2d6ea6b75638df1ebe85",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/amov/202609060175.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-14e332df26d4becd84bcc518",
+      "candidate_id": "2566cc4773a4b79c39bb",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691570.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a96c516d92ea7690a603ab47",
+      "candidate_id": "7f23381a55f2eef2d43e",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691569.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-bd32a11640f80a55b51c1e93",
+      "candidate_id": "4bbcf9b93440736f4b15",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/hd2011/2026/09-06/1203357.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-4478db492bf9a6f81fb8140b",
+      "candidate_id": "da76f31b23695d0d4320",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cul/2026/09-06/10691573.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-0bc55c6df8af670db7799a74",
+      "candidate_id": "c15bc6c8129cd17ae25a",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/acul/202609060174.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-b02ed92efcf5637fb663c6a8",
+      "candidate_id": "cd313ec272e2cb29fdfd",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/edu/2026/09-06/10691567.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d1a6b566b94cb6fddf0b9324",
+      "candidate_id": "329fecd7b9869818eef7",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060173.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-8923252c58b4ac73434aa8ac",
+      "candidate_id": "0db820ecdc5118443059",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/amov/202609060172.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c9b3de854d095f07bc8c36fb",
+      "candidate_id": "5a93b4124e7d70c72427",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691560.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ae7d1638a5642b321a886777",
+      "candidate_id": "47facc12c78d8cbbbd2b",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691562.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-57be18fd77e400b982ed5281",
+      "candidate_id": "baf21c49a79df74a75de",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691561.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-634c7085ef314158f25813d1",
+      "candidate_id": "5e7a95e13f35b9b0b9c7",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691558.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-869738d79d8e9e129dbe59ad",
+      "candidate_id": "9ddeb68664d9f57c65c0",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060171.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-054ea8251c25a73ce1590f50",
+      "candidate_id": "95ac3b738b0a9dae6bbd",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691556.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a47638f8513100b0d4fc5c70",
+      "candidate_id": "9ad0823b1b32d128374e",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691555.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-1e120c227b5c8df09f174512",
+      "candidate_id": "84aa74aaa46aed4d4785",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691554.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9524eb4b0c49b0ccedd57686",
+      "candidate_id": "41555149273ffe5ed57c",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691553.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-258314bef263bc466d03eaf5",
+      "candidate_id": "dbb62fd4db01f5f73b0a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691547.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a0903c31e5036a2eca82a8fa",
+      "candidate_id": "564116310e39bf02c4f4",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691545.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-f1b2ebcea1e585a59dd29f2a",
+      "candidate_id": "4caef92599369c3adb47",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/dwq/2026/09-06/10691523.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-05cf8c7040e47fd2020072ee",
+      "candidate_id": "ee5c8724b6edea169824",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691546.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-36c98940ae6ebc58d04340f5",
+      "candidate_id": "1e45680b923be28d02f1",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691538.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-23c89f1edd200754951b2449",
+      "candidate_id": "c533703d59e626f7244b",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060170.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-047cc38c254f0a3544cf0332",
+      "candidate_id": "cac1a9f826fcc8b8e591",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691530.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-335a2661dde9a422eea5ac08",
+      "candidate_id": "b3eeb42b5bf202604586",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/txy/2026/09-06/10691539.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-00c334b52d9b766223fedeb4",
+      "candidate_id": "4bfec21dde64497661f9",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691550.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-55b7d69b147e87b25673c288",
+      "candidate_id": "d447f98f3a2972978d83",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691544.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-3ec68c2853b7f79d29520c6b",
+      "candidate_id": "f102d4561bbb05972e09",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691542.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-3b292d958f7b3cab92be83d7",
+      "candidate_id": "8465675cc0b913c45d3e",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691540.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a561802ba7708d98c5ef1507",
+      "candidate_id": "e9e6399aa10f539b98ac",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cul/2026/09-06/10691515.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-555b59882a8443c97dbe996f",
+      "candidate_id": "3b12b311ca6176fb038a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691543.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7e8d43af5d46ca2537c8b310",
+      "candidate_id": "b345376b1a66eaad0816",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691541.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-0eb65a62b4fed5240b922cf1",
+      "candidate_id": "2b4c67391f3c0c4ebc80",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cul/2026/09-06/10691518.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ac6ca8ea7f91ef1fdf9e232a",
+      "candidate_id": "814266d6adee489d66b6",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691521.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a367109f1350caab1be4ce7b",
+      "candidate_id": "b39a184d595d00de2baf",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691512.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-3b10363da39fd13a0ee5022b",
+      "candidate_id": "a8fe7fc0fb583f5b5beb",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/afe/202609060169.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-cd113b21517f8ba0c4d094f7",
+      "candidate_id": "22449840106ec5f27ae2",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691537.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-fb4811dba2758a3a172111e8",
+      "candidate_id": "02b409a908f012c9cd14",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/acn/202609060168.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-32812e4630cca7f8b93c00f2",
+      "candidate_id": "2e3e81d9f40f41067f61",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cul/2026/09-06/10691517.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-653b3ea2e86386fc97d1f61c",
+      "candidate_id": "c08264aec41b96494694",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691511.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-5a6d760224b1ac0f5470f885",
+      "candidate_id": "d7b8d11b0d061844138c",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691510.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-03c3e2896ca359498364a778",
+      "candidate_id": "6e71039729dfe423032a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691514.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c47d9232ef30fc424c0a8fa3",
+      "candidate_id": "0bcf1784ab1e3df8a91d",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/jk/2026/09-06/10691505.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-577422a9b543eadce569f604",
+      "candidate_id": "0eb5e6d91ad18c434291",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691534.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-2e03dfe72c46787e796a33b2",
+      "candidate_id": "dd2e9daff8b3c308a344",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060167.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-4f37e4d5eb16f595afb63d8f",
+      "candidate_id": "b4bb3f2e53931b7f86f2",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691522.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-64d73e919ae7e8500cf51a70",
+      "candidate_id": "ecd87a85e0e98d76d55e",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691516.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-77d55c45828eae8450724adf",
+      "candidate_id": "b82a1d471ba547b0cfb2",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691535.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-53c1c814c54f748cae8c0a20",
+      "candidate_id": "5c0cbf2ae6ff5deeebe3",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691536.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ac053b5e6ed3bca16c7f0a65",
+      "candidate_id": "d1656f78ad65aaf95092",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aipl/202609060166.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-fe3b31958c01494b3d1fd59b",
+      "candidate_id": "cdefafe75870d6041e25",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691533.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9928eeff7c423f0441533e77",
+      "candidate_id": "e6115c2383de89307453",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691532.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-81248be662943f4170e03e9d",
+      "candidate_id": "6af8fcbcb1f725604041",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060165.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-aafe79a0f10547e838a155bc",
+      "candidate_id": "2105edf1043585be4837",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/afe/202609060164.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c24c4d0ea69e4051a616a2c8",
+      "candidate_id": "ae2197e1f854f7f41d30",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691531.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7f2df62b2219765ac9be22a2",
+      "candidate_id": "67cd13b037d920521893",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691528.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-1638ab29eaaf99e5dc19ffe8",
+      "candidate_id": "922799d8c02869241326",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691525.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a2e0231d2c554d1b86f6e2f9",
+      "candidate_id": "255c6939773a47ec11ad",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691502.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-4f667007b49a08d11ec00502",
+      "candidate_id": "a70b47c7e6729fcd09b4",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691503.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-5cddcf621595359d3247b43d",
+      "candidate_id": "87ac8391a45c719cf203",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060163.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-48efe3d50a5abded2f52e851",
+      "candidate_id": "a3f1609fa275416802b1",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691501.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e30bc362e8d7944c0b4fdb93",
+      "candidate_id": "5339fee7b8277b812682",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/asoc/202609060162.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-5e8edc7f1ec4de78986a1774",
+      "candidate_id": "9ce4590abe91aae587f2",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691508.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-aaaa209c2d654568fd71a949",
+      "candidate_id": "a670d78262592f7a1f6f",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060161.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-3f06c1c0cf620ca937055af9",
+      "candidate_id": "6d6faa8bb38159750a24",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691513.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ae3f62bd581c61863ab8665f",
+      "candidate_id": "2740549a05ce93f689f2",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691504.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-5e9eb645041c8804850b4b61",
+      "candidate_id": "aa2f21685583d2bc8454",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691520.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7b98c2f42a4efff3e57a015d",
+      "candidate_id": "a54d1fac20672189162f",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/acul/202609060160.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-32bc373cb8103c72f3e54112",
+      "candidate_id": "9ce3ae14b8af3aa0455c",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060159.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-35b7ea15ce231541d52f02cc",
+      "candidate_id": "808911ecdb39fa75a7ef",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691519.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7bb5417f48d03f96b75e702c",
+      "candidate_id": "028a793a0614f6e2cb8e",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060158.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d1ed2e45c59a289d32f6b9d9",
+      "candidate_id": "9c99f6c2d8e4a29cb88c",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691509.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-84c6f5d4570ffe8073541049",
+      "candidate_id": "75aea2040cf9371fc087",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691507.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d6e8dfce4f1248fdad8df5a3",
+      "candidate_id": "8251fbce481072ec83f9",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691500.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-0ed36c2f59bbb89f6933821c",
+      "candidate_id": "dbe1820df81816898859",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691506.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-4b52ed57628f69ff3d433618",
+      "candidate_id": "758a415b643da3649e69",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691489.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-3e254e46ac37b5cfaba2b320",
+      "candidate_id": "aef16c9febfadeb7b6cf",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691488.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-13403c26de3e1b94bac91e3d",
+      "candidate_id": "109dfe77090d3c46b80b",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/acn/202609060157.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d605a14cbfdacfd260d9534a",
+      "candidate_id": "12b6faead71e3d929d00",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/txy/2026/09-06/10691479.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-cf4413bfbacf377833ca4839",
+      "candidate_id": "bb4d9aeb17543df3d9f0",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/dwq/2026/09-06/10691482.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-2ac0a9544f48ae1ba614403c",
+      "candidate_id": "33c6bd19c5ea154348af",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060156.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-04d44ab3f69b335168e379c8",
+      "candidate_id": "a840c086ff21ea4a055f",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060155.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-38f37ce236072f2d92f20e73",
+      "candidate_id": "053a8b9b2c1b02e1c398",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060153.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-69bd431ae626984151ce5e69",
+      "candidate_id": "e174b047936129a56855",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060154.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-112e35f6e534279ac219b7c2",
+      "candidate_id": "33c791c5b34748b1d724",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691498.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-592edfc08a55e7ee0d02869f",
+      "candidate_id": "0c99208160fb894be0f2",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060152.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c4fe5e7f967e3dd9d0a97359",
+      "candidate_id": "8be0b2b6e652b40ca554",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aipl/202609060151.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-84741547a0928a2b98187825",
+      "candidate_id": "08c5e79268ecfeeb53c5",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060150.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ab51fa04108749d979cad7ad",
+      "candidate_id": "c931d851634b09abf90b",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691499.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-6b3d9b398d98a4d910134609",
+      "candidate_id": "7911ee88e593c4f95684",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691494.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-f5edf11c4c233c948bbd3350",
+      "candidate_id": "5d23615e3d1a7c64e087",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060149.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-96c78196cc1086b27cd81525",
+      "candidate_id": "0cf3e7f6765aa391df58",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/hd2011/2026/09-06/1203345.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-37b03a8a6d7dd93da60ea519",
+      "candidate_id": "ca71767057da9e7f2bc9",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691491.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-2081ea0751103000ac8cb134",
+      "candidate_id": "b0af6424358e7883ea09",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060148.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-73497b1a76e860e94d4871a6",
+      "candidate_id": "059d7cf84048b58a8b8d",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691490.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-19f13426f893c93d16406c98",
+      "candidate_id": "17ec6bbfc5bea0fa4278",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/dxw/2026/09-06/10691475.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-5e2c56087f2323efe4cf6a16",
+      "candidate_id": "b24e19f00d775c16ba29",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060147.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d8589c2cad41d8b16fb7a53d",
+      "candidate_id": "8608d500363b1cebc54c",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691487.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-632d973f3f2c1ef4a04c4064",
+      "candidate_id": "0672cc258ebee71ea3a4",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/amov/202609060146.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-cb24e238623b7b21bf3fa5e8",
+      "candidate_id": "274eac1f567179800de7",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691486.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ac554d566718727581e1e0fa",
+      "candidate_id": "bb6bd03ab84d383b1f9b",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691485.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-3d66604aae7084ec5c60c1eb",
+      "candidate_id": "0e771f0fb595d4372353",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691477.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-fb57d2511121e7c5de3653bb",
+      "candidate_id": "280f0224f036f2a7f553",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691484.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-31757e509a67b89eb6d23ea4",
+      "candidate_id": "be3fc0b5f7ae2559c354",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691483.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-172719641f8d17ff0df0edb1",
+      "candidate_id": "bce92131c66a209911c4",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060145.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-6ecdc84a31ff925ed294bf00",
+      "candidate_id": "9ada01f652239ec409d7",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691478.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-92fc39bbebe7c0a18e4cd3ab",
+      "candidate_id": "6e5874cc8a8dc89fdfec",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691474.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-69da8f1ea66c03ff412269c9",
+      "candidate_id": "9f9e4366e354ecb8d1ad",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060144.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-2eef1d1580fd781ff4bfc73c",
+      "candidate_id": "14dd295f9aced198b86e",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691481.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9232f9c27e343f9eab59a587",
+      "candidate_id": "9fa77978693967a52534",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060143.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-4d09fd471b316bb2d635dff6",
+      "candidate_id": "87918f39400239b99da5",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/amov/202609060142.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-326f63ad0e4e4308022050cb",
+      "candidate_id": "b1a2a7cc20b5caa62641",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060141.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-5d56b768a316959b69714647",
+      "candidate_id": "9f7bdb0f3687d005c07e",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691476.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-dfeede897f5c7e1bd028b63d",
+      "candidate_id": "79274d16503b581977f8",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060140.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-3c50b7c10ca50120e9f9043e",
+      "candidate_id": "cc52abf7cb94db634be4",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691469.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a9870d50d321d39143169365",
+      "candidate_id": "0e1ecb287cc45ccff352",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060139.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-bed1caf0506dec95e7842c0b",
+      "candidate_id": "97e69e618cdaaee4ecb6",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691466.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-64e3662204eafc8224ea04bb",
+      "candidate_id": "ff7f25ab14b17582d5d5",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691454.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-26f53b4beea99420f43937f1",
+      "candidate_id": "d90fba4e81b9575e7a7a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691440.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-962654079561921bb809a2c3",
+      "candidate_id": "ee395d2e779b58078b91",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060138.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-67e70630c63b9318479d1f50",
+      "candidate_id": "30ee75fd9374199130df",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aipl/202609060137.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-02dc728521b0aa634c6c9864",
+      "candidate_id": "f29f00fd51b8ec4d7b87",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060136.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7e91766890919158fe1754f6",
+      "candidate_id": "505bb3f1303e9dca97b2",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ll/2026/09-06/10691450.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-6b04fa19302b3f51fdbef89d",
+      "candidate_id": "1a7e8f11d85688fed1ff",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691449.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-bb7832743119ac3a698e94e6",
+      "candidate_id": "bb916ca565086be9af91",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691448.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-109e95d542909217866e34a2",
+      "candidate_id": "ff808eb8e3e395d8c87b",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691445.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ebf22cbabf8dcb8181fa2ab0",
+      "candidate_id": "319985bf690552b4c438",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691436.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-29402f41c317df0098fb3cfa",
+      "candidate_id": "3d383572c696ad7d78aa",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060124.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9857784f31ce3752338c7f2e",
+      "candidate_id": "c588b74dd193c23b032d",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060122.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-309099336c95156cd999052c",
+      "candidate_id": "22e342298722706ddfac",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/acn/202609060123.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-54cf31c6122846d79a7fc60f",
+      "candidate_id": "03207754a84818726bb1",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060121.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c61e2fca86bea6f5b95659fe",
+      "candidate_id": "c4685a591cbba30f7f70",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691446.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-4cfcd3af283f9edc16e36179",
+      "candidate_id": "c0179e72c6ae2c1cd06e",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691435.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e69e6730d5991e06be4c786b",
+      "candidate_id": "a68654d3ad8c691db387",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060120.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-1af26b4ecf6734f7d8a78c26",
+      "candidate_id": "2aa91af5bad7945ca85b",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060119.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-4d653beb45c865320fe3a0c4",
+      "candidate_id": "67217bf78dc6a2f06703",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/afe/202609060118.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a94457b5aca6d9be374d117f",
+      "candidate_id": "60462bd7598e86c75b3d",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/acn/202609060117.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-cc1f2a4353bc194370ccf7a8",
+      "candidate_id": "ee21d7c6268a0ecc9941",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/asoc/202609060116.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-21e3e41ac6b2428991c7227f",
+      "candidate_id": "c1719f7cb9b782b19dfa",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691444.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-f513b0071942e85e604e4aeb",
+      "candidate_id": "719e4ed1e20f03e71e1a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691434.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-6c1f1d724a575050b1e30c28",
+      "candidate_id": "7c597924cc3aff2283a0",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ll/2026/09-06/10691442.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ba9bf75a22ebc3007865cf25",
+      "candidate_id": "4e690131340c9c6ecf37",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060115.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-f71650846dd76dfd36d59fb7",
+      "candidate_id": "1f8bb45fda0795a12aeb",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060114.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9e1dace82921fa439ed373c1",
+      "candidate_id": "91ea1f07396ce7135f9e",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691427.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-8916b2b099a7db9dfa2ddd49",
+      "candidate_id": "62fd3453aaefb582b6e7",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691439.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-750f73c41bdea8cb18dc2f66",
+      "candidate_id": "83a73134091208b174cd",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060113.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-b5d6c64091e4d46697ae8457",
+      "candidate_id": "12b0946d2b4a48126055",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691426.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-03572c0f708af3493896e5fd",
+      "candidate_id": "b3e030408389b57d9b0c",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/dwq/2026/09-06/10691424.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-eabd8e7aec25473c3fa0bba8",
+      "candidate_id": "4fde074071c5eb6cdc1e",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691438.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-1261fb5566d6b76472d96fc9",
+      "candidate_id": "6c974e0e82191db461ac",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691421.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-095c1131457e618fd11e7a13",
+      "candidate_id": "980f74938e24720ee58c",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691428.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-cc48c8b93ab51ab16849ba3e",
+      "candidate_id": "3cd782d9d88bf7070768",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691437.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-626e2c3bbe194e013423e27e",
+      "candidate_id": "c8c591e742c58ae3253a",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060112.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-8557edd2a1987de3bcf3f6f4",
+      "candidate_id": "b251355230247005bf94",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060111.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-350cda9908b406be30049177",
+      "candidate_id": "f72441de7450840da178",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691433.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-02d415bfcd8c23cb85996c1c",
+      "candidate_id": "a7c748db766331dfb468",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691417.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-85ca5a004ed5f9c47de7167c",
+      "candidate_id": "4a6d3a9b07894ae7b0cb",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691423.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d6fcb832b448636ad4a74661",
+      "candidate_id": "b1926e2f5d173eccca28",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ll/2026/09-06/10691432.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-b5df30f17e15a9f37cd78638",
+      "candidate_id": "17ad6dc00b6767a3748a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691414.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e1569af0aa00379352f55ea0",
+      "candidate_id": "17cf506bc5541135ac37",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691431.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-5f915034e2031935328c1efa",
+      "candidate_id": "6244a36e9988541e3933",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060110.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-3249c2b7d03b11dc3485e2e4",
+      "candidate_id": "5dd54091c50742205241",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691413.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-198bf0e5346d0dc2f7761fc5",
+      "candidate_id": "81cfbf75160843379cbd",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691409.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-fa61403981a89772e28ab8be",
+      "candidate_id": "080242452a7533ab1f77",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691429.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-53950421ac682835757da835",
+      "candidate_id": "31876fb9ff7edce83b2b",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060109.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d2de467ce2471af00ee462b9",
+      "candidate_id": "784a6fda555705c33f84",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691425.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-04fb34f86bd5fa986a17a0e4",
+      "candidate_id": "36dc9fed89dd511dd984",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060108.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a967347cdced1cb8678c782b",
+      "candidate_id": "8c078b4d3a0783078e69",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691422.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-52e78b321f27bc5f3fb13be3",
+      "candidate_id": "c01b45ea674623f72b56",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691402.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c7bb4eba5f946eca271766b8",
+      "candidate_id": "1928c0d3f54278412b7a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691420.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d9665b825d640e6d4a452d07",
+      "candidate_id": "a1e00a4367047019d170",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691415.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9d8acb111ff31ef76e5a6d44",
+      "candidate_id": "f2a2a7ae6970a8892c4a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691416.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-64ae23adddd787470e6f2f88",
+      "candidate_id": "5b40722f64edf3c51671",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/asoc/202609060107.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-05e7b24ba0673cb4b64e5496",
+      "candidate_id": "42feb95b0f9a3c261c76",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ll/2026/09-06/10691418.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-967492b4472f9919c2ef16dc",
+      "candidate_id": "bbf9a840d47515353f37",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060106.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ac89b3253bb6e36e41775205",
+      "candidate_id": "3fd389052bf60d5f12f6",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060105.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-55741ffe3f92b5ed71756628",
+      "candidate_id": "fa7dc82a5e43a07c4051",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/acn/202609060104.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-45a69273ffdd30d8c6560e24",
+      "candidate_id": "83fdc20d68472fe56383",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691412.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7ff44de42ead423b7c7a9ba0",
+      "candidate_id": "ab08a4256b39b4facca9",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060103.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e9913842e9c462b7fdfc9f49",
+      "candidate_id": "cfb35a259fc83a5d9ec2",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691397.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e92c40fee62c2551fb2b8885",
+      "candidate_id": "19fb3100e972bdada33e",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060102.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9a0f5f892cbbdc3c6c1a2e00",
+      "candidate_id": "74e1da44e0e89bfea87a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691396.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-225554b4d378c9e579849e66",
+      "candidate_id": "7eb63a6b9a07de3d04ef",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691408.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e1c12b7d53cf35a64eb83137",
+      "candidate_id": "5f485b7df497b1e32a23",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060101.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-4b0cbdb7bdedb6ae029e6531",
+      "candidate_id": "672baed174dc07fca9da",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060100.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-135a7ea197de2e7557a6c191",
+      "candidate_id": "e42c65ad26007e10b426",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691406.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-711ffe6b6ce9f5fa9d5cc3f3",
+      "candidate_id": "14decbf1bcd22358113a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691401.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-56db6cf1d0952c7bbf5a5ba4",
+      "candidate_id": "fd5090f69e3e6c14cdf0",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/dwq/2026/09-06/10691389.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-18a7f173f682fa0244e4d10f",
+      "candidate_id": "5adf47ea79c66a685b8a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691387.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d168960b2f31ebd3bf74e431",
+      "candidate_id": "b5497975c771cda9a3f1",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691386.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-35ea128ac0109ef7b770c119",
+      "candidate_id": "ed69e14cd4d20b97f3e6",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691404.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-35c3adaeb6db5e1536f24b36",
+      "candidate_id": "964582fe6fd2b4055340",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aipl/202609060099.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-8deda454118a1747854ee10e",
+      "candidate_id": "59a1fcd12aaff978de04",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691403.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-296a39a840afc173a7dd00ee",
+      "candidate_id": "73b8c18396344bd9ad99",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691395.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-1f86d5a7c8b6f02348591961",
+      "candidate_id": "6141a79ebc310b1fca42",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691394.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-aa11ab9f16bdb140dbb48dfc",
+      "candidate_id": "bae8f1dedb7f0ac876bf",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691388.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ce31a90aa6543dd31bd3e3e7",
+      "candidate_id": "048010751d337847428a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691392.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-edb3d4e6c66e509898330ee1",
+      "candidate_id": "0bfaa3e86fe34533682a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691400.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-80007bbc899480ee527df394",
+      "candidate_id": "e3557b1b07e02ba401e2",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691385.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-77e01ebab982364f746bcaef",
+      "candidate_id": "431495ebf3aeeb3f7d1e",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691384.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-35fa66319cbb34dbd80314e6",
+      "candidate_id": "1e12630482aa2f8f3a7e",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691398.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9a439d012c17aadecbd874e8",
+      "candidate_id": "042daa2dfe25d7a544fc",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691371.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-fc17123a260d4b00e0c6043c",
+      "candidate_id": "129b94e7e3ae7f5d3042",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691391.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-8c90fa70ca898503f55baf27",
+      "candidate_id": "97f8d9a1186d9bc1ddf7",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691390.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-91ddf64d3b4436565022ae87",
+      "candidate_id": "2cb636fc95ee842265bb",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691393.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d9d5db6e566325eea78dd575",
+      "candidate_id": "a910b366f6077ec6d4f8",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060097.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-bf33b3f7b18ab48423e0f3a5",
+      "candidate_id": "219d41b851f5c0579f75",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aipl/202609060098.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-cf32a10f827cfafb3d51452a",
+      "candidate_id": "495e3b1b3f51d47404f7",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060096.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-17366ef2d455ae56834415b1",
+      "candidate_id": "6ac39defd67a7da3e4e6",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691383.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7ac15d3ec3902e8b83ffe75f",
+      "candidate_id": "7df85b15896391178beb",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691382.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-fa34ed209da25316710d1990",
+      "candidate_id": "62d0fac9c730a66247a0",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691380.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-8c41f9f5ffb206c694b107b9",
+      "candidate_id": "d4880180fe4c2eb308e2",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691379.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-74aaf40ab4fbf40f048cca61",
+      "candidate_id": "cbc267899f44cd302557",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691381.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-1be731766e68621ec5c53e33",
+      "candidate_id": "fff7d19b0184033cafc9",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691370.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-f048fb6bf9cf6b338969ccaf",
+      "candidate_id": "f138d5dd4628116d5e37",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/asoc/202609060095.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e4b90fdc82352f405bc82bfd",
+      "candidate_id": "9892a9104170b2d741de",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/amov/202609060094.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-3c0f62aa2af5b51a82678685",
+      "candidate_id": "a4aacffaed484ccacb7a",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060093.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-35d9c324925e51e914c39d45",
+      "candidate_id": "166662b05c2c81e2bdad",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060092.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-f25f8d76f90e0dfffaecd6dc",
+      "candidate_id": "9876b27bd2dbd3237b95",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060090.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-86ae7ca622f1cfa69897ac1f",
+      "candidate_id": "1b769893e1d23655d18c",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060091.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-414c605bfce4535824db0ad6",
+      "candidate_id": "f7f44ba7a3bdec71c612",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/amov/202609060088.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ee635df15ffeae415d4cc0fa",
+      "candidate_id": "c142237c66763acc8fdb",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060089.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-67cbee0812e9c33d9cd7adfd",
+      "candidate_id": "e6306e18eca9e3a49f84",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060087.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-5fa8592e0a04a4c7eaa51220",
+      "candidate_id": "df1eada27604e264713b",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cul/2026/09-06/10691369.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-29d9349a38e3580dec48011e",
+      "candidate_id": "1a6bd88484b100f3750c",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060086.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e6122e8fcd6a08078ef575c2",
+      "candidate_id": "12ac551c89731a66500e",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/txy/2026/09-06/10691363.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-dfa5d102be7a1cfc08dc4eb5",
+      "candidate_id": "ed84713af781314a8fcb",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691367.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-1ead843a22ff1e0ca0da8997",
+      "candidate_id": "c606747c9ef469f8c66d",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/asoc/202609060085.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a0f689bf68fc54150b7f7c45",
+      "candidate_id": "496b7ef6819b6dbebbd8",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060084.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-bb5daceab0df9254643fed2b",
+      "candidate_id": "cb382283cfba02c71784",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691365.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-56962fd83db052c37a320ddf",
+      "candidate_id": "2d3ac80d81165674b0ed",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cul/2026/09-06/10691362.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-185d0064bfb95cd248e9eeb4",
+      "candidate_id": "18bf5684be3e5f9c36b7",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691364.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-0a367ec7c9b00d78f8ad1cc3",
+      "candidate_id": "741ff4cc9d9dbec24a2b",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691361.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-bbcd63e1c53056efc0b16264",
+      "candidate_id": "c0dda15bf8169226d7e3",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060083.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-b208932cc1db2a10ab674f7e",
+      "candidate_id": "68a5429ffe3358af2b44",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691358.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-df1003e9a44970d6f184bd27",
+      "candidate_id": "6171ce352750364eac50",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060082.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-84eb5c380619a20d7429aa63",
+      "candidate_id": "6ad44556660d99964fd3",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060081.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-8743f3b54c83350a51e6c65b",
+      "candidate_id": "55f70407ad83b3a75645",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060080.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-25fee823551541b2e2719253",
+      "candidate_id": "7b762f189cd5226da595",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/aseaninfo/2026/09-06/10691354.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-8ed9e7b2e5bcc0da80ebad1a",
+      "candidate_id": "b4bd9333f1553877f1d4",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060079.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-1a6234405882af3058a5195f",
+      "candidate_id": "7bf7ca26af6dde8a1260",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691353.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-1185529132a74ed3479d411d",
+      "candidate_id": "31c15580e595e876e4f4",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691345.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-12159cd1e3a1f3010b3fb4ab",
+      "candidate_id": "d0028a0d5363d4407da6",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691336.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d50c8435474f261828c047db",
+      "candidate_id": "e9f4411b3a8ab74a4f56",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/edu/2026/09-06/10691357.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-530066b31fe30a7223761cf1",
+      "candidate_id": "0f2d8c77a68227dd2bfe",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/dwq/2026/09-06/10691352.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-267dbbebc06b6b5d80075934",
+      "candidate_id": "bd1c1aea8c6fc8b904c7",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691351.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-fb5fb4c5926542a029998d76",
+      "candidate_id": "6a11e4f31673c6ab50a7",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060078.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-16675e1fb6a41727762745d7",
+      "candidate_id": "9d2c5176983c425e8c68",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aipl/202609060077.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-84bd85fc98a8b2a6999047f1",
+      "candidate_id": "1ea5e2aa6a73e35d1ed6",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691350.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a04df1fe1f8c57d6029fe206",
+      "candidate_id": "6c08fa769576602a1acb",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691356.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-2b2b64966e877535a4294ed6",
+      "candidate_id": "cdc801577c64c0f575bd",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691355.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7f747b19e08a11788d91fa70",
+      "candidate_id": "84902f5455ba17323a0b",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691349.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-aa2a3481499c4366764b5971",
+      "candidate_id": "8ed688ea330c78234ed7",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/dwq/2026/09-06/10691335.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ef526032635ef33b8fa0ab76",
+      "candidate_id": "da5dfb167a17c7d73cd5",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691347.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-44870e620c5252393c6850c4",
+      "candidate_id": "67cb2be371e83d3142b4",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/txy/2026/09-06/10691346.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-b2103daeb166cd5159d9695c",
+      "candidate_id": "9999b6fe55fccfcb992a",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aipl/202609060076.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-f4c7b62abb59034c0bd0ca96",
+      "candidate_id": "b7fd1e26aaa86488be8a",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060075.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-91f2cc04cc1d8454c2903022",
+      "candidate_id": "fa144c0840ac0aab552d",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691344.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-35ac775794b7c39a02f0d8a0",
+      "candidate_id": "01f58f6c0555bb4ff70d",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691342.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a9c66573d05da325f411dc13",
+      "candidate_id": "b2fef448a764e497685a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691348.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-5684ade74f9a1d10ed687544",
+      "candidate_id": "380edd4c33179a0b0e6c",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/jk/2026/09-06/10691340.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e673012226774e7e78dc415d",
+      "candidate_id": "0d2167f50f785287b5fc",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691338.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c077893410487c769d762a1b",
+      "candidate_id": "c369247e7447fa80f296",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691339.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-75f6663c0f4021a2eac97fac",
+      "candidate_id": "37a2858f4cb519968b0b",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691334.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-cd39fba51b0150ea59cca81e",
+      "candidate_id": "e598966746c2ef009037",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aipl/202609060074.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-cb251b6df84910c6ff349f72",
+      "candidate_id": "7a1c3cb595bca3255e37",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aipl/202609060073.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-744f7b531e08dda10748e8a0",
+      "candidate_id": "e14180d88a1733edabea",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/acn/202609060072.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-70ac325259cfc334c5e5a691",
+      "candidate_id": "21efad55c0ae21eea4db",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060071.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-717472875fa9ba50da19eeb5",
+      "candidate_id": "7b41bc3df3515cee0c3d",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/acn/202609060070.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-829b4a123798da7048d6f2f7",
+      "candidate_id": "90691ae1d59ca231b8a5",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691332.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-f5aafe10cfd0078bfbe0147f",
+      "candidate_id": "8ce40d1fe1e82ec93d0b",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691331.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9657a08387afd85d17d31e0f",
+      "candidate_id": "f1e4b143ab413205f18a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ydyl/2026/09-06/10691330.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9d50d2eec10bb49bf33acfba",
+      "candidate_id": "027a5db5c0584214216b",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/asoc/202609060068.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d3f37a39e78600b46211008f",
+      "candidate_id": "87f83045984035b4823b",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/acn/202609060069.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-b19d9930a8ca232b2eab24c8",
+      "candidate_id": "1d0b1701073b0bd4fe29",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691329.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-5a4c86df41d61e68cf2ac8f3",
+      "candidate_id": "cdfe43aaf517b85dd1cf",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/asoc/202609060067.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-831fed41b6317d40ef5cb582",
+      "candidate_id": "9570336a7d86b030c55a",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060066.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d2d486e71180faacc1d27c1f",
+      "candidate_id": "3409e0b4767d8f0e5350",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060065.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-44fcb569bd5f33973f59fb86",
+      "candidate_id": "0d11843380b1c644f582",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ydyl/2026/09-06/10691328.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-af571c7c4021b8fa2ce0d3d6",
+      "candidate_id": "124c161960201fe7f5cc",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060063.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-2988d0c2d64b36ac5a64175d",
+      "candidate_id": "e663dc03e5e3f04bd264",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060064.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-3c29c4f8b9f223497bed0737",
+      "candidate_id": "1adb11ef36519647302b",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691327.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-bfb93c10effb8b150556c0e2",
+      "candidate_id": "1c35fbae0c6a9320c864",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/txy/2026/09-06/10691307.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-b518f0d893fb61110213938c",
+      "candidate_id": "40a02409c680ef415014",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691326.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-293e36b16e22e90c898d0f8b",
+      "candidate_id": "e216bdfef51d2685ae60",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060062.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7dc80204ea948d0955f4f4e7",
+      "candidate_id": "e58364b8c677aaf91e4c",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060060.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-bc1600432bc83084d64fcca3",
+      "candidate_id": "f205999357fa8c1e91fa",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/asoc/202609060061.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-6cf653288447a0951effdfe2",
+      "candidate_id": "b20bacc11ba847937e58",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691325.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-0fae9d93d58ae372f8a0136e",
+      "candidate_id": "a73fc9662f5c94ea235a",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060059.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-004ccf3c461f7f2b8e449798",
+      "candidate_id": "3caf5d3d4d2455c57695",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691324.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-4e67ab7b9db25eef961ec42e",
+      "candidate_id": "892bf326b4531630e051",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691323.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-63ccb258b8a68a1c24f802f8",
+      "candidate_id": "a8a79db5f2c968f2139e",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060057.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-5b2f4a3b0ba4efc25a96c6c2",
+      "candidate_id": "353a702520b8ed17ec26",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aipl/202609060058.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-31413c91a7b01506724b7e8d",
+      "candidate_id": "2aba5b9c6ba65cd7b24b",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691320.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-43d71d32574fb292fd9d0105",
+      "candidate_id": "bf6e2b5eb336928c0306",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060056.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-56975deae76def69888454a3",
+      "candidate_id": "08fb56d6db5fa9bd8c3b",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060055.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-36ad19f755e18db72b612bb8",
+      "candidate_id": "31fff11a422ca4d29607",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/afe/202609060054.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9db6e5196d0ad65c5ad4e3ac",
+      "candidate_id": "b4a27da06066d4c45ba7",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691318.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-feb61cd4a8ced4f4999840ed",
+      "candidate_id": "b313503ed318a9aed262",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aipl/202609060053.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-89693521db429965395444f7",
+      "candidate_id": "7ec915f391fb079a17ce",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ll/2026/09-06/10691317.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-312b78c29076f1310245374b",
+      "candidate_id": "8432c94be11cbdcc6a65",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691315.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9ddd8dac7ceecd0b3cd7f72d",
+      "candidate_id": "1fdf754c910e61b01ee8",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060051.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-535ad671d6a54a565d076955",
+      "candidate_id": "8fde51abeb5ec88255a6",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/acn/202609060052.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-4a1da12015fe283510972a5d",
+      "candidate_id": "81a062e653f8a015beae",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aipl/202609060050.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-974d61ef879fa53f6966c252",
+      "candidate_id": "480aa68441b07c1fde74",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691302.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-50e358f1ad6f23b07700bf19",
+      "candidate_id": "3ef13f79bd557145cdf1",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691285.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e5a274e3e2e6424417ba1e7b",
+      "candidate_id": "ded5b0c3928540f91d66",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691314.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-45ed956c31748c3cf8acf092",
+      "candidate_id": "e7c6bf078409ca0e434b",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691313.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-1339c8984282e1a6319bc13d",
+      "candidate_id": "b19145627229008d6b8e",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cul/2026/09-06/10691281.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7374600e9af52c9df8d0cc2a",
+      "candidate_id": "981257d9c2ee7865f326",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/acn/202609060049.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e02e6c8512f52aabba69acf3",
+      "candidate_id": "388af85d41f29b657387",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691305.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a3e08f5b2ae64483d04a45c5",
+      "candidate_id": "f79cd1e0af24da4c267e",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060048.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-5cefe609f7ee82cfa51a649c",
+      "candidate_id": "4946d29c86ca9afaefea",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691312.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-cb9f8f9639891657edcc4eae",
+      "candidate_id": "dc322901f100c40cacb6",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691273.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c7aca0f460a9b742d0c085a9",
+      "candidate_id": "85cbab1097d6249c2836",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691311.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-2e584ac6e6298cf4eadea3eb",
+      "candidate_id": "47c64d518d3c8113f9a6",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691309.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-32aa2731e04e365b90305dff",
+      "candidate_id": "b0ed4a2373504675c145",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/aseaninfo/2026/09-06/10691287.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ec5cfc3f5cae26d02f5bd4b1",
+      "candidate_id": "cd520e8028385650cf92",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691286.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-96f6b84b16a47db6da73cac2",
+      "candidate_id": "393b6f55e301e7c5429b",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691308.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-333d2fb3b31ae8a1f18ae19d",
+      "candidate_id": "88512ae7f72c4ec9d18f",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060038.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-74f3cd8fc9e55d6305527596",
+      "candidate_id": "afbbcaa0b0f2e65b4fde",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691306.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d6c4af8238e014b521407e54",
+      "candidate_id": "e062f3a06cd090e9db1d",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060037.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-b7262b901420bc4e7c1550ec",
+      "candidate_id": "fcbd960330179b846825",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691284.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-6fcd222027b00ef414124504",
+      "candidate_id": "632dfaed1cfbb9d338e0",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/jk/2026/09-06/10691303.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-832ddffb33eb263f7662a6b5",
+      "candidate_id": "4931df5b0eab53b9412c",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060036.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d3e92c4b008cd517f02cd69a",
+      "candidate_id": "d1b1e9c6b713ef51a1b0",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060035.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c05fc6926e46ff49574327d1",
+      "candidate_id": "5b87d5a8804e60096827",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060034.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e3984d9ca31be8bd428d4a13",
+      "candidate_id": "492448be5f81ba60cfc1",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/asoc/202609060033.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-b3b83eabcaac68facef72707",
+      "candidate_id": "afbe53cae337431fdb31",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691301.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-8c9e8efbb167d5e1b14dd384",
+      "candidate_id": "438cd52c63a202457cf9",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691300.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-46a86cd435b7804c7ff2c68b",
+      "candidate_id": "a0abaca77d6f2e861dde",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060032.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-2686958084e5e67a811e5bd2",
+      "candidate_id": "d8a48957d1e042e463c3",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060031.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-84502949268383eb28a1dc48",
+      "candidate_id": "e08d5ff4b2c8c69b7d70",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691299.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d0716c02b83c8a23e38c3a98",
+      "candidate_id": "43ab14b79c96c3e894c7",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691298.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-b385ddeed2a5955201f0ca2c",
+      "candidate_id": "787be2690a0f7fe5e94e",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691282.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-41d44cd9c7b2be64c58a8ede",
+      "candidate_id": "74f3b3d2d2e7404ea991",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/afe/202609060030.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9a37aa070eb6de2b6dcc31d2",
+      "candidate_id": "cae589df5be5803cab5f",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/acul/202609065002.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-aa08e0052cc3afd964720b99",
+      "candidate_id": "1811bce5491f37ce0ad6",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/fz/2026/09-06/10691297.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-0cd160c7691df12f5ad3d798",
+      "candidate_id": "f411bcfbd62ce5741719",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691293.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-2860f0b51d980c5e44781137",
+      "candidate_id": "171a7fca99670ad66fc1",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691292.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-1dcda31eeeb1dd1a51b56487",
+      "candidate_id": "8624d8da0d9e911c0230",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/acn/202609060029.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-5c313c016311373d51dccba8",
+      "candidate_id": "5691ee79fe0b94313570",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691288.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-bfc301f1268a8d2c840bf8bd",
+      "candidate_id": "addd0e5a77bbd37c03c4",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060028.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-1fa2c7113499fd0d7dd9d440",
+      "candidate_id": "70ffab8e2fd3ae5e764e",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691272.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-11c75434aea454d340fe842d",
+      "candidate_id": "320c85e2232a94f85fd7",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060027.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-fcf6dd7bc5364021733ee049",
+      "candidate_id": "12d19bfce5ae5f417600",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060026.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-f5bf9a5cbb24cb7cb940c156",
+      "candidate_id": "272988c6d4d6c4fbaace",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060025.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-5e54fd9472b8ec266fe416ef",
+      "candidate_id": "00a568d2168263b71262",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/jk/2026/09-06/10691278.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-519b5b9e45b398e2432ff6ab",
+      "candidate_id": "cf3db612f13d29527d62",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060024.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9c7a5008e15eb32960819f81",
+      "candidate_id": "ebcc958fab62290ac30a",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060023.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ae9af6fd35db04e005ce72fd",
+      "candidate_id": "4aeb883c56ce81d989b0",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691242.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e7e9fd4ccd953ed201ada3cb",
+      "candidate_id": "ba960e104e9f53586e01",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/afe/202609060022.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-2fc272cdff2052d6b364e853",
+      "candidate_id": "2dd9faf2d594363b841d",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691268.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9cd5e2ad2218c1926a1f0040",
+      "candidate_id": "72203bd4e2e91076a5c8",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691267.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-3a1a5961d2f521beb35aad41",
+      "candidate_id": "040de92fb61eec11b1e5",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/ty/2026/09-06/10691266.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c50b12d1d5e106f31d5d8b4f",
+      "candidate_id": "8864cc9251e7b87b5695",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/txy/2026/09-06/10691253.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-be0f69a9542f69b4d6978a63",
+      "candidate_id": "1dd1bbfd49463a876a6f",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691274.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-177357771846cc9e996b8000",
+      "candidate_id": "cdd1fe40ddaf67f68ce6",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060021.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c1e561721a8401a19fa17708",
+      "candidate_id": "c236a6053d6d6d196a92",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cul/2026/09-06/10691252.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-6442dfb886b2123cad2ecd50",
+      "candidate_id": "f18b1d86e73de38bafd5",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/txy/2026/09-06/10691250.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-adc7591e724d3c41019f22a1",
+      "candidate_id": "c712d5af323f1dfc016a",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/asoc/202609060019.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-fa268fe8794a5ada32c67d95",
+      "candidate_id": "03ee04324ec1d207e8f6",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/afe/202609060020.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-16f91e3f35c9b5ff2a00a93d",
+      "candidate_id": "4b18b6e979bff9425170",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691264.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7d1dcb0ef1a705423cd9b2f1",
+      "candidate_id": "a7f535d3bc7d25317eaf",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691263.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-07ce10aed6aa25fc686804ad",
+      "candidate_id": "7c6886d32997a7337376",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060018.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-f362df9044a59cf730a31d63",
+      "candidate_id": "937296491bf230849423",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691257.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-f82aadca2d30bb25ff28c203",
+      "candidate_id": "553873e393eb684f51fe",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/dwq/2026/09-06/10691251.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c59000d7b376d292359edd72",
+      "candidate_id": "ab97d5969893b7dd6666",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609060017.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ac52cde1cf3c08e59577e7e2",
+      "candidate_id": "f76f09ad7930f1e51255",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/amov/202609060016.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-8dd1af0bd205a39e20de09e4",
+      "candidate_id": "0e36a47c656870750523",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aipl/202609060015.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9f40df6001a3222901fa1ed2",
+      "candidate_id": "a397981f598851864ba2",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cj/2026/09-06/10691249.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a0b2f705bbc4f83d5d40ecfb",
+      "candidate_id": "8421935551314efa52b7",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691261.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ac8b28d2f78ae751c74697aa",
+      "candidate_id": "6925325de3ee1704fa03",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691248.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-bfcb5d1402244ea8b33aa04c",
+      "candidate_id": "098973335c89dabe1388",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/cul/2026/09-06/10691260.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c6db9bc2e5bc8c2f978a9fb5",
+      "candidate_id": "072acc79394c0c99a4c8",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/afe/202609060014.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-94b6aac11475b1f99a041fb6",
+      "candidate_id": "94a7a526315d0aa82601",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691254.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-0ff3fc7abf000c8584f3e5dc",
+      "candidate_id": "a4064a3058e02d52120a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691246.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ad7fcddca1df0ef54972314f",
+      "candidate_id": "eecf97a49ede6ce4ca3a",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-06/10691243.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7fb274505d388deffc2161cc",
+      "candidate_id": "fc60524494147ef34c73",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691247.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-afbdda4db80156c4bde793d9",
+      "candidate_id": "7f7efb626c1a4cabe3ef",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060013.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-2b4ea29fdb69357e9ee4e476",
+      "candidate_id": "6623806e3717cefa7c08",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609063002.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-22d505181bd00262e1e6c6b6",
+      "candidate_id": "d61e7192b106457429c1",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691237.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ccf5433fe796870d19b5de7c",
+      "candidate_id": "5a87a70cbef31aeb4329",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/life/2026/09-06/10691236.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ac471edbea0387d88b46d02b",
+      "candidate_id": "2b07cbc75f4cbd84e689",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/chuangyi/2026/09-06/10691234.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-98441d6d5c287405beb06117",
+      "candidate_id": "d25ab858b938092522c2",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609060012.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-83aebee77e825f0766299d84",
+      "candidate_id": "5a811f78ed106d590b36",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-06/10691235.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-1ddbbf6fd53c72bc5ebcb990",
+      "candidate_id": "66aecf1ab610cebbfe8a",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/afe/202609060011.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ead318e5ef6035ffac6adc98",
+      "candidate_id": "7cfd782486c91ec193b6",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ait/202609060010.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-8252568677dbb557168c07df",
+      "candidate_id": "0a4dd5be2dfc61153185",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060009.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-75403a0a3400991fa6529e05",
+      "candidate_id": "455ae02459826a6612c4",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/hr/2026/09-06/10691230.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-310fe7608bb218b4ba847c88",
+      "candidate_id": "694eb02a754004fa68a2",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/ahel/202609065001.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-05061f09867a160f21317425",
+      "candidate_id": "a37050c51ef1b9343071",
+      "source_id": "chinanews",
+      "canonical_url": "https://www.chinanews.com.cn/gj/2026/09-06/10691228.shtml",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-ce61107285d2a6424da05805",
+      "candidate_id": "b27d3b336841bb69fc0c",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060008.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-8ff99b463c5b96e92b1241ef",
+      "candidate_id": "bf3d21a3cefedafb1de6",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aopl/202609060007.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    }
+  ]
+}
