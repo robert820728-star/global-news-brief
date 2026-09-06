@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "operation": "source_scan",
+  "run_id": "gnb-20260906T081308Z-5e7a3c91",
+  "main_sha": "4162e5a1b2352d0ccd285c5b4aec09421f2e8757",
+  "window": {
+    "start": "2026-09-05T08:13:08+00:00",
+    "end": "2026-09-06T08:13:08+00:00"
+  },
+  "source_ids": [
+    "cna",
+    "chinanews"
+  ]
+}
