@@ -19,10 +19,26 @@ jobs:
       contains(github.event.comment.body, '<!-- gnb-remote-acquisition:v1 -->')
     runs-on: ubuntu-latest
     steps:
+      - name: Extract occurrence-pinned runtime SHA
+        id: pin
+        env:
+          BRIDGE_COMMENT: ${{ github.event.comment.body }}
+        run: |
+          python - <<'PY'
+          import os
+          import re
+
+          body = os.environ.get("BRIDGE_COMMENT", "")
+          matches = re.findall(r'"main_sha"\s*:\s*"([0-9a-f]{40})"', body)
+          if len(matches) != 1:
+              raise SystemExit("bridge request must contain exactly one canonical main_sha")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as stream:
+              stream.write(f"main_sha={matches[0]}\n")
+          PY
       - name: Checkout pinned default-branch runtime
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ steps.pin.outputs.main_sha }}
           path: runtime
       - name: Checkout durable run logs
         uses: actions/checkout@v4
@@ -45,7 +61,7 @@ jobs:
       - name: Validate issue request
         env:
           BRIDGE_COMMENT: ${{ github.event.comment.body }}
-          EXPECTED_MAIN_SHA: ${{ github.sha }}
+          EXPECTED_MAIN_SHA: ${{ steps.pin.outputs.main_sha }}
           PYTHONPATH: ${{ github.workspace }}/runtime
         run: >-
           python runtime/scripts/remote_acquisition_bridge_v2.py parse-comment
@@ -54,7 +70,7 @@ jobs:
           --output request.json
       - name: Prepare append-only hydration receipt
         env:
-          EXPECTED_MAIN_SHA: ${{ github.sha }}
+          EXPECTED_MAIN_SHA: ${{ steps.pin.outputs.main_sha }}
           PYTHONPATH: ${{ github.workspace }}/runtime
         run: >-
           python runtime/scripts/remote_acquisition_bridge_v2.py prepare-hydration
@@ -63,7 +79,7 @@ jobs:
           --run-logs-root runlogs
       - name: Prepare append-only web fallback receipt
         env:
-          EXPECTED_MAIN_SHA: ${{ github.sha }}
+          EXPECTED_MAIN_SHA: ${{ steps.pin.outputs.main_sha }}
           PYTHONPATH: ${{ github.workspace }}/runtime
         run: >-
           python runtime/scripts/remote_acquisition_bridge_v2.py prepare-web-fallback
@@ -101,7 +117,7 @@ jobs:
           fi
       - name: Execute bounded acquisition
         env:
-          EXPECTED_MAIN_SHA: ${{ github.sha }}
+          EXPECTED_MAIN_SHA: ${{ steps.pin.outputs.main_sha }}
           PYTHONPATH: ${{ github.workspace }}/runtime
         run: >-
           python runtime/scripts/remote_acquisition_bridge_v2.py execute
