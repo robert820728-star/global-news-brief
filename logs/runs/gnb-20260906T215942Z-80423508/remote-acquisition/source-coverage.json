@@ -7107,5 +7107,125 @@
     "scan_window_start": "2026-09-05T21:59:42+00:00",
     "scan_window_end": "2026-09-06T21:59:42+00:00",
     "scan_evidence_path": "/home/runner/work/global-news-brief/global-news-brief/runlogs/logs/runs/gnb-20260906T215942Z-80423508/remote-acquisition/source-scans/chinanews.json"
+  },
+  {
+    "source_id": "web_fallback",
+    "scan_status": "completed",
+    "coverage_complete": false,
+    "coverage_status": "degraded_partial",
+    "coverage_reason": "configured primary aggregator unavailable; bounded verified host web fallback materialized",
+    "missing_segments": [
+      "configured_primary_aggregator_unavailable"
+    ],
+    "missing_date_variants": [],
+    "within_window_count": 12,
+    "ranked_count": 12,
+    "ranked_items": [
+      {
+        "url": "https://www.reuters.com/world/china/flood-destroyed-china-nepal-border-no-sign-once-busy-port-reuters-witnesses-2026-09-06/",
+        "title": "Flood-destroyed China-Nepal border: no sign of once-busy port",
+        "published_at": "2026-09-06T07:31:00+00:00",
+        "discovery_priority_score": 999,
+        "discovery_priority_reason": "Ongoing multi-country mass-casualty disaster and rescue operation with a material same-window update."
+      },
+      {
+        "url": "https://www.reuters.com/world/middle-east/iran-tackle-economic-issues-says-further-attacks-will-be-more-painful-2026-09-06/",
+        "title": "Iran warns further attacks will draw more painful response amid Hormuz disruption",
+        "published_at": "2026-09-06T11:42:00+00:00",
+        "discovery_priority_score": 998,
+        "discovery_priority_reason": "Active interstate military exchange affecting a global oil-shipping chokepoint and commercial vessel traffic."
+      },
+      {
+        "url": "https://www.reuters.com/world/germanys-far-right-afd-seeks-landmark-state-victory-saxony-anhalt-votes-2026-09-06/",
+        "title": "Germany's AfD wins landmark Saxony-Anhalt state election",
+        "published_at": "2026-09-06T00:06:00+00:00",
+        "discovery_priority_score": 997,
+        "discovery_priority_reason": "Historic state-election result with immediate German political and institutional significance."
+      },
+      {
+        "url": "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06/",
+        "title": "Anak Krakatau eruption disrupts Indonesian aviation",
+        "published_at": "2026-09-06T00:27:00+00:00",
+        "discovery_priority_score": 996,
+        "discovery_priority_reason": "Large, realized aviation-system disruption from an active volcanic eruption with broad passenger impact."
+      },
+      {
+        "url": "https://www.reuters.com/business/aerospace-defense/amazon-prime-air-boeing-767-overruns-runway-miami-airport-2026-09-06/",
+        "title": "Amazon Prime Air Boeing 767 overruns runway at Miami airport",
+        "published_at": "2026-09-06T19:36:00+00:00",
+        "discovery_priority_score": 995,
+        "discovery_priority_reason": "Fatal commercial cargo-aircraft accident at a major airport with operational disruption and federal investigation."
+      },
+      {
+        "url": "https://www.reuters.com/world/middle-east/israeli-military-says-it-strikes-southern-lebanon-after-hezbollah-launched-2026-09-06/",
+        "title": "Israeli strikes in southern Lebanon kill seven after Hezbollah drone attacks",
+        "published_at": "2026-09-06T04:15:00+00:00",
+        "discovery_priority_score": 994,
+        "discovery_priority_reason": "Same-window cross-border military escalation with confirmed fatalities under an existing ceasefire framework."
+      },
+      {
+        "url": "https://www.reuters.com/world/asia-pacific/china-pump-47-bln-into-state-banks-insurers-capital-boosting-push-2026-09-06/",
+        "title": "China pumps $54 billion into state banks and insurers",
+        "published_at": "2026-09-06T09:12:00+00:00",
+        "discovery_priority_score": 993,
+        "discovery_priority_reason": "Large coordinated financial-stability intervention spanning systemically important state banks and insurers."
+      },
+      {
+        "url": "https://www.reuters.com/business/aerospace-defense/us-envoys-make-first-kyiv-visit-amid-ukraine-war-peace-push-2026-09-06/",
+        "title": "U.S. envoys make first Kyiv visit amid Ukraine war peace push",
+        "published_at": "2026-09-06T11:09:00+00:00",
+        "discovery_priority_score": 992,
+        "discovery_priority_reason": "Material diplomatic contact in the Russia-Ukraine war, with concrete talks but no verified peace breakthrough."
+      },
+      {
+        "url": "https://www.reuters.com/world/asia-pacific/north-koreas-kim-jong-un-says-new-destroyer-will-be-part-nuclear-response-system-2026-09-06/",
+        "title": "North Korea commissions second 5,000-tonne destroyer",
+        "published_at": "2026-09-06T21:32:00+00:00",
+        "discovery_priority_score": 991,
+        "discovery_priority_reason": "New strategic naval platform formally commissioned with an asserted nuclear-response role."
+      },
+      {
+        "url": "https://www.reuters.com/legal/government/trump-administration-renews-supreme-court-bid-limit-mail-in-voting-2026-09-06/",
+        "title": "Trump administration renews Supreme Court bid to limit mail-in voting",
+        "published_at": "2026-09-06T16:28:00+00:00",
+        "discovery_priority_score": 990,
+        "discovery_priority_reason": "Active Supreme Court litigation with immediate nationwide election-administration implications."
+      },
+      {
+        "url": "https://www.reuters.com/world/middle-east/israeli-strike-kills-two-people-gaza-medics-say-2026-09-06/",
+        "title": "Israeli strikes in Gaza kill at least four, including children",
+        "published_at": "2026-09-06T15:00:00+00:00",
+        "discovery_priority_score": 989,
+        "discovery_priority_reason": "Current-window civilian casualties and renewed strike activity in an ongoing high-impact conflict."
+      },
+      {
+        "url": "https://www.reuters.com/business/energy/opec-keep-october-policy-unchanged-sources-say-2026-09-06/",
+        "title": "OPEC+ keeps October oil production policy unchanged",
+        "published_at": "2026-09-06T07:37:00+00:00",
+        "discovery_priority_score": 988,
+        "discovery_priority_reason": "Major oil producers' formal policy decision is in-window, though the decision is to maintain the existing setting."
+      }
+    ],
+    "selected_for_pool_count": 12,
+    "selected_item_urls": [
+      "https://www.reuters.com/world/china/flood-destroyed-china-nepal-border-no-sign-once-busy-port-reuters-witnesses-2026-09-06/",
+      "https://www.reuters.com/world/middle-east/iran-tackle-economic-issues-says-further-attacks-will-be-more-painful-2026-09-06/",
+      "https://www.reuters.com/world/germanys-far-right-afd-seeks-landmark-state-victory-saxony-anhalt-votes-2026-09-06/",
+      "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06/",
+      "https://www.reuters.com/business/aerospace-defense/amazon-prime-air-boeing-767-overruns-runway-miami-airport-2026-09-06/",
+      "https://www.reuters.com/world/middle-east/israeli-military-says-it-strikes-southern-lebanon-after-hezbollah-launched-2026-09-06/",
+      "https://www.reuters.com/world/asia-pacific/china-pump-47-bln-into-state-banks-insurers-capital-boosting-push-2026-09-06/",
+      "https://www.reuters.com/business/aerospace-defense/us-envoys-make-first-kyiv-visit-amid-ukraine-war-peace-push-2026-09-06/",
+      "https://www.reuters.com/world/asia-pacific/north-koreas-kim-jong-un-says-new-destroyer-will-be-part-nuclear-response-system-2026-09-06/",
+      "https://www.reuters.com/legal/government/trump-administration-renews-supreme-court-bid-limit-mail-in-voting-2026-09-06/",
+      "https://www.reuters.com/world/middle-east/israeli-strike-kills-two-people-gaza-medics-say-2026-09-06/",
+      "https://www.reuters.com/business/energy/opec-keep-october-policy-unchanged-sources-say-2026-09-06/"
+    ],
+    "discovery_ranking_completed": true,
+    "discovery_ranking_method": "bounded_host_search_rank_v1",
+    "failure_reason": null,
+    "scan_window_start": "2026-09-05T21:59:42+00:00",
+    "scan_window_end": "2026-09-06T21:59:42+00:00",
+    "scan_evidence_path": "/home/runner/work/global-news-brief/global-news-brief/runlogs/logs/runs/gnb-20260906T215942Z-80423508/remote-acquisition/source-scans/web_fallback.json"
   }
 ]

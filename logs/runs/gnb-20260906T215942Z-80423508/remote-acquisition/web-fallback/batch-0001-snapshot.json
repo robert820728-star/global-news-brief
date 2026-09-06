@@ -1,0 +1,165 @@
+{
+  "schema_version": "1.0",
+  "run_id": "gnb-20260906T215942Z-80423508",
+  "main_sha": "4162e5a1b2352d0ccd285c5b4aec09421f2e8757",
+  "window": {
+    "start": "2026-09-05T21:59:42+00:00",
+    "end": "2026-09-06T21:59:42+00:00"
+  },
+  "batch_sequence": 1,
+  "search_provider": "host_web_search",
+  "search_query": "bounded verified global news fallback for exact 24-hour window; Reuters/AP and primary-source corroboration leads",
+  "search_evidence_url": "https://www.reuters.com/world/",
+  "searched_at": "2026-09-06T22:57:17+00:00",
+  "primary_failure_evidence": [
+    "Scheduled Task mobile-native execution has no verified configured GDELT archive byte-transport route in the run-bound bridge.",
+    "The run-bound source_scan bridge supports the regional cna/chinanews routes only; no GDELT source-scan artifact was materialized for this occurrence."
+  ],
+  "results": [
+    {
+      "result_id": "wf-20260906-001",
+      "search_rank": 1,
+      "url": "https://www.reuters.com/world/china/flood-destroyed-china-nepal-border-no-sign-once-busy-port-reuters-witnesses-2026-09-06/",
+      "title": "Flood-destroyed China-Nepal border: no sign of once-busy port",
+      "summary": "Reuters reports ongoing rescue and recovery after the Nepal-Tibet glacier-collapse flood, with more than 1,300 dead across both sides and more than 5,000 missing; 12 more bodies were recovered at Gyirong on September 6.",
+      "published_at": "2026-09-06T07:31:00+00:00",
+      "url_evidence": "Reuters article opened and verified on the current host.",
+      "published_evidence": "Reuters publication timestamp: 2026-09-06 07:31 UTC.",
+      "discovery_priority_reason": "Ongoing multi-country mass-casualty disaster and rescue operation with a material same-window update.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "wf-20260906-002",
+      "search_rank": 2,
+      "url": "https://www.reuters.com/world/middle-east/iran-tackle-economic-issues-says-further-attacks-will-be-more-painful-2026-09-06/",
+      "title": "Iran warns further attacks will draw more painful response amid Hormuz disruption",
+      "summary": "Reuters reports renewed U.S.-Iran military exchanges, Iranian warnings of faster retaliation and a planned restricted zone, while commercial shipping through the Strait of Hormuz remains heavily disrupted.",
+      "published_at": "2026-09-06T11:42:00+00:00",
+      "url_evidence": "Reuters article opened and verified on the current host.",
+      "published_evidence": "Reuters publication timestamp: 2026-09-06 11:42 UTC.",
+      "discovery_priority_reason": "Active interstate military exchange affecting a global oil-shipping chokepoint and commercial vessel traffic.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "wf-20260906-003",
+      "search_rank": 3,
+      "url": "https://www.reuters.com/world/germanys-far-right-afd-seeks-landmark-state-victory-saxony-anhalt-votes-2026-09-06/",
+      "title": "Germany's AfD wins landmark Saxony-Anhalt state election",
+      "summary": "Reuters reports AfD winning about 44% in Saxony-Anhalt against roughly 18.5% for the CDU, a historic state-election result with mainstream parties still refusing cooperation.",
+      "published_at": "2026-09-06T00:06:00+00:00",
+      "url_evidence": "Reuters article opened and verified on the current host.",
+      "published_evidence": "Reuters publication timestamp: 2026-09-06 00:06 UTC.",
+      "discovery_priority_reason": "Historic state-election result with immediate German political and institutional significance.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "wf-20260906-004",
+      "search_rank": 4,
+      "url": "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06/",
+      "title": "Anak Krakatau eruption disrupts Indonesian aviation",
+      "summary": "Reuters reports eight airports suspending operations and more than 1,500 flights affecting around 170,000 passengers after ash from Anak Krakatau spread across Java and Sumatra.",
+      "published_at": "2026-09-06T00:27:00+00:00",
+      "url_evidence": "Reuters article opened and verified on the current host.",
+      "published_evidence": "Reuters publication timestamp: 2026-09-06 00:27 UTC.",
+      "discovery_priority_reason": "Large, realized aviation-system disruption from an active volcanic eruption with broad passenger impact.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "wf-20260906-005",
+      "search_rank": 5,
+      "url": "https://www.reuters.com/business/aerospace-defense/amazon-prime-air-boeing-767-overruns-runway-miami-airport-2026-09-06/",
+      "title": "Amazon Prime Air Boeing 767 overruns runway at Miami airport",
+      "summary": "Reuters reports an Amazon Prime Air Boeing 767 operated by 21 Air overrunning the runway in Miami, hitting ground vehicles and killing at least five people, with FAA and NTSB investigations opened.",
+      "published_at": "2026-09-06T19:36:00+00:00",
+      "url_evidence": "Reuters article opened and verified on the current host.",
+      "published_evidence": "Reuters publication timestamp: 2026-09-06 19:36 UTC.",
+      "discovery_priority_reason": "Fatal commercial cargo-aircraft accident at a major airport with operational disruption and federal investigation.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "wf-20260906-006",
+      "search_rank": 6,
+      "url": "https://www.reuters.com/world/middle-east/israeli-military-says-it-strikes-southern-lebanon-after-hezbollah-launched-2026-09-06/",
+      "title": "Israeli strikes in southern Lebanon kill seven after Hezbollah drone attacks",
+      "summary": "Reuters reports seven people killed and at least six injured in southern Lebanon during Israeli strikes that Israel described as retaliation for Hezbollah drone attacks.",
+      "published_at": "2026-09-06T04:15:00+00:00",
+      "url_evidence": "Reuters article opened and verified on the current host.",
+      "published_evidence": "Reuters publication timestamp: 2026-09-06 04:15 UTC.",
+      "discovery_priority_reason": "Same-window cross-border military escalation with confirmed fatalities under an existing ceasefire framework.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "wf-20260906-007",
+      "search_rank": 7,
+      "url": "https://www.reuters.com/world/asia-pacific/china-pump-47-bln-into-state-banks-insurers-capital-boosting-push-2026-09-06/",
+      "title": "China pumps $54 billion into state banks and insurers",
+      "summary": "Reuters reports coordinated capital injections into major Chinese state-owned banks and insurers to bolster solvency, core capital and credit capacity.",
+      "published_at": "2026-09-06T09:12:00+00:00",
+      "url_evidence": "Reuters article opened and verified on the current host.",
+      "published_evidence": "Reuters publication timestamp: 2026-09-06 09:12 UTC.",
+      "discovery_priority_reason": "Large coordinated financial-stability intervention spanning systemically important state banks and insurers.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "wf-20260906-008",
+      "search_rank": 8,
+      "url": "https://www.reuters.com/business/aerospace-defense/us-envoys-make-first-kyiv-visit-amid-ukraine-war-peace-push-2026-09-06/",
+      "title": "U.S. envoys make first Kyiv visit amid Ukraine war peace push",
+      "summary": "Reuters reports U.S. envoys Steve Witkoff and Jared Kushner meeting President Volodymyr Zelenskiy in Kyiv with new ideas from Moscow, but no clear breakthrough in territorial or security issues.",
+      "published_at": "2026-09-06T11:09:00+00:00",
+      "url_evidence": "Reuters article opened and verified on the current host.",
+      "published_evidence": "Reuters publication timestamp: 2026-09-06 11:09 UTC.",
+      "discovery_priority_reason": "Material diplomatic contact in the Russia-Ukraine war, with concrete talks but no verified peace breakthrough.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "wf-20260906-009",
+      "search_rank": 9,
+      "url": "https://www.reuters.com/world/asia-pacific/north-koreas-kim-jong-un-says-new-destroyer-will-be-part-nuclear-response-system-2026-09-06/",
+      "title": "North Korea commissions second 5,000-tonne destroyer",
+      "summary": "Reuters reports North Korea commissioning its second Choe Hyon-class destroyer in Wonsan, with Kim Jong Un saying the vessel will form part of the state's nuclear response system.",
+      "published_at": "2026-09-06T21:32:00+00:00",
+      "url_evidence": "Reuters article opened and verified on the current host.",
+      "published_evidence": "Reuters publication timestamp: 2026-09-06 21:32 UTC.",
+      "discovery_priority_reason": "New strategic naval platform formally commissioned with an asserted nuclear-response role.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "wf-20260906-010",
+      "search_rank": 10,
+      "url": "https://www.reuters.com/legal/government/trump-administration-renews-supreme-court-bid-limit-mail-in-voting-2026-09-06/",
+      "title": "Trump administration renews Supreme Court bid to limit mail-in voting",
+      "summary": "Reuters reports an emergency U.S. Supreme Court application seeking to revive a restrictive Postal Service mail-ballot rule after a lower-court injunction, as states begin sending ballots for the November midterms.",
+      "published_at": "2026-09-06T16:28:00+00:00",
+      "url_evidence": "Reuters article opened and verified on the current host.",
+      "published_evidence": "Reuters publication timestamp: 2026-09-06 16:28 UTC.",
+      "discovery_priority_reason": "Active Supreme Court litigation with immediate nationwide election-administration implications.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "wf-20260906-011",
+      "search_rank": 11,
+      "url": "https://www.reuters.com/world/middle-east/israeli-strike-kills-two-people-gaza-medics-say-2026-09-06/",
+      "title": "Israeli strikes in Gaza kill at least four, including children",
+      "summary": "Reuters reports at least four people killed in several Gaza strikes on September 6, including children, while Israel said one strike targeted a Hamas militant and was checking the outcome.",
+      "published_at": "2026-09-06T15:00:00+00:00",
+      "url_evidence": "Reuters article opened and verified on the current host.",
+      "published_evidence": "Reuters publication timestamp: 2026-09-06 15:00 UTC.",
+      "discovery_priority_reason": "Current-window civilian casualties and renewed strike activity in an ongoing high-impact conflict.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "wf-20260906-012",
+      "search_rank": 12,
+      "url": "https://www.reuters.com/business/energy/opec-keep-october-policy-unchanged-sources-say-2026-09-06/",
+      "title": "OPEC+ keeps October oil production policy unchanged",
+      "summary": "Reuters reports OPEC+ maintaining its existing October production policy, leaving output settings unchanged amid wider geopolitical energy-market uncertainty.",
+      "published_at": "2026-09-06T07:37:00+00:00",
+      "url_evidence": "Reuters article opened and verified on the current host.",
+      "published_evidence": "Reuters publication timestamp: 2026-09-06 07:37 UTC.",
+      "discovery_priority_reason": "Major oil producers' formal policy decision is in-window, though the decision is to maintain the existing setting.",
+      "section": "GLB"
+    }
+  ],
+  "terminal_marker": "bounded verified global fallback materialized after configured global primary transport remained unavailable; coverage stays degraded_partial"
+}

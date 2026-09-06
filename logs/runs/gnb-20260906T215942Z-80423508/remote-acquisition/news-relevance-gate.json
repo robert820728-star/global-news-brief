@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
-  "input_article_row_count": 471,
+  "input_article_row_count": 483,
   "content_hydration_count": 471,
-  "lightweight_semantic_review_count": 0,
+  "lightweight_semantic_review_count": 12,
   "decisions": [
     {
       "row_id": "row-29deef612c7b1d95b41dc5bf",
@@ -621,6 +621,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-1ed718ba5a00c710d88096e1",
+      "candidate_id": "c2112dd486feaba025a6",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/asia-pacific/north-koreas-kim-jong-un-says-new-destroyer-will-be-part-nuclear-response-system-2026-09-06",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-6963ebaabec7d1b2268c7ba7",
       "candidate_id": "743dc3fe655f9c631e72",
       "source_id": "cna",
@@ -1134,6 +1145,17 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-1083d228b54e6d9ea49b62b7",
+      "candidate_id": "29b22aae6bb48f3ded2d",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/business/aerospace-defense/amazon-prime-air-boeing-767-overruns-runway-miami-airport-2026-09-06",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     },
@@ -2502,6 +2524,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-6e49b15d209ba9e208b95574",
+      "candidate_id": "693e31ea840d6ce8d7ab",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/legal/government/trump-administration-renews-supreme-court-bid-limit-mail-in-voting-2026-09-06",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-095c1131457e618fd11e7a13",
       "candidate_id": "980f74938e24720ee58c",
       "source_id": "chinanews",
@@ -3224,6 +3257,17 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-4c123baf7aeef03cc973cde4",
+      "candidate_id": "0981e01c0baa3f5a8c1f",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/middle-east/israeli-strike-kills-two-people-gaza-medics-say-2026-09-06",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     },
@@ -4251,6 +4295,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-127e51f69b7a6f4cb37322d0",
+      "candidate_id": "dcf2cad3014aacb58711",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/middle-east/iran-tackle-economic-issues-says-further-attacks-will-be-more-painful-2026-09-06",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-7374600e9af52c9df8d0cc2a",
       "candidate_id": "981257d9c2ee7865f326",
       "source_id": "cna",
@@ -4478,6 +4533,17 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-0bc210736801c5b839987b02",
+      "candidate_id": "de63c328a149ca19e76d",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/business/aerospace-defense/us-envoys-make-first-kyiv-visit-amid-ukraine-war-peace-push-2026-09-06",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     },
@@ -5010,6 +5076,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-c02c1ee7e8d92e9c1d7f795d",
+      "candidate_id": "7c04226a80041a157136",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/asia-pacific/china-pump-47-bln-into-state-banks-insurers-capital-boosting-push-2026-09-06",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-7fb274505d388deffc2161cc",
       "candidate_id": "fc60524494147ef34c73",
       "source_id": "chinanews",
@@ -5131,6 +5208,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-ebd024d7410efde291fbbacf",
+      "candidate_id": "86ba8a12961950084156",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/business/energy/opec-keep-october-policy-unchanged-sources-say-2026-09-06",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-75403a0a3400991fa6529e05",
       "candidate_id": "455ae02459826a6612c4",
       "source_id": "chinanews",
@@ -5138,6 +5226,17 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-981f4b005c8af5449871eff6",
+      "candidate_id": "554ae6a288249edd6de7",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/china/flood-destroyed-china-nepal-border-no-sign-once-busy-port-reuters-witnesses-2026-09-06",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     },
@@ -5182,6 +5281,39 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-51fdddfd620c6d54dee725fb",
+      "candidate_id": "6d33a606e3422577987e",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/middle-east/israeli-military-says-it-strikes-southern-lebanon-after-hezbollah-launched-2026-09-06",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c817a0724b93f117a105fd5c",
+      "candidate_id": "07601e545112732aee07",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-daf9ce66e87de7ca53b4f956",
+      "candidate_id": "cc8d07a006c234e3ed98",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/germanys-far-right-afd-seeks-landmark-state-victory-saxony-anhalt-votes-2026-09-06",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     }
