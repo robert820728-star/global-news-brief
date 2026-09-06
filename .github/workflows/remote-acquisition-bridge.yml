@@ -61,7 +61,16 @@ jobs:
           --request request.json
           --expected-main-sha "$EXPECTED_MAIN_SHA"
           --run-logs-root runlogs
-      - name: Persist running hydration receipt
+      - name: Prepare append-only web fallback receipt
+        env:
+          EXPECTED_MAIN_SHA: ${{ github.sha }}
+          PYTHONPATH: ${{ github.workspace }}/runtime
+        run: >-
+          python runtime/scripts/remote_acquisition_bridge_v2.py prepare-web-fallback
+          --request request.json
+          --expected-main-sha "$EXPECTED_MAIN_SHA"
+          --run-logs-root runlogs
+      - name: Persist running acquisition receipt
         working-directory: runlogs
         run: |
           git config user.name "github-actions[bot]"

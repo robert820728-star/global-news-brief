@@ -23,7 +23,38 @@ python scripts/verify_scheduled_task_install.py --template scheduled-task-prompt
 
 若控制面提供 exact task ID readback，另把完整 readback 存成 UTF-8 純文字並加上 `--readback <path>` 再驗一次；verifier 非零退出時禁止啟用 task。這個 verifier 使縮短 launcher、截斷、extension 污染、錯 main 或錯 readback 在 occurrence 前即被拒絕。
 
-`REMOTE_ACQUISITION_BRIDGE_GATE`：Scheduled Task 已證明 GitHub issue #3 寫入、Actions 與 `run-logs` 讀取能力，但缺少 CNA POST／中新社日索引或來源圖片 bytes transport 時，可在 issue #3 建立唯一 `gnb-remote-acquisition:v1` JSON request。request 必須綁定同一 `run_id`、fresh `main_sha` 與精確 24 小時 window；GitHub Actions 只以 default-branch 同 SHA 執行 canonical source/media scripts，結果只寫入 `run-logs/logs/runs/<run_id>/remote-acquisition/`。來源 scan 只接受 `cna`／`chinanews`，結果回到同一 source-scan 繼續文章本體 hydration；GDELT 維持既有 truthful degraded fallback，避免把完整 24h archive 大量資料塞入 connector。圖片以 GitHub connector `encoding=base64` 讀回，重新做 decode/hash 後才交給已實測成功的 local attachment handoff。Actions 成功、artifact URL、base64 字串或本機檔案本身都不得直接算圖片交付；最終仍須非文字 media block 與可見像素。任何橋接能力缺失都保持原 stage fail-closed。
+`REMOTE_ACQUISITION_BRIDGE_GATE`：Scheduled Task 已證明 GitHub issue #3 寫入、Actions 與 `run-logs` 讀取能力，但缺少 CNA POST／中新社日索引、全球搜尋證據持久化或來源圖片 bytes transport 時，可在 issue #3 建立唯一 `gnb-remote-acquisition:v1` JSON request。request 必須綁定同一 `run_id`、fresh `main_sha` 與精確 24 小時 window；GitHub Actions 只以 default-branch 同 SHA 執行 canonical source/media scripts，結果只寫入 `run-logs/logs/runs/<run_id>/remote-acquisition/`。來源 scan 只接受 `cna`／`chinanews`。GDELT archive 不送入 connector；primary routes 耗盡後，宿主已完成的 bounded global web search 可用 `web_fallback_materialize` 分批提交（每批 1–20 筆），每批必須保存 search provider/query/evidence URL、primary failure evidence、搜尋順位、原始文章 URL 與窗內發稿時間。bridge 先保存 append-only running receipt，再物化可重算 snapshot、`web_fallback.json` 與 source coverage，固定 `coverage_complete=false`／`degraded_partial`，之後回到同一 source-scan 與 article hydration，不得冒充 GDELT 完整 coverage。外部 fallback 文章 hydration 只允許 public HTTPS，redirect／override 不得離開已驗證文章 host。圖片以 GitHub connector `encoding=base64` 讀回，重新做 decode/hash 後才交給已實測成功的 local attachment handoff。Actions 成功、artifact URL、base64 字串或本機檔案本身都不得直接算圖片交付；最終仍須非文字 media block 與可見像素。任何橋接能力缺失都保持原 stage fail-closed。
+
+`web_fallback_materialize` 的 canonical request shape 如下；每個 `results[]` object 只能包含列出的欄位，後續批次遞增 `batch_sequence`，不得更換 run／SHA／window：
+
+```json
+{
+  "schema_version": "1.0",
+  "operation": "web_fallback_materialize",
+  "run_id": "gnb-YYYYMMDDThhmmssZ-1234abcd",
+  "main_sha": "40-character-lowercase-sha",
+  "window": {"start": "ISO-8601", "end": "ISO-8601 exactly 24h later"},
+  "batch_sequence": 1,
+  "search_provider": "host_web_search",
+  "search_query": "bounded query actually executed",
+  "search_evidence_url": "https://public-evidence-page.example/",
+  "searched_at": "ISO-8601",
+  "primary_failure_evidence": ["configured primary recovery chain exhausted"],
+  "terminal_reason": "bounded_search_complete",
+  "results": [{
+    "result_id": "result-001",
+    "search_rank": 1,
+    "url": "https://publisher.example/article",
+    "title": "Exact result title",
+    "summary": "Verified result summary",
+    "published_at": "ISO-8601 inside window",
+    "url_evidence": "exact URL evidence preserved in the snapshot",
+    "published_evidence": "exact timestamp evidence preserved in the snapshot",
+    "discovery_priority_reason": "bounded discovery reason, not Public Value scoring",
+    "section": "GLB"
+  }]
+}
+```
 
 在全新對話貼上：
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import html
+import ipaddress
 import json
 import re
 import urllib.error
@@ -87,14 +88,36 @@ def _same_source(url: str, source_id: str) -> bool:
         port = parts.port
     except ValueError:
         return False
+    public_fallback = source_id == "web_fallback" and _public_https_parts(parts)
     return bool(
-        root
-        and parts.scheme.lower() == "https"
+        public_fallback or (
+        root and parts.scheme.lower() == "https"
         and parts.username is None
         and parts.password is None
         and port in {None, 443}
         and (host == root or host.endswith("." + root))
+        )
     )
+
+
+def _public_https_parts(parts) -> bool:
+    try:
+        port = parts.port
+    except ValueError:
+        return False
+    if (
+        parts.scheme.lower() != "https" or not parts.hostname
+        or parts.username is not None or parts.password is not None
+        or port not in {None, 443}
+    ):
+        return False
+    hostname = parts.hostname.rstrip(".").lower()
+    if hostname == "localhost" or hostname.endswith((".localhost", ".local")):
+        return False
+    try:
+        return ipaddress.ip_address(hostname).is_global
+    except ValueError:
+        return True
 
 
 def _decode(data: bytes, content_type: str) -> str:
@@ -139,7 +162,12 @@ def fetch(url: str, source_id: str) -> tuple[bytes, str, str]:
     if ctype not in {"text/html", "application/xhtml+xml"}:
         raise ValueError(f"unsupported content type {ctype}")
     if not _same_source(final, source_id):
-        raise ValueError("article redirect left the configured same-source site")
+        raise ValueError("article redirect left the configured source boundary")
+    if source_id == "web_fallback":
+        initial_host = (urlsplit(url).hostname or "").lower()
+        final_host = (urlsplit(final).hostname or "").lower()
+        if initial_host != final_host:
+            raise ValueError("web fallback article redirect left the verified article host")
     return data, final, ctype_header or ctype
 
 

@@ -20,6 +20,15 @@ HYDRATION_KEYS = {
     "schema_version", "operation", "run_id", "main_sha", "window", "batch_sequence",
     "row_ids", "fetch_overrides", "exhausted_row_ids", "exhaustion_evidence",
 }
+WEB_FALLBACK_KEYS = {
+    "schema_version", "operation", "run_id", "main_sha", "window", "batch_sequence",
+    "search_provider", "search_query", "search_evidence_url", "searched_at",
+    "primary_failure_evidence", "terminal_reason", "results",
+}
+WEB_FALLBACK_RESULT_KEYS = {
+    "result_id", "search_rank", "url", "title", "summary", "published_at",
+    "url_evidence", "published_evidence", "discovery_priority_reason", "section",
+}
 ROW_ID_RE = re.compile(r"^row-[0-9a-f]{24}$")
 TERMINAL_ROW_STATUSES = {"content_ready", "outside_window", "unresolved_exhausted"}
 ATTEMPT_ROW_STATUSES = TERMINAL_ROW_STATUSES | {"unresolved"}
@@ -50,6 +59,66 @@ def _same_source(url: str, source_id: str) -> bool:
 
 
 def validate(value: dict[str, Any], expected_main_sha: str) -> dict[str, Any]:
+    if value.get("operation") == "web_fallback_materialize":
+        unknown = set(value) - WEB_FALLBACK_KEYS
+        if unknown:
+            raise ValueError(f"unknown request keys: {sorted(unknown)}")
+        if value.get("schema_version") != "1.0":
+            raise ValueError("schema_version must be 1.0")
+        if not v1.RUN_ID_RE.fullmatch(str(value.get("run_id", ""))):
+            raise ValueError("run_id is invalid")
+        if str(value.get("main_sha", "")) != expected_main_sha:
+            raise ValueError("main_sha is invalid or stale")
+        window = value.get("window")
+        if not isinstance(window, dict) or set(window) != {"start", "end"}:
+            raise ValueError("window must contain only start and end")
+        start = v1._parse_time(window["start"], "start")
+        end = v1._parse_time(window["end"], "end")
+        if end - start != timedelta(hours=24):
+            raise ValueError("window must be exactly 24 hours")
+        sequence = value.get("batch_sequence")
+        if not isinstance(sequence, int) or isinstance(sequence, bool) or sequence < 1:
+            raise ValueError("batch_sequence must be a positive integer")
+        for field in ("search_provider", "search_query", "terminal_reason"):
+            if not isinstance(value.get(field), str) or not value[field].strip():
+                raise ValueError(f"{field} is required")
+        v1._require_public_https_url(value.get("search_evidence_url"), "search_evidence_url")
+        searched_at = v1._parse_time(value.get("searched_at"), "searched_at")
+        if searched_at > end + timedelta(hours=24) or searched_at < start:
+            raise ValueError("searched_at must be bound to the run window")
+        failures = value.get("primary_failure_evidence")
+        if not isinstance(failures, list) or not failures or not all(
+            isinstance(item, str) and item.strip() for item in failures
+        ):
+            raise ValueError("primary_failure_evidence must contain non-empty evidence")
+        results = value.get("results")
+        if not isinstance(results, list) or not 1 <= len(results) <= 20:
+            raise ValueError("results must contain 1..20 bounded verified search results")
+        ids, ranks, urls = [], [], []
+        for index, item in enumerate(results):
+            if not isinstance(item, dict) or set(item) != WEB_FALLBACK_RESULT_KEYS:
+                raise ValueError(f"results[{index}] must contain exactly the canonical result fields")
+            for field in (
+                "result_id", "url", "title", "summary", "published_at", "url_evidence",
+                "published_evidence", "discovery_priority_reason",
+            ):
+                if not isinstance(item.get(field), str) or not item[field].strip():
+                    raise ValueError(f"results[{index}].{field} is required")
+            if item.get("section") != "GLB":
+                raise ValueError(f"results[{index}].section must be GLB")
+            rank = item.get("search_rank")
+            if not isinstance(rank, int) or isinstance(rank, bool) or rank < 1:
+                raise ValueError(f"results[{index}].search_rank must be a positive integer")
+            v1._require_public_https_url(item["url"], f"results[{index}].url")
+            published = v1._parse_time(item["published_at"], f"results[{index}].published_at")
+            if not start <= published <= end:
+                raise ValueError(f"results[{index}].published_at must be inside the exact run window")
+            ids.append(item["result_id"])
+            ranks.append(rank)
+            urls.append(item["url"])
+        if len(ids) != len(set(ids)) or len(ranks) != len(set(ranks)) or len(urls) != len(set(urls)):
+            raise ValueError("result_id, search_rank, and url must be unique within a batch")
+        return value
     if value.get("operation") != "article_hydration":
         return v1.validate_request(value, expected_main_sha=expected_main_sha)
     unknown = set(value) - HYDRATION_KEYS
@@ -255,8 +324,224 @@ def _validate_fetch_overrides(request: dict[str, Any], canonical: dict[str, dict
     for row_id, url in request.get("fetch_overrides", {}).items():
         item = canonical[row_id]
         source_id = str(item.get("source_id", ""))
-        if not _same_source(str(url), source_id):
+        if source_id == "web_fallback":
+            v1._require_public_https_url(url, f"fetch_overrides[{row_id}]")
+            canonical_host = (urlsplit(str(item.get("canonical_url", ""))).hostname or "").lower()
+            override_host = (urlsplit(str(url)).hostname or "").lower()
+            if canonical_host != override_host:
+                raise ValueError(f"fetch override for {row_id} left the verified fallback article host")
+        elif not _same_source(str(url), source_id):
             raise ValueError(f"fetch override for {row_id} left the configured {source_id} source site")
+
+
+def _web_fallback_root(runlogs: Path, run_id: str) -> Path:
+    return runlogs / "logs" / "runs" / run_id / "remote-acquisition"
+
+
+def _web_fallback_receipt(root: Path, sequence: int) -> Path:
+    return root / "web-fallback" / f"batch-{sequence:04d}.jsonl"
+
+
+def _web_fallback_batches(root: Path) -> list[dict[str, Any]]:
+    batches = []
+    for path in sorted((root / "web-fallback").glob("batch-*.json")):
+        if re.fullmatch(r"batch-\d{4}\.json", path.name) is None:
+            continue
+        value = _load_json(path)
+        batches.append(value)
+    return batches
+
+
+def prepare_web_fallback(request: dict[str, Any], runlogs: Path) -> Path:
+    root = _web_fallback_root(runlogs, request["run_id"])
+    receipt_path = _web_fallback_receipt(root, request["batch_sequence"])
+    request_hash = _request_sha256(request)
+    records = _read_jsonl(receipt_path)
+    if records:
+        if records[0].get("request_sha256") != request_hash:
+            raise ValueError("existing web fallback batch does not match this request")
+        return receipt_path
+    prior = _web_fallback_batches(root)
+    if request["batch_sequence"] != len(prior) + 1:
+        raise ValueError("web fallback batch_sequence must continue the durable sequence")
+    for batch in prior:
+        for field in ("run_id", "main_sha", "window"):
+            if batch.get(field) != request.get(field):
+                raise ValueError(f"web fallback request changed durable {field}")
+    prior_ids = {
+        item["result_id"]
+        for batch in prior for item in batch.get("results", [])
+        if isinstance(item, dict) and "result_id" in item
+    }
+    prior_ranks = {
+        item["search_rank"]
+        for batch in prior for item in batch.get("results", [])
+        if isinstance(item, dict) and "search_rank" in item
+    }
+    prior_urls = {
+        item["url"]
+        for batch in prior for item in batch.get("results", [])
+        if isinstance(item, dict) and "url" in item
+    }
+    if any(
+        item["result_id"] in prior_ids
+        or item["search_rank"] in prior_ranks
+        or item["url"] in prior_urls
+        for item in request["results"]
+    ):
+        raise ValueError("web fallback result identity repeated across batches")
+    _append(receipt_path, {
+        "record": "batch_receipt", "status": "running",
+        "run_id": request["run_id"], "main_sha": request["main_sha"],
+        "window": request["window"], "batch_sequence": request["batch_sequence"],
+        "request_sha256": request_hash, "result_count": len(request["results"]),
+    })
+    return receipt_path
+
+
+def _materialize_web_fallback(root: Path) -> None:
+    batches = _web_fallback_batches(root)
+    if not batches:
+        raise ValueError("no durable web fallback batches exist")
+    first = batches[0]
+    for expected, batch in enumerate(batches, 1):
+        if batch.get("batch_sequence") != expected:
+            raise ValueError("web fallback batches must be contiguous from sequence 1")
+        for field in ("run_id", "main_sha", "window"):
+            if batch.get(field) != first.get(field):
+                raise ValueError(f"web fallback batches disagree on {field}")
+    pages = []
+    ranked = []
+    seen_urls: set[str] = set()
+    seen_result_ids: set[str] = set()
+    seen_ranks: set[int] = set()
+    for index, batch in enumerate(batches):
+        snapshot_path = root / "web-fallback" / f"batch-{batch['batch_sequence']:04d}-snapshot.json"
+        snapshot = {
+            "schema_version": "1.0",
+            "run_id": batch["run_id"],
+            "main_sha": batch["main_sha"],
+            "window": batch["window"],
+            "batch_sequence": batch["batch_sequence"],
+            "search_provider": batch["search_provider"],
+            "search_query": batch["search_query"],
+            "search_evidence_url": batch["search_evidence_url"],
+            "searched_at": batch["searched_at"],
+            "primary_failure_evidence": batch["primary_failure_evidence"],
+            "results": batch["results"],
+            "terminal_marker": batch["terminal_reason"],
+        }
+        _write_json(snapshot_path, snapshot)
+        items = []
+        for item in batch["results"]:
+            if item["url"] in seen_urls:
+                raise ValueError(f"web fallback URL repeated across batches: {item['url']}")
+            if item["result_id"] in seen_result_ids or item["search_rank"] in seen_ranks:
+                raise ValueError("web fallback result identity repeated across batches")
+            seen_urls.add(item["url"])
+            seen_result_ids.add(item["result_id"])
+            seen_ranks.add(item["search_rank"])
+            raw = dict(item)
+            raw["acquisition_route"] = "web_search_fallback"
+            items.append(raw)
+            ranked.append({
+                "url": item["url"],
+                "title": item["title"],
+                "published_at": item["published_at"],
+                "discovery_priority_score": max(0, 1000 - int(item["search_rank"])),
+                "discovery_priority_reason": item["discovery_priority_reason"],
+            })
+        next_url = batches[index + 1]["search_evidence_url"] if index + 1 < len(batches) else None
+        pages.append({
+            "request_url": batch["search_evidence_url"],
+            "fetched_at": batch["searched_at"],
+            "http_status": 200,
+            "snapshot_path": str(snapshot_path.resolve()),
+            "sha256": hashlib.sha256(snapshot_path.read_bytes()).hexdigest(),
+            "next_url": next_url,
+            "extracted_items": items,
+        })
+    latest = batches[-1]
+    metadata = {
+        "coverage_complete": False,
+        "coverage_status": "degraded_partial",
+        "coverage_reason": "configured primary aggregator unavailable; bounded verified host web fallback materialized",
+        "missing_segments": ["configured_primary_aggregator_unavailable"],
+        "missing_date_variants": [],
+    }
+    scan_path = root / "source-scans" / "web_fallback.json"
+    scan = {
+        "schema_version": "1.0.0",
+        "source_id": "web_fallback",
+        "collector": "verified-web-search-fallback",
+        "generated_at": latest["searched_at"],
+        "window_start": first["window"]["start"],
+        "window_end": first["window"]["end"],
+        **metadata,
+        "pages": pages,
+        "terminal_proof": {
+            "type": "source_exhausted",
+            "page_index": len(pages),
+            "terminal_marker": latest["terminal_reason"],
+        },
+    }
+    _write_json(scan_path, scan)
+    ranked.sort(key=lambda item: (item["discovery_priority_score"], item["published_at"], item["url"]), reverse=True)
+    coverage_path = root / "source-coverage.json"
+    coverage = json.loads(coverage_path.read_text(encoding="utf-8")) if coverage_path.is_file() else []
+    if not isinstance(coverage, list):
+        raise ValueError("source-coverage.json must contain an array")
+    coverage = [item for item in coverage if isinstance(item, dict) and item.get("source_id") != "web_fallback"]
+    coverage.append({
+        "source_id": "web_fallback",
+        "scan_status": "completed",
+        **metadata,
+        "within_window_count": len(ranked),
+        "ranked_count": len(ranked),
+        "ranked_items": ranked,
+        "selected_for_pool_count": len(ranked),
+        "selected_item_urls": [item["url"] for item in ranked],
+        "discovery_ranking_completed": True,
+        "discovery_ranking_method": "bounded_host_search_rank_v1",
+        "failure_reason": None,
+        "scan_window_start": first["window"]["start"],
+        "scan_window_end": first["window"]["end"],
+        "scan_evidence_path": str(scan_path.resolve()),
+    })
+    _write_json(coverage_path, coverage)
+
+
+def execute_web_fallback(request: dict[str, Any], runtime: Path, runlogs: Path) -> Path:
+    root = _web_fallback_root(runlogs, request["run_id"])
+    root.mkdir(parents=True, exist_ok=True)
+    sequence = request["batch_sequence"]
+    receipt_path = _web_fallback_receipt(root, sequence)
+    request_hash = _request_sha256(request)
+    prepare_web_fallback(request, runlogs)
+    records = _read_jsonl(receipt_path)
+    terminal = [record for record in records if record.get("status") in {"passed", "failed"}]
+    if records:
+        if records[0].get("request_sha256") != request_hash:
+            raise ValueError("existing web fallback batch does not match this request")
+        if terminal:
+            if len(records) != 2 or terminal[0].get("request_sha256") != request_hash:
+                raise ValueError("web fallback batch has invalid durable receipts")
+            _materialize_web_fallback(root)
+            return root
+    batch_path = root / "web-fallback" / f"batch-{sequence:04d}.json"
+    _write_json(batch_path, request)
+    _materialize_web_fallback(root)
+    _append(receipt_path, {
+        "record": "batch_receipt", "status": "passed",
+        "run_id": request["run_id"], "main_sha": request["main_sha"],
+        "window": request["window"], "batch_sequence": sequence,
+        "request_sha256": request_hash, "result_count": len(request["results"]),
+        "batch_sha256": hashlib.sha256(batch_path.read_bytes()).hexdigest(),
+    })
+    regional_pool = root / "regional-news-source-pool.json"
+    if regional_pool.is_file():
+        _enhance_source_scan(request, runtime, root)
+    return root
 
 
 def _make_exhausted_result(row_id: str, prior_history: list[dict], evidence: list[str]) -> dict[str, Any]:
@@ -508,6 +793,8 @@ def execute_hydration(request: dict[str, Any], runtime: Path, runlogs: Path) -> 
 def execute(request: dict[str, Any], runtime: Path, runlogs: Path) -> Path:
     if request["operation"] == "article_hydration":
         return execute_hydration(request, runtime, runlogs)
+    if request["operation"] == "web_fallback_materialize":
+        return execute_web_fallback(request, runtime, runlogs)
     output = v1.execute_request(request, runtime_root=runtime, run_logs_root=runlogs)
     if request["operation"] == "source_scan":
         _enhance_source_scan(request, runtime, output)
@@ -517,7 +804,7 @@ def execute(request: dict[str, Any], runtime: Path, runlogs: Path) -> Path:
 def main() -> int:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="command", required=True)
-    for name in ("parse-comment", "prepare-hydration", "execute"):
+    for name in ("parse-comment", "prepare-hydration", "prepare-web-fallback", "execute"):
         command = sub.add_parser(name)
         if name == "parse-comment":
             command.add_argument("--comment-env", required=True)
@@ -541,6 +828,11 @@ def main() -> int:
         if request["operation"] != "article_hydration":
             return 0
         print(prepare_hydration(request, args.run_logs_root))
+        return 0
+    if args.command == "prepare-web-fallback":
+        if request["operation"] != "web_fallback_materialize":
+            return 0
+        print(prepare_web_fallback(request, args.run_logs_root))
         return 0
     print(execute(request, args.runtime_root, args.run_logs_root))
     return 0
