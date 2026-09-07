@@ -129,6 +129,110 @@ jobs:
           --expected-main-sha "$EXPECTED_MAIN_SHA"
           --runtime-root runtime
           --run-logs-root runlogs
+      - name: Auto-hydrate unseen rows after source-universe updates
+        env:
+          EXPECTED_MAIN_SHA: ${{ steps.pin.outputs.main_sha }}
+          PYTHONPATH: ${{ github.workspace }}/runtime
+        run: |
+          python - <<'PY'
+          import json
+          import re
+          import subprocess
+          import sys
+          from pathlib import Path
+
+          request = json.loads(Path("request.json").read_text(encoding="utf-8"))
+          if request.get("operation") not in {"source_scan", "web_fallback_materialize"}:
+              print("request does not mutate the source universe; automatic first-pass hydration not needed")
+              raise SystemExit(0)
+
+          run_root = Path("runlogs/logs/runs") / request["run_id"]
+          remote = run_root / "remote-acquisition"
+          source_path = remote / "source-candidates.json"
+          if not source_path.is_file():
+              raise SystemExit("source candidate universe is missing after source acquisition")
+          source = json.loads(source_path.read_text(encoding="utf-8"))
+          rows = source.get("items")
+          if not isinstance(rows, list):
+              raise SystemExit("source-candidates.json has no canonical items array")
+
+          evidence_dir = remote / "content-evidence"
+          latest = {}
+          max_sequence = 0
+          result_re = re.compile(r"batch-(\d{4})-result\.json$")
+          receipt_re = re.compile(r"batch-(\d{4})\.json$")
+          if evidence_dir.is_dir():
+              for path in evidence_dir.iterdir():
+                  match = result_re.fullmatch(path.name) or receipt_re.fullmatch(path.name)
+                  if match:
+                      max_sequence = max(max_sequence, int(match.group(1)))
+                  result_match = result_re.fullmatch(path.name)
+                  if not result_match:
+                      continue
+                  value = json.loads(path.read_text(encoding="utf-8"))
+                  for row in value.get("rows", []):
+                      if isinstance(row, dict) and isinstance(row.get("row_id"), str):
+                          latest[row["row_id"]] = row
+
+          source_ids = [row.get("row_id") for row in rows if isinstance(row, dict)]
+          if len(source_ids) != len(rows) or any(not isinstance(row_id, str) for row_id in source_ids):
+              raise SystemExit("source candidate universe contains invalid row IDs")
+          unseen = [row_id for row_id in source_ids if row_id not in latest]
+          if not unseen:
+              print("no unseen source rows require automatic first-pass hydration")
+              raise SystemExit(0)
+
+          def persist(sequence: int) -> None:
+              status = subprocess.run(
+                  ["git", "status", "--porcelain", "--", "logs/runs"],
+                  cwd="runlogs", text=True, capture_output=True, check=True,
+              ).stdout.strip()
+              if not status:
+                  return
+              subprocess.run(["git", "add", "logs/runs"], cwd="runlogs", check=True)
+              subprocess.run(
+                  ["git", "commit", "-m", f"Store automatic hydration batch {sequence} for {request['run_id']}"],
+                  cwd="runlogs", check=True,
+              )
+              subprocess.run(["git", "pull", "--rebase", "origin", "run-logs"], cwd="runlogs", check=True)
+              subprocess.run(["git", "push", "origin", "HEAD:run-logs"], cwd="runlogs", check=True)
+
+          for offset in range(0, len(unseen), 20):
+              sequence = max_sequence + (offset // 20) + 1
+              batch_ids = unseen[offset:offset + 20]
+              hydration_request = {
+                  "schema_version": "1.0",
+                  "operation": "article_hydration",
+                  "run_id": request["run_id"],
+                  "main_sha": request["main_sha"],
+                  "window": request["window"],
+                  "batch_sequence": sequence,
+                  "row_ids": batch_ids,
+                  "fetch_overrides": {},
+                  "exhausted_row_ids": [],
+                  "exhaustion_evidence": {},
+              }
+              request_path = Path(f"auto-hydration-{sequence:04d}.json")
+              request_path.write_text(
+                  json.dumps(hydration_request, ensure_ascii=False, indent=2) + "\n",
+                  encoding="utf-8",
+              )
+              common = [
+                  "--request", str(request_path),
+                  "--expected-main-sha", request["main_sha"],
+                  "--run-logs-root", "runlogs",
+              ]
+              subprocess.run([
+                  sys.executable, "runtime/scripts/remote_acquisition_bridge_v2.py",
+                  "prepare-hydration", *common,
+              ], check=True)
+              subprocess.run([
+                  sys.executable, "runtime/scripts/remote_acquisition_bridge_v2.py",
+                  "execute", *common, "--runtime-root", "runtime",
+              ], check=True)
+              persist(sequence)
+          print(f"automatic first-pass hydration attempted {len(unseen)} unseen rows")
+          PY
       - name: Materialize bounded mobile audit input when available
         run: |
           python - <<'PY'
@@ -142,6 +246,20 @@ jobs:
           run_root = Path("runlogs/logs/runs") / request["run_id"]
           admissions = run_root / "source-row-admissions.json"
           if helper.is_file() and admissions.is_file():
+              current_path = Path("runlogs/logs/current.json")
+              if not current_path.is_file():
+                  raise SystemExit("mobile audit input requires a current occurrence ledger")
+              current = json.loads(current_path.read_text(encoding="utf-8"))
+              if current.get("run_id") != request["run_id"]:
+                  raise SystemExit("mobile audit input ledger does not belong to this run")
+              ledger_window = current.get("window")
+              if not isinstance(ledger_window, dict):
+                  raise SystemExit("mobile audit input ledger has no canonical window")
+              if ledger_window.get("start") != request["window"]["start"] or ledger_window.get("end") != request["window"]["end"]:
+                  raise SystemExit("mobile audit input ledger window does not match acquisition request")
+              timezone_name = ledger_window.get("timezone")
+              if not isinstance(timezone_name, str) or not timezone_name.strip():
+                  raise SystemExit("mobile audit input ledger timezone is missing")
               remote = run_root / "remote-acquisition"
               subprocess.run([
                   sys.executable,
@@ -151,7 +269,7 @@ jobs:
                   "--content-evidence-dir", str(remote / "content-evidence"),
                   "--output-dir", str(run_root / "audit-input"),
                   "--main-sha", request["main_sha"],
-                  "--timezone", "Asia/Shanghai",
+                  "--timezone", timezone_name,
               ], check=True)
           else:
               print("Pinned runtime has no audit-input helper or source scan is not terminal; skipping")
