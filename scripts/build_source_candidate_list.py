@@ -32,6 +32,20 @@ def normalized_title(value: str) -> str:
     return re.sub(r"[^0-9a-z\u3400-\u9fff]+", "", value)
 
 
+def stable_row_discriminator(raw: dict) -> str:
+    """Return source-native row identity, never materialization coordinates.
+
+    A canonical article URL and publication time identify the normal case.  A
+    source that deliberately emits multiple distinct rows for that same pair
+    must preserve a source-native discriminator through materialization.
+    """
+    for field in ("source_row_discriminator", "result_id"):
+        value = str(raw.get(field, "")).strip()
+        if value:
+            return f"{field}:{unicodedata.normalize('NFKC', value)}"
+    return "canonical_article_identity"
+
+
 def load_json(path: Path):
     with path.open("r", encoding="utf-8") as handle:
         return json.load(handle)
@@ -70,6 +84,7 @@ def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
         )
 
     output = []
+    row_id_provenance: dict[str, tuple[str, str, str, str]] = {}
     completed = []
     for source_id, source in available.items():
         path = scan_dir / f"{source_id}.json"
@@ -79,7 +94,7 @@ def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
         completed.append(source_id)
         pages = list(scan.get("pages", [])) + list(scan.get("supplemental_pages", []))
         for page_index, page in enumerate(pages, 1):
-            for item_index, raw in enumerate(page.get("extracted_items", []), 1):
+            for raw in page.get("extracted_items", []):
                 published = parse_time(str(raw.get("published_at", "")))
                 if published < start or published > end:
                     continue
@@ -101,15 +116,21 @@ def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
                     raise ValueError(f"{source_id} 候選缺少有效板塊：{title}")
                 seed = hashlib.sha256(f"{norm}|{published.date().isoformat()}".encode()).hexdigest()[:24]
                 cid = hashlib.sha256(f"{source_id}|{canon}|{published.isoformat()}".encode()).hexdigest()[:20]
-                row_seed = "|".join((
+                discriminator = stable_row_discriminator(raw)
+                row_provenance = (
                     source_id,
-                    str(page.get("snapshot_path", "")),
-                    str(page_index),
-                    str(item_index),
                     canon,
                     published.isoformat(),
-                ))
+                    discriminator,
+                )
+                row_seed = "|".join(row_provenance)
                 row_id = "row-" + hashlib.sha256(row_seed.encode()).hexdigest()[:24]
+                if row_id in row_id_provenance:
+                    raise ValueError(
+                        f"{source_id} has repeated canonical article identity without a "
+                        "unique stable source_row_discriminator: {canon}"
+                    )
+                row_id_provenance[row_id] = row_provenance
                 output.append({
                     "row_id": row_id,
                     "candidate_id": cid,
@@ -138,6 +159,7 @@ def build(pool: dict, scan_dir: Path, start: datetime, end: datetime) -> dict:
                     "canonical_url": canon,
                     "normalized_title": norm,
                     "dedup_seed": seed,
+                    "source_row_discriminator": discriminator,
                     "snapshot_path": page.get("snapshot_path", ""),
                     "page_index": page_index
                 })

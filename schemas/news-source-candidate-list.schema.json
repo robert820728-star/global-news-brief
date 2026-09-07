@@ -40,6 +40,7 @@
           "canonical_url": {"type": "string", "format": "uri"},
           "normalized_title": {"type": "string", "minLength": 1},
           "dedup_seed": {"type": "string", "minLength": 16},
+          "source_row_discriminator": {"type": "string", "minLength": 1},
           "snapshot_path": {"type": "string", "minLength": 1},
           "page_index": {"type": "integer", "minimum": 1}
         },

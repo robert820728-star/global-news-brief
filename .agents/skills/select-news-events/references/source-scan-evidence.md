@@ -28,6 +28,8 @@
 
 來源掃描完成前，必須將全部時間窗內列物化為 `source-row-admissions.json`。每列使用獨立且穩定的 `row_id`，不得用可能重複的 candidate ID 或 canonical URL 代替 row identity；並保存 source/section、candidate/provisional-group ID、canonical URL、listing timestamp evidence、文章本體 authoritative timestamp evidence、content SHA-256、relevance route 與 model evidence。`scripts/materialize_source_row_admissions.py validate` 必須通過，checkpoint 才能綁定 `source_row_admissions` 並完成 source-scan。
 
+`IMMUTABLE_SOURCE_ROW_IDENTITY_GATE`：`row_id` 只能由 `source_id`、canonical URL、published time 與可選的 source-native stable discriminator 生成；snapshot path、materialized page/item index、排序及之後新增的 fallback rows 都是重建座標，不得改寫既有 ID。同 URL／同時間若確實代表多筆獨立 discovery rows，來源必須保存不同的 immutable `source_row_discriminator`，否則在 hydration 前 fail-closed。
+
 這個 ledger 是 same-run recovery 的唯一 row universe。後續 selection/candidate audit 對每列補寫 terminal `article_dispositions` 時必須沿用相同 row identity；不得由 17 個 threshold events 倒推其餘 raw rows，也不得為補齊 disposition 重跑已完成的 discovery。
 
 ## 驗證方式

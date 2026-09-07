@@ -50,6 +50,80 @@ def request(**updates):
 
 
 class WebFallbackMaterializationTests(unittest.TestCase):
+    def test_existing_hydration_remains_in_universe_after_fallback_expansion(self):
+        pool = {
+            "discovery_sources": [{
+                "source_id": "cna",
+                "name": "CNA",
+                "default_section": "TWN",
+                "acquisition_route": "structured_direct",
+            }],
+            "discovery_policy": {"minimum_ready_sources": 1},
+            "acquisition_policy": {"cross_source_fallback_may_add_candidates": True},
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            scan_dir = root / "source-scans"
+            scan_dir.mkdir()
+            regional_scan = {
+                "source_id": "cna",
+                "collector": "structured_direct",
+                "pages": [{
+                    "request_url": "https://www.cna.com.tw/list/aall.aspx",
+                    "snapshot_path": "first/cna.json",
+                    "extracted_items": [{
+                        "title": "Regional fixture",
+                        "summary": "Regional row hydrated before fallback expansion.",
+                        "discovery_priority_reason": "Regional complete admission.",
+                        "published_at": "2026-09-06T04:00:00+08:00",
+                        "published_evidence": "2026-09-06 04:00",
+                        "url": "https://www.cna.com.tw/news/aipl/202609060001.aspx",
+                        "url_evidence": "/news/aipl/202609060001.aspx",
+                        "section": "TWN",
+                        "acquisition_route": "structured_direct",
+                    }],
+                }],
+            }
+            (scan_dir / "cna.json").write_text(json.dumps(regional_scan), encoding="utf-8")
+            initial = candidates.build(
+                pool, scan_dir,
+                bridge.v1._parse_time(WINDOW["start"], "start"),
+                bridge.v1._parse_time(WINDOW["end"], "end"),
+            )
+            hydrated_id = initial["items"][0]["row_id"]
+            content_dir = root / "content-evidence"
+            content_dir.mkdir()
+            (content_dir / "batch-0001-result.json").write_text(json.dumps({
+                "rows": [{"row_id": hydrated_id, "status": "content_ready"}],
+            }), encoding="utf-8")
+
+            regional_scan["pages"][0]["snapshot_path"] = "second/cna.json"
+            (scan_dir / "cna.json").write_text(json.dumps(regional_scan), encoding="utf-8")
+            (scan_dir / "web_fallback.json").write_text(json.dumps({
+                "source_id": "web_fallback",
+                "collector": "verified-web-search-fallback",
+                "pages": [{
+                    "request_url": "https://search.example/evidence?q=world",
+                    "snapshot_path": "fallback/world.json",
+                    "extracted_items": [{
+                        **request()["results"][0],
+                        "acquisition_route": "web_search_fallback",
+                    }],
+                }],
+            }), encoding="utf-8")
+            expanded = candidates.build(
+                pool, scan_dir,
+                bridge.v1._parse_time(WINDOW["start"], "start"),
+                bridge.v1._parse_time(WINDOW["end"], "end"),
+            )
+            (root / "source-candidates.json").write_text(json.dumps(expanded), encoding="utf-8")
+            state = bridge._write_hydration_state(root)
+
+        self.assertIn(hydrated_id, {row["row_id"] for row in expanded["items"]})
+        self.assertEqual(2, state["source_row_count"])
+        self.assertEqual(1, state["terminal_row_count"])
+        self.assertEqual(1, state["missing_row_count"])
+
     def test_validates_bounded_truthful_request(self):
         self.assertEqual(
             "web_fallback_materialize",

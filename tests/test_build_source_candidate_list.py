@@ -141,8 +141,22 @@ class CandidateListTests(unittest.TestCase):
                 "source_id": "gdelt",
                 "collector": "aggregate_api",
                 "pages": [
-                    {"snapshot_path": "snapshots/page-1.json", "extracted_items": [raw]},
-                    {"snapshot_path": "snapshots/page-2.json", "extracted_items": [raw]},
+                    {
+                        "request_url": "https://example.com/index?page=1",
+                        "snapshot_path": "snapshots/page-1.json",
+                        "extracted_items": [{
+                            **raw,
+                            "source_row_discriminator": "gdelt-native-row-001",
+                        }],
+                    },
+                    {
+                        "request_url": "https://example.com/index?page=2",
+                        "snapshot_path": "snapshots/page-2.json",
+                        "extracted_items": [{
+                            **raw,
+                            "source_row_discriminator": "gdelt-native-row-002",
+                        }],
+                    },
                 ],
             }), encoding="utf-8")
             first = builder.build(
@@ -167,6 +181,115 @@ class CandidateListTests(unittest.TestCase):
             {item["listing_timestamp_evidence"] for item in first["items"]},
         )
         self.assertEqual(1, len({item["provisional_group_id"] for item in first["items"]}))
+
+    def test_repeated_article_identity_without_source_native_discriminator_fails_closed(self):
+        pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
+        raw = {
+            "title": "Repeated row without immutable identity",
+            "summary": "Two indistinguishable rows cannot be assigned durable distinct IDs.",
+            "discovery_priority_reason": "Row conservation requires explicit provenance.",
+            "published_at": "2026-08-16T01:00:00+00:00",
+            "url": "https://example.com/repeated",
+            "section": "GLB",
+            "acquisition_route": "aggregate_api",
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            scan_dir = Path(tmp)
+            (scan_dir / "gdelt.json").write_text(json.dumps({
+                "source_id": "gdelt",
+                "collector": "aggregate_api",
+                "pages": [
+                    {"snapshot_path": "snapshots/a.json", "extracted_items": [raw]},
+                    {"snapshot_path": "snapshots/b.json", "extracted_items": [raw]},
+                ],
+            }), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "stable source_row_discriminator"):
+                builder.build(pool, scan_dir, builder.parse_time("2026-08-15T02:00:00+00:00"), builder.parse_time("2026-08-16T02:00:00+00:00"))
+
+    def test_existing_row_ids_survive_snapshot_relocation_reordering_and_web_fallback_expansion(self):
+        pool = json.loads((ROOT / "news-source-pool.json").read_text(encoding="utf-8"))
+        start = builder.parse_time("2026-08-15T02:00:00+00:00")
+        end = builder.parse_time("2026-08-16T02:00:00+00:00")
+        regional_rows = [
+            {
+                "title": "Regional event one",
+                "summary": "First durable regional discovery row.",
+                "discovery_priority_reason": "Regional complete admission.",
+                "published_at": "2026-08-16T01:00:00+00:00",
+                "published_evidence": "2026-08-16 09:00",
+                "url": "https://example.com/regional-one",
+                "url_evidence": "/regional-one",
+                "section": "TWN",
+                "acquisition_route": "structured_direct",
+            },
+            {
+                "title": "Regional event two",
+                "summary": "Second durable regional discovery row.",
+                "discovery_priority_reason": "Regional complete admission.",
+                "published_at": "2026-08-16T00:30:00+00:00",
+                "published_evidence": "2026-08-16 08:30",
+                "url": "https://example.com/regional-two",
+                "url_evidence": "/regional-two",
+                "section": "TWN",
+                "acquisition_route": "structured_direct",
+            },
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            scan_dir = Path(tmp)
+            regional_scan = {
+                "source_id": "cna",
+                "collector": "structured_direct",
+                "pages": [{
+                    "request_url": "https://example.com/news?page=1",
+                    "snapshot_path": "first-materialization/cna-page-1.json",
+                    "extracted_items": regional_rows,
+                }],
+            }
+            (scan_dir / "cna.json").write_text(json.dumps(regional_scan), encoding="utf-8")
+            first = builder.build(pool, scan_dir, start, end)
+            first_ids = {
+                (item["canonical_url"], item["published_at"]): item["row_id"]
+                for item in first["items"]
+            }
+
+            # Re-materialization may relocate snapshots and reorder extracted arrays.
+            # Neither is immutable discovery provenance and neither may rewrite row IDs.
+            regional_scan["pages"][0]["snapshot_path"] = "second-materialization/cna-page-1.json"
+            regional_scan["pages"][0]["extracted_items"] = list(reversed(regional_rows))
+            (scan_dir / "cna.json").write_text(json.dumps(regional_scan), encoding="utf-8")
+            (scan_dir / "web_fallback.json").write_text(json.dumps({
+                "source_id": "web_fallback",
+                "collector": "verified-web-search-fallback",
+                "coverage_complete": False,
+                "coverage_status": "degraded_partial",
+                "pages": [{
+                    "request_url": "https://search.example/evidence?q=world",
+                    "snapshot_path": "snapshots/web-fallback.json",
+                    "extracted_items": [{
+                        "result_id": "result-global-001",
+                        "title": "Verified global event",
+                        "summary": "A verified world fallback discovery row.",
+                        "discovery_priority_reason": "Restores bounded global recall.",
+                        "published_at": "2026-08-16T01:15:00+00:00",
+                        "published_evidence": "2026-08-16T01:15:00+00:00",
+                        "url": "https://wire.example/world-event",
+                        "url_evidence": "https://wire.example/world-event",
+                        "section": "GLB",
+                        "acquisition_route": "web_search_fallback",
+                    }],
+                }],
+            }), encoding="utf-8")
+            expanded = builder.build(pool, scan_dir, start, end)
+
+        expanded_regional_ids = {
+            (item["canonical_url"], item["published_at"]): item["row_id"]
+            for item in expanded["items"]
+            if item["source_id"] == "cna"
+        }
+        self.assertEqual(first_ids, expanded_regional_ids)
+        self.assertEqual(set(first_ids.values()), set(expanded_regional_ids.values()))
+        self.assertEqual(1, len(expanded["items"]) - len(first["items"]))
+        self.assertTrue(set(first_ids.values()).issubset({item["row_id"] for item in expanded["items"]}))
 
 
 if __name__ == "__main__":
