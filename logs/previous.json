@@ -1,25 +1,38 @@
 {
-  "schema_version": "1.6.0",
+  "schema_version": "1.7.0",
   "execution_mode": "mobile-native",
-  "delivery_profile": "reader-canonical-capability-degraded",
+  "delivery_profile": "full-assets",
   "native_media_status": "available",
   "capability_limitations": [],
-  "run_id": "gnb-20260904T215923Z-0b6c1165",
-  "scheduled_for": "2026-09-04T22:00:00+00:00",
+  "run_id": "gnb-20260906T215942Z-80423508",
+  "scheduled_for": "2026-09-06T22:00:00+00:00",
   "status": "failed",
   "current_stage": "candidate-audit",
   "stage_index": 5,
   "last_completed_stage": "source-scan",
-  "main_sha": "62ceab1193c85ea5b5ebdc4d9562153751fd7a64",
-  "window": {"start":"2026-09-03T21:59:23+00:00","end":"2026-09-04T21:59:23+00:00","timezone":"Asia/Shanghai"},
-  "updated_at": "2026-09-04T22:56:16+00:00",
-  "last_error": {
-    "code": "mobile_structural_admission_incomplete",
-    "message": "candidate-audit cannot be completed from persisted same-run evidence: source-scan records 132 raw rows but omits row-level ranked_items/provisional group IDs/article dispositions and materializes only 17 threshold events; rerunning completed source-scan would violate same-occurrence recovery rules"
+  "main_sha": "4162e5a1b2352d0ccd285c5b4aec09421f2e8757",
+  "window": {
+    "start": "2026-09-05T21:59:42+00:00",
+    "end": "2026-09-06T21:59:42+00:00",
+    "timezone": "Asia/Shanghai"
   },
+  "updated_at": "2026-09-06T23:36:00+00:00",
+  "last_error": "candidate-audit input transport unavailable at pinned main: source-row admissions are complete at 483/483, but the pinned mobile runtime has no lossless bounded audit-input artifact and connector reads of the monolithic source-candidates file truncate before full row conservation; this occurrence cannot consume the newer-main audit-input helper without violating the pinned-SHA gate",
   "delivery_status": "not_ready",
   "client_confirmation_supported": false,
   "reader_artifact": null,
+  "source_row_admissions_artifact": {
+    "path": "logs/runs/gnb-20260906T215942Z-80423508/source-row-admissions.json",
+    "branch": "run-logs",
+    "blob_sha": "11a95c698579ee9b29e88ce56d758d3da446fe45",
+    "run_id": "gnb-20260906T215942Z-80423508",
+    "main_sha": "4162e5a1b2352d0ccd285c5b4aec09421f2e8757",
+    "window": {
+      "start": "2026-09-05T21:59:42+00:00",
+      "end": "2026-09-06T21:59:42+00:00",
+      "timezone": "Asia/Shanghai"
+    }
+  },
   "candidate_audit_artifact": null,
   "verification_artifact": null,
   "map_decisions_artifact": null,
