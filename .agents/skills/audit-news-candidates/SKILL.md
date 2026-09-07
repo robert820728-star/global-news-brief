@@ -40,6 +40,8 @@ description: Maintain a rolling fourteen-day audit of all news candidates, inclu
 
 `FOURTEEN_DAY_AUDIT_MERGE_UNAVAILABLE`：若 mobile-native 宿主無法安全 materialize 或合併既有 durable audit，保留其原 blob，另存 `logs/runs/<run_id>/candidate-audit.json` 作為當輪 24 小時 run-scoped candidate audit，並記錄 `durable_audit_status=preserved_merge_deferred`。這是歷史維護延後，不是 `last_error`；不得標記整輪 failed、建立新 run 或重跑 discovery／評分／驗證。只有本輪 run-scoped audit 的 C 級以上事件需要映射到本輪 reader；沒有本輪實質更新的歷史事件不重刊。
 
+`MOBILE_CANDIDATE_AUDIT_CHECKPOINT_TRANSPORT`：mobile-native 的模型工作不得只存在於單次對話上下文。使用 `mobile_candidate_audit_bridge.py` 保存 exact run／main／window 綁定的 row-review 與 event-score batches；每批只允許 byte-equivalent idempotent replay，衝突覆寫必須拒絕。`materialize_mobile_candidate_audit.py finalize` 只有在完整 row/event universe 已 terminal 時才可組裝 `candidate-audit.json`，且必須通過現有 canonical validator 後才能綁定 artifact。
+
 `MOBILE_NATIVE_COMPACT_DURABLE_AUDIT`
 
 mobile-native durable audit 保存滾動合併與 V2 重驗必要欄位：`candidate_id`、`dedup_key`、可用時的 `continuity_key`、`event_date`、`section`、`title`、`scoring_method`、`importance_breakdown`、`weighted_score`、`importance_score`、fact-ID `dimension_evidence`、`consequence_evidence`、`evidence_facts`、`policy_stage`、`delta_facts`、challenge／rationale、`evidence_confidence`、`confidence_band`、`grade_status`、`provisional_grade`、`decision`、`reason`、`source_ids`、`selected_event_id`，以及精簡 `continuity`。`MUST_OMIT_VERBOSE_GRADING_EVIDENCE`：mobile artifact 不保存 verbose `grading_evidence`、逐頁 `source_audit`、`candidate_urls`、`reason_code`、`grade_reason`、文章全文或無助重驗的重複敘述。full-runtime 可把它當成歷史 continuity profile 接回並重驗保留的 V2 facts、算式、grade status、來源 ID 與 selected mapping，但精簡 profile 不得作為最新 run；最新 run 仍須保存完整 run-scoped audit，既有 full-runtime 接續需要完整證據時才讀取對應 checkpoint。C 級以上仍須完成類別相稱的獨立驗證。壓縮不得改變候選 ID、六項分數、加權總分、grade status 或 C 級以上映射。

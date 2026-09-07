@@ -221,6 +221,57 @@ def _write_json(path: Path, value: dict[str, Any]) -> None:
     temp.replace(path)
 
 
+def _portable_path(path_value: str, root: Path) -> str:
+    path = Path(path_value).resolve()
+    try:
+        return path.relative_to(root.resolve()).as_posix()
+    except ValueError as error:
+        raise ValueError(f"source evidence path escapes the durable run root: {path}") from error
+
+
+def _relativize_source_evidence(root: Path) -> None:
+    """Replace ephemeral runner paths with paths relative to remote-acquisition/."""
+    coverage_path = root / "source-coverage.json"
+    if not coverage_path.is_file():
+        return
+    coverage = json.loads(coverage_path.read_text(encoding="utf-8"))
+    if not isinstance(coverage, list):
+        raise ValueError("source-coverage.json must contain an array")
+    for item in coverage:
+        if not isinstance(item, dict) or item.get("scan_status") != "completed":
+            continue
+        evidence = item.get("scan_evidence_path")
+        if not isinstance(evidence, str) or not evidence:
+            continue
+        scan_path = Path(evidence)
+        if not scan_path.is_absolute():
+            scan_path = root / scan_path
+        scan = _load_json(scan_path)
+        pages = scan.get("pages")
+        if not isinstance(pages, list):
+            raise ValueError(f"{scan_path} pages must be an array")
+        for page in pages:
+            if not isinstance(page, dict) or not isinstance(page.get("snapshot_path"), str):
+                raise ValueError(f"{scan_path} contains invalid snapshot evidence")
+            snapshot = Path(page["snapshot_path"])
+            if not snapshot.is_absolute():
+                snapshot = root / snapshot
+            page["snapshot_path"] = _portable_path(str(snapshot), root)
+        _write_json(scan_path, scan)
+        item["scan_evidence_path"] = _portable_path(str(scan_path), root)
+    _write_json(coverage_path, coverage)
+    candidate_path = root / "source-candidates.json"
+    if candidate_path.is_file():
+        candidate_list = _load_json(candidate_path)
+        for row in candidate_list.get("items", []):
+            if isinstance(row, dict) and isinstance(row.get("snapshot_path"), str):
+                snapshot = Path(row["snapshot_path"])
+                if not snapshot.is_absolute():
+                    snapshot = root / snapshot
+                row["snapshot_path"] = _portable_path(str(snapshot), root)
+        _write_json(candidate_path, candidate_list)
+
+
 def _enhance_source_scan(request: dict[str, Any], runtime: Path, output: Path) -> None:
     python = sys.executable
     source = output / "source-candidates.json"
@@ -527,6 +578,9 @@ def execute_web_fallback(request: dict[str, Any], runtime: Path, runlogs: Path) 
             if len(records) != 2 or terminal[0].get("request_sha256") != request_hash:
                 raise ValueError("web fallback batch has invalid durable receipts")
             _materialize_web_fallback(root)
+            if (root / "regional-news-source-pool.json").is_file():
+                _enhance_source_scan(request, runtime, root)
+            _relativize_source_evidence(root)
             return root
     batch_path = root / "web-fallback" / f"batch-{sequence:04d}.json"
     _write_json(batch_path, request)
@@ -541,6 +595,7 @@ def execute_web_fallback(request: dict[str, Any], runtime: Path, runlogs: Path) 
     regional_pool = root / "regional-news-source-pool.json"
     if regional_pool.is_file():
         _enhance_source_scan(request, runtime, root)
+    _relativize_source_evidence(root)
     return root
 
 
@@ -798,6 +853,7 @@ def execute(request: dict[str, Any], runtime: Path, runlogs: Path) -> Path:
     output = v1.execute_request(request, runtime_root=runtime, run_logs_root=runlogs)
     if request["operation"] == "source_scan":
         _enhance_source_scan(request, runtime, output)
+        _relativize_source_evidence(output)
     return output
 
 

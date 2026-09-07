@@ -31,8 +31,11 @@ def normalized_host(value):
     return urlsplit(str(value)).netloc.lower().removeprefix("www.")
 
 
-def local_path(value):
-    return Path(str(value).removeprefix("sandbox:"))
+def local_path(value, evidence_root=None):
+    path = Path(str(value).removeprefix("sandbox:"))
+    if not path.is_absolute() and evidence_root is not None:
+        path = Path(evidence_root) / path
+    return path
 
 
 def evidence_in_snapshot(value, content):
@@ -43,7 +46,7 @@ def evidence_in_snapshot(value, content):
     return escaped in content
 
 
-def validate_scan(scan, coverage, source, label="source_scan"):
+def validate_scan(scan, coverage, source, label="source_scan", evidence_root=None):
     errors = []
     if not isinstance(scan, dict):
         return [f"{label} 缺少可重算的來源掃描證據"]
@@ -103,7 +106,7 @@ def validate_scan(scan, coverage, source, label="source_scan"):
         previous_next = page.get("next_url")
         if page.get("http_status") != 200:
             errors.append(f"{page_label} HTTP 狀態不是 200；不得把中斷當作掃描完成")
-        snapshot = local_path(page.get("snapshot_path", ""))
+        snapshot = local_path(page.get("snapshot_path", ""), evidence_root)
         if not snapshot.is_file():
             errors.append(f"{page_label} 原始快照不存在：{snapshot}")
             content = ""
@@ -148,7 +151,7 @@ def validate_scan(scan, coverage, source, label="source_scan"):
             errors.append(f"{page_label}.request_url violates same-source boundary")
         if page.get("http_status") != 200:
             errors.append(f"{page_label} HTTP status must be 200")
-        snapshot = local_path(page.get("snapshot_path", ""))
+        snapshot = local_path(page.get("snapshot_path", ""), evidence_root)
         if not snapshot.is_file():
             errors.append(f"{page_label} snapshot is missing: {snapshot}")
             content = ""
@@ -209,7 +212,7 @@ def validate_scan(scan, coverage, source, label="source_scan"):
         elif kind == "source_exhausted":
             page = pages[page_index - 1]
             marker = terminal.get("terminal_marker")
-            snapshot = local_path(page.get("snapshot_path", ""))
+            snapshot = local_path(page.get("snapshot_path", ""), evidence_root)
             content = snapshot.read_text(encoding="utf-8", errors="ignore") if snapshot.is_file() else ""
             if page.get("next_url") is not None:
                 errors.append(f"{label} 宣告來源耗盡時最後一頁仍有 next_url")

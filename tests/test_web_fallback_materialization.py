@@ -89,8 +89,9 @@ class WebFallbackMaterializationTests(unittest.TestCase):
                 scan,
                 web_coverage,
                 {"source_id": "web_fallback", "homepage": "", "allow_external_article_urls": True},
+                evidence_root=output,
             ))
-            snapshot = Path(scan["pages"][0]["snapshot_path"])
+            snapshot = output / scan["pages"][0]["snapshot_path"]
             self.assertTrue(snapshot.is_file())
             self.assertIn("bounded_search_complete", snapshot.read_text(encoding="utf-8"))
             pool = {

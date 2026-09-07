@@ -15,6 +15,8 @@ description: Decide whether a selected news event needs geographic context and c
 
 每一個已入選事件都必須進入本技能並產生明確的 map decision；不得因為事件主要分類是統計、保育、政策、產業、科技或其他非地理分類而跳過。
 
+`MOBILE_MAP_DECISION_CHECKPOINT_TRANSPORT`：mobile-native 在 verification 完整後，以 `mobile_candidate_audit_bridge.py` 的 `map_prepare` 固定 selected event universe，`map_event` 每次 append-only 保存一個事件決定，最後以 `map_finalize` 精確守恆全部 selected events 並執行與 `validate_map_decisions.py` 相同的空間漏判檢查。unknown event、conflicting rewrite、缺少事件或 claim-critical omission 一律拒絕；中斷只補缺少事件，不重跑 verification。
+
 每則事件完成後，`map` 必須且只能落在下列兩類之一：
 
 1. `required: true`，並進一步完成地圖或依恢復規則記錄失敗；

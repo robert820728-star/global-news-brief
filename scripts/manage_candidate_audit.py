@@ -780,6 +780,7 @@ def validate(
     source_pool=None,
     source_row_admissions=None,
     require_fourteen_day_complete=False,
+    source_evidence_root=None,
 ):
     errors = []
     if data.get("schema_version") != "1.2.0":
@@ -1018,13 +1019,16 @@ def validate(
                     errors.append(label + " 掃描證據時間窗必須與本輪精確24小時時間窗一致")
                 if isinstance(evidence_path, str) and evidence_path:
                     local = Path(evidence_path.removeprefix("sandbox:"))
+                    if not local.is_absolute() and source_evidence_root is not None:
+                        local = Path(source_evidence_root) / local
                     if not local.is_file():
                         errors.append(label + f" 掃描證據檔不存在：{evidence_path}")
                     else:
                         try:
                             scan = load(local)
                             errors.extend(validate_source_scan_evidence.validate_scan(
-                                scan, item, source_by_id.get(item.get("source_id"), {}), label + ".scan_evidence"
+                                scan, item, source_by_id.get(item.get("source_id"), {}),
+                                label + ".scan_evidence", evidence_root=source_evidence_root,
                             ))
                         except (OSError, ValueError, json.JSONDecodeError) as error:
                             errors.append(label + f" 掃描證據無法讀取：{error}")
@@ -1561,6 +1565,7 @@ def main():
     validate_parser.add_argument("--input", required=True)
     validate_parser.add_argument("--source-pool", required=True)
     validate_parser.add_argument("--source-row-admissions", required=True)
+    validate_parser.add_argument("--source-evidence-root")
     validate_parser.add_argument("--require-fourteen-day-complete", action="store_true")
     args = parser.parse_args()
     try:
@@ -1569,6 +1574,7 @@ def main():
             errors = validate(
                 load(args.input), source_pool, load(args.source_row_admissions),
                 require_fourteen_day_complete=args.require_fourteen_day_complete,
+                source_evidence_root=args.source_evidence_root,
             )
             for error in errors:
                 print("FAIL:", error)
@@ -1591,7 +1597,10 @@ def main():
             "updated_at": parse_datetime(current_run["generated_at"]).isoformat(),
             "runs": runs,
         }
-        errors = validate(output, source_pool, load(args.source_row_admissions))
+        errors = validate(
+            output, source_pool, load(args.source_row_admissions),
+            source_evidence_root=Path(args.source_row_admissions).parent / "remote-acquisition",
+        )
         if errors:
             raise ValueError("；".join(errors))
         output_path = Path(args.output)

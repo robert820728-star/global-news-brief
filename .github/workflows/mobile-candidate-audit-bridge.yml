@@ -1,0 +1,93 @@
+name: Mobile candidate audit bridge
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mobile-candidate-audit-${{ github.event.comment.id }}
+  cancel-in-progress: false
+
+jobs:
+  checkpoint:
+    if: >-
+      github.event.issue.number == 3 &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association) &&
+      contains(github.event.comment.body, '<!-- gnb-mobile-candidate-audit:v1 -->')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract occurrence-pinned runtime SHA
+        id: pin
+        env:
+          BRIDGE_COMMENT: ${{ github.event.comment.body }}
+        run: |
+          python - <<'PY'
+          import os
+          import re
+
+          body = os.environ.get("BRIDGE_COMMENT", "")
+          matches = re.findall(r'"main_sha"\s*:\s*"([0-9a-f]{40})"', body)
+          if len(matches) != 1:
+              raise SystemExit("candidate-audit request must contain exactly one canonical main_sha")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as stream:
+              stream.write(f"main_sha={matches[0]}\n")
+          PY
+      - name: Checkout occurrence-pinned runtime
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.pin.outputs.main_sha }}
+          path: runtime
+      - name: Checkout durable run logs
+        uses: actions/checkout@v4
+        with:
+          ref: run-logs
+          path: runlogs
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile pinned candidate-audit runtime
+        run: |
+          python -m py_compile \
+            runtime/scripts/mobile_candidate_audit_bridge.py \
+            runtime/scripts/materialize_mobile_candidate_audit.py \
+            runtime/scripts/materialize_mobile_verification.py \
+            runtime/scripts/materialize_mobile_map_decisions.py \
+            runtime/scripts/manage_candidate_audit.py \
+            runtime/scripts/validate_map_decisions.py
+      - name: Validate bounded issue request
+        env:
+          BRIDGE_COMMENT: ${{ github.event.comment.body }}
+          EXPECTED_MAIN_SHA: ${{ steps.pin.outputs.main_sha }}
+          PYTHONPATH: ${{ github.workspace }}/runtime
+        run: >-
+          python runtime/scripts/mobile_candidate_audit_bridge.py parse-comment
+          --comment-env BRIDGE_COMMENT
+          --expected-main-sha "$EXPECTED_MAIN_SHA"
+          --output request.json
+      - name: Execute append-only candidate-audit checkpoint
+        env:
+          EXPECTED_MAIN_SHA: ${{ steps.pin.outputs.main_sha }}
+          PYTHONPATH: ${{ github.workspace }}/runtime
+        run: >-
+          python runtime/scripts/mobile_candidate_audit_bridge.py execute
+          --request request.json
+          --expected-main-sha "$EXPECTED_MAIN_SHA"
+          --runtime-root runtime
+          --run-logs-root runlogs
+      - name: Commit run-scoped checkpoint
+        working-directory: runlogs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain -- logs)" ]; then
+            git add -A -- logs
+            git commit -m "Store mobile candidate audit checkpoint for issue comment ${{ github.event.comment.id }}"
+            git pull --rebase origin run-logs
+            git push origin HEAD:run-logs
+          else
+            echo "No new candidate-audit checkpoint to commit"
+          fi

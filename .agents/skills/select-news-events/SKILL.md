@@ -44,6 +44,8 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 
 `SOURCE_ROW_ADMISSION_LEDGER_GATE`：`source-scan` completed 前，全部 raw discovery rows 必須由 `scripts/materialize_source_row_admissions.py` 一對一物化，保存唯一 row ID、candidate/provisional-group ID、來源與板塊、canonical URL、listing 與文章本體 timestamp evidence、content SHA、relevance route 與 model evidence，並綁定 checkpoint 的 `source_row_admissions`。selection 與 candidate audit 必須沿用這個 row universe 寫 terminal dispositions；same-run recovery 只讀既有 ledger，不得重跑 discovery。
 
+`MOBILE_CANDIDATE_AUDIT_CHECKPOINT_TRANSPORT`：mobile-native 必須從既有 `audit-input/manifest.json` 依序處理 1–20 row review batches，結果透過 pinned `mobile_candidate_audit_bridge.py` append-only 保存。每批 result 的 row IDs 必須精確等於 input；`unresolved` 未歸零前禁止建立 scoring input。review 全部 terminal 後，才可產生每批最多 4 個 semantic events 的 score batches；所有 score batches terminal 後再 finalize canonical run-scoped audit。中斷只從第一個缺少 batch 接續，不得重跑 source scan、hydration 或已完成 batch。
+
 
 ### 一、廣泛海選
 

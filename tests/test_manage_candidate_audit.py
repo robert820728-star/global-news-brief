@@ -406,6 +406,26 @@ def row_ledger_for(audit):
 
 
 class CandidateAuditTests(unittest.TestCase):
+    def test_candidate_audit_resolves_portable_source_evidence_from_explicit_root(self):
+        audit = valid_audit()
+        ledger = row_ledger_for(audit)
+        coverage = audit["runs"][-1]["source_coverage"]
+        evidence_root = Path(coverage[0]["scan_evidence_path"]).parent
+        for item in coverage:
+            scan_path = Path(item["scan_evidence_path"])
+            scan = json.loads(scan_path.read_text(encoding="utf-8"))
+            for page in scan["pages"]:
+                page["snapshot_path"] = Path(page["snapshot_path"]).name
+            scan_path.write_text(json.dumps(scan), encoding="utf-8")
+            item["scan_evidence_path"] = scan_path.name
+
+        self.assertEqual(
+            [],
+            MODULE.validate(
+                audit, source_pool(), ledger, source_evidence_root=evidence_root
+            ),
+        )
+
     def test_132_source_rows_are_conserved_by_terminal_dispositions(self):
         audit = valid_audit(per_source_count=44)
         ledger = row_ledger_for(audit)

@@ -206,6 +206,41 @@ class SourceScanEvidenceTests(unittest.TestCase):
             scan.update(self.coverage_metadata())
             self.assertEqual([], MODULE.validate_scan(scan, self.coverage(), self.source()))
 
+    def test_relative_snapshot_path_resolves_from_explicit_evidence_root(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            snapshots = root / "snapshots"
+            snapshots.mkdir()
+            text = "NO_MORE_RESULTS"
+            snapshot = snapshots / "page.html"
+            snapshot.write_text(text, encoding="utf-8")
+            scan = {
+                "schema_version": "1.0.0", "collector": "fixture",
+                "generated_at": "2026-08-15T06:00:00+08:00",
+                "window_start": "2026-08-14T06:00:00+08:00",
+                "window_end": "2026-08-15T06:00:00+08:00",
+                "pages": [{
+                    "request_url": "https://example.com/feed",
+                    "fetched_at": "2026-08-15T06:00:00+08:00",
+                    "http_status": 200,
+                    "snapshot_path": "snapshots/page.html",
+                    "sha256": hashlib.sha256(text.encode()).hexdigest(),
+                    "next_url": None,
+                    "extracted_items": [],
+                }],
+                "terminal_proof": {
+                    "type": "source_exhausted", "page_index": 1,
+                    "terminal_marker": "NO_MORE_RESULTS",
+                },
+                **self.coverage_metadata(),
+            }
+            self.assertEqual(
+                [],
+                MODULE.validate_scan(
+                    scan, self.coverage(), self.source(), evidence_root=root
+                ),
+            )
+
     def test_crossed_boundary_recomputes_window_items(self):
         with tempfile.TemporaryDirectory() as directory:
             text = "https://example.com/new 2026-08-15T05:00:00+08:00 https://example.com/old 2026-08-14T05:00:00+08:00"

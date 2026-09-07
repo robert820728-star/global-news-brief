@@ -99,6 +99,8 @@ description: Verify selected news events through claim decomposition, independen
 
 並採歸屬式語氣。若 `conflicting`，在各方說法與分析中清楚呈現差異。若核心主張為 `insufficient`，必須寫 `status=failed`，不得把 verification 標 completed 或繼續發布。先完成既定的事件級驗證恢復；仍不足時依執行模式處理：full-runtime 執行 `news_run_checkpoint.py rewind --stage audit-news-candidates`，只退回同一 run 的 audit 與後續階段，將受影響候選重評或以 `unreliable_or_unverified` 排除，再重新物化 manifest；mobile-native 保持 `current_stage=selection-verified`，更新同一 run 的 `candidate-audit.json` 與 `candidate_audit_artifact` 的 Git blob SHA，重新查證成功並保存 `verification.json` 後才可前進。mobile-native 不得執行 stage regression，也不得建立 mobile checkpoint 或 manifest。兩種模式都不得重跑 discovery、preprocess 或 semantic selection，也不得建立替代 run。
 
+`MOBILE_VERIFICATION_CHECKPOINT_TRANSPORT`：mobile-native 先由同一 run-scoped audit 執行 `verification_prepare`，再以 `verification_event` 一次保存一個 selected event 的完整 patch，最後才執行 `verification_finalize`。patch 必須 append-only、綁定相同 run／main／window 並通過既有 verification schema；unknown event、conflicting rewrite、缺 selected event、無效 claim/source mapping 或 `insufficient` 卻標 completed 均拒絕。恢復只補缺少事件，不重跑 candidate audit 或已完成事件。
+
 ## 輸出欄位
 
 只寫入 `verification`：
