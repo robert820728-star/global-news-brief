@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-09-07T02:45:43.211427+00:00",
+  "generated_at": "2026-09-07T02:51:37.117554+00:00",
   "route_ready_count": 2,
   "route_total_count": 2,
   "coverage_complete_count": 2,
@@ -17,9 +17,9 @@
       "request_url": "https://www.cna.com.tw/cna2018api/api/WNewsList",
       "http_status": 200,
       "content_type": "application/json; charset=utf-8",
-      "bytes": 110865,
+      "bytes": 109926,
       "snapshot_path": "/home/runner/work/global-news-brief/global-news-brief/runlogs/logs/runs/gnb-20260907T024318Z-8245bc86/remote-acquisition/source-work/route-snapshots/cna.discovery.json",
-      "sha256": "c0841d146d5fb683eec086e52eb2fcfd0e3d7e02b52b71ab70d291f990a19453",
+      "sha256": "95131cb8287eb33959b115a8dd5f95982af78f74eb87394b08b5238fd194df31",
       "route_ready": true,
       "json_exhaustion_path": [
         "ResultData",

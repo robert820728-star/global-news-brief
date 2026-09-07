@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "source_id": "chinanews",
   "collector": "html_direct",
-  "generated_at": "2026-09-07T02:45:43.211427+00:00",
+  "generated_at": "2026-09-07T02:51:37.117554+00:00",
   "window_start": "2026-09-06T02:43:18+00:00",
   "window_end": "2026-09-07T02:43:18+00:00",
   "coverage_complete": true,
@@ -13,7 +13,7 @@
   "pages": [
     {
       "request_url": "https://www.chinanews.com.cn/scroll-news/2026/0907/news.shtml",
-      "fetched_at": "2026-09-07T02:45:43.211427+00:00",
+      "fetched_at": "2026-09-07T02:51:37.117554+00:00",
       "http_status": 200,
       "snapshot_path": "source-work/route-snapshots/chinanews.discovery.date-offset-+0.html",
       "sha256": "e991a003a88bcf2d7a522a114315d481506bc15d57c5eee0246c23cc90c57132",
@@ -1999,7 +1999,7 @@
     },
     {
       "request_url": "https://www.chinanews.com.cn/scroll-news/2026/0906/news.shtml",
-      "fetched_at": "2026-09-07T02:45:43.211427+00:00",
+      "fetched_at": "2026-09-07T02:51:37.117554+00:00",
       "http_status": 200,
       "snapshot_path": "source-work/route-snapshots/chinanews.discovery.date-offset--1.html",
       "sha256": "73ec5ab69ff121f352d8632e42a7212003b4ed8af0ba98abab28049abb586ce2",

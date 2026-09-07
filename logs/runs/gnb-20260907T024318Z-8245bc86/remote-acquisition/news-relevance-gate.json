@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
-  "input_article_row_count": 529,
-  "content_hydration_count": 529,
+  "input_article_row_count": 528,
+  "content_hydration_count": 528,
   "lightweight_semantic_review_count": 0,
   "decisions": [
     {
@@ -269,6 +269,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-7811792dd21d45245a75b5f4",
+      "candidate_id": "7d170768037e076a668c",
+      "source_id": "cna",
+      "canonical_url": "https://www.cna.com.tw/news/aspt/202609070035.aspx",
+      "route": "content_hydration",
+      "reasons": [
+        "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-fcb8f04bf16cb1da683652fc",
       "candidate_id": "362738b3bdcca2ee8583",
       "source_id": "chinanews",
@@ -280,7 +291,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-ce7abca2c1eee018680fc981",
+      "row_id": "row-75979e6f78e6bf8ece265cbf",
       "candidate_id": "d3d7f1d18d30dcd1ac29",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/afe/202609070034.aspx",
@@ -368,7 +379,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-a3823c6a887d202d8f28f070",
+      "row_id": "row-a529558b0f8b8b8f4ea74b6c",
       "candidate_id": "9d8c08a6f24975e79d29",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609070033.aspx",
@@ -412,7 +423,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-4ec81de481ee0f47fc81db64",
+      "row_id": "row-0345d3a47f9366cce98f67d9",
       "candidate_id": "7e11a87f814c59bad9ff",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609070032.aspx",
@@ -478,7 +489,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-217bfe98fcab6f5753885ef4",
+      "row_id": "row-c1e4fc866ec3adec04f10a10",
       "candidate_id": "b34aa5719b78bfe107bf",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609070031.aspx",
@@ -555,7 +566,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-50fdc75f47bfacff6a8daa16",
+      "row_id": "row-7cba04bbccd1fd2c1a8ae74a",
       "candidate_id": "e16738b2f1df6f92e26e",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609070030.aspx",
@@ -566,7 +577,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-278916315ad438a7d2bce738",
+      "row_id": "row-e6133ef1b2d3f745f6885de5",
       "candidate_id": "61427176a87fd74ac86d",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609070029.aspx",
@@ -632,7 +643,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-e4821bb3d6d58a2ef6c5cc23",
+      "row_id": "row-30d00a06c3e0025b0809b999",
       "candidate_id": "b673161daecccf7f740d",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/asoc/202609070028.aspx",
@@ -709,7 +720,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-76be8a704064e5ce3f7556f4",
+      "row_id": "row-1b398fecade5294ac816dde7",
       "candidate_id": "479adcd9f6143fd9e40d",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aipl/202609070027.aspx",
@@ -786,7 +797,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-dc986ea246c678f98d113195",
+      "row_id": "row-79da44bb3bd0a65561a03788",
       "candidate_id": "b667712186be6d672561",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/afe/202609070026.aspx",
@@ -808,7 +819,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-53879ee8d190ad896a50d73d",
+      "row_id": "row-4d7568f48621f5367e9ff670",
       "candidate_id": "ec87c4e6fdb64c09b427",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ait/202609070025.aspx",
@@ -841,7 +852,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-02e8d9570e25c195f40444ad",
+      "row_id": "row-6f4c54f1b629dbf5516dff36",
       "candidate_id": "bca26389259bf528b6ca",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acn/202609070024.aspx",
@@ -874,7 +885,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-31ba3020594690fbf767c085",
+      "row_id": "row-6f204b0ead11f5d5ecab3b91",
       "candidate_id": "f8844ab86ab11588dd32",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/afe/202609070023.aspx",
@@ -896,7 +907,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-1b1aeff42e79c6db3904c923",
+      "row_id": "row-3e0edc840a59b3608515ec8c",
       "candidate_id": "5e88d0d46f574d7ceeaa",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609070022.aspx",
@@ -929,7 +940,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-5faa5d653cdc79d806713311",
+      "row_id": "row-37a76ba6ecceac322a8d24cd",
       "candidate_id": "05ff8d713e8a26ebfa48",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/afe/202609070021.aspx",
@@ -940,7 +951,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-ddc4b4d23de53bedbcbf0486",
+      "row_id": "row-fafeff70d1d99168ba838d00",
       "candidate_id": "5206c9901bd55a204cce",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/afe/202609070020.aspx",
@@ -995,7 +1006,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-67a58d60bc427cdae1f7ab96",
+      "row_id": "row-66c3b58ebab59cfc330f34b7",
       "candidate_id": "5a132a28e814ab83c857",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acul/202609070019.aspx",
@@ -1017,7 +1028,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-f43df2b0c959ad278b14f664",
+      "row_id": "row-5fdc9c2a5dd733b6215fec11",
       "candidate_id": "5f5253441a8c21989fed",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609070018.aspx",
@@ -1050,7 +1061,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-6e640627f39529cf42f83f5f",
+      "row_id": "row-6c84bc1b964df56fdd5f8ce4",
       "candidate_id": "ec86e32f8fdac596f4be",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609070017.aspx",
@@ -1083,7 +1094,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-db9e29391d621a9a3fbf492b",
+      "row_id": "row-a09cad21b474f24b35714758",
       "candidate_id": "28350a7feac0483742e0",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/afe/202609070016.aspx",
@@ -1094,7 +1105,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-e6dc92128813ac915832c8e0",
+      "row_id": "row-861f944462703230156170dd",
       "candidate_id": "0675d2e2ef0f45bfaf03",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609070015.aspx",
@@ -1138,7 +1149,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-0684b4b5ff280c48f9fb197e",
+      "row_id": "row-4b4a1822299da0a333cb2ce6",
       "candidate_id": "b30fc2ed6113c612339b",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609070014.aspx",
@@ -1149,7 +1160,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-0178fab021d0a0a52397b783",
+      "row_id": "row-a6ebdbad1cae345839340277",
       "candidate_id": "e357a143e5126bd4b3e2",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609070013.aspx",
@@ -1248,7 +1259,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-bd06bff91653baa861733cf9",
+      "row_id": "row-308a6eb85708fe4b0484916b",
       "candidate_id": "15da1b96be3f82534fb8",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609070012.aspx",
@@ -1292,7 +1303,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-2697d6dc91c7331602d3da81",
+      "row_id": "row-25651386c1a2057686f2c9f1",
       "candidate_id": "a8113e6fd9acaf1bd461",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609075001.aspx",
@@ -1303,7 +1314,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-c8a4bf6ff775a8295932b53e",
+      "row_id": "row-d796152ed484b6170d600953",
       "candidate_id": "908f096eb0bc008f65f5",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609070011.aspx",
@@ -1347,7 +1358,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-9b9a7839a7af795580863d07",
+      "row_id": "row-01d44991078bd5f8d95d2cff",
       "candidate_id": "a2553fd8cfcc8731d146",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609070010.aspx",
@@ -1402,7 +1413,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-d684b41d01702ff4e7cf2034",
+      "row_id": "row-1d4cad720dcf7304b9a068aa",
       "candidate_id": "fc284144940e57ec5221",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609070009.aspx",
@@ -1413,7 +1424,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-b2843fd15d51bbfc84ee04b0",
+      "row_id": "row-2723c2b15eeb9025bfb5a891",
       "candidate_id": "696cdf9d3a55db1b13fd",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609070008.aspx",
@@ -1424,7 +1435,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-da10e2146d18de34790e6651",
+      "row_id": "row-149977427c5cdf71fc924aae",
       "candidate_id": "bf9036b57362f233c8c6",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609070007.aspx",
@@ -1435,7 +1446,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-aee47bf72515cfa5510f8615",
+      "row_id": "row-e4b72d861a9a3316191d720c",
       "candidate_id": "d93253c49f8952fa30f9",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609070006.aspx",
@@ -1446,7 +1457,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-1c95ea0686e3560cc9edd694",
+      "row_id": "row-4d10039b985c7d0f1609406b",
       "candidate_id": "003f1b1b99493c751e51",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609070005.aspx",
@@ -1523,7 +1534,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-227511fe7945ec7765b5d2f4",
+      "row_id": "row-39a912201f3eb3ac306eb932",
       "candidate_id": "d3935e6ce69c61aceb4c",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609070004.aspx",
@@ -1534,7 +1545,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-527e4653439a9192c9b584c5",
+      "row_id": "row-6f8829653acbd3ecdf0324e6",
       "candidate_id": "d1fcdf1bfb2b065d6bb9",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609070003.aspx",
@@ -1545,7 +1556,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-3e296756261a7f552a78c778",
+      "row_id": "row-9337f92f0d0ae545e13c4ab1",
       "candidate_id": "2e2013b55b21fe1126e8",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609070002.aspx",
@@ -1688,7 +1699,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-3b482609f28eaf8db297c0f2",
+      "row_id": "row-ce4adcb70929aad471890b25",
       "candidate_id": "70fc3a3932fada3e9ace",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060192.aspx",
@@ -1743,7 +1754,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-78a187721fe13a937f47e51a",
+      "row_id": "row-b40c5e301499067f2c1aed11",
       "candidate_id": "1c15ae0c98d8e9d72e9c",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aipl/202609060191.aspx",
@@ -1754,7 +1765,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-648816f5207e9fb35e76ee28",
+      "row_id": "row-110ce810647e0e5d725e1923",
       "candidate_id": "2aa67857c9a3018938d9",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060189.aspx",
@@ -1765,7 +1776,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-8267878721e34985a064078f",
+      "row_id": "row-ffa242078b9e05569b7e84d2",
       "candidate_id": "043e43e4548688651f4e",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060190.aspx",
@@ -1809,7 +1820,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-094d85988a9fdbb065955fbe",
+      "row_id": "row-7fec2d2352810d4ced5678a7",
       "candidate_id": "da3d45ca08bd7ce25b5c",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acn/202609060188.aspx",
@@ -1820,7 +1831,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-e812bfb355ce5dbdb53c5bc9",
+      "row_id": "row-d7a4d2793093822719a61984",
       "candidate_id": "14680d9554564b6f0ba1",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060187.aspx",
@@ -1831,7 +1842,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-3dc45e3896092ea6a40ccd6b",
+      "row_id": "row-5649ae5e95f4e6f12081eb34",
       "candidate_id": "2ef1f5e841eba2912294",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/afe/202609060186.aspx",
@@ -1842,7 +1853,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-9b99a024953dab5af7ff639e",
+      "row_id": "row-2906bc73d74fc4dcdbc4a72c",
       "candidate_id": "f56650fe23e59f8db71a",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060185.aspx",
@@ -1853,7 +1864,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-d1a98c1ad6601c03ce9c259c",
+      "row_id": "row-1d6d618d94c7dca1754a5b51",
       "candidate_id": "7c4210819c8642db55d1",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/amov/202609060184.aspx",
@@ -1886,7 +1897,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-bc414f7fdd2c6661afa8d678",
+      "row_id": "row-82afbfea72c643fd7c61fb14",
       "candidate_id": "743dc3fe655f9c631e72",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aipl/202609060183.aspx",
@@ -1908,7 +1919,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-bde709b15457387de1219903",
+      "row_id": "row-34ba94da4622e482e923a7e6",
       "candidate_id": "7fe1c6953b6c1c49a1d7",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060182.aspx",
@@ -1930,7 +1941,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-7e9e32ae4d8430f416fd1354",
+      "row_id": "row-4b3dd9c216765543ee4c6421",
       "candidate_id": "b6ab161988c63208a5dd",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aipl/202609060181.aspx",
@@ -1941,7 +1952,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-5f412f3ee381266760c10fc7",
+      "row_id": "row-cb190dcc32ede7db8e016517",
       "candidate_id": "b534054a2c2b53ef61cb",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060179.aspx",
@@ -1952,7 +1963,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-f99f6a7bb1808838a0fc43e7",
+      "row_id": "row-c21785450e9444ee9d55d3e0",
       "candidate_id": "9f210e2396da374cfe46",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060180.aspx",
@@ -1996,7 +2007,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-aa9d6d9c2bdb422e3e67ab43",
+      "row_id": "row-52a40936fae4edecdcab37ee",
       "candidate_id": "11e832fc6055295fad41",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060178.aspx",
@@ -2018,7 +2029,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-73adedbc858c4b37cc3fcf36",
+      "row_id": "row-f54888f8e4a2b3174acb4b34",
       "candidate_id": "dbf6d68aa10c3aea0cca",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060177.aspx",
@@ -2062,7 +2073,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-47e5f732085df3ca0fd31630",
+      "row_id": "row-314b775720aaf998c0a7b211",
       "candidate_id": "fe70481043bb65bbb9e3",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acn/202609060176.aspx",
@@ -2095,7 +2106,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-2de32aaad72862ae2adef418",
+      "row_id": "row-1d46009c9718f7e04eeae7b2",
       "candidate_id": "2d6ea6b75638df1ebe85",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/amov/202609060175.aspx",
@@ -2139,7 +2150,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-4e47980b88cf09403f2600bf",
+      "row_id": "row-075f822dc3ffd91e552a73dc",
       "candidate_id": "c15bc6c8129cd17ae25a",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acul/202609060174.aspx",
@@ -2161,7 +2172,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-7b110b0b8d933f3a9affea28",
+      "row_id": "row-ba05cf53cf992b69d668e951",
       "candidate_id": "329fecd7b9869818eef7",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060173.aspx",
@@ -2172,7 +2183,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-8d844701aeab43e15cad1bc1",
+      "row_id": "row-569c9b506cc0f8152c37b55b",
       "candidate_id": "0db820ecdc5118443059",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/amov/202609060172.aspx",
@@ -2227,7 +2238,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-c71dbda3bc260f8a1d251223",
+      "row_id": "row-d5781f4fd42f34de39b90946",
       "candidate_id": "9ddeb68664d9f57c65c0",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060171.aspx",
@@ -2337,7 +2348,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-c1ddf660b75f5a221c3a7c62",
+      "row_id": "row-74453296e73aa7eec2222d5a",
       "candidate_id": "c533703d59e626f7244b",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060170.aspx",
@@ -2480,7 +2491,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-9074249e96c96d3419de3fad",
+      "row_id": "row-19fe3a581e901e9d088afd34",
       "candidate_id": "a8fe7fc0fb583f5b5beb",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/afe/202609060169.aspx",
@@ -2502,7 +2513,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-9ea853ea82ff6b64fc52d166",
+      "row_id": "row-a1f2875c6f385ae01f3d2e40",
       "candidate_id": "02b409a908f012c9cd14",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acn/202609060168.aspx",
@@ -2579,7 +2590,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-1c035740060b95b444dd27ab",
+      "row_id": "row-8191fbbddf9167ad582fb143",
       "candidate_id": "dd2e9daff8b3c308a344",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060167.aspx",
@@ -2634,7 +2645,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-35424832619463663eaaf73d",
+      "row_id": "row-826a821a03ab1251e2b412a4",
       "candidate_id": "d1656f78ad65aaf95092",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aipl/202609060166.aspx",
@@ -2667,7 +2678,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-68da86f362323840f7347878",
+      "row_id": "row-47ce69e5843da9324b62beba",
       "candidate_id": "6af8fcbcb1f725604041",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060165.aspx",
@@ -2678,7 +2689,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-705a6bcd8772ec454dcc56e3",
+      "row_id": "row-d6bc34a0b30b15e44e066c67",
       "candidate_id": "2105edf1043585be4837",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/afe/202609060164.aspx",
@@ -2766,7 +2777,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-ca6ff9bbb856f1ffa7975f47",
+      "row_id": "row-87fdfe06cadad4a72fa88589",
       "candidate_id": "87ac8391a45c719cf203",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060163.aspx",
@@ -2788,7 +2799,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-dd75de24039fc945954607b0",
+      "row_id": "row-3a468f6003af88a03b6129a5",
       "candidate_id": "5339fee7b8277b812682",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/asoc/202609060162.aspx",
@@ -2810,7 +2821,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-7c2a6aaa91abbe39a5a6d342",
+      "row_id": "row-fc38627b68df7a7fd17291db",
       "candidate_id": "a670d78262592f7a1f6f",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060161.aspx",
@@ -2854,7 +2865,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-c680f9c21805fa8ee52c1bac",
+      "row_id": "row-996142558736d546b9ce01e9",
       "candidate_id": "a54d1fac20672189162f",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acul/202609060160.aspx",
@@ -2865,7 +2876,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-ea0815696969658d8301e3c9",
+      "row_id": "row-cf2719b0adf6594dcd35a5b3",
       "candidate_id": "9ce3ae14b8af3aa0455c",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060159.aspx",
@@ -2887,7 +2898,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-253eab61552f5ac00ffbe255",
+      "row_id": "row-a29a70e5d5998461ae11180b",
       "candidate_id": "028a793a0614f6e2cb8e",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060158.aspx",
@@ -2964,7 +2975,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-b4ed923304896d4ac0adbd79",
+      "row_id": "row-e6da89f5676db810eceaf558",
       "candidate_id": "109dfe77090d3c46b80b",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acn/202609060157.aspx",
@@ -2986,7 +2997,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-b04ea15185bd4efb153abe58",
+      "row_id": "row-5f455bd9e47c05fa692649ce",
       "candidate_id": "33c6bd19c5ea154348af",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060156.aspx",
@@ -2997,7 +3008,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-2bab0a10f22738cf637be1be",
+      "row_id": "row-0224d29d24581c7773bb553a",
       "candidate_id": "a840c086ff21ea4a055f",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060155.aspx",
@@ -3019,7 +3030,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-ce000010f7e7bfbfe941978f",
+      "row_id": "row-0fd7b6cae638b0baedc49f6d",
       "candidate_id": "053a8b9b2c1b02e1c398",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060153.aspx",
@@ -3030,7 +3041,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-a2ceeec1807f5b130bc830f4",
+      "row_id": "row-a66f8b59669e90a2dbaa2bf0",
       "candidate_id": "e174b047936129a56855",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060154.aspx",
@@ -3063,7 +3074,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-8fa11a5b0091822bcd8180f3",
+      "row_id": "row-19824e5a9f133fc2d0b9a280",
       "candidate_id": "0c99208160fb894be0f2",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060152.aspx",
@@ -3074,7 +3085,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-8ecfda466475ce3dc6930493",
+      "row_id": "row-fb3f297dd8b2cc0302b78328",
       "candidate_id": "8be0b2b6e652b40ca554",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aipl/202609060151.aspx",
@@ -3085,7 +3096,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-093f9237294b757da32fee41",
+      "row_id": "row-8be2a9215e7a630b76e5db65",
       "candidate_id": "08c5e79268ecfeeb53c5",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060150.aspx",
@@ -3107,7 +3118,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-d0ef757c231893e372ed1b70",
+      "row_id": "row-cf910cf064d0dd623ddc0797",
       "candidate_id": "5d23615e3d1a7c64e087",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060149.aspx",
@@ -3129,7 +3140,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-1daa110fb94f3e11a2625f23",
+      "row_id": "row-da6f53282b4660583ff2706f",
       "candidate_id": "b0af6424358e7883ea09",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060148.aspx",
@@ -3162,7 +3173,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-ad77e84d858d519970061afd",
+      "row_id": "row-fc0cf903628a230875c3a6bf",
       "candidate_id": "b24e19f00d775c16ba29",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060147.aspx",
@@ -3184,7 +3195,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-6ceba0335c1c1d1456469e0c",
+      "row_id": "row-f58fa282138da7262b9e6849",
       "candidate_id": "0672cc258ebee71ea3a4",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/amov/202609060146.aspx",
@@ -3239,7 +3250,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-266a74205c52f881a9f5ee7b",
+      "row_id": "row-7978e6e994484bacab2b4114",
       "candidate_id": "bce92131c66a209911c4",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060145.aspx",
@@ -3283,7 +3294,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-f7cab6958ae501a9308dacb5",
+      "row_id": "row-2fb9c54276bb4cad4da2791f",
       "candidate_id": "9f9e4366e354ecb8d1ad",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060144.aspx",
@@ -3294,7 +3305,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-1192295a24f14f08c255bd56",
+      "row_id": "row-e521a9d65cdd250f41f94878",
       "candidate_id": "9fa77978693967a52534",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060143.aspx",
@@ -3305,7 +3316,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-4892165fb685e6dcdd4b5994",
+      "row_id": "row-29e005dc01727ee8026d3fbf",
       "candidate_id": "87918f39400239b99da5",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/amov/202609060142.aspx",
@@ -3316,7 +3327,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-d29904b8c108475a9fae4347",
+      "row_id": "row-165e1ecb9a5d6344afdcb5d4",
       "candidate_id": "b1a2a7cc20b5caa62641",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060141.aspx",
@@ -3338,7 +3349,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-6fe4d061872416596f500297",
+      "row_id": "row-90dea18da8b007dca1d2ac76",
       "candidate_id": "79274d16503b581977f8",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060140.aspx",
@@ -3360,7 +3371,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-301f55667b47e81576f0e100",
+      "row_id": "row-da65d526d73c4eb1cc5a28a6",
       "candidate_id": "0e1ecb287cc45ccff352",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060139.aspx",
@@ -3404,7 +3415,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-19f5120385048bbd23f70871",
+      "row_id": "row-d9254db72de4aa495b0af957",
       "candidate_id": "ee395d2e779b58078b91",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060138.aspx",
@@ -3415,7 +3426,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-df0362a7a5ed0002bae9a8c7",
+      "row_id": "row-c0e523edd0435501617bf48f",
       "candidate_id": "30ee75fd9374199130df",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aipl/202609060137.aspx",
@@ -3426,7 +3437,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-6b155ae8c479f9154362857b",
+      "row_id": "row-5ada0b2554d1bb5ae90c245e",
       "candidate_id": "f29f00fd51b8ec4d7b87",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060136.aspx",
@@ -3503,7 +3514,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-e084e7112cfc4825dec132dd",
+      "row_id": "row-98d7491c027b20d051530e20",
       "candidate_id": "3d383572c696ad7d78aa",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060124.aspx",
@@ -3514,7 +3525,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-c06b0f63a93ec67798912d53",
+      "row_id": "row-b63d5f2edb1d5185c89c8702",
       "candidate_id": "c588b74dd193c23b032d",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060122.aspx",
@@ -3525,7 +3536,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-8ef5ab687ada850db951de7d",
+      "row_id": "row-80a086e2c3d3b18fe48dcb0f",
       "candidate_id": "22e342298722706ddfac",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acn/202609060123.aspx",
@@ -3536,7 +3547,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-7ef28d18b9bf7beb369eee07",
+      "row_id": "row-6f328e513dadc26b4598d815",
       "candidate_id": "03207754a84818726bb1",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060121.aspx",
@@ -3569,7 +3580,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-d122aba5ea73b0fab732b889",
+      "row_id": "row-fa8164ce9ee13e083207db66",
       "candidate_id": "a68654d3ad8c691db387",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060120.aspx",
@@ -3580,7 +3591,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-7c206f21d226a0ea3b8058a8",
+      "row_id": "row-22fd83c92a855ee08c4834fa",
       "candidate_id": "2aa91af5bad7945ca85b",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060119.aspx",
@@ -3591,7 +3602,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-b8785691dff68960aaaf72b4",
+      "row_id": "row-6fc8ce45b6abb004068b771e",
       "candidate_id": "67217bf78dc6a2f06703",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/afe/202609060118.aspx",
@@ -3602,7 +3613,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-a87bef8f67b21ce2fe26a674",
+      "row_id": "row-592abe0a90dd64d047ac1ec3",
       "candidate_id": "60462bd7598e86c75b3d",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acn/202609060117.aspx",
@@ -3613,7 +3624,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-780793d6e66dfd2405788630",
+      "row_id": "row-570188f4f81cb4adaf8829a5",
       "candidate_id": "ee21d7c6268a0ecc9941",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/asoc/202609060116.aspx",
@@ -3657,7 +3668,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-000b011e3754cebecd2db5ed",
+      "row_id": "row-38ba478308d5c50c1add29cd",
       "candidate_id": "4e690131340c9c6ecf37",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060115.aspx",
@@ -3668,7 +3679,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-89398bc003d04ca076c04514",
+      "row_id": "row-05f7e77cbd95fa7b15a9eaf7",
       "candidate_id": "1f8bb45fda0795a12aeb",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060114.aspx",
@@ -3701,7 +3712,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-ef0b2b781c9b253597ac4b3a",
+      "row_id": "row-631a1413e073e8583071a46a",
       "candidate_id": "83a73134091208b174cd",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060113.aspx",
@@ -3778,7 +3789,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-36862c24bbe491116986e2f8",
+      "row_id": "row-cee18fbf7b28c120e5f9016b",
       "candidate_id": "c8c591e742c58ae3253a",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060112.aspx",
@@ -3789,7 +3800,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-7852279e19b18398b1862cf1",
+      "row_id": "row-08c2d59bd6c246fa902cf00a",
       "candidate_id": "b251355230247005bf94",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060111.aspx",
@@ -3866,7 +3877,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-515c49f2585dc29f482ce1a7",
+      "row_id": "row-471d4bb65e459f150eff044a",
       "candidate_id": "6244a36e9988541e3933",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060110.aspx",
@@ -3910,7 +3921,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-83dbd09d771b4b28f335cd25",
+      "row_id": "row-a4f62b7c500ba85ab4a46558",
       "candidate_id": "31876fb9ff7edce83b2b",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060109.aspx",
@@ -3932,7 +3943,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-941de844f22791294c5cb15d",
+      "row_id": "row-2a354b9c54b83b45376f3e5e",
       "candidate_id": "36dc9fed89dd511dd984",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060108.aspx",
@@ -3998,7 +4009,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-a2f07b0cdce1c13c2d011fea",
+      "row_id": "row-840762999422e7f00d3bf234",
       "candidate_id": "5b40722f64edf3c51671",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/asoc/202609060107.aspx",
@@ -4020,7 +4031,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-02e77d928ef754968995cece",
+      "row_id": "row-95c6edcbae818e6aa65459cb",
       "candidate_id": "bbf9a840d47515353f37",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060106.aspx",
@@ -4031,7 +4042,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-916f6b11f01f3ce753978127",
+      "row_id": "row-f06e60b55373e060cd3a2377",
       "candidate_id": "3fd389052bf60d5f12f6",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060105.aspx",
@@ -4042,7 +4053,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-3a2e8f8690d748d2e8384bcc",
+      "row_id": "row-6bdd3d1ddf54935772a167dd",
       "candidate_id": "fa7dc82a5e43a07c4051",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acn/202609060104.aspx",
@@ -4064,7 +4075,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-47e214bc76958c4339286e14",
+      "row_id": "row-131b690395affcf654347de4",
       "candidate_id": "ab08a4256b39b4facca9",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060103.aspx",
@@ -4097,7 +4108,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-e17e5a5d20ce85e0697a8fd5",
+      "row_id": "row-4cab396a7b10c39b65460d08",
       "candidate_id": "19fb3100e972bdada33e",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060102.aspx",
@@ -4130,7 +4141,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-b682851c804e7705e0540132",
+      "row_id": "row-e10f744f187babb17cb487f8",
       "candidate_id": "5f485b7df497b1e32a23",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060101.aspx",
@@ -4141,7 +4152,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-a0ce5873b1f2d7a488ab9cf5",
+      "row_id": "row-527bec41521666cb9df56537",
       "candidate_id": "672baed174dc07fca9da",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060100.aspx",
@@ -4218,7 +4229,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-3b60e43775d411cd22aa113c",
+      "row_id": "row-52163246553081c606a746d8",
       "candidate_id": "964582fe6fd2b4055340",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aipl/202609060099.aspx",
@@ -4361,7 +4372,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-8af60a9a17a448238733f159",
+      "row_id": "row-32cab2c6034ee0251172787c",
       "candidate_id": "a910b366f6077ec6d4f8",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060097.aspx",
@@ -4372,7 +4383,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-ae0003fb931e28861259be00",
+      "row_id": "row-a284114f7b5f78149815401a",
       "candidate_id": "219d41b851f5c0579f75",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aipl/202609060098.aspx",
@@ -4383,7 +4394,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-40078632109e575c8e245e25",
+      "row_id": "row-4f396c23f61c2a7be09c4384",
       "candidate_id": "495e3b1b3f51d47404f7",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060096.aspx",
@@ -4460,7 +4471,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-35182c37cbdff9bd5bc68e51",
+      "row_id": "row-09f661da1a86df430f13ea0d",
       "candidate_id": "f138d5dd4628116d5e37",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/asoc/202609060095.aspx",
@@ -4471,7 +4482,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-099b5c90d578bbaf8ece798b",
+      "row_id": "row-a824a7cb7cdf1887dba52e94",
       "candidate_id": "9892a9104170b2d741de",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/amov/202609060094.aspx",
@@ -4482,7 +4493,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-6253a68765bd0521bf917ceb",
+      "row_id": "row-24a52f4d8cf33d11bf47119d",
       "candidate_id": "a4aacffaed484ccacb7a",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060093.aspx",
@@ -4493,7 +4504,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-5e939255938d207593c30caa",
+      "row_id": "row-68f58cbcaccf5c0b701b34f7",
       "candidate_id": "166662b05c2c81e2bdad",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060092.aspx",
@@ -4504,7 +4515,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-ccd2e640dac927584fa446dd",
+      "row_id": "row-f647af842263e88fceeb5865",
       "candidate_id": "9876b27bd2dbd3237b95",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060090.aspx",
@@ -4515,7 +4526,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-ea828786bf3c28515bd54dfa",
+      "row_id": "row-a7f08e12aacbd951d8eab6a8",
       "candidate_id": "1b769893e1d23655d18c",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060091.aspx",
@@ -4526,7 +4537,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-208fbb20c7e4df50c82349f7",
+      "row_id": "row-447553f60715aeb65370a9b3",
       "candidate_id": "f7f44ba7a3bdec71c612",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/amov/202609060088.aspx",
@@ -4537,7 +4548,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-df867cab868c89cbaa9d539f",
+      "row_id": "row-af8116c0bc50c4e0424fca56",
       "candidate_id": "c142237c66763acc8fdb",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060089.aspx",
@@ -4548,7 +4559,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-d5fbd54f406618ef6ee2f223",
+      "row_id": "row-6e19b6bba090a71b57d962fd",
       "candidate_id": "e6306e18eca9e3a49f84",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060087.aspx",
@@ -4570,7 +4581,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-c21bdb966d69d47a93003f71",
+      "row_id": "row-bcbe8c85ab78c962bcd3f555",
       "candidate_id": "1a6bd88484b100f3750c",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060086.aspx",
@@ -4603,7 +4614,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-df073c2c540a782400439608",
+      "row_id": "row-f51f012aaa8e9e10cf92f754",
       "candidate_id": "c606747c9ef469f8c66d",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/asoc/202609060085.aspx",
@@ -4614,7 +4625,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-031e302cf220211b354a39e0",
+      "row_id": "row-3ea8a7fc8fbe8c34b526f590",
       "candidate_id": "496b7ef6819b6dbebbd8",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060084.aspx",
@@ -4658,7 +4669,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-b3357aea9e33e7b74e6edc40",
+      "row_id": "row-0f2da7753f8b756ea8c6886d",
       "candidate_id": "c0dda15bf8169226d7e3",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060083.aspx",
@@ -4680,7 +4691,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-6286f14cc63c1c8b09dc7b41",
+      "row_id": "row-05b736c28924a77bf70b0390",
       "candidate_id": "6171ce352750364eac50",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060082.aspx",
@@ -4691,7 +4702,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-2493d575c0a46519c9e0ca43",
+      "row_id": "row-045e8dba057cab46f8949e47",
       "candidate_id": "6ad44556660d99964fd3",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060081.aspx",
@@ -4702,7 +4713,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-6cf07ae6efdbc69412d6b5f9",
+      "row_id": "row-c480283495576cc98c3ab1d0",
       "candidate_id": "55f70407ad83b3a75645",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060080.aspx",
@@ -4724,7 +4735,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-3e7257918510f47bf962a6c4",
+      "row_id": "row-487762145d7ea6d96b096a1b",
       "candidate_id": "b4bd9333f1553877f1d4",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060079.aspx",
@@ -4790,7 +4801,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-8977ce59a69e7938001d9cfa",
+      "row_id": "row-cff93c63e1a1b8d429f72099",
       "candidate_id": "6a11e4f31673c6ab50a7",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060078.aspx",
@@ -4801,7 +4812,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-4a9bd3d436d792e3ac1e94ea",
+      "row_id": "row-3e2e16253c40e716caeea277",
       "candidate_id": "9d2c5176983c425e8c68",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aipl/202609060077.aspx",
@@ -4878,7 +4889,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-e0c0c0081784160d52acbde8",
+      "row_id": "row-ebb1eb47eec33d6557dc12c9",
       "candidate_id": "9999b6fe55fccfcb992a",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aipl/202609060076.aspx",
@@ -4889,7 +4900,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-712c15f8596846afb241dd32",
+      "row_id": "row-dca9b6aed326ea30954bb441",
       "candidate_id": "b7fd1e26aaa86488be8a",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060075.aspx",
@@ -4977,7 +4988,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-58daee639f5a42df47541be8",
+      "row_id": "row-fe28ab307e5e3b56bc0206bc",
       "candidate_id": "e598966746c2ef009037",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aipl/202609060074.aspx",
@@ -4988,7 +4999,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-0b8aa6b97c35e88ad24b2887",
+      "row_id": "row-49559abeb58a1b1247a1d201",
       "candidate_id": "7a1c3cb595bca3255e37",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aipl/202609060073.aspx",
@@ -4999,7 +5010,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-558a4b813ef323335c991974",
+      "row_id": "row-a49d27be2e7496e95efaa22f",
       "candidate_id": "e14180d88a1733edabea",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acn/202609060072.aspx",
@@ -5010,7 +5021,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-7874d767e7546e0c6c02c613",
+      "row_id": "row-a30d3e5ef7bca29322709b39",
       "candidate_id": "21efad55c0ae21eea4db",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060071.aspx",
@@ -5021,7 +5032,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-dd56f966aee83035fe854af3",
+      "row_id": "row-fe3ad43c0200a930c5fc00d8",
       "candidate_id": "7b41bc3df3515cee0c3d",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acn/202609060070.aspx",
@@ -5054,7 +5065,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-45ebc4f06e47f97034fa947c",
+      "row_id": "row-857b5289fd522c47a4f58aec",
       "candidate_id": "027a5db5c0584214216b",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/asoc/202609060068.aspx",
@@ -5065,7 +5076,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-a5599e087c54d6c7a0130bda",
+      "row_id": "row-08fd3591218bf9005602008b",
       "candidate_id": "87f83045984035b4823b",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acn/202609060069.aspx",
@@ -5098,7 +5109,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-b00be1048d1ccbf6afae787d",
+      "row_id": "row-ee677b464f69ec92ce8f1cfe",
       "candidate_id": "cdfe43aaf517b85dd1cf",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/asoc/202609060067.aspx",
@@ -5109,7 +5120,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-a7a745bb31e49127f2dfcecf",
+      "row_id": "row-e8dfdb1863bb10fa82baef35",
       "candidate_id": "9570336a7d86b030c55a",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060066.aspx",
@@ -5120,7 +5131,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-ab01841d60cc151402f51ccd",
+      "row_id": "row-f03a960386f821f75fd12f5e",
       "candidate_id": "3409e0b4767d8f0e5350",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060065.aspx",
@@ -5131,7 +5142,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-5ec3cfa2ca004480df78ca72",
+      "row_id": "row-7ecfa3844b03bd2980b80d9b",
       "candidate_id": "124c161960201fe7f5cc",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060063.aspx",
@@ -5142,7 +5153,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-7721562cb49d745146eb9eff",
+      "row_id": "row-12e6a54eb4cb0f00754f726d",
       "candidate_id": "e663dc03e5e3f04bd264",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060064.aspx",
@@ -5186,7 +5197,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-41bb2f5292d3d5e4b80af95d",
+      "row_id": "row-bb1239989e1db885838b6245",
       "candidate_id": "e216bdfef51d2685ae60",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060062.aspx",
@@ -5197,7 +5208,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-eab5d5e84a506435865862b9",
+      "row_id": "row-44bd4caecf7b54b772335d4e",
       "candidate_id": "e58364b8c677aaf91e4c",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060060.aspx",
@@ -5208,7 +5219,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-6b9a120c293790a7c7f232a1",
+      "row_id": "row-c07bc16d80e84409635d71a4",
       "candidate_id": "f205999357fa8c1e91fa",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/asoc/202609060061.aspx",
@@ -5230,7 +5241,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-9ebdff53c01f5b6c9f627398",
+      "row_id": "row-f1f59a0130d087290bb56f6c",
       "candidate_id": "a73fc9662f5c94ea235a",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060059.aspx",
@@ -5252,7 +5263,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-e3de4623f697f1a7c46cd43d",
+      "row_id": "row-73f4f8868f0817b5ea154176",
       "candidate_id": "a8a79db5f2c968f2139e",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060057.aspx",
@@ -5263,7 +5274,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-32806ff9e6fe64177bdd29f4",
+      "row_id": "row-3d7258f8420ab20ea1574d13",
       "candidate_id": "353a702520b8ed17ec26",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aipl/202609060058.aspx",
@@ -5296,7 +5307,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-853f0a529650039ab7c01887",
+      "row_id": "row-32e5dd1d74454a7793056d5e",
       "candidate_id": "bf6e2b5eb336928c0306",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060056.aspx",
@@ -5307,7 +5318,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-840bc5accc582a942c36abe0",
+      "row_id": "row-f0a7b07cfe589e32d1bd3002",
       "candidate_id": "08fb56d6db5fa9bd8c3b",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060055.aspx",
@@ -5318,7 +5329,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-d667d7423a39942d23551bd6",
+      "row_id": "row-edc68a9ef6c5db1fd68bbf38",
       "candidate_id": "31fff11a422ca4d29607",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/afe/202609060054.aspx",
@@ -5340,7 +5351,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-8581b4889461f61fe76d2dc7",
+      "row_id": "row-7fa9cf359d55cd3eec835d84",
       "candidate_id": "b313503ed318a9aed262",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aipl/202609060053.aspx",
@@ -5373,7 +5384,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-e0642d371be458e9ebeeb960",
+      "row_id": "row-2d324b7a84d5c14c0b5ca4ac",
       "candidate_id": "1fdf754c910e61b01ee8",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060051.aspx",
@@ -5384,7 +5395,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-c4ecc421af6ccd7eda459858",
+      "row_id": "row-1a92f1bd8b3abfef318ed5b0",
       "candidate_id": "8fde51abeb5ec88255a6",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acn/202609060052.aspx",
@@ -5395,7 +5406,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-a3facfe3c46198e1b248d6b1",
+      "row_id": "row-2f17058b62288e2f9a50bfbb",
       "candidate_id": "81a062e653f8a015beae",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aipl/202609060050.aspx",
@@ -5450,7 +5461,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-cd66912e7bde13a8ee5bed78",
+      "row_id": "row-4d4abc8752ae6a0b3f8d9d5e",
       "candidate_id": "981257d9c2ee7865f326",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acn/202609060049.aspx",
@@ -5472,7 +5483,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-d1ee4e00db9b91d21dd50cd0",
+      "row_id": "row-dad53cc3b0873e8032f12f6e",
       "candidate_id": "f79cd1e0af24da4c267e",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aloc/202609060048.aspx",
@@ -5560,7 +5571,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-b5ea9575ec5db6fb908b6ad8",
+      "row_id": "row-47a801775c5b3a117cc2595d",
       "candidate_id": "88512ae7f72c4ec9d18f",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060038.aspx",
@@ -5582,7 +5593,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-8c7de5e70deac7a0e9e4b51a",
+      "row_id": "row-0d562853487d5946569f66c0",
       "candidate_id": "e062f3a06cd090e9db1d",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060037.aspx",
@@ -5615,7 +5626,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-a5218c6ec66b2a2cda42a436",
+      "row_id": "row-51143cb415a357215422f233",
       "candidate_id": "4931df5b0eab53b9412c",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060036.aspx",
@@ -5626,7 +5637,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-a3f9f5c44404ec7679b63c6a",
+      "row_id": "row-c4648b373fbb2f8fb60836f4",
       "candidate_id": "d1b1e9c6b713ef51a1b0",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060035.aspx",
@@ -5637,7 +5648,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-d963a3314423db49eba83b64",
+      "row_id": "row-71aaefc5d60ece40b7c22858",
       "candidate_id": "5b87d5a8804e60096827",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aspt/202609060034.aspx",
@@ -5659,7 +5670,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-cd02d7d3a7bd1450cc0d8495",
+      "row_id": "row-9410cd1a7c1c6b7998a188ea",
       "candidate_id": "492448be5f81ba60cfc1",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/asoc/202609060033.aspx",
@@ -5670,7 +5681,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-177270de0d3642afe879e8a4",
+      "row_id": "row-066ad801e245b7a84822d5f9",
       "candidate_id": "a0abaca77d6f2e861dde",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/ahel/202609060032.aspx",
@@ -5692,7 +5703,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-0342717f3ea2238e82931cc0",
+      "row_id": "row-cf8ee28b975ad65319e0eed4",
       "candidate_id": "d8a48957d1e042e463c3",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/aopl/202609060031.aspx",
@@ -5736,7 +5747,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-ec46c1ef37fc5e0328f09bb8",
+      "row_id": "row-3226665353882f8fc1b389b4",
       "candidate_id": "74f3b3d2d2e7404ea991",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/afe/202609060030.aspx",
@@ -5747,7 +5758,7 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-4234a09fb257e4355b0bb538",
+      "row_id": "row-bef58e2bd4c5418494f6e981",
       "candidate_id": "cae589df5be5803cab5f",
       "source_id": "cna",
       "canonical_url": "https://www.cna.com.tw/news/acul/202609065002.aspx",
@@ -5791,32 +5802,10 @@
       "matched_discovery_signals": {}
     },
     {
-      "row_id": "row-7cf3f48e8e0249c8e4c0f060",
-      "candidate_id": "8624d8da0d9e911c0230",
-      "source_id": "cna",
-      "canonical_url": "https://www.cna.com.tw/news/acn/202609060029.aspx",
-      "route": "content_hydration",
-      "reasons": [
-        "regional_supplement_complete_admission"
-      ],
-      "matched_discovery_signals": {}
-    },
-    {
       "row_id": "row-2b2e1af6df99b7a0cf92dab8",
       "candidate_id": "5691ee79fe0b94313570",
       "source_id": "chinanews",
       "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-06/10691288.shtml",
-      "route": "content_hydration",
-      "reasons": [
-        "regional_supplement_complete_admission"
-      ],
-      "matched_discovery_signals": {}
-    },
-    {
-      "row_id": "row-3ce3ba02bb094cb302e667e9",
-      "candidate_id": "addd0e5a77bbd37c03c4",
-      "source_id": "cna",
-      "canonical_url": "https://www.cna.com.tw/news/aloc/202609060028.aspx",
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"

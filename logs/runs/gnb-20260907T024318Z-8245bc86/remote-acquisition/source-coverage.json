@@ -7,8 +7,8 @@
     "coverage_reason": null,
     "missing_segments": [],
     "missing_date_variants": [],
-    "within_window_count": 180,
-    "ranked_count": 180,
+    "within_window_count": 179,
+    "ranked_count": 179,
     "ranked_items": [
       {
         "url": "https://www.cna.com.tw/news/aopl/202609070031.aspx",
@@ -179,20 +179,6 @@
         "discovery_priority_reason": "僅依標題與摘要訊號安排內容補齊順序；不得作為事件重要性評分。"
       },
       {
-        "url": "https://www.cna.com.tw/news/acn/202609060029.aspx",
-        "title": "習近平訪華府 中國學者：美方制裁清單是重點議題",
-        "published_at": "2026-09-06T10:48:00+08:00",
-        "discovery_priority_score": 25,
-        "discovery_signals": {
-          "urgent": false,
-          "policy": true,
-          "broad_scope": false,
-          "structural": false,
-          "core_section": false
-        },
-        "discovery_priority_reason": "僅依標題與摘要訊號安排內容補齊順序；不得作為事件重要性評分。"
-      },
-      {
         "url": "https://www.cna.com.tw/news/aloc/202609070008.aspx",
         "title": "慶「大象來了」全球第100場 數萬人齊唱生日快樂歌",
         "published_at": "2026-09-07T05:16:00+08:00",
@@ -215,6 +201,20 @@
           "urgent": false,
           "policy": false,
           "broad_scope": true,
+          "structural": false,
+          "core_section": false
+        },
+        "discovery_priority_reason": "僅依標題與摘要訊號安排內容補齊順序；不得作為事件重要性評分。"
+      },
+      {
+        "url": "https://www.cna.com.tw/news/aspt/202609070035.aspx",
+        "title": "MLB李灝宇1保送跑回1分 鄧愷威近3戰失6分下放3A",
+        "published_at": "2026-09-07T10:34:00+08:00",
+        "discovery_priority_score": 0,
+        "discovery_signals": {
+          "urgent": false,
+          "policy": false,
+          "broad_scope": false,
           "structural": false,
           "core_section": false
         },
@@ -2515,23 +2515,9 @@
           "core_section": false
         },
         "discovery_priority_reason": "僅依標題與摘要訊號安排內容補齊順序；不得作為事件重要性評分。"
-      },
-      {
-        "url": "https://www.cna.com.tw/news/aloc/202609060028.aspx",
-        "title": "中火燃氣機組商轉在即 盧秀燕：支持增氣但配套須拆煤",
-        "published_at": "2026-09-06T10:46:00+08:00",
-        "discovery_priority_score": 0,
-        "discovery_signals": {
-          "urgent": false,
-          "policy": false,
-          "broad_scope": false,
-          "structural": false,
-          "core_section": false
-        },
-        "discovery_priority_reason": "僅依標題與摘要訊號安排內容補齊順序；不得作為事件重要性評分。"
       }
     ],
-    "selected_for_pool_count": 180,
+    "selected_for_pool_count": 179,
     "selected_item_urls": [
       "https://www.cna.com.tw/news/aopl/202609070031.aspx",
       "https://www.cna.com.tw/news/ahel/202609070004.aspx",
@@ -2545,9 +2531,9 @@
       "https://www.cna.com.tw/news/aipl/202609060099.aspx",
       "https://www.cna.com.tw/news/aopl/202609060066.aspx",
       "https://www.cna.com.tw/news/aopl/202609060031.aspx",
-      "https://www.cna.com.tw/news/acn/202609060029.aspx",
       "https://www.cna.com.tw/news/aloc/202609070008.aspx",
       "https://www.cna.com.tw/news/aopl/202609060158.aspx",
+      "https://www.cna.com.tw/news/aspt/202609070035.aspx",
       "https://www.cna.com.tw/news/afe/202609070034.aspx",
       "https://www.cna.com.tw/news/ahel/202609070033.aspx",
       "https://www.cna.com.tw/news/ahel/202609070032.aspx",
@@ -2711,8 +2697,7 @@
       "https://www.cna.com.tw/news/asoc/202609060033.aspx",
       "https://www.cna.com.tw/news/ahel/202609060032.aspx",
       "https://www.cna.com.tw/news/afe/202609060030.aspx",
-      "https://www.cna.com.tw/news/acul/202609065002.aspx",
-      "https://www.cna.com.tw/news/aloc/202609060028.aspx"
+      "https://www.cna.com.tw/news/acul/202609065002.aspx"
     ],
     "discovery_ranking_completed": true,
     "discovery_ranking_method": "discovery_priority_v1",

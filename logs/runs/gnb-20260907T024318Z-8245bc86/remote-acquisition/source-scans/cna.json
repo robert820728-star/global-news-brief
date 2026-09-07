@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "source_id": "cna",
   "collector": "structured_direct",
-  "generated_at": "2026-09-07T02:45:43.211427+00:00",
+  "generated_at": "2026-09-07T02:51:37.117554+00:00",
   "window_start": "2026-09-06T02:43:18+00:00",
   "window_end": "2026-09-07T02:43:18+00:00",
   "coverage_complete": true,
@@ -13,12 +13,25 @@
   "pages": [
     {
       "request_url": "https://www.cna.com.tw/cna2018api/api/WNewsList",
-      "fetched_at": "2026-09-07T02:45:43.211427+00:00",
+      "fetched_at": "2026-09-07T02:51:37.117554+00:00",
       "http_status": 200,
       "snapshot_path": "source-work/route-snapshots/cna.discovery.json",
-      "sha256": "c0841d146d5fb683eec086e52eb2fcfd0e3d7e02b52b71ab70d291f990a19453",
+      "sha256": "95131cb8287eb33959b115a8dd5f95982af78f74eb87394b08b5238fd194df31",
       "next_url": null,
       "extracted_items": [
+        {
+          "url": "https://www.cna.com.tw/news/aspt/202609070035.aspx",
+          "title": "MLB李灝宇1保送跑回1分 鄧愷威近3戰失6分下放3A",
+          "summary": "MLB李灝宇1保送跑回1分 鄧愷威近3戰失6分下放3A",
+          "summary_quality": "title_only",
+          "published_at": "2026-09-07T10:34:00+08:00",
+          "url_evidence": "https://www.cna.com.tw/news/aspt/202609070035.aspx",
+          "published_evidence": "2026/09/07 10:34",
+          "categories": [],
+          "discovery_priority_reason": "MLB李灝宇1保送跑回1分 鄧愷威近3戰失6分下放3A",
+          "acquisition_route": "structured_direct",
+          "discovery_signals": {}
+        },
         {
           "url": "https://www.cna.com.tw/news/afe/202609070034.aspx",
           "title": "928檔期總銷探6年新低 北台灣大案撐盤、高雄減幅居冠",
@@ -2330,32 +2343,6 @@
           "published_evidence": "2026/09/06 10:56",
           "categories": [],
           "discovery_priority_reason": "美購債計畫及蘋果發表會將登場 法人：台股季線區間震盪",
-          "acquisition_route": "structured_direct",
-          "discovery_signals": {}
-        },
-        {
-          "url": "https://www.cna.com.tw/news/acn/202609060029.aspx",
-          "title": "習近平訪華府 中國學者：美方制裁清單是重點議題",
-          "summary": "習近平訪華府 中國學者：美方制裁清單是重點議題",
-          "summary_quality": "title_only",
-          "published_at": "2026-09-06T10:48:00+08:00",
-          "url_evidence": "https://www.cna.com.tw/news/acn/202609060029.aspx",
-          "published_evidence": "2026/09/06 10:48",
-          "categories": [],
-          "discovery_priority_reason": "習近平訪華府 中國學者：美方制裁清單是重點議題",
-          "acquisition_route": "structured_direct",
-          "discovery_signals": {}
-        },
-        {
-          "url": "https://www.cna.com.tw/news/aloc/202609060028.aspx",
-          "title": "中火燃氣機組商轉在即 盧秀燕：支持增氣但配套須拆煤",
-          "summary": "中火燃氣機組商轉在即 盧秀燕：支持增氣但配套須拆煤",
-          "summary_quality": "title_only",
-          "published_at": "2026-09-06T10:46:00+08:00",
-          "url_evidence": "https://www.cna.com.tw/news/aloc/202609060028.aspx",
-          "published_evidence": "2026/09/06 10:46",
-          "categories": [],
-          "discovery_priority_reason": "中火燃氣機組商轉在即 盧秀燕：支持增氣但配套須拆煤",
           "acquisition_route": "structured_direct",
           "discovery_signals": {}
         }
