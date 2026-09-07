@@ -71,6 +71,40 @@ jobs:
           --comment-env BRIDGE_COMMENT
           --expected-main-sha "$EXPECTED_MAIN_SHA"
           --output request.json
+      - name: Detect reusable completed source scan
+        id: reuse
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          request = json.loads(Path("request.json").read_text(encoding="utf-8"))
+          reusable = False
+          if request.get("operation") == "source_scan":
+              remote = Path("runlogs/logs/runs") / request["run_id"] / "remote-acquisition"
+              required = [
+                  remote / "request.json",
+                  remote / "receipt.json",
+                  remote / "source-candidates.json",
+                  remote / "source-coverage.json",
+                  remote / "news-relevance-gate.json",
+                  remote / "source-scans" / "cna.json",
+                  remote / "source-scans" / "chinanews.json",
+              ]
+              present = [path.is_file() for path in required]
+              if any(present) and not all(present):
+                  raise SystemExit("same-run source scan is partially materialized; refuse live rescan until repaired")
+              if all(present):
+                  stored = json.loads((remote / "request.json").read_text(encoding="utf-8"))
+                  identity_keys = ("operation", "run_id", "main_sha", "window", "source_ids")
+                  if any(stored.get(key) != request.get(key) for key in identity_keys):
+                      raise SystemExit("existing source-scan artifact identity conflicts with this request")
+                  reusable = True
+                  print("same-run source scan already materialized; reusing frozen source universe")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as stream:
+              stream.write(f"source_scan={'true' if reusable else 'false'}\n")
+          PY
       - name: Prepare append-only hydration receipt
         env:
           EXPECTED_MAIN_SHA: ${{ steps.pin.outputs.main_sha }}
@@ -120,6 +154,7 @@ jobs:
             git push origin HEAD:run-logs
           fi
       - name: Execute bounded acquisition
+        if: steps.reuse.outputs.source_scan != 'true'
         env:
           EXPECTED_MAIN_SHA: ${{ steps.pin.outputs.main_sha }}
           PYTHONPATH: ${{ github.workspace }}/runtime
@@ -286,4 +321,3 @@ jobs:
             git push origin HEAD:run-logs
           else
             echo "No new run-scoped acquisition result to commit"
-          fi
