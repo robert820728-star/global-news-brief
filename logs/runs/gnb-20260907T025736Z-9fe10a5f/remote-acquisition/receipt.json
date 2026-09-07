@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "operation": "source_scan",
+  "run_id": "gnb-20260907T025736Z-9fe10a5f",
+  "main_sha": "cff433b785f21f0e9334c06018037f311c49abe2",
+  "window": {
+    "start": "2026-09-06T02:57:36+00:00",
+    "end": "2026-09-07T02:57:36+00:00"
+  },
+  "status": "completed",
+  "resume_stage": "source-scan"
+}
