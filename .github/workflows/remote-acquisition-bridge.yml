@@ -8,7 +8,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: remote-acquisition-${{ github.event.comment.id }}
+  group: remote-acquisition-${{ github.event.issue.number }}
   cancel-in-progress: false
 
 jobs:
