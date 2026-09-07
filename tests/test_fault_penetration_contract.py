@@ -1,3 +1,4 @@
+import re
 import unittest
 from pathlib import Path
 
@@ -10,6 +11,19 @@ def read(path: str) -> str:
 
 
 class FaultPenetrationContractTests(unittest.TestCase):
+    def test_remote_acquisition_final_commit_shell_branch_is_closed(self):
+        workflow = read(".github/workflows/remote-acquisition-bridge.yml")
+        commit_step = re.search(
+            r"(?ms)^      - name: Commit run-scoped result\n"
+            r".*?^          if \[ -n .*?^          else\n"
+            r".*?^          fi\s*$",
+            workflow,
+        )
+        self.assertIsNotNone(
+            commit_step,
+            "Commit run-scoped result must close its shell if/else with fi",
+        )
+
     def test_remote_acquisition_bridge_is_bound_and_never_bypasses_visible_media(self):
         root = Path(__file__).resolve().parents[1]
         workflow = (root / ".github/workflows/remote-acquisition-bridge.yml").read_text(encoding="utf-8")

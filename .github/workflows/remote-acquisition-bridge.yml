@@ -321,3 +321,4 @@ jobs:
             git push origin HEAD:run-logs
           else
             echo "No new run-scoped acquisition result to commit"
+          fi

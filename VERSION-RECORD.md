@@ -1,7 +1,13 @@
-Warning: truncated output (original token count: 34366)
-Total output lines: 327
+# Version Record / 版本紀錄
 
-# Version Record / �蝝��
+## v0.6.0-rc.52 — Run-scoped result commit shell closure / Run-scoped 結果提交 shell 閉合
+
+- Reason / 原因：A fresh live occurrence completed bounded global fallback and a legal Reuters exhaustion batch, but both remote-acquisition jobs failed at `Commit run-scoped result` with exit code 2. Inspection of the exact pinned workflow showed that its terminal shell `if`/`else` branch had no closing `fi`, so valid batch 44, regenerated admissions, and audit input could not be committed to `run-logs`. / 全新實跑 occurrence 已完成 bounded global fallback 與合法 Reuters exhaustion batch，但兩個 remote-acquisition jobs 都在 `Commit run-scoped result` 以 exit code 2 失敗。檢查精確 pinned workflow 後確認，最後的 shell `if`／`else` 分支缺少結尾 `fi`，導致有效的 batch 44、重新生成的 admissions 與 audit input 無法提交至 `run-logs`。
+- Approach / 方法：Close the existing final commit branch with the missing `fi` and add a focused workflow regression that requires the `Commit run-scoped result` shell branch to be syntactically closed. Do not alter acquisition, hydration, row identity, same-run recovery, or publication gates. / 為既有最終提交分支補上缺少的 `fi`，並新增聚焦 workflow 回歸測試，強制 `Commit run-scoped result` 的 shell 分支必須完整閉合；不修改 acquisition、hydration、row identity、same-run recovery 或 publication gates。
+- Entry points / 入口：`.github/workflows/remote-acquisition-bridge.yml`, `tests/test_fault_penetration_contract.py`, and this version record. The canceled ten-minute validation automation remains absent and the formal daily 06:00 task is not modified. / 修改 remote-acquisition workflow、fault-penetration contract test 與本版本紀錄；已取消的每十分鐘驗收 automation 維持不存在，正式每日 06:00 task 未修改。
+- Validation / 驗證：The new regression was observed RED against the missing `fi` and GREEN after the one-line repair. The complete 563-test source suite passes. Capsule rebuild/verification, two unchanged-fingerprint final-state audit cycles, clean-export verification, remote CI, and source binding remain release gates. / 新回歸測試已在缺少 `fi` 時實證 RED，加入單行修復後轉為 GREEN；完整 563 項 source suite 通過。Capsule 重建／驗證、兩輪相同 fingerprint 的 final-state audit、clean-export 驗證、遠端 CI 與 source binding 仍為發行 gate。
+- Result / 結果：The repository candidate removes the confirmed shell syntax failure that prevented valid run-scoped results from reaching `run-logs`. This is not LIVE_PASS; the failed occurrence is pinned to its old SHA, and a fresh occurrence must still prove source-scan persistence and the complete downstream Reader and visible-media path. / repository candidate 已移除阻止有效 run-scoped 結果寫入 `run-logs` 的確認 shell 語法錯誤。目前不是 LIVE_PASS；失敗 occurrence 仍綁定舊 SHA，必須由全新 occurrence 證明 source-scan 持久化及完整下游 Reader／可見媒體路徑。
+- Rollback / 回復：Revert the rc.52 source and generated capsule together; rc.51 remains the clean rollback baseline but retains the missing terminal `fi`. / 一併回復 rc.52 source 與 generated capsule；rc.51 為乾淨回復基線，但保留缺少終端 `fi` 的錯誤。
 
 ## v0.6.0-rc.51 — Immutable source-row identity / 不可變來源列身分
 
