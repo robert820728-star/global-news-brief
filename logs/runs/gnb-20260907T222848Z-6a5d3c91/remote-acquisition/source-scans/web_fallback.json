@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0.0",
+  "source_id": "web_fallback",
+  "collector": "verified-web-search-fallback",
+  "generated_at": "2026-09-07T22:20:00Z",
+  "window_start": "2026-09-06T22:28:48Z",
+  "window_end": "2026-09-07T22:28:48Z",
+  "coverage_complete": false,
+  "coverage_status": "degraded_partial",
+  "coverage_reason": "configured primary aggregator unavailable; bounded verified host web fallback materialized",
+  "missing_segments": [
+    "configured_primary_aggregator_unavailable"
+  ],
+  "missing_date_variants": [],
+  "pages": [
+    {
+      "request_url": "https://www.reuters.com/business/environment/nepal-marks-national-mourning-day-after-deadly-flood-2026-09-07/",
+      "fetched_at": "2026-09-07T22:20:00Z",
+      "http_status": 200,
+      "snapshot_path": "web-fallback/batch-0001-snapshot.json",
+      "sha256": "fca9abb2727efe6e1d4f13b97a7b7c528dce50cf36124e497bec84c96499bccd",
+      "next_url": null,
+      "extracted_items": [
+        {
+          "result_id": "glb-fallback-20260907-001",
+          "search_rank": 1,
+          "url": "https://www.reuters.com/business/environment/nepal-marks-national-mourning-day-after-deadly-flood-2026-09-07/",
+          "title": "Nepal rescuers focus on 900 hydropower workers, 121 could be trapped in tunnels, officials say",
+          "summary": "Reuters reports more than 1,380 dead and more than 5,500 missing after catastrophic Nepal-Tibet border floods, with rescuers focusing on hydropower workers and possible tunnel survivors.",
+          "published_at": "2026-09-07T06:16:00Z",
+          "url_evidence": "Reuters canonical article URL opened and independently read during this occurrence.",
+          "published_evidence": "Reuters article metadata states September 7, 2026 6:16 AM UTC.",
+          "discovery_priority_reason": "Very high realized casualties, large missing population, active rescue window and cross-border disaster significance.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "glb-fallback-20260907-002",
+          "search_rank": 2,
+          "url": "https://www.reuters.com/world/middle-east/iran-says-announce-new-restricted-zone-gulf-coming-days-2026-09-07/",
+          "title": "Iran warns US energy assets in Gulf are vulnerable after latest clashes",
+          "summary": "Reuters reports renewed US-Iran strikes and retaliation threats while Strait of Hormuz commodity-vessel traffic fell to its lowest level since May, sustaining global energy and shipping risk.",
+          "published_at": "2026-09-07T06:57:00Z",
+          "url_evidence": "Reuters canonical article URL opened and independently read during this occurrence.",
+          "published_evidence": "Reuters article metadata states September 7, 2026 6:57 AM UTC.",
+          "discovery_priority_reason": "Ongoing military confrontation at a globally important energy chokepoint with realized shipping disruption and oil-market effects.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "glb-fallback-20260907-003",
+          "search_rank": 3,
+          "url": "https://www.reuters.com/business/environment/eight-indonesian-airports-remain-shut-due-to-volcanic-ash-anak-krakatau-2026-09-07/",
+          "title": "Seven Indonesian airports remain shut due to volcanic ash from Anak Krakatau",
+          "summary": "Reuters reports seven airports still closed, 2,961 flights delayed, diverted or cancelled and about 341,000 travellers affected by volcanic ash, with further-eruption risk ongoing.",
+          "published_at": "2026-09-07T01:11:00Z",
+          "url_evidence": "Reuters canonical article URL opened and independently read during this occurrence.",
+          "published_evidence": "Reuters article metadata states September 7, 2026 1:11 AM UTC.",
+          "discovery_priority_reason": "Large realized aviation disruption across a major metropolitan transport system plus continuing volcanic hazard.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "glb-fallback-20260907-004",
+          "search_rank": 4,
+          "url": "https://www.reuters.com/world/europe/far-right-afd-courts-conservative-support-after-historic-german-state-election-2026-09-07/",
+          "title": "Far-right win leaves Germany's Merz shaken as AfD plots path to power",
+          "summary": "Reuters reports the AfD won nearly 44% in Saxony-Anhalt and 39 of 83 seats, a historic state-election result that intensified pressure on Germany's mainstream-party firewall.",
+          "published_at": "2026-09-07T09:44:00Z",
+          "url_evidence": "Reuters canonical article URL opened and independently read during this occurrence.",
+          "published_evidence": "Reuters article metadata states September 7, 2026 9:44 AM UTC.",
+          "discovery_priority_reason": "Material realized electoral change with structural significance for Germany's coalition and party-system constraints.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        }
+      ]
+    }
+  ],
+  "terminal_proof": {
+    "type": "source_exhausted",
+    "page_index": 1,
+    "terminal_marker": "global primary discovery unavailable; bounded verified global fallback materialized"
+  }
+}

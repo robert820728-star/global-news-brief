@@ -12402,5 +12402,61 @@
     "scan_window_start": "2026-09-06T22:28:48Z",
     "scan_window_end": "2026-09-07T22:28:48Z",
     "scan_evidence_path": "source-scans/chinanews.json"
+  },
+  {
+    "source_id": "web_fallback",
+    "scan_status": "completed",
+    "coverage_complete": false,
+    "coverage_status": "degraded_partial",
+    "coverage_reason": "configured primary aggregator unavailable; bounded verified host web fallback materialized",
+    "missing_segments": [
+      "configured_primary_aggregator_unavailable"
+    ],
+    "missing_date_variants": [],
+    "within_window_count": 4,
+    "ranked_count": 4,
+    "ranked_items": [
+      {
+        "url": "https://www.reuters.com/business/environment/nepal-marks-national-mourning-day-after-deadly-flood-2026-09-07/",
+        "title": "Nepal rescuers focus on 900 hydropower workers, 121 could be trapped in tunnels, officials say",
+        "published_at": "2026-09-07T06:16:00Z",
+        "discovery_priority_score": 999,
+        "discovery_priority_reason": "Very high realized casualties, large missing population, active rescue window and cross-border disaster significance."
+      },
+      {
+        "url": "https://www.reuters.com/world/middle-east/iran-says-announce-new-restricted-zone-gulf-coming-days-2026-09-07/",
+        "title": "Iran warns US energy assets in Gulf are vulnerable after latest clashes",
+        "published_at": "2026-09-07T06:57:00Z",
+        "discovery_priority_score": 998,
+        "discovery_priority_reason": "Ongoing military confrontation at a globally important energy chokepoint with realized shipping disruption and oil-market effects."
+      },
+      {
+        "url": "https://www.reuters.com/business/environment/eight-indonesian-airports-remain-shut-due-to-volcanic-ash-anak-krakatau-2026-09-07/",
+        "title": "Seven Indonesian airports remain shut due to volcanic ash from Anak Krakatau",
+        "published_at": "2026-09-07T01:11:00Z",
+        "discovery_priority_score": 997,
+        "discovery_priority_reason": "Large realized aviation disruption across a major metropolitan transport system plus continuing volcanic hazard."
+      },
+      {
+        "url": "https://www.reuters.com/world/europe/far-right-afd-courts-conservative-support-after-historic-german-state-election-2026-09-07/",
+        "title": "Far-right win leaves Germany's Merz shaken as AfD plots path to power",
+        "published_at": "2026-09-07T09:44:00Z",
+        "discovery_priority_score": 996,
+        "discovery_priority_reason": "Material realized electoral change with structural significance for Germany's coalition and party-system constraints."
+      }
+    ],
+    "selected_for_pool_count": 4,
+    "selected_item_urls": [
+      "https://www.reuters.com/business/environment/nepal-marks-national-mourning-day-after-deadly-flood-2026-09-07/",
+      "https://www.reuters.com/world/middle-east/iran-says-announce-new-restricted-zone-gulf-coming-days-2026-09-07/",
+      "https://www.reuters.com/business/environment/eight-indonesian-airports-remain-shut-due-to-volcanic-ash-anak-krakatau-2026-09-07/",
+      "https://www.reuters.com/world/europe/far-right-afd-courts-conservative-support-after-historic-german-state-election-2026-09-07/"
+    ],
+    "discovery_ranking_completed": true,
+    "discovery_ranking_method": "bounded_host_search_rank_v1",
+    "failure_reason": null,
+    "scan_window_start": "2026-09-06T22:28:48Z",
+    "scan_window_end": "2026-09-07T22:28:48Z",
+    "scan_evidence_path": "source-scans/web_fallback.json"
   }
 ]

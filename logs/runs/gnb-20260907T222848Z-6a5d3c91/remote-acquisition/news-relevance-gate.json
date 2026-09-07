@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
-  "input_article_row_count": 824,
+  "input_article_row_count": 828,
   "content_hydration_count": 824,
-  "lightweight_semantic_review_count": 0,
+  "lightweight_semantic_review_count": 4,
   "decisions": [
     {
       "row_id": "row-2ea506e7e11fca4c7de2f06a",
@@ -8464,6 +8464,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-4b4d8ed0c0ea9a433d596745",
+      "candidate_id": "2c821482949784c311a7",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/europe/far-right-afd-courts-conservative-support-after-historic-german-state-election-2026-09-07",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-aa4d297d96aee83b7b7b727f",
       "candidate_id": "257e5e04a2e007356b86",
       "source_id": "chinanews",
@@ -9025,6 +9036,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-1ecd2bd9c3cf9518f7720034",
+      "candidate_id": "5c48831dfe264aa57bda",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/middle-east/iran-says-announce-new-restricted-zone-gulf-coming-days-2026-09-07",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-23586571dcf0731003abbcf9",
       "candidate_id": "a2553fd8cfcc8731d146",
       "source_id": "cna",
@@ -9065,6 +9087,28 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-f92becda6b55aeb7840a2139",
+      "candidate_id": "532b79332223e37a3b30",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/business/environment/nepal-marks-national-mourning-day-after-deadly-flood-2026-09-07",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-72457e752a21e575ed74d3f9",
+      "candidate_id": "ee4b5a8ccde70e16e875",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/business/environment/eight-indonesian-airports-remain-shut-due-to-volcanic-ash-anak-krakatau-2026-09-07",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     }
