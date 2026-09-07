@@ -1,26 +1,17 @@
 {
   "schema_version": "1.0",
   "source_row_count": 528,
-  "seen_row_count": 520,
-  "terminal_row_count": 520,
-  "missing_row_count": 8,
+  "seen_row_count": 528,
+  "terminal_row_count": 528,
+  "missing_row_count": 0,
   "unresolved_row_count": 0,
-  "missing_row_ids": [
-    "row-2b2e1af6df99b7a0cf92dab8",
-    "row-30ae407f17a02974d99ece8d",
-    "row-3226665353882f8fc1b389b4",
-    "row-3f4e2855fa9912e8d67fcad2",
-    "row-5c2db3a4ed2364cee2bf1e7b",
-    "row-a791091c78d1ae75feb9091b",
-    "row-bef58e2bd4c5418494f6e981",
-    "row-fb8f0e4d6c60a3dbbcd6d4ed"
-  ],
+  "missing_row_ids": [],
   "unresolved_row_ids": [],
   "status_counts": {
-    "content_ready": 515,
-    "unresolved_exhausted": 0,
     "unresolved": 0,
-    "outside_window": 5
+    "content_ready": 523,
+    "outside_window": 5,
+    "unresolved_exhausted": 0
   },
-  "complete": false
+  "complete": true
 }
