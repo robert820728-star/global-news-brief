@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260907T222848Z-6a5d3c91",
+  "main_sha": "6476a96501cedb85ab24ac3bf8c0074c81def89f",
+  "window": {
+    "start": "2026-09-06T22:28:48+00:00",
+    "end": "2026-09-07T22:28:48+00:00",
+    "timezone": "Asia/Taipei"
+  },
+  "batch_sequence": 9,
+  "input_batch_sha256": "2ea03e666fc9e63f8680b6f640ba7d852a8ef84c7f0c1e7817e0b129d0251719",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-31f32fb6532ed99a7b0843fa",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-nepal-gilong-landslide-search-0907",
+      "reason": "吉隆災區9月7日仍在持續救援，報導具體呈現一線供餐保障與軍地志願者協作，屬同一跨境災害救援的當期後勤進展。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "併入同一吉隆泥石流搜救事件，僅將當期後勤運作視為新增證據。",
+        "evidence_refs": [
+          "row-31f32fb6532ed99a7b0843fa"
+        ]
+      }
+    },
+    {
+      "row_id": "row-322e6a317762a7235b072acd",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-china-envoy-shanghai-jiangsu-tour-0907",
+      "reason": "20國30名駐華使節及外交官9月7日在上海啟動滬蘇城市治理參訪活動。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體當日國際交流活動啟動。",
+        "evidence_refs": [
+          "row-322e6a317762a7235b072acd"
+        ]
+      }
+    },
+    {
+      "row_id": "row-32661c198217339e72b94aae",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "模型可見正文僅有賽事收官標題與導流內容，缺乏足夠可核對的本期新增賽果；同類完整報導顯示賽事已於較早日期收官。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "不以標題補造事件細節。",
+        "evidence_refs": [
+          "row-32661c198217339e72b94aae"
+        ]
+      }
+    },
+    {
+      "row_id": "row-32850d0f3856f5d1cb175005",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-hunan-summer-climate-stats-0907",
+      "reason": "湖南省氣候中心最新數據顯示今夏平均高溫日15.9天、較常年少6.6天，為近十年最少。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期官方季節氣候統計發布。",
+        "evidence_refs": [
+          "row-32850d0f3856f5d1cb175005"
+        ]
+      }
+    },
+    {
+      "row_id": "row-33132e9411e74fec18b0f500",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-changhua-thai-fraud-mule-arrest-0907",
+      "reason": "彰化警方9月7日公布泰籍觀光客入境隔日涉嫌充當詐騙車手遭埋伏逮捕並移送偵辦。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體當期刑事查緝事件。",
+        "evidence_refs": [
+          "row-33132e9411e74fec18b0f500"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3314a13cb28fdc03f99d44b6",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-pinglu-canal-nautical-chart-0907",
+      "reason": "同一平陸運河出海口海圖9月7日正式發行並完成127座航標的事件，提供更完整技術與航安資訊。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "與既有平陸運河航海安全里程碑合併。",
+        "evidence_refs": [
+          "row-3314a13cb28fdc03f99d44b6"
+        ]
+      }
+    },
+    {
+      "row_id": "row-335d6ed28d056059995663b0",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-guangzhou-seafarer-emergency-rescue-0907",
+      "reason": "廣州海事9月7日啟動船員就醫專線，跨部門救援昏迷水手並成功送醫，生命體徵穩定。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體當日海上緊急救援事件。",
+        "evidence_refs": [
+          "row-335d6ed28d056059995663b0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-33877536f4e11caec1702344",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-nepal-gilong-landslide-search-0907",
+      "reason": "中國9月7日確認首次邀請8家外媒進入吉隆土石流核心災區採訪，並公布截至5日晚43死、519失聯等資訊。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "併入同一跨境災害，作為當期資訊開放與傷亡統計證據。",
+        "evidence_refs": [
+          "row-33877536f4e11caec1702344"
+        ]
+      }
+    },
+    {
+      "row_id": "row-33ace918a750cc736b57c4b4",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "模型可見內容僅為重慶軌道車站納涼圖片標題與導流，沒有足夠可核對的本期氣象或公共政策增量。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "圖片型生活花絮，不建立新聞事件。",
+        "evidence_refs": [
+          "row-33ace918a750cc736b57c4b4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-33cf64fe7f70164cb7fb2d96",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "大思政課活動明確於9月6日晚舉行，早於本地統計窗9月7日06:28:48開始；9月7日文章主要回顧活動內容。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "窗外活動的後續敘事。",
+        "evidence_refs": [
+          "row-33cf64fe7f70164cb7fb2d96"
+        ]
+      }
+    },
+    {
+      "row_id": "row-341f5da782428ad44a793233",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-heilongjiang-ethnic-unity-month-launch-0907",
+      "reason": "黑龍江省暨大慶市民族團結進步宣傳月9月7日在杜爾伯特啟動，並安排普法與後續全省系列活動。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體當日公共宣傳與法治活動啟動。",
+        "evidence_refs": [
+          "row-341f5da782428ad44a793233"
+        ]
+      }
+    },
+    {
+      "row_id": "row-34316e2021e8f49b22376ea6",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "文章所述中國科大活動於9月6日晚完成，早於本輪本地時間窗，9月7日僅再敘述現場內容。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "窗外活動回顧。",
+        "evidence_refs": [
+          "row-34316e2021e8f49b22376ea6"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3433c205850be73a24878d82",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "GBIC全球閩商合作對接會明確於9月6日舉行，早於本地統計窗，9月7日刊文未揭示新的協議或政策增量。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "窗外活動後續報導。",
+        "evidence_refs": [
+          "row-3433c205850be73a24878d82"
+        ]
+      }
+    },
+    {
+      "row_id": "row-34f80dfe4e224a8686552d4d",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "北京昌平騎行活動於9月6日舉行並完成，早於本地統計窗，9月7日僅發布賽事回顧。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "窗外已結束活動。",
+        "evidence_refs": [
+          "row-34f80dfe4e224a8686552d4d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-35146ec4bfab1e2852adc985",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "文章為台灣青年在福建工作的長篇人物特寫，主要新增事項發生於7月，統計窗內沒有新的政策、任職或公共事件。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "人物／文化特寫，不以刊登日製造事件。",
+        "evidence_refs": [
+          "row-35146ec4bfab1e2852adc985"
+        ]
+      }
+    },
+    {
+      "row_id": "row-35351778d6bd3b92e5318c42",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-direct-military-officer-recruitment-2026-27",
+      "reason": "中央軍委政治工作部近日部署2026—2027年度直接選拔招錄軍警官，並公布9月18至30日報名與適用畢業生範圍。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體全國性軍事人才招錄政策公告；尚未開始的報名只按已公告階段處理。",
+        "evidence_refs": [
+          "row-35351778d6bd3b92e5318c42"
+        ]
+      }
+    },
+    {
+      "row_id": "row-357cd0fc7ed1ff23ad5ecb32",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-xinjiang-muztagh-glacier-avalanche-0907",
+      "reason": "新疆慕士塔格峰二號冰川近日發生大規模雪崩且未傳傷亡，9月7日報導並引述當地高危區域管制資訊。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體自然災害／冰川事件；精確發生時間需後續驗證。",
+        "evidence_refs": [
+          "row-357cd0fc7ed1ff23ad5ecb32"
+        ]
+      }
+    },
+    {
+      "row_id": "row-358abfc6db3468903d324c2d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-japan-kanto-heavy-rain-0907",
+      "reason": "日本關東、東北9月7日豪雨升級，伊豆群島發布最高等級警報，福島地下道淹水造成1人死亡並衝擊交通。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "併入同一日本豪雨事件，補充死亡與累積雨量。",
+        "evidence_refs": [
+          "row-358abfc6db3468903d324c2d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-359141d717c80300ad387cf3",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-tw-local-chief-china-trip-final-conviction-0907",
+      "reason": "最高法院日前駁回上訴，使新北青山里長等赴中接受落地招待案的有罪判決確定，姚韋華判2年6月。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體司法終局程序進展，涉及選舉與反滲透法。",
+        "evidence_refs": [
+          "row-359141d717c80300ad387cf3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-35950fb19e69d9e014b45f49",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-tw-commercial-oil-supply-gap-0907",
+      "reason": "中聯油品停工後全國每月約4200公噸營業用油出現供應缺口，台中市府9月7日說明已協調業者增產與媒合供應。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期食品供應鏈與政府調度資訊更新。",
+        "evidence_refs": [
+          "row-35950fb19e69d9e014b45f49"
+        ]
+      }
+    }
+  ]
+}
