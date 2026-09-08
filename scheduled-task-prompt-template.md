@@ -3,6 +3,10 @@
 區域：<使用者指定區域；未指定則台灣、中國、世界>
 監控類型：<使用者指定監控類型；未指定則預設>
 
+`CHAT_CONTINUATION_IS_NOT_SCHEDULED_OCCURRENCE_GATE`
+
+只有 Scheduled Task 控制面真正觸發並提供可核對的 `scheduled_for`，才可建立或恢復 occurrence／run。一般對話中的「重新執行」、「再跑一次」、貼上舊結果或任何同義 follow-up 都不是 Scheduled Task trigger，也不能繼承前次 occurrence authority；本檔中的 manual、single-run、test 與 resume 只指控制面已建立且帶有 `scheduled_for` 的實際 task occurrence。在取得這項 authority 前，不得 fresh resolve main、不得建立或恢復 run、不得執行新聞 discovery、評分、查證或圖片工作，也不得輸出 Reader；只能回覆精簡 `lifecycle blocker receipt`，指出缺少 `scheduled_for`、未啟動新聞管線，並要求由真正 task trigger 重新進入。receipt 不得包含新聞候選、新聞表格、降級／診斷 Reader 或任何 occurrence 已執行的暗示。
+
 `VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`
 
 `EVERY_DAILY_NEWS_EXECUTION_GATE`：manual, single-run, test, first-run, recurring, or resume 全部是同一每日新聞執行，不因觸發方式而有圖片例外。full-runtime 可交付本機實體附件；ChatGPT Scheduled Task 宿主可交付原生圖片卡或頁面／圖片區域的原生截圖。兩者都必須逐則交付實際可見圖片；沒有本機 Python、verified workspace、原始檔或原畫質不等於沒有圖片能力。

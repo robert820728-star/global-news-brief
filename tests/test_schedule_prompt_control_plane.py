@@ -202,6 +202,36 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
         self.assertNotIn("本檔只保留給 mobile-native 的流程外能力診斷", mobile)
         self.assertIn("直接截圖", mobile)
 
+    def test_chat_continuation_is_not_a_scheduled_occurrence(self):
+        documents = {
+            name: (ROOT / name).read_text(encoding="utf-8")
+            for name in (
+                "INSTALL.md",
+                "README.md",
+                "scheduled-task-prompt-template.md",
+                "daily-schedule-prompt.md",
+                "mobile-chatgpt-start-prompt.md",
+                "mobile-chatgpt-daily-prompt.md",
+                ".agents/skills/daily-news-brief/SKILL.md",
+            )
+        }
+
+        for name, document in documents.items():
+            with self.subTest(document=name):
+                self.assertIn(
+                    "CHAT_CONTINUATION_IS_NOT_SCHEDULED_OCCURRENCE_GATE",
+                    document,
+                )
+                self.assertIn("scheduled_for", document)
+                self.assertIn("重新執行", document)
+                self.assertIn("lifecycle blocker receipt", document)
+
+        prompt = documents["scheduled-task-prompt-template.md"]
+        self.assertIn("不得 fresh resolve main", prompt)
+        self.assertIn("不得建立或恢復 run", prompt)
+        self.assertIn("不得執行新聞 discovery", prompt)
+        self.assertIn("不得輸出 Reader", prompt)
+
 
 if __name__ == "__main__":
     unittest.main()

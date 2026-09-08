@@ -5,6 +5,8 @@ description: Orchestrate the complete daily news brief with verified runtime-cap
 
 # 每日新聞主控
 
+`CHAT_CONTINUATION_IS_NOT_SCHEDULED_OCCURRENCE_GATE`：只有 Scheduled Task 控制面真正觸發並提供可核對的 `scheduled_for`，才可建立或恢復 occurrence／run。一般對話中的「重新執行」、「再跑一次」或貼上舊結果不是 task trigger；manual、single-run、test 與 resume 只指帶有 `scheduled_for` 的實際 task occurrence。缺少 authority 時不得 fresh resolve main、不得建立或恢復 run、不得執行新聞 discovery，也不得輸出 Reader；只能回覆精簡 `lifecycle blocker receipt`。
+
 `EVERY_DAILY_NEWS_EXECUTION_GATE`：本技能的 manual, single-run, test, first-run, recurring, or resume 使用相同新聞與逐則可見圖片門檻。full-runtime 以本機附件交付；無本機 Python 的 ChatGPT Scheduled Task 在同一宿主通過原生圖片卡／頁面圖片區域截圖 smoke 後，依 `mobile-chatgpt-daily-prompt.md` 完整執行。不得把 URL、Markdown 熱連結、圖說或破圖框當成圖片，也不要求原始檔或原畫質。full-runtime 在 manifest 建立後以 manifest 作事件交換層；mobile-native 以同一 run 的 candidate audit 與 ledger bindings 作 publication authority。
 
 ## Execution-mode boundary

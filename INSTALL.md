@@ -185,6 +185,8 @@ python scripts/verify_scheduled_task_install.py --template scheduled-task-prompt
 
 `VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`
 
+`CHAT_CONTINUATION_IS_NOT_SCHEDULED_OCCURRENCE_GATE`：只有 Scheduled Task 控制面真正觸發並提供可核對的 `scheduled_for`，才可建立或恢復 occurrence／run。一般對話中的「重新執行」、「再跑一次」、貼上舊結果或任何同義 follow-up 都不是 Scheduled Task trigger，也不能繼承前次 occurrence authority；本檔中的 manual、single-run、test 與 resume 只指控制面已建立且帶有 `scheduled_for` 的實際 task occurrence。在取得這項 authority 前，不得 fresh resolve main、不得建立或恢復 run、不得執行新聞 discovery、評分、查證或圖片工作，也不得輸出 Reader；只能回覆精簡 `lifecycle blocker receipt`，指出缺少 `scheduled_for`、未啟動新聞管線，並要求由真正 task trigger 重新進入。receipt 不得包含新聞候選、新聞表格、降級／診斷 Reader 或任何 occurrence 已執行的暗示。
+
 `EVERY_DAILY_NEWS_EXECUTION_GATE`：本產品所有每日新聞執行——manual, single-run, test, first-run, recurring, or resume——都要求每則已確認存在合格圖片的入選事件完成實際可見圖片交付。full-runtime 可交付本機實體附件；ChatGPT Scheduled Task 宿主可交付原生圖片卡或頁面／圖片區域的原生截圖。排程型態不是圖片要求的例外，但也不得把「沒有本機 Python／verified workspace」誤判成「沒有圖片能力」。任一模式都可直接截圖，不要求原始檔或原畫質；外部 URL、Markdown 熱連結、路徑字串、圖說與破圖框仍不算交付。
 
 `INDEPENDENT_VISIBLE_MEDIA_CAPABILITY_PROBE`：`page_open`、`native_image_search`、`webpage_region_screenshot`、`source_media_byte_fetch` 與 `local_attachment_media_handoff` 必須分別以實際呼叫驗證；任一項成功不得推導另一項可用。能開來源頁不代表能截取 HTML 圖片區域；有 Python／可寫檔案系統也不代表能取得外部媒體 bytes 或把本機檔交付成可見附件。安裝 smoke 只需證明其中一條端到端可見媒體路徑，但 occurrence 必須依本輪實測能力選路。
@@ -448,6 +450,8 @@ mobile-native 沒有 checkpoint 或 manifest。查證不足時依 `VERIFICATION_
 `VISUAL_DELIVERY_ONLY_RECOVERY`：既有 run 若已完成新聞階段而缺少圖片，只讀既有 candidate audit、verification、map decisions、image evidence 與來源頁；full-runtime 只補直接下載／截圖、物化與本機附件，Scheduled Task 宿主只補原生圖片卡或頁面圖片區域直接截圖。兩種模式都不得重跑 discovery、scoring、verification、建立 new run 或變更 event IDs。
 
 `QUALIFIED_IMAGE_DELIVERY_INDEPENDENT_OF_CLAIM_CRITICAL`：所有 C 級以上事件只要已確認存在合格來源圖片，交付失敗就必須停在上述視覺恢復；`claim_critical=false` 不得把 delivery failure 改寫成 omitted 或完成文字 Reader。只有完整 source exhaustion 證明不存在合格圖片時，非關鍵圖片才可 omitted。
+
+`DEGRADED_READER_SHAPE_FORBIDDEN`：只要 `visible_delivery_complete=false`，最終使用者回覆只能是精簡的 blocker receipt，列出同一 run、first incomplete stage、未交付事件與合法恢復點；不得輸出任何以「每日新聞讀者版」為標題或包含「今日總覽」／「逐條詳報」／新聞總覽表格的降級、純文字、診斷或預覽 Reader。口頭標示「非 canonical」不能把半成品 Reader 變成合法交付。
 
 `FOURTEEN_DAY_AUDIT_MERGE_UNAVAILABLE` 同樣不是新聞 recovery target。保留既有 `logs/latest-candidate-audit.json`，保存本輪 run-scoped candidate audit，將 durable merge 交給日後具備適合 runtime 的維護步驟；當輪仍從 manifest／驗證繼續。
 

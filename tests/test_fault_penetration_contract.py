@@ -139,6 +139,15 @@ class FaultPenetrationContractTests(unittest.TestCase):
             self.assertIn("media anchor", document, path)
             self.assertIn("caption", document, path)
 
+    def test_incomplete_visible_delivery_cannot_emit_degraded_reader_shape(self):
+        for path in ("INSTALL.md", "mobile-chatgpt-daily-prompt.md"):
+            document = read(path)
+            self.assertIn("DEGRADED_READER_SHAPE_FORBIDDEN", document, path)
+            self.assertIn("blocker receipt", document, path)
+            self.assertIn("每日新聞讀者版", document, path)
+            self.assertIn("今日總覽", document, path)
+            self.assertIn("逐條詳報", document, path)
+
     def test_old_audit_schema_is_preserved_without_blocking_today_reader(self):
         mobile = read("mobile-chatgpt-daily-prompt.md")
         self.assertIn("CURRENT_SCHEMA_ONLY_DURABLE_AUDIT", mobile)
