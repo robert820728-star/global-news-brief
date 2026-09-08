@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.1",
+  "rows": [
+    {
+      "row_id": "row-4b4d8ed0c0ea9a433d596745",
+      "candidate_id": "2c821482949784c311a7",
+      "canonical_url": "https://www.reuters.com/world/europe/far-right-afd-courts-conservative-support-after-historic-german-state-election-2026-09-07",
+      "requested_url": "https://www.reuters.com/world/europe/far-right-afd-courts-conservative-support-after-historic-german-state-election-2026-09-07",
+      "source_id": "web_fallback",
+      "status": "unresolved_exhausted",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "error": "configured same-source and final host recovery chain exhausted",
+      "recovery_evidence": [
+        "same-run first-pass hydration returned HTTP 401 Forbidden for the canonical Reuters article; the occurrence-level web fallback already independently verified its URL and publication time"
+      ]
+    },
+    {
+      "row_id": "row-1ecd2bd9c3cf9518f7720034",
+      "candidate_id": "5c48831dfe264aa57bda",
+      "canonical_url": "https://www.reuters.com/world/middle-east/iran-says-announce-new-restricted-zone-gulf-coming-days-2026-09-07",
+      "requested_url": "https://www.reuters.com/world/middle-east/iran-says-announce-new-restricted-zone-gulf-coming-days-2026-09-07",
+      "source_id": "web_fallback",
+      "status": "unresolved_exhausted",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "error": "configured same-source and final host recovery chain exhausted",
+      "recovery_evidence": [
+        "same-run first-pass hydration returned HTTP 401 Forbidden for the canonical Reuters article; the occurrence-level web fallback already independently verified its URL and publication time"
+      ]
+    },
+    {
+      "row_id": "row-f92becda6b55aeb7840a2139",
+      "candidate_id": "532b79332223e37a3b30",
+      "canonical_url": "https://www.reuters.com/business/environment/nepal-marks-national-mourning-day-after-deadly-flood-2026-09-07",
+      "requested_url": "https://www.reuters.com/business/environment/nepal-marks-national-mourning-day-after-deadly-flood-2026-09-07",
+      "source_id": "web_fallback",
+      "status": "unresolved_exhausted",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "error": "configured same-source and final host recovery chain exhausted",
+      "recovery_evidence": [
+        "same-run first-pass hydration returned HTTP 401 Forbidden for the canonical Reuters article; the occurrence-level web fallback already independently verified its URL and publication time"
+      ]
+    },
+    {
+      "row_id": "row-72457e752a21e575ed74d3f9",
+      "candidate_id": "ee4b5a8ccde70e16e875",
+      "canonical_url": "https://www.reuters.com/business/environment/eight-indonesian-airports-remain-shut-due-to-volcanic-ash-anak-krakatau-2026-09-07",
+      "requested_url": "https://www.reuters.com/business/environment/eight-indonesian-airports-remain-shut-due-to-volcanic-ash-anak-krakatau-2026-09-07",
+      "source_id": "web_fallback",
+      "status": "unresolved_exhausted",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "error": "configured same-source and final host recovery chain exhausted",
+      "recovery_evidence": [
+        "same-run first-pass hydration returned HTTP 401 Forbidden for the canonical Reuters article; the occurrence-level web fallback already independently verified its URL and publication time"
+      ]
+    }
+  ]
+}
