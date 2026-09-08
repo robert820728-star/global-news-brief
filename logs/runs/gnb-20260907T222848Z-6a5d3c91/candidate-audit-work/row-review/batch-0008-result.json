@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260907T222848Z-6a5d3c91",
+  "main_sha": "6476a96501cedb85ab24ac3bf8c0074c81def89f",
+  "window": {
+    "start": "2026-09-06T22:28:48+00:00",
+    "end": "2026-09-07T22:28:48+00:00",
+    "timezone": "Asia/Taipei"
+  },
+  "batch_sequence": 8,
+  "input_batch_sha256": "4a72d40b62284595558bfd7bbe3a7621d60fb81729e9f371a1b5a9ebb011734c",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-2caad3e838b47cc70b6848f0",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-ruijin-yanan-direct-hsr-0907",
+      "reason": "9月7日起江西瑞金與陝西延安直達高鐵正式雙向對開，全程約11小時並串聯贛鄂陝。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期跨省鐵路服務正式啟用。",
+        "evidence_refs": [
+          "row-2caad3e838b47cc70b6848f0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2cb46dc278b71f81875f0eaa",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-nepal-gilong-landslide-search-0907",
+      "reason": "尼泊爾跨境泥石流災害9月7日仍持續搜救，死亡至少1380人、失蹤逾5500人，近日並救出4名生還者。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "重大災害的當期搜救與傷亡更新，數字需獨立查證。",
+        "evidence_refs": [
+          "row-2cb46dc278b71f81875f0eaa"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2cc40a51ce72567a647010fc",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-us-china-ai-dialogue-contact-0907",
+      "reason": "中國外交部9月7日回應外界所稱中美AI對話安排，僅確認雙方就AI問題保持溝通。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期外交表態成立，但不能把尚未證實的未來對話當成既定會議。",
+        "evidence_refs": [
+          "row-2cc40a51ce72567a647010fc"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2cdde475817915f73f155e56",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "內容為對習近平此前5天4夜中亞中東行程的宣傳性總結與評論，沒有統計窗內新的外交行動。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "回顧／評論，不另建事件。",
+        "evidence_refs": [
+          "row-2cdde475817915f73f155e56"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2d920343e07388bcd16b0bd2",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "中國新聞網『關於我們』固定介紹頁，正文時間為2025年且來源已判定outside_window，非新聞事件。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "網站靜態頁。",
+        "evidence_refs": [
+          "row-2d920343e07388bcd16b0bd2"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2de7bcc34996665113a910db",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "亞太媒體高端論壇實際於9月2日至5日舉行並已結束，早於本地統計窗；9月7日文章為總結性報導。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "窗外活動回顧。",
+        "evidence_refs": [
+          "row-2de7bcc34996665113a910db"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2df687691ab114fa57130140",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-kaohsiung-mayor-culture-budget-dispute-0907",
+      "reason": "高雄市長選戰9月7日就文化部預算刪凍金額與影響爆發公開攻防，雙方提出不同數字與政策主張。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期選舉政策爭議，需在驗證中核對預算基數與刪凍定義。",
+        "evidence_refs": [
+          "row-2df687691ab114fa57130140"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2e0f2b9c96bc6f4f06726043",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-penghu-drone-medical-logistics-trial-0907",
+      "reason": "澎湖縣府與澎科大9月7日完成馬公至吉貝的無人機醫療物資跨海運送試驗，飛行約15分鐘並規劃後續離島服務。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體醫療物流技術試驗；未來常態服務尚未實現。",
+        "evidence_refs": [
+          "row-2e0f2b9c96bc6f4f06726043"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2e1125d96a09e9f4954151ba",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-liqiang-qatar-pm-meeting-0907",
+      "reason": "中國國務院總理李強9月7日在北京會見卡塔爾首相兼外交大臣，討論能源、AI、金融與中東斡旋合作。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "正式高層外交會晤。",
+        "evidence_refs": [
+          "row-2e1125d96a09e9f4954151ba"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2ea506e7e11fca4c7de2f06a",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "文章正文發布於9月8日06:32台北時間，已超過本輪06:28:48統計窗終點，來源亦標記outside_window。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "明確窗外。",
+        "evidence_refs": [
+          "row-2ea506e7e11fca4c7de2f06a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2ec999eafc77b2aa351b08a5",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-foxconn-sustainability-targets-report-0907",
+      "reason": "鴻海2025永續報告於9月7日報導出爐，公布2025綠電使用成績及2030、2040、2050新階段目標。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "大型製造集團的當期永續績效與目標披露；未來目標不得當成已達成。",
+        "evidence_refs": [
+          "row-2ec999eafc77b2aa351b08a5"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2eff32f58b54c114a917be14",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "國際攀岩挑戰賽於9月6日晚已落幕，早於本地統計窗開始，9月7日文章僅賽果回顧。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "窗外已結束賽事。",
+        "evidence_refs": [
+          "row-2eff32f58b54c114a917be14"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2f220ffef0dd1a57fe06c762",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-newtaipei-final-council-session-donation-0907",
+      "reason": "新北市議員9月7日進行侯友宜任內最後一次市政總質詢，其中蔡淑君宣布將百萬元競總活動經費捐助教育。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體地方政治與公益事件，公共價值留待評分。",
+        "evidence_refs": [
+          "row-2f220ffef0dd1a57fe06c762"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2f243b7ad9e0bb931d1e90b9",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "內容為新疆地理、歷史與發展定位的系列專題敘事，未提供統計窗內可獨立識別的新政策或事件。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "背景特寫，不另建本期事件。",
+        "evidence_refs": [
+          "row-2f243b7ad9e0bb931d1e90b9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2fa478a61a2d8d966e625e06",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-hsinchu-baseball-parking-reopen-0907",
+      "reason": "新竹棒球場地下停車場9月7日起重新啟用試營運，平時300席汽車位並於9月底前免費。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "地方公共設施當期重啟。",
+        "evidence_refs": [
+          "row-2fa478a61a2d8d966e625e06"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2fdc8be61309076af633e71e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-nepal-gilong-landslide-search-0907",
+      "reason": "中國外交部9月7日表示吉隆泥石流核心災區道路初步打通，已安排外媒進入並稱搜救、善後與資訊發布將持續。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "併入同一尼泊爾—吉隆跨境災害的當期救援與資訊開放進展。",
+        "evidence_refs": [
+          "row-2fdc8be61309076af633e71e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2fdf1bbcaca0b864de72ee40",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-classic-industries-policy-0907",
+      "reason": "國新辦9月7日發布會進一步說明歷史經典產業政策的文旅、康養、教育與鄉村振興協同措施。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "同一國家級產業政策的官方實施說明。",
+        "evidence_refs": [
+          "row-2fdf1bbcaca0b864de72ee40"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3019bdd71be36e867d397e05",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-hainan-dutyfree-summer-sales-0907",
+      "reason": "海口海關9月7日公布2026暑期海南離島免稅購物金額38.2億元、年增4.1%等最新統計。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期官方消費與旅遊經濟統計發布。",
+        "evidence_refs": [
+          "row-3019bdd71be36e867d397e05"
+        ]
+      }
+    },
+    {
+      "row_id": "row-304da321bbe020bf1987c017",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-russia-northkorea-road-bridge-open-0907",
+      "reason": "俄羅斯與北韓9月7日啟用首座跨圖們江公路橋，俄方總理出席視訊典禮並稱將擴大雙邊往來。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "俄朝戰略關係與跨境基礎設施的重要里程碑。",
+        "evidence_refs": [
+          "row-304da321bbe020bf1987c017"
+        ]
+      }
+    },
+    {
+      "row_id": "row-30bfbd11603acd6225c6575d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-pudong-airport-connectivity-ranking-0907",
+      "reason": "ACI亞太及中東區9月7日發布2025航空連通性指數，上海浦東機場獲亞太第一及最佳進步獎。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期國際航空產業評比與樞紐數據發布。",
+        "evidence_refs": [
+          "row-30bfbd11603acd6225c6575d"
+        ]
+      }
+    }
+  ]
+}
