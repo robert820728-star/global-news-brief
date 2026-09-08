@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260907T222848Z-6a5d3c91",
+  "main_sha": "6476a96501cedb85ab24ac3bf8c0074c81def89f",
+  "window": {
+    "start": "2026-09-06T22:28:48+00:00",
+    "end": "2026-09-07T22:28:48+00:00",
+    "timezone": "Asia/Taipei"
+  },
+  "batch_sequence": 5,
+  "input_batch_sha256": "aa51cafb8909d5e7ce6ddc470d096729c921db5ed7cb4d2abc8fb42ec1b317cf",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-1906d74459cb052e259291b4",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-asian-u18-baseball-tw-korea-0907",
+      "reason": "台韓戰當日賽前投捕搭配與兩隊王牌資訊，屬同一場9月7日亞洲青棒賽事的前置證據。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "併入同一台韓賽事，不另建重複事件。",
+        "evidence_refs": [
+          "row-1906d74459cb052e259291b4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-195d35cfd6565a1cfde82eef",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-dongxing-customs-logistics-award-0907",
+      "reason": "東興海關及緝私分局公布涉案貨物運輸裝卸服務採購成交結果，含供應商與成交下浮系數。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "正式政府採購結果，公共價值留待評分。",
+        "evidence_refs": [
+          "row-195d35cfd6565a1cfde82eef"
+        ]
+      }
+    },
+    {
+      "row_id": "row-19b4d122ad8963fc51bda28f",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-nanning-postal-customs-reception-notice-0907",
+      "reason": "南寧郵局海關公布9月23日關領導接待日與預約方式，屬正式行政公告。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體公告事件，影響範圍很小但不在模型前靜默刪除。",
+        "evidence_refs": [
+          "row-19b4d122ad8963fc51bda28f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-19c0aa48111f25a2fcafa77c",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "核心為毒蟹與海洋毒物食安科普，開頭個案缺乏可核對日期與官方處置，沒有時間窗內可獨立識別的新事件。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "健康科普保留審核但不虛構本期事件。",
+        "evidence_refs": [
+          "row-19c0aa48111f25a2fcafa77c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1a3d2938c4bbd57cb738138d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-auto-supplier-payment-notice-0907",
+      "reason": "工信部與市場監管總局同一汽車供應商帳期通知的另一篇正式發布報導。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "與既有汽車供應商帳期政策事件合併。",
+        "evidence_refs": [
+          "row-1a3d2938c4bbd57cb738138d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1a98eebc52ecc33b60e4cac3",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-wuhan-guo-degang-performance-penalty-0907",
+      "reason": "武漢文旅局9月7日就7月24日演出正式作出行政處罰，沒收違法所得並對主辦及場地方罰款。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "本期新發生的是行政處罰決定，而非舊演出本身。",
+        "evidence_refs": [
+          "row-1a98eebc52ecc33b60e4cac3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1ae21d43629f8051bca84760",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "文章核心為智庫專家對美國海軍長期部署過載及印太影響的評論，未揭示時間窗內新的官方部署決定或軍事行動。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "分析評論與既有部署資料，不另建本期事件。",
+        "evidence_refs": [
+          "row-1ae21d43629f8051bca84760"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1bc4f8844db78f31e4cbd423",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-hsinchu-mayor-campaign-0907",
+      "reason": "新竹市長選戰9月7日出現高虹安路口拜票與莊競程社區親子活動等具體競選行程。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期地方選舉活動事件，實質性留待評分。",
+        "evidence_refs": [
+          "row-1bc4f8844db78f31e4cbd423"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1bd4d35f2b6f1f7159a058b0",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-fujian-hk-investment-mous-0907",
+      "reason": "9月7日投洽會期間廈門市商務局分別與香港貿發局、香港品質保證局簽署合作備忘錄。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體跨境經貿合作協議事件。",
+        "evidence_refs": [
+          "row-1bd4d35f2b6f1f7159a058b0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1c902ff0a60f777b9c441701",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "模型可見內容僅有吉隆泥石流救援日記標題、作者與導流文字，沒有足夠可核對的本期新增救援事實可作事件證據。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "不以標題自行補造正文；同一災害若有其他完整來源另行處置。",
+        "evidence_refs": [
+          "row-1c902ff0a60f777b9c441701"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1cb07066ce75c4457bd06300",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-shinjuku-minpaku-restriction-plan-0907",
+      "reason": "東京新宿區公布收緊民宿條例構想，擬限制住宅及學校周邊營業並縮短部分區域營業天數，將先徵詢公眾意見。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "政策仍是規劃／公眾諮詢階段，不能把2027預定實施當已生效。",
+        "evidence_refs": [
+          "row-1cb07066ce75c4457bd06300"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1d0b88d41e4d92116cbeffae",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "海外青年文旅活動實際隨9月3至6日博覽會舉行，早於本地統計窗開始；9月7日報導沒有窗內新協議或新成果。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "窗外活動後續刊登，不因刊登日強行納入。",
+        "evidence_refs": [
+          "row-1d0b88d41e4d92116cbeffae"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1d644d1919a4e9775bb85d13",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-acer-pan-asia-india-growth-0907",
+      "reason": "宏碁9月7日受訪公布泛亞上半年營收年增17%、印度營收與120萬台平板標案等當期營運資訊。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體上市科技公司市場與訂單更新。",
+        "evidence_refs": [
+          "row-1d644d1919a4e9775bb85d13"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1e0be4cbc7a6631afc9cfd65",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-anak-krakatau-flight-disruption-0907",
+      "reason": "喀拉喀托之子火山灰使雅加達等4座機場9月7日延長關閉，並披露逾17萬旅客受困等最新交通影響。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "併入同一火山航空中斷事件。",
+        "evidence_refs": [
+          "row-1e0be4cbc7a6631afc9cfd65"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1e85497016485650fe1399e5",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-ningxia-corn-yield-records-0907",
+      "reason": "寧夏農林科學院9月7日披露多生態區玉米高產紀錄、品種與種植技術成果。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體農業科研與糧食產能資料更新。",
+        "evidence_refs": [
+          "row-1e85497016485650fe1399e5"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1ecd2bd9c3cf9518f7720034",
+      "disposition": "unresolved_exhausted",
+      "semantic_event_id": null,
+      "reason": "Reuters全球fallback列已完成同來源及最終主機恢復鏈但正文仍因HTTP 401無法取得；不得僅憑摘要補作模型事件證據。",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "來源列已合法終止但無可審正文；同事件另有可用完整來源時可由其他列進入事件池。",
+        "evidence_refs": [
+          "row-1ecd2bd9c3cf9518f7720034"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1f491327eb5312edb88076c2",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-china-coast-guard-east-taiwan-expansion-0907",
+      "reason": "彭博船舶追蹤分析顯示中國海警自6月起首次常態進入台灣東部外海巡邏，9月7日報導提供部署範圍與航運數據。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "台海安全態勢的具體部署模式變化，需後續獨立驗證追蹤資料與官方說法。",
+        "evidence_refs": [
+          "row-1f491327eb5312edb88076c2"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1f522396b10817b86e0e1088",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-kunming-biodiversity-global-review-dialogue-0907",
+      "reason": "昆蒙框架全球審議昆明對話會9月7日舉行，為COP17首次中期全球進展評估前的正式多方審議活動。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體全球生物多樣性治理進程事件。",
+        "evidence_refs": [
+          "row-1f522396b10817b86e0e1088"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1fe8b3a3f316fef42f6c4e8b",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-guangdong-heavy-rain-0906-0907",
+      "reason": "廣東6日至7日多地出現暴雨至大暴雨，最大24小時雨量101.1毫米，並發布後續局地強降雨風險。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期天候與公共安全事件。",
+        "evidence_refs": [
+          "row-1fe8b3a3f316fef42f6c4e8b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-20ab55ea72ae2142ead78633",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "柴達木星球挑戰賽於9月4至6日舉行並已結束，早於本地統計窗開始；9月7日文章沒有窗內新結果。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "窗外已完結賽事的後續刊登。",
+        "evidence_refs": [
+          "row-20ab55ea72ae2142ead78633"
+        ]
+      }
+    }
+  ]
+}
