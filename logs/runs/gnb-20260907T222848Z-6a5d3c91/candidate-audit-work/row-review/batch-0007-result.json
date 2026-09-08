@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260907T222848Z-6a5d3c91",
+  "main_sha": "6476a96501cedb85ab24ac3bf8c0074c81def89f",
+  "window": {
+    "start": "2026-09-06T22:28:48+00:00",
+    "end": "2026-09-07T22:28:48+00:00",
+    "timezone": "Asia/Taipei"
+  },
+  "batch_sequence": 7,
+  "input_batch_sha256": "d9dcd815195e3a6042fdb3b715b9735921ed238b682860df79ce158f8a457623",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-26b170d3ca32701b10240d0c",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-asian-u18-baseball-tw-korea-0907",
+      "reason": "劉任右在9月7日台韓戰投5局無安打、6K無失分，終場台灣0比2落敗，屬同一賽事的賽後證據。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "併入既有亞洲青棒台韓賽事。",
+        "evidence_refs": [
+          "row-26b170d3ca32701b10240d0c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-26c16f3b0fda0367ba68927f",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-jilin-skills-competition-0907",
+      "reason": "吉林省第三屆職業技能大賽9月7日在四平開幕，573名選手參與並涵蓋數位技能等新職業項目。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體當日人才政策與競賽活動。",
+        "evidence_refs": [
+          "row-26c16f3b0fda0367ba68927f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2738ad143d52ac0cf9e72d42",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-taipei-heritage-day-launch-0907",
+      "reason": "台北市文化局9月7日啟動2026台北古蹟日，串聯40處館所與逾百場活動。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "地方文化資產活動正式啟動。",
+        "evidence_refs": [
+          "row-2738ad143d52ac0cf9e72d42"
+        ]
+      }
+    },
+    {
+      "row_id": "row-279eb39ba8630360aae37cf4",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-un-autonomous-weapons-ban-call-0907",
+      "reason": "聯合國人權事務高級專員9月7日因全自主無人機致死報導公開呼籲緊急禁止無人介入即可奪命的武器。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期聯合國人權政策倡議；無人機致死細節仍屬媒體報導，需保留歸屬語氣。",
+        "evidence_refs": [
+          "row-279eb39ba8630360aae37cf4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-27ca62e1096b622d318aac4a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-korea-france-film-investment-partnership-0907",
+      "reason": "韓國與法國元首9月7日共同宣布Lumière Partnership，承諾未來5年各投入5億歐元影視產業並推動共同製作。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "正式跨國產業投資倡議；未來投資效益不可當已實現。",
+        "evidence_refs": [
+          "row-27ca62e1096b622d318aac4a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-281030a45aea87654987e06a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-tw-first-ne-monsoon-forecast-0907",
+      "reason": "中央氣象署9月7日預報今年首波東北季風9日至11日影響台灣，並警示11日基隆北海岸及宜花局部較大雨勢。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期官方天氣風險預報，屬潛在而非已實現影響。",
+        "evidence_refs": [
+          "row-281030a45aea87654987e06a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2813adafdc7ce7e2e20e3ac5",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-pinglu-canal-nautical-chart-0907",
+      "reason": "9月7日《平陸運河出海口》專用海圖正式出版，沿海段127座航標亦完成，航海安全保障體系宣告就緒。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "重大基礎設施通航前的正式安全保障里程碑。",
+        "evidence_refs": [
+          "row-2813adafdc7ce7e2e20e3ac5"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2830eb11ea0a4a15654d26e0",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-energy-storage-capacity-pause-0907",
+      "reason": "報導顯示中國正盤點儲能產能並暫緩尚未開工的規劃項目，同時披露上半年裝機與新增產能數據。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "產能治理措施仍在進行；精確政策起始時間與官方依據需後續驗證。",
+        "evidence_refs": [
+          "row-2830eb11ea0a4a15654d26e0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2946c4fc054d42dec5286dbe",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-saxony-anhalt-afd-election-0906",
+      "reason": "中國外交部9月7日就薩克森-安哈特州選舉結果回應稱屬德國內政，並重申中德關係立場。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "作為同一AfD州選舉事件的當期外交反應證據。",
+        "evidence_refs": [
+          "row-2946c4fc054d42dec5286dbe"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2956984588bd6549008e76b0",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-wanning-15th-five-year-industry-plan-0907",
+      "reason": "萬寧市9月7日發布會公布十五五期間193個重大項目、1525.7億元投資與四大百億級產業集群規劃。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "地方中期產業規劃正式發布，未來產值目標不得當成已實現。",
+        "evidence_refs": [
+          "row-2956984588bd6549008e76b0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-29618caabd77ab1fadbbd1aa",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-international-lab-proficiency-completion-0907",
+      "reason": "市場監管總局近日完成2025年度國際檢驗檢測能力驗證，91家來自29個經濟體的機構參與。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "官方宣布年度跨國品質驗證工作完成；精確完成日期需後續確認。",
+        "evidence_refs": [
+          "row-29618caabd77ab1fadbbd1aa"
+        ]
+      }
+    },
+    {
+      "row_id": "row-29b7b979de5ff8618d261ebe",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-eye-drops-quality-recall-response-0907",
+      "reason": "9月7日珍視明就國家藥監局此前公布的滴眼液抽檢不合格作出新回應；涉案23批產品已被要求停售、召回並調查。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "本期新增是企業排查與公開回應，監管通告日期為9月4日需在分析中區分。",
+        "evidence_refs": [
+          "row-29b7b979de5ff8618d261ebe"
+        ]
+      }
+    },
+    {
+      "row_id": "row-29d797e92daf8808011c7731",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-suzhou-illegal-grand-canal-wharf-investigation-0907",
+      "reason": "記者調查披露蘇州京杭大運河非法碼頭在多次執法後仍持續運作，形成多頭監管與環境治理問題。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期調查報導揭露仍在持續的違規活動與治理失靈。",
+        "evidence_refs": [
+          "row-29d797e92daf8808011c7731"
+        ]
+      }
+    },
+    {
+      "row_id": "row-29e86999225ec43f6a32d9d9",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-liaoning-business-environment-survey-0907",
+      "reason": "遼寧公布2026年第二季2.5萬餘份問卷的營商環境評價，經營主體感受度85.94%、較一季升4.02個百分點。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期地方治理調查數據發布。",
+        "evidence_refs": [
+          "row-29e86999225ec43f6a32d9d9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2a1d1d42d697a9d08ba25e80",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "文章主要批判外媒對尼泊爾氣候賠償訴求的敘事，核心澄清發生於9月3日，早於統計窗，9月7日未有新的尼方政策行動。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "評論與窗外舊表態，不另建事件。",
+        "evidence_refs": [
+          "row-2a1d1d42d697a9d08ba25e80"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2aaab2f49e73753a265ba26d",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "內容為台資連接器企業二十多年發展的專題訪談與企業故事，未提供統計窗內新的投資、訂單或政策事件。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "企業人物／歷史特寫，不以刊登日製造新事件。",
+        "evidence_refs": [
+          "row-2aaab2f49e73753a265ba26d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2b294e46a41820ea23d6509b",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "核心道路交通安全法修訂草案於8月25日已提請初審，文章為9月7日深度解讀，沒有窗內新的立法程序進展。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "舊草案的分析文章。",
+        "evidence_refs": [
+          "row-2b294e46a41820ea23d6509b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2b45cf45c048557beb0220b5",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-us-russia-ukraine-trilateral-talks-push-0907",
+      "reason": "美國特使魏科夫9月7日公開稱俄烏斡旋取得實質進展，正推動安排新的美俄烏三方會談。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期外交斡旋新表態；會談尚未落實，不得把可能性當成已召開。",
+        "evidence_refs": [
+          "row-2b45cf45c048557beb0220b5"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2b6eec5b2f26d2c1ebe773f4",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-china-coast-guard-dongsha-incursion-0907",
+      "reason": "中國海警3501船9月7日進入東沙限制水域，台灣海巡雲林艦併航監控驅離並持續對峙；海巡稱今年已驅離12航次。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期海上安全與兩岸執法對峙事件，需獨立核對雙方主張。",
+        "evidence_refs": [
+          "row-2b6eec5b2f26d2c1ebe773f4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2c4a9f0d96355396fb3dc813",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-chongzuo-crossborder-tourism-plan-0907",
+      "reason": "崇左市9月7日發布未來5年中越跨境文旅規劃，並公布德天瀑布合作區截至9月6日跨境游客70439人次。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "地方跨境產業政策與最新營運統計發布。",
+        "evidence_refs": [
+          "row-2c4a9f0d96355396fb3dc813"
+        ]
+      }
+    }
+  ]
+}
