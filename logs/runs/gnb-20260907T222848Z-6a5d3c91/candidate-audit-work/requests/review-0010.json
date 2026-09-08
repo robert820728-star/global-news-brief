@@ -1,0 +1,273 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260907T222848Z-6a5d3c91",
+  "main_sha": "6476a96501cedb85ab24ac3bf8c0074c81def89f",
+  "window": {
+    "start": "2026-09-06T22:28:48+00:00",
+    "end": "2026-09-07T22:28:48+00:00",
+    "timezone": "Asia/Taipei"
+  },
+  "batch_sequence": 10,
+  "rows": [
+    {
+      "row_id": "row-3623086fe3c95d51362c2c02",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-tw-rail-punctuality-compensation-consumer-foundation-0907",
+      "reason": "消基會9月7日召開記者會，以台鐵年度與今年上半年準點率資料提出6項制度改革與賠償要求。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期公共運輸消費權益與制度倡議事件。",
+        "evidence_refs": [
+          "row-3623086fe3c95d51362c2c02"
+        ]
+      }
+    },
+    {
+      "row_id": "row-36271d115390382ffecc61c3",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-asian-u18-japan-hk-0907",
+      "reason": "亞洲青棒錦標賽日本隊9月7日以18比0、4局扣倒香港，為具體當日賽事結果。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當日體育賽事，公共價值留待評分。",
+        "evidence_refs": [
+          "row-36271d115390382ffecc61c3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-366de971c42427111ae94a96",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-ai-judicial-opinion-0907",
+      "reason": "最高人民法院9月7日發布24條涉人工智能糾紛審理意見，涵蓋AI換臉擬聲、網路開盒、差別定價及智駕責任。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "中國首部最高審判機關AI司法裁判規則文件，屬明確制度增量。",
+        "evidence_refs": [
+          "row-366de971c42427111ae94a96"
+        ]
+      }
+    },
+    {
+      "row_id": "row-36de5f8cb067d5e5bcc1990a",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "文章主要綜述近年腦機介面技術路徑、既有病例與產品進展，未指出統計窗內新啟動的臨床試驗或監管決定。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "科技深度觀察而非可獨立識別的本期新事件。",
+        "evidence_refs": [
+          "row-36de5f8cb067d5e5bcc1990a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3736f558c05abb1480b274df",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-acer-gadget-aug-revenue-0907",
+      "reason": "倚天酷碁9月7日公布8月營收4.44億元、年增80.4%，創歷年同期新高。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期上市櫃企業月營收資訊。",
+        "evidence_refs": [
+          "row-3736f558c05abb1480b274df"
+        ]
+      }
+    },
+    {
+      "row_id": "row-379f7edc501df5f6be92f1ce",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-earthmoon-cubesat-constellation-launch-0907",
+      "reason": "中國近日正式啟動國際地月立方星座大科學計畫，規劃30顆立方星於2030年前後完成部署。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體國家級太空科學計畫啟動；未來部署成果不得當成已實現。",
+        "evidence_refs": [
+          "row-379f7edc501df5f6be92f1ce"
+        ]
+      }
+    },
+    {
+      "row_id": "row-380bd099d78c4170b40c3783",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-tw-memory-aug-revenue-0907",
+      "reason": "威剛、旺宏、鈺創與十銓9月7日公布8月營收，多家公司創歷史或同期新高，反映記憶體景氣與AI需求。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期產業營運數據發布。",
+        "evidence_refs": [
+          "row-380bd099d78c4170b40c3783"
+        ]
+      }
+    },
+    {
+      "row_id": "row-38153193ed3d5d1e71768f62",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-health-insurance-drg-dip-3-0907",
+      "reason": "國家醫保局發布DRG/DIP付費3.0分組方案，新增基層病種與同病同付安排，要求2027年3月底前落地。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "全國醫保支付制度的重要規則更新，屬結構性政策事件。",
+        "evidence_refs": [
+          "row-38153193ed3d5d1e71768f62"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3840e2b44fce8b7b41470694",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-pla-humanoid-robot-military-research-0907",
+      "reason": "路透9月7日依逾100份採購、論文、專利與官方資料報導解放軍正加速研究人形機器人軍事用途，但尚無作戰部署證據。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "系統性調查揭露當期軍事研發方向；部署仍屬潛在，不得灌入已實現影響。",
+        "evidence_refs": [
+          "row-3840e2b44fce8b7b41470694"
+        ]
+      }
+    },
+    {
+      "row_id": "row-387e5ef0332f46d89864d305",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "節目已於9月5日晚播出，早於本地統計窗；9月7日文章主要介紹節目與電影幕後內容。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "窗外文化節目回顧。",
+        "evidence_refs": [
+          "row-387e5ef0332f46d89864d305"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3899b29bc27b910173adf61a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-kaohsiung-credit-card-parking-note-0907",
+      "reason": "高雄警方9月7日受理停車場拾獲信用卡、現金及借卡紙條案件並調閱監視器釐清。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體當日警政事件，公共價值預期很低但仍須進評分。",
+        "evidence_refs": [
+          "row-3899b29bc27b910173adf61a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-38a32ab5291bffa5a68fa9c9",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-tw-japan-kanagawa-supplychain-meeting-0907",
+      "reason": "賴清德9月7日接見神奈川縣日華親善協會訪團，提出擴大半導體、AI與精密製造合作及韌性供應鏈方向。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期台日高層交流與產業政策表態。",
+        "evidence_refs": [
+          "row-38a32ab5291bffa5a68fa9c9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-390fa91f771e4d8f610b60ff",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "廣東首次錨地船對船甲醇加注明確於9月6日完成，早於本地統計窗9月7日06:28:48開始；9月7日刊文沒有新的後續措施。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "窗外已完成產業事件。",
+        "evidence_refs": [
+          "row-390fa91f771e4d8f610b60ff"
+        ]
+      }
+    },
+    {
+      "row_id": "row-392fc3528d8874a970e9be88",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-abc-financial-education-week-0907",
+      "reason": "中國農業銀行9月7日至13日啟動2026金融教育宣傳周，部署鄉村、養老、青少年與數位金融風險宣導。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體全國性金融消保宣教活動啟動。",
+        "evidence_refs": [
+          "row-392fc3528d8874a970e9be88"
+        ]
+      }
+    },
+    {
+      "row_id": "row-39416e86e61c954341773d30",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-tw-business-chongqing-industry-tour-0907",
+      "reason": "70餘名台商台企代表9月7日在重慶高新區與兩江新區展開產業考察對接，聚焦電子、生醫及智能製造合作。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體當日兩岸產業交流活動。",
+        "evidence_refs": [
+          "row-39416e86e61c954341773d30"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3981f3e8124a9d49ebf79921",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-logistics-pmi-august-0907",
+      "reason": "中國物流與採購聯合會近日公布8月物流業景氣指數50.9%，較上月升0.5個百分點，多項分項維持擴張。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期全國物流景氣統計發布。",
+        "evidence_refs": [
+          "row-3981f3e8124a9d49ebf79921"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3a4029cc970eacbc2a52abd9",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-guigang-customs-reception-day-0907",
+      "reason": "貴港海關9月7日公告9月16日關領導接待日及預約方式。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "正式行政公告，影響範圍小但不在評分前刪除。",
+        "evidence_refs": [
+          "row-3a4029cc970eacbc2a52abd9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3a46750f73ddaec9145aac8f",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-chishui-river-rare-fish-recovery-0907",
+      "reason": "貴州9月7日發布長江大保護成效，稱赤水河魚類物種增加，長江鱘等珍稀特有魚類種群明顯恢復並披露水質與繁殖成果。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期官方生物多樣性與流域治理成果發布。",
+        "evidence_refs": [
+          "row-3a46750f73ddaec9145aac8f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3a939e8f531866d479fc28ce",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "文章為北京快遞員參與基層治理的長篇制度與人物特寫，核心數據與案例跨2025至今，沒有統計窗內新的政策啟動或制度變更。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "背景／人物專題，不另建本期事件。",
+        "evidence_refs": [
+          "row-3a939e8f531866d479fc28ce"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3aa4236d383cfcafa2faab58",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-saxony-anhalt-afd-election-0906",
+      "reason": "德國總理梅爾茨9月7日就薩克森-安哈特州選舉慘敗公開回應並承諾繼續改革，為同一州選舉事件的當期政治後續。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "併入既有AfD州選舉事件，補充聯邦層級反應。",
+        "evidence_refs": [
+          "row-3aa4236d383cfcafa2faab58"
+        ]
+      }
+    }
+  ]
+}
