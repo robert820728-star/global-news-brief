@@ -56,6 +56,7 @@ jobs:
             runtime/scripts/materialize_mobile_candidate_audit.py \
             runtime/scripts/materialize_mobile_verification.py \
             runtime/scripts/materialize_mobile_map_decisions.py \
+            runtime/scripts/materialize_mobile_image_evidence.py \
             runtime/scripts/manage_candidate_audit.py \
             runtime/scripts/validate_map_decisions.py
       - name: Validate bounded issue request

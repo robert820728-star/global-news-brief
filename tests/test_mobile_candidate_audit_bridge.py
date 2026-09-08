@@ -55,6 +55,7 @@ class MobileCandidateAuditBridgeTests(unittest.TestCase):
         self.assertIn("git add -A -- logs", workflow)
         self.assertNotIn("git add -A -- .", workflow)
         self.assertIn("materialize_mobile_map_decisions.py", workflow)
+        self.assertIn("materialize_mobile_image_evidence.py", workflow)
 
     def test_active_contracts_require_resumable_candidate_verification_and_map_transport(self):
         root = Path(__file__).resolve().parents[1]
@@ -63,9 +64,11 @@ class MobileCandidateAuditBridgeTests(unittest.TestCase):
         self.assertIn("MOBILE_CANDIDATE_AUDIT_CHECKPOINT_TRANSPORT", daily)
         self.assertIn("MOBILE_VERIFICATION_CHECKPOINT_TRANSPORT", daily)
         self.assertIn("MOBILE_MAP_DECISION_CHECKPOINT_TRANSPORT", daily)
+        self.assertIn("MOBILE_IMAGE_EVIDENCE_CHECKPOINT_TRANSPORT", daily)
         self.assertIn("candidate_audit_review", install)
         self.assertIn("verification_prepare", install)
         self.assertIn("map_prepare", install)
+        self.assertIn("image_prepare", install)
 
     def test_comment_requires_one_marker_and_one_json_request(self):
         body = bridge.MARKER + "\n```json\n" + json.dumps(request()) + "\n```"
@@ -103,6 +106,20 @@ class MobileCandidateAuditBridgeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             input_root = root / "runlogs/logs/runs" / RUN_ID / "map-work/input"
+            write_json(input_root / "manifest.json", {
+                "run_id": RUN_ID, "main_sha": MAIN_SHA, "window": WINDOW,
+                "event_ids": ["GLB-01"],
+            })
+            with self.assertRaisesRegex(ValueError, "unknown selected event"):
+                bridge.execute(value, root / "runtime", root / "runlogs")
+
+    def test_image_transport_rejects_unknown_event_before_writing(self):
+        value = request("image_event")
+        value.update({"event_id": "GLB-99", "image_evidence": {}})
+        self.assertEqual("image_event", bridge.validate(value, MAIN_SHA)["operation"])
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            input_root = root / "runlogs/logs/runs" / RUN_ID / "image-work/input"
             write_json(input_root / "manifest.json", {
                 "run_id": RUN_ID, "main_sha": MAIN_SHA, "window": WINDOW,
                 "event_ids": ["GLB-01"],

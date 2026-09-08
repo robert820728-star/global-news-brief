@@ -12,6 +12,7 @@ from typing import Any
 
 from scripts import materialize_mobile_candidate_audit as transport
 from scripts import materialize_mobile_map_decisions as map_transport
+from scripts import materialize_mobile_image_evidence as image_transport
 from scripts import materialize_mobile_verification as verification_transport
 
 
@@ -29,6 +30,9 @@ OPERATION_KEYS = {
     "map_prepare": set(),
     "map_event": {"event_id", "map"},
     "map_finalize": set(),
+    "image_prepare": set(),
+    "image_event": {"event_id", "image_evidence"},
+    "image_finalize": set(),
 }
 MAX_COMMENT_REQUEST_BYTES = 60_000
 
@@ -109,10 +113,14 @@ def validate(value: dict[str, Any], expected_main_sha: str) -> dict[str, Any]:
             codes.append(scope["code"])
         if len(codes) != len(set(codes)) or sum(scope["fallback"] for scope in scopes) != 1:
             raise ValueError("section scopes require unique codes and exactly one fallback")
-    if operation in {"verification_event", "map_event"}:
+    if operation in {"verification_event", "map_event", "image_event"}:
         if re.fullmatch(r"[A-Z]{3}-[0-9]{2,}", str(value.get("event_id", ""))) is None:
             raise ValueError(f"{operation} event_id is invalid")
-        payload_field = "verification" if operation == "verification_event" else "map"
+        payload_field = {
+            "verification_event": "verification",
+            "map_event": "map",
+            "image_event": "image_evidence",
+        }[operation]
         if not isinstance(value.get(payload_field), dict):
             raise ValueError(f"{payload_field} payload must be an object")
     if len(transport.canonical_bytes(value)) > MAX_COMMENT_REQUEST_BYTES:
@@ -225,6 +233,39 @@ def execute(request: dict[str, Any], runtime_root: Path, runlogs_root: Path) -> 
         return map_transport.finalize(
             map_root / "input" / "manifest.json", map_root / "patches",
             run_root / "map-decisions.json",
+        )
+
+    image_root = run_root / "image-work"
+    if operation == "image_prepare":
+        return image_transport.prepare(
+            run_root / "candidate-audit.json", run_root / "verification.json",
+            run_root / "map-decisions.json", image_root / "input",
+        )
+    if operation == "image_event":
+        patch = {
+            "schema_version": "1.0.0", "run_id": request["run_id"],
+            "main_sha": request["main_sha"], "window": request["window"],
+            "event_id": request["event_id"], "image_evidence": request["image_evidence"],
+        }
+        input_manifest = json.loads((image_root / "input" / "manifest.json").read_text(encoding="utf-8"))
+        if transport.identity(patch) != transport.identity(input_manifest):
+            raise ValueError("image patch changed durable run/main/window identity")
+        if request["event_id"] not in input_manifest.get("event_ids", []):
+            raise ValueError("image patch references an unknown selected event")
+        errors = image_transport.evidence_errors(request["image_evidence"])
+        if errors:
+            raise ValueError("image evidence payload is invalid: " + "; ".join(errors))
+        stored = transport.append_only_write(image_root / "patches" / f"{request['event_id']}.json", patch)
+        return {
+            "schema_version": "1.0.0", "run_id": request["run_id"],
+            "main_sha": request["main_sha"], "window": request["window"],
+            "event_id": request["event_id"], "result_sha256": transport.digest(stored),
+            "status": "terminal",
+        }
+    if operation == "image_finalize":
+        return image_transport.finalize(
+            image_root / "input" / "manifest.json", image_root / "patches",
+            run_root / "image-evidence.json",
         )
 
     coverage_path = run_root / "remote-acquisition" / "source-coverage.json"
