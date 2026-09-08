@@ -1,0 +1,273 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260907T222848Z-6a5d3c91",
+  "main_sha": "6476a96501cedb85ab24ac3bf8c0074c81def89f",
+  "window": {
+    "start": "2026-09-06T22:28:48+00:00",
+    "end": "2026-09-07T22:28:48+00:00",
+    "timezone": "Asia/Taipei"
+  },
+  "batch_sequence": 4,
+  "rows": [
+    {
+      "row_id": "row-1351b79238806ade6f2de6ed",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-asia-coast-guard-meeting-hangzhou-announcement-0907",
+      "reason": "中國海警局宣布將首次主辦第22屆亞洲地區海岸警備機構高官會並公布議題方向。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "正式區域海上安全會議公告，後續成果尚未發生。",
+        "evidence_refs": [
+          "row-1351b79238806ade6f2de6ed"
+        ]
+      }
+    },
+    {
+      "row_id": "row-13d4045d2520e7a26f708eea",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-ai-commercial-property-demand-2026h1",
+      "reason": "當期產業報導以2026上半年杭州寫字樓空置率、租金與AI企業擴租案例呈現租賃結構轉變。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體半年度市場數據與企業租賃行為可評分。",
+        "evidence_refs": [
+          "row-13d4045d2520e7a26f708eea"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1421cec6bfcb78a0342b842d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-ningxia-senior-university-term-0907",
+      "reason": "寧夏老年大學9月7日開學，公布近9000名學員、1378名新生與新增課程。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體教育服務事件。",
+        "evidence_refs": [
+          "row-1421cec6bfcb78a0342b842d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-14274f24215db262ba888c43",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "內容主要為烏江沿岸當日景觀照片與一般生態修復背景，沒有窗內可量化的新政策或生態成果。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "景觀紀錄不另建語意事件。",
+        "evidence_refs": [
+          "row-14274f24215db262ba888c43"
+        ]
+      }
+    },
+    {
+      "row_id": "row-147c23f699f4db6e7fe6641d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-qiaojia-red-tourism-green-energy-feature-2026",
+      "reason": "90週年專題提供巧家近期紅色旅遊與截至2026年6月白鶴灘累計發電等當期地方發展資訊。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體地方產業與能源進展，歷史敘事本身不灌入新影響。",
+        "evidence_refs": [
+          "row-147c23f699f4db6e7fe6641d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-15087fd3c640288bb34a5177",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-tw-power-lottery-115072",
+      "reason": "威力彩第115072期9月7日晚開獎並公布號碼。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體當日開獎事件，公共價值另行評分。",
+        "evidence_refs": [
+          "row-15087fd3c640288bb34a5177"
+        ]
+      }
+    },
+    {
+      "row_id": "row-150b11302f60c8af3be7ba72",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-yunnan-air-school-bus-2026-term",
+      "reason": "新學期尼珠河學生持續使用景區交通上學，並披露7月底新增電梯後運力及截至8月底護送數據。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "公共交通／教育可達性的當期運作進展。",
+        "evidence_refs": [
+          "row-150b11302f60c8af3be7ba72"
+        ]
+      }
+    },
+    {
+      "row_id": "row-15ec594b3b718e070d8913dd",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-tw-96-cycling-wuling-0907",
+      "reason": "96自由車聯賽武嶺站9月7日舉行，何硯宜以新紀錄奪男子菁英組冠軍。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體當日賽事結果。",
+        "evidence_refs": [
+          "row-15ec594b3b718e070d8913dd"
+        ]
+      }
+    },
+    {
+      "row_id": "row-161ea2728b692aca2777095c",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-classic-industries-policy-0907",
+      "reason": "同一六部門歷史經典產業政策，補充其為國家首次專項產業政策及發布會數據。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "與既有政策事件合併。",
+        "evidence_refs": [
+          "row-161ea2728b692aca2777095c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-16b6baef88b7f851a15c5196",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-hsinchu-keli-volleyball-team-launch-0907",
+      "reason": "新竹可利工程師排球隊9月7日正式成軍，將同時參與企業與職業聯賽。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "新球隊成立與聯賽參與事件。",
+        "evidence_refs": [
+          "row-16b6baef88b7f851a15c5196"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1745579bdb5bd62fa1d450f3",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-newtaipei-metro-subsidy-cut-2027",
+      "reason": "新北市長稱中央116年捷運補助減列54.1億元，市府已函交通部爭取優先追加。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "地方交通建設預算的新爭議與正式爭取程序。",
+        "evidence_refs": [
+          "row-1745579bdb5bd62fa1d450f3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-17abe0317ac07311b1e553eb",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "文章為中國元首外交思想總結與宣傳性評論，主要回顧既有出訪及倡議，沒有獨立的新事件。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "評論／政治敘事，不以刊登時間製造新事件。",
+        "evidence_refs": [
+          "row-17abe0317ac07311b1e553eb"
+        ]
+      }
+    },
+    {
+      "row_id": "row-17adde3e56d76293b7907fc4",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-qingyuan-missing-elder-rescue-0907",
+      "reason": "清遠93歲失智老人走失後經19小時跨部門搜救安全尋獲並送醫。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體公共安全搜救事件。",
+        "evidence_refs": [
+          "row-17adde3e56d76293b7907fc4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-17c5c2cabde646e2fa7820c4",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-saxony-anhalt-afd-election-0906",
+      "reason": "德國薩克森-安哈特州議會選舉中AfD預測得票44%居首並刷新州選舉紀錄，席次仍不足單獨過半。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "重大州選舉結果，與全球fallback同事件合併。",
+        "evidence_refs": [
+          "row-17c5c2cabde646e2fa7820c4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-17cd7fcabb9ffe1cc19be424",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-anhui-yuan-zhiying-expelled-0907",
+      "reason": "安徽紀委監委宣布袁之應被開除黨籍、取消待遇並移送檢察。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "正式反腐處分與司法移送事件。",
+        "evidence_refs": [
+          "row-17cd7fcabb9ffe1cc19be424"
+        ]
+      }
+    },
+    {
+      "row_id": "row-17f342fb9692e85482a9f541",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-north-cold-rain-0907-0909",
+      "reason": "同一北方大範圍冷空氣與降雨過程的當日實況更新，部分地區降溫超17℃並預報暴雨延續。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "併入同一氣象事件，補充實況與後續風險。",
+        "evidence_refs": [
+          "row-17f342fb9692e85482a9f541"
+        ]
+      }
+    },
+    {
+      "row_id": "row-18006df155ecba00827085ea",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "為直播詐騙模式的調查型整理，主要案例始於2024年，未揭示窗內新的執法或制度事件。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "長篇風險解說與舊案例集合。",
+        "evidence_refs": [
+          "row-18006df155ecba00827085ea"
+        ]
+      }
+    },
+    {
+      "row_id": "row-180fba02ed739ca8f1a3da55",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-shantou-counterfeit-cosmetics-crackdown-0907",
+      "reason": "汕頭潮陽9月7日因媒體曝光化妝品造假成立聯合執法組，已查封場所、扣押物品並停職調查人員。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當日市場監管與公安執法事件。",
+        "evidence_refs": [
+          "row-180fba02ed739ca8f1a3da55"
+        ]
+      }
+    },
+    {
+      "row_id": "row-18943b87c69a00dfee02c142",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "核心研討會於9月5日舉行，早於本地時間窗；9月7日文章主要回顧十年實習計畫，無窗內新協議。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "窗外活動的回顧性報導。",
+        "evidence_refs": [
+          "row-18943b87c69a00dfee02c142"
+        ]
+      }
+    },
+    {
+      "row_id": "row-18dd290bec79876eb14e3d8e",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "成果發表會於9月5日舉行，早於本地時間窗，文章未提供窗內新的文化政策或計畫轉折。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "窗外活動的後續報導。",
+        "evidence_refs": [
+          "row-18dd290bec79876eb14e3d8e"
+        ]
+      }
+    }
+  ]
+}
