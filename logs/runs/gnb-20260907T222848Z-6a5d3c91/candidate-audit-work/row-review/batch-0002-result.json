@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260907T222848Z-6a5d3c91",
+  "main_sha": "6476a96501cedb85ab24ac3bf8c0074c81def89f",
+  "window": {
+    "start": "2026-09-06T22:28:48+00:00",
+    "end": "2026-09-07T22:28:48+00:00",
+    "timezone": "Asia/Taipei"
+  },
+  "batch_sequence": 2,
+  "input_batch_sha256": "9ef5bcd79437239077dc7ed4a4b4f6f3fa28a023679e73615894a966f102810d",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-05a24ca56f2ad75d35b54442",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-tw-palau-aid-response-0907",
+      "reason": "中國外交部就帛琉受台灣援助報導作出當日正式回應，屬兩岸外交議題的新表態。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當日外交部例行記者會的具體政策表態。",
+        "evidence_refs": [
+          "row-05a24ca56f2ad75d35b54442"
+        ]
+      }
+    },
+    {
+      "row_id": "row-06267fbb7db810b977adeb9b",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "內容為玻璃纖維健康風險與生活用品使用的科普解說，沒有可識別的當期新事件或實質更新。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "常識型科普文章，不另建本期事件。",
+        "evidence_refs": [
+          "row-06267fbb7db810b977adeb9b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-063446e29a6d5b9b83a4b8b1",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-taichung-national-sports-day-0909",
+      "reason": "台中市公布9月9日國民體育日免費入場與體驗措施，並同日辦理冰壺活動。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體地方公共活動與設施使用事件。",
+        "evidence_refs": [
+          "row-063446e29a6d5b9b83a4b8b1"
+        ]
+      }
+    },
+    {
+      "row_id": "row-07c3447ae1e9f5de738efd8d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-qiyang-rural-libraries-reform-2026",
+      "reason": "祁陽作為農家書屋改革試點，披露266個書屋改造與服務數據，屬當期公共文化政策實施資訊。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體地方公共服務改革進展。",
+        "evidence_refs": [
+          "row-07c3447ae1e9f5de738efd8d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-07e302e1acc78e20150e8b12",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-ganzhou-welfare-hk-concert-review-0907",
+      "reason": "文章以官方9月7日核查通報為核心並解讀低保規則，與同一贛州低保事件合併。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "同一官方核查事件的補充證據與法規脈絡。",
+        "evidence_refs": [
+          "row-07e302e1acc78e20150e8b12"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0858dbae5d08d2f3a9f11c8d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-japan-kanto-heavy-rain-0907",
+      "reason": "關東等地破紀錄豪雨觸發最高級警報、鐵路航班停駛及福島車輛淹水傷害。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當日重大天候與交通安全事件。",
+        "evidence_refs": [
+          "row-0858dbae5d08d2f3a9f11c8d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-08687f55bfcf39e61f1ac532",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-orchid-award-final-review-0906",
+      "reason": "第三屆蘭花獎終評會完成並選出10名建議人選，具體評選程序新進展。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期文化獎項評審事件。",
+        "evidence_refs": [
+          "row-08687f55bfcf39e61f1ac532"
+        ]
+      }
+    },
+    {
+      "row_id": "row-08a9fcadcc2ba598ea045072",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-asian-u18-baseball-tw-korea-0907",
+      "reason": "亞洲青棒錦標賽台灣隊當日0比2不敵韓國，為具體賽事結果。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當日體育賽事結果，公共價值另行評分。",
+        "evidence_refs": [
+          "row-08a9fcadcc2ba598ea045072"
+        ]
+      }
+    },
+    {
+      "row_id": "row-08be53d8454c8722a451f4c8",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-classic-industries-policy-0907",
+      "reason": "六部門發布歷史經典產業高品質發展意見，設定2028與2030目標，屬國家級產業政策。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "正式發布且已生效的產業政策文件。",
+        "evidence_refs": [
+          "row-08be53d8454c8722a451f4c8"
+        ]
+      }
+    },
+    {
+      "row_id": "row-093fafcc3cdc88cd10bf537b",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-auto-supplier-payment-notice-0907",
+      "reason": "工信部與市場監管總局發布首個汽車業供應商帳期管理文件，規範驗收與支付期限。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "國家級產業監管新規。",
+        "evidence_refs": [
+          "row-093fafcc3cdc88cd10bf537b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-093fc0dd562318c7df7e0ba1",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-zhenjiang-shipbuilding-growth-2026h1",
+      "reason": "調研報導披露鎮江船舶海工上半年產值增長、訂單排至2029年等當期產業數據。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體產業景氣與產能資訊可評分。",
+        "evidence_refs": [
+          "row-093fc0dd562318c7df7e0ba1"
+        ]
+      }
+    },
+    {
+      "row_id": "row-09bbaae30a3cd8dff09acaf2",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "外骨骼文章主要使用8月既有市場資料與醫療專家解說，未呈現時間窗內可獨立識別的新事件或轉折。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "產業科普與使用建議，缺少本期實質更新。",
+        "evidence_refs": [
+          "row-09bbaae30a3cd8dff09acaf2"
+        ]
+      }
+    },
+    {
+      "row_id": "row-09ffdacc87189eb3af82849b",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-miami-amazon-cargo-crash-0906",
+      "reason": "NTSB宣布已尋獲邁阿密亞馬遜貨機墜毀事故黑盒子，並確認5死5傷等最新調查資訊。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "同一航空事故的當期調查進展。",
+        "evidence_refs": [
+          "row-09ffdacc87189eb3af82849b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0a111c77c1224e6963f775d9",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-ustc-youth-ideology-event-0906",
+      "reason": "王戟於9月6日中科大主題活動登台，文章大量人物專訪但仍提供同一活動的現場證據。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "併入同一中科大主題活動，不另把人物舊歷程當新事件。",
+        "evidence_refs": [
+          "row-0a111c77c1224e6963f775d9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0a8b2c5c59b431dbd825172e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-xinjiang-coal-transport-scale-0907",
+      "reason": "國家發改委安排提高疆煤外運規模並協調產量與鐵路運力，屬能源供應政策執行。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期國家能源供應調度措施。",
+        "evidence_refs": [
+          "row-0a8b2c5c59b431dbd825172e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0a9eaa024db9c9c3c5113ef3",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "正文僅為宣傳圖文標題與製作資訊，缺乏可核對的本期事件事實或實質更新。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "內容不足以建立語意事件。",
+        "evidence_refs": [
+          "row-0a9eaa024db9c9c3c5113ef3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0abb475956eb7a11c1734136",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-jilin-zeng-fantao-expelled-0907",
+      "reason": "吉林省紀委監委宣布曾范濤被開除黨籍、公職並移送檢察，屬正式紀律與司法程序進展。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期反腐處分事件。",
+        "evidence_refs": [
+          "row-0abb475956eb7a11c1734136"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0b34544d357c7c047b19b7bf",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-shaoguan-tourism-carnival-2026",
+      "reason": "韶關丹霞山啟動城市文旅嘉年華、公布推薦官與消費季補貼安排，屬具體文旅活動。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期地方文旅活動與促消費措施。",
+        "evidence_refs": [
+          "row-0b34544d357c7c047b19b7bf"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0bbe3859826c516e51a333a1",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-miami-amazon-cargo-crash-0906",
+      "reason": "亞馬遜貨機9月6日在邁阿密衝出跑道造成5死5傷及大量航班取消，為事故初始事實。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "與黑盒子尋獲更新合併為同一航空事故。",
+        "evidence_refs": [
+          "row-0bbe3859826c516e51a333a1"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0bc2cb36e696ccdddef82e2f",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-housing-policy-market-response-0907",
+      "reason": "8月28日房市政策落地10天後，多城市出現帶看、簽約、貸款與公寓需求變化，屬政策效果早期觀測。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體政策實施後的當期市場數據。",
+        "evidence_refs": [
+          "row-0bc2cb36e696ccdddef82e2f"
+        ]
+      }
+    }
+  ]
+}
