@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260907T222848Z-6a5d3c91",
+  "main_sha": "6476a96501cedb85ab24ac3bf8c0074c81def89f",
+  "window": {
+    "start": "2026-09-06T22:28:48+00:00",
+    "end": "2026-09-07T22:28:48+00:00",
+    "timezone": "Asia/Taipei"
+  },
+  "batch_sequence": 3,
+  "input_batch_sha256": "00e9c72fec63118753b8e6c3105c1b2ae2cd76a776b34805748c9c8a4d2f6d0d",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-0d2c5c19930f1c57067984d4",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-hualien-pomelo-season-2026",
+      "reason": "花蓮縣府9月7日宣布文旦產季行銷方案，並披露產量減少、批發價格與出口數據。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期農產季與產銷資訊。",
+        "evidence_refs": [
+          "row-0d2c5c19930f1c57067984d4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0d9b84ab06d1ddb39faf9e92",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "僅為白露時節公園花況圖片紀錄，沒有可獨立識別的公共事件或實質更新。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "景觀圖片，不建立新聞事件。",
+        "evidence_refs": [
+          "row-0d9b84ab06d1ddb39faf9e92"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0dbe5c779cd5fd64d692a8c6",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-angola-speaker-china-visit-announced-0907",
+      "reason": "中國全國人大9月7日宣布安哥拉國民議會議長將於9月9至16日訪華。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "正式外交訪問公告，影響以已宣布行程評分，不灌入未發生結果。",
+        "evidence_refs": [
+          "row-0dbe5c779cd5fd64d692a8c6"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0ee309dffb42b9cc724376d7",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-taipei-dance-center-proposal-0907",
+      "reason": "台北市議會質詢中提出專業舞蹈中心，市長表態支持並稱正盤點地點，屬政策構想進展。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "政策仍在規劃／盤點階段，須按proposal stage評分。",
+        "evidence_refs": [
+          "row-0ee309dffb42b9cc724376d7"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0f2bffc623d9bd2e226b9259",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-nato-russia-hybrid-deterrence-warning-0907",
+      "reason": "北約相關國防與情報官員對俄混合戰嚇阻失效提出新警告，並以德國正式歸因的無人機未遂案為轉折。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期安全政策警告與官方歸因進展。",
+        "evidence_refs": [
+          "row-0f2bffc623d9bd2e226b9259"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0f77bf255676fdfe4f1e5b14",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-iran-gulf-exclusion-zone-0906",
+      "reason": "伊朗高層宣布將在荷莫茲海峽外設新禁航區並制裁違規船隻，美伊同時對海峽通行情況提出衝突數據。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "重大航運與戰爭管制政策新表態，需獨立查證各方說法。",
+        "evidence_refs": [
+          "row-0f77bf255676fdfe4f1e5b14"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0f9976f3da1d917b779681f1",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-syntec-smec-mou-0907",
+      "reason": "台灣新代科技與韓國SMEC簽署智慧工具機與實體AI合作MOU。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "正式企業合作協議，未來效益不得當成已實現。",
+        "evidence_refs": [
+          "row-0f9976f3da1d917b779681f1"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0fb5ca3e669e58d04ffd0751",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-wrestling-naoyang-finals-0905",
+      "reason": "全國摔跤撓羊大賽9月5日落幕並公布各量級結果與觀眾數據。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體賽事事件；時間窗適格性需在時序審查確認。",
+        "evidence_refs": [
+          "row-0fb5ca3e669e58d04ffd0751"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0feee1e30ad7797e1106b49e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-boc-global-fujian-business-gbic-0906",
+      "reason": "中國銀行9月6日在泉州舉辦GBIC全球閩商合作會並發布企業家辦公室方案與服務聯盟。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體金融服務與企業合作活動。",
+        "evidence_refs": [
+          "row-0feee1e30ad7797e1106b49e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-10170b94c970266281395113",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "核心為8月26日研討會內容與產業趨勢評論，沒有時間窗內新的藥政、研發或市場事件。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "舊研討會衍生分析，不以9月7日刊登時間製造新事件。",
+        "evidence_refs": [
+          "row-10170b94c970266281395113"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1065ca91ac34875d88f33e83",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-yinchuan-ideology-education-alliance-0907",
+      "reason": "銀川9月7日啟動跨區域教研共同體、成立12個工作室並簽署19校聯盟協議。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體教育治理組織成立事件。",
+        "evidence_refs": [
+          "row-1065ca91ac34875d88f33e83"
+        ]
+      }
+    },
+    {
+      "row_id": "row-10e260baf24780c7f239daea",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-lancang-protected-wildlife-discoveries-0907",
+      "reason": "雲南瀾滄近期確認鷹嘴龜與細角尤犀金龜兩種國家二級保護動物發現並完成救助放歸／紀錄。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體生物多樣性與保育發現事件。",
+        "evidence_refs": [
+          "row-10e260baf24780c7f239daea"
+        ]
+      }
+    },
+    {
+      "row_id": "row-116ecf13444adfa85f827481",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-nanning-customs-reception-day-notice-0907",
+      "reason": "南寧吳圩機場海關公布9月16日關領導接待日與預約辦法，屬正式行政公告。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "公告本身可辨識，公共價值留待評分。",
+        "evidence_refs": [
+          "row-116ecf13444adfa85f827481"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1225496e44259d46f89d44e9",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-telecom-15th-five-year-plan-0907",
+      "reason": "工信部發布信息通信行業十五五規劃，設定2030年收入、投資、5G與算力等13項指標。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "國家級中期通信產業規劃正式發布。",
+        "evidence_refs": [
+          "row-1225496e44259d46f89d44e9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-122b76592a1229dde5a44bca",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-special-bond-financial-capital-300b",
+      "reason": "財政部將發行3000億元特別國債支持8家中央金融企業補充核心一級資本，多家企業9月6日披露增資方案。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "重大金融資本補充政策事件，時序與已實現影響需後續審查。",
+        "evidence_refs": [
+          "row-122b76592a1229dde5a44bca"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1242d2c41723a9a7fcec71de",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "賽事已於9月6日收官，而本輪本地時間窗自9月7日06:28開始；文章未呈現窗內新的實質轉折。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "已結束舊賽事的窗內重刊。",
+        "evidence_refs": [
+          "row-1242d2c41723a9a7fcec71de"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1295f8f2a5c14eda3ce13d52",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-led-auto-international-standards-0907",
+      "reason": "中國牽頭制定的純電動車道路運行與自動駕駛感知等國際標準近日正式發布。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "新發布的國際技術標準。",
+        "evidence_refs": [
+          "row-1295f8f2a5c14eda3ce13d52"
+        ]
+      }
+    },
+    {
+      "row_id": "row-129cd1e2d1592688d434d258",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-qingdao-brushing-scam-case-2026",
+      "reason": "報導揭示青島受害者遭54人群組刷單詐騙的具體案件與資金投入過程。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體詐騙個案可評分，不以題材類型先排除。",
+        "evidence_refs": [
+          "row-129cd1e2d1592688d434d258"
+        ]
+      }
+    },
+    {
+      "row_id": "row-12e155737da1bfca227b2b69",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-daqing-xingnan-energy-efficiency-0907",
+      "reason": "大慶油田9月7日公布杏南開發區3700餘口井能耗治理階段性成效與節電數據。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期能源生產效率改善數據。",
+        "evidence_refs": [
+          "row-12e155737da1bfca227b2b69"
+        ]
+      }
+    },
+    {
+      "row_id": "row-131ddf0188d0f8e37764f793",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "內容為大學家校協同邊界的評論文章，未提供可獨立識別的本期政策或事件增量。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "觀點評論，不建立新聞事件。",
+        "evidence_refs": [
+          "row-131ddf0188d0f8e37764f793"
+        ]
+      }
+    }
+  ]
+}
