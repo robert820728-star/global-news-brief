@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260907T222848Z-6a5d3c91",
+  "main_sha": "6476a96501cedb85ab24ac3bf8c0074c81def89f",
+  "window": {
+    "start": "2026-09-06T22:28:48+00:00",
+    "end": "2026-09-07T22:28:48+00:00",
+    "timezone": "Asia/Taipei"
+  },
+  "batch_sequence": 1,
+  "input_batch_sha256": "89c37fcc14ccf987a75b0f219ff535101681510aedfc4fd6be21757c72b7daa3",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-004b16320aa1f45cfa434ee9",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-anak-krakatau-flight-disruption-0907",
+      "reason": "當期火山灰造成雅加達機場與台灣往返航班取消，具體且有本期營運影響。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "可辨識的當期航空中斷事件。",
+        "evidence_refs": [
+          "row-004b16320aa1f45cfa434ee9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-009939ef8ce90c3da52cd293",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-tw-928-housing-sales-2026",
+      "reason": "當期928檔期推案與總銷統計發布，包含全台與區域年減數據。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "新發布的房市統計事件。",
+        "evidence_refs": [
+          "row-009939ef8ce90c3da52cd293"
+        ]
+      }
+    },
+    {
+      "row_id": "row-00a922aa2501823b53a82ddf",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-online-food-false-ads-cases",
+      "reason": "市場監管總局公布首批網路食品虛假宣傳典型案例，屬當期監管執法增量。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "新公布的全國監管案例。",
+        "evidence_refs": [
+          "row-00a922aa2501823b53a82ddf"
+        ]
+      }
+    },
+    {
+      "row_id": "row-00fd079954136c670c8ff212",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-student-summer-gig-trend-2026",
+      "reason": "報導以多個當期個案呈現大學生暑期兼職型態變化，仍有具體本期事實。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "可評分的勞動市場趨勢報導，不先以題材類型排除。",
+        "evidence_refs": [
+          "row-00fd079954136c670c8ff212"
+        ]
+      }
+    },
+    {
+      "row_id": "row-01a3fc09e1feb71a514f6ca6",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-ustc-youth-ideology-event-0906",
+      "reason": "9月6日中科大舉行大型主題宣傳與教育活動，具明確時間、主辦與參與事實。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "活動本身是可辨識事件，公共價值留待評分。",
+        "evidence_refs": [
+          "row-01a3fc09e1feb71a514f6ca6"
+        ]
+      }
+    },
+    {
+      "row_id": "row-02e707e89404e66b0a9d1b1b",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-north-cold-rain-0907-0909",
+      "reason": "中央氣象台發布北方大範圍降雨降溫與局地暴雨預報，屬當期安全資訊。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體氣象風險事件。",
+        "evidence_refs": [
+          "row-02e707e89404e66b0a9d1b1b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-02f74f101b06f055ff1400ee",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-ai-manufacturing-expo-feature-0907",
+      "reason": "亞太媒體論壇科技展集中呈現大灣區AI與製造應用，含企業與產業數據。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期展會與產業應用事件，低高價值留待V2評分。",
+        "evidence_refs": [
+          "row-02f74f101b06f055ff1400ee"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0306c96ba07717167397e80c",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-zijin-report-errors-correction-0905",
+      "reason": "紫金礦業就半年報多處錯字發布更正與道歉，揭露內控資訊披露問題。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "公司正式更正公告構成本期增量。",
+        "evidence_refs": [
+          "row-0306c96ba07717167397e80c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-03485f9e07c0e9224c45fe18",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-ustc-ai-scientist-lab-feature-0907",
+      "reason": "當期報導揭露中科大智能化學實驗室自動化科研系統與具體研發案例。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體科技研發進展可進事件評分。",
+        "evidence_refs": [
+          "row-03485f9e07c0e9224c45fe18"
+        ]
+      }
+    },
+    {
+      "row_id": "row-034eab9ec21af19a4fe73f48",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "核心內容為評論美國對伊朗制裁策略是否失靈，主要回顧既有戰事與政策，未提供足以獨立成為新事件的本期實質增量。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "分析評論與既有事實回顧，不另建語意事件。",
+        "evidence_refs": [
+          "row-034eab9ec21af19a4fe73f48"
+        ]
+      }
+    },
+    {
+      "row_id": "row-03880a18bbc1a16030d7953b",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-hotel-misrepresentation-enforcement-2026",
+      "reason": "市場監管總局公布旅遊住宿不正當競爭典型案件，含虛假房型與星級宣傳處分。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期監管執法案例發布。",
+        "evidence_refs": [
+          "row-03880a18bbc1a16030d7953b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-03b670b3b34731d4103fb47c",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-tw-smart-agri-week-startups-0908",
+      "reason": "好食好事宣布9家新創參與台灣智慧農漁週，屬即將展開的產業活動與供應鏈展示。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體展會參與事件，潛在影響不得當成已實現。",
+        "evidence_refs": [
+          "row-03b670b3b34731d4103fb47c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0424bf79e65efe56aa8d6dfd",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-taekwondo-campus-weinan-0907",
+      "reason": "跆拳道選手別嘉晨9月7日參與渭南校園體育推廣活動，具體活動事件。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "事件成立但公共價值另行評分。",
+        "evidence_refs": [
+          "row-0424bf79e65efe56aa8d6dfd"
+        ]
+      }
+    },
+    {
+      "row_id": "row-04395a13a38bfd7f29af50d4",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-private-fund-solicitation-draft-0907",
+      "reason": "中國證監會就私募基金募集監管辦法公開徵求意見，新增合格投資者與募集規範。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "政策處於徵求意見階段，需按proposal/draft評分。",
+        "evidence_refs": [
+          "row-04395a13a38bfd7f29af50d4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-043bbdc1270caeb1140f8c09",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-tw-food-agri-accelerator-case-0907",
+      "reason": "當期報導公開青年食農新創的製麵自動化與養殖投餵無人船實際測試案例。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體產業應用個案，與展會公告不同事件。",
+        "evidence_refs": [
+          "row-043bbdc1270caeb1140f8c09"
+        ]
+      }
+    },
+    {
+      "row_id": "row-044acf3b0515da196bddc032",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-us-diesel-record-high-0907",
+      "reason": "AAA數據顯示美國柴油均價升至紀錄新高，報導連結至美伊戰爭造成的供應衝擊。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期價格紀錄與戰爭外溢經濟影響。",
+        "evidence_refs": [
+          "row-044acf3b0515da196bddc032"
+        ]
+      }
+    },
+    {
+      "row_id": "row-044bb01952649b01670ab0ca",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-chiayi-child-sexual-exploitation-indictment-0907",
+      "reason": "嘉義地檢署偵結起訴未成年人私密影像誘騙案件，具體司法程序增量。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "新起訴事件，公共影響範圍另行評分。",
+        "evidence_refs": [
+          "row-044bb01952649b01670ab0ca"
+        ]
+      }
+    },
+    {
+      "row_id": "row-04cea21098717e1412ae8552",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-ganzhou-welfare-hk-concert-review-0907",
+      "reason": "贛州經開區就赴港看演唱會是否導致取消低保發布官方通報並啟動核查。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "官方澄清與福利資格核查是本期行政事件。",
+        "evidence_refs": [
+          "row-04cea21098717e1412ae8552"
+        ]
+      }
+    },
+    {
+      "row_id": "row-057575bf71697024d9979e1e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-tw-mlb-players-0907",
+      "reason": "台灣旅美球員李灝宇出賽與鄧愷威被下放3A為當日體育賽事與名單異動。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體當日體育事件，先保留至V2評分。",
+        "evidence_refs": [
+          "row-057575bf71697024d9979e1e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0589019671876f458ac9323f",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "影片核心為專家評論美國對伊朗軍事、制裁與談判策略，沒有可獨立識別的當期新政策或新行動。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "評論性內容，與同日戰爭實際事件分離處置。",
+        "evidence_refs": [
+          "row-0589019671876f458ac9323f"
+        ]
+      }
+    }
+  ]
+}
