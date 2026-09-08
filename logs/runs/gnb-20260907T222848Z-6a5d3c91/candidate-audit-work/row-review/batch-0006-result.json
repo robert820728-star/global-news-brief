@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260907T222848Z-6a5d3c91",
+  "main_sha": "6476a96501cedb85ab24ac3bf8c0074c81def89f",
+  "window": {
+    "start": "2026-09-06T22:28:48+00:00",
+    "end": "2026-09-07T22:28:48+00:00",
+    "timezone": "Asia/Taipei"
+  },
+  "batch_sequence": 6,
+  "input_batch_sha256": "935005bc6fadf7a1fb21d7d42204eb18b53390f6a895cf5a01962c122c346998",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-20d7e20e11c88b92b7047c24",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-sichuan-airlines-li-haiying-investigation-0907",
+      "reason": "四川省紀委監委9月7日宣布四川航空集團原董事長李海鷹涉嫌嚴重違紀違法並接受審查調查。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "正式紀律監察程序新進展。",
+        "evidence_refs": [
+          "row-20d7e20e11c88b92b7047c24"
+        ]
+      }
+    },
+    {
+      "row_id": "row-20ddf75a5fc3e3ad968f9dcb",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "文章為9月7日整理型QA，核心公費流感疫苗政策與疫情說明引用9月1日既有疾管署資訊，未顯示統計窗內新的政策決定。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "重要健康資訊仍經模型審核，但不能把舊公告的QA重刊當本期新事件。",
+        "evidence_refs": [
+          "row-20ddf75a5fc3e3ad968f9dcb"
+        ]
+      }
+    },
+    {
+      "row_id": "row-21e696d838b0b4cb6b4cae41",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-tw-drugstore-retail-stats-0907",
+      "reason": "經濟部統計處9月7日發布藥粧零售產業統計，包含2025全年歷史新高及2026年前7月年增5.4%。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期官方經濟統計發布。",
+        "evidence_refs": [
+          "row-21e696d838b0b4cb6b4cae41"
+        ]
+      }
+    },
+    {
+      "row_id": "row-21ea10036f8618d68622caae",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "內容僅為8月31日至9月6日政治活動週報導流，涵蓋期已在本地統計窗開始前結束，且無9月7日新行動。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "回顧型週刊，不另建新事件。",
+        "evidence_refs": [
+          "row-21ea10036f8618d68622caae"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2341617d301ce69b6d52fad2",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-shanxi-worker-influencer-tour-0907",
+      "reason": "9月7日山西啟動35名職工網路達人的基層參訪活動，行程持續至11日。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體當日活動啟動，公共價值另行評分。",
+        "evidence_refs": [
+          "row-2341617d301ce69b6d52fad2"
+        ]
+      }
+    },
+    {
+      "row_id": "row-23586571dcf0731003abbcf9",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-iran-gulf-exclusion-zone-0906",
+      "reason": "伊朗高層宣布將在荷莫茲海峽外劃設新禁區，並披露美軍封鎖與商船改道數據；文章發布時間落在本地統計窗內。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "與既有伊朗禁航區事件合併，後續需獨立核對交戰雙方數據。",
+        "evidence_refs": [
+          "row-23586571dcf0731003abbcf9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-23a4f748e49db1433c3134f4",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "外媒記者赴吉隆受災區採訪實際發生於9月6日下午，早於本地統計窗，9月7日影片主要是觀感與氣候倡議，無窗內新救援進展。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "窗外採訪活動的後續發布。",
+        "evidence_refs": [
+          "row-23a4f748e49db1433c3134f4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-23ce4f0d35a6fb4cb0aad247",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-kuandu-arts-festival-launch-0907",
+      "reason": "北藝大9月7日舉行2026關渡藝術節啟動記者會，公布9月至12月節目與跨域科技表演內容。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期文化節慶啟動事件。",
+        "evidence_refs": [
+          "row-23ce4f0d35a6fb4cb0aad247"
+        ]
+      }
+    },
+    {
+      "row_id": "row-23fe78f204ee5b31c383406a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-japan-dichlorosilane-antidumping-0907",
+      "reason": "中國商務部9月7日初裁日本進口二氯二氫矽存在傾銷，宣布自9月8日起以80.8%至99.2%保證金實施臨時反傾銷措施。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "正式貿易救濟初裁與措施公告；須按臨時措施階段評分。",
+        "evidence_refs": [
+          "row-23fe78f204ee5b31c383406a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-242286ff273c239ef9757b00",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-tianshan-xue-beijing-performances-0907",
+      "reason": "雜技劇《天山雪》9月7日至8日在北京保利劇院演出，屬全國少數民族文藝會演當期節目。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具體文化演出事件，公共價值另行評分。",
+        "evidence_refs": [
+          "row-242286ff273c239ef9757b00"
+        ]
+      }
+    },
+    {
+      "row_id": "row-24306eda30d0c3a92ce17b8c",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-luckin-taiwan-investment-review-0907",
+      "reason": "台灣經濟部投審司9月7日表示已正式發函，要求瑞幸咖啡相關案須依陸資投資管道申請。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "本期新增的是主管機關的正式行政要求，網路傳聞本身不作核心主張。",
+        "evidence_refs": [
+          "row-24306eda30d0c3a92ce17b8c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-244ff3dd7a22a11e60aa398d",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "林肯號航母於當地時間9月6日自泰國啟程返美，早於本地統計窗；9月7日文章主要整理既有部署與艦上狀況報導。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "窗外軍事動態後續整理，不以刊登時間重新製造事件。",
+        "evidence_refs": [
+          "row-244ff3dd7a22a11e60aa398d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-245a2c6b470c38948c5f591b",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-chongqing-customs-maintenance-procurement-0907",
+      "reason": "重慶海關技術中心9月7日起公開46.37萬元設備設施維保服務比選案。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "正式政府採購公告，影響範圍小但需進評分。",
+        "evidence_refs": [
+          "row-245a2c6b470c38948c5f591b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2519d840026f4fbdffdde8b7",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-cn-autumn-grain-critical-stage-0907",
+      "reason": "9月7日官方報導指出全國秋糧全面進入產量形成關鍵期，公布農用無人機、水肥設施應用與目前災害條件評估。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "當期全國糧食生產狀態與風險更新。",
+        "evidence_refs": [
+          "row-2519d840026f4fbdffdde8b7"
+        ]
+      }
+    },
+    {
+      "row_id": "row-25350ec42dc9618c288e680d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-unga-correct-map-resolution-2026",
+      "reason": "聯合國大會近日以164票贊成通過倡導使用等面積世界地圖投影的決議，9月7日報導提供投票與非洲倡議背景。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "可識別的聯大決議事件；精確決議日期需在時序與獨立驗證階段確認。",
+        "evidence_refs": [
+          "row-25350ec42dc9618c288e680d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-25877151479f15d2b90b0ed9",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-yilan-atm-cash-recovered-disclosure-0907",
+      "reason": "宜蘭警方9月7日公布日前保全補鈔遺落55.2萬元並經民眾報案、警方追查後全數發還案件。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "本期為警方正式對外披露，原始遺失發生於9月3日；公共價值另行評分。",
+        "evidence_refs": [
+          "row-25877151479f15d2b90b0ed9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-258f961ec5fc44379eb35b19",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "模型可見內容只有投洽會『即將開幕』標題與大量導流文字，缺乏足夠可核對的本期實質事件內容。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "不依標題自行補造展會資訊。",
+        "evidence_refs": [
+          "row-258f961ec5fc44379eb35b19"
+        ]
+      }
+    },
+    {
+      "row_id": "row-25c7173ce01e76774224416f",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-tw-coast-guard-fleet-staffing-response-0907",
+      "reason": "海巡署9月7日正式回應審計部對千億造艦計畫碼頭與人力不足的質疑，稱配置與泊靠正常並說明補員機制。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "重大海巡資本計畫的監督爭議與主管機關回應。",
+        "evidence_refs": [
+          "row-25c7173ce01e76774224416f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2607fcc1c5d57392fa62990f",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "文章為奈良旅遊導覽，核心UNESCO列入世界遺產為2026年先前已完成事件，未呈現統計窗內的新決定或變化。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "旅遊內容不因9月7日刊出成為新事件。",
+        "evidence_refs": [
+          "row-2607fcc1c5d57392fa62990f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2676b4fdd4effc8aebc4d11f",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "莫斯科復古電車城市日活動發生於當地9月6日，早於本地統計窗，9月7日僅後續發布影片。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "窗外文化活動。",
+        "evidence_refs": [
+          "row-2676b4fdd4effc8aebc4d11f"
+        ]
+      }
+    }
+  ]
+}
