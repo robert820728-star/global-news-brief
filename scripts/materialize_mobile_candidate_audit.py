@@ -101,6 +101,210 @@ def append_only_write(path: Path, value: dict[str, Any]) -> dict[str, Any]:
     return value
 
 
+def _relative_artifact_path(path: Path, run_root: Path) -> str:
+    try:
+        return path.resolve().relative_to(run_root.resolve()).as_posix()
+    except ValueError as error:
+        raise ValueError("candidate-audit progress path escaped the run root") from error
+
+
+def _validate_completed_review_prefix(
+    manifest: dict[str, Any], batches: list[tuple[Path, dict[str, Any]]], review_dir: Path
+) -> tuple[int, list[str]]:
+    completed = 0
+    missing_seen = False
+    unresolved: list[str] = []
+    for sequence, (_path, batch) in enumerate(batches, 1):
+        result_path = review_dir / f"batch-{sequence:04d}-result.json"
+        receipt_path = review_dir / "receipts" / f"batch-{sequence:04d}.json"
+        if not result_path.is_file():
+            missing_seen = True
+            if receipt_path.exists():
+                raise ValueError("row review receipt exists without its result checkpoint")
+            continue
+        if missing_seen:
+            raise ValueError("non-contiguous row review checkpoints")
+        if not receipt_path.is_file():
+            raise ValueError("row review checkpoint is missing its terminal receipt")
+        result = load(result_path)
+        receipt = load(receipt_path)
+        require_identity(result, manifest, result_path.name)
+        require_identity(receipt, manifest, receipt_path.name)
+        if result.get("batch_sequence") != sequence or receipt.get("batch_sequence") != sequence:
+            raise ValueError("row review checkpoint sequence drifted")
+        if result.get("input_batch_sha256") != digest(batch):
+            raise ValueError(f"{result_path.name} is not bound to its audit input")
+        expected_ids = [row["row_id"] for row in batch["rows"]]
+        rows = result.get("rows") if isinstance(result.get("rows"), list) else []
+        if Counter(row.get("row_id") for row in rows) != Counter(expected_ids):
+            raise ValueError("review checkpoints do not conserve the audit input universe")
+        for row in rows:
+            validate_review_row(row)
+            if row["disposition"] == "unresolved":
+                unresolved.append(row["row_id"])
+        if receipt.get("status") != "terminal" or receipt.get("result_sha256") != digest(result):
+            raise ValueError("row review receipt is not bound to its terminal result")
+        completed += 1
+    return completed, unresolved
+
+
+def _validate_completed_score_prefix(
+    manifest: dict[str, Any], batches: list[tuple[Path, dict[str, Any]]], result_dir: Path
+) -> int:
+    completed = 0
+    missing_seen = False
+    for sequence, (_path, batch) in enumerate(batches, 1):
+        result_path = result_dir / f"batch-{sequence:04d}-result.json"
+        receipt_path = result_dir / "receipts" / f"batch-{sequence:04d}.json"
+        if not result_path.is_file():
+            missing_seen = True
+            if receipt_path.exists():
+                raise ValueError("score receipt exists without its result checkpoint")
+            continue
+        if missing_seen:
+            raise ValueError("non-contiguous score checkpoints")
+        if not receipt_path.is_file():
+            raise ValueError("score checkpoint is missing its terminal receipt")
+        result = load(result_path)
+        receipt = load(receipt_path)
+        require_identity(result, manifest, result_path.name)
+        require_identity(receipt, manifest, receipt_path.name)
+        if result.get("batch_sequence") != sequence or receipt.get("batch_sequence") != sequence:
+            raise ValueError("score checkpoint sequence drifted")
+        if result.get("input_batch_sha256") != digest(batch):
+            raise ValueError(f"{result_path.name} is not bound to its score input")
+        expected_ids = [event["semantic_event_id"] for event in batch["events"]]
+        events = result.get("events") if isinstance(result.get("events"), list) else []
+        if Counter(item.get("semantic_event_id") for item in events) != Counter(expected_ids):
+            raise ValueError("score checkpoints do not conserve the semantic event universe")
+        if receipt.get("status") != "terminal" or receipt.get("result_sha256") != digest(result):
+            raise ValueError("score receipt is not bound to its terminal result")
+        completed += 1
+    return completed
+
+
+def candidate_audit_progress(
+    manifest_path: Path, work_root: Path, candidate_audit_path: Path
+) -> dict[str, Any]:
+    """Derive the single next legal candidate-audit operation from durable state."""
+    manifest, review_batches = validate_manifest_batches(manifest_path)
+    run_root = manifest_path.parent.parent
+    review_total = len(review_batches)
+    review_completed, unresolved = _validate_completed_review_prefix(
+        manifest, review_batches, work_root / "row-review"
+    )
+    base = {
+        "schema_version": "1.0.0",
+        "run_id": manifest["run_id"],
+        "main_sha": manifest["main_sha"],
+        "window": manifest["window"],
+        "pending_work_is_blocker": False,
+        "row_review": {
+            "total_batch_count": review_total,
+            "completed_batch_count": review_completed,
+            "remaining_batch_count": review_total - review_completed,
+        },
+        "event_scoring": {
+            "prepared": False,
+            "total_batch_count": 0,
+            "completed_batch_count": 0,
+            "remaining_batch_count": 0,
+        },
+    }
+
+    audit_exists = candidate_audit_path.is_file()
+    if review_completed < review_total:
+        if audit_exists:
+            raise ValueError("candidate audit exists before row review is complete")
+        next_sequence = review_completed + 1
+        next_path, next_batch = review_batches[next_sequence - 1]
+        return {
+            **base, "status": "in_progress", "phase": "row_review",
+            "next_operation": "candidate_audit_review",
+            "next_batch_sequence": next_sequence,
+            "next_input_path": _relative_artifact_path(next_path, run_root),
+            "next_input_sha256": digest(next_batch),
+            "candidate_audit_path": None, "candidate_audit_sha256": None,
+        }
+
+    if unresolved:
+        if audit_exists:
+            raise ValueError("candidate audit exists while row review remains unresolved")
+        return {
+            **base, "status": "blocked", "phase": "row_recovery",
+            "pending_work_is_blocker": True, "next_operation": None,
+            "next_batch_sequence": None, "next_input_path": None,
+            "next_input_sha256": None, "candidate_audit_path": None,
+            "candidate_audit_sha256": None,
+            "blocker": {
+                "code": "UNRESOLVED_REVIEW_ROWS_REQUIRE_RECOVERY",
+                "row_ids": sorted(unresolved),
+            },
+        }
+
+    score_manifest_path = work_root / "score-input" / "manifest.json"
+    if not score_manifest_path.is_file():
+        if audit_exists:
+            raise ValueError("candidate audit exists before scoring input is prepared")
+        return {
+            **base, "status": "in_progress", "phase": "prepare_scoring",
+            "next_operation": "candidate_audit_prepare_scoring",
+            "next_batch_sequence": None, "next_input_path": None,
+            "next_input_sha256": None, "candidate_audit_path": None,
+            "candidate_audit_sha256": None,
+        }
+
+    score_manifest, score_batches = validate_score_batches(score_manifest_path)
+    require_identity(score_manifest, manifest, "score manifest")
+    score_total = len(score_batches)
+    score_completed = _validate_completed_score_prefix(
+        score_manifest, score_batches, work_root / "score-results"
+    )
+    scoring = {
+        "prepared": True,
+        "total_batch_count": score_total,
+        "completed_batch_count": score_completed,
+        "remaining_batch_count": score_total - score_completed,
+    }
+    if score_completed < score_total:
+        if audit_exists:
+            raise ValueError("candidate audit exists before event scoring is complete")
+        next_sequence = score_completed + 1
+        next_path, next_batch = score_batches[next_sequence - 1]
+        return {
+            **base, "event_scoring": scoring,
+            "status": "in_progress", "phase": "event_scoring",
+            "next_operation": "candidate_audit_score",
+            "next_batch_sequence": next_sequence,
+            "next_input_path": _relative_artifact_path(next_path, run_root),
+            "next_input_sha256": digest(next_batch),
+            "candidate_audit_path": None, "candidate_audit_sha256": None,
+        }
+    if audit_exists:
+        audit = load(candidate_audit_path)
+        runs = audit.get("runs") if isinstance(audit, dict) else None
+        if not isinstance(runs, list) or not any(
+            isinstance(run, dict) and run.get("run_id") == manifest["run_id"] for run in runs
+        ):
+            raise ValueError("candidate audit does not contain the durable run identity")
+        return {
+            **base, "event_scoring": scoring,
+            "status": "completed", "phase": "completed",
+            "next_operation": None, "next_batch_sequence": None,
+            "next_input_path": None, "next_input_sha256": None,
+            "candidate_audit_path": _relative_artifact_path(candidate_audit_path, run_root),
+            "candidate_audit_sha256": digest(audit),
+        }
+    return {
+        **base, "event_scoring": scoring,
+        "status": "in_progress", "phase": "finalize",
+        "next_operation": "candidate_audit_finalize",
+        "next_batch_sequence": None, "next_input_path": None,
+        "next_input_sha256": None, "candidate_audit_path": None,
+        "candidate_audit_sha256": None,
+    }
+
+
 def validate_review_row(row: dict[str, Any]) -> None:
     disposition = row.get("disposition")
     if disposition not in DISPOSITIONS:

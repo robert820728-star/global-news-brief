@@ -816,6 +816,23 @@ class PipelineContractTests(unittest.TestCase):
         ):
             self.assertIn(requirement, daily)
 
+    def test_pending_candidate_audit_work_is_never_a_blocker(self):
+        documents = [
+            ROOT / "scheduled-task-prompt-template.md",
+            ROOT / "daily-schedule-prompt.md",
+            ROOT / "mobile-chatgpt-daily-prompt.md",
+            ROOT / "INSTALL.md",
+            ROOT / ".agents/skills/daily-news-brief/SKILL.md",
+            ROOT / ".agents/skills/select-news-events/SKILL.md",
+            ROOT / ".agents/skills/audit-news-candidates/SKILL.md",
+        ]
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("PENDING_CANDIDATE_AUDIT_WORK_IS_NOT_BLOCKER_GATE", text, str(path))
+            self.assertIn("candidate_audit_status", text, str(path))
+            self.assertIn("不得停用", text, str(path))
+            self.assertIn("第一個未完成", text, str(path))
+
     def test_discovery_then_verify_replaces_all_source_gate(self):
         import json
 

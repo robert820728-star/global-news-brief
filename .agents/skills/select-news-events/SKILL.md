@@ -46,6 +46,8 @@ description: Discover, cluster, deduplicate, select, section, and grade news eve
 
 `MOBILE_CANDIDATE_AUDIT_CHECKPOINT_TRANSPORT`：mobile-native 必須從既有 `audit-input/manifest.json` 依序處理 1–20 row review batches，結果透過 pinned `mobile_candidate_audit_bridge.py` append-only 保存。每批 result 的 row IDs 必須精確等於 input；`unresolved` 未歸零前禁止建立 scoring input。review 全部 terminal 後，才可產生每批最多 4 個 semantic events 的 score batches；所有 score batches terminal 後再 finalize canonical run-scoped audit。中斷只從第一個缺少 batch 接續，不得重跑 source scan、hydration 或已完成 batch。
 
+`PENDING_CANDIDATE_AUDIT_WORK_IS_NOT_BLOCKER_GATE`：先呼叫 `candidate_audit_status` 並讀取 exact run 的 `candidate-audit-work/progress.json`，只執行其中唯一 `next_operation`，等待該批 durable commit 後再查一次，直到 completed 或出現具體 validator／transport failure。待審 row 數、batch 數、已耗模型時間、context 大小或 token 顧慮只是 `in_progress`，不是不可恢復 blocker；只因仍有批次時不得輸出 blocker receipt、不得重跑 discovery、不得另開 run、**不得停用** exact task，必須從**第一個未完成**單元接續。
+
 
 ### 一、廣泛海選
 

@@ -20,6 +20,7 @@ MARKER = "<!-- gnb-mobile-candidate-audit:v1 -->"
 RUN_ID_RE = re.compile(r"^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$")
 COMMON_KEYS = {"schema_version", "operation", "run_id", "main_sha", "window"}
 OPERATION_KEYS = {
+    "candidate_audit_status": set(),
     "candidate_audit_review": {"batch_sequence", "rows"},
     "candidate_audit_prepare_scoring": set(),
     "candidate_audit_score": {"batch_sequence", "events"},
@@ -133,6 +134,17 @@ def execute(request: dict[str, Any], runtime_root: Path, runlogs_root: Path) -> 
     input_root = run_root / "audit-input"
     work_root = run_root / "candidate-audit-work"
     operation = request["operation"]
+    def refresh_progress() -> dict[str, Any]:
+        progress = transport.candidate_audit_progress(
+            input_root / "manifest.json", work_root, run_root / "candidate-audit.json"
+        )
+        if transport.identity(progress) != transport.identity(request):
+            raise ValueError("status request changed durable run/main/window identity")
+        write_json(work_root / "progress.json", progress)
+        return progress
+
+    if operation == "candidate_audit_status":
+        return refresh_progress()
     if operation == "candidate_audit_review":
         result = {
             "schema_version": "1.0.0", "run_id": request["run_id"],
@@ -141,16 +153,20 @@ def execute(request: dict[str, Any], runtime_root: Path, runlogs_root: Path) -> 
         }
         temporary = work_root / "requests" / f"review-{request['batch_sequence']:04d}.json"
         write_json(temporary, result)
-        return transport.record_review_result(
+        receipt = transport.record_review_result(
             input_root / "manifest.json",
             input_root / f"batch-{request['batch_sequence']:04d}.json",
             temporary,
             work_root / "row-review",
         )
+        refresh_progress()
+        return receipt
     if operation == "candidate_audit_prepare_scoring":
-        return transport.prepare_scoring(
+        result = transport.prepare_scoring(
             input_root / "manifest.json", work_root / "row-review", work_root / "score-input"
         )
+        refresh_progress()
+        return result
     if operation == "candidate_audit_score":
         result = {
             "schema_version": "1.0.0", "run_id": request["run_id"],
@@ -159,12 +175,14 @@ def execute(request: dict[str, Any], runtime_root: Path, runlogs_root: Path) -> 
         }
         temporary = work_root / "requests" / f"score-{request['batch_sequence']:04d}.json"
         write_json(temporary, result)
-        return transport.record_score_result(
+        receipt = transport.record_score_result(
             work_root / "score-input" / "manifest.json",
             work_root / "score-input" / f"batch-{request['batch_sequence']:04d}.json",
             temporary,
             work_root / "score-results",
         )
+        refresh_progress()
+        return receipt
 
     verification_root = run_root / "verification-work"
     if operation == "verification_prepare":
@@ -281,13 +299,15 @@ def execute(request: dict[str, Any], runtime_root: Path, runlogs_root: Path) -> 
     }
     run_base_path = work_root / "run-base.json"
     transport.append_only_write(run_base_path, run_base)
-    return transport.finalize(
+    result = transport.finalize(
         input_root / "manifest.json", work_root / "row-review",
         work_root / "score-input" / "manifest.json", work_root / "score-results",
         run_base_path, run_root / "source-row-admissions.json",
         runtime_root / "news-source-pool.json", runlogs_root / "logs" / "latest-candidate-audit.json",
         run_root / "candidate-audit.json",
     )
+    refresh_progress()
+    return result
 
 
 def main() -> int:

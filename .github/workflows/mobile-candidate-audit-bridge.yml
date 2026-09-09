@@ -8,7 +8,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: mobile-candidate-audit-${{ github.event.comment.id }}
+  group: mobile-candidate-audit-${{ github.event.issue.number }}
   cancel-in-progress: false
 
 jobs:

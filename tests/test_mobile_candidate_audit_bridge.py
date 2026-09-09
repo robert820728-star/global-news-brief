@@ -1,3 +1,4 @@
+import copy
 import json
 import tempfile
 import unittest
@@ -56,6 +57,8 @@ class MobileCandidateAuditBridgeTests(unittest.TestCase):
         self.assertNotIn("git add -A -- .", workflow)
         self.assertIn("materialize_mobile_map_decisions.py", workflow)
         self.assertIn("materialize_mobile_image_evidence.py", workflow)
+        self.assertIn("mobile-candidate-audit-${{ github.event.issue.number }}", workflow)
+        self.assertNotIn("mobile-candidate-audit-${{ github.event.comment.id }}", workflow)
 
     def test_active_contracts_require_resumable_candidate_verification_and_map_transport(self):
         root = Path(__file__).resolve().parents[1]
@@ -66,9 +69,46 @@ class MobileCandidateAuditBridgeTests(unittest.TestCase):
         self.assertIn("MOBILE_MAP_DECISION_CHECKPOINT_TRANSPORT", daily)
         self.assertIn("MOBILE_IMAGE_EVIDENCE_CHECKPOINT_TRANSPORT", daily)
         self.assertIn("candidate_audit_review", install)
+        self.assertIn("candidate_audit_status", install)
         self.assertIn("verification_prepare", install)
         self.assertIn("map_prepare", install)
         self.assertIn("image_prepare", install)
+
+    def test_status_operation_persists_derived_next_action(self):
+        value = request("candidate_audit_status")
+        self.assertEqual("candidate_audit_status", bridge.validate(value, MAIN_SHA)["operation"])
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            run_root = root / "runlogs/logs/runs" / RUN_ID
+            input_root = run_root / "audit-input"
+            row = {
+                "row_id": "row-" + "1" * 24,
+                "candidate_id": "candidate-1", "provisional_group_id": "group-1",
+                "source_id": "cna", "section": "TWN", "title": "fixture",
+                "summary": "fixture", "canonical_url": "https://example.com/1",
+                "model_excerpt": "fixture body", "model_input_status": "ready",
+            }
+            write_json(input_root / "batch-0001.json", {
+                "schema_version": "1.0.0", "run_id": RUN_ID, "main_sha": MAIN_SHA,
+                "window": WINDOW, "batch_sequence": 1, "row_count": 1, "rows": [row],
+            })
+            write_json(input_root / "manifest.json", {
+                "schema_version": "1.0.0", "run_id": RUN_ID, "main_sha": MAIN_SHA,
+                "window": WINDOW, "source_row_count": 1, "batch_size": 20,
+                "batch_count": 1, "batch_files": ["batch-0001.json"],
+                "ready_for_model_audit": True,
+            })
+            output = bridge.execute(value, root / "runtime", root / "runlogs")
+            self.assertEqual("candidate_audit_review", output["next_operation"])
+            progress_path = run_root / "candidate-audit-work/progress.json"
+            self.assertTrue(progress_path.is_file())
+            self.assertEqual(output, json.loads(progress_path.read_text(encoding="utf-8")))
+
+            wrong_window = copy.deepcopy(value)
+            wrong_window["window"]["start"] = "2026-09-06T00:02:03+00:00"
+            wrong_window["window"]["end"] = "2026-09-07T00:02:03+00:00"
+            with self.assertRaisesRegex(ValueError, "status request changed durable run/main/window identity"):
+                bridge.execute(wrong_window, root / "runtime", root / "runlogs")
 
     def test_comment_requires_one_marker_and_one_json_request(self):
         body = bridge.MARKER + "\n```json\n" + json.dumps(request()) + "\n```"

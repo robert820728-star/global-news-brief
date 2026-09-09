@@ -103,6 +103,110 @@ def review_result(batch, *, unresolved=False):
 
 
 class MobileCandidateAuditTransportTests(unittest.TestCase):
+    def test_progress_returns_exact_first_missing_operation_through_scoring(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            _manifest, batch = audit_input_fixture(root)
+            manifest_path = root / "audit-input/manifest.json"
+            work_root = root / "candidate-audit-work"
+            audit_path = root / "candidate-audit.json"
+
+            initial = transport.candidate_audit_progress(manifest_path, work_root, audit_path)
+            self.assertEqual("in_progress", initial["status"])
+            self.assertEqual("row_review", initial["phase"])
+            self.assertEqual("candidate_audit_review", initial["next_operation"])
+            self.assertEqual(1, initial["next_batch_sequence"])
+            self.assertEqual("audit-input/batch-0001.json", initial["next_input_path"])
+            self.assertEqual(0, initial["row_review"]["completed_batch_count"])
+            self.assertEqual(1, initial["row_review"]["remaining_batch_count"])
+            self.assertFalse(initial["pending_work_is_blocker"])
+
+            review_path = root / "review.json"
+            write_json(review_path, review_result(batch))
+            transport.record_review_result(
+                manifest_path, root / "audit-input/batch-0001.json",
+                review_path, work_root / "row-review",
+            )
+            reviewed = transport.candidate_audit_progress(manifest_path, work_root, audit_path)
+            self.assertEqual("prepare_scoring", reviewed["phase"])
+            self.assertEqual("candidate_audit_prepare_scoring", reviewed["next_operation"])
+
+            transport.prepare_scoring(manifest_path, work_root / "row-review", work_root / "score-input")
+            scoring = transport.candidate_audit_progress(manifest_path, work_root, audit_path)
+            self.assertEqual("event_scoring", scoring["phase"])
+            self.assertEqual("candidate_audit_score", scoring["next_operation"])
+            self.assertEqual(1, scoring["next_batch_sequence"])
+            self.assertEqual("candidate-audit-work/score-input/batch-0001.json", scoring["next_input_path"])
+            self.assertEqual(0, scoring["event_scoring"]["completed_batch_count"])
+            self.assertEqual(1, scoring["event_scoring"]["remaining_batch_count"])
+
+            score_batch = json.loads((work_root / "score-input/batch-0001.json").read_text(encoding="utf-8"))
+            score_result = {
+                "schema_version": "1.0.0", "run_id": RUN_ID, "main_sha": MAIN_SHA,
+                "window": WINDOW, "batch_sequence": 1,
+                "events": [{
+                    "semantic_event_id": event["semantic_event_id"],
+                    "candidate": {
+                        "semantic_event_id": event["semantic_event_id"],
+                        "candidate_urls": event["candidate_urls"],
+                    },
+                } for event in score_batch["events"]],
+            }
+            score_path = root / "score.json"
+            write_json(score_path, score_result)
+            transport.record_score_result(
+                work_root / "score-input/manifest.json",
+                work_root / "score-input/batch-0001.json",
+                score_path, work_root / "score-results",
+            )
+            ready = transport.candidate_audit_progress(manifest_path, work_root, audit_path)
+            self.assertEqual("finalize", ready["phase"])
+            self.assertEqual("candidate_audit_finalize", ready["next_operation"])
+            self.assertIsNone(ready["next_batch_sequence"])
+
+    def test_progress_rejects_noncontiguous_review_checkpoints(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            manifest, first = audit_input_fixture(root, count=1)
+            second = copy.deepcopy(first)
+            second["batch_sequence"] = 2
+            second["rows"][0]["row_id"] = "row-" + "2" * 24
+            second["rows"][0]["canonical_url"] = "https://example.com/2"
+            write_json(root / "audit-input/batch-0002.json", second)
+            manifest.update({
+                "source_row_count": 2,
+                "batch_count": 2,
+                "batch_files": ["batch-0001.json", "batch-0002.json"],
+            })
+            write_json(root / "audit-input/manifest.json", manifest)
+            result = review_result(second)
+            result["batch_sequence"] = 2
+            result_path = root / "result.json"
+            write_json(result_path, result)
+            transport.record_review_result(
+                root / "audit-input/manifest.json", root / "audit-input/batch-0002.json",
+                result_path, root / "candidate-audit-work/row-review",
+            )
+            with self.assertRaisesRegex(ValueError, "non-contiguous row review checkpoints"):
+                transport.candidate_audit_progress(
+                    root / "audit-input/manifest.json", root / "candidate-audit-work",
+                    root / "candidate-audit.json",
+                )
+
+    def test_progress_rejects_candidate_audit_without_complete_checkpoints(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            audit_input_fixture(root)
+            write_json(root / "candidate-audit.json", {
+                "schema_version": "1.2.0",
+                "runs": [{"run_id": RUN_ID}],
+            })
+            with self.assertRaisesRegex(ValueError, "candidate audit exists before row review is complete"):
+                transport.candidate_audit_progress(
+                    root / "audit-input/manifest.json", root / "candidate-audit-work",
+                    root / "candidate-audit.json",
+                )
+
     def test_review_result_requires_exact_batch_row_conservation(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

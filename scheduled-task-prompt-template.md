@@ -137,6 +137,8 @@ Reader 必須包含本輪所有 C 級以上 validated 事件，來源連結與�
 
 每個 stage 只有在最新版契約要求的 artifact／結構驗證通過後才可完成。單一路徑失敗、沒有特定工具名稱、搜尋卡沒有 image ref、GitHub 某次讀取 timeout 或圖片需要換來源，都不是最早不可恢復 blocker；先執行同 stage 的合法 fallback 與有限重試。失敗時從 first incomplete stage 接續，不得把失敗硬說成完成，也不得因後段失敗重跑已完成前段。
 
+`PENDING_CANDIDATE_AUDIT_WORK_IS_NOT_BLOCKER_GATE`：candidate audit 開始時及每次 checkpoint commit 後呼叫 `candidate_audit_status`，讀取 exact run 的 `candidate-audit-work/progress.json`，只執行其唯一 `next_operation`，等待 durable commit，再從**第一個未完成**單元接續。待處理 row／batch 數、已耗模型時間、context 大小或 token 顧慮只是 `in_progress`，不是不可恢復 blocker；不得只因仍有 review／score 工作就回報失敗、重掃 discovery、另建 run，並且**不得停用**本 exact task。只有具體 identity、hash、conservation、validator 或 transport failure 才可 fail-closed。
+
 `CURRENT_CONVERSATION_DELIVERY_GATE`
 
 成功時將完整 canonical Reader（含實際可見圖片）回覆到建立本 Scheduled Task 的目前 ChatGPT 對話，不得另開新對話、只貼摘要、只給 GitHub artifact、只報「已生成」、只列候選或只交付圖片網址。若真正遇到最新版規則定義的不可恢復 blocker，只回報最早 blocker、已完成 stage、同一 run 的可恢復位置與尚未完成項目；不得把 partial Reader 冒充正式結果。
