@@ -1,19 +1,17 @@
 {
   "schema_version": "1.0",
   "source_row_count": 861,
-  "seen_row_count": 860,
-  "terminal_row_count": 860,
-  "missing_row_count": 1,
+  "seen_row_count": 861,
+  "terminal_row_count": 861,
+  "missing_row_count": 0,
   "unresolved_row_count": 0,
-  "missing_row_ids": [
-    "row-dbef557a01a84e892ed53b4e"
-  ],
+  "missing_row_ids": [],
   "unresolved_row_ids": [],
   "status_counts": {
-    "unresolved_exhausted": 0,
     "outside_window": 4,
-    "content_ready": 856,
+    "content_ready": 857,
+    "unresolved_exhausted": 0,
     "unresolved": 0
   },
-  "complete": false
+  "complete": true
 }
