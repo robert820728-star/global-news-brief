@@ -20,10 +20,10 @@
     "row-f6c20be718998f81588123b8"
   ],
   "status_counts": {
-    "unresolved": 11,
-    "outside_window": 11,
     "content_ready": 850,
-    "unresolved_exhausted": 0
+    "unresolved_exhausted": 0,
+    "outside_window": 11,
+    "unresolved": 11
   },
   "complete": false
 }
