@@ -10,8 +10,8 @@
   "pending_work_is_blocker": false,
   "row_review": {
     "total_batch_count": 44,
-    "completed_batch_count": 3,
-    "remaining_batch_count": 41
+    "completed_batch_count": 4,
+    "remaining_batch_count": 40
   },
   "event_scoring": {
     "prepared": false,
@@ -22,9 +22,9 @@
   "status": "in_progress",
   "phase": "row_review",
   "next_operation": "candidate_audit_review",
-  "next_batch_sequence": 4,
-  "next_input_path": "audit-input/batch-0004.json",
-  "next_input_sha256": "5e3269aa3881e32a1fdac2c09de8bffbe91e386ccbdccb359c7a327322b3cab4",
+  "next_batch_sequence": 5,
+  "next_input_path": "audit-input/batch-0005.json",
+  "next_input_sha256": "d57e2ec7fe69d0f1734d0b06c767d6c547d442865f30457fb04568a4605b0e0a",
   "candidate_audit_path": null,
   "candidate_audit_sha256": null
 }

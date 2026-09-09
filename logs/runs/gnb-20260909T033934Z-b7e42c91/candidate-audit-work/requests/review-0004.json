@@ -1,0 +1,273 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260909T033934Z-b7e42c91",
+  "main_sha": "fed82d271b4eaa299067c6571e3c80a0779c4282",
+  "window": {
+    "start": "2026-09-08T03:39:34+00:00",
+    "end": "2026-09-09T03:39:34+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 4,
+  "rows": [
+    {
+      "row_id": "row-14209868a37838e1324c8b20",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-62e04f7aea46783f408f7c9d",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-14209868a37838e1324c8b20"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1592ae5c1cefa8b0b29b8420",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-954316028a48f89a9a82566e",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-1592ae5c1cefa8b0b29b8420"
+        ]
+      }
+    },
+    {
+      "row_id": "row-15a4b4c0282b35b55c551aac",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-c8886007d01cc01ae6fef8e6",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-15a4b4c0282b35b55c551aac"
+        ]
+      }
+    },
+    {
+      "row_id": "row-15d15561f95d309e8c6aa65c",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-d012ef28ec9a9db09e482e18",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-15d15561f95d309e8c6aa65c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-160fd346c3a1f785098637cb",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-c412b3545cd9ce04275c5ce3",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-160fd346c3a1f785098637cb"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1621fce89907cc107192b980",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-2381d13ab36b97254d8f47ac",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-1621fce89907cc107192b980"
+        ]
+      }
+    },
+    {
+      "row_id": "row-16925b34134c1b704eb09d43",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-2d685534dbc14454ecd530b2",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-16925b34134c1b704eb09d43"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1697d78edf43d9376c7d22f2",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-3a24b9c67ffe232032f0dfb7",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-1697d78edf43d9376c7d22f2"
+        ]
+      }
+    },
+    {
+      "row_id": "row-16e72a1bdfa9c6908d68a78e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-6143c3dd98fa7de2f8c99749",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-16e72a1bdfa9c6908d68a78e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-178ddd6b75a564daad119a39",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-ae4ab0114f307858cdc3bd1c",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-178ddd6b75a564daad119a39"
+        ]
+      }
+    },
+    {
+      "row_id": "row-19679057ecd45f19070a2346",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-8e8d5976c2b7924a52873a67",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-19679057ecd45f19070a2346"
+        ]
+      }
+    },
+    {
+      "row_id": "row-19e5751945ed1b0dd39f6a71",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-703e2ad8c95d7af3715f15f9",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-19e5751945ed1b0dd39f6a71"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1aa3868f7cb157a08623a3b9",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-ff2dfb70ee8018863a355d09",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-1aa3868f7cb157a08623a3b9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1b3174482997404bada7ea5d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-65403cac425e574ef8081118",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-1b3174482997404bada7ea5d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1b5c434f7d21d578592b34fc",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-d78dc826df3a788bf5964468",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-1b5c434f7d21d578592b34fc"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1ba2633afc512997bf4946e5",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-2ac5977ad43d4e32149e5b14",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-1ba2633afc512997bf4946e5"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1bc4fb2bafa3447d8ad42fb5",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-7c63db3835113c5f70e7683d",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-1bc4fb2bafa3447d8ad42fb5"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1bce7d416a89dff9ae0cab80",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-9cdc460b973dee6b1b0db33f",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-1bce7d416a89dff9ae0cab80"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1bd62a1bb1d5f01940d0d1af",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-8e30e03abee9ce906001a964",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-1bd62a1bb1d5f01940d0d1af"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1c0b6a434337114d06b25996",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-30a869606a4833b22fa3df00",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-1c0b6a434337114d06b25996"
+        ]
+      }
+    }
+  ]
+}
