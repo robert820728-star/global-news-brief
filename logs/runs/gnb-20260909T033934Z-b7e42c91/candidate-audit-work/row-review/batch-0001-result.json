@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260909T033934Z-b7e42c91",
+  "main_sha": "fed82d271b4eaa299067c6571e3c80a0779c4282",
+  "window": {
+    "start": "2026-09-08T03:39:34+00:00",
+    "end": "2026-09-09T03:39:34+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 1,
+  "input_batch_sha256": "543cefffc836c899a3763eabdeeb50da2e33046324b305be4c89d86b3ca1841f",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-00616ef02c19d9f318a367f8",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-a5c1cebf20d30729c1ee9375",
+      "reason": "Hydrated article reports a time-bound market event; retain for semantic-event scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated factual developments.",
+        "evidence_refs": [
+          "row-00616ef02c19d9f318a367f8"
+        ]
+      }
+    },
+    {
+      "row_id": "row-00b9bc92c69f0aaeb4ddcc28",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-834c091dc909317f54fa130e",
+      "reason": "Hydrated article reports a current government pet-registration incentive; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated program details and eligibility rules.",
+        "evidence_refs": [
+          "row-00b9bc92c69f0aaeb4ddcc28"
+        ]
+      }
+    },
+    {
+      "row_id": "row-01352f763bbc03947703392f",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-dc6685b80a96c2311fc3b7ac",
+      "reason": "Hydrated article reports South Africa Q2 GDP contraction; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains official dated GDP data.",
+        "evidence_refs": [
+          "row-01352f763bbc03947703392f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-026a01c35f65fcc9f5a00f8e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-6578ba7672c8741262299ac5",
+      "reason": "Hydrated article reports the opening and scale of a current disability sports event.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated event facts.",
+        "evidence_refs": [
+          "row-026a01c35f65fcc9f5a00f8e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-026bf95bf9aaccaf275e5b63",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-9192d57bbfd7a9a261ef17b0",
+      "reason": "Hydrated article reports a current analysis of embedded AI in Chinese manufacturing; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body supplies current attributed industry analysis.",
+        "evidence_refs": [
+          "row-026bf95bf9aaccaf275e5b63"
+        ]
+      }
+    },
+    {
+      "row_id": "row-028c560f47baaa423dab67ec",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-28e918437860529ae4f9ab1e",
+      "reason": "Hydrated investigative report documents illegal fuel stations and safety risks; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains current investigative findings.",
+        "evidence_refs": [
+          "row-028c560f47baaa423dab67ec"
+        ]
+      }
+    },
+    {
+      "row_id": "row-02cd052824bb79da15d42c7f",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-9a50f74e34c150b2f832f564",
+      "reason": "Hydrated article reports a current MLB roster transaction; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated transaction facts.",
+        "evidence_refs": [
+          "row-02cd052824bb79da15d42c7f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-03ae54a8402be1d06d93de84",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-020b1f9ab759377585abdde0",
+      "reason": "Hydrated article reports the death of former Hong Kong chief executive Tung Chee-hwa; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains a dated death report and political context.",
+        "evidence_refs": [
+          "row-03ae54a8402be1d06d93de84"
+        ]
+      }
+    },
+    {
+      "row_id": "row-049f84d361c7f6c8e7de8e41",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-a5da766d4d313553efdf783b",
+      "reason": "Hydrated article reports the first second-instance hearing in Ko Wen-je's case; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated court-procedure developments.",
+        "evidence_refs": [
+          "row-049f84d361c7f6c8e7de8e41"
+        ]
+      }
+    },
+    {
+      "row_id": "row-04b18c027c8013595bef9634",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-257a1983cc99ccf30478c8ef",
+      "reason": "Hydrated article reports a current zoo education-center reopening and exhibition; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body is a dated local cultural event report.",
+        "evidence_refs": [
+          "row-04b18c027c8013595bef9634"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0502f11e081e12ae4d5f4679",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-b6b731fb920c41bf62a464c0",
+      "reason": "Hydrated article reports current AI-assisted traditional-medicine applications at a trade fair; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated exhibition and technology-use facts.",
+        "evidence_refs": [
+          "row-0502f11e081e12ae4d5f4679"
+        ]
+      }
+    },
+    {
+      "row_id": "row-052913e0df1bc7b44ca2fe50",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-0a70ad8094b40efa4d512683",
+      "reason": "Hydrated article reports current cross-strait trade and investment activities; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated event and participation facts.",
+        "evidence_refs": [
+          "row-052913e0df1bc7b44ca2fe50"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0537bce59a63984bab97d476",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-7fee8d536cb4965d26e1eecc",
+      "reason": "Hydrated article reports a proposed e-cigarette possession penalty and current collection program; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated policy-stage and implementation facts.",
+        "evidence_refs": [
+          "row-0537bce59a63984bab97d476"
+        ]
+      }
+    },
+    {
+      "row_id": "row-05580d420e9d39ceffa8a134",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-06cf6d550e18ded0065f444a",
+      "reason": "Hydrated article reports an anti-corruption investigation of a former pharmaceutical company chairman.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains a dated official disciplinary-investigation notice.",
+        "evidence_refs": [
+          "row-05580d420e9d39ceffa8a134"
+        ]
+      }
+    },
+    {
+      "row_id": "row-060357d5f64c6a2e02cda5b5",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-fb9bcfe33d17228c45d50e3d",
+      "reason": "Hydrated article reports a presidential meeting with a Canadian parliamentary delegation and cooperation agenda.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated diplomatic-event facts.",
+        "evidence_refs": [
+          "row-060357d5f64c6a2e02cda5b5"
+        ]
+      }
+    },
+    {
+      "row_id": "row-06644f71b7677cd2b843e2e9",
+      "disposition": "unresolved_exhausted",
+      "semantic_event_id": null,
+      "reason": "Reuters article-body hydration remained unavailable after canonical, retry, and same-host recovery attempts; no body evidence is available for semantic review.",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "Durable hydration evidence records repeated HTTP 401 and terminal exhaustion.",
+        "evidence_refs": [
+          "row-06644f71b7677cd2b843e2e9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-06df70d784caad2ae477c627",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-5fa41ac75ef8463590359bbd",
+      "reason": "Hydrated article reports renewed Russian strikes on Kyiv after a three-day pause; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated attack and casualty facts.",
+        "evidence_refs": [
+          "row-06df70d784caad2ae477c627"
+        ]
+      }
+    },
+    {
+      "row_id": "row-07c4ec799be21750db890c32",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-3c2c69876092f72ea2cb07b7",
+      "reason": "Hydrated article reports Czech plans for an AI gigafactory and national language model; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains current policy and infrastructure-plan facts.",
+        "evidence_refs": [
+          "row-07c4ec799be21750db890c32"
+        ]
+      }
+    },
+    {
+      "row_id": "row-07d04522992bfb069a129a14",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-4199cc98b7ede96edea2e17d",
+      "reason": "Hydrated article reports a UK-France-Canada statement and trade/sanctions measures regarding West Bank settlements.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated joint-statement and policy facts.",
+        "evidence_refs": [
+          "row-07d04522992bfb069a129a14"
+        ]
+      }
+    },
+    {
+      "row_id": "row-084b6bf41f3c8434b70868dc",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-9192c59a14f3d37b8acefb62",
+      "reason": "Hydrated article reports the opening and attendance of the China Intellectual Property Annual Conference; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body is a dated conference report.",
+        "evidence_refs": [
+          "row-084b6bf41f3c8434b70868dc"
+        ]
+      }
+    }
+  ]
+}
