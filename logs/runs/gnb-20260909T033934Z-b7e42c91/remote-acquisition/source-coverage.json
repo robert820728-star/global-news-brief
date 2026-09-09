@@ -12957,5 +12957,101 @@
     "scan_window_start": "2026-09-08T03:39:34+00:00",
     "scan_window_end": "2026-09-09T03:39:34+00:00",
     "scan_evidence_path": "source-scans/chinanews.json"
+  },
+  {
+    "source_id": "web_fallback",
+    "scan_status": "completed",
+    "coverage_complete": false,
+    "coverage_status": "degraded_partial",
+    "coverage_reason": "configured primary aggregator unavailable; bounded verified host web fallback materialized",
+    "missing_segments": [
+      "configured_primary_aggregator_unavailable"
+    ],
+    "missing_date_variants": [],
+    "within_window_count": 9,
+    "ranked_count": 9,
+    "ranked_items": [
+      {
+        "url": "https://www.reuters.com/world/middle-east/saudi-led-coalition-yemen-says-73-injured-houthi-attacks-kingdom-2026-09-08/",
+        "title": "Houthi attacks disrupt Saudi energy facilities, wound 73, authorities say",
+        "published_at": "2026-09-08T04:19:00+00:00",
+        "discovery_priority_score": 999,
+        "discovery_priority_reason": "Major regional conflict escalation with direct civilian, energy-security and global commodity-market effects."
+      },
+      {
+        "url": "https://www.reuters.com/business/autos-transportation/canadas-retaliatory-tariffs-take-effect-us-trade-talks-stall-2026-09-08/",
+        "title": "US to ban Canadian motorcycle, dairy, alcohol imports as trade war sizzles",
+        "published_at": "2026-09-08T04:03:00+00:00",
+        "discovery_priority_score": 998,
+        "discovery_priority_reason": "Large cross-border trade-policy escalation involving two major integrated economies and USMCA stability."
+      },
+      {
+        "url": "https://www.reuters.com/business/environment/nepal-rescue-focused-on-workers-trapped-three-tunnels-2026-09-08/",
+        "title": "Nepal rescue focused on workers trapped in three tunnels",
+        "published_at": "2026-09-08T06:11:00+00:00",
+        "discovery_priority_score": 997,
+        "discovery_priority_reason": "Mass-casualty cross-border disaster with continuing rescue operations and critical infrastructure impacts."
+      },
+      {
+        "url": "https://www.reuters.com/world/uk/uk-announce-trade-ban-israeli-west-bank-goods-2026-09-08/",
+        "title": "Israel to close British consulate in East Jerusalem after UK, France and Canada ban imports from settlements",
+        "published_at": "2026-09-08T06:13:00+00:00",
+        "discovery_priority_score": 996,
+        "discovery_priority_reason": "Coordinated multi-country policy action and direct diplomatic retaliation concerning a major international conflict."
+      },
+      {
+        "url": "https://www.reuters.com/technology/qualcomm-amazon-develop-custom-chips-ai-data-centers-2026-09-08/",
+        "title": "Qualcomm strikes AI chip deal with Amazon, offers right to buy about $4 billion in stock",
+        "published_at": "2026-09-08T13:15:00+00:00",
+        "discovery_priority_score": 995,
+        "discovery_priority_reason": "Large strategic AI-infrastructure deal with semiconductor-market and cloud-computing implications."
+      },
+      {
+        "url": "https://www.reuters.com/technology/us-accuses-chinese-ai-firms-industrial-scale-theft-ai-technology-2026-09-08/",
+        "title": "US accuses Chinese AI firms of 'malicious' copying of AI technology",
+        "published_at": "2026-09-08T17:47:00+00:00",
+        "discovery_priority_score": 994,
+        "discovery_priority_reason": "High-level U.S.-China technology and national-security allegation with implications for AI competition and diplomacy."
+      },
+      {
+        "url": "https://www.reuters.com/world/middle-east/iran-says-it-captured-us-submarine-drone-strait-hormuz-2026-09-08/",
+        "title": "Iran says it captured US submarine drone in Strait of Hormuz",
+        "published_at": "2026-09-08T22:31:00+00:00",
+        "discovery_priority_score": 993,
+        "discovery_priority_reason": "Novel military-technology incident in the strategically critical Strait of Hormuz during an active regional conflict."
+      },
+      {
+        "url": "https://www.reuters.com/world/middle-east/shipping-traffic-via-strait-hormuz-stays-below-10-day-average-data-shows-2026-09-09/",
+        "title": "Shipping traffic via Strait of Hormuz stays below 10-day average, data shows",
+        "published_at": "2026-09-09T02:08:00+00:00",
+        "discovery_priority_score": 992,
+        "discovery_priority_reason": "Current measurable disruption at a globally critical energy-shipping chokepoint."
+      },
+      {
+        "url": "https://www.reuters.com/world/africa/south-africas-second-quarter-gdp-contracts-02-qq-2026-09-08/",
+        "title": "South African economy shrinks in second quarter, dragged down by Iran war",
+        "published_at": "2026-09-08T09:02:00+00:00",
+        "discovery_priority_score": 991,
+        "discovery_priority_reason": "National macroeconomic contraction with documented spillover from the Middle East energy shock."
+      }
+    ],
+    "selected_for_pool_count": 9,
+    "selected_item_urls": [
+      "https://www.reuters.com/world/middle-east/saudi-led-coalition-yemen-says-73-injured-houthi-attacks-kingdom-2026-09-08/",
+      "https://www.reuters.com/business/autos-transportation/canadas-retaliatory-tariffs-take-effect-us-trade-talks-stall-2026-09-08/",
+      "https://www.reuters.com/business/environment/nepal-rescue-focused-on-workers-trapped-three-tunnels-2026-09-08/",
+      "https://www.reuters.com/world/uk/uk-announce-trade-ban-israeli-west-bank-goods-2026-09-08/",
+      "https://www.reuters.com/technology/qualcomm-amazon-develop-custom-chips-ai-data-centers-2026-09-08/",
+      "https://www.reuters.com/technology/us-accuses-chinese-ai-firms-industrial-scale-theft-ai-technology-2026-09-08/",
+      "https://www.reuters.com/world/middle-east/iran-says-it-captured-us-submarine-drone-strait-hormuz-2026-09-08/",
+      "https://www.reuters.com/world/middle-east/shipping-traffic-via-strait-hormuz-stays-below-10-day-average-data-shows-2026-09-09/",
+      "https://www.reuters.com/world/africa/south-africas-second-quarter-gdp-contracts-02-qq-2026-09-08/"
+    ],
+    "discovery_ranking_completed": true,
+    "discovery_ranking_method": "bounded_host_search_rank_v1",
+    "failure_reason": null,
+    "scan_window_start": "2026-09-08T03:39:34+00:00",
+    "scan_window_end": "2026-09-09T03:39:34+00:00",
+    "scan_evidence_path": "source-scans/web_fallback.json"
   }
 ]

@@ -1,0 +1,149 @@
+{
+  "schema_version": "1.0.0",
+  "source_id": "web_fallback",
+  "collector": "verified-web-search-fallback",
+  "generated_at": "2026-09-09T03:39:34+00:00",
+  "window_start": "2026-09-08T03:39:34+00:00",
+  "window_end": "2026-09-09T03:39:34+00:00",
+  "coverage_complete": false,
+  "coverage_status": "degraded_partial",
+  "coverage_reason": "configured primary aggregator unavailable; bounded verified host web fallback materialized",
+  "missing_segments": [
+    "configured_primary_aggregator_unavailable"
+  ],
+  "missing_date_variants": [],
+  "pages": [
+    {
+      "request_url": "https://www.reuters.com/world/middle-east/saudi-led-coalition-yemen-says-73-injured-houthi-attacks-kingdom-2026-09-08/",
+      "fetched_at": "2026-09-09T03:39:34+00:00",
+      "http_status": 200,
+      "snapshot_path": "web-fallback/batch-0001-snapshot.json",
+      "sha256": "a4be9868a7fde537c98d4b950e19837c06e11fcd7c1359bb2d732feab7fd2761",
+      "next_url": null,
+      "extracted_items": [
+        {
+          "result_id": "result-001",
+          "search_rank": 1,
+          "url": "https://www.reuters.com/world/middle-east/saudi-led-coalition-yemen-says-73-injured-houthi-attacks-kingdom-2026-09-08/",
+          "title": "Houthi attacks disrupt Saudi energy facilities, wound 73, authorities say",
+          "summary": "Houthi missile and drone attacks hit Saudi energy facilities and southern cities, wounded 73 people and caused fires and operational disruptions as regional tensions pushed oil prices higher.",
+          "published_at": "2026-09-08T04:19:00+00:00",
+          "url_evidence": "Exact Reuters article URL opened and verified in host search.",
+          "published_evidence": "Reuters article header: September 8, 2026 4:19 AM UTC.",
+          "discovery_priority_reason": "Major regional conflict escalation with direct civilian, energy-security and global commodity-market effects.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-002",
+          "search_rank": 2,
+          "url": "https://www.reuters.com/business/autos-transportation/canadas-retaliatory-tariffs-take-effect-us-trade-talks-stall-2026-09-08/",
+          "title": "US to ban Canadian motorcycle, dairy, alcohol imports as trade war sizzles",
+          "summary": "The United States announced broad Canadian import bans effective September 29 after Canadian retaliatory tariffs on $20 billion of U.S. goods took effect, escalating the bilateral trade conflict.",
+          "published_at": "2026-09-08T04:03:00+00:00",
+          "url_evidence": "Exact Reuters article URL opened and verified in host search.",
+          "published_evidence": "Reuters article header: September 8, 2026 4:03 AM UTC.",
+          "discovery_priority_reason": "Large cross-border trade-policy escalation involving two major integrated economies and USMCA stability.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-003",
+          "search_rank": 3,
+          "url": "https://www.reuters.com/business/environment/nepal-rescue-focused-on-workers-trapped-three-tunnels-2026-09-08/",
+          "title": "Nepal rescue focused on workers trapped in three tunnels",
+          "summary": "Nepal rescuers concentrated on hydropower tunnels after catastrophic floods; at least 1,399 people had died and more than 5,400 were missing across Nepal and Tibet.",
+          "published_at": "2026-09-08T06:11:00+00:00",
+          "url_evidence": "Exact Reuters article URL opened and verified in host search.",
+          "published_evidence": "Reuters article header: September 8, 2026 6:11 AM UTC.",
+          "discovery_priority_reason": "Mass-casualty cross-border disaster with continuing rescue operations and critical infrastructure impacts.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-004",
+          "search_rank": 4,
+          "url": "https://www.reuters.com/world/uk/uk-announce-trade-ban-israeli-west-bank-goods-2026-09-08/",
+          "title": "Israel to close British consulate in East Jerusalem after UK, France and Canada ban imports from settlements",
+          "summary": "Israel said it would close the British consulate in East Jerusalem after Britain, France and Canada moved to block imports from Israeli settlements, deepening a major diplomatic dispute over the West Bank.",
+          "published_at": "2026-09-08T06:13:00+00:00",
+          "url_evidence": "Exact Reuters article URL opened and verified in host search.",
+          "published_evidence": "Reuters article header: September 8, 2026 6:13 AM UTC.",
+          "discovery_priority_reason": "Coordinated multi-country policy action and direct diplomatic retaliation concerning a major international conflict.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-005",
+          "search_rank": 5,
+          "url": "https://www.reuters.com/technology/qualcomm-amazon-develop-custom-chips-ai-data-centers-2026-09-08/",
+          "title": "Qualcomm strikes AI chip deal with Amazon, offers right to buy about $4 billion in stock",
+          "summary": "Amazon could purchase up to $60 billion of Qualcomm AI data-center chips and related products under a long-term partnership that also grants Amazon warrants worth about $4 billion.",
+          "published_at": "2026-09-08T13:15:00+00:00",
+          "url_evidence": "Exact Reuters article URL opened and verified in host search.",
+          "published_evidence": "Reuters article header: September 8, 2026 1:15 PM UTC.",
+          "discovery_priority_reason": "Large strategic AI-infrastructure deal with semiconductor-market and cloud-computing implications.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-006",
+          "search_rank": 6,
+          "url": "https://www.reuters.com/technology/us-accuses-chinese-ai-firms-industrial-scale-theft-ai-technology-2026-09-08/",
+          "title": "US accuses Chinese AI firms of 'malicious' copying of AI technology",
+          "summary": "U.S. officials accused six Chinese AI companies of industrial-scale targeted distillation from American AI models; the allegations precede planned U.S.-China leader and AI-safety talks.",
+          "published_at": "2026-09-08T17:47:00+00:00",
+          "url_evidence": "Exact Reuters article URL opened and verified in host search.",
+          "published_evidence": "Reuters article header: September 8, 2026 5:47 PM UTC.",
+          "discovery_priority_reason": "High-level U.S.-China technology and national-security allegation with implications for AI competition and diplomacy.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-007",
+          "search_rank": 7,
+          "url": "https://www.reuters.com/world/middle-east/iran-says-it-captured-us-submarine-drone-strait-hormuz-2026-09-08/",
+          "title": "Iran says it captured US submarine drone in Strait of Hormuz",
+          "summary": "Iran's Revolutionary Guards said they captured a U.S. Dive-LD uncrewed submarine; the Pentagon said the drone malfunctioned during regional surveying and carried no classified sonar or radar equipment.",
+          "published_at": "2026-09-08T22:31:00+00:00",
+          "url_evidence": "Exact Reuters article URL opened and verified in host search.",
+          "published_evidence": "Reuters article header: September 8, 2026 10:31 PM UTC.",
+          "discovery_priority_reason": "Novel military-technology incident in the strategically critical Strait of Hormuz during an active regional conflict.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-008",
+          "search_rank": 8,
+          "url": "https://www.reuters.com/world/middle-east/shipping-traffic-via-strait-hormuz-stays-below-10-day-average-data-shows-2026-09-09/",
+          "title": "Shipping traffic via Strait of Hormuz stays below 10-day average, data shows",
+          "summary": "Only six commodity vessels transited the Strait of Hormuz on Tuesday, below a 10-day average of about 12, amid intensified U.S.-Iran conflict and attacks affecting regional energy infrastructure.",
+          "published_at": "2026-09-09T02:08:00+00:00",
+          "url_evidence": "Exact Reuters article URL opened and verified in host search.",
+          "published_evidence": "Reuters article header: September 9, 2026 2:08 AM UTC.",
+          "discovery_priority_reason": "Current measurable disruption at a globally critical energy-shipping chokepoint.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        },
+        {
+          "result_id": "result-009",
+          "search_rank": 9,
+          "url": "https://www.reuters.com/world/africa/south-africas-second-quarter-gdp-contracts-02-qq-2026-09-08/",
+          "title": "South African economy shrinks in second quarter, dragged down by Iran war",
+          "summary": "South Africa's GDP contracted 0.2% quarter-on-quarter in the second quarter, its first contraction in nearly two years, with mining, manufacturing and trade declining.",
+          "published_at": "2026-09-08T09:02:00+00:00",
+          "url_evidence": "Exact Reuters article URL opened and verified in host search.",
+          "published_evidence": "Reuters article header: September 8, 2026 9:02 AM UTC.",
+          "discovery_priority_reason": "National macroeconomic contraction with documented spillover from the Middle East energy shock.",
+          "section": "GLB",
+          "acquisition_route": "web_search_fallback"
+        }
+      ]
+    }
+  ],
+  "terminal_proof": {
+    "type": "source_exhausted",
+    "page_index": 1,
+    "terminal_marker": "bounded_search_complete"
+  }
+}

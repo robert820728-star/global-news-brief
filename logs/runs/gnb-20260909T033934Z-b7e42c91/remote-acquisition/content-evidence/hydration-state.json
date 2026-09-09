@@ -1,17 +1,27 @@
 {
   "schema_version": "1.0",
-  "source_row_count": 861,
-  "seen_row_count": 861,
+  "source_row_count": 870,
+  "seen_row_count": 870,
   "terminal_row_count": 861,
   "missing_row_count": 0,
-  "unresolved_row_count": 0,
+  "unresolved_row_count": 9,
   "missing_row_ids": [],
-  "unresolved_row_ids": [],
+  "unresolved_row_ids": [
+    "row-06644f71b7677cd2b843e2e9",
+    "row-0e70df4fe8b49acce5dec9ea",
+    "row-1c1f2ecd647f8ca6086a86c7",
+    "row-2835d68da35a84b614954dbe",
+    "row-4030958b3d5955db7b9a984b",
+    "row-6f19c9cf296d3d679e8ec4a6",
+    "row-99cae824e782b06ed0ca8d15",
+    "row-e2eb6fb8fe3c7de07000e4c0",
+    "row-e8d6e9c5dc1ea93ff97f61f3"
+  ],
   "status_counts": {
-    "content_ready": 850,
     "outside_window": 11,
-    "unresolved": 0,
-    "unresolved_exhausted": 0
+    "unresolved": 9,
+    "unresolved_exhausted": 0,
+    "content_ready": 850
   },
-  "complete": true
+  "complete": false
 }
