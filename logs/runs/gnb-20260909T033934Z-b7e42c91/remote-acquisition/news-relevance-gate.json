@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
-  "input_article_row_count": 870,
+  "input_article_row_count": 872,
   "content_hydration_count": 861,
-  "lightweight_semantic_review_count": 9,
+  "lightweight_semantic_review_count": 11,
   "decisions": [
     {
       "row_id": "row-a7f0b328ec214166e448bc8f",
@@ -2795,6 +2795,17 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-f6c20be718998f81588123b8",
+      "candidate_id": "26b650464f6e579f87ae",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/asia-pacific/japan-manufacturers-mood-near-five-year-high-reuters-tankan-shows-2026-09-08",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     },
@@ -8394,6 +8405,17 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-93991aaeec0c7af29f7711a5",
+      "candidate_id": "45d60064bb2f9931b34d",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/uk/uk-air-traffic-control-says-it-is-experiencing-technical-issue-2026-09-08",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     },

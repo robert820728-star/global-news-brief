@@ -12968,8 +12968,8 @@
       "configured_primary_aggregator_unavailable"
     ],
     "missing_date_variants": [],
-    "within_window_count": 9,
-    "ranked_count": 9,
+    "within_window_count": 11,
+    "ranked_count": 11,
     "ranked_items": [
       {
         "url": "https://www.reuters.com/world/middle-east/saudi-led-coalition-yemen-says-73-injured-houthi-attacks-kingdom-2026-09-08/",
@@ -13033,9 +13033,23 @@
         "published_at": "2026-09-08T09:02:00+00:00",
         "discovery_priority_score": 991,
         "discovery_priority_reason": "National macroeconomic contraction with documented spillover from the Middle East energy shock."
+      },
+      {
+        "url": "https://www.reuters.com/world/uk/uk-air-traffic-control-says-it-is-experiencing-technical-issue-2026-09-08/",
+        "title": "UK air traffic disruption causes mass flight cancellations after NATS technical issue",
+        "published_at": "2026-09-08T14:17:00+00:00",
+        "discovery_priority_score": 990,
+        "discovery_priority_reason": "Nationwide critical transport-system disruption affecting large numbers of passengers and flights."
+      },
+      {
+        "url": "https://www.reuters.com/world/asia-pacific/japan-manufacturers-mood-near-five-year-high-reuters-tankan-shows-2026-09-08/",
+        "title": "Japan manufacturers' mood near five-year high, Reuters Tankan shows",
+        "published_at": "2026-09-08T23:06:00+00:00",
+        "discovery_priority_score": 989,
+        "discovery_priority_reason": "Fresh high-frequency business sentiment signal for a major economy with semiconductor and AI-demand relevance."
       }
     ],
-    "selected_for_pool_count": 9,
+    "selected_for_pool_count": 11,
     "selected_item_urls": [
       "https://www.reuters.com/world/middle-east/saudi-led-coalition-yemen-says-73-injured-houthi-attacks-kingdom-2026-09-08/",
       "https://www.reuters.com/business/autos-transportation/canadas-retaliatory-tariffs-take-effect-us-trade-talks-stall-2026-09-08/",
@@ -13045,7 +13059,9 @@
       "https://www.reuters.com/technology/us-accuses-chinese-ai-firms-industrial-scale-theft-ai-technology-2026-09-08/",
       "https://www.reuters.com/world/middle-east/iran-says-it-captured-us-submarine-drone-strait-hormuz-2026-09-08/",
       "https://www.reuters.com/world/middle-east/shipping-traffic-via-strait-hormuz-stays-below-10-day-average-data-shows-2026-09-09/",
-      "https://www.reuters.com/world/africa/south-africas-second-quarter-gdp-contracts-02-qq-2026-09-08/"
+      "https://www.reuters.com/world/africa/south-africas-second-quarter-gdp-contracts-02-qq-2026-09-08/",
+      "https://www.reuters.com/world/uk/uk-air-traffic-control-says-it-is-experiencing-technical-issue-2026-09-08/",
+      "https://www.reuters.com/world/asia-pacific/japan-manufacturers-mood-near-five-year-high-reuters-tankan-shows-2026-09-08/"
     ],
     "discovery_ranking_completed": true,
     "discovery_ranking_method": "bounded_host_search_rank_v1",

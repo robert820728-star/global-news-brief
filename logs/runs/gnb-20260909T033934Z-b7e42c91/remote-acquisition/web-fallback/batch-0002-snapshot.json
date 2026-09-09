@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "run_id": "gnb-20260909T033934Z-b7e42c91",
+  "main_sha": "fed82d271b4eaa299067c6571e3c80a0779c4282",
+  "window": {
+    "start": "2026-09-08T03:39:34+00:00",
+    "end": "2026-09-09T03:39:34+00:00"
+  },
+  "batch_sequence": 2,
+  "search_provider": "host_web_search",
+  "search_query": "Reuters September 8 2026 aviation outage Japan manufacturers sentiment bounded global search",
+  "search_evidence_url": "https://www.reuters.com/world/uk/uk-air-traffic-control-says-it-is-experiencing-technical-issue-2026-09-08/",
+  "searched_at": "2026-09-09T03:39:34+00:00",
+  "primary_failure_evidence": [
+    "Configured GDELT primary route was not available through the host execution path; bounded verified global web search was executed after regional source scan completion."
+  ],
+  "results": [
+    {
+      "result_id": "result-010",
+      "search_rank": 10,
+      "url": "https://www.reuters.com/world/uk/uk-air-traffic-control-says-it-is-experiencing-technical-issue-2026-09-08/",
+      "title": "UK air traffic disruption causes mass flight cancellations after NATS technical issue",
+      "summary": "A UK air-traffic-control technical failure led to more than a thousand flight cancellations and widespread delays, including disruption at Heathrow, before the system issue was resolved.",
+      "published_at": "2026-09-08T14:17:00+00:00",
+      "url_evidence": "Exact Reuters article URL opened and verified in host search.",
+      "published_evidence": "Reuters article header: September 8, 2026 2:17 PM UTC.",
+      "discovery_priority_reason": "Nationwide critical transport-system disruption affecting large numbers of passengers and flights.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "result-011",
+      "search_rank": 11,
+      "url": "https://www.reuters.com/world/asia-pacific/japan-manufacturers-mood-near-five-year-high-reuters-tankan-shows-2026-09-08/",
+      "title": "Japan manufacturers' mood near five-year high, Reuters Tankan shows",
+      "summary": "Japanese manufacturers' sentiment rose near a five-year high, led by electronics and AI/data-center demand, while the survey offered a fresh reading on the outlook for a major global economy.",
+      "published_at": "2026-09-08T23:06:00+00:00",
+      "url_evidence": "Exact Reuters article URL opened and verified in host search.",
+      "published_evidence": "Reuters article header: September 8, 2026 11:06 PM UTC.",
+      "discovery_priority_reason": "Fresh high-frequency business sentiment signal for a major economy with semiconductor and AI-demand relevance.",
+      "section": "GLB"
+    }
+  ],
+  "terminal_marker": "bounded_search_complete"
+}

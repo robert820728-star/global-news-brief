@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.1",
+  "rows": [
+    {
+      "row_id": "row-f6c20be718998f81588123b8",
+      "candidate_id": "26b650464f6e579f87ae",
+      "canonical_url": "https://www.reuters.com/world/asia-pacific/japan-manufacturers-mood-near-five-year-high-reuters-tankan-shows-2026-09-08",
+      "requested_url": "https://www.reuters.com/world/asia-pacific/japan-manufacturers-mood-near-five-year-high-reuters-tankan-shows-2026-09-08",
+      "source_id": "web_fallback",
+      "status": "unresolved",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "model_excerpt": null,
+      "error": "HTTPError: HTTP Error 401: HTTP Forbidden"
+    },
+    {
+      "row_id": "row-93991aaeec0c7af29f7711a5",
+      "candidate_id": "45d60064bb2f9931b34d",
+      "canonical_url": "https://www.reuters.com/world/uk/uk-air-traffic-control-says-it-is-experiencing-technical-issue-2026-09-08",
+      "requested_url": "https://www.reuters.com/world/uk/uk-air-traffic-control-says-it-is-experiencing-technical-issue-2026-09-08",
+      "source_id": "web_fallback",
+      "status": "unresolved",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "model_excerpt": null,
+      "error": "HTTPError: HTTP Error 401: HTTP Forbidden"
+    }
+  ]
+}
