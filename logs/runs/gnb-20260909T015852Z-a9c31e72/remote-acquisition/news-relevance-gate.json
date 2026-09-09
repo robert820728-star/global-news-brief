@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
-  "input_article_row_count": 866,
+  "input_article_row_count": 877,
   "content_hydration_count": 866,
-  "lightweight_semantic_review_count": 0,
+  "lightweight_semantic_review_count": 11,
   "decisions": [
     {
       "row_id": "row-f08f9e8c0e227a1a4a506e96",
@@ -1380,6 +1380,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-6e02f32d20290fe40594b5d8",
+      "candidate_id": "e1445078877dc53588f8",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/business/wildcat-infrastructure-offers-buy-austals-us-operations-up-135-billion-2026-09-09",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-4c1d5910ee729c03bf639edc",
       "candidate_id": "94facd201db2b4872ded",
       "source_id": "cna",
@@ -1398,6 +1409,17 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a871fdc1724e3e67902b8b86",
+      "candidate_id": "94977252c635bed01eea",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/china/openai-offers-ai-chip-design-touts-cost-advantage-over-open-source-cfo-says-2026-09-09",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     },
@@ -4460,6 +4482,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-ea435e18c69021485e1ad009",
+      "candidate_id": "36950702b778600ae642",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/technology/us-accuses-chinese-ai-firms-industrial-scale-theft-ai-technology-2026-09-08",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-a1122b66b3b63613374e7f36",
       "candidate_id": "c7c97a1b584f741c153f",
       "source_id": "cna",
@@ -7166,6 +7199,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-4ca43d396bd481d54da95f0a",
+      "candidate_id": "2535cee4aca2b1cf2aee",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/uk/some-uk-departing-flights-disrupted-by-nats-technical-issue-heathrow-says-2026-09-08",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-4bf217e2751da19029d53fd7",
       "candidate_id": "ae9fc9fc3dd1c6df3826",
       "source_id": "chinanews",
@@ -7760,6 +7804,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-95af8c3fedc20cf37111fb66",
+      "candidate_id": "e02b27fc06acc4468de9",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/technology/qualcomm-amazon-develop-custom-chips-ai-data-centers-2026-09-08",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-c6ec5663aa7f8a878b3b33aa",
       "candidate_id": "8ea4236deb4943bf74cb",
       "source_id": "chinanews",
@@ -7866,6 +7921,17 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-7b8136210fa77f9ab58bcc06",
+      "candidate_id": "f9a9a0933d15343ced54",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/business/aerospace-defense/cluster-bomb-casualties-near-record-driven-by-ukraine-2026-09-08",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     },
@@ -8937,6 +9003,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-cebdc9bb913591a11ca9f9fe",
+      "candidate_id": "37fb080086c1fdf1dd8b",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/german-police-detain-suspect-after-sabotage-attacks-power-grid-2026-09-08",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-2c152a33d672ea187678cf54",
       "candidate_id": "41bf521eb91102d1783b",
       "source_id": "chinanews",
@@ -9527,6 +9604,50 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-e75b1adc4acafcbd54502a93",
+      "candidate_id": "91b7859e4e9a7fec6b8a",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/business/wall-st-futures-slip-oil-surge-puts-markets-edge-2026-09-08",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-9b9f169d9ac3472b4f64cdc6",
+      "candidate_id": "8b8705518efc7163e5ec",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/uk/uk-announce-trade-ban-israeli-west-bank-goods-2026-09-08",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-989a5c1114644e2af54f009d",
+      "candidate_id": "b20cdc96f2bbc9168c82",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/europe/russian-ballistic-missiles-hit-kyiv-us-envoys-leave-2026-09-08",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-14f94789062d4f2352ff870b",
+      "candidate_id": "534d53fbb721f2ac7f10",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/asia-pacific/chinas-exports-up-25-yy-august-imports-surge-282-2026-09-08",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     }
