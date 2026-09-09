@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260909T033934Z-b7e42c91",
+  "main_sha": "fed82d271b4eaa299067c6571e3c80a0779c4282",
+  "window": {
+    "start": "2026-09-08T03:39:34+00:00",
+    "end": "2026-09-09T03:39:34+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 44,
+  "row_count": 1,
+  "rows": [
+    {
+      "row_id": "row-ffdb647ae5865cbf630fae45",
+      "candidate_id": "df0e1cc73aafcec2f764",
+      "provisional_group_id": "group-cfee2efb97cbb09abac50bb6",
+      "source_id": "cna",
+      "section": "TWN",
+      "title": "台灣大推AI Agent 林之晨：未來3年是企業AI關鍵期",
+      "summary": "台灣大推AI Agent 林之晨：未來3年是企業AI關鍵期",
+      "summary_quality": "title_only",
+      "canonical_url": "https://www.cna.com.tw/news/afe/202609080159.aspx",
+      "listing_published_at": "2026-09-08T15:00:00+08:00",
+      "admission_status": "content_ready",
+      "article_body_published_at": "2026-09-08T16:36:00+08:00",
+      "article_body_evidence_url": "https://www.cna.com.tw/news/afe/202609080159.aspx",
+      "content_sha256": "9e0f0cd89da91333e80ccc26393384b44c8799dac99d4125cc2b4782678eb781",
+      "hydration_batch_sequence": 37,
+      "model_excerpt": "台灣大哥大今天舉辦第4屆硬科技日，發表企業級AI Agent平台MyAgent。台灣大總經理林之晨表示，未來3年是企業部署AI的關鍵期，需要的是從電力、算力、傳輸、算法到應用，與企業流程與系統的ICT完整整合。 中央訊息 台灣大推AI Agent 林之晨：未來3年是企業AI關鍵期 （中央社記者 江明晏 台北8日電）台灣大哥大今天舉辦第4屆硬科技日，發表企業級AI Agent平台MyAgent。台灣大總經理林之晨表示，未來3年是企業部署AI的關鍵期，需要的是從電力、算力、傳輸、算法到應用，與企業流程與系統的ICT完整整合。 企業AI正從問答工具走向代理完整工作流程，部署的挑戰也從模型能力，轉向算力、模型、應用、治理與企業系統的ICT完整整合。 台灣大哥大今天舉辦第4屆「D.E.E.P. Tech Day 2026」台灣大硬科技日，發表企業級AI Agent平台MyAgent，整合企業知識、模型、工具與工作流程，支援地端或私有雲部署、多元模型彈性切換與企業級治理，協助企業將分散的AI應用整合為可自主掌握、可規模部署且能持續進化的AI Workforce。 台灣大表示，已率先將MyAgent導入內部知識管理與行政流程，依應用情境估算，知識管理與查找、行政庶務處理效率分別提升15%，端到端工作流程效率預估提升30%。 台灣大哥大總經理林之晨表示，未來3年是企業部署AI的關鍵期，需要的是從電力、算力、傳輸、算法到應用，與企業流程與系統的ICT完整整合。 台灣大指出，自2024年投資精誠資訊以來，雙方兩年間已合作推出近50項企業解決方案。 精誠資訊董事長林隆奮表示，企業AI正從概念驗證走向核心營運，企業需要的不只是模型，而是能串接既有系統、資料與工作流程的完整解決方案。精誠以Ai4Ia（AI for Industry Application）推進產業AI應用，結合現場工程（FDE）、軟",
+      "model_input_status": "ready",
+      "failure_evidence": null
+    }
+  ]
+}
