@@ -1,0 +1,225 @@
+{
+  "schema_version": "1.1",
+  "rows": [
+    {
+      "row_id": "row-06644f71b7677cd2b843e2e9",
+      "candidate_id": "e7f353aff59c1d399532",
+      "canonical_url": "https://www.reuters.com/world/middle-east/iran-says-it-captured-us-submarine-drone-strait-hormuz-2026-09-08",
+      "requested_url": "https://www.reuters.com/world/middle-east/iran-says-it-captured-us-submarine-drone-strait-hormuz-2026-09-08/",
+      "source_id": "web_fallback",
+      "status": "unresolved_exhausted",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "error": "configured same-source and final host recovery chain exhausted",
+      "recovery_evidence": [
+        "canonical Reuters hydration returned HTTP 401 in batch 45",
+        "canonical Reuters retry returned HTTP 401 in batch 47",
+        "same-host trailing-slash Reuters recovery returned HTTP 401 in batch 48"
+      ]
+    },
+    {
+      "row_id": "row-0e70df4fe8b49acce5dec9ea",
+      "candidate_id": "36950702b778600ae642",
+      "canonical_url": "https://www.reuters.com/technology/us-accuses-chinese-ai-firms-industrial-scale-theft-ai-technology-2026-09-08",
+      "requested_url": "https://www.reuters.com/technology/us-accuses-chinese-ai-firms-industrial-scale-theft-ai-technology-2026-09-08/",
+      "source_id": "web_fallback",
+      "status": "unresolved_exhausted",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "error": "configured same-source and final host recovery chain exhausted",
+      "recovery_evidence": [
+        "canonical Reuters hydration returned HTTP 401 in batch 45",
+        "canonical Reuters retry returned HTTP 401 in batch 47",
+        "same-host trailing-slash Reuters recovery returned HTTP 401 in batch 48"
+      ]
+    },
+    {
+      "row_id": "row-1c1f2ecd647f8ca6086a86c7",
+      "candidate_id": "eeb2e83fde6db1ece29c",
+      "canonical_url": "https://www.reuters.com/business/autos-transportation/canadas-retaliatory-tariffs-take-effect-us-trade-talks-stall-2026-09-08",
+      "requested_url": "https://www.reuters.com/business/autos-transportation/canadas-retaliatory-tariffs-take-effect-us-trade-talks-stall-2026-09-08/",
+      "source_id": "web_fallback",
+      "status": "unresolved_exhausted",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "error": "configured same-source and final host recovery chain exhausted",
+      "recovery_evidence": [
+        "canonical Reuters hydration returned HTTP 401 in batch 45",
+        "canonical Reuters retry returned HTTP 401 in batch 47",
+        "same-host trailing-slash Reuters recovery returned HTTP 401 in batch 48"
+      ]
+    },
+    {
+      "row_id": "row-2835d68da35a84b614954dbe",
+      "candidate_id": "a722a02bb7714b3c115e",
+      "canonical_url": "https://www.reuters.com/world/middle-east/shipping-traffic-via-strait-hormuz-stays-below-10-day-average-data-shows-2026-09-09",
+      "requested_url": "https://www.reuters.com/world/middle-east/shipping-traffic-via-strait-hormuz-stays-below-10-day-average-data-shows-2026-09-09/",
+      "source_id": "web_fallback",
+      "status": "unresolved_exhausted",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "error": "configured same-source and final host recovery chain exhausted",
+      "recovery_evidence": [
+        "canonical Reuters hydration returned HTTP 401 in batch 45",
+        "canonical Reuters retry returned HTTP 401 in batch 47",
+        "same-host trailing-slash Reuters recovery returned HTTP 401 in batch 48"
+      ]
+    },
+    {
+      "row_id": "row-4030958b3d5955db7b9a984b",
+      "candidate_id": "03d5d40b7bba3a5e62d6",
+      "canonical_url": "https://www.reuters.com/world/middle-east/saudi-led-coalition-yemen-says-73-injured-houthi-attacks-kingdom-2026-09-08",
+      "requested_url": "https://www.reuters.com/world/middle-east/saudi-led-coalition-yemen-says-73-injured-houthi-attacks-kingdom-2026-09-08/",
+      "source_id": "web_fallback",
+      "status": "unresolved_exhausted",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "error": "configured same-source and final host recovery chain exhausted",
+      "recovery_evidence": [
+        "canonical Reuters hydration returned HTTP 401 in batch 45",
+        "canonical Reuters retry returned HTTP 401 in batch 47",
+        "same-host trailing-slash Reuters recovery returned HTTP 401 in batch 48"
+      ]
+    },
+    {
+      "row_id": "row-6f19c9cf296d3d679e8ec4a6",
+      "candidate_id": "b8d99ff2a6b3ded916d4",
+      "canonical_url": "https://www.reuters.com/world/africa/south-africas-second-quarter-gdp-contracts-02-qq-2026-09-08",
+      "requested_url": "https://www.reuters.com/world/africa/south-africas-second-quarter-gdp-contracts-02-qq-2026-09-08/",
+      "source_id": "web_fallback",
+      "status": "unresolved_exhausted",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "error": "configured same-source and final host recovery chain exhausted",
+      "recovery_evidence": [
+        "canonical Reuters hydration returned HTTP 401 in batch 45",
+        "canonical Reuters retry returned HTTP 401 in batch 47",
+        "same-host trailing-slash Reuters recovery returned HTTP 401 in batch 48"
+      ]
+    },
+    {
+      "row_id": "row-93991aaeec0c7af29f7711a5",
+      "candidate_id": "45d60064bb2f9931b34d",
+      "canonical_url": "https://www.reuters.com/world/uk/uk-air-traffic-control-says-it-is-experiencing-technical-issue-2026-09-08",
+      "requested_url": "https://www.reuters.com/world/uk/uk-air-traffic-control-says-it-is-experiencing-technical-issue-2026-09-08/",
+      "source_id": "web_fallback",
+      "status": "unresolved_exhausted",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "error": "configured same-source and final host recovery chain exhausted",
+      "recovery_evidence": [
+        "canonical Reuters hydration returned HTTP 401 in batch 46",
+        "canonical Reuters retry returned HTTP 401 in batch 47",
+        "same-host trailing-slash Reuters recovery returned HTTP 401 in batch 48"
+      ]
+    },
+    {
+      "row_id": "row-99cae824e782b06ed0ca8d15",
+      "candidate_id": "8b8705518efc7163e5ec",
+      "canonical_url": "https://www.reuters.com/world/uk/uk-announce-trade-ban-israeli-west-bank-goods-2026-09-08",
+      "requested_url": "https://www.reuters.com/world/uk/uk-announce-trade-ban-israeli-west-bank-goods-2026-09-08/",
+      "source_id": "web_fallback",
+      "status": "unresolved_exhausted",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "error": "configured same-source and final host recovery chain exhausted",
+      "recovery_evidence": [
+        "canonical Reuters hydration returned HTTP 401 in batch 45",
+        "canonical Reuters retry returned HTTP 401 in batch 47",
+        "same-host trailing-slash Reuters recovery returned HTTP 401 in batch 48"
+      ]
+    },
+    {
+      "row_id": "row-e2eb6fb8fe3c7de07000e4c0",
+      "candidate_id": "c033e7aa8152414dcca7",
+      "canonical_url": "https://www.reuters.com/business/environment/nepal-rescue-focused-on-workers-trapped-three-tunnels-2026-09-08",
+      "requested_url": "https://www.reuters.com/business/environment/nepal-rescue-focused-on-workers-trapped-three-tunnels-2026-09-08/",
+      "source_id": "web_fallback",
+      "status": "unresolved_exhausted",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "error": "configured same-source and final host recovery chain exhausted",
+      "recovery_evidence": [
+        "canonical Reuters hydration returned HTTP 401 in batch 45",
+        "canonical Reuters retry returned HTTP 401 in batch 47",
+        "same-host trailing-slash Reuters recovery returned HTTP 401 in batch 48"
+      ]
+    },
+    {
+      "row_id": "row-e8d6e9c5dc1ea93ff97f61f3",
+      "candidate_id": "e02b27fc06acc4468de9",
+      "canonical_url": "https://www.reuters.com/technology/qualcomm-amazon-develop-custom-chips-ai-data-centers-2026-09-08",
+      "requested_url": "https://www.reuters.com/technology/qualcomm-amazon-develop-custom-chips-ai-data-centers-2026-09-08/",
+      "source_id": "web_fallback",
+      "status": "unresolved_exhausted",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "error": "configured same-source and final host recovery chain exhausted",
+      "recovery_evidence": [
+        "canonical Reuters hydration returned HTTP 401 in batch 45",
+        "canonical Reuters retry returned HTTP 401 in batch 47",
+        "same-host trailing-slash Reuters recovery returned HTTP 401 in batch 48"
+      ]
+    },
+    {
+      "row_id": "row-f6c20be718998f81588123b8",
+      "candidate_id": "26b650464f6e579f87ae",
+      "canonical_url": "https://www.reuters.com/world/asia-pacific/japan-manufacturers-mood-near-five-year-high-reuters-tankan-shows-2026-09-08",
+      "requested_url": "https://www.reuters.com/world/asia-pacific/japan-manufacturers-mood-near-five-year-high-reuters-tankan-shows-2026-09-08/",
+      "source_id": "web_fallback",
+      "status": "unresolved_exhausted",
+      "actual_url": null,
+      "content_type": null,
+      "content_sha256": null,
+      "article_body_published_at": null,
+      "article_body_timestamp_evidence": null,
+      "article_body_evidence_url": null,
+      "error": "configured same-source and final host recovery chain exhausted",
+      "recovery_evidence": [
+        "canonical Reuters hydration returned HTTP 401 in batch 46",
+        "canonical Reuters retry returned HTTP 401 in batch 47",
+        "same-host trailing-slash Reuters recovery returned HTTP 401 in batch 48"
+      ]
+    }
+  ]
+}

@@ -311,6 +311,34 @@
       "failure_evidence": null
     },
     {
+      "row_id": "row-06644f71b7677cd2b843e2e9",
+      "candidate_id": "e7f353aff59c1d399532",
+      "provisional_group_id": "group-1ca6ebfdd81a69a4cb45579b",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "title": "Iran says it captured US submarine drone in Strait of Hormuz",
+      "summary": "Iran's Revolutionary Guards said they captured a U.S. Dive-LD uncrewed submarine; the Pentagon said the drone malfunctioned during regional surveying and carried no classified sonar or radar equipment.",
+      "summary_quality": "source_summary",
+      "canonical_url": "https://www.reuters.com/world/middle-east/iran-says-it-captured-us-submarine-drone-strait-hormuz-2026-09-08",
+      "listing_published_at": "2026-09-08T22:31:00+00:00",
+      "admission_status": "unresolved_exhausted",
+      "article_body_published_at": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "hydration_batch_sequence": 49,
+      "model_excerpt": null,
+      "model_input_status": "terminal_without_content_review",
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/world/middle-east/iran-says-it-captured-us-submarine-drone-strait-hormuz-2026-09-08/",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "canonical Reuters hydration returned HTTP 401 in batch 45",
+          "canonical Reuters retry returned HTTP 401 in batch 47",
+          "same-host trailing-slash Reuters recovery returned HTTP 401 in batch 48"
+        ]
+      }
+    },
+    {
       "row_id": "row-06df70d784caad2ae477c627",
       "candidate_id": "6778cee030d4ba97f4b0",
       "provisional_group_id": "group-5fa41ac75ef8463590359bbd",
@@ -387,26 +415,6 @@
       "content_sha256": "670d3ad8250c04e8fb471727af3d6c049e9519194496abfd8e2896a4b095b451",
       "hydration_batch_sequence": 18,
       "model_excerpt": "第十五届中国知识产权年会在北京开幕 中外代表8000余人与会 中新网 北京9月8日电 (记者 孙自法)以“奋力推动‘十五五’知识产权事业高质量发展”为主题的第十五届中国知识产权年会，9月8日在北京开幕，来自政府部门、学界、企业界等中外代表8000余人与会。 中国国家知识产权局局长申长雨、陕西省副省长武文罡、中国船舶集团有限公司总经理王国强、芬兰专利与注册局局长安蒂·萨卡里·里瓦利、世界知识产权组织首席经济学家卡斯滕·芬克出席开幕式并致辞。中国国家知识产权局副局长芮文彪主持开幕式。 申长雨指出，“十四五”期间，中国知识产权事业实现新发展、新跨越、新提升。站在“十五五”新的历史起点上，国家知识产权局将认真抓好知识产权“十五五”规划部署的落地实施，持续优化知识产权保护环境，大力提升知识产权运用效益，不断健全知识产权综合管理体系，积极构建知识产权国际合作新格局，为推进中国式现代化贡献更多知识产权力量。 武文罡表示，面向“十五五”，陕西将锚定西部示范知识产权强省建设目标，以知识产权为纽带深度融入全球创新版图，以知识产权为引擎前瞻培育新质生产力，以知识产权为基石营造一流开放创新生态，为知识产权强国建设贡献更多陕西力量。 王国强表示，船舶产业是创新集聚、知识密集、技术集成、开放外向的实体制造业。中船集团作为船舶产业的引领者，始终把知识产权作为科技创新的“助推器”、产业安全的“护城河”、全球经营的“通行证”，聚焦高质量创造、高效益运用、高水平保护、高质效管理、高能力培养，取得显著成效。未来，中船集团将加大知识产权有效供给，加快提升知识产权应用效能，加速释放知识产权数据价值，加强全球化学习交流，助力知识产权强国建设。 安蒂·萨卡里·里瓦利说，芬兰专利与注册局同中国国家知识产权局保持长期合作关系，多年来双方持续优化合作模式、交流工作经验。知识产权不仅用于保护创新成果，更是推动创新发展的工具。应",
-      "model_input_status": "ready",
-      "failure_evidence": null
-    },
-    {
-      "row_id": "row-08a3929a38e20e5de56b635e",
-      "candidate_id": "9c338aed1fac0a7a07c3",
-      "provisional_group_id": "group-30586bffeaf5267d1121a2c9",
-      "source_id": "cna",
-      "section": "TWN",
-      "title": "南寶8月營收22.21億元創同期新高 年增14.2%",
-      "summary": "南寶8月營收22.21億元創同期新高 年增14.2%",
-      "summary_quality": "title_only",
-      "canonical_url": "https://www.cna.com.tw/news/afe/202609080272.aspx",
-      "listing_published_at": "2026-09-08T18:18:00+08:00",
-      "admission_status": "content_ready",
-      "article_body_published_at": "2026-09-08T18:18:00+08:00",
-      "article_body_evidence_url": "https://www.cna.com.tw/news/afe/202609080272.aspx",
-      "content_sha256": "1be8151393801e92fcd42dcb2ef23f9ffe4a394f854c4295aa8884f8658ca264",
-      "hydration_batch_sequence": 25,
-      "model_excerpt": "南寶樹脂今天公布8月合併營收新台幣22.21億元，年增14.2%，創同期新高，主因持續開發新產品與應用，拓展新客戶，以及市占率提升；1至8月合併營收170.37億元，較去年同期增加11.4%，也創歷史同期新高。 中央訊息 南寶8月營收22.21億元創同期新高 年增14.2% （中央社記者 潘智義 台北8日電）南寶樹脂今天公布8月合併營收新台幣22.21億元，年增14.2%，創同期新高，主因持續開發新產品與應用，拓展新客戶，以及市占率提升；1至8月合併營收170.37億元，較去年同期增加11.4%，也創歷史同期新高。 南寶看好半導體用膠和其他電子領域成為新的成長動能，半導體相關應用主要用於封裝製程，隨著客戶認證、開發與測試需求持續推進，今年營收將可望逐步提升，將持續增加資源投入，未來將持續開發各領域新的成長機會，以及提升高毛利產品比重。 南寶強調，躋身全球少數成功開發折疊螢幕用光學透明膠的供應商，該產品具備高耐彎折性及高黏著彈性，能有效降低反覆彎折造成的耗損，提升螢幕穩定性與使用壽命。 在鞋材接著劑業務方面，南寶評估，儘管目前觀察消費需求仍較平緩，但在產品價格隨成本逐步調整、積極爭取更多訂單份額，以及去年低基期效應的帶動下，今年可望回歸成長。 南寶表示，由於原物料價格成本上升，帶動客戶較為積極下單備貨與產品價格逐步調整，加上鞋材業務持續積極爭取更多訂單份額，以及持續開發新產品與應用帶動下，全年營收再創新高的把握度進一步提升。（編輯：張均懋）1150908 選擇與事實站在一起，您的每一份贊助，都是守護新聞自由的力量 下載中央社「一手新聞」APP，即時掌握最新消息 本網站之文字、圖片及影音，非經授權，不得轉載、公開播送或公開傳輸及利用。 霍守業：威權國家勾連形成動盪軸心 試圖瓦解安全秩序 台積電攜ASML推進12吋光罩 2031年建試產線攻先進製程 一個編輯就是一家出版社 郭重興",
       "model_input_status": "ready",
       "failure_evidence": null
     }
