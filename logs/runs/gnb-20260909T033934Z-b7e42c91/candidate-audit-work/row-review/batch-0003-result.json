@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260909T033934Z-b7e42c91",
+  "main_sha": "fed82d271b4eaa299067c6571e3c80a0779c4282",
+  "window": {
+    "start": "2026-09-08T03:39:34+00:00",
+    "end": "2026-09-09T03:39:34+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 3,
+  "input_batch_sha256": "1b6e20819db8335f937a72b8eddc7a4b3dd980e622dcefc8101556737f1f2826",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-0e4f6152c734e46f8deeab76",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-6f305553cd9262313a7226b4",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-0e4f6152c734e46f8deeab76"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0e6763c9fd00c93cf570d763",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-e755c0a01dc80c4c323a7c6f",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-0e6763c9fd00c93cf570d763"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0e70df4fe8b49acce5dec9ea",
+      "disposition": "unresolved_exhausted",
+      "semantic_event_id": null,
+      "reason": "hydration exhausted",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "terminal evidence",
+        "evidence_refs": [
+          "row-0e70df4fe8b49acce5dec9ea"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0e80b8e77cda2a814e29d268",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-b0f0d298a5f76d40ebac9d04",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-0e80b8e77cda2a814e29d268"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0eae6adbc45b98de8f799634",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-51e2e556a8493e83bc79a355",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-0eae6adbc45b98de8f799634"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0eb4f8cb783abda4c62795bb",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-7fc26ef7d033537ead1d5bcd",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-0eb4f8cb783abda4c62795bb"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0fdc3b4381c5d0a9a031cd7a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-d11a86a7b19fa22fbab188d3",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-0fdc3b4381c5d0a9a031cd7a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-101e7ba2f3d068b29fc1df44",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-75b683f68e3429644683e7fa",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-101e7ba2f3d068b29fc1df44"
+        ]
+      }
+    },
+    {
+      "row_id": "row-104d2114b52e3eaea50dde76",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-339b52ccf6128c2ac01a246d",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-104d2114b52e3eaea50dde76"
+        ]
+      }
+    },
+    {
+      "row_id": "row-105d5f7870dd7195f5defed0",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-f9d3ab8174bb597a3ecc010b",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-105d5f7870dd7195f5defed0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-115d67b9d3edecbc14481769",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-28e918437860529ae4f9ab1e",
+      "reason": "same Huainan illegal-fuel event",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "official follow-up",
+        "evidence_refs": [
+          "row-115d67b9d3edecbc14481769"
+        ]
+      }
+    },
+    {
+      "row_id": "row-117225a0da7b214ca61e1799",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-c2a936b09c27be9f1e1877f3",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-117225a0da7b214ca61e1799"
+        ]
+      }
+    },
+    {
+      "row_id": "row-12b151bc171123a099537d61",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-4d212692d77dc373888b40e8",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-12b151bc171123a099537d61"
+        ]
+      }
+    },
+    {
+      "row_id": "row-12c1128adaf06da598f8aa87",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-95edfdc53636ce1fbcb632cb",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-12c1128adaf06da598f8aa87"
+        ]
+      }
+    },
+    {
+      "row_id": "row-12c2362ae9a087dd5ba636e9",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-e43177e99b2fb6acbf49c215",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-12c2362ae9a087dd5ba636e9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-13061c293f0f5aa1c93d4f8d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-7a2c1ee884ff4915b6f90254",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-13061c293f0f5aa1c93d4f8d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-13640e36451c25c36b424122",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-d04fc8ba255649ccf7e1b9fb",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-13640e36451c25c36b424122"
+        ]
+      }
+    },
+    {
+      "row_id": "row-137401034fd81a2ebb6b8cc6",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-b2cede34385acd2273f37b10",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-137401034fd81a2ebb6b8cc6"
+        ]
+      }
+    },
+    {
+      "row_id": "row-13869b2d7b01f4849a0439f0",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-24e50204de439276ceb69d91",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-13869b2d7b01f4849a0439f0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-13f7d11cf6ec323f0c666ad8",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-ffed61cb4c16df7fbe0963dd",
+      "reason": "news",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "body",
+        "evidence_refs": [
+          "row-13f7d11cf6ec323f0c666ad8"
+        ]
+      }
+    }
+  ]
+}
