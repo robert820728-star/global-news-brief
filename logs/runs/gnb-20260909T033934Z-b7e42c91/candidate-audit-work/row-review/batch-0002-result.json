@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260909T033934Z-b7e42c91",
+  "main_sha": "fed82d271b4eaa299067c6571e3c80a0779c4282",
+  "window": {
+    "start": "2026-09-08T03:39:34+00:00",
+    "end": "2026-09-09T03:39:34+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 2,
+  "input_batch_sha256": "13e16bfec33a614941ad40d73a0f78992e9918012e7b4306d17935f8378390d5",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-08a3929a38e20e5de56b635e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-30586bffeaf5267d1121a2c9",
+      "reason": "Hydrated article contains a dated factual development; retain for event scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body provides current factual evidence.",
+        "evidence_refs": [
+          "row-08a3929a38e20e5de56b635e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0954c745196e4928c7815f3d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-15a096ca4bf6af40f9dafd88",
+      "reason": "Hydrated article contains a dated sports result; retain for event scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body provides current factual evidence.",
+        "evidence_refs": [
+          "row-0954c745196e4928c7815f3d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-09b311eb196976eabe9660bb",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-89213581809ce163002457b5",
+      "reason": "Hydrated article reports a current service-trade event and policy framing; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body provides dated event evidence.",
+        "evidence_refs": [
+          "row-09b311eb196976eabe9660bb"
+        ]
+      }
+    },
+    {
+      "row_id": "row-09fd2b22530f7edc931d7092",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-28e918437860529ae4f9ab1e",
+      "reason": "Official investigation is a direct follow-up to the same Huainan illegal-fuel event already represented in batch 1.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body reports the authority response to the same underlying fuel-station investigation.",
+        "evidence_refs": [
+          "row-09fd2b22530f7edc931d7092"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0a60e2e24077d092806db8b5",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-785d832bd0477fa88cf1a3d4",
+      "reason": "Hydrated article contains a dated sports development; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body provides current factual evidence.",
+        "evidence_refs": [
+          "row-0a60e2e24077d092806db8b5"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0a69673acb1663a62d07fcfb",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-8e3e187939b38f1463072104",
+      "reason": "Hydrated article contains current governance and public-service developments; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains current attributable factual material.",
+        "evidence_refs": [
+          "row-0a69673acb1663a62d07fcfb"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0aaa9784c0aa484e3fe05321",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-284f1fcadb5c3958a7aebf27",
+      "reason": "Hydrated article reports a current AI capacity-building policy action; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated official policy facts.",
+        "evidence_refs": [
+          "row-0aaa9784c0aa484e3fe05321"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0ae768c07c032949b0bb9f4a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-8e5c3fe8deec19502f507580",
+      "reason": "Hydrated article contains a dated sports and cultural event; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body provides current factual evidence.",
+        "evidence_refs": [
+          "row-0ae768c07c032949b0bb9f4a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0b062a2f4c8187029bb522dc",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-ca5c9057dc517e8fe099d020",
+      "reason": "Hydrated article reports a current court judgment in an illegal-insurance case; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated judicial facts.",
+        "evidence_refs": [
+          "row-0b062a2f4c8187029bb522dc"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0b3d526b5f9a7731411d3047",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-c4120c2a1d02de1666236a38",
+      "reason": "Hydrated article contains a current cross-strait youth profile and activities; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body supplies dated factual material.",
+        "evidence_refs": [
+          "row-0b3d526b5f9a7731411d3047"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0b8a54bffb397e41afb8a5a8",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-262d5e649b84f65967e98592",
+      "reason": "Hydrated article reports current medication-timing guidance from a national health briefing; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains attributable health guidance from a dated briefing.",
+        "evidence_refs": [
+          "row-0b8a54bffb397e41afb8a5a8"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0b8db745d82e7105b64b415e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-bcd50e34aa06bd44380b7467",
+      "reason": "Hydrated article reports establishment of an agricultural industry alliance and innovation park; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated industry-development facts.",
+        "evidence_refs": [
+          "row-0b8db745d82e7105b64b415e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0ca33e68d8b699e7d723d2df",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-8b6d69aef582515e35853060",
+      "reason": "Hydrated article reports official August producer-price data; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated official macroeconomic statistics.",
+        "evidence_refs": [
+          "row-0ca33e68d8b699e7d723d2df"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0ceaaf213e881a96adedb6fb",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-6c7330507d9c3eacfbf49ab4",
+      "reason": "Hydrated article reports current regional development cooperation; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated program and investment facts.",
+        "evidence_refs": [
+          "row-0ceaaf213e881a96adedb6fb"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0d3070a48f2320bf69ca8f61",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-767089d7c4b9a2a466e5de37",
+      "reason": "Hydrated article contains current environmental-governance developments; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body includes current factual outcomes despite commentary framing.",
+        "evidence_refs": [
+          "row-0d3070a48f2320bf69ca8f61"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0db086ca52c88645536d87ea",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-3f630109f036805867eb9514",
+      "reason": "Hydrated article reports a current 12-country trade restriction initiative on West Bank settlements; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated multinational policy action.",
+        "evidence_refs": [
+          "row-0db086ca52c88645536d87ea"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0dc771cb5798792bfa6bdcb6",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-550034be1b8b356d76a861ad",
+      "reason": "Hydrated article reports 12 deaths and one missing in a Jiangxi mudslide; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated disaster casualty and rescue facts.",
+        "evidence_refs": [
+          "row-0dc771cb5798792bfa6bdcb6"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0df98ff76edea2ebb97e522c",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-81afd1bba9477bf5c4ed4842",
+      "reason": "Hydrated article reports a current cross-strait youth-media exchange event; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated participation and program facts.",
+        "evidence_refs": [
+          "row-0df98ff76edea2ebb97e522c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0e03415e19d2994eb928c638",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-1ee5016f07feca78b265b607",
+      "reason": "Hydrated article reports current trade-zone logistics and institutional changes; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains current policy and operational facts.",
+        "evidence_refs": [
+          "row-0e03415e19d2994eb928c638"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0e4c918a6a9c6ad66f139d06",
+      "disposition": "event_evidence",
+      "semantic_event_id": "group-6fee52a75c5444ef064a4824",
+      "reason": "Hydrated article reports current Japan-Taiwan political and security exchanges; retain for scoring.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Article body contains dated diplomatic and security-policy discussion.",
+        "evidence_refs": [
+          "row-0e4c918a6a9c6ad66f139d06"
+        ]
+      }
+    }
+  ]
+}
