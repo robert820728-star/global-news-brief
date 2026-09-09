@@ -51,6 +51,33 @@
       "failure_evidence": null
     },
     {
+      "row_id": "row-14f94789062d4f2352ff870b",
+      "candidate_id": "534d53fbb721f2ac7f10",
+      "provisional_group_id": "group-dd8f2d36bd7a56f77e50b2d1",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "title": "China’s exports surge as demand for high-tech, AI help prop up growth",
+      "summary": "China reported August exports up 25% year on year and imports up 28.2%, with high-tech and AI-related demand contributing to trade growth.",
+      "summary_quality": "source_summary",
+      "canonical_url": "https://www.reuters.com/world/asia-pacific/chinas-exports-up-25-yy-august-imports-surge-282-2026-09-08",
+      "listing_published_at": "2026-09-08T02:45:00+00:00",
+      "admission_status": "unresolved_exhausted",
+      "article_body_published_at": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "hydration_batch_sequence": 47,
+      "model_excerpt": null,
+      "model_input_status": "terminal_without_content_review",
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/world/asia-pacific/chinas-exports-up-25-yy-august-imports-surge-282-2026-09-08/",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "canonical Reuters article returned HTTP 401 in automatic hydration",
+          "same-host trailing-slash retry also returned HTTP 401"
+        ]
+      }
+    },
+    {
       "row_id": "row-15263e6c4f4ba7b1a8943ccf",
       "candidate_id": "aed0559891a56ddd59ea",
       "provisional_group_id": "group-3b8b6fba8feffd63033a1468",
@@ -387,26 +414,6 @@
       "content_sha256": "cee14f7d488006cef127828b9c0e5286dc10fa8acfb52eba4ad4011ebab6f978",
       "hydration_batch_sequence": 29,
       "model_excerpt": "外交部：中国重视金砖合作，支持印度成功举办今年领导人会晤 中新网 北京9月8日电 (记者 张蔚然)中国外交部发言人毛宁8日主持例行记者会。 有外媒记者提问：印度将于本周末举办金砖国家峰会。外交部能否介绍中方的出席情况？第二个问题，中方对本次金砖峰会有哪些期待？ 毛宁：中国重视金砖合作，支持印度成功举办今年的领导人会晤。你的具体问题，我目前没有可以提供的消息。(完) 中新网评：“葫芦娃爷爷”的美好生活不该变成流量素材 网上销售的便携式甲醛检测仪，精准度高达99.9%？ 中国挤压论又是一套骗人的话术 茶饮品牌按下减速键，奶茶生意不香了? 一年减少2.7万家，药店再“瘦身” 人这一辈子，一定要去一趟“八卦城”！ 因地制宜，不是遍地乱开花 刷小视频停不下来？你的大脑被“绑架”了 乌总统泽连斯基会见美特使 谈了啥？有何进展？ 独家！一名中国游客的尼泊尔泥石流脱困之路 穆穆：很幸运成为两大古老文明之间的小小连接 “葫芦娃爷爷”摘掉7个葫芦后最新发声：盼着热闹过后，日子能慢慢回归平常 388元体验3分钟短剧拍摄 “我在横店当主演” 一个镜头试四五十次，这部爆火AI短剧是怎么做出来的？ 亚太，不做美国AI的韭菜 科技有多暖，生活里的这些改变给出了答案 《早春晴朗》火了，被形容“氛围封神” “绝不能让他们流汗又流泪”，多地密集部署 宁夏中卫：鹅喉羚见证荒漠新生 浙江缙云：“观鸟热”促生态保育与乡村振兴共生共赢 大学生娄山关前朗诵《忆秦娥·娄山关》，字字铿锵 萌物扎堆 湖南长沙玩偶展圈粉年轻人 白露染新秋 与古人共赴浪漫之约 中外学生Citywalk北京西城 街巷间开启“开学第一课” 香港新赛马季开锣 赛驹“嘉应高升”再创新纪录 莫斯科城市日：复古有轨电车变身“移动博物馆” 景区一名NPC酷似“玄奘”走红网路 开学第一天完美诠释一喜一悲！网友：得瑟的爹 生无可恋的女儿 黑猩猩无师自通解锁盘串技",
-      "model_input_status": "ready",
-      "failure_evidence": null
-    },
-    {
-      "row_id": "row-1b5c434f7d21d578592b34fc",
-      "candidate_id": "5f446d1b07517b768ee5",
-      "provisional_group_id": "group-d78dc826df3a788bf5964468",
-      "source_id": "cna",
-      "section": "TWN",
-      "title": "欣興：客戶預約未來5年產能 在台續拚ABF擴產",
-      "summary": "欣興：客戶預約未來5年產能 在台續拚ABF擴產",
-      "summary_quality": "title_only",
-      "canonical_url": "https://www.cna.com.tw/news/afe/202609080291.aspx",
-      "listing_published_at": "2026-09-08T19:15:00+08:00",
-      "admission_status": "content_ready",
-      "article_body_published_at": "2026-09-08T19:15:00+08:00",
-      "article_body_evidence_url": "https://www.cna.com.tw/news/afe/202609080291.aspx",
-      "content_sha256": "ee09c2431a0c05262a3b3f44fd1c166305866b9de877c6f9fe03c077a91463d2",
-      "hydration_batch_sequence": 17,
-      "model_excerpt": "欣興今天表示，客戶通常都一次預約未來5年產能，楊梅與光復廠未來幾年陸續量產，但在結構性成長及通常5年的長約拉動下，ABF供不應求狀況將持續。 中央訊息 欣興：客戶預約未來5年產能 在台續拚ABF擴產 （中央社記者 江明晏 台北8日電）欣興今天表示，客戶通常都一次預約未來5年產能，楊梅與光復廠未來幾年陸續量產，但在結構性成長及通常5年的長約拉動下，ABF供不應求狀況將持續。 欣興今天公告，董事會決議授權董事長於授權金額範圍內，全權處理購置不動產；欣興說明將用於在台擴充ABF產能。 欣興今天受邀參與券商產業論壇。欣興表示，當前在台灣主要據點為楊梅廠，楊梅仍可再蓋2個廠，光復2廠預計明年量產，楊梅2廠則預計在2028年量產，分別對應客戶2027年至2031年、2028年至2032年的需求。 欣興表示，在AI server驅動的高階晶片需求下，高階載板產能不足，現有與規劃中廠房即使未來幾年陸續量產，仍難滿足已簽訂的5年期產能預約，加上欣興和日商Ibiden仍是現階段唯二具備較佳量產能力及良率的業者，因此ABF供不應求狀況未來幾年都將持續，客戶傾向提前鎖定高階載板產能。 針對赴美國設廠規劃，欣興表示，「評估當然是有」，但成本、供應鏈與獲利能力為最大考量，載板產業美國基礎少，原物料供應商多在日本與韓國，導致成本、物流與時程風險上升，相較晶圓代工的定價權，載板廠較受供需影響，獲利彈性較小。（編輯：潘羿菁）1150908 選擇與事實站在一起，您的每一份贊助，都是守護新聞自由的力量 下載中央社「一手新聞」APP，即時掌握最新消息 本網站之文字、圖片及影音，非經授權，不得轉載、公開播送或公開傳輸及利用。 台積電攜ASML推進12吋光罩 2031年建試產線攻先進製程 一個編輯就是一家出版社 郭重興成就台灣特別風景 體操女將世錦賽門票遭放棄周春米籲徹查 運動部：已要求研擬改善措施 88歲日本冒險家",
       "model_input_status": "ready",
       "failure_evidence": null
     }
