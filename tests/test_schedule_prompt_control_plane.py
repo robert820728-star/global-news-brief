@@ -99,36 +99,6 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
         self.assertIn("一般 list／search 空結果", prompt)
         self.assertNotIn("仍不一致或無法讀回時，不得宣稱排程設置完成", starter)
 
-    def test_fresh_conversation_uses_explicit_single_create_transaction(self):
-        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
-        starter = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
-        prompt = starter.split("```text", 1)[1].split("```", 1)[0].strip()
-
-        self.assertIn("EXPLICIT_SCHEDULE_INSTALL_INTENT_GATE", install)
-        self.assertIn("本次安裝意圖：create_new", prompt)
-        self.assertNotIn("優先更新同名既有排程", prompt)
-
-        for requirement in (
-            "create_new 不得把同名 list／search 當成首次 create 的必要前置",
-            "最多呼叫一次 create",
-            "不得再次 create",
-            "update_existing 必須先有 exact task ID",
-            "actual control-plane error",
-        ):
-            with self.subTest(requirement=requirement):
-                self.assertIn(requirement, install)
-
-    def test_install_fast_path_reaches_control_plane_before_runtime_contracts(self):
-        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
-        starter = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
-
-        for document in (install, starter):
-            self.assertIn("INSTALL_CONTROL_PLANE_FAST_PATH", document)
-            self.assertIn("新聞 runtime 文件", document)
-            self.assertIn("第一次 create／update", document)
-
-        self.assertIn("只讀安裝必要檔案", starter)
-
     def test_current_conversation_binding_uses_available_control_plane_evidence(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         starter = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")

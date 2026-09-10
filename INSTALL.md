@@ -195,17 +195,9 @@ python scripts/verify_scheduled_task_install.py --template scheduled-task-prompt
 
 建立或修正 Scheduled Task 時，控制面第一步必須先把當下最新 `scheduled-task-prompt-template.md` 全文寫入 task instruction，並依 `SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE` 驗證正式 create／update 結果；不得先 bootstrap repository、取得 verified workspace 或執行新聞流程。既有 task 若保存舊 prompt，舊 prompt 不得繼續啟用，也不得因任何 smoke／bootstrap 失敗而被保留。後續 smoke 失敗時保留最新版 prompt 並暫停 task，不得留下舊 prompt 繼續執行。
 
-`INSTALL_CONTROL_PLANE_FAST_PATH`
-
-第一次 create／update 前只讀安裝必要檔案：`INSTALL.md`、`scheduled-task-prompt-template.md`、`scripts/build_scheduled_task_install_payload.py`、`scripts/verify_scheduled_task_install.py`，以及使用者要求測試時的 `scheduled-task-test-extension.example.json`。完成 canonical outbound payload 的本機核對後，下一個產品動作必須是控制面的第一次 create／update；不得先讀新聞 runtime 文件、bootstrap、skills、schemas、來源規則或執行新聞流程。task 已取得 exact ID 且完成安裝驗證後，真正 occurrence 才依 `INSTALL.md` 的權責順序讀取 runtime 契約。
-
-`EXPLICIT_SCHEDULE_INSTALL_INTENT_GATE`
-
-安裝前先把使用者的生命週期意圖固定為 `create_new` 或 `update_existing`。使用者明確要求「建立／新增／先建一個」時是 `create_new`：create_new 不得把同名 list／search 當成首次 create 的必要前置，且最多呼叫一次 create；「不得重複建立」是禁止第二次 create，不是禁止已獲授權的第一次 create。正式 create 回傳 task ID 與成功狀態後，後續所有 readback、smoke、schedule 與 enable 都只綁該 ID。若 create 回傳遭截斷、沒有 task ID 或結果不明，保存 `outcome_unknown`、actual control-plane error 與可取得的 operation identity；同一安裝不得再次 create，只能由相同控制面查明第一次結果或要求使用者在「已排程」檢視。update_existing 必須先有 exact task ID；只有同名標題或一般 list／search 結果不得授權 update。更新同名既有排程時，先取得該 exact ID，再執行一次 update。
-
 `SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE`
 
-提交前必須只替換「區域」與「監控類型」兩個 placeholder，對替換後的完整 prompt 做全文、字元數與雜湊核對，並把該完整 prompt 作為單一 create／update payload；不得提交摘要、節錄、短 launcher 或只貼檔案連結。若控制面支援 saved-prompt readback，建立或更新後必須讀回並與提交全文逐字比較，只允許 CRLF／LF 與檔尾換行差異；不一致時更新同一 task 後重讀，仍不一致即失敗。若控制面明確不提供 saved-prompt readback，不得只因缺少這項非通用能力宣告失敗，也不得謊稱已逐字讀回；此時由提交前核對證明完整 prompt 已作為未摘要且未截斷的 outbound payload，正式 create／update 回傳則必須至少證明 task ID、成功建立或更新、每天 06:00 與目前帳號／對話時區。若 create／update 動作是在目前對話發出，而且目前對話內的正式 task 回傳或 task 卡顯示相同 exact task ID，即是目前對話 delivery destination 的控制面證據；不要求不存在的 destination 欄位。其他對話的結果、一般 list／search 或只有自然語言聲稱均不能取代這項證據。任何一項沒有上述相應證據可核對即失敗。「不得盲建重複排程」只約束第二次 create：`update_existing` 沒有 exact task ID 時不得改用 create 猜測；`create_new` 的第一次 create 結果不明時也不得再 create，但不能用無法查找同名 task 阻止已獲授權的第一次 create。
+提交前必須只替換「區域」與「監控類型」兩個 placeholder，對替換後的完整 prompt 做全文、字元數與雜湊核對，並把該完整 prompt 作為單一 create／update payload；不得提交摘要、節錄、短 launcher 或只貼檔案連結。若控制面支援 saved-prompt readback，建立或更新後必須讀回並與提交全文逐字比較，只允許 CRLF／LF 與檔尾換行差異；不一致時更新同一 task 後重讀，仍不一致即失敗。若控制面明確不提供 saved-prompt readback，不得只因缺少這項非通用能力宣告失敗，也不得謊稱已逐字讀回；此時由提交前核對證明完整 prompt 已作為未摘要且未截斷的 outbound payload，正式 create／update 回傳則必須至少證明 task ID、成功建立或更新、每天 06:00 與目前帳號／對話時區。若 create／update 動作是在目前對話發出，而且目前對話內的正式 task 回傳或 task 卡顯示相同 exact task ID，即是目前對話 delivery destination 的控制面證據；不要求不存在的 destination 欄位。其他對話的結果、一般 list／search 或只有自然語言聲稱均不能取代這項證據。任何一項沒有上述相應證據可核對即失敗。若無法查找同名 task，且也沒有可識別 task ID 的正式 create／update 結果，不得盲建重複排程。
 
 這個分流只承認控制面實際提供的證據：create／update 回傳不能冒充 saved bytes 的逐字讀回；但在控制面明確不提供 readback 時，完整 outbound payload 的預先核對與正式成功回傳是允許的安裝驗證邊界。一般對話文字、自行聲稱「應該已保存」或只有排程名稱都不算正式結果。
 

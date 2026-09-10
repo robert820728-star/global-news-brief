@@ -1,29 +1,11 @@
 import json
 import re
-import subprocess
 import unittest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 TEXT_SUFFIXES = {".json", ".md", ".py", ".yaml", ".yml"}
-
-
-def repository_text_paths():
-    """Yield tracked text-contract paths, with a clean-export fallback."""
-    try:
-        tracked = subprocess.check_output(
-            ["git", "ls-files", "-z"], cwd=ROOT
-        ).decode("utf-8").split("\0")
-    except (OSError, subprocess.CalledProcessError, UnicodeDecodeError):
-        candidates = ROOT.rglob("*")
-    else:
-        candidates = (ROOT / relative for relative in tracked if relative)
-    return (
-        path
-        for path in candidates
-        if path.is_file() and path.suffix.lower() in TEXT_SUFFIXES
-    )
 
 
 class NoObsoleteContractsTests(unittest.TestCase):
@@ -224,12 +206,10 @@ class NoObsoleteContractsTests(unittest.TestCase):
             "可升至 " + "`B`",
         )
         hits = []
-        for path in repository_text_paths():
-            if (
-                ".git" in path.parts
-                or "__pycache__" in path.parts
-                or path.name.startswith("capsule.part")
-            ):
+        for path in ROOT.rglob("*"):
+            if not path.is_file() or path.suffix.lower() not in TEXT_SUFFIXES:
+                continue
+            if "__pycache__" in path.parts or path.name.startswith("capsule.part"):
                 continue
             text = path.read_text(encoding="utf-8", errors="strict")
             for phrase in forbidden:
