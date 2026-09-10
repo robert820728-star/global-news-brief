@@ -1,5 +1,7 @@
 import json
 import re
+import subprocess
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -8,7 +10,60 @@ ROOT = Path(__file__).resolve().parents[1]
 TEXT_SUFFIXES = {".json", ".md", ".py", ".yaml", ".yml"}
 
 
+def repository_text_records(root=ROOT):
+    """Yield immutable HEAD text-contract bytes, with a clean-export fallback."""
+    try:
+        tracked = subprocess.check_output(
+            ["git", "ls-tree", "-r", "--name-only", "-z", "HEAD"], cwd=root
+        ).decode("utf-8").split("\0")
+    except (OSError, subprocess.CalledProcessError, UnicodeDecodeError):
+        for path in root.rglob("*"):
+            if (
+                path.is_file()
+                and path.suffix.lower() in TEXT_SUFFIXES
+                and ".git" not in path.parts
+                and "__pycache__" not in path.parts
+                and not path.name.startswith("capsule.part")
+            ):
+                yield path, path.read_bytes()
+    else:
+        for relative in tracked:
+            path = root / relative
+            if relative and path.suffix.lower() in TEXT_SUFFIXES:
+                yield path, subprocess.check_output(
+                    ["git", "cat-file", "blob", f"HEAD:{relative}"], cwd=root
+                )
+
+
 class NoObsoleteContractsTests(unittest.TestCase):
+    def test_repository_contract_scan_reads_immutable_head_not_mutated_index(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+            subprocess.run(
+                ["git", "config", "user.email", "tests@example.invalid"],
+                cwd=root,
+                check=True,
+            )
+            subprocess.run(
+                ["git", "config", "user.name", "Contract Tests"],
+                cwd=root,
+                check=True,
+            )
+            (root / "valid.json").write_text('{"status":"ok"}', encoding="utf-8")
+            subprocess.run(["git", "add", "valid.json"], cwd=root, check=True)
+            subprocess.run(["git", "commit", "-qm", "fixture"], cwd=root, check=True)
+
+            (root / "runtime-artifact.json").write_bytes(b"\xaa\xbb\xcc")
+            subprocess.run(["git", "add", "runtime-artifact.json"], cwd=root, check=True)
+
+            records = list(repository_text_records(root))
+            self.assertEqual(
+                ["valid.json"],
+                [path.relative_to(root).as_posix() for path, _ in records],
+            )
+            self.assertEqual(b'{"status":"ok"}', records[0][1])
+
     def test_active_structures_have_no_grade_floor_default_or_ceiling_keys(self):
         forbidden = re.compile(
             r"(?:_min_grade|_default_grade)$|default_d_applied",
@@ -206,12 +261,14 @@ class NoObsoleteContractsTests(unittest.TestCase):
             "可升至 " + "`B`",
         )
         hits = []
-        for path in ROOT.rglob("*"):
-            if not path.is_file() or path.suffix.lower() not in TEXT_SUFFIXES:
+        for path, content in repository_text_records():
+            if (
+                ".git" in path.parts
+                or "__pycache__" in path.parts
+                or path.name.startswith("capsule.part")
+            ):
                 continue
-            if "__pycache__" in path.parts or path.name.startswith("capsule.part"):
-                continue
-            text = path.read_text(encoding="utf-8", errors="strict")
+            text = content.decode("utf-8", errors="strict")
             for phrase in forbidden:
                 if phrase.casefold() in text.casefold():
                     hits.append(f"{path.relative_to(ROOT)}: {phrase}")
