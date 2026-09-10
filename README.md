@@ -12,6 +12,8 @@
 
 `SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`／`SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE`／`SCHEDULE_PROMPT_EXACT_ID_READBACK_ONLY_GATE`：建立或修正排程時先以最新版完整範本取代 saved prompt。控制面支援同一 namespace 的 exact task ID readback 時必須讀回逐字核對；沒有 exact-ID view 時，由提交前核對證明完整 prompt payload，正式 create／update 結果核對 task ID、成功狀態、排程時間、時區及目前對話。scope 不明的一般 list 空結果不得推翻 create 成功，也不得盲建重複排程。其後以同一 Scheduled Task 工具執行面獨立探測並完成至少一條端到端可見媒體路徑：可驗證的來源 bytes→解碼／雜湊→本機媒體交付、原生圖片卡，或已實測可用的頁面圖片區域截圖；不需要 repository bootstrap 或台灣底圖。失敗時保留最新版 prompt 並暫停 task。
 
+`INSTALL_CONTROL_PLANE_FAST_PATH`／`EXPLICIT_SCHEDULE_INSTALL_INTENT_GATE`：新建與更新必須先固定為 `create_new` 或 `update_existing`。`create_new` 在 canonical payload 核對後立即執行唯一一次 create，不以同名搜尋為前置；`update_existing` 必須先有 exact task ID。第一次 create 結果不明時不得重送，必須保留實際控制面錯誤並查明該次結果。
+
 完整本機工作流仍使用下方的安裝方式與 `daily-schedule-prompt.md`；兩種模式互不覆蓋。
 
 完整 capsule 工作流的 canonical runtime 與來源擷取已使用跨平台 Python；full-runtime 不需要 PowerShell。宿主提供的 bundled-runtime Python 會先經 Pillow 實際匯入驗證，通過後才執行 checkpoint 與後續 pipeline；mobile-native 不冒充具備這條本機 runtime 路徑。
@@ -26,7 +28,7 @@
 
 > 每日新聞排程
 >
-> 請確認 https://github.com/robert820728-star/global-news-brief 的最新 main commit，完整閱讀最新版 INSTALL.md。先取得最新版 scheduled-task-prompt-template.md，將全文原樣寫入 Scheduled Task instruction；控制面支援同一 namespace 的 exact task ID readback 時讀回逐字核對，沒有 exact-ID view 時依 INSTALL.md 的 capability-aware 正式回傳驗證。不得以 scope 不明的一般 list 空結果推翻 create 成功，也不得盲建重複排程。不得先做 bootstrap 或附件 smoke，也不得因測試失敗保留舊 prompt。更新完成後，以同一 Scheduled Task／ChatGPT 工具執行面直接截圖一個公開頁面的圖片區域或交付原生圖片卡，確認目前對話實際可見後才啟用循環；不要求 verified workspace、原始檔或原畫質。
+> 本次安裝意圖為 `create_new`。請確認 https://github.com/robert820728-star/global-news-brief 的最新 main commit，並依最新版 INSTALL.md 的 `INSTALL_CONTROL_PLANE_FAST_PATH` 執行：第一次 create 前只讀 INSTALL.md、scheduled-task-prompt-template.md 及其安裝 payload 建置／驗證檔，不先展開新聞 runtime 文件。將完整 template 只替換允許的區域與監控 placeholder，驗證後作為唯一一次 create payload；不得先用同名 list／search 阻止首次 create。正式回傳 task ID 後，後續 readback、同對話可見媒體 smoke 與啟用全部綁定該 exact ID。若第一次 create 回傳截斷或結果不明，保存 actual control-plane error 且不得第二次 create；先由相同控制面查明第一次結果。smoke 通過後才啟用每天 06:00 循環排程。
 >
 > 1. 請在目前這個對話內建立每天 6 點循環排程。
 >
