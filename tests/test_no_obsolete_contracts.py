@@ -209,7 +209,11 @@ class NoObsoleteContractsTests(unittest.TestCase):
         for path in ROOT.rglob("*"):
             if not path.is_file() or path.suffix.lower() not in TEXT_SUFFIXES:
                 continue
-            if "__pycache__" in path.parts or path.name.startswith("capsule.part"):
+            if (
+                ".git" in path.parts
+                or "__pycache__" in path.parts
+                or path.name.startswith("capsule.part")
+            ):
                 continue
             text = path.read_text(encoding="utf-8", errors="strict")
             for phrase in forbidden:
