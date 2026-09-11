@@ -1,0 +1,293 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 18,
+  "rows": [
+    {
+      "row_id": "row-5ca83f8ab8316575e2a2b935",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Routine daily RMB central parity fixing with a small 23-basis-point move and no discrete policy shift.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Routine market reference-rate update.",
+        "evidence_refs": [
+          "row:row-5ca83f8ab8316575e2a2b935",
+          "group:82635820ba060d45cba1d036"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5cace801bd55b362db4922b3",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Evergreen labor-law explainer about recognizing employment relationships and contract timing, not a new legal event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "General legal guidance without an in-window policy or judgment.",
+        "evidence_refs": [
+          "row:row-5cace801bd55b362db4922b3",
+          "group:11bb6252ded82fd4b15ca428"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5cbaff316579a87d654b5b4d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1803",
+      "reason": "The Yulin North-Cenxi East section of the Nanzhu high-speed railway began integrated testing on September 11 with its first inspection train.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current pre-opening milestone for a major 350-km/h rail project.",
+        "evidence_refs": [
+          "row:row-5cbaff316579a87d654b5b4d",
+          "group:7358fe5eee4aeec32c67d5dc"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5debe09a6c7f52327324f91c",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "China News Service 'About us' institutional page, not news content.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Static publisher information page.",
+        "evidence_refs": [
+          "row:row-5debe09a6c7f52327324f91c",
+          "group:11877de163b8f4e0851d07aa"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5e0a63a2d72a042f9187a0d2",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1805",
+      "reason": "China's Ministry of Natural Resources formally released AI-based intelligent geological mapping and mineral-prospecting systems at the China Mining Conference on September 11.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current national technology-system release with geological-survey applications.",
+        "evidence_refs": [
+          "row:row-5e0a63a2d72a042f9187a0d2",
+          "group:c14516c4a8c1f42d2b3cda78"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5e58cd600da5467a61fe39a8",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Seasonal agricultural feature about Weiyuan medicinal-herb growers and ongoing development programs rather than a discrete in-window action.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Feature/trend framing dominates.",
+        "evidence_refs": [
+          "row:row-5e58cd600da5467a61fe39a8",
+          "group:3591193bccdcd268e13818d8"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5e85bcfb825552c220f9ea81",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1714",
+      "reason": "The Chiang Mai government delegation's ongoing Qinghai visit included an exchange of a sister-province intention document and cooperation talks, adding evidence to the same Qinghai-Chiang Mai cooperation event.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Same current subnational cooperation event already represented by CHN-1714.",
+        "evidence_refs": [
+          "row:row-5e85bcfb825552c220f9ea81",
+          "group:0793dfabbafdc3a83d97e5dc"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5ef6a12791fd60e6c1d9cab2",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Feature on an ongoing cultural-heritage volunteer and party-building model whose key team formation dates to 2025, with no discrete new in-window event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Institutional feature/retrospective.",
+        "evidence_refs": [
+          "row:row-5ef6a12791fd60e6c1d9cab2",
+          "group:b84ddff94c94d4daef71fa57"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5f62f485253a642707e5d74b",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Economic-observation piece compiling foreign-company interviews and previously released investment statistics at CIFTIS rather than one discrete new event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Analysis/interview roundup framing dominates.",
+        "evidence_refs": [
+          "row:row-5f62f485253a642707e5d74b",
+          "group:d50305997a027583b14279a4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-600a0ecf13a00a4b6dcef34c",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1810",
+      "reason": "The 2026 Guangdong International Tourism Industry Expo opened on September 11, adding its first international medical-tourism exhibition area.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current major tourism-industry expo opening with a new exhibition segment.",
+        "evidence_refs": [
+          "row:row-600a0ecf13a00a4b6dcef34c",
+          "group:7c3993b6f4836a1ea780a114"
+        ]
+      }
+    },
+    {
+      "row_id": "row-6045f49e28f35cd0e2c42285",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1811",
+      "reason": "The 11th Maker China AI competition concluded September 11, selecting 20 projects and launching a Zhejiang digital-industrial-goods service center and cloud-computing alliance.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current national SME innovation competition conclusion plus institutional launches.",
+        "evidence_refs": [
+          "row:row-6045f49e28f35cd0e2c42285",
+          "group:5b9a7509a660d04868b40e9b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-617547e19d3d65816fa88078",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The semaglutide MASH indication approval occurred September 10, before the fixed local window; the September 11 article is analysis of that prior-day approval.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material regulatory event predates the run window.",
+        "evidence_refs": [
+          "row:row-617547e19d3d65816fa88078",
+          "group:0c8f86a9e4b99b38f5ce0acb"
+        ]
+      }
+    },
+    {
+      "row_id": "row-61c19a48fe0f9d8425b87d41",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Historical profile of businessman Li Yaoting without a current semantic event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Historical feature.",
+        "evidence_refs": [
+          "row:row-61c19a48fe0f9d8425b87d41",
+          "group:3bd6cda6c30f10f092c39f45"
+        ]
+      }
+    },
+    {
+      "row_id": "row-6207a4d59afcad0314f13c60",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Hong Kong ICAC's private-sector integrity center was established on September 10, before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material establishment event predates the run window.",
+        "evidence_refs": [
+          "row:row-6207a4d59afcad0314f13c60",
+          "group:fd4cd40b666ccaaf95edb7fa"
+        ]
+      }
+    },
+    {
+      "row_id": "row-621bc513c7de80bf57080533",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The Zhangjinggao Yangtze River Bridge pilot-rope crossing occurred September 10, before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material construction milestone predates the run window.",
+        "evidence_refs": [
+          "row:row-621bc513c7de80bf57080533",
+          "group:138b657ddc6566e05c248e32"
+        ]
+      }
+    },
+    {
+      "row_id": "row-62776c4e1dbcba79865eddc2",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1816",
+      "reason": "September 11 CPBL games included TSG Hawks ending a seven-game losing streak and Rakuten Monkeys winning on an eighth-inning grand slam.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current professional-sports results, likely low public-value score.",
+        "evidence_refs": [
+          "row:row-62776c4e1dbcba79865eddc2",
+          "group:165c596176e4d495e19a4b89"
+        ]
+      }
+    },
+    {
+      "row_id": "row-628e45da118ed28360b99977",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Explainer of the Fifteenth Five-Year financial blueprint unveiled at a September 10 State Council Information Office press conference before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Underlying policy-release event predates the run window.",
+        "evidence_refs": [
+          "row:row-628e45da118ed28360b99977",
+          "group:b45bb30421d3700738bb2284"
+        ]
+      }
+    },
+    {
+      "row_id": "row-62ce14ac6ef48b5ccfc2439c",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1818",
+      "reason": "Hong Kong's updated standardized tobacco-packaging rules were gazetted on September 11, including plain dark-brown packaging and 12 updated health-warning images.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current regulatory publication with scheduled legal effect.",
+        "evidence_refs": [
+          "row:row-62ce14ac6ef48b5ccfc2439c",
+          "group:713b17e7bac135c8dd92890a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-6340ae48bd01ff1300de3ef6",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1420",
+      "reason": "This is the same September 11 Taiwan equity-market decline already represented by TWN-1420, with the final 755.64-point closing figure.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Duplicate evidence merged into existing Taiwan market event.",
+        "evidence_refs": [
+          "row:row-6340ae48bd01ff1300de3ef6",
+          "group:fcd98e3e6480169211f2f767"
+        ]
+      }
+    },
+    {
+      "row_id": "row-634facf72f13c3832013c9b3",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Actor Lui Yu-yeung died on September 7, outside the fixed window; the September 11 article reports the earlier death.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material event time predates the run window.",
+        "evidence_refs": [
+          "row:row-634facf72f13c3832013c9b3",
+          "group:59404cc915d6202a2a59edd3"
+        ]
+      }
+    }
+  ]
+}
