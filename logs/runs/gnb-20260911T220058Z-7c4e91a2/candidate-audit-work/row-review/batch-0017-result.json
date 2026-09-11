@@ -1,0 +1,295 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 17,
+  "input_batch_sha256": "6c75a4ead2aa325fb9116a797951432d39f34dffb82fdf5e813d7ee8e0e350b0",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-5806453d6c4fb527fda0715e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1701",
+      "reason": "Guangdong's flood and typhoon headquarters issued a September 11 province-wide defense notice for a South China Sea tropical disturbance expected to strengthen and bring severe wind and rain.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current official public-safety preparedness action.",
+        "evidence_refs": [
+          "row:row-5806453d6c4fb527fda0715e",
+          "group:216878640ae96c9d60eca8c9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5845c33e95f6feb1d07a07a0",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1702",
+      "reason": "Xi Jinping issued current Teachers' Day greetings to China's teachers and education workers; the article then expands into commentary and examples.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "A discrete current head-of-state Teachers' Day message is present despite feature framing.",
+        "evidence_refs": [
+          "row:row-5845c33e95f6feb1d07a07a0",
+          "group:c8a8fcc0340552734ee59ba8"
+        ]
+      }
+    },
+    {
+      "row_id": "row-58830f26594fa3fcfdde2687",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Historical profile of Chongqing transport entrepreneur Chen Hongyi with no new in-window event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Historical feature.",
+        "evidence_refs": [
+          "row:row-58830f26594fa3fcfdde2687",
+          "group:03671402265295a4856a3bb2"
+        ]
+      }
+    },
+    {
+      "row_id": "row-58face492d3c449bcd8ff9f3",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1704",
+      "reason": "Taiwan officials disclosed that the Mainland Affairs Council and Economy Ministry are drafting China-travel guidance for citizens and high-tech workers ahead of new Chinese entry-exit rules taking effect September 15.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current cross-strait risk-management policy development.",
+        "evidence_refs": [
+          "row:row-58face492d3c449bcd8ff9f3",
+          "group:534f3b773bc616f84e70f448"
+        ]
+      }
+    },
+    {
+      "row_id": "row-591c0d779954f741e018eff7",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1705",
+      "reason": "Everland's panda cub Shubao made its first public appearance on its 100th day in South Korea.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current cultural/wildlife event, likely low public value.",
+        "evidence_refs": [
+          "row:row-591c0d779954f741e018eff7",
+          "group:65457ddf5dbe4f8f7079c440"
+        ]
+      }
+    },
+    {
+      "row_id": "row-59442f8ab66ef7fc8251f634",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The reported Miaoli iguana removal operations occurred September 7 and 8, before the fixed window; September 11 article summarizes those earlier actions.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material field operations predate the run window.",
+        "evidence_refs": [
+          "row:row-59442f8ab66ef7fc8251f634",
+          "group:48c9f700debfbdb75c0b6482"
+        ]
+      }
+    },
+    {
+      "row_id": "row-59ceef018f08044f16ee5aa6",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Long March anniversary/history and bamboo-industry feature built around a reporter visit on September 10.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Historical feature; current visit predates the window.",
+        "evidence_refs": [
+          "row:row-59ceef018f08044f16ee5aa6",
+          "group:c36065d2058e00a09d151dd2"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5a76274843be0e5c616a20ca",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1708",
+      "reason": "Taitung County announced the September 12-13 Dong! Take Me Away concert lineup and staging, including Alex To's first Taitung performance.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current public cultural-event announcement, likely low public-value score.",
+        "evidence_refs": [
+          "row:row-5a76274843be0e5c616a20ca",
+          "group:0b6005c3a36b7f34cbc5c3ca"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5aab7b69f63de24393100c99",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1316",
+      "reason": "ANSA confirmed Vice President Hsiao Bi-khim's arrival on Ventotene for the democracy forum, adding same-event evidence to her Italy visit.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Additional current evidence merged into the existing Hsiao Italy diplomatic event.",
+        "evidence_refs": [
+          "row:row-5aab7b69f63de24393100c99",
+          "group:9d63c34988428cd1569325c1"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5b65dcfc4b2bf0bdd44d2123",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Long-form archaeological feature on Shimao ancient city and discoveries accumulated since 2011, not a discrete in-window finding.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Historical/archaeological feature.",
+        "evidence_refs": [
+          "row:row-5b65dcfc4b2bf0bdd44d2123",
+          "group:bc4c77cb7694c43d5278f722"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5b6ec27049d40d1ed4a03f34",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Explainer of an industrial-cost anti-price-war notice publicly issued September 10 before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Underlying regulatory release predates the local run window.",
+        "evidence_refs": [
+          "row:row-5b6ec27049d40d1ed4a03f34",
+          "group:57f9f0054d2807f09ea6751c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5b7274288fd43558daeaf1f5",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Routine daily 7-day reverse-repurchase liquidity operation with no indicated policy-rate or exceptional liquidity change.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Routine monetary-market operation rather than a distinct policy shift.",
+        "evidence_refs": [
+          "row:row-5b7274288fd43558daeaf1f5",
+          "group:80a1f88422a4a98994c55fe0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5b97d3d2483ed22324c78f28",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Lifestyle/local-product feature about navel-orange mooncakes without a material public event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Food/cultural feature.",
+        "evidence_refs": [
+          "row:row-5b97d3d2483ed22324c78f28",
+          "group:6a07dd8c67e9f2e9ded3e935"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5ba2befcb2e71c22bdf30437",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1714",
+      "reason": "Qinghai Province and Thailand's Chiang Mai Province held a current cooperation symposium.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete subnational international-cooperation meeting; likely limited public impact.",
+        "evidence_refs": [
+          "row:row-5ba2befcb2e71c22bdf30437",
+          "group:8c75becc211cc7ce66e12561"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5bb2770c1c0fc2a53197d5c8",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1715",
+      "reason": "Eleven hydrological stations supporting the Pinglu Canal were formally handed over for operation, marking a new safety-monitoring milestone for the western land-sea corridor.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current infrastructure-operational milestone.",
+        "evidence_refs": [
+          "row:row-5bb2770c1c0fc2a53197d5c8",
+          "group:4f01fd63951feb88e9645aa3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5bd0b1ea9d0820eae611c99b",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1705",
+      "reason": "This report covers the same Everland panda 100-day event and naming as CHN-1705.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Duplicate evidence merged into the same semantic event.",
+        "evidence_refs": [
+          "row:row-5bd0b1ea9d0820eae611c99b",
+          "group:69ee70f29171ace81a0a7db6"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5c0379960481d1f9cdfd5f72",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1717",
+      "reason": "China's NDRC imposed another temporary fuel-price intervention on September 11, reducing calculated gasoline and diesel increases amid crude prices above $100 and the Iran war.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current national energy-price policy action with broad consumer and inflation impact.",
+        "evidence_refs": [
+          "row:row-5c0379960481d1f9cdfd5f72",
+          "group:2cf1e2f0bd7eb76f969c5a4f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5c2c879fc22792c0559c71d7",
+      "disposition": "event_evidence",
+      "semantic_event_id": "GLB-1718",
+      "reason": "Philippine Coast Guard reported finding 30 bodies aboard the burned June Aster ferry on September 11, raising confirmed deaths to 35 while 54 remained missing.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Major current mass-casualty search-and-recovery update.",
+        "evidence_refs": [
+          "row:row-5c2c879fc22792c0559c71d7",
+          "group:d2528675983d02b8fefd4d20"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5c4b2a3fbfb85d6309e48257",
+      "disposition": "event_evidence",
+      "semantic_event_id": "GLB-1719",
+      "reason": "The US Supreme Court issued a fresh ruling barring Missouri from using a Republican-favored congressional map in the November midterm election.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current high-court election-law decision with national political implications.",
+        "evidence_refs": [
+          "row:row-5c4b2a3fbfb85d6309e48257",
+          "group:dde2f9beb6727c9cb262e2ec"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5ca6078df9181aaf357df521",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1720",
+      "reason": "Ding Junhui and Zhou Yuelong advanced to the English Open snooker quarterfinals in current competition.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current sports result, likely low public-value score.",
+        "evidence_refs": [
+          "row:row-5ca6078df9181aaf357df521",
+          "group:a5eb3bebb70ea386de447090"
+        ]
+      }
+    }
+  ]
+}
