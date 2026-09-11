@@ -1,0 +1,295 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 6,
+  "input_batch_sha256": "6a32d96080a799c309e6d61cc7d2b6c442e4a5f117df4fa568e542f2b8915de5",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-1a2cdfe0c941aa06536f51b4",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Routine lottery-number service item rather than a public-affairs news event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The row only publishes draw results and contains no material news development.",
+        "evidence_refs": [
+          "row:row-1a2cdfe0c941aa06536f51b4",
+          "group:409fb18bbd463a68fd26dfa0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1a3dc244a429bb6ecfb04382",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-252168301121283",
+      "reason": "Guizhou disciplinary authorities announced an investigation into a provincial geology and mineral-resources bureau deputy party secretary.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The formal disciplinary investigation is a discrete current governance event.",
+        "evidence_refs": [
+          "row:row-1a3dc244a429bb6ecfb04382",
+          "group:e55882030f03d4871a902e8a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1a631aa40367ae158d7b364b",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-198069533018424",
+      "reason": "A Chongqing government press conference announced the September 19 international mountain outdoor sports open and its field.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The official event announcement is a discrete current sports development.",
+        "evidence_refs": [
+          "row:row-1a631aa40367ae158d7b364b",
+          "group:b424a82809387a5830c61d22"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1a79bc79ae493e6a221f1d8e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-119171711026825",
+      "reason": "The creator of Hong Kong's Pillar of Shame and NGOs held a current international press conference demanding return of the sculpture amid an active forfeiture dispute.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The press conference and pending property/legal dispute are discrete current Hong Kong rights/cultural developments.",
+        "evidence_refs": [
+          "row:row-1a79bc79ae493e6a221f1d8e",
+          "group:6c62d380c6890bfffac78d44"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1aa805fc30d5cbd9db7b3781",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "General legal/social feature on youth tattoo regulation rather than a discrete current event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Case examples and expert commentary are used for a broad trend discussion without a bounded new occurrence.",
+        "evidence_refs": [
+          "row:row-1aa805fc30d5cbd9db7b3781",
+          "group:498bc061fbdad1e00a75207b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1acccd9481c43e7219286d2e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-150597385992913",
+      "reason": "Taiwan U18 baseball adjusted its starting lineup for the current Super Round game and returned an injured catcher to the lineup.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The lineup/injury update is a discrete current sports development.",
+        "evidence_refs": [
+          "row:row-1acccd9481c43e7219286d2e",
+          "group:88f7afb23ad1c2f062fbbd1b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1b44c69a9691d805677494ff",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The described U.S.-China youth trip and tree planting occurred September 1-7, outside the fixed run window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The row is a later feature recap of an earlier completed exchange program.",
+        "evidence_refs": [
+          "row:row-1b44c69a9691d805677494ff",
+          "group:b27ce2de6e214da1b2d2904c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1b5972cec4b7d1d769c5d93f",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Field feature on adoption of new-energy agricultural machinery rather than a single newly realized in-window event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The article synthesizes ongoing industry examples and technology trends.",
+        "evidence_refs": [
+          "row:row-1b5972cec4b7d1d769c5d93f",
+          "group:cea1fb6ae4b348212f383515"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1c00f9c8618dd048958afebd",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-211518181224409",
+      "reason": "The 2026 sweet-potato industry high-quality development conference convened in Xiangcheng, Henan.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The industry conference is a discrete current agricultural-sector event.",
+        "evidence_refs": [
+          "row:row-1c00f9c8618dd048958afebd",
+          "group:c05fea0e2fd9e3ea72d6f02c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1c8190560622ca9647d4ad37",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-178646718067047",
+      "reason": "The ethnic dance drama 'Aoxue Changbai' appeared at the current national minority arts performance.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The performance is a discrete current cultural event.",
+        "evidence_refs": [
+          "row:row-1c8190560622ca9647d4ad37",
+          "group:a27a6e2bb1670793d90c71f3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1d3a498d3f2c60e768370bce",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-8296440874123",
+      "reason": "The New York 9/11 25th-anniversary ceremony and an unusual public accusation by a victims' representative are additional evidence for the same commemoration event already identified.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "This is the same current 25th-anniversary semantic event with added political/legal context.",
+        "evidence_refs": [
+          "row:row-1d3a498d3f2c60e768370bce",
+          "event:CHN-8296440874123"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1d79b9dc4d5e2cb14bbef2ae",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-174324103712936",
+      "reason": "Two DPP Hsinchu-area candidates held a current municipal-policy exchange on transport, education and metropolitan coordination.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The campaign-policy meeting is a discrete current local political event.",
+        "evidence_refs": [
+          "row:row-1d79b9dc4d5e2cb14bbef2ae",
+          "group:9e8bfe4710a8d4033b48bf08"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1de936c0c01d0546e0afe148",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-58230164998642",
+      "reason": "ARATS chairman Zhang Zhijun's current remarks were delivered at the same 20th Jiangxi-Taiwan cooperation conference already represented in the event set.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The speech is supporting evidence for the same cross-strait conference semantic event.",
+        "evidence_refs": [
+          "row:row-1de936c0c01d0546e0afe148",
+          "event:CHN-58230164998642"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1df6b193b442a83595b1712c",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-87132787679668",
+      "reason": "Kaohsiung Film Festival announced its 2026 opening and closing films.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The festival programming announcement is a discrete current cultural event.",
+        "evidence_refs": [
+          "row:row-1df6b193b442a83595b1712c",
+          "group:4f3f2edba1b4211182adf762"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1e02c8572fe5f656a0dd112c",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-110905961635153",
+      "reason": "Taiwan High Court extended Jeffrey Koo Jr.'s travel restrictions and electronic check-in requirements for eight months.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The court order is a discrete current legal development.",
+        "evidence_refs": [
+          "row:row-1e02c8572fe5f656a0dd112c",
+          "group:64de4e725d51648f5fffdaeb"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1e0deb20c11140779bf9a893",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-163629600630169",
+      "reason": "New Taipei councilors raised a current land-rights accusation against mayoral candidate Lee Ssu-chuan and his campaign responded.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The council questioning and campaign response are discrete current political developments.",
+        "evidence_refs": [
+          "row:row-1e0deb20c11140779bf9a893",
+          "group:94d1fc38659945260bb2b559"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1e1d86b55bb354db8f2b9c9d",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Long March anniversary historical/ideological feature rather than a discrete new in-window event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Historical narrative and commemorative commentary dominate.",
+        "evidence_refs": [
+          "row:row-1e1d86b55bb354db8f2b9c9d",
+          "group:696aba2b2af731b724a5b5ec"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1e237e5347223307e61bcadf",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-219924222732933",
+      "reason": "At a current seminar on 30 years of direct presidential elections, Hsu Hsin-liang and James Soong debated Taiwan's electoral and constitutional history.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The attributable current political/constitutional discussion is a discrete public event.",
+        "evidence_refs": [
+          "row:row-1e237e5347223307e61bcadf",
+          "group:c805192c6a85ab131515eeb4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1e4b947e660fa318c4f04fe0",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Scenic photo feature based on September 10 imagery, outside the fixed window and without a new public event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The row is a landscape photo item rather than current event reporting.",
+        "evidence_refs": [
+          "row:row-1e4b947e660fa318c4f04fe0",
+          "group:43df62b3bf422ffa1747e69a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1eafe99080fac8d5ebb6f192",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-9726456808158",
+      "reason": "Hualien county magistrate candidate Wei Chia-hsien filed a current complaint alleging coordinated cyber-army attacks and sought investigation of operators.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The complaint is a discrete current election/legal development.",
+        "evidence_refs": [
+          "row:row-1eafe99080fac8d5ebb6f192",
+          "group:08d89e00c2de662cb68f293f"
+        ]
+      }
+    }
+  ]
+}
