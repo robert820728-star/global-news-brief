@@ -1,0 +1,295 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 19,
+  "input_batch_sha256": "bbd2a849a167b50c9bec50e1a312c748db7e67011833f6e4ab22ba6dc399c721",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-63c7747f99f3ea8e0bffc263",
+      "disposition": "event_evidence",
+      "semantic_event_id": "GLB-1901",
+      "reason": "The US Bureau of Labor Statistics released August CPI data on September 11 showing 3.4% year-on-year inflation and 0.4% month-on-month growth.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "New official macroeconomic data release with broad policy and market relevance.",
+        "evidence_refs": [
+          "row:row-63c7747f99f3ea8e0bffc263",
+          "group:fdb927b30dcea2084b6ec903"
+        ]
+      }
+    },
+    {
+      "row_id": "row-63d5ac0c7fdfef6edd3ae20a",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Think-tank seminar commentary about US-Taiwan AI trade and possible future trade-policy pressure, without a discrete policy decision or new official action.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Expert analysis and projection dominate.",
+        "evidence_refs": [
+          "row:row-63d5ac0c7fdfef6edd3ae20a",
+          "group:b7ff606e6da5bfa4856d16ee"
+        ]
+      }
+    },
+    {
+      "row_id": "row-63d75a192abe2a70d31f32f6",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1903",
+      "reason": "Taiwan High Court ordered an eight-month extension of former Taipei urban-development chief Huang Ching-mao's travel and sea-exit restrictions in the Core Pacific City case.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current appellate-court procedural ruling in a major corruption case.",
+        "evidence_refs": [
+          "row:row-63d75a192abe2a70d31f32f6",
+          "group:6da6c36b8849793e80bc73e6"
+        ]
+      }
+    },
+    {
+      "row_id": "row-63e5297827e3fd977280339f",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1904",
+      "reason": "A fuel-tank fire occurred at Taitung's Chihhang Air Base on September 11 during contractor cleaning work, injuring one worker and prompting an investigation.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current military-facility safety incident with an injury.",
+        "evidence_refs": [
+          "row:row-63e5297827e3fd977280339f",
+          "group:34392227417093b47b1b00a8"
+        ]
+      }
+    },
+    {
+      "row_id": "row-64442f94ccfa60ef49eb9124",
+      "disposition": "event_evidence",
+      "semantic_event_id": "GLB-1905",
+      "reason": "Elena Rybakina defeated Coco Gauff in the US Open semifinal and advanced to the final against Aryna Sabalenka.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current major international sports result, likely low public-value score.",
+        "evidence_refs": [
+          "row:row-64442f94ccfa60ef49eb9124",
+          "group:05723a69f7c1929f4b7c336a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-64504953ded8dbd2cfab8641",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1906",
+      "reason": "Ningde held its September 10-11 Beijing product-promotion event showcasing food, marine, health and agricultural products, providing a current local-industry promotion event embedded in a broader feature.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "A discrete current promotional event is present, though the article is largely developmental feature content.",
+        "evidence_refs": [
+          "row:row-64504953ded8dbd2cfab8641",
+          "group:a7a7407f45f1143a4922df54"
+        ]
+      }
+    },
+    {
+      "row_id": "row-648c99664cfef519a39c2cc9",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1907",
+      "reason": "Former Agricultural Bank of China Anhui branch president Zhang Chunlin was placed under disciplinary and supervisory investigation for suspected serious violations.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current anti-corruption investigation announcement involving a senior financial official.",
+        "evidence_refs": [
+          "row:row-648c99664cfef519a39c2cc9",
+          "group:63b36509e511ec1d97771d50"
+        ]
+      }
+    },
+    {
+      "row_id": "row-64aa316a11ea1a7d888405a8",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1908",
+      "reason": "A new City Green Co-building Index report covering 100 Chinese cities was released around China Clean Air Week, reporting broad improvement but persistent ozone and regional challenges.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current institutional report release with nationwide environmental-comparison data; exact release timing remains for scoring/verification.",
+        "evidence_refs": [
+          "row:row-64aa316a11ea1a7d888405a8",
+          "group:7e103e236af38fee1ddf0c95"
+        ]
+      }
+    },
+    {
+      "row_id": "row-64bce3be9bcc3c3ba3e68fde",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Olympic champions' CIFTIS appearance and comments occurred September 10, before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material appearance predates the run window and content is mainly commentary.",
+        "evidence_refs": [
+          "row:row-64bce3be9bcc3c3ba3e68fde",
+          "group:6a562f98dfb22e04036c68e8"
+        ]
+      }
+    },
+    {
+      "row_id": "row-64c7a44d0392d97485a60b7f",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1910",
+      "reason": "Meta announced rollout in Taiwan of Instagram parent search alerts for repeated teen searches involving suicide or self-harm terms.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current platform-safety feature launch with youth mental-health implications.",
+        "evidence_refs": [
+          "row:row-64c7a44d0392d97485a60b7f",
+          "group:a820201b0b742ec3167579ee"
+        ]
+      }
+    },
+    {
+      "row_id": "row-64cfa1fda65ea9664fa8edfd",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Routine intraday New Taiwan dollar midpoint update without a distinct policy or exceptional market event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Routine market-tape snapshot.",
+        "evidence_refs": [
+          "row:row-64cfa1fda65ea9664fa8edfd",
+          "group:262183c50353bad52416390d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-65648459f467a990bde00559",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Aerial photo feature on the historic Yangyuan village without a discrete new event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Travel/cultural visual feature.",
+        "evidence_refs": [
+          "row:row-65648459f467a990bde00559",
+          "group:a79d25b3ee2164c8763e9235"
+        ]
+      }
+    },
+    {
+      "row_id": "row-6572bba01625f8767c95b9f0",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The methanol dual-fuel container ship departed Nantong for sea trials on September 10, before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material ship-trial milestone predates the run window.",
+        "evidence_refs": [
+          "row:row-6572bba01625f8767c95b9f0",
+          "group:bd62a04fffaa1d359a5fab4d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-65bfe2860650c5d32ef91f5a",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Smartphone-industry trend analysis based chiefly on product launches from September 7 and 10, with no distinct in-window event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Trend/analysis feature and underlying launches predate the window.",
+        "evidence_refs": [
+          "row:row-65bfe2860650c5d32ef91f5a",
+          "group:6d5c31c25f9a4dd4d9a990b4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-66244ef806f09c2593cc51db",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1403",
+      "reason": "At the same September 11 Tunchang Fifteenth Five-Year Plan briefing, officials detailed the county's agriculture strategy; this is additional evidence for CHN-1403.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Same current Tunchang planning event, merged to avoid duplication.",
+        "evidence_refs": [
+          "row:row-66244ef806f09c2593cc51db",
+          "group:93205acd56f28a32a8c90463"
+        ]
+      }
+    },
+    {
+      "row_id": "row-665311299ec2ba6fcf1a7c10",
+      "disposition": "event_evidence",
+      "semantic_event_id": "GLB-1916",
+      "reason": "The UK Office for National Statistics released July GDP showing 0.4% growth, above expectations and June's 0.3% growth.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "New official national macroeconomic data release.",
+        "evidence_refs": [
+          "row:row-665311299ec2ba6fcf1a7c10",
+          "group:8336f661349c0e01ba352509"
+        ]
+      }
+    },
+    {
+      "row_id": "row-667443a08a3675cfd102dffd",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1917",
+      "reason": "A 2026 Belt and Road trade exchange and overseas-Chinese enterprise export initiative convened in Guiyang with officials and representatives from numerous countries and regions.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current international trade-promotion event.",
+        "evidence_refs": [
+          "row:row-667443a08a3675cfd102dffd",
+          "group:73a6c3c7979ff0c86b0a5ed9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-6688dab32f3d2147181ba8ac",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1918",
+      "reason": "Taiwan prosecutors and police arrested another man in Kaohsiung on September 11 for allegedly assisting fugitive Chang Chun-chieh, in an investigation linked to a broader national-security case.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current law-enforcement development.",
+        "evidence_refs": [
+          "row:row-6688dab32f3d2147181ba8ac",
+          "group:f347c3652a031802d27aea48"
+        ]
+      }
+    },
+    {
+      "row_id": "row-674d4f179b644c87975ba2c7",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1420",
+      "reason": "Institutional investors' NT$112.372 billion net selling is additional evidence for the same September 11 Taiwan equity selloff already represented by TWN-1420.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Duplicate same-session market evidence merged into TWN-1420.",
+        "evidence_refs": [
+          "row:row-674d4f179b644c87975ba2c7",
+          "group:6b13a427ccfe3e5465d8021e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-67d9faf2e340b72650d0a23a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1920",
+      "reason": "Henan's provincial party committee appointed Wang Song as Zhengzhou Communist Party secretary, replacing An Wei.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current senior municipal leadership appointment.",
+        "evidence_refs": [
+          "row:row-67d9faf2e340b72650d0a23a",
+          "group:c68eb34408f948a07b19e105"
+        ]
+      }
+    }
+  ]
+}
