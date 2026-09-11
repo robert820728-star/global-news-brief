@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 15,
+  "input_batch_sha256": "76229ade897f30dcbbde6dd70cde28ebdb1b5a70ddafb3e13473b2ef3bc3f267",
+  "result_sha256": "d8ca526de31c648afd06ca96aa78ab0fd0bab8912f427f794c8a6583ac4bb510",
+  "status": "terminal"
+}

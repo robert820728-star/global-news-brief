@@ -1,0 +1,295 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 15,
+  "input_batch_sha256": "76229ade897f30dcbbde6dd70cde28ebdb1b5a70ddafb3e13473b2ef3bc3f267",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-4e6d5dce04de9d8127edb365",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1501",
+      "reason": "The Pearl River Water Resources Commission released its 2025 basin water-resources bulletin with new supply, rainfall and efficiency statistics.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete in-window official statistical release.",
+        "evidence_refs": [
+          "row:row-4e6d5dce04de9d8127edb365",
+          "group:3d171ed1489f67f4398a52d9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4e6df28bee9f291541033fe3",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1502",
+      "reason": "China's market regulator published a new set of enforcement cases from its low-quality low-price crackdown, including unsafe counterfeit-certified helmets and criminal referrals.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current national regulatory enforcement disclosure with consumer-safety implications.",
+        "evidence_refs": [
+          "row:row-4e6df28bee9f291541033fe3",
+          "group:acf515ed3bc7263739ff4944"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4ea356dad17d8cc8271ae669",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1503",
+      "reason": "Guangzhou Port reported Nansha vehicle exports up nearly 50% in January-August and inaugurated a new automotive supply-chain joint venture.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "New trade data plus a discrete current logistics-company launch.",
+        "evidence_refs": [
+          "row:row-4ea356dad17d8cc8271ae669",
+          "group:e26715b5b5f9e537ca743082"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4eb6b0526e3859df9986c1aa",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Personal health disclosure by Jimmy Lai's daughter based on a September 9 social-media post; no distinct in-window public-policy or legal event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Human-interest/personal disclosure rather than a current public event.",
+        "evidence_refs": [
+          "row:row-4eb6b0526e3859df9986c1aa",
+          "group:aae8dea450e7cda2d4d92e6a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4f18ba21cf241ac544dfcc02",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Daily ASEAN digest bundles several unrelated items and prior-day developments rather than one auditable semantic event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Aggregator/roundup format; underlying events require their own source rows.",
+        "evidence_refs": [
+          "row:row-4f18ba21cf241ac544dfcc02",
+          "group:9141d58ae8fc31aed427aad7"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4f2198c2a2d6d5a85e4442d0",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Profile feature about a railway police officer's multi-year work alongside the Pinglu Canal project rather than a discrete new event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Profile/retrospective framing dominates.",
+        "evidence_refs": [
+          "row:row-4f2198c2a2d6d5a85e4442d0",
+          "group:0c8e750f2583699203644684"
+        ]
+      }
+    },
+    {
+      "row_id": "row-50ac37e0988a30c7c6d01597",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1507",
+      "reason": "PwC and partner think tanks released the 2026 Cities of Opportunity report comparing 60 Chinese cities across ten dimensions.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete in-window report release with new comparative urban data.",
+        "evidence_refs": [
+          "row:row-50ac37e0988a30c7c6d01597",
+          "group:33e3ee7ba63950cc35e7dbeb"
+        ]
+      }
+    },
+    {
+      "row_id": "row-50ae36312df14ba0515eefd0",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Field-report feature on traditional clay crafts; the reporter visit occurred September 10 before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Feature and underlying visit outside the window.",
+        "evidence_refs": [
+          "row:row-50ae36312df14ba0515eefd0",
+          "group:184ded5fda49bd2c1cf541ca"
+        ]
+      }
+    },
+    {
+      "row_id": "row-50d992181f289d2c15e6e20b",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The first container river vessel completed its Qinzhou Port operation on September 10, before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material event time predates the run window.",
+        "evidence_refs": [
+          "row:row-50d992181f289d2c15e6e20b",
+          "group:2a3fa305cf3e4db69c85a7cd"
+        ]
+      }
+    },
+    {
+      "row_id": "row-50e08a01175beeb0bde85c16",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Agricultural harvest and rural-industry feature describing ongoing seasonal production without a distinct new policy or market event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Seasonal feature.",
+        "evidence_refs": [
+          "row:row-50e08a01175beeb0bde85c16",
+          "group:dbbf8e8e53432f6e22f93e3b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5110e51c1f69e506eb769fa5",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Evergreen health explainer about dietary sugar and skin glycation.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "General health guidance, no current event.",
+        "evidence_refs": [
+          "row:row-5110e51c1f69e506eb769fa5",
+          "group:f1a4cb2ae24b97941706b10b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-51622f950b2da6c53376b2ce",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1217",
+      "reason": "Another report of the same 2026 CIFTIS Xiong'an Digital Trade Innovation Conference opening already represented by CHN-1217.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Duplicate evidence merged into the existing semantic event.",
+        "evidence_refs": [
+          "row:row-51622f950b2da6c53376b2ce",
+          "group:909a935b777dc7a15e734909"
+        ]
+      }
+    },
+    {
+      "row_id": "row-51bb03161a5f8825ac52f1cc",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Trend feature synthesizing previously released service-trade and tourism statistics rather than reporting a discrete in-window release.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Analytical roundup rather than one new event.",
+        "evidence_refs": [
+          "row:row-51bb03161a5f8825ac52f1cc",
+          "group:7046c5150c3578183621f083"
+        ]
+      }
+    },
+    {
+      "row_id": "row-524cca8f26470a854b73844b",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1514",
+      "reason": "Japan announced ace Oda Shoki as starter for the September 12 U18 Asian Championship elimination game against Taiwan after losing to Korea.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current sports-team decision and tournament development, though likely low public-value score.",
+        "evidence_refs": [
+          "row:row-524cca8f26470a854b73844b",
+          "group:68e3e20e2c91dfac481fa840"
+        ]
+      }
+    },
+    {
+      "row_id": "row-527513df2ad195a470df2e56",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1515",
+      "reason": "Uni-Lions announced a 613-drone show for Chen Yung-chi's retirement games on September 19-20.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current sports-event announcement, likely low public-value score.",
+        "evidence_refs": [
+          "row:row-527513df2ad195a470df2e56",
+          "group:4e9356f77573c46942edbe87"
+        ]
+      }
+    },
+    {
+      "row_id": "row-52b4173ba4ac09032c158e8d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1403",
+      "reason": "Tunchang officials used the same September 11 Fifteenth Five-Year Plan press conference to announce a county branding strategy; this is additional evidence for CHN-1403.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Same press-conference policy package, merged with the Tunchang plan event.",
+        "evidence_refs": [
+          "row:row-52b4173ba4ac09032c158e8d",
+          "group:4359228228c92754771c08ff"
+        ]
+      }
+    },
+    {
+      "row_id": "row-52b85e67b1f3092a19eba4e2",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1517",
+      "reason": "HSBC released its fourth-quarter global investment outlook and Fidelity released a new Asia outlook, both highlighting AI, semiconductors and Asian growth.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "New institutional investment-report releases in-window.",
+        "evidence_refs": [
+          "row:row-52b85e67b1f3092a19eba4e2",
+          "group:157a8eca3e9130e0147f4553"
+        ]
+      }
+    },
+    {
+      "row_id": "row-52f20d947b893b18cb9fd6e4",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1518",
+      "reason": "A new KPMG-linked book/report on Chinese companies' overseas expansion was released at CIFTIS with updated strategic framing and data synthesis.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current publication release, likely low public impact.",
+        "evidence_refs": [
+          "row:row-52f20d947b893b18cb9fd6e4",
+          "group:41f5442afc1e107782dd4de7"
+        ]
+      }
+    },
+    {
+      "row_id": "row-536705f5c204895d007e5c97",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Industry trend feature on Malaysia's Industry 4.0 transition and Taiwanese suppliers; cited policy milestones predate the window and no discrete new investment is identified.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Trend feature rather than current event.",
+        "evidence_refs": [
+          "row:row-536705f5c204895d007e5c97",
+          "group:4b5152df09b62fadce61c422"
+        ]
+      }
+    },
+    {
+      "row_id": "row-53b4825ea1103bca3eff01c6",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1520",
+      "reason": "Organizers announced nine first-time features for the current China-ASEAN Expo, constituting a fresh event-program disclosure.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete in-window expo-program announcement; importance to be determined in scoring.",
+        "evidence_refs": [
+          "row:row-53b4825ea1103bca3eff01c6",
+          "group:4d4aebf0f5bb99b397ef6362"
+        ]
+      }
+    }
+  ]
+}
