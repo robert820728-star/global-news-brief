@@ -1,0 +1,295 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 1,
+  "input_batch_sha256": "62acb550ad820f5a0b659c089955ebac3cbcfcb44c81612617ef16d031b668f5",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-0025c30497b749bd94a8a2f3",
+      "disposition": "unresolved_exhausted",
+      "semantic_event_id": null,
+      "reason": "Article-body recovery was exhausted, so this row cannot be used as event evidence without fabricating content.",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "No durable article-body content is available after the documented same-host recovery chain.",
+        "evidence_refs": [
+          "row:row-0025c30497b749bd94a8a2f3",
+          "failure:configured-same-source-and-final-host-recovery-chain-exhausted"
+        ]
+      }
+    },
+    {
+      "row_id": "row-00d87dd9bb977addb53aba28",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-218975664725200",
+      "reason": "Content-ready article describes a current prosecutorial detention request in a Keelung public-works bid-rigging case.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The article body contains a discrete in-window judicial development.",
+        "evidence_refs": [
+          "row:row-00d87dd9bb977addb53aba28",
+          "group:c7283eb5dcd02177f24d46b9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-00e9208a4580eb32a7b894d9",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-122047352093056",
+      "reason": "Content-ready article reports the release of a Zhejiang AI science-education study at a current event.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The report release is a discrete in-window occurrence even if later scoring may find low public value.",
+        "evidence_refs": [
+          "row:row-00e9208a4580eb32a7b894d9",
+          "group:6f005d113980f8bb432d1107"
+        ]
+      }
+    },
+    {
+      "row_id": "row-01049450ad48768294874d79",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-3663299158334",
+      "reason": "Content-ready article reports a current statement by Iran's president ahead of the BRICS summit amid active U.S.-Iran pressure.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The statement and summit participation are current, attributable developments.",
+        "evidence_refs": [
+          "row:row-01049450ad48768294874d79",
+          "group:0354eda5213e20ea59c92841"
+        ]
+      }
+    },
+    {
+      "row_id": "row-01afc960f5d3f7a45c8da96a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-175058801510141",
+      "reason": "Content-ready article reports the opening of a National Palace Museum exhibition built around newly accessioned artifacts.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The exhibition opening is a discrete current cultural event.",
+        "evidence_refs": [
+          "row:row-01afc960f5d3f7a45c8da96a",
+          "group:9f370dadc6fd38d3506be9da"
+        ]
+      }
+    },
+    {
+      "row_id": "row-024d73540b43cf6bf5562fa9",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The row is a human-interest profile of Pakistani students in Xinjiang rather than a discrete material in-window event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Narrative profile/background dominates and no distinct current event is established in the excerpt.",
+        "evidence_refs": [
+          "row:row-024d73540b43cf6bf5562fa9",
+          "group:974fe2bdce8556e145b46c1b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-026de9631356a9ab2f5d2474",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-243581272789886",
+      "reason": "Content-ready article reports China's procedural vote and formal position at a current UN Security Council meeting on Iran.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The vote and meeting are discrete in-window diplomatic actions.",
+        "evidence_refs": [
+          "row:row-026de9631356a9ab2f5d2474",
+          "group:dd892f3d137e1c16557a3bde"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0286d49a5a0ae7ca5ffc4851",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-121205802663452",
+      "reason": "Content-ready article reports Taiwan's announced starting pitcher for a decisive U18 Asia baseball game.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "This is a discrete current sports development eligible for later public-value scoring.",
+        "evidence_refs": [
+          "row:row-0286d49a5a0ae7ca5ffc4851",
+          "group:6e3c6ccffe1cc5ae59a0ec0f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0288cdebf85d19b332852145",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-15989218383898",
+      "reason": "Content-ready article reports a newly released dialysis carbon-footprint assessment from Linkou Chang Gung Memorial Hospital.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Release of quantified healthcare-emissions findings is a discrete current development.",
+        "evidence_refs": [
+          "row:row-0288cdebf85d19b332852145",
+          "group:0e8ac7ae981a4fc0bcaeb470"
+        ]
+      }
+    },
+    {
+      "row_id": "row-03cf7ccd7daca30620c781a9",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The row is a profile/advocacy-style feature about an Australian teacher's Xinjiang travel rather than a discrete current event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The excerpt is primarily narrative commentary and background, with no material in-window event identity.",
+        "evidence_refs": [
+          "row:row-03cf7ccd7daca30620c781a9",
+          "group:aec0be84615495708a9106f5"
+        ]
+      }
+    },
+    {
+      "row_id": "row-03fbf1852ab49f23cfdfa6c4",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-115432064749803",
+      "reason": "Content-ready article reports a current Taiwanese national-security warning tied to China's new entry-exit rules taking effect September 15.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The public warning and identified risk groups are a discrete in-window government advisory development.",
+        "evidence_refs": [
+          "row:row-03fbf1852ab49f23cfdfa6c4",
+          "group:68fc1f3710eb18929adda478"
+        ]
+      }
+    },
+    {
+      "row_id": "row-041b244d63ecaae1fc6622d3",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The row is a long-form profile of an Indian teacher and literary translator rather than a discrete current event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The excerpt is biographical/background material without a distinct material in-window occurrence.",
+        "evidence_refs": [
+          "row:row-041b244d63ecaae1fc6622d3",
+          "group:0f68f320cb9e4d34ee37aa55"
+        ]
+      }
+    },
+    {
+      "row_id": "row-042d07a0dc04a4e5ef7e51ef",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-234234055312549",
+      "reason": "The row reports the opening of the 2026 Greater Bay Area time-honored-brand cultural expo in Guangzhou.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The expo opening is a discrete current event despite low likely public-value score.",
+        "evidence_refs": [
+          "row:row-042d07a0dc04a4e5ef7e51ef",
+          "group:d508dda944a551b5851c2296"
+        ]
+      }
+    },
+    {
+      "row_id": "row-046408f9d8fe6ee67fb33aad",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-120687426776590",
+      "reason": "Content-ready article reports a Taiwanese insurer's current deployment of AI in auto-insurance underwriting inspections.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The reported operational AI deployment is a current industry development.",
+        "evidence_refs": [
+          "row:row-046408f9d8fe6ee67fb33aad",
+          "group:6dc3bb33ae0ec8a90d216233"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0483a8c69a740e5f0c435bd5",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-26537480074645",
+      "reason": "Content-ready article reports the start of a three-night Hakka-language family theater run in Chiayi.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The scheduled performance opening is a discrete current cultural event.",
+        "evidence_refs": [
+          "row:row-0483a8c69a740e5f0c435bd5",
+          "group:1822bd12b5951fadbec1c8cd"
+        ]
+      }
+    },
+    {
+      "row_id": "row-049a0c88779743bc8c10ebdf",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-60248140388244",
+      "reason": "Content-ready article reports current U.S. Republican midterm campaigning and post-Trump succession positioning.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The Dallas rally and campaign statements are discrete in-window political developments.",
+        "evidence_refs": [
+          "row:row-049a0c88779743bc8c10ebdf",
+          "group:36cb9d0197944644c9b989ca"
+        ]
+      }
+    },
+    {
+      "row_id": "row-04c45d4273e8fe5c268c6377",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1621117254141",
+      "reason": "The row reports a current research/industry field visit on pet-food innovation in Henan.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "It is a discrete current industry/research activity, retained for later scoring rather than filtered by topic.",
+        "evidence_refs": [
+          "row:row-04c45d4273e8fe5c268c6377",
+          "group:0179721e39fd7d64bf963c68"
+        ]
+      }
+    },
+    {
+      "row_id": "row-04d2c997c186c69ff8320bec",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-215733594975301",
+      "reason": "The row reports the opening of the 12th China Cangzhou International Wushu Competition.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The competition opening is a discrete current event eligible for scoring.",
+        "evidence_refs": [
+          "row:row-04d2c997c186c69ff8320bec",
+          "group:c435644b6c4510b0b46e53a1"
+        ]
+      }
+    },
+    {
+      "row_id": "row-04d668a2ab9878148a952bd2",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-122017750532616",
+      "reason": "Content-ready article reports a current local government industrial-development plan for Hainan's natural-rubber value chain.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The policy/industry planning announcement is a discrete current development requiring later policy-stage scoring.",
+        "evidence_refs": [
+          "row:row-04d668a2ab9878148a952bd2",
+          "group:6ef978ad4208e13a2c81749d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-053ace306227bcf545683f88",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-197721645123287",
+      "reason": "The row reports Zhao Leji's current meeting with Angola's National Assembly president.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The bilateral legislative-leadership meeting is a discrete diplomatic event.",
+        "evidence_refs": [
+          "row:row-053ace306227bcf545683f88",
+          "group:b3d3a86c06d784154e7624e2"
+        ]
+      }
+    }
+  ]
+}
