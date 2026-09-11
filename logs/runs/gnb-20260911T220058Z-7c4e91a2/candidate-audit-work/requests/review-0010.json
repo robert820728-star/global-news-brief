@@ -1,0 +1,293 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 10,
+  "rows": [
+    {
+      "row_id": "row-322234280d3a25e1a5990af5",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1001",
+      "reason": "A current sports-selection development: Tseng Ya-ni confirmed a return to the Asian Games after 20 years.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete in-window participation development, albeit low public consequence.",
+        "evidence_refs": [
+          "row:row-322234280d3a25e1a5990af5",
+          "group:06b906740109bb4e1eeac0b8"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3277c1d1cb4f06554564c94b",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1002",
+      "reason": "Lanzhou Customs released new in-window export statistics showing Linxia cut-flower exports rose more than 30% in the first eight months.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "New official economic data released in the window.",
+        "evidence_refs": [
+          "row:row-3277c1d1cb4f06554564c94b",
+          "group:7aa567ad160dc3ca57f5208c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-327aa3bac4ccad31473fb592",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1003",
+      "reason": "A newly released Czech BIS annual report publicly assessed persistent Chinese state-linked cyber-espionage against Czech diplomatic systems.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The report release is a new institutional security assessment even though the underlying intrusions are older.",
+        "evidence_refs": [
+          "row:row-327aa3bac4ccad31473fb592",
+          "group:4c602ed5cafeeb426ecf35bc"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3284a30d25006bd420d6cdd2",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Health explainer built around a recent anecdotal case and general gout advice rather than a distinct in-window public event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Explainer/health-education format dominates.",
+        "evidence_refs": [
+          "row:row-3284a30d25006bd420d6cdd2",
+          "group:da43f39cae8926c922820456"
+        ]
+      }
+    },
+    {
+      "row_id": "row-333c6ad7eeacaf0cf23c03e3",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1005",
+      "reason": "Shanghai No. 2 Intermediate People's Court issued an in-window first-instance death sentence with two-year reprieve to former SIIC president Zhou Jun for corruption and bribery.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current court judgment with official case facts.",
+        "evidence_refs": [
+          "row:row-333c6ad7eeacaf0cf23c03e3",
+          "group:a135867d6ff05211b2b3b3d0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3342ad9981dc6caad105e65f",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Photo-feature about urban bridge geometry without a material new event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Visual/lifestyle feature rather than a news event.",
+        "evidence_refs": [
+          "row:row-3342ad9981dc6caad105e65f",
+          "group:672593243f92767bb971eadf"
+        ]
+      }
+    },
+    {
+      "row_id": "row-334d1c7a0eac15f87c493211",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1007",
+      "reason": "Taiwan's National Land Management Agency began nationwide distribution of more than 60,000 apartment disaster-prevention guides and promoted community self-protection teams.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current implementation of a central resilience policy with nationwide distribution.",
+        "evidence_refs": [
+          "row:row-334d1c7a0eac15f87c493211",
+          "group:52a887d7d599832ee9694ea5"
+        ]
+      }
+    },
+    {
+      "row_id": "row-33859042ba6a98669419a268",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1008",
+      "reason": "Taiwan issued work visas for the first 35 Indonesian technical workers under the newly opened overseas recruitment route for lodging services.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "First operational cohort under a new labor-import channel.",
+        "evidence_refs": [
+          "row:row-33859042ba6a98669419a268",
+          "group:963f15a68dc07f52e6e51a39"
+        ]
+      }
+    },
+    {
+      "row_id": "row-33c41aad47ad5ceeb8cc047a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1009",
+      "reason": "Guangdong customs released new August and January-August trade data, including three consecutive months above one trillion yuan in monthly trade.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "New official provincial trade statistics with broad economic relevance.",
+        "evidence_refs": [
+          "row:row-33c41aad47ad5ceeb8cc047a",
+          "group:e9ab885d97bbc0fb81e45869"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3415e2f28dbb29bad7db3fb0",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The cargo-ship drone attack occurred on September 9, before the fixed 24-hour window; the article is a later report.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material event time is outside the run window.",
+        "evidence_refs": [
+          "row:row-3415e2f28dbb29bad7db3fb0",
+          "group:c00b90516c4b66abe9addbb5"
+        ]
+      }
+    },
+    {
+      "row_id": "row-349418657a168f10321f127d",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Conference interview/opinion piece about AI and sustainability without a discrete public event beyond the talk itself.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Commentary and forward-looking views dominate.",
+        "evidence_refs": [
+          "row:row-349418657a168f10321f127d",
+          "group:c1213d6f291a696d3f52535a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-35080c67c3db312d2ba2a441",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1012",
+      "reason": "Changhua District Court issued an in-window criminal judgment sentencing a former social-welfare association chair to 40 days' detention for coercing two children to kneel.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current court judgment.",
+        "evidence_refs": [
+          "row:row-35080c67c3db312d2ba2a441",
+          "group:0712dae22508b482e576eda4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-35705fd4bfa28bc4eb1f32cc",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1013",
+      "reason": "Henan's China-Europe freight-train service passed the 20,000-train cumulative milestone with a departure from Zhengzhou.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete transport/logistics milestone reached in-window.",
+        "evidence_refs": [
+          "row:row-35705fd4bfa28bc4eb1f32cc",
+          "group:f68ae2eded83fe73125a814e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-35854f005feb2af0fb5280d0",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1014",
+      "reason": "A new industry report on livestreams, short dramas and web fiction as cultural-consumption channels was released in Beijing.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current report release with identifiable institutional authors, though likely low public impact.",
+        "evidence_refs": [
+          "row:row-35854f005feb2af0fb5280d0",
+          "group:6313664e5feadc5ed28d576c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-35df246d651b4ec8ff428722",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1015",
+      "reason": "China's central anti-corruption authorities announced the expulsion from the Party and public office of former Gansu vice governor Lei Siwei and transfer of suspected crimes for prosecution.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current senior-official disciplinary action.",
+        "evidence_refs": [
+          "row:row-35df246d651b4ec8ff428722",
+          "group:7d5ba51089b3fc98da89158b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3638a070212139d7b9b701a7",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "KPMG executive interview presenting broad views on China's innovation and investment environment rather than a discrete new event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Interview/commentary dominates and cited trends predate the window.",
+        "evidence_refs": [
+          "row:row-3638a070212139d7b9b701a7",
+          "group:f43b5a04bb77b04522ac86a3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-364cc48bf2344eba5f5690b8",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1017",
+      "reason": "Eleven firefighting teams from mainland China, Hong Kong and Macau assembled at Huashan for a current joint training event.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete in-window emergency-response training activity.",
+        "evidence_refs": [
+          "row:row-364cc48bf2344eba5f5690b8",
+          "group:e1378b48d1fbc4cbafd26c7d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-36756fb45b5f8dade81518ad",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1018",
+      "reason": "A current exhibition of elite artifacts from the Shuyuan Street Shang-dynasty aristocratic cemetery opened/drew visitors in Zhengzhou.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current cultural exhibition event, likely low public consequence.",
+        "evidence_refs": [
+          "row:row-36756fb45b5f8dade81518ad",
+          "group:13fd7fdfd69adf8f75e21256"
+        ]
+      }
+    },
+    {
+      "row_id": "row-36a42f7827e34d8f59b8e625",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Routine intraday market-open snapshot without a demonstrated material market event or structural development.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Routine market-tape update rather than a distinct semantic event.",
+        "evidence_refs": [
+          "row:row-36a42f7827e34d8f59b8e625",
+          "group:128a5aeb5c98904872548b10"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3748e3c889b723b4855ad9cb",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1020",
+      "reason": "Gustavo Dudamel gave his first performance after taking up the New York Philharmonic music-director role at Radio City Music Hall.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current cultural leadership/debut event, though low public-system impact.",
+        "evidence_refs": [
+          "row:row-3748e3c889b723b4855ad9cb",
+          "group:3c8b921d77ccf1f2b4886415"
+        ]
+      }
+    }
+  ]
+}
