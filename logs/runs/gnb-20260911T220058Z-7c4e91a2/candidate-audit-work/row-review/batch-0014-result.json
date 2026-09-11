@@ -1,0 +1,295 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 14,
+  "input_batch_sha256": "a5dd7f94d3d98fdbdcdc74426cd72e3179bc94c18ec3ac47f857f16bab5618e7",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-49ef5bec03acf1fae5d008ae",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1401",
+      "reason": "A public-policy petition for a school-counselor duty allowance crossed the 5,000-endorsement threshold, requiring a government response by November 4.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current participatory-policy threshold with mandatory government response.",
+        "evidence_refs": [
+          "row:row-49ef5bec03acf1fae5d008ae",
+          "group:ddb59dfaa7cfbd3e9c9634e4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4a11e562b6d19d74ee81717f",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Interview/commentary following a Taiwan-Europe chip forum held September 9-10, before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Underlying forum predates window and article is analytical interview.",
+        "evidence_refs": [
+          "row:row-4a11e562b6d19d74ee81717f",
+          "group:6e6379421b85b8b7221bfc62"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4a590adb3169f6502906b127",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1403",
+      "reason": "Tunchang officials laid out an in-window Fifteenth Five-Year Plan industrial-cluster strategy built around one park, three industrial zones and two centers.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current local-government development-plan disclosure.",
+        "evidence_refs": [
+          "row:row-4a590adb3169f6502906b127",
+          "group:216b80b572b537c03ff1a7a3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4ab5b7c1aa14ca9247418654",
+      "disposition": "event_evidence",
+      "semantic_event_id": "GLB-1404",
+      "reason": "US average diesel prices exceeded $6 per gallon for the first time amid war-related fuel disruption and crude prices above $100.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "New national fuel-price threshold with broad transport, food and inflation implications.",
+        "evidence_refs": [
+          "row:row-4ab5b7c1aa14ca9247418654",
+          "group:bb8b9973f85f7a7bc0bf296b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4ade0fc1d26231bb24ba5f2d",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Routine daily US market close summarizing a rebound and rate expectations rather than a distinct structural event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Market-tape snapshot.",
+        "evidence_refs": [
+          "row:row-4ade0fc1d26231bb24ba5f2d",
+          "group:a2abd3d70fe46e9e77e8c57c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4b2d6c31252905a3f8df061f",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The private-enterprise management training course ran September 8-10 and ended before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material event predates window.",
+        "evidence_refs": [
+          "row:row-4b2d6c31252905a3f8df061f",
+          "group:fe6b6b57599ac6d1bd0017f6"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4b97f481ee93f45c71f7f0dc",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Profile of a scientist and a rice-derived albumin drug approved in 2025; no new in-window regulatory or clinical milestone is established.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Profile/retrospective.",
+        "evidence_refs": [
+          "row:row-4b97f481ee93f45c71f7f0dc",
+          "group:3057c04fb5e899029000f843"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4b9c4ec9dc38f47337c95f63",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1403",
+      "reason": "At the same September 11 Tunchang Fifteenth Five-Year Plan press conference, the county detailed green-industry, trade and 2030 growth targets.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Additional evidence for the same Tunchang development-plan event.",
+        "evidence_refs": [
+          "row:row-4b9c4ec9dc38f47337c95f63",
+          "group:54195e77c4ab9eebe67dcf04"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4c0b528cbe11adddbc1e9daf",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1409",
+      "reason": "Guangdong's tourism investment promotion event produced more than 20 billion yuan in cooperation agreements and launched 30 million yuan in consumption subsidies.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current investment-signing and subsidy launch with substantial value.",
+        "evidence_refs": [
+          "row:row-4c0b528cbe11adddbc1e9daf",
+          "group:a1046e1f9279b6ff86b3972e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4c98af387b905fb813d2e56f",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1316",
+      "reason": "The EU responded to Vice President Hsiao Bi-khim's Italy visit by reiterating its willingness to engage Taiwan under its one-China policy.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Additional diplomatic response evidence for the same Hsiao Italy visit.",
+        "evidence_refs": [
+          "row:row-4c98af387b905fb813d2e56f",
+          "group:9a953f84563ab74b7cb37179"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4cad0328fb0343d3779d24ed",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1411",
+      "reason": "Shijiazhuang's 2026 RV camping festival opened as a local tourism-industry event.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current tourism event, likely low public-value score.",
+        "evidence_refs": [
+          "row:row-4cad0328fb0343d3779d24ed",
+          "group:c3599dd860db624c48dcf376"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4cbe6b9b5c53834c0849dfcd",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The Hong Kong Shunde association inauguration and charity-fund launch took place September 10 before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material event predates window.",
+        "evidence_refs": [
+          "row:row-4cbe6b9b5c53834c0849dfcd",
+          "group:3be4e90724bdb95ca68f7123"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4cdc501371ca0129e525bb38",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1413",
+      "reason": "Guangdong disciplinary authorities announced former Dongguan inspector Cai Jiahua's expulsion from the Party, retirement-benefit cancellation and transfer for prosecution.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current corruption disciplinary action.",
+        "evidence_refs": [
+          "row:row-4cdc501371ca0129e525bb38",
+          "group:fb42658e1f645fa657cc09af"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4ceb2cce4d4451c3b2b5a4e7",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Feature on Shanghai's property-plus-eldercare pilot, with highlighted service center opened September 1 before the window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Program feature/retrospective rather than new in-window event.",
+        "evidence_refs": [
+          "row:row-4ceb2cce4d4451c3b2b5a4e7",
+          "group:3855a4b3fb481583530988fc"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4d18a50886ebf33aa35673be",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1415",
+      "reason": "CPPCC chairman Wang Huning met Angola's National Assembly president in Beijing for talks on bilateral cooperation and global governance.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current high-level diplomatic meeting.",
+        "evidence_refs": [
+          "row:row-4d18a50886ebf33aa35673be",
+          "group:55f4484a47a9946da9533282"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4d1dd931d927f3fb0416affe",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The reporter-group museum visit occurred September 10 before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material event predates window.",
+        "evidence_refs": [
+          "row:row-4d1dd931d927f3fb0416affe",
+          "group:390eeb521656e4ac065aa926"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4d2247fb0e52c9164e47efbe",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1417",
+      "reason": "A cross-strait youth dragon-boat friendship race was held in Shanghai and a Taipei-Shanghai sports cooperation agreement was signed.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current cross-strait exchange event with institutional follow-on agreement.",
+        "evidence_refs": [
+          "row:row-4d2247fb0e52c9164e47efbe",
+          "group:1870d1eb59826716279fcb8e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4d286c55ad2786616803193d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1418",
+      "reason": "Mainland Chinese equities experienced a broad intraday selloff with all three major indices down about 2% and more than 5,100 stocks falling.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Unusually broad market decline beyond a routine flat snapshot.",
+        "evidence_refs": [
+          "row:row-4d286c55ad2786616803193d",
+          "group:8c50835934d620aaa67a1bb2"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4d795c78cc20fa67a1d50d09",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Taiwan culture minister's French National Library visit occurred September 10 local time before the fixed window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material visit predates window.",
+        "evidence_refs": [
+          "row:row-4d795c78cc20fa67a1d50d09",
+          "group:f2a8c80471e9eb8b359405a1"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4dcd44018e131f406343cb14",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1420",
+      "reason": "Taiwan's stock market closed down 755 points while holding above its monthly moving average, marking a large current-session decline.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Large broad-market move with potential macro/financial relevance.",
+        "evidence_refs": [
+          "row:row-4dcd44018e131f406343cb14",
+          "group:99f7f48df53909fc94b46828"
+        ]
+      }
+    }
+  ]
+}
