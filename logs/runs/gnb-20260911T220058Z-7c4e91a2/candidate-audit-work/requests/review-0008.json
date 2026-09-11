@@ -1,0 +1,293 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 8,
+  "rows": [
+    {
+      "row_id": "row-2441fba0ea64f50e2540b7de",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-16363022001100",
+      "reason": "Daqing Drilling announced successful first field use of its self-developed managed-pressure system in Sichuan-Chongqing.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The completed first industrial application is a discrete current technology event.",
+        "evidence_refs": [
+          "row:row-2441fba0ea64f50e2540b7de",
+          "group:0ee1d01d23cca4ec5a6a6f12"
+        ]
+      }
+    },
+    {
+      "row_id": "row-24906f1b9625d4c7a44e2597",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The material corporate AIDC investment announcement was made on September 8, before the fixed window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "This is later analysis of an earlier corporate filing rather than a new in-window event.",
+        "evidence_refs": [
+          "row:row-24906f1b9625d4c7a44e2597",
+          "group:68bbab1579e895558ab05b6b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-252617423f01d1e02ddca538",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Trend analysis of medical-school admissions and career preferences rather than a discrete current event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The article synthesizes admissions patterns and interviews without a bounded in-window occurrence.",
+        "evidence_refs": [
+          "row:row-252617423f01d1e02ddca538",
+          "group:b3ca43ea87ffe8fe871c29a7"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2566eb20a1de861457bdd99a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-81899050585429",
+      "reason": "Taiwan beat the Philippines 10-0 in the U18 Asian Baseball Championship and set up a decisive game against Japan for a championship berth.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The completed game and resulting qualification scenario are discrete current sports developments.",
+        "evidence_refs": [
+          "row:row-2566eb20a1de861457bdd99a",
+          "group:4a7c9bd14d55d5e4feebd897"
+        ]
+      }
+    },
+    {
+      "row_id": "row-261012b184aa6f8bc58a0e5f",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-251558800876471",
+      "reason": "China's Foreign Ministry said it lodged representations with Italy and the EU over Hsiao Bi-khim attending a meeting in Italy.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The formal diplomatic protest is a discrete current cross-strait/international development.",
+        "evidence_refs": [
+          "row:row-261012b184aa6f8bc58a0e5f",
+          "group:e4ca98f763b77f3619470f85"
+        ]
+      }
+    },
+    {
+      "row_id": "row-26ddfc09113fafae6d39e432",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "This is a pre-summit promotional/explanatory item built around a future BRICS meeting rather than a realized current event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Prospective travel and broad policy framing dominate.",
+        "evidence_refs": [
+          "row:row-26ddfc09113fafae6d39e432",
+          "group:6aea897b09fa10962263e52b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-26ffd4c1b4d4c0dd0ce390e7",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-268806009402738",
+      "reason": "China's major A-share indexes closed lower, with more than 4,800 stocks down and turnover near 1.99 trillion yuan.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The completed trading session is a discrete current market event.",
+        "evidence_refs": [
+          "row:row-26ffd4c1b4d4c0dd0ce390e7",
+          "group:f47a46b43572bd25c48c9f16"
+        ]
+      }
+    },
+    {
+      "row_id": "row-274785020bc1f6c37874ae68",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-146434970229247",
+      "reason": "Chinese procuratorates announced prosecutions of four former officials in separate bribery-related cases.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The formal filing of prosecutions is a discrete current legal/governance development.",
+        "evidence_refs": [
+          "row:row-274785020bc1f6c37874ae68",
+          "group:852e8c6219ff690051ea6fb0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-276af331f4591f84dfe1ed7e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-12293718660356",
+      "reason": "Reports citing Yemeni government sources said Houthi forces occupied the strategic Hanish Islands and captured Mocha after fighting.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The territorial/military change is a discrete current Red Sea security event requiring attribution-preserving verification.",
+        "evidence_refs": [
+          "row:row-276af331f4591f84dfe1ed7e",
+          "group:0b2e5abbd504c1320d4e3706"
+        ]
+      }
+    },
+    {
+      "row_id": "row-27cac21a859d01189d888e23",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-62341351483195",
+      "reason": "Jiangyong, Hunan reported the current harvest of more than a thousand mu of hybrid-rice seed production and related farmer income.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The harvest and production update are discrete current agricultural developments.",
+        "evidence_refs": [
+          "row:row-27cac21a859d01189d888e23",
+          "group:38b2fa1c273b28a66949342b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-27fe0c612fbaf5c0a000564f",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-3765358399827",
+      "reason": "South Korea's prime minister said negotiations over the country's $350 billion U.S. investment commitment were progressing and a first project was nearing final talks.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The official negotiation update is a discrete current bilateral economic development.",
+        "evidence_refs": [
+          "row:row-27fe0c612fbaf5c0a000564f",
+          "group:036cb0d99153ededbc8d6f7a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-287e8383405c39dfa301b698",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-83495474046623",
+      "reason": "The 2026 CIFTIS human-resources session released six policy and cooperation outcomes, including an expanded international-qualification recognition list.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The release of concrete policy/service outcomes is a discrete current labor-market development.",
+        "evidence_refs": [
+          "row:row-287e8383405c39dfa301b698",
+          "group:4bf04e12269fa180849fbac6"
+        ]
+      }
+    },
+    {
+      "row_id": "row-28b89778506d353d10f06800",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The mining conference opening and Bank of China action-plan release occurred September 10, before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The material event time is outside the run window.",
+        "evidence_refs": [
+          "row:row-28b89778506d353d10f06800",
+          "group:7284259defde05116592d73a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-29abf954ed681f0ac5b15991",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Routine lottery payout service item rather than a substantive public-affairs event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The row only reports winning numbers and payouts.",
+        "evidence_refs": [
+          "row:row-29abf954ed681f0ac5b15991",
+          "group:740198c02023024a29fe8050"
+        ]
+      }
+    },
+    {
+      "row_id": "row-29b8aab6693bc5ac276573b9",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-241622840053191",
+      "reason": "China's Foreign Ministry responded to a new WIPO innovation-cluster report and stated its position on sharing innovation gains.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The official response to a newly released international innovation ranking is a discrete current policy statement.",
+        "evidence_refs": [
+          "row:row-29b8aab6693bc5ac276573b9",
+          "group:dbc1338d0dc7eb0da7a31e4f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-29d85b5456a298f5861c106a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-210332217014504",
+      "reason": "China approved four national standards covering GNSS radio-occultation payloads, data quality, product levels and formats.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The standards release is a discrete current science/technical-governance development.",
+        "evidence_refs": [
+          "row:row-29d85b5456a298f5861c106a",
+          "group:bf4bc91478e8700a9fc52a02"
+        ]
+      }
+    },
+    {
+      "row_id": "row-29ec93e76001695fb44acb15",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-102619591080136",
+      "reason": "China promulgated regulations governing local market-supervision offices, effective November 1.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Promulgation of the State Council regulation is a discrete current governance event.",
+        "evidence_refs": [
+          "row:row-29ec93e76001695fb44acb15",
+          "group:5d54fc45f8c8aa0c7fb63f7d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2a3c2c2f690c2e021ef2ea0d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-241745445304436",
+      "reason": "A Hangzhou AI and robotics expo running through September 11 gathered about 300 companies and international buyers.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The ongoing expo is a discrete current technology-industry event.",
+        "evidence_refs": [
+          "row:row-2a3c2c2f690c2e021ef2ea0d",
+          "group:dbddbf64b8743c784ef920c8"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2a77d31c3cbf55b6777b46ee",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Rural-tourism development feature on Shiyi Qiang village rather than a single discrete current event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The article synthesizes multi-year tourism and entrepreneurship changes.",
+        "evidence_refs": [
+          "row:row-2a77d31c3cbf55b6777b46ee",
+          "group:5c612a6041436eeed9f48734"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2acef20b60b03a7f891d57c5",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Commentary on deepening BRICS cooperation and global governance rather than a bounded realized event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Analytical/policy framing dominates.",
+        "evidence_refs": [
+          "row:row-2acef20b60b03a7f891d57c5",
+          "group:309b2d43b4a2e8206ce74536"
+        ]
+      }
+    }
+  ]
+}
