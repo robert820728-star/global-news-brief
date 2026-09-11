@@ -1,0 +1,295 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 13,
+  "input_batch_sha256": "acf57ea2213fbbb87251c7bd4cd12ee27db26a7cd53e46ff01b0927c7a3c1fc3",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-4175aeff0251fb9697eaa186",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Photo feature on overseas Chinese-school teachers visiting a museum; no material discrete event beyond the visit.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Cultural visit/photo feature.",
+        "evidence_refs": [
+          "row:row-4175aeff0251fb9697eaa186",
+          "group:536fd4d711309de7a7cb932d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4248218443745e527e1462d0",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Photo/travel feature on a Red Flag Canal reenactment rather than a consequential new event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Feature content.",
+        "evidence_refs": [
+          "row:row-4248218443745e527e1462d0",
+          "group:405d51fff1de5e95240d89d3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-433da249c8fe181a72d6cd26",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The State Council Information Office financial-policy press conference was held September 10 before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material policy-release event predates window.",
+        "evidence_refs": [
+          "row:row-433da249c8fe181a72d6cd26",
+          "group:2888452d83dbe8eeddba3c50"
+        ]
+      }
+    },
+    {
+      "row_id": "row-453dab2dbb5658386809ccec",
+      "disposition": "event_evidence",
+      "semantic_event_id": "GLB-1304",
+      "reason": "US President Donald Trump newly stated he did not regret the Iran war decision and predicted the war would end after the US midterm elections.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current head-of-state statement on an ongoing major war, with policy and electoral implications.",
+        "evidence_refs": [
+          "row:row-453dab2dbb5658386809ccec",
+          "group:140038bc1bcf8f4711fa605f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-453f01613fde5abd538290a3",
+      "disposition": "event_evidence",
+      "semantic_event_id": "GLB-1305",
+      "reason": "A current report says Beijing is considering a technology, EV and aerospace executive delegation to accompany Xi Jinping on a prospective US visit; details remain unconfirmed.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Potential high-level diplomatic/economic delegation development, with attribution caveat required.",
+        "evidence_refs": [
+          "row:row-453f01613fde5abd538290a3",
+          "group:e16a19bb9b87b9e619abf2aa"
+        ]
+      }
+    },
+    {
+      "row_id": "row-45b9215072efb4770a334f17",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1306",
+      "reason": "Fujian authorities announced Wei Dong's appointment as Zhangzhou Communist Party secretary.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current senior municipal leadership appointment.",
+        "evidence_refs": [
+          "row:row-45b9215072efb4770a334f17",
+          "group:08f42112b3b94c683675d95e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-46315f868f244a6e2b021663",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1307",
+      "reason": "Taitung council oversight revealed zero applications to a local low-income rent subsidy through August despite over 3,000 eligible households, prompting the county to consider redesign.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "New program-performance disclosure and announced policy review.",
+        "evidence_refs": [
+          "row:row-46315f868f244a6e2b021663",
+          "group:4ffdee0677d1088ba8fdf83d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-469e9c6a06450a431c06f786",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1015",
+      "reason": "Central anti-corruption authorities announced disciplinary sanctions against former Gansu vice governor Lei Siwei and former XPCC deputy commander Li Xu; this row overlaps the Lei event while adding Li Xu.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current senior-official disciplinary action; merged with existing Lei semantic event to avoid duplication.",
+        "evidence_refs": [
+          "row:row-469e9c6a06450a431c06f786",
+          "group:b12f4e52329b45ab169c830f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-46a50140f4f91b4535044984",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The Getty Center-area wildfire occurred September 9, outside the fixed 24-hour window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material event time outside window.",
+        "evidence_refs": [
+          "row:row-46a50140f4f91b4535044984",
+          "group:3503f3bed6dc72d897751524"
+        ]
+      }
+    },
+    {
+      "row_id": "row-46acd3af4b49f3aa0a889465",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1310",
+      "reason": "A New Taipei borough-chief candidate and associates were released on bail and travel restrictions after searches and questioning over alleged vote-buying with movie tickets.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current election-integrity criminal investigation development.",
+        "evidence_refs": [
+          "row:row-46acd3af4b49f3aa0a889465",
+          "group:7f91f068078c56ea5152ebe8"
+        ]
+      }
+    },
+    {
+      "row_id": "row-46fa87209f7bc857f3c57d80",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Ideological/education feature on USTC, Hefei and youth rather than a discrete current public event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Essay/feature framing dominates.",
+        "evidence_refs": [
+          "row:row-46fa87209f7bc857f3c57d80",
+          "group:0578ad17ecea06cb163c55b3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4725f40bc476bca88d3f49f5",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1312",
+      "reason": "Taiwan's Central Weather Administration issued a heavy-rain advisory for Yilan mountain areas, the New Taipei north coast and Taipei, warning of landslides, rockfalls, swollen streams and flooding.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current official hazardous-weather warning admitted inside the fixed source window.",
+        "evidence_refs": [
+          "row:row-4725f40bc476bca88d3f49f5",
+          "group:e349b9faad70d34f08071dec"
+        ]
+      }
+    },
+    {
+      "row_id": "row-476fa7618f21be1e43111872",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1313",
+      "reason": "Taitung County Health Bureau received six national pharmaceutical-administration awards from the health ministry.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current government performance recognition, likely low public-value score.",
+        "evidence_refs": [
+          "row:row-476fa7618f21be1e43111872",
+          "group:02bc94e236ccbf98c2dcf280"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4796854e832e344ffe1078ac",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Routine daily foreign-exchange close without an exceptional move or structural event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Market-tape snapshot.",
+        "evidence_refs": [
+          "row:row-4796854e832e344ffe1078ac",
+          "group:a4fdec64068ba7c840a4ec8b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-47eae5a503c727745de9fa2b",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1315",
+      "reason": "eCloudvalley launched a group-level enterprise AI portfolio organized around agent orchestration, governance and scale deployment.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current enterprise technology/product strategy launch.",
+        "evidence_refs": [
+          "row:row-47eae5a503c727745de9fa2b",
+          "group:01b88daa211eb3c313c395e0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-483241f0a9402589fe06927e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1316",
+      "reason": "Taiwan Vice President Hsiao Bi-khim traveled to Italy for the Ventotene European Freedom and Democracy Forum, accompanied by the foreign minister, as confirmed by the Presidential Office.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current high-level international diplomatic engagement.",
+        "evidence_refs": [
+          "row:row-483241f0a9402589fe06927e",
+          "group:904420eef79b21644b31a02b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-49349e02a82003bef7da5584",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Opinion/commentary about a recently decided ethnic-hatred case rather than a new court action reported in this item.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Commentary framing dominates.",
+        "evidence_refs": [
+          "row:row-49349e02a82003bef7da5584",
+          "group:d51fa9935390f9a0ba887b18"
+        ]
+      }
+    },
+    {
+      "row_id": "row-494aa6722514b774f370ca65",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1318",
+      "reason": "Taiwan's central bank publicly responded to reports of illegal gambling among military police guarding its Wenyuan gold vault, saying the gold remains secure under multiple controls.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current official security response to a reported guard-unit integrity incident.",
+        "evidence_refs": [
+          "row:row-494aa6722514b774f370ca65",
+          "group:d12bbe98d10d9acf92f5fd2a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-49660c3e4395428fc423c26a",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Commentary on the September 9 Tiangong class and broader patriotic science education; underlying event predates the window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Retrospective/commentary.",
+        "evidence_refs": [
+          "row:row-49660c3e4395428fc423c26a",
+          "group:1256104a869a8144f1bb23ab"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4979f232bbdcf2279c679ee8",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1320",
+      "reason": "Dance drama 'Half of the Sea' opened in Shanghai with a theme centered on overseas Chinese ties to their homeland.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current cultural performance opening, likely low public-value score.",
+        "evidence_refs": [
+          "row:row-4979f232bbdcf2279c679ee8",
+          "group:68ac25916cd0f22ba359ade6"
+        ]
+      }
+    }
+  ]
+}
