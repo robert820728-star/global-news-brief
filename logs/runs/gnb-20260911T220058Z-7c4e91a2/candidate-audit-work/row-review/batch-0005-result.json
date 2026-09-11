@@ -1,0 +1,295 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 5,
+  "input_batch_sha256": "9644baf1293ac68294a4e6c8595ed0fdf35cde9053a9062692dcb6e7e1154222",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-15dcbf9d1c2600fb56a96952",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-164068325761687",
+      "reason": "Sotheby's held a current Taipei preview for its Hong Kong autumn auction featuring major Nara and Kusama works.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The media preview/exhibition is a discrete current cultural-market event.",
+        "evidence_refs": [
+          "row:row-15dcbf9d1c2600fb56a96952",
+          "group:95382246a29756b022fe0456"
+        ]
+      }
+    },
+    {
+      "row_id": "row-15f863266d94e654e65a173a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-245673286323368",
+      "reason": "A current CIFTIS forum convened industry and policy speakers on high-quality service-consumption growth.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The named forum is a discrete in-window event, with significance left to scoring.",
+        "evidence_refs": [
+          "row:row-15f863266d94e654e65a173a",
+          "group:df7044f64ca8987ce0e6a003"
+        ]
+      }
+    },
+    {
+      "row_id": "row-169aefbdae82c113f12e6d5b",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Pre-summit media roundup and commentary on BRICS rather than a discrete realized in-window event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The article synthesizes views ahead of the September 12-13 summit.",
+        "evidence_refs": [
+          "row:row-169aefbdae82c113f12e6d5b",
+          "group:c5410c4704550225106edc76"
+        ]
+      }
+    },
+    {
+      "row_id": "row-16c05066c6b0c016f1d9eae8",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Anniversary-themed field feature on Nankang's low-altitude economy rather than a single new in-window occurrence.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The piece is primarily a development feature with retrospective and ongoing examples.",
+        "evidence_refs": [
+          "row:row-16c05066c6b0c016f1d9eae8",
+          "group:0148fbceda66739778095c7d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-16c2bd7384bf45b95aee018e",
+      "disposition": "unresolved_exhausted",
+      "semantic_event_id": null,
+      "reason": "AP same-host article hydration was exhausted with HTTP 403 and no durable article-body bytes were available.",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "The source row is preserved but cannot be used as event evidence without fabricating unavailable body content.",
+        "evidence_refs": [
+          "row:row-16c2bd7384bf45b95aee018e",
+          "failure:ap-same-host-hydration-http-403-exhausted"
+        ]
+      }
+    },
+    {
+      "row_id": "row-16da6bd3b8a62e3f87e4e25f",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-15799045764382",
+      "reason": "Taiwan FDA opened a supplier solicitation after an essential budesonide inhalation suspension left the market.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The medicine-supply action is a discrete current public-health and pharmaceutical-supply development.",
+        "evidence_refs": [
+          "row:row-16da6bd3b8a62e3f87e4e25f",
+          "group:0e5e8082b51ee09580adf72f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-16fd56e30f7cc17ccecd7b7b",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Long March anniversary corporate-history feature on Dongfeng and Shiyan rather than a discrete current event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Historical narrative and feature framing dominate.",
+        "evidence_refs": [
+          "row:row-16fd56e30f7cc17ccecd7b7b",
+          "group:3c64c29b524d3fafa70b3f7f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-170fa36f56d315ec28e3dfc9",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-88157842252598",
+      "reason": "Shanxi customs reported the province's first export shipment of sheep-tail fat to the UAE.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The first-of-kind export is a discrete current trade development.",
+        "evidence_refs": [
+          "row:row-170fa36f56d315ec28e3dfc9",
+          "group:502dd8df23364c3debcb6267"
+        ]
+      }
+    },
+    {
+      "row_id": "row-174f5d8fb8ae4bc99e79ff12",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-29442779201432",
+      "reason": "A Malaysian tourism diplomat gave a current CIFTIS interview on tourism ties and Chinese robotics.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The attributable current trade-fair statement is a discrete low-level event eligible for scoring.",
+        "evidence_refs": [
+          "row:row-174f5d8fb8ae4bc99e79ff12",
+          "group:1ac72e653f98334e344c1f19"
+        ]
+      }
+    },
+    {
+      "row_id": "row-17c4697c2147ffb69f4c7f77",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-167341094499750",
+      "reason": "Heilongjiang published the Jixi Fengyuan Mining water-disaster investigation report and accountability measures for 30 people.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The formal accident-investigation report release is a discrete current safety/governance development.",
+        "evidence_refs": [
+          "row:row-17c4697c2147ffb69f4c7f77",
+          "group:9832227e75a6e516a715bc4a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-17cdaa03222a3455c9a09ed5",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-118923739864946",
+      "reason": "Four China Coast Guard vessels entered Kinmen restricted waters and Taiwan Coast Guard shadowed and expelled them, the fourth such incident that week.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The maritime gray-zone encounter is a discrete current cross-strait security event.",
+        "evidence_refs": [
+          "row:row-17cdaa03222a3455c9a09ed5",
+          "group:6c2917451f72cb9489801a44"
+        ]
+      }
+    },
+    {
+      "row_id": "row-181f10d382f30bdc22c26562",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-268214485489407",
+      "reason": "Nanning used a current CIFTIS promotion event to pursue China-ASEAN digital-service cooperation and recorded preliminary business intentions.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The promotion and cooperation activity is a discrete current trade/digital-economy event.",
+        "evidence_refs": [
+          "row:row-181f10d382f30bdc22c26562",
+          "group:f3f08d2196ffc32991ac43b8"
+        ]
+      }
+    },
+    {
+      "row_id": "row-188674ad56cd6eee5a27ac41",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Analysis/interview feature on Czech-Taiwan medical-AI opportunities rather than a concrete newly realized cooperation event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Potential future collaboration and structural context dominate.",
+        "evidence_refs": [
+          "row:row-188674ad56cd6eee5a27ac41",
+          "group:fd7f63bcad23dc893df5acd9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-18d6699052a06212d7f26ed8",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-6506157403260",
+      "reason": "China's Commerce Ministry responded to CIA comments about expanded intelligence collection targeting Chinese AI and semiconductor firms and threatened countermeasures.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The official bilateral intelligence/economic-security exchange is a discrete current development.",
+        "evidence_refs": [
+          "row:row-18d6699052a06212d7f26ed8",
+          "group:05ead5336c7cef0db4ebbd6d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-191630c0c01b17ea756d33fe",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-188762593603174",
+      "reason": "South Korea said no decision has been made on a U.S. request concerning Hormuz deployment, during a current foreign-minister call with Iran.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The deployment deliberation and ministerial call are discrete current Middle East security developments.",
+        "evidence_refs": [
+          "row:row-191630c0c01b17ea756d33fe",
+          "group:abadb756ae66743fabad2e03"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1918e3f39a6bbb7702780781",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-90546258865789",
+      "reason": "Henan authorities reported destruction of more than 72.95 million yuan worth of counterfeit and infringing goods in a national enforcement action.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The enforcement/destruction action is a discrete current market-regulation event.",
+        "evidence_refs": [
+          "row:row-1918e3f39a6bbb7702780781",
+          "group:5259f1986e7d7a493c246194"
+        ]
+      }
+    },
+    {
+      "row_id": "row-194e589c260258ab92e0ab14",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-119280089219293",
+      "reason": "Former Kaohsiung City Council speaker Chu An-hsiung died in China and his ashes were returned to Kaohsiung.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The death and repatriation are discrete current biographical/political-news developments.",
+        "evidence_refs": [
+          "row:row-194e589c260258ab92e0ab14",
+          "group:6c7c0f58c0dd0016039f85f0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-196d1775796dff8e245fb12c",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-167624525159168",
+      "reason": "Taichung City Council committee approved nearly NT$395 million for next year's shopping-festival/economic-stimulus plan amid partisan dispute.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The budget committee action is a discrete current local-governance development.",
+        "evidence_refs": [
+          "row:row-196d1775796dff8e245fb12c",
+          "group:987420471b009335f6c52cd0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-19d1716c936950fb4590acac",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-130762615999207",
+      "reason": "Oil above $100 and rising inflation concerns drove a current global government-bond selloff with benchmark yields at multi-year highs.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The cross-market repricing is a discrete current macro-financial event.",
+        "evidence_refs": [
+          "row:row-19d1716c936950fb4590acac",
+          "group:76ed8b46cae799c6dfb5fabe"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1a0739a4b01f2026dc4362cb",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Pre-summit explainer of longstanding China-India tensions and a possible future Modi-Xi meeting rather than a realized in-window event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Prospective meeting expectations and historical background dominate.",
+        "evidence_refs": [
+          "row:row-1a0739a4b01f2026dc4362cb",
+          "group:ef35f9ee68ae636803015c5e"
+        ]
+      }
+    }
+  ]
+}
