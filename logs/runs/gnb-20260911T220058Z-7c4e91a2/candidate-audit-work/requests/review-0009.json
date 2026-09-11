@@ -1,0 +1,293 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 9,
+  "rows": [
+    {
+      "row_id": "row-2b12bf221e3879a1d4053619",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Consumer-service feature built around an AI customer-service standard effective September 1 and earlier complaint cases rather than a new in-window event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Explainer/trend framing dominates.",
+        "evidence_refs": [
+          "row:row-2b12bf221e3879a1d4053619",
+          "group:45360e49bef724f8c67582b4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2b2fec8b553b4bd0f691ebd4",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-201286845304791",
+      "reason": "The sixth cross-strait exchange seminar opened in Urumqi with more than 120 participants and senior Taiwan-affairs officials.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The opening is a discrete current cross-strait political event.",
+        "evidence_refs": [
+          "row:row-2b2fec8b553b4bd0f691ebd4",
+          "group:b711bee98fd7f84344fda28f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2c5ab9e3cef2e8b8bb14dd46",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The anti-fraud intervention occurred on September 9, before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The article is a later recap of an earlier incident.",
+        "evidence_refs": [
+          "row:row-2c5ab9e3cef2e8b8bb14dd46",
+          "group:8f88313bbaad5ec69f32c48c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2c8625aed5d1bd926d003158",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The Philippine minister's statement was made on September 10, before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The material event time falls outside the 24-hour window.",
+        "evidence_refs": [
+          "row:row-2c8625aed5d1bd926d003158",
+          "group:f6791fb59d54a70b6734ff3f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2c8669ab6092db7aec69de15",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-188946108877251",
+      "reason": "Mandarin Airlines launched its first Taitung-Penghu direct charter service, cutting direct travel time to about 75 minutes.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The inaugural flight is a discrete current transport event.",
+        "evidence_refs": [
+          "row:row-2c8669ab6092db7aec69de15",
+          "group:abd871b389c365b580b04ffa"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2ca66f4559d9244593100b31",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-43760052457272",
+      "reason": "Taiwan's Finance Ministry released August housing-related tax statistics, including a 33.2% annual rise in individual house-and-land income tax.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The official data release is a discrete current housing/economic development.",
+        "evidence_refs": [
+          "row:row-2ca66f4559d9244593100b31",
+          "group:27ccae61cf382e2ee10a6ac0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2d11f666974d0ae7b0b21b9f",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Seasonal flood-control retrospective synthesizing conditions through early September rather than a discrete new event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Trend/background framing dominates.",
+        "evidence_refs": [
+          "row:row-2d11f666974d0ae7b0b21b9f",
+          "group:0394f411404c3d95cf9df96e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2e1386e5a63ef180e6738dce",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-77703489594243",
+      "reason": "The 18th Sun Tzu Culture and Tourism Festival opened in Guangrao, Shandong on September 11.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The festival opening is a discrete current cultural event.",
+        "evidence_refs": [
+          "row:row-2e1386e5a63ef180e6738dce",
+          "group:46abc0e523835d39ee5c4bd3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2e2187a8347d9dc7a8a7ae62",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "KPMG executive interview giving broad views on China's services market rather than a discrete material occurrence.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Analytical/interview framing dominates.",
+        "evidence_refs": [
+          "row:row-2e2187a8347d9dc7a8a7ae62",
+          "group:9de2e5c6ce733b092961d3e1"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2eb5eb1ba3a28f48c4c231b6",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Feature on Qinghai grassroots legislative contact points and ethnic-community participation rather than a single discrete current event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Institutional background and examples dominate.",
+        "evidence_refs": [
+          "row:row-2eb5eb1ba3a28f48c4c231b6",
+          "group:3751d037e4cf711e3205b81e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2f07314b693b3fcb88061b07",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-253864631358152",
+      "reason": "Disability-rights groups protested at Taiwan's Health Ministry over pending disability-law amendments and the ministry committed to further fiscal and policy review.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The protest and official response are discrete current social-policy developments.",
+        "evidence_refs": [
+          "row:row-2f07314b693b3fcb88061b07",
+          "group:e6e3772c52c89ab383c1ce44"
+        ]
+      }
+    },
+    {
+      "row_id": "row-302b313437129cd3ab437ddd",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The China International Fashion Week closing ceremony occurred on September 10 evening, before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The material event time is outside the run window.",
+        "evidence_refs": [
+          "row:row-302b313437129cd3ab437ddd",
+          "group:f64da5bc595927d3cf18424b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-304cc9dbb42791cfa67fceef",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-240963187882382",
+      "reason": "Taiwan's Finance Ministry released August tax revenue of NT$198.2 billion, up 28.9%, with securities-transaction tax up 94.5% year on year.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The official fiscal data release is a discrete current economic event.",
+        "evidence_refs": [
+          "row:row-304cc9dbb42791cfa67fceef",
+          "group:db279d37b98ef35d081106e0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-30a7f2b809e991ea37bf971e",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Long-form interview with Yi Zhongtian on creativity and AI rather than a discrete news event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Opinion/interview content dominates.",
+        "evidence_refs": [
+          "row:row-30a7f2b809e991ea37bf971e",
+          "group:2b19114f7ccd981cd4812065"
+        ]
+      }
+    },
+    {
+      "row_id": "row-30e1aa6debc21630fe1354d2",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Editorial commentary on AI customer-service handoff rather than a discrete current event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Commentary rather than event reporting.",
+        "evidence_refs": [
+          "row:row-30e1aa6debc21630fe1354d2",
+          "group:1b78603f8c5afd84dfa570e1"
+        ]
+      }
+    },
+    {
+      "row_id": "row-30e35b0bd4915f2c2a753346",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-118392984466223",
+      "reason": "Hong Kong's court sentenced three former Alliance leaders to prison and fined the dissolved organization in a national-security case; Chief Executive John Lee responded the same day.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The sentencing is a discrete current legal and rights-related event.",
+        "evidence_refs": [
+          "row:row-30e35b0bd4915f2c2a753346",
+          "group:6bad83c8732fbc75ec427656"
+        ]
+      }
+    },
+    {
+      "row_id": "row-31310f3ad038dbb4cd115870",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-221172221624305",
+      "reason": "Certification bodies issued the first 32 certificates under China's revised power-bank CCC rules, which add stronger battery-safety requirements.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The first certifications under the new safety regime are a discrete current regulatory/product-safety development.",
+        "evidence_refs": [
+          "row:row-31310f3ad038dbb4cd115870",
+          "group:c927abb43ff11e92a5c7416a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3165441517eb778ea8b9c889",
+      "disposition": "unresolved_exhausted",
+      "semantic_event_id": null,
+      "reason": "The row is marked terminal_without_content_review and is not safe to promote as event evidence.",
+      "model_evidence": {
+        "review_status": "unresolved_exhausted",
+        "reason": "Model-review-ready article evidence is unavailable in the terminal row state.",
+        "evidence_refs": [
+          "row:row-3165441517eb778ea8b9c889",
+          "failure:terminal_without_content_review"
+        ]
+      }
+    },
+    {
+      "row_id": "row-31a1ff056f52073a28a11215",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "General ideological video on science and technology policy rather than a discrete new event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Broad retrospective/policy framing dominates.",
+        "evidence_refs": [
+          "row:row-31a1ff056f52073a28a11215",
+          "group:3768fa6f1d6f9fe173f853df"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3205d4d2cf10f01b20ff6c20",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-159637212988714",
+      "reason": "Tesla publicly displayed its Cybercab in Japan for the first time, while launch timing for robotaxi service remained undecided.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The first Japan public display is a discrete current technology/transport event.",
+        "evidence_refs": [
+          "row:row-3205d4d2cf10f01b20ff6c20",
+          "group:91306f5f852a89b44d5e5bc0"
+        ]
+      }
+    }
+  ]
+}
