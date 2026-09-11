@@ -1,0 +1,297 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 4,
+  "input_batch_sha256": "8c03306062247ba4ca0484cc79a564134da66cda0b1be4464e0e3a3e1a44b703",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-1165fb569715a2dc7b2174e0",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Photo feature uses September 10 imagery and previews a future Hong Kong five-year plan announcement rather than a new in-window realized event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The pictured activity predates the fixed window and the plan itself is prospective.",
+        "evidence_refs": [
+          "row:row-1165fb569715a2dc7b2174e0",
+          "group:da5b3249052bdd1597393450"
+        ]
+      }
+    },
+    {
+      "row_id": "row-117880366e006f260d70d39d",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Long-form profile of an Italian scholar living in Hainan rather than a discrete current event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Biographical narrative and retrospective Free Trade Port observations dominate.",
+        "evidence_refs": [
+          "row:row-117880366e006f260d70d39d",
+          "group:9fa0f4999d80a01d4c53e41f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1198d4961f65ff0a2b4efbc3",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-222986849964795",
+      "reason": "A current press conference announced dates, competition scale and Egypt as guest country for the 13th Silk Road International Film Festival.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The festival program announcement is a discrete current cultural-industry event.",
+        "evidence_refs": [
+          "row:row-1198d4961f65ff0a2b4efbc3",
+          "group:cace2bfb52fb7eb207f5c5dd"
+        ]
+      }
+    },
+    {
+      "row_id": "row-11e81903c093d55f327ac3ec",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-60248140388244",
+      "reason": "This explainer analyzes the same newly announced Trump $5,000-adult dividend proposal reported in the current Republican campaign event.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "It provides additional legal, fiscal and inflation evidence for the same current campaign-policy semantic event.",
+        "evidence_refs": [
+          "row:row-11e81903c093d55f327ac3ec",
+          "group:6cd5f8de37488bde3be1b351",
+          "event:TWN-60248140388244"
+        ]
+      }
+    },
+    {
+      "row_id": "row-12997caa4d2af4ab9452f010",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-18911958863392",
+      "reason": "Changhua County launched its current traffic-safety month campaign and published first-half motorcycle fatality figures.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The campaign launch is a discrete current local-safety event.",
+        "evidence_refs": [
+          "row:row-12997caa4d2af4ab9452f010",
+          "group:113348970e202fb2c78239c8"
+        ]
+      }
+    },
+    {
+      "row_id": "row-12a3a7029004609e178ffaed",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-43208794053306",
+      "reason": "The Taiwan stock market opened materially lower with current index and turnover data.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The opening move is a discrete in-window market event for later significance scoring.",
+        "evidence_refs": [
+          "row:row-12a3a7029004609e178ffaed",
+          "group:274c54d21abaf984429e1e52"
+        ]
+      }
+    },
+    {
+      "row_id": "row-12c45f29b5992fb3c002f603",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-270205259964734",
+      "reason": "Premier Cho Jung-tai explained the Executive Yuan's decision to countersign the same defense-autonomy and drone-industry law.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "This is additional government-side evidence for the same current drone-law semantic event.",
+        "evidence_refs": [
+          "row:row-12c45f29b5992fb3c002f603",
+          "group:28d3b64106f3123f34a64beb",
+          "event:TWN-270205259964734"
+        ]
+      }
+    },
+    {
+      "row_id": "row-12d159fca54285a41bd789bc",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-83096792518050",
+      "reason": "Current reporting says Sam Altman told an internal meeting OpenAI could consider coordinated slowing with other AI labs amid safety concerns.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The reported industry coordination stance is a discrete current AI-governance development, subject to attribution verification.",
+        "evidence_refs": [
+          "row:row-12d159fca54285a41bd789bc",
+          "group:4b937acccda21ef233c2605c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-12f1a406b11482ebd44ca5df",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-223223997463848",
+      "reason": "Uni-Lions manager Lin Yueh-ping gave current postseason-race comments and roster-use details.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "A discrete current sports development is present, with significance left to scoring.",
+        "evidence_refs": [
+          "row:row-12f1a406b11482ebd44ca5df",
+          "group:cb056312fd28d34f3d8e5940"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1329bc222d7d1a2793884cb4",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-249690944246749",
+      "reason": "Air-traffic-control staffing shortages caused current Sydney Airport flight cancellations and delays.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The operational disruption is a discrete current transport event.",
+        "evidence_refs": [
+          "row:row-1329bc222d7d1a2793884cb4",
+          "group:e317b40913dd0e37926cfc95"
+        ]
+      }
+    },
+    {
+      "row_id": "row-132c5d44c0718e947ee94f33",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-25985924603132",
+      "reason": "Current reporting says Iceland's government plans to introduce a bill permanently banning commercial whaling.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The announced legislative plan is a discrete policy development, while adoption remains prospective.",
+        "evidence_refs": [
+          "row:row-132c5d44c0718e947ee94f33",
+          "group:17a251ce1cfc5f6a63b97fb3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-13b4a09498a2b090ec6d1efd",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-97373182502681",
+      "reason": "Nikkei reporting says Bank of Japan leadership is expected to propose a rate increase to 1.25% at the coming policy meeting.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The credible current monetary-policy report is a discrete development; the hike itself remains unconfirmed and must retain that status.",
+        "evidence_refs": [
+          "row:row-13b4a09498a2b090ec6d1efd",
+          "group:588f75f42719251333351907"
+        ]
+      }
+    },
+    {
+      "row_id": "row-143cd2717ef04da23adf942c",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Long March anniversary retrospective and development feature, not a discrete current event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Historical framing and feature storytelling dominate without a bounded in-window occurrence.",
+        "evidence_refs": [
+          "row:row-143cd2717ef04da23adf942c",
+          "group:5470345cd9150a05281cc7ed"
+        ]
+      }
+    },
+    {
+      "row_id": "row-143d176ac2851d27e7e64b63",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-231348466237661",
+      "reason": "A current Taichung multi-vehicle crash involving a military vehicle injured three people.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The crash is a discrete in-window public-safety event.",
+        "evidence_refs": [
+          "row:row-143d176ac2851d27e7e64b63",
+          "group:d269032640dd37bc8f23cfd8"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1475fa365919e0e21eedea5f",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-144751917093386",
+      "reason": "Guangzhou Liuxihe National Forest Park reported a second consecutive annual sighting of an endangered golden Kaiser-i-Hind butterfly.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The newly documented biodiversity observation is a discrete current conservation/science development.",
+        "evidence_refs": [
+          "row:row-1475fa365919e0e21eedea5f",
+          "group:83a6ae99520a531364420628"
+        ]
+      }
+    },
+    {
+      "row_id": "row-14c173615b487c97c5d47b10",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-122637849581979",
+      "reason": "Kaohsiung District Court sentenced two China Steel personnel over a fatal workplace-safety accident.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The court judgment is a discrete current legal and occupational-safety development.",
+        "evidence_refs": [
+          "row:row-14c173615b487c97c5d47b10",
+          "group:6f89d975d99b1fd9099a5314"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1504a38d11121f1f685fc66e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-214041758146370",
+      "reason": "Tokyo police arrested a 22-year-old Taiwanese man suspected of acting as a cash collector in an attempted fraud scheme.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The arrest is a discrete current cross-border crime development.",
+        "evidence_refs": [
+          "row:row-1504a38d11121f1f685fc66e",
+          "group:c2ab7af61f42339b6ceddde6"
+        ]
+      }
+    },
+    {
+      "row_id": "row-1504b352f96b1bb8ee475661",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-134375142264589",
+      "reason": "Wall Street Journal reporting, citing U.S. and Middle Eastern officials, says Iran has resumed limited ballistic-missile production in underground facilities.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The reported military-industrial restart is a discrete current security development, requiring attribution-preserving verification.",
+        "evidence_refs": [
+          "row:row-1504b352f96b1bb8ee475661",
+          "group:7a36a69f0f0df9cb90491289"
+        ]
+      }
+    },
+    {
+      "row_id": "row-15bb93dc52bdb06ec60da368",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-148918740735239",
+      "reason": "China's Foreign Ministry confirmed an increase in visa fees for Japanese citizens on reciprocity grounds.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The visa-fee adjustment is a discrete current bilateral-policy change.",
+        "evidence_refs": [
+          "row:row-15bb93dc52bdb06ec60da368",
+          "group:8770d8a4550754770a100d25"
+        ]
+      }
+    },
+    {
+      "row_id": "row-15d19c9f38a58d5cba67f7d2",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-252025989396925",
+      "reason": "Taiwan's Sports Administration called for removal of the gymnastics association secretary-general, prompting a current response from gymnast Pan Tsai-chen's family.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The governance action and response are discrete current sports-administration developments.",
+        "evidence_refs": [
+          "row:row-15d19c9f38a58d5cba67f7d2",
+          "group:e5375f9279bda198e7184fe4"
+        ]
+      }
+    }
+  ]
+}
