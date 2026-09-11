@@ -11,6 +11,32 @@
   "row_count": 20,
   "rows": [
     {
+      "row_id": "row-0025c30497b749bd94a8a2f3",
+      "candidate_id": "c40a6b2baff2a834df67",
+      "provisional_group_id": "group-931cc9b77a9254e529444df3",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "title": "Modi, Putin seek stronger ties as Russia calls for BRICS to counter West",
+      "summary": "India and Russia agreed to deepen strategic ties as BRICS leaders gathered in New Delhi, with discussions covering trade, energy, payments, infrastructure and conflicts affecting maritime commerce.",
+      "summary_quality": "source_summary",
+      "canonical_url": "https://www.reuters.com/business/aerospace-defense/modi-putin-hold-talks-new-delhi-trade-defence-2026-09-11",
+      "listing_published_at": "2026-09-11T10:54:00+00:00",
+      "admission_status": "unresolved_exhausted",
+      "article_body_published_at": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "hydration_batch_sequence": 47,
+      "model_excerpt": null,
+      "model_input_status": "terminal_without_content_review",
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/business/aerospace-defense/modi-putin-hold-talks-new-delhi-trade-defence-2026-09-11",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Prior same-host canonical Reuters hydration in batch-0046 returned HTTP 401 Forbidden; no durable article-body bytes were available to the GitHub bridge, so the row is preserved as exhausted rather than fabricated."
+        ]
+      }
+    },
+    {
       "row_id": "row-00d87dd9bb977addb53aba28",
       "candidate_id": "afa344d690db650cbe47",
       "provisional_group_id": "group-c7283eb5dcd02177f24d46b9",
@@ -387,26 +413,6 @@
       "content_sha256": "f477c2578064cc7c067d48bdc955595ed4aecae0439a07fe471c8f104239e073",
       "hydration_batch_sequence": 10,
       "model_excerpt": "赵乐际同安哥拉国民议会议长德阿尔梅达会谈 新华社北京9月11日电 全国人大常委会委员长赵乐际11日在北京人民大会堂同安哥拉国民议会议长德阿尔梅达举行会谈。 赵乐际表示，近年来，在习近平主席和洛伦索总统战略引领下，中安关系提升为全面战略合作伙伴关系，各领域合作持续深化、富有成效。中方愿同安方一道，以两国元首重要共识为遵循，赓续传统友谊，加强团结合作，推动中非合作论坛北京峰会成果落地，促进中安关系不断发展，为共筑新时代全天候中非命运共同体作出更大贡献。 赵乐际指出，双方要巩固政治互信。中方感谢安方长期恪守一个中国原则，将继续坚定支持安方维护国家主权、安全、发展利益。拓展务实合作，深化农业渔业、工业、能源、矿业等领域合作，在清洁能源、数字技术、人工智能等领域打造合作新亮点。以今年“中非人文交流年”为契机，加强教育、文化、旅游、地方等合作，让中安、中非友好深入人心。加强国际协作，携手践行真正的多边主义，落实好四大全球倡议，推进平等有序的世界多极化、普惠包容的经济全球化。 赵乐际强调，中安立法机构合作为增进两国人民友谊、丰富双边关系内涵发挥重要作用。中国全国人大愿同安哥拉国民议会一道，加强各层次、多领域对话交流，为两国互利合作提供法律保障。欢迎安方派员参加中国全国人大面向非洲国家举办的议员研讨班。赵乐际还介绍了中国全国人大立法工作情况，表示双方可以围绕绿色发展、社会治理、民生保障等开展立法经验交流。 德阿尔梅达表示，安方衷心感谢中方对安哥拉国家重建和经济社会发展的宝贵支持。中国在自身发展同时，助力全球伙伴共同发展。安哥拉愿同中方加强能源、经贸、投资等各领域合作，深化共建“一带一路”合作，共同维护多边主义，促进世界和平稳定。安国民议会愿加强同中国全国人大的交流，为推动两国合作协议的落实积极发挥立法机构的法律保障作用。 会谈后，赵乐际与德阿尔梅达共同签署了中国全国人大与安哥拉国民议会谅解",
-      "model_input_status": "ready",
-      "failure_evidence": null
-    },
-    {
-      "row_id": "row-05a29304e2ab22be019dc455",
-      "candidate_id": "9c80faeeccd4c34a7859",
-      "provisional_group_id": "group-c41f344b83b39aead3263a36",
-      "source_id": "chinanews",
-      "section": "CHN",
-      "title": "第十六届智慧城市与智能经济博览会在浙江宁波开幕",
-      "summary": "1 22:48 [ 国际 ] 金砖国家工商论坛在新德里举行 9-11 22:48 [ 图片 ] 张国荣纪念展香港开幕 珍贵照片重现流行文化经典 9-11 22:47 [ 图片 ] 第十六届智慧城市与智能经济博览会在浙江宁波开幕 9-11 22:45 [ 图片 ] （活力中国调研行）河南安阳：实景演出再现红旗渠开凿场景 9-11 22:45 [ 图片 ] 2026中国（广西）—东盟青少年无人机足球邀请赛开赛 9-11 22:37 [ 图片 ] 135件（组）新疆文物精品亮相浙江嘉兴 9-11 22:34 [ 财经 ] 服务消费如何高质量发展？多方共探新",
-      "summary_quality": "source_summary",
-      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-11/10694985.shtml",
-      "listing_published_at": "2026-09-11T22:45:00+08:00",
-      "admission_status": "content_ready",
-      "article_body_published_at": "2026-09-11T22:47:13+08:00",
-      "article_body_evidence_url": "https://www.chinanews.com.cn/tp/2026/09-11/10694985.shtml",
-      "content_sha256": "42c9251eb77989aa3d4f0e94478529aa1b6cd323f58330aaa072933a08470bb2",
-      "hydration_batch_sequence": 4,
-      "model_excerpt": "第十六届智慧城市与智能经济博览会在浙江宁波开幕 临时调控再出手！油价少涨了 打车20元路程竟收40元？起底计价器虚增里程猫腻 动动手指真能轻松赚钱？揭露“高薪兼职”背后陷阱 中国车企开启“国车自运”时代 一碗泡面诱发痛风？这些高嘌呤食物容易被忽略 明明一直在吃，却重度低钾？这些行为正悄悄掏空你的身体 不能回家的除了旅行青蛙，可能还有玩家的钱 250元的AI工具积分只卖8.8元？小心你的代码被截留倒卖 也门打起来了！全球两大航运“油管”同时动荡 量子美容仪用“量子技术”除皱？ 中国民营企业加速向新向优发展 低钾为何会要命？急诊专家解读 中国展会“金九”旺 消费引流与产业赋能同发力 新能源电车辐射大，长期开会掉头发、掉腿毛？ 转发+收藏！中秋国庆假期购票日历来了！ 2026年国家基本医保药品目录预计于11月发布 中国疾控中心提示：9月重点防范这几类传染病 中新网评：“鬼秤”闹的不是鬼，是信任危机 印度大厨在北京：美食是连接人与文化的桥梁 大型活动吃饭高峰排长队？炒菜机器人：5分钟就出一锅菜 三峡水库2026年度蓄水启动 航道部门全力筑牢安全屏障 武汉多处山体有摩崖石刻 系难得历史遗存 宁夏中卫：鹅喉羚见证荒漠新生 浙江缙云：“观鸟热”促生态保育与乡村振兴共生共赢 大学生娄山关前朗诵《忆秦娥·娄山关》，字字铿锵 萌物扎堆 湖南长沙玩偶展圈粉年轻人 景区一名NPC酷似“玄奘”走红网路 开学第一天完美诠释一喜一悲！网友：得瑟的爹 生无可恋的女儿 黑猩猩无师自通解锁盘串技能 前NBA球星考辛斯现身淄博撸串 蟒蛇入户狂吃9只鸭子 民警赶到后全部“退赃” 网友晒自家狗狗边弹琴边唱歌如痴如醉 6岁内蒙古萌娃学着长辈的样子 熟练推莜面窝窝 法国人在无锡造折叠“三蹦子” 销往欧洲售价近2万人民币 北京永定河水上巴士通航试运营 北京2027年世界田径锦标赛进入倒计时一周年 广西龙胜：秋染侗乡 景致",
       "model_input_status": "ready",
       "failure_evidence": null
     }
