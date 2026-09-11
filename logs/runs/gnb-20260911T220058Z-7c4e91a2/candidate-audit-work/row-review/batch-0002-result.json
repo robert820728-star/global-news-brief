@@ -1,0 +1,295 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 2,
+  "input_batch_sha256": "868cb4dcd5e97599bc5f91ea64d50dc542fd7c5693a27b827c9d2a6b066b0413",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-05a29304e2ab22be019dc455",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-215638300394419",
+      "reason": "Current article reports the opening of the 16th Smart City and Intelligent Economy Expo in Ningbo.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "A discrete in-window event is established by the article body.",
+        "evidence_refs": [
+          "row:row-05a29304e2ab22be019dc455",
+          "group:c41f344b83b39aead3263a36"
+        ]
+      }
+    },
+    {
+      "row_id": "row-05b2e5e37ec359e2b5319889",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Anniversary/history feature centered on a Long March leaflet, not a distinct material in-window event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Historical retrospective content dominates and does not establish a new current event.",
+        "evidence_refs": [
+          "row:row-05b2e5e37ec359e2b5319889",
+          "group:18657411aadbc411c87ac5e6"
+        ]
+      }
+    },
+    {
+      "row_id": "row-05cf198ff54b19d9efe82fe5",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-16498360875698",
+      "reason": "Current article reports CLP's chief executive remarks at an APEC-linked energy forum on Hong Kong's regional transition role.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The attributed forum statement is a discrete in-window development.",
+        "evidence_refs": [
+          "row:row-05cf198ff54b19d9efe82fe5",
+          "group:0f0152f07ab237eafdd923c0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-05e630ea1b774d836199f591",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "This is interpretive analysis of August CPI data released before the run window rather than a new in-window event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The material update being discussed predates the fixed 24-hour window.",
+        "evidence_refs": [
+          "row:row-05e630ea1b774d836199f591",
+          "group:4a0e50a2c080b1c399a250e1"
+        ]
+      }
+    },
+    {
+      "row_id": "row-05fc608305192d45adbd795e",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Pre-summit explanatory/promotional feature on the Global South and BRICS rather than a discrete realized event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The excerpt mainly provides framing and prior statements ahead of a future summit.",
+        "evidence_refs": [
+          "row:row-05fc608305192d45adbd795e",
+          "group:32a8bc5c136740d732d727b8"
+        ]
+      }
+    },
+    {
+      "row_id": "row-05fdc5535d0499ab3c7ef1f8",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-79124735747975",
+      "reason": "Current customs release reports Yunnan's first-eight-month ASEAN fruit import volume and value.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Publication of new official trade statistics is a discrete current data release.",
+        "evidence_refs": [
+          "row:row-05fdc5535d0499ab3c7ef1f8",
+          "group:47f6a9c467872608eb4042d0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0628ea343de09ec896c78d13",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-16588311469030",
+      "reason": "Current research release reports peer-reviewed findings on cascading cryosphere hazards in the Himalayas.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Publication and institutional release of new hazard findings are discrete in-window science developments.",
+        "evidence_refs": [
+          "row:row-0628ea343de09ec896c78d13",
+          "group:0f1644699be688fcfa182c0d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-068bba2988cce82edf52a1a0",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-107857266536848",
+      "reason": "Current photo report documents active construction on the Chongqing-Yibin expressway corridor.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The article describes ongoing in-window infrastructure activity; later scoring may assign low public value.",
+        "evidence_refs": [
+          "row:row-068bba2988cce82edf52a1a0",
+          "group:62187a0ef19098cd503ae48c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-06a94b4c0f38c4a7eca53210",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-166304106692222",
+      "reason": "Current article reports Taiwan security concerns over a Russian representative office's documentary screening and alleged influence activity.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The screening and official reaction constitute a discrete current cross-strait/security development.",
+        "evidence_refs": [
+          "row:row-06a94b4c0f38c4a7eca53210",
+          "group:9740b1343e7e004f35e9cab0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-070009f540a817e911a82ae1",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Broad feature on local sporting events and tourism rather than a single discrete in-window event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The title and framing indicate trend/feature coverage without a clearly bounded current occurrence.",
+        "evidence_refs": [
+          "row:row-070009f540a817e911a82ae1",
+          "group:8bbc081804b31ec581885be9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0700fe9626a8b666798408f3",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-249952520018099",
+      "reason": "Current UK government announcement proposes enabling English local authorities to levy an overnight visitor tax from 2028.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "A concrete government policy proposal was announced within the run window.",
+        "evidence_refs": [
+          "row:row-0700fe9626a8b666798408f3",
+          "group:e3549b2a98b384bb1a9c406b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-081afc444e1070909cfc6650",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-4879493252140",
+      "reason": "Current article reports a central-government meeting and agreements to advance the Hengqin Guangdong-Macao cooperation zone.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The meeting, signed support agreements and implementation push are discrete current governance actions.",
+        "evidence_refs": [
+          "row:row-081afc444e1070909cfc6650",
+          "group:04701876442cdb9a199e7aa1"
+        ]
+      }
+    },
+    {
+      "row_id": "row-081c387e7479f840b6923e75",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Underlying commentary is dated September 8 and falls outside the fixed window; the filename-only title does not establish a new event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Article-body content is a stale commentary/restatement rather than an in-window development.",
+        "evidence_refs": [
+          "row:row-081c387e7479f840b6923e75",
+          "group:8fb316f23c2cf51d2403111e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-08a33f6eb6fc24f2f687ff8b",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-76401676167342",
+      "reason": "Current article reports the opening of a Ningxia reading/culture/tourism market event.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The market opening is a discrete current cultural event.",
+        "evidence_refs": [
+          "row:row-08a33f6eb6fc24f2f687ff8b",
+          "group:457ca6c4a8ae012d455b290b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-093f923a440b09aa4c9addce",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-8296440874123",
+      "reason": "Current photo report documents 25th-anniversary September 11 memorial activity in New York.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The commemoration activities are discrete in-window events, distinct from a mere historical retrospective.",
+        "evidence_refs": [
+          "row:row-093f923a440b09aa4c9addce",
+          "group:078baa69448b08d41da0e3da"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0944f74eccd8f330a1e9e6ad",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-126419605818645",
+      "reason": "Current article reports closure of the 16th APEC Energy Ministerial and release of a joint statement.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The multilateral joint statement is a discrete in-window policy outcome.",
+        "evidence_refs": [
+          "row:row-0944f74eccd8f330a1e9e6ad",
+          "group:72fa5bb28d152a95f1c4df74"
+        ]
+      }
+    },
+    {
+      "row_id": "row-099fcd481582a6ee84ec9210",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-230163700352325",
+      "reason": "Current interview reports Taiwan's representative in Singapore linking Taiwan Strait stability to Southeast Asian economic security.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The attributable diplomatic/security statement is a current development eligible for scoring.",
+        "evidence_refs": [
+          "row:row-099fcd481582a6ee84ec9210",
+          "group:d15529998545b086b23a6b0b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-09a6e3cb8a4121bfcfef2f3b",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-277881502238691",
+      "reason": "Current article reports Chinese children's theatre performances in Brazil under the China-Brazil cultural year.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The overseas performance series is a discrete ongoing current cultural event.",
+        "evidence_refs": [
+          "row:row-09a6e3cb8a4121bfcfef2f3b",
+          "group:fcbb543b07e375c96bbf0783"
+        ]
+      }
+    },
+    {
+      "row_id": "row-09a8840bbccf054dc98620b4",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-137106056196073",
+      "reason": "Current consumer-protection bodies issued a new gold-jewelry purchasing guide.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Release of an official consumer advisory is a discrete current public-information action.",
+        "evidence_refs": [
+          "row:row-09a8840bbccf054dc98620b4",
+          "group:7cb27dc6afe9fe00d56a16a3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-09d7d180021368bd33bb07b3",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-245339684065459",
+      "reason": "Current article announces the October Wistron Ladies Open field including Tseng Ya-ni and Choi Na-yeon.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The tournament announcement is a discrete current sports development for later scoring.",
+        "evidence_refs": [
+          "row:row-09d7d180021368bd33bb07b3",
+          "group:df2298b7d0b3903130012cf5"
+        ]
+      }
+    }
+  ]
+}
