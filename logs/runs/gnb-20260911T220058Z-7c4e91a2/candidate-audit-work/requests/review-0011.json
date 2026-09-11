@@ -1,0 +1,293 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 11,
+  "rows": [
+    {
+      "row_id": "row-377a6631abd6dae38155c9ea",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Routine lottery-number result without a broader public event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Routine result listing.",
+        "evidence_refs": [
+          "row:row-377a6631abd6dae38155c9ea",
+          "group:7fbb29f06d6622da5b1c3b8c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-377f7f2393fe9a06a1e5fc7a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1102",
+      "reason": "Ningxia held a cross-regional veterans and military-family recruitment fair with thousands of jobs and 235 preliminary employment matches.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete in-window employment-support event with measurable outcomes.",
+        "evidence_refs": [
+          "row:row-377f7f2393fe9a06a1e5fc7a",
+          "group:b13fe5e327fcf7fefb128740"
+        ]
+      }
+    },
+    {
+      "row_id": "row-37ba339d7ae5591375ed2086",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1103",
+      "reason": "Tatung? No; TTET held an in-window investor briefing reporting first-half profit growth and a new market outlook tied to US soybean demand.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current company disclosure and outlook are discrete financial-news evidence, subject to low public-value scoring.",
+        "evidence_refs": [
+          "row:row-37ba339d7ae5591375ed2086",
+          "group:2e9079b1166ef74e4f0a0946"
+        ]
+      }
+    },
+    {
+      "row_id": "row-37f5ce3bf1c764f49b535d32",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1104",
+      "reason": "A Ministry-organized tourism trade and media delegation from nine European countries arrived in Ningxia for a five-day inspection and business-matching program.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete in-window inbound-tourism promotion delegation.",
+        "evidence_refs": [
+          "row:row-37f5ce3bf1c764f49b535d32",
+          "group:af4129cf322c4b6d14227c9f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-38ec56ff9733c6676e68cd6f",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The overseas Chinese-media visit began on September 10 before the fixed local window; the September 11 story mainly recaps that prior-day activity.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material event time is outside the fixed window.",
+        "evidence_refs": [
+          "row:row-38ec56ff9733c6676e68cd6f",
+          "group:a5a6ead11376515988679cff"
+        ]
+      }
+    },
+    {
+      "row_id": "row-39cbc88f7e2c462d830de1cd",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Heritage feature centered on long-running Great Wall conservation and historical context; no sufficiently discrete in-window event is established.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Feature/explainer framing dominates.",
+        "evidence_refs": [
+          "row:row-39cbc88f7e2c462d830de1cd",
+          "group:2457fe0086524af8b024f4ea"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3aca3711dfe9704085e02ae2",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1107",
+      "reason": "Anhui disciplinary authorities announced former Hefei vice mayor He Fengyang's expulsion from the Party and public office and transfer for prosecution.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current senior-local-official disciplinary action.",
+        "evidence_refs": [
+          "row:row-3aca3711dfe9704085e02ae2",
+          "group:2fc6b828cb12c67ff2dbe7a8"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3b136c030b63afb6dcf23564",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Historical remembrance feature about the 1934 Xiangjiang campaign without a new in-window public event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Historical feature rather than current event.",
+        "evidence_refs": [
+          "row:row-3b136c030b63afb6dcf23564",
+          "group:bf8e1c5bdf4dcc2ceebfe6ed"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3b24577e417f56c37c5421b5",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The mining forum and conference opening occurred on September 10 before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material opening event is outside the run window.",
+        "evidence_refs": [
+          "row:row-3b24577e417f56c37c5421b5",
+          "group:4dec9ee6cdfc1d68360b795a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3b2737f9211ea371716b1ea4",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Observation piece compiling business leaders' favorable views at an ongoing investment fair rather than reporting a distinct new agreement or policy action.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Commentary/roundup framing dominates.",
+        "evidence_refs": [
+          "row:row-3b2737f9211ea371716b1ea4",
+          "group:5a4100b52274733ad6794bf2"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3b9aee2d91ec15d4c1a1e8c7",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The principal shipment arrival occurred the night of September 10 and the first WorldSkills shipment on September 9, before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material logistics events precede the run window.",
+        "evidence_refs": [
+          "row:row-3b9aee2d91ec15d4c1a1e8c7",
+          "group:88749b9ff4d4ad06086643ef"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3bbf0b3cf7ddbfcdc74a13df",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1112",
+      "reason": "Tunchang authorities announced a newly completed Hainan first: an industrial-land secondary-market full online transaction combined with mortgaged-property transfer, alongside current business-environment reforms.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "A first-of-kind land transaction and implementation reform are discrete current developments, though exact transaction date may require scoring/verification caution.",
+        "evidence_refs": [
+          "row:row-3bbf0b3cf7ddbfcdc74a13df",
+          "group:7c945a357c371a729dd91b59"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3beee390c2e7fa014e8b9c7f",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Routine multi-day weather forecast without an extreme-weather warning or material disruption.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Routine forecast rather than a discrete high-consequence weather event.",
+        "evidence_refs": [
+          "row:row-3beee390c2e7fa014e8b9c7f",
+          "group:e80310ecd71ccb8e4278580a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3bf772741b87d965a8d43727",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1114",
+      "reason": "Jimei launched a cross-strait short-drama works solicitation and AI training-camp recruitment at an in-window press conference.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current cross-strait cultural-industry program launch.",
+        "evidence_refs": [
+          "row:row-3bf772741b87d965a8d43727",
+          "group:3b920d0a02c08bc55d700a55"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3c2ff5eb3b19c07be8a646e6",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1115",
+      "reason": "The China Academy of Science and Technology for Development released its 2026 regional innovation evaluation report with new nationwide rankings and scores.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "New institutional report and nationwide comparative data released in-window.",
+        "evidence_refs": [
+          "row:row-3c2ff5eb3b19c07be8a646e6",
+          "group:d3eef03a946a36a6ea512d6d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3c7f04ed4ac9569e934d5103",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Photo/lifestyle feature about reading spaces without a material new event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Visual feature rather than semantic news event.",
+        "evidence_refs": [
+          "row:row-3c7f04ed4ac9569e934d5103",
+          "group:f44e34258ccf5626a1edbdb0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3c838e0e4ca697c933474b2e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1117",
+      "reason": "Nvidia CEO Jensen Huang made fresh investor-conference comments defending the company's financing model and identifying cybersecurity as a likely next major AI use case.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current market-relevant executive disclosure/commentary at a major investor conference; public-value score will determine publication.",
+        "evidence_refs": [
+          "row:row-3c838e0e4ca697c933474b2e",
+          "group:6cc7a3b6592ccad5fb668ed2"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3cc552ec1f4dbdfd7a2887e7",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1118",
+      "reason": "A 420-plus-item archival exhibition on the Red Army's Long March through Yunnan opened in Kunming, including 67 central-archive items shown in Yunnan for the first time.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current museum/archive exhibition opening.",
+        "evidence_refs": [
+          "row:row-3cc552ec1f4dbdfd7a2887e7",
+          "group:a7806c83a1014bc4a3e92e6a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3cd1414ac4a20570461e48e8",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1119",
+      "reason": "Taiwan defeated the Philippines 10-0 in the U18 Asian Baseball Championship Super Round, setting up a berth-deciding game against Japan.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current international sports result.",
+        "evidence_refs": [
+          "row:row-3cd1414ac4a20570461e48e8",
+          "group:9ba3330419a4db29874b4f60"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3ce155fbd7291943ac30912c",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1120",
+      "reason": "Ningxia customs released new January-August foreign-trade data showing 177.2 billion yuan in trade and 23.9% year-on-year growth.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "New official regional trade statistics released in-window.",
+        "evidence_refs": [
+          "row:row-3ce155fbd7291943ac30912c",
+          "group:72ce580e8d289b3ba6e71916"
+        ]
+      }
+    }
+  ]
+}
