@@ -1,0 +1,295 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 3,
+  "rows": [
+    {
+      "row_id": "row-0a76a3c02a22fb68cd780632",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-56610148490582",
+      "reason": "Current reporting attributes to informed sources a Beijing effort to facilitate renewed Trump-Kim diplomacy.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The reported diplomatic initiative is a discrete in-window development, with attribution uncertainty to be preserved in verification.",
+        "evidence_refs": [
+          "row:row-0a76a3c02a22fb68cd780632",
+          "group:337c93ca9d56efbfe397eb6e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0a90f7416df586152ed8584a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-218975664725200",
+      "reason": "This is a material update to the same Keelung public-works bid-rigging case: the court approved detention of the two officials.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The court ruling advances the same semantic event already represented by the detention-request row.",
+        "evidence_refs": [
+          "row:row-0a90f7416df586152ed8584a",
+          "group:551f9b56efb7d34ec93958a6",
+          "event:TWN-218975664725200"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0aa070712d171cead663988e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-86287487398150",
+      "reason": "Current photo report documents widening works on the Nanzhong Bridge connection of the Shiziyang Passage.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The construction activity is a discrete current infrastructure development.",
+        "evidence_refs": [
+          "row:row-0aa070712d171cead663988e",
+          "group:4e7a5f08f106526f8a9ac2dc"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0af88d445bafebbd53c3e527",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The article is a rural tourism and lifestyle feature about Shiyi Qiang village rather than a distinct in-window event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Narrative background and tourism promotion dominate without a discrete current occurrence.",
+        "evidence_refs": [
+          "row:row-0af88d445bafebbd53c3e527",
+          "group:93158ef59c118a4599435913"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0b1e60cf98f18a7403338685",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-37521789167735",
+      "reason": "China's MIIT and other agencies released a current 15th Five-Year Plan for intelligent connected new-energy vehicles with 2030 targets.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The formal policy-plan release is a discrete current and structurally material development.",
+        "evidence_refs": [
+          "row:row-0b1e60cf98f18a7403338685",
+          "group:222038ea287703b925f07b0d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0b2439ca780aa4fa1fa081ff",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "This is a pre-summit preview centered on a future Xi trip and retrospective BRICS framing, not a realized in-window event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The article is primarily anticipatory/explanatory and does not establish a new completed occurrence.",
+        "evidence_refs": [
+          "row:row-0b2439ca780aa4fa1fa081ff",
+          "group:d00e15fe3060c2e19ce211e2"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0b631737cf168d2bc56db812",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-237649664843964",
+      "reason": "Hung Hsiu-chu made a current cross-strait political statement at a seminar in Urumqi.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The attributable speech at a named current event is a discrete in-window political development.",
+        "evidence_refs": [
+          "row:row-0b631737cf168d2bc56db812",
+          "group:d8241fdaa0bca56c13f4581d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0bc3e0ba92216ca95a1b3a90",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-128727190219381",
+      "reason": "A current EU Asylum Agency report disclosed first-half asylum application totals and a multi-year low.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The release of new official asylum statistics is a discrete data-publication event.",
+        "evidence_refs": [
+          "row:row-0bc3e0ba92216ca95a1b3a90",
+          "group:7513a2722a75c832994a164b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0c660070bc40842ed1d9f063",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-271962841177466",
+      "reason": "McDonald's China chief impact officer gave a current services-trade-fair interview outlining continued expansion and investment.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The corporate expansion commitment and operating figures are current attributable business developments.",
+        "evidence_refs": [
+          "row:row-0c660070bc40842ed1d9f063",
+          "group:f759488a5d7a469970c34c7f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0d34dd6ebb8929746fec0a84",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-270205259964734",
+      "reason": "Taiwan's Executive Yuan countersigned the drone-industry law and the Taiwan People's Party caucus issued a current constitutional criticism.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The countersignature and immediate legislative-political response are discrete current governance developments.",
+        "evidence_refs": [
+          "row:row-0d34dd6ebb8929746fec0a84",
+          "group:f5c01089613e017c8bdeb85b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0dcba461a3e54387379a9d73",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-195395251677373",
+      "reason": "A 70-work revolutionary art exhibition opened in Guangzhou during the run window.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The exhibition opening is a discrete current cultural event.",
+        "evidence_refs": [
+          "row:row-0dcba461a3e54387379a9d73",
+          "group:b1b6009128bd886ede567aaf"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0ed006535ebf523f2ca5bee3",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-37521789167735",
+      "reason": "This article reports another major target from the same newly released intelligent-connected NEV 15th Five-Year Plan: highly automated driving in specified road scenarios by 2030.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "It is additional evidence for the same policy-plan semantic event as the 2030 NEV sales-target article.",
+        "evidence_refs": [
+          "row:row-0ed006535ebf523f2ca5bee3",
+          "group:516b697474d7b340420bfe0d",
+          "event:CHN-37521789167735"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0eda997336c995901963bd2a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-105154690693387",
+      "reason": "The Philippine defense secretary renewed and detailed accusations about a Chinese military attaché's note at the Seoul Defense Dialogue.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The current attributable statement and claimed diplomatic incident are discrete regional-security developments.",
+        "evidence_refs": [
+          "row:row-0eda997336c995901963bd2a",
+          "group:5fa33bfc390b4a7703072bcf"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0ee5e7259b375e8fbe696d68",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-232548527506312",
+      "reason": "Chinese discipline and supervisory authorities announced an investigation into former China Merchants Bank vice president Shi Shunhua.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The formal investigation announcement is a discrete current anti-corruption development.",
+        "evidence_refs": [
+          "row:row-0ee5e7259b375e8fbe696d68",
+          "group:d3806c6003880068bf648300"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0f17285d999fd571f3473fb7",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-268561123247067",
+      "reason": "The cross-strait co-created play 'Xunwei' was performed in Beijing during the run window.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The performance is a discrete current cultural event despite extensive background in the article.",
+        "evidence_refs": [
+          "row:row-0f17285d999fd571f3473fb7",
+          "group:f441425a03db8b15379aff6e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-106086e8269814b7119ea61d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-128059617036697",
+      "reason": "Taiwan's National Federation of Teachers Unions publicly challenged an Energy Administration school conservation poster as age-inappropriate.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The current institutional complaint about government school materials is a discrete public-policy controversy.",
+        "evidence_refs": [
+          "row:row-106086e8269814b7119ea61d",
+          "group:747833fbc999a64acfc62647"
+        ]
+      }
+    },
+    {
+      "row_id": "row-106f4b643b48aea6bb211984",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-58230164998642",
+      "reason": "The 20th Jiangxi-Taiwan economic and cultural cooperation conference opened in Lushan.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The conference opening and associated cross-strait economic activities are discrete current events.",
+        "evidence_refs": [
+          "row:row-106f4b643b48aea6bb211984",
+          "group:34f5c44cc9f28947d027b329"
+        ]
+      }
+    },
+    {
+      "row_id": "row-10782db8447c4d84869bffeb",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-119313316024998",
+      "reason": "A Guangdong-Hong Kong-Macao marine cooperation forum convened and launched a deep-sea exploration collaboration mechanism.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The mechanism launch is a discrete current regional cooperation development.",
+        "evidence_refs": [
+          "row:row-10782db8447c4d84869bffeb",
+          "group:6c83cbd192a601309004c636"
+        ]
+      }
+    },
+    {
+      "row_id": "row-114008c492d22c258ab46e60",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "This is an anniversary-themed rural-development feature tied to Long March history rather than a discrete current event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The article is a retrospective/feature with illustrative statistics, not a bounded new occurrence.",
+        "evidence_refs": [
+          "row:row-114008c492d22c258ab46e60",
+          "group:1b03c39e50b7241c87042c2a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-11408a478238cfa22ccb5410",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-142523082816124",
+      "reason": "The National Technology Transfer Central Center released a current report on R&D staffing and technology-transfer indicators in six central provinces.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Publication of new regional innovation statistics is a discrete current data-release event.",
+        "evidence_refs": [
+          "row:row-11408a478238cfa22ccb5410",
+          "group:819fbdb93a7ca0c4724caeaf"
+        ]
+      }
+    }
+  ]
+}
