@@ -1,0 +1,293 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 16,
+  "rows": [
+    {
+      "row_id": "row-5426db485e09b138baf61a50",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1601",
+      "reason": "The 27th China International Optoelectronic Exposition concluded in Shenzhen on September 11 after presenting new AI-photonics products and technologies from more than 4,000 exhibitors.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current major industry-exhibition conclusion with product launches.",
+        "evidence_refs": [
+          "row:row-5426db485e09b138baf61a50",
+          "group:f1f214f5199e8c1a0f365aca"
+        ]
+      }
+    },
+    {
+      "row_id": "row-549ae623dc838a002ae2b923",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Morning-news roundup bundles multiple unrelated developments, several from September 10, rather than one auditable semantic event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Aggregator format; constituent events require their own source rows.",
+        "evidence_refs": [
+          "row:row-549ae623dc838a002ae2b923",
+          "group:5d1e671b7ede2c233a3b5caf"
+        ]
+      }
+    },
+    {
+      "row_id": "row-54b1b74ef9fb38d7630d3f8f",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1603",
+      "reason": "Hubei released its Fifteenth Five-Year water-security plan setting regional flood, water-allocation, ecological and digital-water-network priorities.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current provincial strategic-plan release with major infrastructure implications.",
+        "evidence_refs": [
+          "row:row-54b1b74ef9fb38d7630d3f8f",
+          "group:81821e22ace1df8fecd1d9a7"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5513cfcda17776ca68515b20",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "September 10 Xinhua overview of CIFTIS and general service-trade openness; source dispatch predates the fixed local window and is largely interpretive.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Outside-window overview/commentary.",
+        "evidence_refs": [
+          "row:row-5513cfcda17776ca68515b20",
+          "group:1ae5e9baca039dfbc54e93a1"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5515ea8a567c1741f17c0ef6",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Commemorative video repackaging prior Xi Jinping remarks about teachers, with no new policy or event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Retrospective/commemorative media item.",
+        "evidence_refs": [
+          "row:row-5515ea8a567c1741f17c0ef6",
+          "group:4f6066309845cc0ec25931f2"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5552046dfc75bb80dcd6d09a",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The six-satellite Long March 4B launch occurred September 10 at 17:00 China time, before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material event time predates the run window.",
+        "evidence_refs": [
+          "row:row-5552046dfc75bb80dcd6d09a",
+          "group:5c6871a08f35370c26f7a81c"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5566d67c75359b5b4cfd66f0",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The All-China Federation of Industry and Commerce social-service committee was established at a meeting held September 10, before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material event time predates the run window.",
+        "evidence_refs": [
+          "row:row-5566d67c75359b5b4cfd66f0",
+          "group:f38bef1273dbce616f0030e5"
+        ]
+      }
+    },
+    {
+      "row_id": "row-557ebb90887b5f17f8024bf9",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1608",
+      "reason": "Taiwan Academy in Houston announced its autumn cultural program featuring Taiwanese film, music and cultural-diplomacy events.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current cultural-program announcement; importance to be scored later.",
+        "evidence_refs": [
+          "row:row-557ebb90887b5f17f8024bf9",
+          "group:a6bda5108fc74bb5c4ab4126"
+        ]
+      }
+    },
+    {
+      "row_id": "row-55d2a1b060a88b1815f47e82",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Feature about Yunnan's ethnic-unity monument protection law that took effect in May 2025; no distinct in-window legal action.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Retrospective cultural/legal feature.",
+        "evidence_refs": [
+          "row:row-55d2a1b060a88b1815f47e82",
+          "group:4c984140ba0e27d7dbdefd7a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-55ddde55edd4da2e5d5a258f",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Police searches of two Kinmen massage businesses occurred the previous evening, before the fixed local window began at 06:00 September 11.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material enforcement event predates the run window.",
+        "evidence_refs": [
+          "row:row-55ddde55edd4da2e5d5a258f",
+          "group:a3f3b4541f5dd0ba3091afa0"
+        ]
+      }
+    },
+    {
+      "row_id": "row-55df89a98470c0bc1d21561d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1611",
+      "reason": "Sanhe No. 1 tunnel broke through on September 11, completing all tunnel work for the Huangbai Railway connection's added second-track section.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current milestone in a major western transport corridor project.",
+        "evidence_refs": [
+          "row:row-55df89a98470c0bc1d21561d",
+          "group:36d798bac11ac0151eb16114"
+        ]
+      }
+    },
+    {
+      "row_id": "row-56127ee2ebed3d5dc8211562",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1612",
+      "reason": "Taiwan's Labor Ministry issued a current official response defending employment-stabilization-fund spending for Minister Hung Sun-han's Europe trip and promising statutory reporting.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current government-accountability response to a public-funds controversy.",
+        "evidence_refs": [
+          "row:row-56127ee2ebed3d5dc8211562",
+          "group:ebaa5703efcf4d30678097e3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-562bfe0986ee3ce959dd0906",
+      "disposition": "event_evidence",
+      "semantic_event_id": "GLB-1613",
+      "reason": "The New York Times newly reported that US Vice President JD Vance directly canvassed theater commanders about Iran-war objectives, casualties and stressed Patriot and other missile inventories.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "New investigative disclosure concerning ongoing war management and US ammunition readiness.",
+        "evidence_refs": [
+          "row:row-562bfe0986ee3ce959dd0906",
+          "group:8e2b2ddea5005eba2e22c1b1"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5632aa386a8703e59e214ad2",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1614",
+      "reason": "China's MIIT released its Fifteenth Five-Year information-and-communications plan, targeting a new-generation network by 2030, 3.8 trillion yuan infrastructure investment and continued 6G trials.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Major current national infrastructure and technology plan release.",
+        "evidence_refs": [
+          "row:row-5632aa386a8703e59e214ad2",
+          "group:af45c5205edbbc0418987008"
+        ]
+      }
+    },
+    {
+      "row_id": "row-567b87fe7780dd98e2ef816b",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1615",
+      "reason": "ASE Technology's subsidiary board approved roughly NT$334 million of AOI/AVI equipment purchases from Machvision to support capacity expansion.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current listed-company capital-equipment decision.",
+        "evidence_refs": [
+          "row:row-567b87fe7780dd98e2ef816b",
+          "group:f3e2159a0796ee1da6b0c2c5"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5686d2a7e5b316ad6af1b003",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1616",
+      "reason": "Jiayuguan police announced an investigation after finding a viral claim about a sponsored student's threats was fabricated for traffic.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current police enforcement disclosure, though limited public scope.",
+        "evidence_refs": [
+          "row:row-5686d2a7e5b316ad6af1b003",
+          "group:7b1f28f8ff10c3738e446d4e"
+        ]
+      }
+    },
+    {
+      "row_id": "row-56b6f3750d53d1ffbfa8e058",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Foreign Minister Lin Chia-lung's meeting with the Hoover Institution delegation occurred September 9, before the fixed window; the September 11 article is a ministry recap.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material meeting predates the run window.",
+        "evidence_refs": [
+          "row:row-56b6f3750d53d1ffbfa8e058",
+          "group:996495d971b0af337f8a2d8b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-56e3bf4b2f39773a945232d3",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1618",
+      "reason": "Hannstar? Hanmi Testing's OTC auction results were finalized, setting a NT$4,272.7 weighted average winning price ahead of a September 22 listing.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current securities-market transaction result.",
+        "evidence_refs": [
+          "row:row-56e3bf4b2f39773a945232d3",
+          "group:21bc58da485a9029e7add43a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-57255bb83289794d6608927a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1619",
+      "reason": "Four Yangtze River Delta science-policy institutes jointly released the first Shanghai/Yangtze River Delta International Science and Innovation Center Index with new R&D data.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current multi-province innovation report release.",
+        "evidence_refs": [
+          "row:row-57255bb83289794d6608927a",
+          "group:54b8168f5218f515d3fca9f5"
+        ]
+      }
+    },
+    {
+      "row_id": "row-5744e3b1d1def8760440e804",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Macro-finance analysis on Singapore safe-haven demand amid high long-term yields, without a distinct new policy decision or market threshold identified in this row.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Trend/analysis feature rather than a discrete semantic event.",
+        "evidence_refs": [
+          "row:row-5744e3b1d1def8760440e804",
+          "group:3fba2afe0ae775f0a244d036"
+        ]
+      }
+    }
+  ]
+}
