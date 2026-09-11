@@ -1,0 +1,293 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 12,
+  "rows": [
+    {
+      "row_id": "row-3d2ca2df7d1d7560592802ae",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1201",
+      "reason": "China's fifth batch of emergency aid for Nepal arrived in Kathmandu aboard a Y-20 transport aircraft on September 11.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete in-window international disaster-assistance delivery.",
+        "evidence_refs": [
+          "row:row-3d2ca2df7d1d7560592802ae",
+          "group:21be5bab3d28641bfcb18fde"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3d3ca5c6e5b1b74c8e5add95",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The prosecutorate heritage-protection interview tour began September 10 before the fixed local window; the article largely reviews long-running preservation work.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Prior-day feature/retrospective rather than a new in-window event.",
+        "evidence_refs": [
+          "row:row-3d3ca5c6e5b1b74c8e5add95",
+          "group:5cd8e2d9481899b804ebe0b5"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3d46fc955a8fd8a3d5d98d60",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The Shihezi green-transition press conference was held September 10 before the fixed local window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Material disclosure event occurred before the run window.",
+        "evidence_refs": [
+          "row:row-3d46fc955a8fd8a3d5d98d60",
+          "group:7a97d944b02898848600da37"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3d5b1f44e0116ce0394f4138",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1204",
+      "reason": "China's foreign ministry said on September 11 that Beijing and New Delhi were arranging a Xi Jinping-Narendra Modi bilateral meeting during the BRICS summit.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "New official diplomatic scheduling disclosure with major bilateral relevance.",
+        "evidence_refs": [
+          "row:row-3d5b1f44e0116ce0394f4138",
+          "group:ad21169de32b49518ed4a7b4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3da672bff225661fd8862a07",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The underlying detention decisions were made before the fixed window; the in-window content is primarily legislator Kao Chin Su-mei's reaction and political analogy.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Reaction commentary does not establish a distinct new legal action in-window.",
+        "evidence_refs": [
+          "row:row-3da672bff225661fd8862a07",
+          "group:988d20a798ddf05ea826e959"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3dd570c5341d5c2f663e5fe2",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1206",
+      "reason": "Taiwan's Finance Ministry issued revised PPP rules expanding qualifying major public works to labor-welfare and cultural/educational facilities, potentially covering five projects worth about NT$1.129 billion.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete central-government regulatory change effective through an in-window rule revision.",
+        "evidence_refs": [
+          "row:row-3dd570c5341d5c2f663e5fe2",
+          "group:5aa4cd1773ea74df70b6a0a7"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3e151c5644a268007138f231",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Explainer analyzes the September 5 Suichuan mudslide and broader hazard trends; the triggering disaster predates the window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Post-event analysis/explainer rather than a new in-window event.",
+        "evidence_refs": [
+          "row:row-3e151c5644a268007138f231",
+          "group:a4edc3badc89581ea8c78c14"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3e28459d1c1d335927963d3e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1208",
+      "reason": "Tianjin's Nankai district issued eight measures supporting AI-enabled one-person companies, including workspace, compute, data, finance and startup subsidies.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete local economic/technology policy release in-window.",
+        "evidence_refs": [
+          "row:row-3e28459d1c1d335927963d3e",
+          "group:62d1638b310f8944924e29c3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3e6801f87ae7d84013615df8",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1209",
+      "reason": "Hainan launched a China-Serbia tourism-safety policing project with eight Serbian officers beginning two weeks of joint patrols in Sanya and Haikou.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete in-window bilateral law-enforcement cooperation launch.",
+        "evidence_refs": [
+          "row:row-3e6801f87ae7d84013615df8",
+          "group:0ac3e7346e901d9a3f6d79bb"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3e6e6ba7e187d9cb0c7a3002",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Consumer controversy article about an AI-generated scissors demonstration and customer-service clarification; no material public event or regulatory action is established.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Brand/social-media controversy with service explanation.",
+        "evidence_refs": [
+          "row:row-3e6e6ba7e187d9cb0c7a3002",
+          "group:8f0f7dbce063fa7de71f89e3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3ee429d65cedb194daf25df5",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1211",
+      "reason": "New Taipei's Gold Museum announced and opened registration for its October international mining-studies forum with participants from Taiwan, Japan and Vietnam.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current program announcement/registration launch, likely low public-value score.",
+        "evidence_refs": [
+          "row:row-3ee429d65cedb194daf25df5",
+          "group:b3d04eb98dfe1f40231f93b7"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3f1af67c2d12988836e6d275",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "General skincare and nutrition explainer without a distinct in-window event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Evergreen health guidance.",
+        "evidence_refs": [
+          "row:row-3f1af67c2d12988836e6d275",
+          "group:a368cc7919fc26428f52a4cb"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3f5e750b2792a5b6c84dce6d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "GLB-1213",
+      "reason": "Nepal's foreign ministry released a new estimate that reconstruction after the August glacier-collapse flood would cost about US$4.78 billion, with short- and long-term needs quantified.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "New official post-disaster damage/reconstruction estimate with large public and fiscal consequences.",
+        "evidence_refs": [
+          "row:row-3f5e750b2792a5b6c84dce6d",
+          "group:1b411bc41e6d0c91d5ca55d8"
+        ]
+      }
+    },
+    {
+      "row_id": "row-3f6bf7ba1c76e970985f1f2a",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Profile/interview of a Chinese air-force pilot recounting career and training experiences, without a discrete new operational event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Profile feature rather than current event.",
+        "evidence_refs": [
+          "row:row-3f6bf7ba1c76e970985f1f2a",
+          "group:eef557edd49090530a5c0407"
+        ]
+      }
+    },
+    {
+      "row_id": "row-401a98d88aad90856090c9fa",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Macro manufacturing trend analysis assembling previously released statistics and conference opinions rather than a discrete new event.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Analytical feature/roundup framing dominates.",
+        "evidence_refs": [
+          "row:row-401a98d88aad90856090c9fa",
+          "group:72029f44d1e12234ebd51be4"
+        ]
+      }
+    },
+    {
+      "row_id": "row-409428f271d43d612197b07a",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Human-interest feature about jasmine-flavored eggs and a local producer's sales success.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Lifestyle/business feature without material public event.",
+        "evidence_refs": [
+          "row:row-409428f271d43d612197b07a",
+          "group:3c8038fb4b475d81f88b31f6"
+        ]
+      }
+    },
+    {
+      "row_id": "row-40afb80c8bd4b5d8e03057a0",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-1217",
+      "reason": "The 2026 CIFTIS Xiong'an Digital Trade Innovation Conference convened on September 11 with about 900 participants and 110-plus exhibitors across AI, 6G, robotics and digital trade.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current national-level digital-trade conference event.",
+        "evidence_refs": [
+          "row:row-40afb80c8bd4b5d8e03057a0",
+          "group:d859799c5ac25396c56c106b"
+        ]
+      }
+    },
+    {
+      "row_id": "row-40c5c8409ace7a9b9d02a77c",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-1218",
+      "reason": "A New Taipei city-council candidate was detained and held incommunicado over alleged vote-buying with food and US dollars and suspected charitable-property embezzlement.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Discrete current election-integrity criminal-procedure development involving a candidate.",
+        "evidence_refs": [
+          "row:row-40c5c8409ace7a9b9d02a77c",
+          "group:f1be77dfc691b73fbaa5eb9a"
+        ]
+      }
+    },
+    {
+      "row_id": "row-4102419a9dd777eaceeb9705",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Human-interest profile of an Indian yoga instructor and his family living in Beijing.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Profile feature rather than semantic news event.",
+        "evidence_refs": [
+          "row:row-4102419a9dd777eaceeb9705",
+          "group:c00027a930736f0455747584"
+        ]
+      }
+    },
+    {
+      "row_id": "row-414fb09178d126df2744f068",
+      "disposition": "event_evidence",
+      "semantic_event_id": "GLB-1220",
+      "reason": "Japan Prime Minister Sanae Takaichi was reported to be preparing a cabinet reshuffle in which Nippon Ishin no Kai may enter the cabinet for the first time.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "Current national-government political restructuring with coalition significance.",
+        "evidence_refs": [
+          "row:row-414fb09178d126df2744f068",
+          "group:8cae274d4a0dff5f7468d56a"
+        ]
+      }
+    }
+  ]
+}
