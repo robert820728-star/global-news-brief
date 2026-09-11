@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
-  "input_article_row_count": 897,
+  "input_article_row_count": 906,
   "content_hydration_count": 897,
-  "lightweight_semantic_review_count": 0,
+  "lightweight_semantic_review_count": 9,
   "decisions": [
     {
       "row_id": "row-a93cf35b6616a8965773b7fa",
@@ -1490,6 +1490,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-a114f34ab98cd309877290d0",
+      "candidate_id": "6e0831f28ef63f929e8a",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/business/healthcare-pharmaceuticals/ebola-infections-top-7000-congo-virus-spreads-new-province-2026-09-11",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-b77c9dd05931be20ab1cb0e6",
       "candidate_id": "e92d3b0bb439c48c1992",
       "source_id": "cna",
@@ -1915,6 +1926,17 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-cec55fad6592682757da97b5",
+      "candidate_id": "19270aec281b51651f7c",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/asia-pacific/north-korea-launches-unidentified-projectile-toward-east-sea-yonhap-reports-2026-09-11",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     },
@@ -2773,6 +2795,17 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-16c2bd7384bf45b95aee018e",
+      "candidate_id": "dda513521e95e5787b44",
+      "source_id": "web_fallback",
+      "canonical_url": "https://apnews.com/article/un-council-sudan-arms-embargo-russia-fde2c6880c80343bebffb83c243fd3f4",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     },
@@ -8299,6 +8332,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-0025c30497b749bd94a8a2f3",
+      "candidate_id": "c40a6b2baff2a834df67",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/business/aerospace-defense/modi-putin-hold-talks-new-delhi-trade-defence-2026-09-11",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-c7bbe962ef354d718d3d9fbf",
       "candidate_id": "e8723b50c558416755a8",
       "source_id": "cna",
@@ -9245,6 +9289,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-7e3711952dc7a7a4a0baa012",
+      "candidate_id": "0af3a6a037b279639ece",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/middle-east/yemens-houthis-reach-strategic-island-mouth-vital-shipping-lane-2026-09-11",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-f4ce6dd743eba8fe85aea817",
       "candidate_id": "9272606b9f1d21b22e9f",
       "source_id": "chinanews",
@@ -9465,6 +9520,17 @@
       "matched_discovery_signals": {}
     },
     {
+      "row_id": "row-80574896c12318097f126dda",
+      "candidate_id": "147fc545db1dc354c611",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/middle-east/uae-revises-ai-data-center-plan-after-iranian-attacks-sources-say-2026-09-11",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
       "row_id": "row-12a3a7029004609e178ffaed",
       "candidate_id": "92e9859cd1821e224dbe",
       "source_id": "cna",
@@ -9593,6 +9659,17 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-d4f40fe92791d9b9db542354",
+      "candidate_id": "daaf2710fff5283c5c29",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/business/energy/global-2026-oil-supply-gap-deepen-delayed-return-normal-gulf-flows-iea-says-2026-09-11",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     },
@@ -9868,6 +9945,28 @@
       "route": "content_hydration",
       "reasons": [
         "regional_supplement_complete_admission"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-c179c283624038d6db95437b",
+      "candidate_id": "fabbc86aff83124834a3",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/russian-air-strikes-injure-two-cause-fire-9-storey-apartment-building-kyiv-2026-09-11",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
+      ],
+      "matched_discovery_signals": {}
+    },
+    {
+      "row_id": "row-a4b455fafa1e1401b5ff6cc5",
+      "candidate_id": "bcf06368c792afa51361",
+      "source_id": "web_fallback",
+      "canonical_url": "https://www.reuters.com/world/china/global-markets-corrected-2026-09-11",
+      "route": "lightweight_semantic_review",
+      "reasons": [
+        "no_relevance_or_heat_signal"
       ],
       "matched_discovery_signals": {}
     }

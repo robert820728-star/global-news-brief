@@ -13497,5 +13497,101 @@
     "scan_window_start": "2026-09-10T22:00:58Z",
     "scan_window_end": "2026-09-11T22:00:58Z",
     "scan_evidence_path": "source-scans/chinanews.json"
+  },
+  {
+    "source_id": "web_fallback",
+    "scan_status": "completed",
+    "coverage_complete": false,
+    "coverage_status": "degraded_partial",
+    "coverage_reason": "configured primary aggregator unavailable; bounded verified host web fallback materialized",
+    "missing_segments": [
+      "configured_primary_aggregator_unavailable"
+    ],
+    "missing_date_variants": [],
+    "within_window_count": 9,
+    "ranked_count": 9,
+    "ranked_items": [
+      {
+        "url": "https://www.reuters.com/world/middle-east/yemens-houthis-reach-strategic-island-mouth-vital-shipping-lane-2026-09-11/",
+        "title": "Gulf oil threatened anew as Houthis reach key island and pipeline is shut down",
+        "published_at": "2026-09-11T09:35:17Z",
+        "discovery_priority_score": 999,
+        "discovery_priority_reason": "Major active conflict escalation with immediate global energy and shipping consequences."
+      },
+      {
+        "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/ebola-infections-top-7000-congo-virus-spreads-new-province-2026-09-11/",
+        "title": "Ebola infections top 7,000 in Congo as virus spreads to new province",
+        "published_at": "2026-09-11T21:12:00Z",
+        "discovery_priority_score": 998,
+        "discovery_priority_reason": "Large, expanding high-fatality infectious-disease outbreak with cross-province public-health consequences."
+      },
+      {
+        "url": "https://www.reuters.com/business/energy/global-2026-oil-supply-gap-deepen-delayed-return-normal-gulf-flows-iea-says-2026-09-11/",
+        "title": "IEA warns 2026 oil supply gap will widen on delayed return of normal Gulf flows",
+        "published_at": "2026-09-11T08:09:00Z",
+        "discovery_priority_score": 997,
+        "discovery_priority_reason": "Global energy-supply and inflation implications backed by a major intergovernmental energy agency report."
+      },
+      {
+        "url": "https://www.reuters.com/world/russian-air-strikes-injure-two-cause-fire-9-storey-apartment-building-kyiv-2026-09-11/",
+        "title": "Russian attacks on Kyiv petrol stations kill two, Ukrainian strikes kill three in Russia",
+        "published_at": "2026-09-11T01:38:25Z",
+        "discovery_priority_score": 996,
+        "discovery_priority_reason": "Material escalation in cross-border strikes on economic infrastructure in an ongoing interstate war."
+      },
+      {
+        "url": "https://www.reuters.com/business/aerospace-defense/modi-putin-hold-talks-new-delhi-trade-defence-2026-09-11/",
+        "title": "Modi, Putin seek stronger ties as Russia calls for BRICS to counter West",
+        "published_at": "2026-09-11T10:54:00Z",
+        "discovery_priority_score": 995,
+        "discovery_priority_reason": "High-level geopolitical and economic coordination among major states with implications for sanctions, trade and global governance."
+      },
+      {
+        "url": "https://www.reuters.com/world/middle-east/uae-revises-ai-data-center-plan-after-iranian-attacks-sources-say-2026-09-11/",
+        "title": "UAE revises AI data center plan after Iranian attacks, sources say",
+        "published_at": "2026-09-11T09:04:00Z",
+        "discovery_priority_score": 994,
+        "discovery_priority_reason": "Security-driven redesign of globally significant AI infrastructure involving major U.S. technology firms."
+      },
+      {
+        "url": "https://www.reuters.com/world/china/global-markets-corrected-2026-09-11/",
+        "title": "Wall Street jumps, oil lower ahead of Fed vote next week",
+        "published_at": "2026-09-11T00:56:00Z",
+        "discovery_priority_score": 993,
+        "discovery_priority_reason": "Global macroeconomic and financial-market implications from inflation, oil shock and monetary-policy repricing."
+      },
+      {
+        "url": "https://www.reuters.com/world/asia-pacific/north-korea-launches-unidentified-projectile-toward-east-sea-yonhap-reports-2026-09-11/",
+        "title": "North Korea launches unidentified projectile toward East Sea",
+        "published_at": "2026-09-11T20:49:00Z",
+        "discovery_priority_score": 992,
+        "discovery_priority_reason": "Potential regional-security development requiring later evidence-based scoring because weapon type and impact were initially unresolved."
+      },
+      {
+        "url": "https://apnews.com/article/un-council-sudan-arms-embargo-russia-fde2c6880c80343bebffb83c243fd3f4",
+        "title": "UN extends partial Sudan arms embargo for a month while talks continue on US demand for a total ban",
+        "published_at": "2026-09-11T19:30:00Z",
+        "discovery_priority_score": 991,
+        "discovery_priority_reason": "Formal U.N. Security Council action tied to one of the world's largest ongoing humanitarian crises."
+      }
+    ],
+    "selected_for_pool_count": 9,
+    "selected_item_urls": [
+      "https://www.reuters.com/world/middle-east/yemens-houthis-reach-strategic-island-mouth-vital-shipping-lane-2026-09-11/",
+      "https://www.reuters.com/business/healthcare-pharmaceuticals/ebola-infections-top-7000-congo-virus-spreads-new-province-2026-09-11/",
+      "https://www.reuters.com/business/energy/global-2026-oil-supply-gap-deepen-delayed-return-normal-gulf-flows-iea-says-2026-09-11/",
+      "https://www.reuters.com/world/russian-air-strikes-injure-two-cause-fire-9-storey-apartment-building-kyiv-2026-09-11/",
+      "https://www.reuters.com/business/aerospace-defense/modi-putin-hold-talks-new-delhi-trade-defence-2026-09-11/",
+      "https://www.reuters.com/world/middle-east/uae-revises-ai-data-center-plan-after-iranian-attacks-sources-say-2026-09-11/",
+      "https://www.reuters.com/world/china/global-markets-corrected-2026-09-11/",
+      "https://www.reuters.com/world/asia-pacific/north-korea-launches-unidentified-projectile-toward-east-sea-yonhap-reports-2026-09-11/",
+      "https://apnews.com/article/un-council-sudan-arms-embargo-russia-fde2c6880c80343bebffb83c243fd3f4"
+    ],
+    "discovery_ranking_completed": true,
+    "discovery_ranking_method": "bounded_host_search_rank_v1",
+    "failure_reason": null,
+    "scan_window_start": "2026-09-10T22:00:58Z",
+    "scan_window_end": "2026-09-11T22:00:58Z",
+    "scan_evidence_path": "source-scans/web_fallback.json"
   }
 ]
