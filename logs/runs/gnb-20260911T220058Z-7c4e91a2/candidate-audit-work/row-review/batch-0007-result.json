@@ -1,0 +1,295 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260911T220058Z-7c4e91a2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-10T22:00:58+00:00",
+    "end": "2026-09-11T22:00:58+00:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "batch_sequence": 7,
+  "input_batch_sha256": "a2c8eacc348df43172bfc18e250babe680f532fc2e20483f719a92a283b38f33",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-1efc6ce4885a4ead2fb13c4c",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-37110686911791",
+      "reason": "Taipei City said it would fast-track reconstruction review as fourth-year rent-subsidy talks for the Jitai Dazhi collapse victims remained unresolved.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The current subsidy dispute and municipal review action are discrete housing-governance developments.",
+        "evidence_refs": [
+          "row:row-1efc6ce4885a4ead2fb13c4c",
+          "group:21c0814f8d2f33419a2da68d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-203f0b044b2adae748148612",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The featured China-Russia grassland concert began on September 10 evening, before the fixed local window began on September 11 at 06:00.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The article is a later recap of an event outside the fixed 24-hour window.",
+        "evidence_refs": [
+          "row:row-203f0b044b2adae748148612",
+          "group:1552e71a352293964d7871c3"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2040b204dda1e067405276a2",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-268260718654888",
+      "reason": "Taiwan's Labor Ministry announced the minimum-wage review meeting for September 24, with next year's wage level to be decided.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The official scheduling of the statutory wage-review process is a discrete current labor-policy development.",
+        "evidence_refs": [
+          "row:row-2040b204dda1e067405276a2",
+          "group:f3fb50d7b5a880295ed1c6a5"
+        ]
+      }
+    },
+    {
+      "row_id": "row-206b64200933c74251f19759",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-19893630373617",
+      "reason": "China's National Information Center released current leading-indicator data on infrastructure, AI investment, ports and consumption.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The official data release is a discrete current macroeconomic development.",
+        "evidence_refs": [
+          "row:row-206b64200933c74251f19759",
+          "group:1217d8c58ef1d3d90deef719"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2088904d09bb92e3080ee469",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-258354539651842",
+      "reason": "South Korea beat Japan 3-2 in the U18 Asian Baseball Championship Super Round and effectively secured a championship-game berth.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The completed game and qualification consequence are discrete current sports developments.",
+        "evidence_refs": [
+          "row:row-2088904d09bb92e3080ee469",
+          "group:eaf8da8fe3021533e7c206e2"
+        ]
+      }
+    },
+    {
+      "row_id": "row-209809eb1404bcd7cd3315d1",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-146283510549342",
+      "reason": "Taipei mayoral candidate Shen Bo-yang departed for a Japan visit focused on parliamentary and city diplomacy and establishing a support group.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The campaign-linked overseas visit is a discrete current political event.",
+        "evidence_refs": [
+          "row:row-209809eb1404bcd7cd3315d1",
+          "group:850b48aecb5e35c64f59e171"
+        ]
+      }
+    },
+    {
+      "row_id": "row-20f3a108463731965cbc4dae",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-257292377529668",
+      "reason": "Premier Cho Jung-tai invited Chiayi Mayor Huang Min-hui to discuss central-local cooperation, and the city said she would visit Taipei.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The invitation and follow-up commitment are discrete current intergovernmental developments.",
+        "evidence_refs": [
+          "row:row-20f3a108463731965cbc4dae",
+          "group:ea018cc41d44bf7e1af126c1"
+        ]
+      }
+    },
+    {
+      "row_id": "row-218fbd4cf213815d90426f8d",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-103538359931559",
+      "reason": "Official U.S. August CPI data showed 3.4% year-on-year inflation and a 0.3% monthly rise in core CPI, affecting rate expectations.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The government inflation release is a discrete current macroeconomic event.",
+        "evidence_refs": [
+          "row:row-218fbd4cf213815d90426f8d",
+          "group:5e2ae72a12a79cfc9b3b94d7"
+        ]
+      }
+    },
+    {
+      "row_id": "row-220fc91819aba97f3840121b",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-145180795519690",
+      "reason": "A smart mobile kitchen with three cooking robots was demonstrated at the current CIFTIS venue as an operational service-technology application.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The live technology demonstration is a discrete current industry event, with significance left to scoring.",
+        "evidence_refs": [
+          "row:row-220fc91819aba97f3840121b",
+          "group:840a89bec2cad5dfc0cc4beb"
+        ]
+      }
+    },
+    {
+      "row_id": "row-226c59d8a9f6576a11515eaf",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-101774082989761",
+      "reason": "China's State Administration for Market Regulation published six current typical enforcement cases involving blind-box business violations.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The official regulatory case release is a discrete current consumer-protection development.",
+        "evidence_refs": [
+          "row:row-226c59d8a9f6576a11515eaf",
+          "group:5c9020105ec1e41ee05a5450"
+        ]
+      }
+    },
+    {
+      "row_id": "row-226d14cfe26a83d35bc9bd0a",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-207515222640592",
+      "reason": "Taiwan Railways apologized for sewage backflow causing odor at Taipei Main Station and announced pipe relocation work.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The infrastructure malfunction and corrective action are discrete current transport-service developments.",
+        "evidence_refs": [
+          "row:row-226d14cfe26a83d35bc9bd0a",
+          "group:bcbbe72187d04c9545ed5ded"
+        ]
+      }
+    },
+    {
+      "row_id": "row-22d59ca91df088be4f738eb2",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-148918740735239",
+      "reason": "China's embassy in Japan announced the September 14 adjustment of visa fees for Japanese citizens, supporting the same bilateral visa-fee event already identified.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "This is direct official evidence for the same current visa-fee policy change.",
+        "evidence_refs": [
+          "row:row-22d59ca91df088be4f738eb2",
+          "event:CHN-148918740735239"
+        ]
+      }
+    },
+    {
+      "row_id": "row-23513d29dead63db275f58eb",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-258354539651842",
+      "reason": "Lee Homin's first high-school home run at Taipei Dome occurred in the same Korea-Japan U18 game that sent Korea toward the championship game.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "This is additional player-level evidence for the same completed game event.",
+        "evidence_refs": [
+          "row:row-23513d29dead63db275f58eb",
+          "event:TWN-258354539651842"
+        ]
+      }
+    },
+    {
+      "row_id": "row-235cc14d72e9335d491f036e",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-224977113816770",
+      "reason": "China Railway Nanning Group released a current forecast of 7.5 million passenger trips for the Mid-Autumn/National Day transport period and ticketing guidance.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The official transport-demand forecast and service plan are discrete current operational developments.",
+        "evidence_refs": [
+          "row:row-235cc14d72e9335d491f036e",
+          "group:cc9d90f39ec20a6af53369da"
+        ]
+      }
+    },
+    {
+      "row_id": "row-2362aad746b12c5059b4c3ea",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "The Three Gorges 2026 reservoir impoundment began on September 10, before the fixed local window began on September 11 at 06:00.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The material event time falls outside the fixed 24-hour window.",
+        "evidence_refs": [
+          "row:row-2362aad746b12c5059b4c3ea",
+          "group:f308f383ddc35e757fc859e9"
+        ]
+      }
+    },
+    {
+      "row_id": "row-236862b29d07c092f84728cc",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Governance feature built around consultation examples from 2019 and 2023 rather than a distinct new event in the current window.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "Retrospective feature framing dominates and no bounded current occurrence is established.",
+        "evidence_refs": [
+          "row:row-236862b29d07c092f84728cc",
+          "group:964dc7a87756557a3a19447d"
+        ]
+      }
+    },
+    {
+      "row_id": "row-23703ce7424e8916174bc31f",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-193184112718510",
+      "reason": "President Lai promulgated income-tax amendments increasing child exemptions and expanding social-insurance deductions, with the Finance Ministry estimating 2.37 million beneficiaries and NT$8 billion in tax relief.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The promulgation makes the tax-policy change a discrete current governance event.",
+        "evidence_refs": [
+          "row:row-23703ce7424e8916174bc31f",
+          "group:14bbc43a865c86195e00a535"
+        ]
+      }
+    },
+    {
+      "row_id": "row-23a9663ddce6387aad26a792",
+      "disposition": "event_evidence",
+      "semantic_event_id": "TWN-193184112718510",
+      "reason": "A Tainan residential fire spread to three neighboring households without casualties.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The fire is a discrete current public-safety incident.",
+        "evidence_refs": [
+          "row:row-23a9663ddce6387aad26a792",
+          "group:afb32e6a32ae4e7ddc92dcad"
+        ]
+      }
+    },
+    {
+      "row_id": "row-240f1c886472726ce064733e",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "Viral human-interest follow-up about an elderly resident rehanging gourds for tourists, without material wider public consequence.",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "The item is primarily a social-media tourism feature rather than substantive event reporting.",
+        "evidence_refs": [
+          "row:row-240f1c886472726ce064733e",
+          "group:c30302e441ee3d8b9428001f"
+        ]
+      }
+    },
+    {
+      "row_id": "row-243c7f331b41a3e348046561",
+      "disposition": "event_evidence",
+      "semantic_event_id": "CHN-15168432226680",
+      "reason": "Hebei released current trade data showing commerce with other SCO member states had risen nearly twentyfold over 24 years.",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "The official trade-data release is a discrete current economic-information event.",
+        "evidence_refs": [
+          "row:row-243c7f331b41a3e348046561",
+          "group:0dcbad03c178aaaf5e68d767"
+        ]
+      }
+    }
+  ]
+}
