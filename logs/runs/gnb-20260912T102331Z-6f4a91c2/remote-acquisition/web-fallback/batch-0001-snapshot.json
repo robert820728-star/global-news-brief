@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0",
+  "run_id": "gnb-20260912T102331Z-6f4a91c2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-11T10:23:31Z",
+    "end": "2026-09-12T10:23:31Z"
+  },
+  "batch_sequence": 1,
+  "search_provider": "ChatGPT web search",
+  "search_query": "major world developments Sep 11-12 2026 Reuters AP Middle East energy BRICS Ukraine Europe",
+  "search_evidence_url": "https://www.reuters.com/world/",
+  "searched_at": "2026-09-12T10:31:30Z",
+  "primary_failure_evidence": [
+    "GDELT archive binary ZIP transport unavailable on this Scheduled Task executor",
+    "direct executor network seed failed at DNS resolution; configured primary aggregator could not be truthfully materialized"
+  ],
+  "results": [
+    {
+      "result_id": "web-glb-0001",
+      "search_rank": 1,
+      "url": "https://www.reuters.com/business/energy/saudis-shut-down-oil-pipeline-houthis-tighten-grip-red-sea-shipping-2026-09-12/",
+      "title": "Saudis shut down oil pipeline as Houthis tighten grip on Red Sea shipping",
+      "summary": "Saudi Arabia shut its East-West oil pipeline after a drone attack while Houthi forces seized Perim Island near Bab el-Mandeb, intensifying disruption to global energy and shipping routes.",
+      "published_at": "2026-09-12T00:55:47Z",
+      "url_evidence": "Reuters article URL returned by current web search",
+      "published_evidence": "Reuters search result timestamp: Sat Sep 12 00:55:47 2026 UTC",
+      "discovery_priority_reason": "Potential direct impact on several million barrels per day of oil flows and two strategic maritime chokepoints.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "web-glb-0002",
+      "search_rank": 2,
+      "url": "https://www.reuters.com/world/china/brics-bloc-agrees-joint-declaration-sources-say-2026-09-12/",
+      "title": "BRICS bloc agrees on joint declaration, sources say",
+      "summary": "BRICS negotiators reached consensus on a joint declaration expected to condemn unilateral war while bridging differences between Iran and the UAE during the New Delhi summit.",
+      "published_at": "2026-09-12T08:01:17Z",
+      "url_evidence": "Reuters article URL returned by current web search",
+      "published_evidence": "Reuters search result timestamp: Sat Sep 12 08:01:17 2026 UTC",
+      "discovery_priority_reason": "Multilateral institutional development involving major emerging economies amid two active wars.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "web-glb-0003",
+      "search_rank": 3,
+      "url": "https://apnews.com/article/839f5b0fc5217afc4cb34e15b01b6eff",
+      "title": "3 killed in Russian strikes on Ukraine as Putin warns Europe against sending troops",
+      "summary": "Russian strikes killed civilians and wounded dozens across Ukraine as Moscow intensified attacks on energy and urban targets and Putin warned against European troop deployment.",
+      "published_at": "2026-09-12T09:14:38Z",
+      "url_evidence": "AP article URL returned by current web search",
+      "published_evidence": "AP search result timestamp: Sat Sep 12 09:14:38 2026 UTC",
+      "discovery_priority_reason": "Active interstate war with civilian casualties and direct escalation warnings involving European states.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "web-glb-0004",
+      "search_rank": 4,
+      "url": "https://www.reuters.com/world/explosion-hits-another-weapons-site-bulgaria-2026-09-12/",
+      "title": "Explosion hits another EMCO weapons site in Bulgaria; probe underway",
+      "summary": "Bulgaria opened a sabotage investigation after another fire at an EMCO ammunition facility, following a similar recent blast and a history of alleged Russian targeting.",
+      "published_at": "2026-09-12T05:35:46Z",
+      "url_evidence": "Reuters article URL returned by current web search",
+      "published_evidence": "Reuters search result timestamp: Sat Sep 12 05:35:46 2026 UTC",
+      "discovery_priority_reason": "Repeated security incident at a weapons supplier with possible foreign-interference implications.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "web-glb-0005",
+      "search_rank": 5,
+      "url": "https://www.reuters.com/world/middle-east/syrian-private-airport-plans-spark-outcry-over-mass-graves-land-rights-2026-09-12/",
+      "title": "Syrian private airport plans spark outcry over mass graves, land rights",
+      "summary": "Plans to redevelop Damascus's Mezzeh military airport raised alarms that construction could disturb suspected mass graves and unresolved private property claims from the Assad era.",
+      "published_at": "2026-09-12T05:06:46Z",
+      "url_evidence": "Reuters article URL returned by current web search",
+      "published_evidence": "Reuters search result timestamp: Sat Sep 12 05:06:46 2026 UTC",
+      "discovery_priority_reason": "Potential destruction of forensic evidence and institutional handling of mass disappearance and property restitution.",
+      "section": "GLB"
+    },
+    {
+      "result_id": "web-glb-0006",
+      "search_rank": 6,
+      "url": "https://www.reuters.com/business/finance/russian-state-reinsurer-will-get-new-capital-light-ukrainian-attacks-2026-09-11/",
+      "title": "Russian state reinsurer will get new capital in light of Ukrainian attacks",
+      "summary": "Russia's central bank said it would inject 165 billion roubles into the state reinsurer as Ukrainian drone attacks increase sabotage and terrorism insurance risks for economic infrastructure.",
+      "published_at": "2026-09-11T13:35:10Z",
+      "url_evidence": "Reuters article URL returned by current web search",
+      "published_evidence": "Reuters search result timestamp: Fri Sep 11 13:35:10 2026 UTC",
+      "discovery_priority_reason": "Material financial-system response to sustained wartime infrastructure risk.",
+      "section": "GLB"
+    }
+  ],
+  "terminal_marker": "bounded high-authority world search completed for material developments inside the exact run window"
+}

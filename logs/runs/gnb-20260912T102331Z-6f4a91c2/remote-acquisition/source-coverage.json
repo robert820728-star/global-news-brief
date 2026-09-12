@@ -9462,5 +9462,77 @@
     "scan_window_start": "2026-09-11T10:23:31Z",
     "scan_window_end": "2026-09-12T10:23:31Z",
     "scan_evidence_path": "source-scans/chinanews.json"
+  },
+  {
+    "source_id": "web_fallback",
+    "scan_status": "completed",
+    "coverage_complete": false,
+    "coverage_status": "degraded_partial",
+    "coverage_reason": "configured primary aggregator unavailable; bounded verified host web fallback materialized",
+    "missing_segments": [
+      "configured_primary_aggregator_unavailable"
+    ],
+    "missing_date_variants": [],
+    "within_window_count": 6,
+    "ranked_count": 6,
+    "ranked_items": [
+      {
+        "url": "https://www.reuters.com/business/energy/saudis-shut-down-oil-pipeline-houthis-tighten-grip-red-sea-shipping-2026-09-12/",
+        "title": "Saudis shut down oil pipeline as Houthis tighten grip on Red Sea shipping",
+        "published_at": "2026-09-12T00:55:47Z",
+        "discovery_priority_score": 999,
+        "discovery_priority_reason": "Potential direct impact on several million barrels per day of oil flows and two strategic maritime chokepoints."
+      },
+      {
+        "url": "https://www.reuters.com/world/china/brics-bloc-agrees-joint-declaration-sources-say-2026-09-12/",
+        "title": "BRICS bloc agrees on joint declaration, sources say",
+        "published_at": "2026-09-12T08:01:17Z",
+        "discovery_priority_score": 998,
+        "discovery_priority_reason": "Multilateral institutional development involving major emerging economies amid two active wars."
+      },
+      {
+        "url": "https://apnews.com/article/839f5b0fc5217afc4cb34e15b01b6eff",
+        "title": "3 killed in Russian strikes on Ukraine as Putin warns Europe against sending troops",
+        "published_at": "2026-09-12T09:14:38Z",
+        "discovery_priority_score": 997,
+        "discovery_priority_reason": "Active interstate war with civilian casualties and direct escalation warnings involving European states."
+      },
+      {
+        "url": "https://www.reuters.com/world/explosion-hits-another-weapons-site-bulgaria-2026-09-12/",
+        "title": "Explosion hits another EMCO weapons site in Bulgaria; probe underway",
+        "published_at": "2026-09-12T05:35:46Z",
+        "discovery_priority_score": 996,
+        "discovery_priority_reason": "Repeated security incident at a weapons supplier with possible foreign-interference implications."
+      },
+      {
+        "url": "https://www.reuters.com/world/middle-east/syrian-private-airport-plans-spark-outcry-over-mass-graves-land-rights-2026-09-12/",
+        "title": "Syrian private airport plans spark outcry over mass graves, land rights",
+        "published_at": "2026-09-12T05:06:46Z",
+        "discovery_priority_score": 995,
+        "discovery_priority_reason": "Potential destruction of forensic evidence and institutional handling of mass disappearance and property restitution."
+      },
+      {
+        "url": "https://www.reuters.com/business/finance/russian-state-reinsurer-will-get-new-capital-light-ukrainian-attacks-2026-09-11/",
+        "title": "Russian state reinsurer will get new capital in light of Ukrainian attacks",
+        "published_at": "2026-09-11T13:35:10Z",
+        "discovery_priority_score": 994,
+        "discovery_priority_reason": "Material financial-system response to sustained wartime infrastructure risk."
+      }
+    ],
+    "selected_for_pool_count": 6,
+    "selected_item_urls": [
+      "https://www.reuters.com/business/energy/saudis-shut-down-oil-pipeline-houthis-tighten-grip-red-sea-shipping-2026-09-12/",
+      "https://www.reuters.com/world/china/brics-bloc-agrees-joint-declaration-sources-say-2026-09-12/",
+      "https://apnews.com/article/839f5b0fc5217afc4cb34e15b01b6eff",
+      "https://www.reuters.com/world/explosion-hits-another-weapons-site-bulgaria-2026-09-12/",
+      "https://www.reuters.com/world/middle-east/syrian-private-airport-plans-spark-outcry-over-mass-graves-land-rights-2026-09-12/",
+      "https://www.reuters.com/business/finance/russian-state-reinsurer-will-get-new-capital-light-ukrainian-attacks-2026-09-11/"
+    ],
+    "discovery_ranking_completed": true,
+    "discovery_ranking_method": "bounded_host_search_rank_v1",
+    "failure_reason": null,
+    "scan_window_start": "2026-09-11T10:23:31Z",
+    "scan_window_end": "2026-09-12T10:23:31Z",
+    "scan_evidence_path": "source-scans/web_fallback.json"
   }
 ]
