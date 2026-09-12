@@ -351,6 +351,33 @@
       "failure_evidence": null
     },
     {
+      "row_id": "row-101f2170d31c04d0da31a736",
+      "candidate_id": "8202d3f706d289bc851c",
+      "provisional_group_id": "group-0ebb68f42d0af8d78005a1be",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "title": "Syrian private airport plans spark outcry over mass graves, land rights",
+      "summary": "Plans to redevelop Damascus's Mezzeh military airport raised alarms that construction could disturb suspected mass graves and unresolved private property claims from the Assad era.",
+      "summary_quality": "source_summary",
+      "canonical_url": "https://www.reuters.com/world/middle-east/syrian-private-airport-plans-spark-outcry-over-mass-graves-land-rights-2026-09-12",
+      "listing_published_at": "2026-09-12T05:06:46+00:00",
+      "admission_status": "unresolved_exhausted",
+      "article_body_published_at": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "hydration_batch_sequence": 34,
+      "model_excerpt": null,
+      "model_input_status": "terminal_without_content_review",
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/world/middle-east/syrian-private-airport-plans-spark-outcry-over-mass-graves-land-rights-2026-09-12",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Canonical remote hydration batch 0033 returned HTTP 401 Forbidden for the verified Reuters article URL.",
+          "The same Reuters article is readable through the Scheduled Task browser-open path, but that path cannot persist article bytes/hash into the canonical hydration ledger and no additional same-host non-browser transport is available."
+        ]
+      }
+    },
+    {
       "row_id": "row-106f4b643b48aea6bb211984",
       "candidate_id": "72b3eb9a957607d04c8d",
       "provisional_group_id": "group-34f5c44cc9f28947d027b329",
@@ -387,26 +414,6 @@
       "content_sha256": "9b0d4261924d57ecc6ca2e399d4de1126ac8d5d33cf354ed83b9e52e3c4cdec8",
       "hydration_batch_sequence": 26,
       "model_excerpt": "2026年粤港澳海洋合作发展论坛在广州举行 中新网 广州9月11日电 (记者 孙秋霞)2026年粤港澳海洋合作发展论坛11日在广州举行，本次论坛由广州市人民政府和广东省自然资源厅(广东省海洋局)主办，来自香港、澳门、广州等地的专家与行业代表展开深入交流，探索粤港澳在海洋产业领域进一步资源互通、优势互补，拓展蓝色经济合作新空间。 自然资源部南海局发布的《2025年粤港澳大湾区海洋生态状况报告》显示，粤港澳大湾区海洋生态状况总体保持稳中向好态势，各类生态保护修复举措扎实落地，美丽中国建设在滨海区域的实践成效逐步显现。 本次论坛举行了深海探测政产学研金多元合作机制启动仪式，标志着粤港澳三地迈入了深海探测领域协同合作的机制化、系统化新阶段。 中国工程院院士、中南大学校长李建成在主旨报告中提出，科技正在重塑海洋产业的发展边界，从“能看见”走向“看得准、看得远、看得深、管得聪明，海洋时空信息基础设施是海洋产业技术密集转型的底座，粤港澳大湾区可发挥“科技创新-产业升级-绿色治理”闭环的天然优势，率先打造这一前沿领域的示范标杆。 中国工程院院士、南方海洋科学与工程广东省实验室(广州)主任张偲表示，深海是海洋强国建设的必然之路，海底透视观探测技术是重中之重，亟需在海底战略资源识别、靶区评价、智能采样和环境感知等方面实现技术突破，支撑海底战略资源探测、开发和生态保护等国家战略。 圆桌论坛环节，粤港澳大湾区研究院研究员朱元冰剖析了海洋制造业与服务业融合浪潮下粤港澳协同路径，提出“双转赋能、双链共生”的创新思路。香港科技大学(广州)教授苏权科围绕服务海洋强国战略，从科研、产业、人才三方面阐述粤港澳海洋领域实践。澳门海洋学会会长何伟添提出了港澳与广东省内企业和平台的合作方向。 当日下午同步举办四个平行分论坛，与会嘉宾聚焦船舶海工、海洋技术服务、海洋城市文化与深海产业等关键领域进行深入研讨。本次论坛还",
-      "model_input_status": "ready",
-      "failure_evidence": null
-    },
-    {
-      "row_id": "row-10bc803d5a3092831c51d5a1",
-      "candidate_id": "388084a91ad986c1b196",
-      "provisional_group_id": "group-83687313c019d07233d55961",
-      "source_id": "chinanews",
-      "section": "CHN",
-      "title": "加拿大龙舟选手上海挥桨逐浪 “洋面孔”爱上“交朋友的运动”",
-      "summary": "/div> [ 财经 ] （经济观察）多点开花齐提速 中国服务出海动力足 9-12 15:18 [ 社会 ] 高校买商品房当学生宿舍：空调洗衣机齐全 双人间一年1320元 9-12 15:17 [ 社会 ] 加拿大龙舟选手上海挥桨逐浪 “洋面孔”爱上“交朋友的运动” 9-12 15:14 [ 社会 ] 陕西：300余名骑手巡游嵯峨山 机车音乐嘉年华促农文旅深度融合 9-12 15:13 [ 时政 ] 产学研协同赋能西北城市更新 第十一届西安城市更新大会举行 9-12 15:13 [ 财经 ] 2026年广州房博会开幕 上百个优质楼盘集中亮相 9-12 15:11 [ 财经 ] 安全性能位居全球第一梯队！华龙一号2.0版创新成果亮相</a",
-      "summary_quality": "source_summary",
-      "canonical_url": "https://www.chinanews.com.cn/sh/2026/09-12/10695245.shtml",
-      "listing_published_at": "2026-09-12T15:14:00+08:00",
-      "admission_status": "content_ready",
-      "article_body_published_at": "2026-09-12T15:14:41+08:00",
-      "article_body_evidence_url": "https://www.chinanews.com.cn/sh/2026/09-12/10695245.shtml",
-      "content_sha256": "f8af7a446da726ff9790fc0092ce2fa3579ccbcdad2222d64779dbb904e890de",
-      "hydration_batch_sequence": 7,
-      "model_excerpt": "加拿大龙舟选手上海挥桨逐浪 “洋面孔”爱上“交朋友的运动” 中新网 上海9月12日电 题：加拿大龙舟选手上海挥桨逐浪 “洋面孔”爱上“交朋友的运动” 作者 范宇斌 桨叶整齐切入水面，溅起连片白浪，铿锵鼓点与号子声交织在水上赛场。第15届上海世界华人龙舟邀请赛12日至13日在上海青浦举行，来自14个国家和地区的20支华人龙舟队挥桨逐浪。 加拿大龙的传人龙舟队多位队员接受 采访时表示，这片赛场不仅是比拼竞技的赛道，更是以舟为媒、联结四海的 “朋友圈”。蒙特利尔上海同乡会会长沈俊华已是第6次带队参赛，去年队伍斩获历史最好成绩后，全队士气大振，回到蒙特利尔便坚持常态化集训，只为今年能更进一步。 在他眼中，赛事的意义远不止竞技名次，更是民间交流的重要桥梁。身为蒙特利尔中华龙舟节组委会执行主席，沈俊华多年来致力于在当地推广龙舟运动：队伍通过“老带新”模式培育氛围，吸引大批零基础爱好者参与，逐步成长为正式参赛队员；同时积极吸纳非华裔队员加入，让承载着华人乡愁与文化记忆的龙舟，成为多元文化交融共生的载体。 队伍里既有参赛多年的“老桨手”，也有朝气蓬勃的年轻力量。 61岁的上海籍队员朱丽萍7年前陪女儿接触龙舟，本想让孩子多讲中文、不忘乡音，自己却先爱上了这项运动。“为了参赛，我们雨天也照常集训，任凭汗水雨水浸透衣衫，依旧斗志昂扬，尽享乘风破浪的畅快。”对她而言，回到故土参赛最开心的便是与各国选手交流，“并肩划桨的快乐，是其他运动无法替代的”。 队员赵美英特意带上同为龙舟爱好者的丈夫王宝猛，夫妻俩刚结束台湾的龙舟赛事便转战上海。作为领桨手，赵美英掌控着全队划桨节奏，她觉得龙舟最动人的就是“一条船一条心”，家人的默契与团队的拼搏，让每一次冲刺都更有力量。 在校大学生肖卓之首次来亚洲参赛。她表示，近年来蒙特利尔龙舟运动蓬勃发展，不同年龄段的爱好者因龙舟相聚，彼此陪伴、共同进步。 开放包容的龙舟运动",
       "model_input_status": "ready",
       "failure_evidence": null
     }

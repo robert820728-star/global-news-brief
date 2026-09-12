@@ -11,6 +11,26 @@
   "row_count": 20,
   "rows": [
     {
+      "row_id": "row-3342ad9981dc6caad105e65f",
+      "candidate_id": "fa4c803f8bf505d43566",
+      "provisional_group_id": "group-672593243f92767bb971eadf",
+      "source_id": "chinanews",
+      "section": "CHN",
+      "title": "福州金山高架桥：藏在城市里的几何光影长廊",
+      "summary": "1 19:06 [ 财经 ] 专家：臭氧成制约大气污染系统治理的关键污染物 9-11 19:05 [ 财经 ] （活力中国调研行）“新能源风”吹进中国粮田 9-11 19:01 [ 图片 ] 福州金山高架桥：藏在城市里的几何光影长廊 9-11 18:59 [ 图片 ] 狮子洋通道衔接段南中大桥拼宽改造工程有序开展 9-11 18:58 [ 图片 ] 甘肃定西：文脉山水引客来 9-11 18:55 [ 图片 ] （长征胜利90周年）湖北郧西：一张传单一脉红 9-11 18:54 [ 图片 ] 第十二届中国·沧州国际武术大赛开幕",
+      "summary_quality": "source_summary",
+      "canonical_url": "https://www.chinanews.com.cn/tp/2026/09-11/10694808.shtml",
+      "listing_published_at": "2026-09-11T18:59:00+08:00",
+      "admission_status": "content_ready",
+      "article_body_published_at": "2026-09-11T18:59:15+08:00",
+      "article_body_evidence_url": "https://www.chinanews.com.cn/tp/2026/09-11/10694808.shtml",
+      "content_sha256": "f26d9ced4f1bf5e261533b4bdf07f0b302cfa61faaf02d3427b09b523e5ad863",
+      "hydration_batch_sequence": 30,
+      "model_excerpt": "福州金山高架桥：藏在城市里的几何光影长廊 风靡中国的印度飞饼，为何印度找不到 临时调控再出手！油价少涨了 打车20元路程竟收40元？起底计价器虚增里程猫腻 动动手指真能轻松赚钱？揭露“高薪兼职”背后陷阱 中国车企开启“国车自运”时代 一碗泡面诱发痛风？这些高嘌呤食物容易被忽略 明明一直在吃，却重度低钾？这些行为正悄悄掏空你的身体 不能回家的除了旅行青蛙，可能还有玩家的钱 250元的AI工具积分只卖8.8元？小心你的代码被截留倒卖 也门打起来了！全球两大航运“油管”同时动荡 量子美容仪用“量子技术”除皱？ 中国民营企业加速向新向优发展 低钾为何会要命？急诊专家解读 中国展会“金九”旺 消费引流与产业赋能同发力 新能源电车辐射大，长期开会掉头发、掉腿毛？ 转发+收藏！中秋国庆假期购票日历来了！ 2026年国家基本医保药品目录预计于11月发布 中国疾控中心提示：9月重点防范这几类传染病 印度大厨在北京：美食是连接人与文化的桥梁 大型活动吃饭高峰排长队？炒菜机器人：5分钟就出一锅菜 三峡水库2026年度蓄水启动 航道部门全力筑牢安全屏障 武汉多处山体有摩崖石刻 系难得历史遗存 宁夏中卫：鹅喉羚见证荒漠新生 浙江缙云：“观鸟热”促生态保育与乡村振兴共生共赢 大学生娄山关前朗诵《忆秦娥·娄山关》，字字铿锵 萌物扎堆 湖南长沙玩偶展圈粉年轻人 景区一名NPC酷似“玄奘”走红网路 开学第一天完美诠释一喜一悲！网友：得瑟的爹 生无可恋的女儿 黑猩猩无师自通解锁盘串技能 前NBA球星考辛斯现身淄博撸串 蟒蛇入户狂吃9只鸭子 民警赶到后全部“退赃” 网友晒自家狗狗边弹琴边唱歌如痴如醉 6岁内蒙古萌娃学着长辈的样子 熟练推莜面窝窝 法国人在无锡造折叠“三蹦子” 销往欧洲售价近2万人民币 北京永定河水上巴士通航试运营 北京2027年世界田径锦标赛进入倒计时一周年 广西龙胜：秋染侗乡 景致如画 三峡水",
+      "model_input_status": "ready",
+      "failure_evidence": null
+    },
+    {
       "row_id": "row-334d1c7a0eac15f87c493211",
       "candidate_id": "b2337ae0c1ec75bf56cc",
       "provisional_group_id": "group-52a887d7d599832ee9694ea5",
@@ -351,6 +371,33 @@
       "failure_evidence": null
     },
     {
+      "row_id": "row-3bef9e430a2b4531b8b586a6",
+      "candidate_id": "4a130d28c3cf083440a1",
+      "provisional_group_id": "group-fe38b3c1b436ddfd8c934ee6",
+      "source_id": "web_fallback",
+      "section": "GLB",
+      "title": "Russian state reinsurer will get new capital in light of Ukrainian attacks",
+      "summary": "Russia's central bank said it would inject 165 billion roubles into the state reinsurer as Ukrainian drone attacks increase sabotage and terrorism insurance risks for economic infrastructure.",
+      "summary_quality": "source_summary",
+      "canonical_url": "https://www.reuters.com/business/finance/russian-state-reinsurer-will-get-new-capital-light-ukrainian-attacks-2026-09-11",
+      "listing_published_at": "2026-09-11T13:35:10+00:00",
+      "admission_status": "unresolved_exhausted",
+      "article_body_published_at": null,
+      "article_body_evidence_url": null,
+      "content_sha256": null,
+      "hydration_batch_sequence": 34,
+      "model_excerpt": null,
+      "model_input_status": "terminal_without_content_review",
+      "failure_evidence": {
+        "attempted_url": "https://www.reuters.com/business/finance/russian-state-reinsurer-will-get-new-capital-light-ukrainian-attacks-2026-09-11",
+        "error": "configured same-source and final host recovery chain exhausted",
+        "recovery_evidence": [
+          "Canonical remote hydration batch 0033 returned HTTP 401 Forbidden for the verified Reuters article URL.",
+          "The same Reuters article is readable through the Scheduled Task browser-open path, but that path cannot persist article bytes/hash into the canonical hydration ledger and no additional same-host non-browser transport is available."
+        ]
+      }
+    },
+    {
       "row_id": "row-3c2ff5eb3b19c07be8a646e6",
       "candidate_id": "9849fea76a5709d06846",
       "provisional_group_id": "group-d3eef03a946a36a6ea512d6d",
@@ -367,46 +414,6 @@
       "content_sha256": "bae391cbf23794363d36df597522baebee7e5a9ec53f922278cd4421fc4cba71",
       "hydration_batch_sequence": 27,
       "model_excerpt": "中国区域科技创新哪里强？最新报告称沪京苏粤浙津排名前六位 中新网 上海9月11日电 (记者 孙自法 郑莹莹)9月11日在上海发布的《中国区域科技创新评价报告2026》显示，中国综合科技创新水平得分为81.13分，比上年提高0.93分。上海、北京、江苏、广东、浙江和天津6省市的综合科技创新水平领先全国，位居第一梯队。 2026浦江创新论坛当天下午举办区域创新发展论坛。中国科学技术发展战略研究院发布《中国区域科技创新评价报告2026》认为，当前，中国已形成高地引领、梯次联动、优势互补的区域创新格局，为加快科技强国建设奠定了更加坚实的基础。 《中国区域科技创新评价报告2026》从科技创新环境、科技创新投入、科技创新产出、高新技术产业和创新促进发展5个维度，构建由12个二级指标和51个三级指标组成的指标体系，对全国31个省、自治区、直辖市(不包括港澳台)综合科技创新水平进行评价分为三个梯队。 除第一梯队6省市外，第二梯队依次包括湖北、安徽、重庆、陕西、四川、湖南、山东、福建、江西、河南、辽宁、吉林、河北、宁夏、黑龙江、海南、甘肃、贵州、广西、云南、内蒙古、新疆和山西等23个省区市，青海和西藏位于第三梯队。 根据《中国区域科技创新评价报告2026》，中国区域科技创新还呈现京津冀协同创新发展深入推进、长三角一体化创新格局加快形成、粤港澳大湾区创新发展取得显著成效、长江经济带创新能级不断提升、黄河流域省区科技创新环境持续优化等特色亮点。 其中，长江经济带依托上海(长三角)国际科技创新中心和成渝、武汉区域科技创新中心的辐射引领、协同联动，区域创新体系日益健全，科技创新水平持续提升。此外，沿黄地区科技创新能力也持续提升。 中国科学技术发展战略研究院党委书记刘冬梅发布并解读《中国区域科技创新评价报告2026》指出，聚焦科技教育人才一体化发展、科技创新与产业创新融合以及国际化发展等方向，该报告新",
-      "model_input_status": "ready",
-      "failure_evidence": null
-    },
-    {
-      "row_id": "row-3cae7a653f52bdd2efc359b1",
-      "candidate_id": "92e64423fff519760b73",
-      "provisional_group_id": "group-2d91c8c0974794b181e99207",
-      "source_id": "cna",
-      "section": "TWN",
-      "title": "花蓮首推高中生就學費用補助 每學期1萬元估7千人受惠",
-      "summary": "花蓮首推高中生就學費用補助 每學期1萬元估7千人受惠",
-      "summary_quality": "title_only",
-      "canonical_url": "https://www.cna.com.tw/news/aloc/202609120066.aspx",
-      "listing_published_at": "2026-09-12T11:43:00+08:00",
-      "admission_status": "content_ready",
-      "article_body_published_at": "2026-09-12T11:43:00+08:00",
-      "article_body_evidence_url": "https://www.cna.com.tw/news/aloc/202609120066.aspx",
-      "content_sha256": "62fdee63b3461afc8bd5670f192fc022558acdb40455990a3af61aab5e5cfa87",
-      "hydration_batch_sequence": 13,
-      "model_excerpt": "為減輕家庭教育負擔，花蓮縣政府宣布，115學年度第1學期起，縣內公私立高中學生營養午餐免費，每學期就學費用補助新台幣1萬元，是全國第一個開辦縣市。 中央訊息 花蓮首推高中生就學費用補助 每學期1萬元估7千人受惠 （中央社記者 張祈 花蓮縣12日電）為減輕家庭教育負擔，花蓮縣政府宣布，115學年度第1學期起，縣內公私立高中學生營養午餐免費，每學期就學費用補助新台幣1萬元，是全國第一個開辦縣市。 縣府邀集全縣公私立高中職校長說明青年措施，縣長徐榛蔚說，落實0至18歲照顧政策，將學費補助及免費營養午餐政策，從國中小向上延伸至公私立高中職，讓孩子享有平等且安心的學習機會。 花蓮縣教育處表示，經調查縣內13所高中職學校各年級學費、雜費等費用取中間值，沒有限制使用方式，可彈性用在購買制服、文具用品等，初估7000名學生受惠。 教育處說明，經向各校開會討論後，待教育部國教署核定學生名冊後，預計10月15日前依名冊將補助款項撥款給學校，再由學校以現金或轉帳方式發放給學生。 此外，教育處也將免費營養午餐政策擴大到高中職，每人每餐補助新台幣75元，實施方式由各校決定，可比照國中小以桶餐方式供餐、撥款給學生自行訂餐或發放送餐券。 教育處表示，國中小免費上學政策，除原有公立學校學費、雜費全免，這學期擴大納入私立國中小，包括書籍費、班級費用等都由縣府補助，1學期可省下約8000元。（編輯：陳仁華）1150912 選擇與事實站在一起，您的每一份贊助，都是守護新聞自由的力量 下載中央社「一手新聞」APP，即時掌握最新消息 本網站之文字、圖片及影音，非經授權，不得轉載、公開播送或公開傳輸及利用。 台藝術家赴日打造仿考古遺址 咒術迴戰「兩面宿儺」如真實出土 市長參選人也當網紅 社群平台成另類拜票場 影片／副總統蕭美琴義大利演說：台灣有權和世界交朋友 911恐攻跨世代傷痛 罹難機長女兒嘆父親無緣見孫 台灣嬤德",
-      "model_input_status": "ready",
-      "failure_evidence": null
-    },
-    {
-      "row_id": "row-3cb802e46950554e31caa76e",
-      "candidate_id": "26cfbfe355aab1f0bbdc",
-      "provisional_group_id": "group-1203759d6e398a869d861d76",
-      "source_id": "chinanews",
-      "section": "CHN",
-      "title": "【讲习所·中国与世界】习近平：把金砖打造成推动全球治理变革的先锋力量",
-      "summary": "m\">[ 图片 ] 话剧《寻味》在北京上演 两岸戏剧人联合演绎寻亲寻根故事 9-12 09:27 [ 社会 ] 中央气象台：海南岛等地有大到暴雨 西南地区等地多阴雨 9-12 09:17 [ 时政 ] 【讲习所·中国与世界】习近平：把金砖打造成推动全球治理变革的先锋力量 9-12 09:07 [ 图片 ] 舞剧《傲雪长白》在北京上演 重现抗联风骨 9-12 09:02 [ 时政 ] 习近平离京赴新德里出席金砖国家领导人第十八次会晤 9-12 09:02 [ 时政 ] 学习新语｜推动金砖大船行稳致远 9-12 08:57 [ 时政 ] 学习笔记丨习近平纵论金砖合作之道 </d",
-      "summary_quality": "source_summary",
-      "canonical_url": "https://www.chinanews.com.cn/gn/2026/09-12/10695119.shtml",
-      "listing_published_at": "2026-09-12T09:07:00+08:00",
-      "admission_status": "content_ready",
-      "article_body_published_at": "2026-09-12T09:10:36+08:00",
-      "article_body_evidence_url": "https://www.chinanews.com.cn/gn/2026/09-12/10695119.shtml",
-      "content_sha256": "330fcade62b670353ee151557d3d8fa308aaf859b43b4c0770270be91918af44",
-      "hydration_batch_sequence": 16,
-      "model_excerpt": "【讲习所·中国与世界】习近平：把金砖打造成推动全球治理变革的先锋力量 【本期导读】 “金砖国家就像5根手指，伸开来各有所长，攥起来就是一只拳头。”作为金砖合作的积极倡导者和推动者，2013年以来，习近平主席主持或出席金砖国家领导人历次会晤，深刻阐述金砖合作之道。从首倡“金砖+”合作模式，到提出建设“五大金砖”主张、“坚持多边主义、坚持开放共赢、坚持团结合作”3点建议、“让‘大金砖合作’基础更牢、动能更足、影响更大”的目标方向……习近平主席以实际行动推动金砖国家成为知行合一的行动队。 国际人士与媒体普遍认为，金砖国家机制已成为南南合作的重要平台。中国毫无疑问是“金砖合作之锚”，长期以来为提升全球南方国家的代表性和发言权作出了不懈努力。随着多极化进程深入，中国正源源不断为全球可持续发展注入强劲动力。 监制：魏静、戴爽、金近 策划：张倩楠 文案：任丽君 编辑：周明演 视觉：曹懿心 校对：吕冬 风靡中国的印度飞饼，为何印度找不到 临时调控再出手！油价少涨了 打车20元路程竟收40元？起底计价器虚增里程猫腻 动动手指真能轻松赚钱？揭露“高薪兼职”背后陷阱 中国车企开启“国车自运”时代 一碗泡面诱发痛风？这些高嘌呤食物容易被忽略 明明一直在吃，却重度低钾？这些行为正悄悄掏空你的身体 不能回家的除了旅行青蛙，可能还有玩家的钱 250元的AI工具积分只卖8.8元？小心你的代码被截留倒卖 也门打起来了！全球两大航运“油管”同时动荡 量子美容仪用“量子技术”除皱？ 中国民营企业加速向新向优发展 低钾为何会要命？急诊专家解读 中国展会“金九”旺 消费引流与产业赋能同发力 新能源电车辐射大，长期开会掉头发、掉腿毛？ 转发+收藏！中秋国庆假期购票日历来了！ 2026年国家基本医保药品目录预计于11月发布 中国疾控中心提示：9月重点防范这几类传染病 印度大厨在北京：美食是连接人与文化的桥梁 大型活动吃",
       "model_input_status": "ready",
       "failure_evidence": null
     }
