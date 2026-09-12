@@ -1,9 +1,12 @@
+import io
 import json
 import re
 import subprocess
+import tarfile
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,10 +16,21 @@ TEXT_SUFFIXES = {".json", ".md", ".py", ".yaml", ".yml"}
 def repository_text_records(root=ROOT):
     """Yield immutable HEAD text-contract bytes, with a clean-export fallback."""
     try:
-        tracked = subprocess.check_output(
-            ["git", "ls-tree", "-r", "--name-only", "-z", "HEAD"], cwd=root
-        ).decode("utf-8").split("\0")
-    except (OSError, subprocess.CalledProcessError, UnicodeDecodeError):
+        archive = subprocess.check_output(
+            ["git", "archive", "--format=tar", "HEAD"], cwd=root
+        )
+        records = []
+        with tarfile.open(fileobj=io.BytesIO(archive), mode="r:") as snapshot:
+            for member in snapshot.getmembers():
+                relative = Path(member.name)
+                if not member.isfile() or relative.suffix.lower() not in TEXT_SUFFIXES:
+                    continue
+                source = snapshot.extractfile(member)
+                if source is None:
+                    raise OSError(f"missing archive member bytes: {member.name}")
+                records.append((root / relative, source.read()))
+    except (OSError, subprocess.CalledProcessError, tarfile.TarError):
+        records = []
         for path in root.rglob("*"):
             if (
                 path.is_file()
@@ -25,17 +39,52 @@ def repository_text_records(root=ROOT):
                 and "__pycache__" not in path.parts
                 and not path.name.startswith("capsule.part")
             ):
-                yield path, path.read_bytes()
-    else:
-        for relative in tracked:
-            path = root / relative
-            if relative and path.suffix.lower() in TEXT_SUFFIXES:
-                yield path, subprocess.check_output(
-                    ["git", "cat-file", "blob", f"HEAD:{relative}"], cwd=root
-                )
+                records.append((path, path.read_bytes()))
+    yield from records
 
 
 class NoObsoleteContractsTests(unittest.TestCase):
+    def test_repository_contract_scan_is_one_atomic_head_snapshot(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+            subprocess.run(
+                ["git", "config", "user.email", "tests@example.invalid"],
+                cwd=root,
+                check=True,
+            )
+            subprocess.run(
+                ["git", "config", "user.name", "Contract Tests"],
+                cwd=root,
+                check=True,
+            )
+            contract = root / "valid.json"
+            contract.write_text('{"status":"ok"}', encoding="utf-8")
+            subprocess.run(["git", "add", "valid.json"], cwd=root, check=True)
+            subprocess.run(["git", "commit", "-qm", "fixture"], cwd=root, check=True)
+
+            original = subprocess.check_output
+
+            def move_head_after_listing(command, **kwargs):
+                result = original(command, **kwargs)
+                if command[1:3] == ["ls-tree", "-r"]:
+                    contract.write_bytes(b"\xaa\xbb\xcc")
+                    subprocess.run(["git", "add", "valid.json"], cwd=root, check=True)
+                    subprocess.run(
+                        ["git", "commit", "-qm", "moving-head"],
+                        cwd=root,
+                        check=True,
+                    )
+                return result
+
+            with mock.patch(
+                "tests.test_no_obsolete_contracts.subprocess.check_output",
+                side_effect=move_head_after_listing,
+            ):
+                records = list(repository_text_records(root))
+
+            self.assertEqual([(root / "valid.json", b'{"status":"ok"}')], records)
+
     def test_repository_contract_scan_reads_immutable_head_not_mutated_index(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
