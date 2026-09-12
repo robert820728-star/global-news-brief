@@ -14,6 +14,8 @@
 
 `INSTALL_CONTROL_PLANE_FAST_PATH`／`EXPLICIT_SCHEDULE_INSTALL_INTENT_GATE`：新建與更新必須先固定為 `create_new` 或 `update_existing`。`create_new` 在 canonical payload 核對後立即執行唯一一次 create，不以同名搜尋為前置；`update_existing` 必須先有 exact task ID。第一次 create 結果不明時不得重送，必須保留實際控制面錯誤並查明該次結果。
 
+`IMMUTABLE_INSTALL_MAIN_RESOLUTION_GATE`：可貼入新對話的安裝入口必須先用兩個 fresh nonce 交叉解析 main，再只從兩端點同意的 immutable 40 字元 SHA 讀取 `INSTALL.md` 與 template。mutable `/main/` 不得作為安裝權威，避免 GitHub raw cache 讓已修正的 create-new 規則被舊版 anti-duplicate 文字覆蓋。
+
 完整本機工作流仍使用下方的安裝方式與 `daily-schedule-prompt.md`；兩種模式互不覆蓋。
 
 完整 capsule 工作流的 canonical runtime 與來源擷取已使用跨平台 Python；full-runtime 不需要 PowerShell。宿主提供的 bundled-runtime Python 會先經 Pillow 實際匯入驗證，通過後才執行 checkpoint 與後續 pipeline；mobile-native 不冒充具備這條本機 runtime 路徑。
@@ -28,11 +30,9 @@
 
 > 每日新聞排程
 >
-> 本次安裝意圖為 `create_new`。請確認 https://github.com/robert820728-star/global-news-brief 的最新 main commit，並依最新版 INSTALL.md 的 `INSTALL_CONTROL_PLANE_FAST_PATH` 執行：第一次 create 前只讀 INSTALL.md、scheduled-task-prompt-template.md 及其安裝 payload 建置／驗證檔，不先展開新聞 runtime 文件。將完整 template 只替換允許的區域與監控 placeholder，驗證後作為唯一一次 create payload；不得先用同名 list／search 阻止首次 create。正式回傳 task ID 後，後續 readback、同對話可見媒體 smoke 與啟用全部綁定該 exact ID。若第一次 create 回傳截斷或結果不明，保存 actual control-plane error 且不得第二次 create；先由相同控制面查明第一次結果。smoke 通過後才啟用每天 06:00 循環排程。
+> `IMMUTABLE_INSTALL_MAIN_RESOLUTION_GATE`：先各產生一個 fresh UTC nonce，分別讀取 `https://api.github.com/repos/robert820728-star/global-news-brief/branches/main?cache_bust=<nonce-a>` 與 `https://api.github.com/repos/robert820728-star/global-news-brief/commits/main?cache_bust=<nonce-b>`。兩者必須回傳相同的 40 字元 SHA；若不同，用兩個新 nonce 重試整組一次，仍不同就回報兩個值並停止，不得猜測。之後只從 `https://raw.githubusercontent.com/robert820728-star/global-news-brief/<resolved-main-sha>/INSTALL.md` 讀取安裝契約，並從同一 `<resolved-main-sha>` 讀取 template 與安裝檔；mutable /main 不得作為本次安裝權威。
 >
-> 1. 請在目前這個對話內建立每天 6 點循環排程。
->
-> 2. 完成結果回覆在目前這個對話，不要另開新對話。
+> 本次安裝意圖：create_new。區域：台灣、中國、世界。監控類型：預設。依該 immutable `INSTALL.md` 的 `INSTALL_CONTROL_PLANE_FAST_PATH`，把同一 SHA 的 `scheduled-task-prompt-template.md` 全文只替換允許的兩個 placeholder，驗證後作為唯一一次 create payload。第一次 create 前不得呼叫 list／search／inventory，也不得先讀新聞 runtime 文件；anti-duplicate 只禁止第二次 create。請在目前這個對話建立每天 06:00、使用目前帳號／對話時區、結果回覆目前對話的循環 Scheduled Task。取得 task ID 後，所有 readback、可見圖片 smoke、啟用與 next-run 核對只綁定該 exact ID；第一次 create 結果不明時不得重送，須保存 actual control-plane error 並查明原操作。smoke 通過才啟用，最後回覆 exact task ID、saved-prompt 驗證、時區、enabled、next run 與目前對話 delivery 證據。
 
 安裝時確認兩項內容偏好與 Scheduled Task 自身的時間／時區：
 

@@ -7,6 +7,45 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class SchedulePromptControlPlaneTests(unittest.TestCase):
+    def test_every_paste_ready_create_starter_pins_install_contract_immutably(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        mobile = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(
+            encoding="utf-8"
+        )
+        starters = {
+            "INSTALL.md": install.split("在全新對話貼上：", 1)[1].split(
+                "收到後", 1
+            )[0],
+            "README.md": readme.split("> 每日新聞排程", 1)[1].split(
+                "安裝時確認", 1
+            )[0],
+            "mobile-chatgpt-start-prompt.md": mobile.split("```text", 1)[1].split(
+                "```", 1
+            )[0],
+        }
+
+        for name, starter in starters.items():
+            with self.subTest(document=name):
+                for requirement in (
+                    "IMMUTABLE_INSTALL_MAIN_RESOLUTION_GATE",
+                    "/branches/main?cache_bust=<nonce-a>",
+                    "/commits/main?cache_bust=<nonce-b>",
+                    "40 字元 SHA",
+                    "<resolved-main-sha>/INSTALL.md",
+                    "本次安裝意圖：create_new",
+                    "第一次 create 前不得呼叫 list／search／inventory",
+                    "mutable /main",
+                ):
+                    self.assertIn(requirement, starter)
+
+    def test_create_new_starter_has_no_update_existing_intent(self):
+        starter = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
+        prompt = starter.split("```text", 1)[1].split("```", 1)[0]
+
+        self.assertNotIn("update_existing", prompt)
+        self.assertNotIn("更新同名既有排程", prompt)
+
     def test_install_payload_builder_keeps_diagnostics_outside_saved_prompt(self):
         documents = {
             name: (ROOT / name).read_text(encoding="utf-8")

@@ -58,11 +58,11 @@ python scripts/verify_scheduled_task_install.py --template scheduled-task-prompt
 
 在全新對話貼上：
 
-> 請使用以下 GitHub 專案建立我的每日新聞簡報：
+> 每日新聞排程
 >
-> https://github.com/robert820728-star/global-news-brief
+> `IMMUTABLE_INSTALL_MAIN_RESOLUTION_GATE`：先各產生一個 fresh UTC nonce，分別讀取 `https://api.github.com/repos/robert820728-star/global-news-brief/branches/main?cache_bust=<nonce-a>` 與 `https://api.github.com/repos/robert820728-star/global-news-brief/commits/main?cache_bust=<nonce-b>`。兩者必須回傳相同的 40 字元 SHA；若不同，用兩個新 nonce 重試整組一次，仍不同就回報兩個值並停止，不得猜測。之後只從 `https://raw.githubusercontent.com/robert820728-star/global-news-brief/<resolved-main-sha>/INSTALL.md` 讀取安裝契約，並從同一 `<resolved-main-sha>` 讀取 template 與安裝檔；mutable /main 不得作為本次安裝權威。
 >
-> 請先完整閱讀最新版 `INSTALL.md`，再依照其中的讀取順序、技能、設定、產物、驗證與恢復規則執行，不要自行簡化或重新發明流程。
+> 本次安裝意圖：create_new。區域：台灣、中國、世界。監控類型：預設。依該 immutable `INSTALL.md` 的 `INSTALL_CONTROL_PLANE_FAST_PATH`，把同一 SHA 的 `scheduled-task-prompt-template.md` 全文只替換允許的兩個 placeholder，驗證後作為唯一一次 create payload。第一次 create 前不得呼叫 list／search／inventory，也不得先讀新聞 runtime 文件；anti-duplicate 只禁止第二次 create。請在目前這個對話建立每天 06:00、使用目前帳號／對話時區、結果回覆目前對話的循環 Scheduled Task。取得 task ID 後，所有 readback、可見圖片 smoke、啟用與 next-run 核對只綁定該 exact ID；第一次 create 結果不明時不得重送，須保存 actual control-plane error 並查明原操作。smoke 通過才啟用，最後回覆 exact task ID、saved-prompt 驗證、時區、enabled、next run 與目前對話 delivery 證據。
 
 收到後，以本文件為入口直接開始。使用者不必理解 YAML、三碼代碼、排程語法、schema 或 Git blob。
 
@@ -194,6 +194,10 @@ python scripts/verify_scheduled_task_install.py --template scheduled-task-prompt
 `SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`
 
 建立或修正 Scheduled Task 時，控制面第一步必須先把當下最新 `scheduled-task-prompt-template.md` 全文寫入 task instruction，並依 `SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE` 驗證正式 create／update 結果；不得先 bootstrap repository、取得 verified workspace 或執行新聞流程。既有 task 若保存舊 prompt，舊 prompt 不得繼續啟用，也不得因任何 smoke／bootstrap 失敗而被保留。後續 smoke 失敗時保留最新版 prompt 並暫停 task，不得留下舊 prompt 繼續執行。
+
+`IMMUTABLE_INSTALL_MAIN_RESOLUTION_GATE`
+
+任何要貼入新對話、再由 ChatGPT 讀 repository 建立排程的入口，都必須在讀 `INSTALL.md` 前自行完成雙端點 main 解析：以兩個 fresh UTC nonce 分別讀取 named branch 與 commit main API，要求兩者同意同一 40 字元 SHA；不一致時只准以兩個新 nonce 重試整組一次。確認後，`INSTALL.md`、`scheduled-task-prompt-template.md` 與安裝 payload 建置／驗證檔全部只從該 immutable SHA 讀取。mutable `/main/` raw URL、搜尋摘要、模型記憶、先前對話或先前安裝 SHA 都不是安裝權威。這是讀到 repository 契約前唯一允許的 pre-contract envelope；不得在此階段列舉 tasks、讀新聞資料或執行 runtime。使用者已明確要求 `create_new` 時，main pin 與 outbound payload 驗證後的第一個控制面操作必須是唯一一次 create；第一次 create 前不得呼叫 list／search／inventory。
 
 `INSTALL_CONTROL_PLANE_FAST_PATH`
 

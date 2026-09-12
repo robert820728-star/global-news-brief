@@ -19,13 +19,9 @@
 ```text
 每日新聞排程
 
-請依 https://github.com/robert820728-star/global-news-brief 最新 main 的 INSTALL.md 安裝每日新聞。
+IMMUTABLE_INSTALL_MAIN_RESOLUTION_GATE：先各產生一個 fresh UTC nonce，分別讀取 https://api.github.com/repos/robert820728-star/global-news-brief/branches/main?cache_bust=<nonce-a> 與 https://api.github.com/repos/robert820728-star/global-news-brief/commits/main?cache_bust=<nonce-b>。兩者必須回傳相同的 40 字元 SHA；若不同，用兩個新 nonce 重試整組一次，仍不同就回報兩個值並停止，不得猜測。之後只從 https://raw.githubusercontent.com/robert820728-star/global-news-brief/<resolved-main-sha>/INSTALL.md 讀取安裝契約，並從同一 <resolved-main-sha> 讀取 template 與安裝檔；mutable /main 不得作為本次安裝權威。
 
-本次安裝意圖：create_new。區域：台灣、中國、世界。監控類型：預設。請在目前這個對話建立每天 06:00、使用目前帳號／對話時區、結果回覆目前這個對話的循環 Scheduled Task。
-
-依 INSTALL_CONTROL_PLANE_FAST_PATH，只讀安裝必要檔案並產生、驗證完整 canonical saved prompt；第一次 create 前不要讀新聞 runtime 文件，也不得把一般 list／search 空結果當成阻止首次 create 的理由。create 最多一次；正式 create／update 回傳 task ID 後，後續全部操作只使用同一控制面的 exact task ID。若回傳截斷或結果不明，不得再次 create，必須回報 actual control-plane error 並查明第一次結果。
-
-取得 task ID 後，依 INSTALL.md 完成 prompt capability-aware verification、目前對話的可見圖片 smoke、啟用及 next-run 核對。smoke 通過才啟用；最後回覆 exact task ID、saved-prompt 驗證、時區、enabled、next run 與目前對話 delivery 證據。
+本次安裝意圖：create_new。區域：台灣、中國、世界。監控類型：預設。依該 immutable INSTALL.md 的 INSTALL_CONTROL_PLANE_FAST_PATH，把同一 SHA 的 scheduled-task-prompt-template.md 全文只替換允許的兩個 placeholder，驗證後作為唯一一次 create payload。第一次 create 前不得呼叫 list／search／inventory，也不得先讀新聞 runtime 文件；anti-duplicate 只禁止第二次 create。請在目前這個對話建立每天 06:00、使用目前帳號／對話時區、結果回覆目前對話的循環 Scheduled Task。正式 create／update 回傳 task ID 後，所有 readback、可見圖片 smoke、啟用與 next-run 核對只綁定同一控制面的 exact task ID；一般 list／search 空結果不得推翻正式成功回傳。第一次 create 結果不明時不得重送，須保存 actual control-plane error 並查明原操作。smoke 通過才啟用，最後回覆 exact task ID、saved-prompt 驗證、時區、enabled、next run 與目前對話 delivery 證據。
 ```
 
 
