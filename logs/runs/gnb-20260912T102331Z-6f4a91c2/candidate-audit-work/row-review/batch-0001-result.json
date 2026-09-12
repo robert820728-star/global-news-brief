@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260912T102331Z-6f4a91c2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-11T10:23:31+00:00",
+    "end": "2026-09-12T10:23:31+00:00",
+    "timezone": "America/Los_Angeles"
+  },
+  "batch_sequence": 1,
+  "input_batch_sha256": "2bdde6b55756c20199d7e32dcb35a8e05788a5a938fd53f04e411834cd33a677",
+  "row_count": 20,
+  "rows": [
+    {
+      "row_id": "row-00a883205036469163ae6286",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "健康衛教／風險解說，沒有時間窗內新的公共事件或制度變化。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "文章為熬夜健康風險衛教，非本輪新事件。",
+        "evidence_refs": [
+          "https://www.chinanews.com.cn/jk/2026/09-12/10695096.shtml"
+        ]
+      }
+    },
+    {
+      "row_id": "row-00e9208a4580eb32a7b894d9",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-zhejiang-ai-science-study-report-20260911",
+      "reason": "浙江省科普聯合會正式發布AI科普研學發展報告，屬可辨識的教育／科普制度事件。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "存在明確發布行動、主體與日期。",
+        "evidence_refs": [
+          "https://www.chinanews.com.cn/cj/2026/09-11/10694833.shtml"
+        ]
+      }
+    },
+    {
+      "row_id": "row-01049450ad48768294874d79",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-iran-president-brics-us-pressure-20260911",
+      "reason": "伊朗總統赴BRICS峰會並就美伊戰爭與美國壓力公開表態，屬當期外交事件。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "具明確外交場合、行為者與當期政策／戰爭脈絡。",
+        "evidence_refs": [
+          "https://www.cna.com.tw/news/aopl/202609110323.aspx"
+        ]
+      }
+    },
+    {
+      "row_id": "row-04301a8373220dcab7e266ba",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "以金磚合作20年成果為主的背景／宣傳型綜述，沒有獨立的新實質事件。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "主要為歷史回顧與合作成就整理。",
+        "evidence_refs": [
+          "https://www.chinanews.com.cn/gn/2026/09-12/10695121.shtml"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0453bd7a2ef6c1974642243a",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "藝術家新作介紹與人物特寫，沒有足以形成每日公共新聞事件的制度或公共後果。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "文化人物作品報導屬軟性特寫。",
+        "evidence_refs": [
+          "https://www.cna.com.tw/news/aloc/202609120076.aspx"
+        ]
+      }
+    },
+    {
+      "row_id": "row-04d2c997c186c69ff8320bec",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "例行體育／文化賽事開幕圖片稿，沒有重大公共影響或制度轉折。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "例行賽事開幕，不構成本輪需評分的公共事件。",
+        "evidence_refs": [
+          "https://www.chinanews.com.cn/tp/2026/09-11/10694853.shtml"
+        ]
+      }
+    },
+    {
+      "row_id": "row-04d668a2ab9878148a952bd2",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-hainan-tunchang-rubber-15th-five-year-plan-20260911",
+      "reason": "屯昌縣在省級新聞發布會公布十五五天然橡膠深加工與循環利用布局，屬地方產業政策事件。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "存在正式政策布局、產業鏈規劃與項目進展。",
+        "evidence_refs": [
+          "https://www.chinanews.com.cn/cj/2026/09-11/10694928.shtml"
+        ]
+      }
+    },
+    {
+      "row_id": "row-04ecf21233c06c756c04c449",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-taipei-shooting-suspects-arrested-20260912",
+      "reason": "台北槍擊案出現重大偵辦進展，傷者丈夫與女性槍手遭逮捕，屬公共安全事件。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "槍擊、受傷與嫌犯逮捕均為時間窗內可驗證事件。",
+        "evidence_refs": [
+          "https://www.cna.com.tw/news/asoc/202609120080.aspx"
+        ]
+      }
+    },
+    {
+      "row_id": "row-053ace306227bcf545683f88",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-china-angola-parliament-mou-20260911",
+      "reason": "中安兩國立法機構領導人會談並簽署諒解備忘錄，屬正式雙邊外交／議會合作事件。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "有正式會談及簽署文件。",
+        "evidence_refs": [
+          "https://www.chinanews.com.cn/gn/2026/09-11/10694958.shtml"
+        ]
+      }
+    },
+    {
+      "row_id": "row-05a29304e2ab22be019dc455",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "博覽會開幕圖片稿，摘要未提供可辨識的重大政策、產業規則或公共後果。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "例行展會活動稿。",
+        "evidence_refs": [
+          "https://www.chinanews.com.cn/tp/2026/09-11/10694985.shtml"
+        ]
+      }
+    },
+    {
+      "row_id": "row-05b2e5e37ec359e2b5319889",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "長征紀念文化／歷史圖片特寫，屬週年回顧而非新事件。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "歷史紀念與圖文回顧，沒有新的實質發展。",
+        "evidence_refs": [
+          "https://www.chinanews.com.cn/tp/2026/09-11/10694835.shtml"
+        ]
+      }
+    },
+    {
+      "row_id": "row-05cf198ff54b19d9efe82fe5",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "企業高管在論壇發表對香港能源金融角色的觀點，未見新政策、投資決定或制度效果。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "主要為論壇觀點與倡議。",
+        "evidence_refs": [
+          "https://www.chinanews.com.cn/cj/2026/09-11/10694963.shtml"
+        ]
+      }
+    },
+    {
+      "row_id": "row-05fdc5535d0499ab3c7ef1f8",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-yunnan-asean-fruit-imports-2026-jan-aug",
+      "reason": "昆明海關發布前8月東盟水果進口量與金額及同比變化，屬新的貿易統計事件。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "官方發布具體新統計，反映跨境農產品貿易變化。",
+        "evidence_refs": [
+          "https://www.chinanews.com.cn/aseaninfo/2026/09-11/10694976.shtml"
+        ]
+      }
+    },
+    {
+      "row_id": "row-07b347bb4c989672a6a79f9a",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "工廠趕製訂單的圖片／產業景氣特寫，沒有獨立可驗證的重大狀態轉折。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "圖片型企業生產特寫。",
+        "evidence_refs": [
+          "https://www.chinanews.com.cn/tp/2026/09-12/10695180.shtml"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0891397aa4fdd01c28498b73",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "習近平過往金磚峰會影像回顧及會前宣傳，屬背景素材，非獨立新事件。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "以歷史精彩時刻回顧為主。",
+        "evidence_refs": [
+          "https://www.chinanews.com.cn/gn/2026/09-12/10695221.shtml"
+        ]
+      }
+    },
+    {
+      "row_id": "row-08b06f7cfebf05ea33ee7dd6",
+      "disposition": "non_news",
+      "semantic_event_id": null,
+      "reason": "電影字幕翻譯人物訪談與文化特寫，沒有制度性或公共事件增量。",
+      "model_evidence": {
+        "review_status": "non_news",
+        "reason": "文化人物／翻譯專訪。",
+        "evidence_refs": [
+          "https://www.chinanews.com.cn/gn/2026/09-12/10695184.shtml"
+        ]
+      }
+    },
+    {
+      "row_id": "row-08fb45d166121f419fbf732b",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-us-august-cpi-20260911",
+      "reason": "美國勞工部公布8月CPI同比3.4%、環比0.4%，市場加息預期顯著升高，屬重大宏觀經濟數據事件。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "官方宏觀通膨數據於時間窗內發布並影響貨幣政策預期。",
+        "evidence_refs": [
+          "https://www.chinanews.com.cn/gj/2026/09-12/10695092.shtml"
+        ]
+      }
+    },
+    {
+      "row_id": "row-0944f74eccd8f330a1e9e6ad",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-apec-energy-ministers-joint-statement-20260911",
+      "reason": "APEC能源部長會議發布聯合聲明，對區域能源安全與轉型路徑形成正式多邊共識。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "正式多邊部長級聯合聲明在時間窗內發布。",
+        "evidence_refs": [
+          "https://www.chinanews.com.cn/cj/2026/09-11/10695037.shtml"
+        ]
+      }
+    },
+    {
+      "row_id": "row-097ed6f85c6c26a33b092124",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-world-class-scitech-journal-list-2025-release-20260912",
+      "reason": "中國科技信息研究所等發布2025年度世界一流科技期刊目錄與新評價體系結果，屬學術評價制度事件。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "有正式目錄發布、評價範圍及制度性用途。",
+        "evidence_refs": [
+          "https://www.chinanews.com.cn/gn/2026/09-12/10695176.shtml"
+        ]
+      }
+    },
+    {
+      "row_id": "row-099fcd481582a6ee84ec9210",
+      "disposition": "event_evidence",
+      "semantic_event_id": "sev-taiwan-singapore-representative-strait-security-statement-20260911",
+      "reason": "台灣駐新加坡代表就馬來西亞與新加坡相關涉台言論作出正式外交回應，屬當期區域安全外交事件。",
+      "model_evidence": {
+        "review_status": "event_evidence",
+        "reason": "正式代表處層級的公開回應與台海安全論述發生在時間窗內。",
+        "evidence_refs": [
+          "https://www.cna.com.tw/news/aipl/202609110270.aspx"
+        ]
+      }
+    }
+  ]
+}
