@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "gnb-20260912T102331Z-6f4a91c2",
+  "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
+  "window": {
+    "start": "2026-09-11T10:23:31+00:00",
+    "end": "2026-09-12T10:23:31+00:00",
+    "timezone": "America/Los_Angeles"
+  },
+  "pending_work_is_blocker": false,
+  "row_review": {
+    "total_batch_count": 32,
+    "completed_batch_count": 0,
+    "remaining_batch_count": 32
+  },
+  "event_scoring": {
+    "prepared": false,
+    "total_batch_count": 0,
+    "completed_batch_count": 0,
+    "remaining_batch_count": 0
+  },
+  "status": "in_progress",
+  "phase": "row_review",
+  "next_operation": "candidate_audit_review",
+  "next_batch_sequence": 1,
+  "next_input_path": "audit-input/batch-0001.json",
+  "next_input_sha256": "2bdde6b55756c20199d7e32dcb35a8e05788a5a938fd53f04e411834cd33a677",
+  "candidate_audit_path": null,
+  "candidate_audit_sha256": null
+}
