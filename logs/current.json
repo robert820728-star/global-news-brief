@@ -3,20 +3,24 @@
   "execution_mode": "mobile-native",
   "delivery_profile": "full-assets",
   "native_media_status": "available",
-  "capability_limitations": [],
-  "run_id": "gnb-20260911T220058Z-7c4e91a2",
-  "scheduled_for": "2026-09-11T22:00:00Z",
+  "capability_limitations": [
+    "verified full-runtime bootstrap transport unavailable on this executor",
+    "webpage region screenshot transport unavailable",
+    "direct source-media byte fetch unavailable on this executor"
+  ],
+  "run_id": "gnb-20260912T102331Z-6f4a91c2",
+  "scheduled_for": "2026-09-12T10:23:25Z",
   "status": "running",
   "current_stage": "source-scan",
   "stage_index": 4,
   "last_completed_stage": "workspace-ready",
   "main_sha": "e3c70a402312d7d622201e2c4ce34af45eb92852",
   "window": {
-    "start": "2026-09-10T22:00:58Z",
-    "end": "2026-09-11T22:00:58Z",
-    "timezone": "Asia/Shanghai"
+    "start": "2026-09-11T10:23:31Z",
+    "end": "2026-09-12T10:23:31Z",
+    "timezone": "America/Los_Angeles"
   },
-  "updated_at": "2026-09-11T22:02:00Z",
+  "updated_at": "2026-09-12T10:31:16Z",
   "last_error": null,
   "delivery_status": "not_ready",
   "client_confirmation_supported": false,
