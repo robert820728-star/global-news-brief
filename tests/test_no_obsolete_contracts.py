@@ -17,7 +17,9 @@ def repository_text_records(root=ROOT):
     """Yield immutable HEAD text-contract bytes, with a clean-export fallback."""
     try:
         archive = subprocess.check_output(
-            ["git", "archive", "--format=tar", "HEAD"], cwd=root
+            ["git", "archive", "--format=tar", "HEAD"],
+            cwd=root,
+            stderr=subprocess.DEVNULL,
         )
         records = []
         with tarfile.open(fileobj=io.BytesIO(archive), mode="r:") as snapshot:
@@ -40,10 +42,27 @@ def repository_text_records(root=ROOT):
                 and not path.name.startswith("capsule.part")
             ):
                 records.append((path, path.read_bytes()))
-    yield from records
+    for path, content in records:
+        try:
+            content.decode("utf-8", errors="strict")
+        except UnicodeDecodeError:
+            continue
+        yield path, content
 
 
 class NoObsoleteContractsTests(unittest.TestCase):
+    def test_repository_text_records_exclude_non_utf8_binary_contract_artifacts(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            valid = root / "valid.json"
+            binary = root / "runtime-artifact.json"
+            valid.write_text('{"status":"ok"}', encoding="utf-8")
+            binary.write_bytes(b"\xaa\xbb\xcc")
+
+            records = list(repository_text_records(root))
+
+            self.assertEqual([(valid, b'{"status":"ok"}')], records)
+
     def test_repository_contract_scan_is_one_atomic_head_snapshot(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
