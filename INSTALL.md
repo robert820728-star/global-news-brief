@@ -62,7 +62,7 @@ python scripts/verify_scheduled_task_install.py --template scheduled-task-prompt
 >
 > `IMMUTABLE_INSTALL_MAIN_RESOLUTION_GATE`：先各產生一個 fresh UTC nonce，分別讀取 `https://api.github.com/repos/robert820728-star/global-news-brief/branches/main?cache_bust=<nonce-a>` 與 `https://api.github.com/repos/robert820728-star/global-news-brief/commits/main?cache_bust=<nonce-b>`。兩者必須回傳相同的 40 字元 SHA；若不同，用兩個新 nonce 重試整組一次，仍不同就回報兩個值並停止，不得猜測。之後只從 `https://raw.githubusercontent.com/robert820728-star/global-news-brief/<resolved-main-sha>/INSTALL.md` 讀取安裝契約，並從同一 `<resolved-main-sha>` 讀取 template 與安裝檔；mutable /main 不得作為本次安裝權威。
 >
-> 本次安裝意圖：create_new。區域：台灣、中國、世界。監控類型：預設。依該 immutable `INSTALL.md` 的 `INSTALL_CONTROL_PLANE_FAST_PATH`，把同一 SHA 的 `scheduled-task-prompt-template.md` 全文只替換允許的兩個 placeholder，驗證後作為唯一一次 create payload。第一次 create 前不得呼叫 list／search／inventory，也不得先讀新聞 runtime 文件；anti-duplicate 只禁止第二次 create。請在目前這個對話建立每天 06:00、使用目前帳號／對話時區、結果回覆目前對話的循環 Scheduled Task。取得 task ID 後，所有 readback、可見圖片 smoke、啟用與 next-run 核對只綁定該 exact ID；第一次 create 結果不明時不得重送，須保存 actual control-plane error 並查明原操作。smoke 通過才啟用，最後回覆 exact task ID、saved-prompt 驗證、時區、enabled、next run 與目前對話 delivery 證據。
+> 本次安裝意圖：ensure_singleton。區域：台灣、中國、世界。監控類型：預設。依該 immutable `INSTALL.md` 的 `INSTALL_CONTROL_PLANE_FAST_PATH`，把同一 SHA 的 `scheduled-task-prompt-template.md` 全文只替換允許的兩個 placeholder 並驗證。第一個控制面動作是 authoritative task inventory：存在唯一符合任務就取得 exact ID 並 update_existing；明確不存在才以完整 prompt create 一次；多筆相符記為 multiple_present；無法取得權威清單記為 unknown。multiple_present／unknown 不得盲建、不得宣稱安裝完成，也不得讀新聞 runtime 文件。請確保目前對話只有一個每天 06:00、使用目前帳號／對話時區、結果回覆目前對話的循環 Scheduled Task。取得 exact ID 後，所有 readback、可見圖片 smoke、啟用與 next-run 核對只綁定該 ID；create 結果不明時不得再次 create，須保存 actual control-plane error 與 operation identity 並查明原操作。smoke 通過才啟用，最後回覆 exact task ID、saved-prompt 驗證、時區、enabled、next run 與目前對話 delivery 證據。
 
 收到後，以本文件為入口直接開始。使用者不必理解 YAML、三碼代碼、排程語法、schema 或 Git blob。
 
@@ -197,19 +197,21 @@ python scripts/verify_scheduled_task_install.py --template scheduled-task-prompt
 
 `IMMUTABLE_INSTALL_MAIN_RESOLUTION_GATE`
 
-任何要貼入新對話、再由 ChatGPT 讀 repository 建立排程的入口，都必須在讀 `INSTALL.md` 前自行完成雙端點 main 解析：以兩個 fresh UTC nonce 分別讀取 named branch 與 commit main API，要求兩者同意同一 40 字元 SHA；不一致時只准以兩個新 nonce 重試整組一次。確認後，`INSTALL.md`、`scheduled-task-prompt-template.md` 與安裝 payload 建置／驗證檔全部只從該 immutable SHA 讀取。mutable `/main/` raw URL、搜尋摘要、模型記憶、先前對話或先前安裝 SHA 都不是安裝權威。這是讀到 repository 契約前唯一允許的 pre-contract envelope；不得在此階段列舉 tasks、讀新聞資料或執行 runtime。使用者已明確要求 `create_new` 時，main pin 與 outbound payload 驗證後的第一個控制面操作必須是唯一一次 create；第一次 create 前不得呼叫 list／search／inventory。
+任何要貼入新對話、再由 ChatGPT 讀 repository 確保唯一排程的入口，都必須在讀 `INSTALL.md` 前自行完成雙端點 main 解析：以兩個 fresh UTC nonce 分別讀取 named branch 與 commit main API，要求兩者同意同一 40 字元 SHA；不一致時只准以兩個新 nonce 重試整組一次。確認後，`INSTALL.md`、`scheduled-task-prompt-template.md` 與安裝 payload 建置／驗證檔全部只從該 immutable SHA 讀取。mutable `/main/` raw URL、搜尋摘要、模型記憶、先前對話或先前安裝 SHA 都不是安裝權威。這是讀到 repository 契約前唯一允許的 pre-contract envelope；不得在此階段讀新聞資料或執行 runtime。main pin 與 outbound payload 驗證後，第一個控制面操作必須是 `SINGLETON_SCHEDULE_INSTALL_GATE` 要求的 authoritative task inventory；不得先做新聞工作。
 
 `INSTALL_CONTROL_PLANE_FAST_PATH`
 
 第一次 create／update 前只讀安裝必要檔案：`INSTALL.md`、`scheduled-task-prompt-template.md`、`scripts/build_scheduled_task_install_payload.py`、`scripts/verify_scheduled_task_install.py`，以及使用者要求測試時的 `scheduled-task-test-extension.example.json`。完成 canonical outbound payload 的本機核對後，下一個產品動作必須是控制面的第一次 create／update；不得先讀新聞 runtime 文件、bootstrap、skills、schemas、來源規則或執行新聞流程。task 已取得 exact ID 且完成安裝驗證後，真正 occurrence 才依 `INSTALL.md` 的權責順序讀取 runtime 契約。
 
-`EXPLICIT_SCHEDULE_INSTALL_INTENT_GATE`
+`SINGLETON_SCHEDULE_INSTALL_GATE`
 
-安裝前先把使用者的生命週期意圖固定為 `create_new` 或 `update_existing`。使用者明確要求「建立／新增／先建一個」時是 `create_new`：create_new 不得把同名 list／search 當成首次 create 的必要前置，且最多呼叫一次 create；「不得重複建立」是禁止第二次 create，不是禁止已獲授權的第一次 create。正式 create 回傳 task ID 與成功狀態後，後續所有 readback、smoke、schedule 與 enable 都只綁該 ID。若 create 回傳遭截斷、沒有 task ID 或結果不明，保存 `outcome_unknown`、actual control-plane error 與可取得的 operation identity；同一安裝不得再次 create，只能由相同控制面查明第一次結果或要求使用者在「已排程」檢視。update_existing 必須先有 exact task ID；只有同名標題或一般 list／search 結果不得授權 update。更新同名既有排程時，先取得該 exact ID，再執行一次 update。
+目標是不得盲建重複排程；inventory 無法形成權威四態證據時不得用 create 猜測。
+
+canonical 安裝意圖預設固定為 `ensure_singleton`，並在任何 create／update 前以相同 Scheduled Task 控制面的 authoritative task inventory 建立四態 receipt。`present` 表示恰有一個名稱、對話、排程型態與 06:00 recurrence 相符的任務：取得其 exact task ID 後執行一次 `update_existing`；`absent` 必須由權威清單明確證明不存在，才可用完整 canonical prompt 執行一次 create；`multiple_present` 必須保留所有相符 exact IDs 並停止自動 mutation；`unknown` 表示控制面沒有提供可驗證清單或結果不可判讀，必須保存 actual control-plane error，不得盲建、不得宣稱安裝完成。update_existing 必須先有 exact task ID；只有同名標題、聊天文字或非權威搜尋結果不得授權 update。create 正式回傳 task ID 與成功狀態後，後續所有 readback、smoke、schedule 與 enable 都只綁該 ID。若 create 回傳遭截斷、沒有 task ID 或結果不明，保存 `outcome_unknown`、actual control-plane error 與可取得的 operation identity；同一安裝不得再次 create，只能由相同控制面查明第一次結果或要求使用者在「已排程」檢視。使用者若明確提供 exact task ID，可直接選定 `update_existing`；額外建立第二個任務不屬 singleton 安裝流程。
 
 `SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE`
 
-提交前必須只替換「區域」與「監控類型」兩個 placeholder，對替換後的完整 prompt 做全文、字元數與雜湊核對，並把該完整 prompt 作為單一 create／update payload；不得提交摘要、節錄、短 launcher 或只貼檔案連結。若控制面支援 saved-prompt readback，建立或更新後必須讀回並與提交全文逐字比較，只允許 CRLF／LF 與檔尾換行差異；不一致時更新同一 task 後重讀，仍不一致即失敗。若控制面明確不提供 saved-prompt readback，不得只因缺少這項非通用能力宣告失敗，也不得謊稱已逐字讀回；此時由提交前核對證明完整 prompt 已作為未摘要且未截斷的 outbound payload，正式 create／update 回傳則必須至少證明 task ID、成功建立或更新、每天 06:00 與目前帳號／對話時區。若 create／update 動作是在目前對話發出，而且目前對話內的正式 task 回傳或 task 卡顯示相同 exact task ID，即是目前對話 delivery destination 的控制面證據；不要求不存在的 destination 欄位。其他對話的結果、一般 list／search 或只有自然語言聲稱均不能取代這項證據。任何一項沒有上述相應證據可核對即失敗。「不得盲建重複排程」只約束第二次 create：`update_existing` 沒有 exact task ID 時不得改用 create 猜測；`create_new` 的第一次 create 結果不明時也不得再 create，但不能用無法查找同名 task 阻止已獲授權的第一次 create。
+提交前必須只替換「區域」與「監控類型」兩個 placeholder，對替換後的完整 prompt 做全文、字元數與雜湊核對，並把該完整 prompt 作為單一 create／update payload；不得提交摘要、節錄、短 launcher 或只貼檔案連結。若控制面支援 saved-prompt readback，建立或更新後必須讀回並與提交全文逐字比較，只允許 CRLF／LF 與檔尾換行差異；不一致時更新同一 task 後重讀，仍不一致即失敗。若控制面明確不提供 saved-prompt readback，不得只因缺少這項非通用能力宣告失敗，也不得謊稱已逐字讀回；此時由提交前核對證明完整 prompt 已作為未摘要且未截斷的 outbound payload，正式 create／update 回傳則必須至少證明 task ID、成功建立或更新、每天 06:00 與目前帳號／對話時區。若 create／update 動作是在目前對話發出，而且目前對話內的正式 task 回傳或 task 卡顯示相同 exact task ID，即是目前對話 delivery destination 的控制面證據；不要求不存在的 destination 欄位。其他對話的結果、一般 list／search 或只有自然語言聲稱均不能取代這項證據。任何一項沒有上述相應證據可核對即失敗。`multiple_present`／`unknown` 不得改用 create 猜測；第一次 create 結果不明時也不得再次 create。
 
 這個分流只承認控制面實際提供的證據：create／update 回傳不能冒充 saved bytes 的逐字讀回；但在控制面明確不提供 readback 時，完整 outbound payload 的預先核對與正式成功回傳是允許的安裝驗證邊界。一般對話文字、自行聲稱「應該已保存」或只有排程名稱都不算正式結果。
 

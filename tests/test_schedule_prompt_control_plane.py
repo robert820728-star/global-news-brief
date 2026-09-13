@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class SchedulePromptControlPlaneTests(unittest.TestCase):
-    def test_every_paste_ready_create_starter_pins_install_contract_immutably(self):
+    def test_every_paste_ready_starter_pins_singleton_install_contract_immutably(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         mobile = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(
@@ -33,18 +33,25 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
                     "/commits/main?cache_bust=<nonce-b>",
                     "40 字元 SHA",
                     "<resolved-main-sha>/INSTALL.md",
-                    "本次安裝意圖：create_new",
-                    "第一次 create 前不得呼叫 list／search／inventory",
+                    "本次安裝意圖：ensure_singleton",
+                    "authoritative task inventory",
+                    "multiple_present",
                     "mutable /main",
                 ):
                     self.assertIn(requirement, starter)
 
-    def test_create_new_starter_has_no_update_existing_intent(self):
+    def test_singleton_starter_can_adopt_or_create_without_blind_duplication(self):
         starter = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
         prompt = starter.split("```text", 1)[1].split("```", 1)[0]
 
-        self.assertNotIn("update_existing", prompt)
-        self.assertNotIn("更新同名既有排程", prompt)
+        self.assertIn("ensure_singleton", prompt)
+        self.assertIn("authoritative task inventory", prompt)
+        self.assertIn("存在唯一符合任務", prompt)
+        self.assertIn("明確不存在", prompt)
+        self.assertIn("multiple_present", prompt)
+        self.assertIn("unknown", prompt)
+        self.assertNotIn("本次安裝意圖：create_new", prompt)
+        self.assertNotIn("anti-duplicate 只禁止第二次 create", prompt)
 
     def test_install_payload_builder_keeps_diagnostics_outside_saved_prompt(self):
         documents = {
@@ -138,24 +145,32 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
         self.assertIn("一般 list／search 空結果", prompt)
         self.assertNotIn("仍不一致或無法讀回時，不得宣稱排程設置完成", starter)
 
-    def test_fresh_conversation_uses_explicit_single_create_transaction(self):
+    def test_fresh_conversation_uses_capability_aware_singleton_transaction(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         starter = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
         prompt = starter.split("```text", 1)[1].split("```", 1)[0].strip()
 
-        self.assertIn("EXPLICIT_SCHEDULE_INSTALL_INTENT_GATE", install)
-        self.assertIn("本次安裝意圖：create_new", prompt)
-        self.assertNotIn("優先更新同名既有排程", prompt)
+        self.assertIn("SINGLETON_SCHEDULE_INSTALL_GATE", install)
+        self.assertIn("本次安裝意圖：ensure_singleton", prompt)
 
         for requirement in (
-            "create_new 不得把同名 list／search 當成首次 create 的必要前置",
-            "最多呼叫一次 create",
+            "present",
+            "absent",
+            "multiple_present",
+            "unknown",
+            "authoritative task inventory",
+            "唯一符合任務",
+            "明確不存在",
+            "不得盲建",
             "不得再次 create",
             "update_existing 必須先有 exact task ID",
             "actual control-plane error",
         ):
             with self.subTest(requirement=requirement):
                 self.assertIn(requirement, install)
+
+        self.assertNotIn("create_new 不得把同名 list／search 當成首次 create 的必要前置", install)
+        self.assertNotIn("第一次 create 前不得呼叫 list／search／inventory", prompt)
 
     def test_install_fast_path_reaches_control_plane_before_runtime_contracts(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
