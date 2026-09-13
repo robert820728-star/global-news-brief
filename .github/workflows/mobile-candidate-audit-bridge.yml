@@ -8,7 +8,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: mobile-candidate-audit-${{ github.event.issue.number }}
+  group: run-logs-writer-${{ github.repository_id }}-${{ github.event.issue.number }}
   cancel-in-progress: false
 
 jobs:
@@ -35,11 +35,23 @@ jobs:
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as stream:
               stream.write(f"main_sha={matches[0]}\n")
           PY
-      - name: Checkout occurrence-pinned runtime
+      - name: Checkout default-branch verifier runtime
         uses: actions/checkout@v4
         with:
-          ref: ${{ steps.pin.outputs.main_sha }}
           path: runtime
+          fetch-depth: 0
+      - name: Validate pinned SHA is in default-branch ancestry
+        env:
+          PINNED_SHA: ${{ steps.pin.outputs.main_sha }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          git -C runtime fetch --no-tags origin "${DEFAULT_BRANCH}:refs/remotes/origin/${DEFAULT_BRANCH}"
+          git -C runtime cat-file -e "${PINNED_SHA}^{commit}"
+          if ! git -C runtime merge-base --is-ancestor "$PINNED_SHA" "origin/${DEFAULT_BRANCH}"; then
+            echo "Pinned SHA is not in default-branch ancestry" >&2
+            exit 1
+          fi
+          git -C runtime checkout --detach "$PINNED_SHA"
       - name: Checkout durable run logs
         uses: actions/checkout@v4
         with:

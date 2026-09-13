@@ -51,13 +51,17 @@ def write_json(path: Path, value):
 class MobileCandidateAuditBridgeTests(unittest.TestCase):
     def test_workflow_executes_against_occurrence_pinned_runtime_and_run_logs_only(self):
         workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/mobile-candidate-audit-bridge.yml").read_text(encoding="utf-8")
-        self.assertIn("ref: ${{ steps.pin.outputs.main_sha }}", workflow)
+        self.assertNotIn("ref: ${{ steps.pin.outputs.main_sha }}", workflow)
+        self.assertIn('git -C runtime checkout --detach "$PINNED_SHA"', workflow)
         self.assertIn("--run-logs-root runlogs", workflow)
         self.assertIn("git add -A -- logs", workflow)
         self.assertNotIn("git add -A -- .", workflow)
         self.assertIn("materialize_mobile_map_decisions.py", workflow)
         self.assertIn("materialize_mobile_image_evidence.py", workflow)
-        self.assertIn("mobile-candidate-audit-${{ github.event.issue.number }}", workflow)
+        self.assertIn(
+            "run-logs-writer-${{ github.repository_id }}-${{ github.event.issue.number }}",
+            workflow,
+        )
         self.assertNotIn("mobile-candidate-audit-${{ github.event.comment.id }}", workflow)
 
     def test_active_contracts_require_resumable_candidate_verification_and_map_transport(self):

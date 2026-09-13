@@ -43,6 +43,30 @@ class FaultPenetrationContractTests(unittest.TestCase):
             self.assertIn("不得直接算圖片交付", document)
             self.assertRegex(document, r"GDELT[^\n]*(?:不得|維持既有 truthful degraded fallback)")
 
+    def test_all_run_log_writers_share_one_lock_and_validate_main_ancestry(self):
+        workflows = {
+            name: read(f".github/workflows/{name}")
+            for name in (
+                "remote-acquisition-bridge.yml",
+                "mobile-candidate-audit-bridge.yml",
+            )
+        }
+        shared_group = (
+            "run-logs-writer-${{ github.repository_id }}-"
+            "${{ github.event.issue.number }}"
+        )
+        for name, workflow in workflows.items():
+            with self.subTest(workflow=name):
+                self.assertIn(f"group: {shared_group}", workflow)
+                self.assertIn("Validate pinned SHA is in default-branch ancestry", workflow)
+                self.assertIn("github.event.repository.default_branch", workflow)
+                self.assertIn("merge-base --is-ancestor", workflow)
+                self.assertIn("checkout --detach", workflow)
+                self.assertLess(
+                    workflow.index("Validate pinned SHA is in default-branch ancestry"),
+                    workflow.index("Compile"),
+                )
+
     def test_bootstrap_transport_failure_routes_same_occurrence_to_mobile(self):
         daily = read("daily-schedule-prompt.md")
         install = read("INSTALL.md")
