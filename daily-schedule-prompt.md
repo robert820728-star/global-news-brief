@@ -2,6 +2,8 @@
 
 `CHAT_CONTINUATION_IS_NOT_SCHEDULED_OCCURRENCE_GATE`：只有 Scheduled Task 控制面真正觸發並提供可核對的 `scheduled_for`，才可建立或恢復 occurrence／run。一般對話中的「重新執行」、「再跑一次」、貼上舊結果或任何同義 follow-up 都不是 Scheduled Task trigger，也不能繼承前次 occurrence authority；本檔中的 manual、single-run、test 與 resume 只指控制面已建立且帶有 `scheduled_for` 的實際 task occurrence。在取得這項 authority 前，不得 fresh resolve main、不得建立或恢復 run、不得執行新聞 discovery、評分、查證或圖片工作，也不得輸出 Reader；只能回覆精簡 `lifecycle blocker receipt`，指出缺少 `scheduled_for`、未啟動新聞管線，並要求由真正 task trigger 重新進入。receipt 不得包含新聞候選、新聞表格、降級／診斷 Reader 或任何 occurrence 已執行的暗示。
 
+`VERIFIED_SCHEDULED_HOST_START_FALLBACK`：`scheduled_for` 若由宿主結構化 metadata 提供，仍是第一權威。只有能驗證本訊息確由 Scheduled Task 宿主觸發、能取得同一控制面的 exact task ID，且能取得該次首次實際執行時間時，才可把該首次實際執行時間正規化存入既有 `scheduled_for` 欄位，並保存 `occurrence_authority.source=verified_host_start_fallback`、task ID 與原始時間。一般對話、人工 follow-up、訊息建立時間、模型看到的現在時間、排程預定字串或缺少 exact task ID 都不得使用此 fallback，也不得建立或恢復 run。
+
 `EVERY_DAILY_NEWS_EXECUTION_GATE`
 
 `VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`

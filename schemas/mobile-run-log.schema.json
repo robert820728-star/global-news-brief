@@ -48,6 +48,21 @@
       "pattern": "^gnb-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$"
     },
     "scheduled_for": { "type": "string", "format": "date-time" },
+    "occurrence_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "task_id", "first_actual_execution_at"],
+      "properties": {
+        "source": {
+          "enum": ["structured_scheduled_for", "verified_host_start_fallback"]
+        },
+        "task_id": { "type": ["string", "null"] },
+        "first_actual_execution_at": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        }
+      }
+    },
     "status": {
       "enum": [
         "awaiting_executor",

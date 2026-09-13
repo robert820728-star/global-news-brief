@@ -316,6 +316,25 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
         self.assertIn("不得執行新聞 discovery", prompt)
         self.assertIn("不得輸出 Reader", prompt)
 
+    def test_verified_scheduled_host_start_is_the_only_scheduled_for_fallback(self):
+        documents = {
+            name: (ROOT / name).read_text(encoding="utf-8")
+            for name in (
+                "INSTALL.md",
+                "scheduled-task-prompt-template.md",
+                "daily-schedule-prompt.md",
+                "mobile-chatgpt-daily-prompt.md",
+                ".agents/skills/daily-news-brief/SKILL.md",
+            )
+        }
+        for name, document in documents.items():
+            with self.subTest(document=name):
+                self.assertIn("VERIFIED_SCHEDULED_HOST_START_FALLBACK", document)
+                self.assertIn("exact task ID", document)
+                self.assertIn("首次實際執行時間", document)
+                self.assertIn("scheduled_for", document)
+                self.assertIn("一般對話", document)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -63,6 +63,10 @@ DELIVERY_STATUSES = {
     "handoff_started",
     "client_confirmed",
 }
+OCCURRENCE_AUTHORITY_SOURCES = {
+    "structured_scheduled_for",
+    "verified_host_start_fallback",
+}
 
 
 def _read_json(path: Path) -> dict[str, Any]:
@@ -157,6 +161,23 @@ def validate_record(record: dict[str, Any]) -> None:
         raise ValueError("run_id must use canonical format gnb-YYYYMMDDTHHMMSSZ-xxxxxxxx")
     if record["status"] not in STATUSES:
         raise ValueError(f"invalid status: {record['status']}")
+    occurrence_authority = record.get("occurrence_authority")
+    if occurrence_authority is not None:
+        if not isinstance(occurrence_authority, dict):
+            raise ValueError("occurrence_authority must be an object")
+        if occurrence_authority.get("source") not in OCCURRENCE_AUTHORITY_SOURCES:
+            raise ValueError("invalid occurrence_authority source")
+        if set(occurrence_authority) != {
+            "source",
+            "task_id",
+            "first_actual_execution_at",
+        }:
+            raise ValueError("invalid occurrence_authority fields")
+        if occurrence_authority["source"] == "verified_host_start_fallback":
+            if not occurrence_authority.get("task_id"):
+                raise ValueError("fallback occurrence authority requires task_id")
+            if occurrence_authority.get("first_actual_execution_at") != record["scheduled_for"]:
+                raise ValueError("fallback occurrence authority must match scheduled_for")
     stage = record["current_stage"]
     if stage not in STAGE_INDEX or record["stage_index"] != STAGE_INDEX[stage]:
         raise ValueError("stage_index does not match current_stage")
@@ -427,20 +448,71 @@ def _validate_window(window: Any, label: str) -> None:
 
 
 
+def _resolve_occurrence_authority(
+    *,
+    scheduled_for: str | None,
+    scheduled_host_provenance: str | None,
+    task_id: str | None,
+    actual_started_at: str | None,
+) -> tuple[str, dict[str, str | None]]:
+    if scheduled_for:
+        try:
+            parsed = datetime.fromisoformat(scheduled_for)
+        except ValueError as error:
+            raise ValueError("scheduled_for must use an ISO timestamp") from error
+        if parsed.tzinfo is None:
+            raise ValueError("scheduled_for must include a time zone")
+        return scheduled_for, {
+            "source": "structured_scheduled_for",
+            "task_id": task_id,
+            "first_actual_execution_at": None,
+        }
+
+    if (
+        scheduled_host_provenance != "verified_scheduled_task_trigger"
+        or not task_id
+        or not actual_started_at
+    ):
+        raise ValueError(
+            "missing scheduled_for requires verified Scheduled Task host provenance, "
+            "an exact task_id, and first actual execution time"
+        )
+    try:
+        parsed = datetime.fromisoformat(actual_started_at)
+    except ValueError as error:
+        raise ValueError("first actual execution time must use an ISO timestamp") from error
+    if parsed.tzinfo is None:
+        raise ValueError("first actual execution time must include a time zone")
+    return actual_started_at, {
+        "source": "verified_host_start_fallback",
+        "task_id": task_id,
+        "first_actual_execution_at": actual_started_at,
+    }
+
+
 def prepare_run(
     ledger_dir: Path | str,
     *,
     run_id: str,
-    scheduled_for: str,
+    scheduled_for: str | None,
     updated_at: str,
     execution_mode: str,
     delivery_profile: str = "full-assets",
     native_media_status: str = "available",
     capability_limitations: list[str] | None = None,
+    scheduled_host_provenance: str | None = None,
+    task_id: str | None = None,
+    actual_started_at: str | None = None,
 ) -> dict[str, Any]:
     ledger_dir = Path(ledger_dir)
     current_path = ledger_dir / "current.json"
     previous_path = ledger_dir / "previous.json"
+    scheduled_for, occurrence_authority = _resolve_occurrence_authority(
+        scheduled_for=scheduled_for,
+        scheduled_host_provenance=scheduled_host_provenance,
+        task_id=task_id,
+        actual_started_at=actual_started_at,
+    )
 
     if current_path.exists():
         previous = _read_json(current_path)
@@ -471,6 +543,7 @@ def prepare_run(
         "capability_limitations": list(capability_limitations or []),
         "run_id": run_id,
         "scheduled_for": scheduled_for,
+        "occurrence_authority": occurrence_authority,
         "status": "awaiting_executor",
         "current_stage": "schedule-prepared",
         "stage_index": STAGE_INDEX["schedule-prepared"],
@@ -631,7 +704,10 @@ def build_parser() -> argparse.ArgumentParser:
     prepare = subparsers.add_parser("prepare")
     prepare.add_argument("--ledger-dir", type=Path, required=True)
     prepare.add_argument("--run-id", required=True)
-    prepare.add_argument("--scheduled-for", required=True)
+    prepare.add_argument("--scheduled-for")
+    prepare.add_argument("--scheduled-host-provenance")
+    prepare.add_argument("--task-id")
+    prepare.add_argument("--actual-started-at")
     prepare.add_argument("--updated-at", required=True)
     prepare.add_argument("--execution-mode", choices=sorted(EXECUTION_MODES), required=True)
     prepare.add_argument("--delivery-profile", choices=sorted(DELIVERY_PROFILES), default="full-assets")
@@ -680,6 +756,9 @@ def main() -> int:
             delivery_profile=args.delivery_profile,
             native_media_status=args.native_media_status,
             capability_limitations=args.capability_limitation,
+            scheduled_host_provenance=args.scheduled_host_provenance,
+            task_id=args.task_id,
+            actual_started_at=args.actual_started_at,
         )
     elif args.command == "advance":
         window_values = (args.window_start, args.window_end, args.window_timezone)

@@ -261,6 +261,54 @@ class MobileRunLogTests(unittest.TestCase):
         self.assertEqual("2026-08-18T04:00:00+09:00", current["scheduled_for"])
         self.assertEqual("mobile-native", current["execution_mode"])
 
+    def test_verified_scheduled_host_can_normalize_first_actual_start_when_scheduled_for_is_absent(self):
+        current = self.module.prepare_run(
+            self.ledger_dir,
+            run_id=RUN_1,
+            scheduled_for=None,
+            updated_at="2026-08-17T22:00:03Z",
+            execution_mode="mobile-native",
+            scheduled_host_provenance="verified_scheduled_task_trigger",
+            task_id="task-daily-news-001",
+            actual_started_at="2026-08-17T22:00:03Z",
+        )
+
+        self.assertEqual("2026-08-17T22:00:03Z", current["scheduled_for"])
+        self.assertEqual(
+            {
+                "source": "verified_host_start_fallback",
+                "task_id": "task-daily-news-001",
+                "first_actual_execution_at": "2026-08-17T22:00:03Z",
+            },
+            current["occurrence_authority"],
+        )
+
+    def test_missing_scheduled_for_rejects_chat_follow_up_or_unbound_task(self):
+        invalid_cases = (
+            {
+                "scheduled_host_provenance": "chat_follow_up",
+                "task_id": "task-daily-news-001",
+                "actual_started_at": "2026-08-17T22:00:03Z",
+            },
+            {
+                "scheduled_host_provenance": "verified_scheduled_task_trigger",
+                "task_id": None,
+                "actual_started_at": "2026-08-17T22:00:03Z",
+            },
+        )
+        for kwargs in invalid_cases:
+            with self.subTest(kwargs=kwargs), self.assertRaisesRegex(
+                ValueError, "verified Scheduled Task host provenance"
+            ):
+                self.module.prepare_run(
+                    self.ledger_dir,
+                    run_id=RUN_1,
+                    scheduled_for=None,
+                    updated_at="2026-08-17T22:00:03Z",
+                    execution_mode="mobile-native",
+                    **kwargs,
+                )
+
     def test_mobile_native_mode_and_candidate_audit_artifact_are_persisted(self):
         self.module.prepare_run(
             self.ledger_dir,

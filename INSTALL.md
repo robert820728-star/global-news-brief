@@ -10,6 +10,8 @@
 4. 新聞發現使用 GDELT、中央社與中新社三條 discovery routes；事件驗證依事件與主張角色動態選取原始、官方／主要及真正獨立的證據。
 5. 首次安裝或修正時先完整提交最新 task prompt，並依 Scheduled Task 控制面實際提供的驗證能力確認保存結果；再在建立或更新排程的目前對話，以獨立 capability probe 完成至少一條來源 bytes→本機媒體交付、原生圖片卡或已實測可用的頁面圖片區域截圖端到端路徑，通過後才啟用循環排程並執行一次完整測試。這是安裝期宿主能力測試，不是 Scheduled Task occurrence，也不要求立即觸發指定 task ID。
 
+`VERIFIED_SCHEDULED_HOST_START_FALLBACK`：`scheduled_for` 若由宿主結構化 metadata 提供，仍是第一權威。只有能驗證本訊息確由 Scheduled Task 宿主觸發、能取得同一控制面的 exact task ID，且能取得該次首次實際執行時間時，才可把該首次實際執行時間正規化存入既有 `scheduled_for` 欄位，並保存 `occurrence_authority.source=verified_host_start_fallback`、task ID 與原始時間。一般對話、人工 follow-up、訊息建立時間、模型看到的現在時間、排程預定字串或缺少 exact task ID 都不得使用此 fallback，也不得建立或恢復 run。
+
 ## 使用者啟動指令
 
 ### 可執行的 canonical prompt 安裝包
