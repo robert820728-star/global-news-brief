@@ -2349,7 +2349,7 @@
         {
           "end_line": 8,
           "index": 1,
-          "sha256": "dd5b6b8be6c7028c33cf78b379e2a2f97f46d56ab24792df0fcbb4b3152fee18",
+          "sha256": "b5efdd5bf53052daef28e234a194dfba39c99eb61e827ddc4ce822008ee18783",
           "size": 2056,
           "start_line": 1
         },
@@ -2375,11 +2375,11 @@
           "start_line": 25
         }
       ],
-      "encoded_sha256": "5b2bf7163aab45576ee2a2a4e86f1f95b3d56828495dd8f38a470dfc0575f96e",
+      "encoded_sha256": "196b35ad8d215cb54ccb4083bf4e5667afa46a152815ca673dc5b3d9f14e25dc",
       "encoded_size": 8192,
       "line_count": 32,
       "name": "capsule.part0061.txt",
-      "sha256": "29f0b7d7c8b724f3598ee490bef7efca1a035440093d171f4c11b42e4dfd7799",
+      "sha256": "f5ffc3b5cbaf9e75a604e8ec3e21958d27ea234ca3fafd7473a3d6aa6b9b2f2c",
       "size": 8224
     },
     {
@@ -2473,27 +2473,27 @@
         {
           "end_line": 16,
           "index": 2,
-          "sha256": "b9d4054be0ad7e0c64128efee9e8c97be4903725f453a7482206a4df16c7e803",
+          "sha256": "2884ce846494e3d1ad13566e2985461ee79531493dad26d3680399d4e785f5e2",
           "size": 2056,
           "start_line": 9
         },
         {
           "end_line": 21,
           "index": 3,
-          "sha256": "15f669cfdeb5c3b7594900f4ee907b64b58d2c3c0a7700b9745495a3fd9f53ad",
-          "size": 1093,
+          "sha256": "b72e2b0d36768a0e316946fc31d517a471fc8c248fc3954ff3d1d013cecbcf84",
+          "size": 1125,
           "start_line": 17
         }
       ],
-      "encoded_sha256": "f057232ecd09e10dbbabc6cf9e63a50ba56a9f14827a30d802201e44a4fe4ca8",
-      "encoded_size": 5184,
+      "encoded_sha256": "a95b11e48e81a11bee40c06788360ae4a7452c67523eaeb0ddaa0d7f718455ba",
+      "encoded_size": 5216,
       "line_count": 21,
       "name": "capsule.part0064.txt",
-      "sha256": "7eefe31362d91e866939a218b20baedfe84afef2ea9dbf4ab36481611ea89a38",
-      "size": 5205
+      "sha256": "bd2638eed0c923f55d56a2164600287f9029d21e8aa07ab25f78ef5622ea4bdf",
+      "size": 5237
     }
   ],
-  "encoded_size": 521280,
+  "encoded_size": 521312,
   "encoding": "base64",
   "line_width": 256,
   "loader": {
@@ -2506,12 +2506,12 @@
   "materialization_scope": "verified-runtime-capsule",
   "payload": {
     "name": "capsule-payload.tar.xz",
-    "sha256": "11c28f96cf40723228f30603a4f7136fca368717ae3febb0b4b4863bd73f8eb3",
-    "size": 390960,
-    "source_blob_sha": "0c787f1020574c398bfaca516c3cb54b2f334fca"
+    "sha256": "aeea1ac53949f31b66b383b1a6f8f66953358dc66182c480b236d92b45955892",
+    "size": 390984,
+    "source_blob_sha": "773dd8bcdb4ebd2c8f4c84798d7ec907dc05016d"
   },
-  "payload_sha256": "11c28f96cf40723228f30603a4f7136fca368717ae3febb0b4b4863bd73f8eb3",
-  "payload_size": 390960,
+  "payload_sha256": "aeea1ac53949f31b66b383b1a6f8f66953358dc66182c480b236d92b45955892",
+  "payload_size": 390984,
   "repository": "robert820728-star/global-news-brief",
   "retrieval_block_lines": 8,
   "runtime_file_count": 84,
@@ -2998,9 +2998,9 @@
     },
     {
       "path": "scripts/verify_scheduled_task_install.py",
-      "sha256": "4f72bb799e1dcaacb25048e6ab3708cc883a3c0de7f99e96040959e6815755fb",
-      "size": 4242,
-      "source_blob_sha": "bd09a5df76b493e762840ed04efa202229b53d7e"
+      "sha256": "158530cbab0d15245422f6b1e284096ead6d1687e47444ca81bc1559b184444e",
+      "size": 4429,
+      "source_blob_sha": "c2af95d22a4fc4e7e5d6865a9644ad9061243127"
     },
     {
       "path": "source-route-config.json",
@@ -3021,7 +3021,7 @@
       "source_blob_sha": "82179e799dd7558fa68f8cade43424b63a13dcc4"
     }
   ],
-  "runtime_fingerprint": "97a268e5e4b8dca201c508d7457295b071d1046976d7883e7c37260c8ff806f5",
+  "runtime_fingerprint": "42bd36fa5706738165c864a84e23863f1be609a3f1e5994294a13bb45c5303f6",
   "schema_version": "1.1.0",
-  "source_commit": "b84a7e9c66eef608f12c9334fa014c020f7d0644"
+  "source_commit": "fc91ffaabbcb4e1fb547fdcd163b97167cd71976"
 }
