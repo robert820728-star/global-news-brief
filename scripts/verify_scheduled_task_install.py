@@ -9,11 +9,18 @@ import json
 from pathlib import Path
 from typing import Any
 
-from scripts.build_scheduled_task_install_payload import (
-    MONITOR_PLACEHOLDER,
-    REGION_PLACEHOLDER,
-    _replace_one_line,
-)
+if __package__:
+    from scripts.build_scheduled_task_install_payload import (
+        MONITOR_PLACEHOLDER,
+        REGION_PLACEHOLDER,
+        _replace_one_line,
+    )
+else:
+    from build_scheduled_task_install_payload import (
+        MONITOR_PLACEHOLDER,
+        REGION_PLACEHOLDER,
+        _replace_one_line,
+    )
 
 
 def _sha256(payload: bytes) -> str:

@@ -1,4 +1,6 @@
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -60,6 +62,36 @@ class VerifyScheduledTaskInstallTests(unittest.TestCase):
             )
             self.assertFalse(report["verified"])
             self.assertTrue(any("saved prompt" in error for error in report["errors"]))
+
+    def test_documented_direct_cli_entrypoint_can_import_its_sibling_builder(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            template, result = self._payload(root)
+            saved = Path(result["saved_prompt_path"])
+            readback = root / "readback.txt"
+            readback.write_bytes(saved.read_bytes())
+            command = [
+                sys.executable,
+                str(Path(__file__).resolve().parents[1] / "scripts" / "verify_scheduled_task_install.py"),
+                "--template",
+                str(template),
+                "--saved-prompt",
+                str(saved),
+                "--receipt",
+                result["receipt_path"],
+                "--expected-main-sha",
+                MAIN_SHA,
+                "--readback",
+                str(readback),
+            ]
+            completed = subprocess.run(
+                command,
+                cwd=Path(__file__).resolve().parents[1],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(0, completed.returncode, completed.stdout + completed.stderr)
 
 
 if __name__ == "__main__":
