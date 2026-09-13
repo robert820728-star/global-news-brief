@@ -399,7 +399,7 @@ class PipelineContractTests(unittest.TestCase):
         ):
             self.assertIn(requirement, prompt)
         self.assertNotIn("maps/generated/taiwan-counties-yellow-v2.png", prompt)
-        self.assertNotIn("Do not disable the daily schedule", prompt)
+        self.assertIn("FORMAL_DAILY_TASK_RUNTIME_IMMUTABILITY_GATE", prompt)
         self.assertLess(
             prompt.index("SCHEDULED_HOST_CAPABILITY_ROUTING"),
             prompt.index("EARLY_DIAGNOSTIC_TREE_VERIFIED"),

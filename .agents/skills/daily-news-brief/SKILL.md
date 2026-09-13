@@ -9,6 +9,8 @@ description: Orchestrate the complete daily news brief with verified runtime-cap
 
 `VERIFIED_SCHEDULED_HOST_START_FALLBACK`：`scheduled_for` 若由宿主結構化 metadata 提供，仍是第一權威。只有能驗證本訊息確由 Scheduled Task 宿主觸發、能取得同一控制面的 exact task ID，且能取得該次首次實際執行時間時，才可把該首次實際執行時間正規化存入既有 `scheduled_for` 欄位，並保存 `occurrence_authority.source=verified_host_start_fallback`、task ID 與原始時間。一般對話、人工 follow-up、訊息建立時間、模型看到的現在時間、排程預定字串或缺少 exact task ID 都不得使用此 fallback，也不得建立或恢復 run。
 
+`FORMAL_DAILY_TASK_RUNTIME_IMMUTABILITY_GATE`：本技能進入任何執行期 occurrence 後，不得對正式每日 06:00 task 執行 `create／update／pause／disable／delete／reschedule／replace`，不論 run 成功、失敗、等待、超時或 fail-closed。執行期只能更新同一 run 的 ledger／blocker／artifact；task ID、saved prompt、時區、每日 06:00 recurrence、同對話 delivery 與 enabled 狀態保持不變。任何 stage 都不得停用正式 task或建立 replacement task；排程安裝／修復屬另一控制面流程。
+
 `EVERY_DAILY_NEWS_EXECUTION_GATE`：本技能的 manual, single-run, test, first-run, recurring, or resume 使用相同新聞與逐則可見圖片門檻。full-runtime 以本機附件交付；無本機 Python 的 ChatGPT Scheduled Task 在同一宿主通過原生圖片卡／頁面圖片區域截圖 smoke 後，依 `mobile-chatgpt-daily-prompt.md` 完整執行。不得把 URL、Markdown 熱連結、圖說或破圖框當成圖片，也不要求原始檔或原畫質。full-runtime 在 manifest 建立後以 manifest 作事件交換層；mobile-native 以同一 run 的 candidate audit 與 ledger bindings 作 publication authority。
 
 ## Execution-mode boundary

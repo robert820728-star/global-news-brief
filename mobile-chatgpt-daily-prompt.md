@@ -4,6 +4,8 @@
 
 `VERIFIED_SCHEDULED_HOST_START_FALLBACK`：`scheduled_for` 若由宿主結構化 metadata 提供，仍是第一權威。只有能驗證本訊息確由 Scheduled Task 宿主觸發、能取得同一控制面的 exact task ID，且能取得該次首次實際執行時間時，才可把該首次實際執行時間正規化存入既有 `scheduled_for` 欄位，並保存 `occurrence_authority.source=verified_host_start_fallback`、task ID 與原始時間。一般對話、人工 follow-up、訊息建立時間、模型看到的現在時間、排程預定字串或缺少 exact task ID 都不得使用此 fallback，也不得建立或恢復 run。
 
+`FORMAL_DAILY_TASK_RUNTIME_IMMUTABILITY_GATE`：mobile-native 的執行期 occurrence 不擁有排程控制權。正式每日 06:00 task 在 occurrence 內不得 `create／update／pause／disable／delete／reschedule／replace`，新聞 run 失敗、持久化失敗、圖片未交付、工作仍在進行或工具超時都不構成例外；只能更新同一 run 的 ledger／blocker／artifact，維持 task ID、saved prompt、時區、每日 06:00 recurrence、同對話 delivery 與 enabled 狀態不變。整輪都不得停用正式 task，也不得建立 replacement task。
+
 `EVERY_DAILY_NEWS_EXECUTION_GATE`／`SCHEDULED_HOST_VISIBLE_SCREENSHOT_ROUTE`：本檔是無本機 Python 的 ChatGPT Scheduled Task 執行路徑。排程安裝時必須已由同一 Scheduled Task／ChatGPT 工具執行面直接截圖公開頁面的圖片區域或交付原生圖片卡，並在目前對話確認可見像素；不要求 verified workspace、原始檔或原畫質。manual, single-run, test, first-run, recurring, or resume 的圖片門檻完全相同。實際 occurrence 在 discovery 前只確認原生圖片／截圖工具本身可呼叫；單次查詢沒有合格 image ref 不得改判成能力不存在。通過後不得在 discovery 後宣告 NATIVE_MEDIA_UNAVAILABLE，也不得把原圖下載、CDN、第一來源或單一圖片卡失敗當成圖片不可取得。
 
 `INDEPENDENT_VISIBLE_MEDIA_CAPABILITY_PROBE`：分別實測 `page_open`、`native_image_search`、`webpage_region_screenshot`、`source_media_byte_fetch` 與 `local_attachment_media_handoff`；任一成功不得推導另一項可用。能開 HTML 頁不代表能截圖；有 Python／可寫檔案系統不代表能取得來源 bytes 或交付本機附件。只走本輪已證明可完成的端到端媒體路徑。

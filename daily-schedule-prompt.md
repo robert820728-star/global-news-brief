@@ -4,6 +4,8 @@
 
 `VERIFIED_SCHEDULED_HOST_START_FALLBACK`：`scheduled_for` 若由宿主結構化 metadata 提供，仍是第一權威。只有能驗證本訊息確由 Scheduled Task 宿主觸發、能取得同一控制面的 exact task ID，且能取得該次首次實際執行時間時，才可把該首次實際執行時間正規化存入既有 `scheduled_for` 欄位，並保存 `occurrence_authority.source=verified_host_start_fallback`、task ID 與原始時間。一般對話、人工 follow-up、訊息建立時間、模型看到的現在時間、排程預定字串或缺少 exact task ID 都不得使用此 fallback，也不得建立或恢復 run。
 
+`FORMAL_DAILY_TASK_RUNTIME_IMMUTABILITY_GATE`：任何已授權的執行期 occurrence 都只能執行新聞 run；正式每日 06:00 task 是不可變控制面資源。成功、失敗、等待、超時或 fail-closed 均不得對正式 task 執行 `create／update／pause／disable／delete／reschedule／replace`，不得建立 replacement task；只能更新同一 run 的 ledger／blocker／artifact，並保持 task ID、saved prompt、時區、每日 06:00 recurrence、同對話 delivery 與 enabled 狀態不變。此「不得停用」不變式覆蓋從 occurrence authority 到 delivery 的全部 stage。
+
 `EVERY_DAILY_NEWS_EXECUTION_GATE`
 
 `VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`

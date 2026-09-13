@@ -12,6 +12,8 @@
 
 `VERIFIED_SCHEDULED_HOST_START_FALLBACK`：`scheduled_for` 若由宿主結構化 metadata 提供，仍是第一權威。只有能驗證本訊息確由 Scheduled Task 宿主觸發、能取得同一控制面的 exact task ID，且能取得該次首次實際執行時間時，才可把該首次實際執行時間正規化存入既有 `scheduled_for` 欄位，並保存 `occurrence_authority.source=verified_host_start_fallback`、task ID 與原始時間。一般對話、人工 follow-up、訊息建立時間、模型看到的現在時間、排程預定字串或缺少 exact task ID 都不得使用此 fallback，也不得建立或恢復 run。
 
+`FORMAL_DAILY_TASK_RUNTIME_IMMUTABILITY_GATE`：排程生命週期分成安裝／修復控制面與執行期 occurrence。只有在尚未開始 occurrence 的安裝／修復控制面，依 `SCHEDULE_TASK_SINGLETON_STATE_MACHINE` 鎖定 exact task ID 後，才可合法 create、update、暫停 smoke 失敗的 candidate 或重新啟用；一旦 occurrence 取得 authority，正式每日 06:00 task 即不可變。執行期 occurrence 不論成功、失敗、等待、超時或 fail-closed，都不得對正式 task 執行 `create／update／pause／disable／delete／reschedule／replace`，不得建立 replacement task；只能更新同一 run 的 ledger／blocker／artifact，並維持 task ID、saved prompt、帳號時區、每日 06:00 recurrence、同對話 delivery 與 enabled 狀態不變。執行期任何錯誤都以 run failure/recovery 表示，不得停用正式 task。
+
 ## 使用者啟動指令
 
 ### 可執行的 canonical prompt 安裝包

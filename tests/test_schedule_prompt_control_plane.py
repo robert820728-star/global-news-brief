@@ -335,6 +335,35 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
                 self.assertIn("scheduled_for", document)
                 self.assertIn("一般對話", document)
 
+    def test_runtime_occurrence_cannot_mutate_formal_daily_task(self):
+        runtime_documents = {
+            name: (ROOT / name).read_text(encoding="utf-8")
+            for name in (
+                "scheduled-task-prompt-template.md",
+                "daily-schedule-prompt.md",
+                "mobile-chatgpt-daily-prompt.md",
+                ".agents/skills/daily-news-brief/SKILL.md",
+            )
+        }
+        for name, document in runtime_documents.items():
+            with self.subTest(document=name):
+                self.assertIn("FORMAL_DAILY_TASK_RUNTIME_IMMUTABILITY_GATE", document)
+                self.assertIn("正式每日 06:00", document)
+                self.assertIn(
+                    "create／update／pause／disable／delete／reschedule／replace",
+                    document,
+                )
+                self.assertIn("只能更新同一 run", document)
+                self.assertIn("不得停用", document)
+
+    def test_installation_task_mutation_is_scoped_outside_runtime_occurrence(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        self.assertIn("FORMAL_DAILY_TASK_RUNTIME_IMMUTABILITY_GATE", install)
+        self.assertIn("安裝／修復控制面", install)
+        self.assertIn("尚未開始 occurrence", install)
+        self.assertIn("執行期 occurrence", install)
+        self.assertIn("只能更新同一 run", install)
+
 
 if __name__ == "__main__":
     unittest.main()
