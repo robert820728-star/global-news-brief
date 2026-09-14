@@ -364,6 +364,43 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
         self.assertIn("執行期 occurrence", install)
         self.assertIn("只能更新同一 run", install)
 
+    def test_context_loss_resumes_same_install_transaction_from_authorities(self):
+        install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
+        starters = {
+            name: (ROOT / name).read_text(encoding="utf-8")
+            for name in (
+                "README.md",
+                "mobile-chatgpt-start-prompt.md",
+            )
+        }
+
+        self.assertIn("INSTALL_CONTEXT_LOSS_RECOVERY_GATE", install)
+        for requirement in (
+            "上下文截斷",
+            "同一安裝 transaction",
+            "已鎖定的 immutable SHA",
+            "已取得的 exact task ID",
+            "重新取得",
+            "重建 canonical prompt",
+            "saved-prompt fingerprint",
+            "enabled",
+            "timezone",
+            "next_run_time",
+            "目前對話",
+            "不得重新 inventory",
+            "不得再次 create",
+            "不得改用新 main",
+        ):
+            with self.subTest(requirement=requirement):
+                self.assertIn(requirement, install)
+
+        self.assertIn("readback 回傳內容遺失不得授權 update", install)
+        self.assertIn("重新讀取同一 exact task ID", install)
+        for name, document in starters.items():
+            with self.subTest(starter=name):
+                self.assertIn("INSTALL_CONTEXT_LOSS_RECOVERY_GATE", document)
+                self.assertIn("不得重跑 inventory／create 或換 main", document)
+
 
 if __name__ == "__main__":
     unittest.main()

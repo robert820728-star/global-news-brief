@@ -33,6 +33,8 @@
 > `IMMUTABLE_INSTALL_MAIN_RESOLUTION_GATE`：先各產生一個 fresh UTC nonce，分別讀取 `https://api.github.com/repos/robert820728-star/global-news-brief/branches/main?cache_bust=<nonce-a>` 與 `https://api.github.com/repos/robert820728-star/global-news-brief/commits/main?cache_bust=<nonce-b>`。兩者必須回傳相同的 40 字元 SHA；若不同，用兩個新 nonce 重試整組一次，仍不同就回報兩個值並停止，不得猜測。之後只從 `https://raw.githubusercontent.com/robert820728-star/global-news-brief/<resolved-main-sha>/INSTALL.md` 讀取安裝契約，並從同一 `<resolved-main-sha>` 讀取 template 與安裝檔；mutable /main 不得作為本次安裝權威。
 >
 > 本次安裝意圖：ensure_singleton。區域：台灣、中國、世界。監控類型：預設。依該 immutable `INSTALL.md` 的 `INSTALL_CONTROL_PLANE_FAST_PATH`，把同一 SHA 的 `scheduled-task-prompt-template.md` 全文只替換允許的兩個 placeholder 並驗證。第一個控制面動作是 authoritative task inventory：存在唯一符合任務就取得 exact ID 並 update_existing；明確不存在才以完整 prompt create 一次；多筆相符記為 multiple_present；無法取得權威清單記為 unknown。multiple_present／unknown 不得盲建、不得宣稱安裝完成，也不得讀新聞 runtime 文件。請確保目前對話只有一個每天 06:00、使用目前帳號／對話時區、結果回覆目前對話的循環 Scheduled Task。取得 exact ID 後，所有 readback、可見圖片 smoke、啟用與 next-run 核對只綁定該 ID；create 結果不明時不得再次 create，須保存 actual control-plane error 與 operation identity 並查明原操作。smoke 通過才啟用，最後回覆 exact task ID、saved-prompt 驗證、時區、enabled、next run 與目前對話 delivery 證據。
+>
+> `INSTALL_CONTEXT_LOSS_RECOVERY_GATE`：上下文截斷時沿用已鎖定 SHA 與 exact ID，從該 SHA 重建 prompt/fingerprint，重讀同 ID 最終狀態；不得重跑 inventory／create 或換 main。
 
 安裝時確認兩項內容偏好與 Scheduled Task 自身的時間／時區：
 

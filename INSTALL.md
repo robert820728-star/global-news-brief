@@ -14,6 +14,8 @@
 
 `FORMAL_DAILY_TASK_RUNTIME_IMMUTABILITY_GATE`：排程生命週期分成安裝／修復控制面與執行期 occurrence。只有在尚未開始 occurrence 的安裝／修復控制面，依 `SCHEDULE_TASK_SINGLETON_STATE_MACHINE` 鎖定 exact task ID 後，才可合法 create、update、暫停 smoke 失敗的 candidate 或重新啟用；一旦 occurrence 取得 authority，正式每日 06:00 task 即不可變。執行期 occurrence 不論成功、失敗、等待、超時或 fail-closed，都不得對正式 task 執行 `create／update／pause／disable／delete／reschedule／replace`，不得建立 replacement task；只能更新同一 run 的 ledger／blocker／artifact，並維持 task ID、saved prompt、帳號時區、每日 06:00 recurrence、同對話 delivery 與 enabled 狀態不變。執行期任何錯誤都以 run failure/recovery 表示，不得停用正式 task。
 
+`INSTALL_CONTEXT_LOSS_RECOVERY_GATE`：上下文截斷、compaction 或工具回傳內容遺失，不得單獨把安裝判為失敗或 `INSTALL VERIFICATION INCOMPLETE`。只要同一安裝 transaction 已鎖定的 immutable SHA 與已取得的 exact task ID 仍可由目前對話、正式 task 回傳或 task 卡識別，就沿用兩者，不得改用新 main、不得重新 inventory、不得再次 create。從已鎖定的 immutable SHA 重新取得 `INSTALL.md`、`scheduled-task-prompt-template.md` 與兩個安裝 scripts，依相同區域／監控替換重建 canonical prompt、install receipt 與 saved-prompt fingerprint；再重新讀取同一 exact task ID 的 saved prompt（若控制面提供）、`enabled`、`timezone`、`next_run_time` 及目前對話 binding。readback 回傳內容遺失不得授權 update；只有重新讀取同一 exact task ID 後明確證明 saved prompt 不一致，才可依既有 exact-ID update 路徑修正。完整 prompt 不需要依賴模型記憶保存，immutable source 與 exact-ID control-plane state 才是恢復權威。若 exact task ID 本身不可恢復，依原 operation identity 查明既有操作，不得另建任務。
+
 ## 使用者啟動指令
 
 ### 可執行的 canonical prompt 安裝包
@@ -67,6 +69,8 @@ python scripts/verify_scheduled_task_install.py --template scheduled-task-prompt
 > `IMMUTABLE_INSTALL_MAIN_RESOLUTION_GATE`：先各產生一個 fresh UTC nonce，分別讀取 `https://api.github.com/repos/robert820728-star/global-news-brief/branches/main?cache_bust=<nonce-a>` 與 `https://api.github.com/repos/robert820728-star/global-news-brief/commits/main?cache_bust=<nonce-b>`。兩者必須回傳相同的 40 字元 SHA；若不同，用兩個新 nonce 重試整組一次，仍不同就回報兩個值並停止，不得猜測。之後只從 `https://raw.githubusercontent.com/robert820728-star/global-news-brief/<resolved-main-sha>/INSTALL.md` 讀取安裝契約，並從同一 `<resolved-main-sha>` 讀取 template 與安裝檔；mutable /main 不得作為本次安裝權威。
 >
 > 本次安裝意圖：ensure_singleton。區域：台灣、中國、世界。監控類型：預設。依該 immutable `INSTALL.md` 的 `INSTALL_CONTROL_PLANE_FAST_PATH`，把同一 SHA 的 `scheduled-task-prompt-template.md` 全文只替換允許的兩個 placeholder 並驗證。第一個控制面動作是 authoritative task inventory：存在唯一符合任務就取得 exact ID 並 update_existing；明確不存在才以完整 prompt create 一次；多筆相符記為 multiple_present；無法取得權威清單記為 unknown。multiple_present／unknown 不得盲建、不得宣稱安裝完成，也不得讀新聞 runtime 文件。請確保目前對話只有一個每天 06:00、使用目前帳號／對話時區、結果回覆目前對話的循環 Scheduled Task。取得 exact ID 後，所有 readback、可見圖片 smoke、啟用與 next-run 核對只綁定該 ID；create 結果不明時不得再次 create，須保存 actual control-plane error 與 operation identity 並查明原操作。smoke 通過才啟用，最後回覆 exact task ID、saved-prompt 驗證、時區、enabled、next run 與目前對話 delivery 證據。
+>
+> `INSTALL_CONTEXT_LOSS_RECOVERY_GATE`：上下文截斷時沿用已鎖定 SHA 與 exact ID，從該 SHA 重建 prompt/fingerprint，重讀同 ID 最終狀態；不得重跑 inventory／create 或換 main。
 
 收到後，以本文件為入口直接開始。使用者不必理解 YAML、三碼代碼、排程語法、schema 或 Git blob。
 
