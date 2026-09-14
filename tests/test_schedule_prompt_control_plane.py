@@ -401,6 +401,46 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
                 self.assertIn("INSTALL_CONTEXT_LOSS_RECOVERY_GATE", document)
                 self.assertIn("不得重跑 inventory／create 或換 main", document)
 
+    def test_control_plane_entry_is_state_disjoint_after_context_loss(self):
+        documents = {
+            name: (ROOT / name).read_text(encoding="utf-8")
+            for name in (
+                "INSTALL.md",
+                "README.md",
+                "mobile-chatgpt-start-prompt.md",
+                "daily-schedule-prompt.md",
+            )
+        }
+
+        for name, document in documents.items():
+            with self.subTest(document=name):
+                self.assertIn("new_without_exact_id", document)
+                self.assertIn("known_exact_id_resume", document)
+                self.assertIn("create_outcome_unknown", document)
+
+        install = documents["INSTALL.md"]
+        self.assertIn(
+            "new_without_exact_id 才以 authoritative task inventory 作為第一個控制面操作",
+            install,
+        )
+        self.assertIn(
+            "known_exact_id_resume 只重讀或更新同一 exact task ID",
+            install,
+        )
+        self.assertIn(
+            "create_outcome_unknown 只依原 operation identity 查明第一次結果",
+            install,
+        )
+        self.assertNotIn(
+            "main pin 與 outbound payload 驗證後，第一個控制面操作必須是",
+            install,
+        )
+        self.assertIn(
+            "入口狀態解析完成後的第一個 mutation",
+            install,
+        )
+        self.assertNotIn("控制面第一步必須先把", install)
+
 
 if __name__ == "__main__":
     unittest.main()
