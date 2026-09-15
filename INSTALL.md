@@ -326,8 +326,10 @@ Stage 12 與 13 的 full-runtime 指令介面如下；`--artifact` 對每個必�
 <bundled-python> scripts/manage_canonical_run_bundle.py pack --run-id <run-id> --transport-dir <transport-dir> --manifest <bundle-manifest> --artifact checkpoint=<checkpoint> --artifact reader=<reader> --artifact release-receipt=<release-dir>/release-receipt.json
 <bundled-python> scripts/manage_canonical_run_bundle.py verify --manifest <bundle-manifest> --transport-dir <transport-dir>
 <bundled-python> scripts/manage_canonical_run_bundle.py restore --manifest <bundle-manifest> --transport-dir <transport-dir> --output-dir <restore-proof-dir>
-<bundled-python> scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-receipt.json --checkpoint <checkpoint> --conversation-transport
+<bundled-python> scripts/publish_news_brief.py --resume-before-deliver <release-dir>/release-receipt.json --checkpoint <checkpoint> --conversation-transport
 ```
+
+此命令是最後回覆前的唯一控制入口，不是單純 receipt 檢查。checkpoint 尚未完成時，它回傳 `action=resume_required` 與第一個 `target_stage`；這是同一 run 的內部續跑決策，必須完成該 stage 後再次呼叫，不得直接回覆使用者。全部 required stages 已完成但 receipt 缺少或失效時，它會自動重建 canonical release／receipt 並交付。只有 bounded same-stage recovery 真正耗盡時才回覆 blocker。
 
 `pack` 命令列出的三個 `--artifact` 只是語法示例，不是完整清單；實際發布必須把本輪 candidate audit、完整 `article_dispositions`、image evidence、materialized images、map decisions、checkpoint、counts、event manifest、reader、attachments index、release receipt 及其他宣稱交付的附件全部逐項加入。完成 `pack` 後先 `verify`，上傳 transport 與 `logs/current.json` 的單一 atomic commit，再從該 commit 下載並 `restore`；只有重組後 byte identity 一致才可執行 Stage 13。
 

@@ -62,8 +62,10 @@ class DeliveryRuntimeRevalidationTests(unittest.TestCase):
                 setattr(main, name, value)
             old_argv = sys.argv[:]
             try:
-                sys.argv = ["publish_news_brief.py", "--deliver-receipt", str(receipt), "--checkpoint", str(files["checkpoint"])]
-                errors = MODULE._runtime_revalidation_errors(ROOT)
+                observed = []
+                for delivery_flag in ("--deliver-receipt", "--resume-before-deliver"):
+                    sys.argv = ["publish_news_brief.py", delivery_flag, str(receipt), "--checkpoint", str(files["checkpoint"])]
+                    observed.append(MODULE._runtime_revalidation_errors(ROOT))
             finally:
                 sys.argv = old_argv
                 for name, value in old.items():
@@ -71,7 +73,8 @@ class DeliveryRuntimeRevalidationTests(unittest.TestCase):
                         delattr(main, name)
                     else:
                         setattr(main, name, value)
-            self.assertIn("REVALIDATED", errors)
+            for errors in observed:
+                self.assertIn("REVALIDATED", errors)
 
 
 if __name__ == "__main__":

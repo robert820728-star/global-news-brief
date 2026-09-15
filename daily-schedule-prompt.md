@@ -300,17 +300,17 @@ Bundle persistence is executable, not a prose-only obligation. First run `script
 - publisher 建立 `release-receipt.json`；
 - 交付當下 publisher 再次 revalidate bootstrap binding、checkpoint、manifest、audit、source pool、brief、attachments 與 map decisions。
 
-最後正式輸出只能由以下命令的 stdout 直接交付，不得在 stdout 前後自行添加文字，也不得重新讀取 release 後轉貼。`--conversation-transport` 只把 canonical Markdown 的本機圖片路徑轉成 ChatGPT 可顯示的 `sandbox:` URI；不得改寫 canonical release、receipt、文字、圖說或 SHA-256：
+在撰寫任何使用者可見回覆前，必須呼叫以下唯一 resume/delivery 控制入口。它會先檢查同一 run 的 checkpoint：若尚有未完成 stage，stdout 只回傳 `action=resume_required` 與 `target_stage`，這是內部續跑指令，不是使用者回覆；完成該 stage 後再次呼叫。若 required stages 已完成但 receipt 缺少或失效，命令會自動重建 canonical release／receipt，再交付。只有它輸出的 Reader bytes 可以成為最後回覆，不得在 stdout 前後自行添加文字，也不得重新讀取 release 後轉貼。`--conversation-transport` 只把 canonical Markdown 的本機圖片路徑轉成 ChatGPT 可顯示的 `sandbox:` URI；不得改寫 canonical release、receipt、文字、圖說或 SHA-256：
 
 ```bash
-<bundled-python> scripts/publish_news_brief.py --deliver-receipt <release-dir>/release-receipt.json --checkpoint <checkpoint> --conversation-transport
+<bundled-python> scripts/publish_news_brief.py --resume-before-deliver <release-dir>/release-receipt.json --checkpoint <checkpoint> --conversation-transport
 ```
 
-若此命令失敗或 stdout 為空，回到對應 recovery stage；不得改用手工摘要或舊 release 冒充成功。
+`resume_required` 不是 blocker，也不得對使用者輸出；必須留在同一 occurrence／run，由第一個未完成 stage 繼續。只有同一 stage 的 bounded recovery 真正耗盡，才可回覆精簡 blocker receipt。不得改用手工摘要或舊 release 冒充成功。
 
 ## 成功與失敗的判定
 
-只有 canonical delivery command 成功輸出 reader bytes，才算本輪每日新聞成功。
+只有 canonical resume/delivery command 成功輸出 reader bytes，才算本輪每日新聞成功。
 
 下列都不算成功：
 

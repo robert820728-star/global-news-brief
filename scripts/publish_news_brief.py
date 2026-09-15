@@ -2,7 +2,8 @@
 """Canonical fail-closed release and delivery gate for the daily news brief."""
 from __future__ import annotations
 
-import argparse, hashlib, json, os, re, sys, tempfile
+import argparse, hashlib, io, json, os, re, sys, tempfile
+from contextlib import redirect_stderr, redirect_stdout
 from datetime import datetime
 from pathlib import Path
 from PIL import Image
@@ -283,7 +284,9 @@ def publish(args) -> int:
         except (OSError, ValueError, json.JSONDecodeError) as error:
             print(f"RELEASE BLOCKED: source-row admissions: {error}", file=sys.stderr)
             return 2
-    errors = gate_check.validate_repository(ROOT)
+    # Publication creates the receipt, so delivery-time receipt revalidation is
+    # intentionally deferred until the subsequent deliver() call.
+    errors = gate_check.validate_repository(ROOT, runtime_delivery=False)
     errors += checkpoint_errors(cp, manifest, audit, paths)
     errors += candidate_errors(audit, manifest, pool, row_admissions)
     errors += attachment_errors(manifest)
@@ -377,11 +380,129 @@ def deliver(path: Path, cp: Path, conversation: bool = False) -> int:
     sys.stdout.buffer.write(conversation_transport(data) if conversation else data); return 0
 
 
+def _checkpoint_artifact_path(
+    checkpoint: dict, stage: str, name: str
+) -> Path | None:
+    binding = (
+        checkpoint.get("stage_evidence", {})
+        .get(stage, {})
+        .get("artifacts", {})
+        .get(name)
+    )
+    if not isinstance(binding, dict) or not str(binding.get("path", "")).strip():
+        return None
+    return Path(str(binding["path"]))
+
+
+def first_resume_stage(checkpoint: dict) -> tuple[str | None, str | None]:
+    """Find the first stage that must be resumed before delivery is attempted."""
+    statuses = checkpoint.get("stage_status", {})
+    if not isinstance(statuses, dict):
+        return "source-scan", "checkpoint.stage_status 無效"
+    for stage in checkpoint_lib.RELEASE_REQUIRED_STAGES:
+        state = statuses.get(stage)
+        if state != "completed":
+            return stage, f"{stage}={state or 'missing'}"
+        for name in checkpoint_lib.REQUIRED_STAGE_ARTIFACTS[stage]:
+            artifact = _checkpoint_artifact_path(checkpoint, stage, name)
+            if artifact is None:
+                return stage, f"{stage}.{name} 缺少 artifact binding"
+            errors = checkpoint_lib.verify_bound_artifact(
+                checkpoint, stage, name, artifact
+            )
+            if errors:
+                return stage, errors[0]
+    return None, None
+
+
+def emit_resume_decision(
+    checkpoint: dict, target_stage: str, reason: str
+) -> int:
+    print(json.dumps({
+        "action": "resume_required",
+        "run_id": checkpoint.get("run_id"),
+        "target_stage": target_stage,
+        "reason": reason,
+        "continue_required": True,
+        "reader_delivery_authorized": False,
+    }, ensure_ascii=False))
+    return 0
+
+
+def resume_before_deliver(
+    receipt_path: Path, checkpoint_path: Path, conversation: bool = False
+) -> int:
+    """Deliver an authorized release or return the same run's next recovery action.
+
+    An incomplete run is normal controller state, not a terminal delivery error.
+    When every stage and artifact binding is complete, a missing or invalid receipt
+    is rebuilt once from the checkpoint-bound canonical inputs before delivery.
+    """
+    try:
+        checkpoint = checkpoint_lib.load(checkpoint_path)
+    except (OSError, ValueError, json.JSONDecodeError) as error:
+        print(f"DELIVERY RECOVERY BLOCKED: checkpoint 無法讀取：{error}", file=sys.stderr)
+        return 2
+
+    target_stage, reason = first_resume_stage(checkpoint)
+    if target_stage is not None:
+        return emit_resume_decision(checkpoint, target_stage, reason or "stage incomplete")
+
+    if receipt_path.is_file():
+        errors, _, data = validate_receipt(receipt_path, checkpoint_path)
+        if not errors and data is not None:
+            sys.stdout.buffer.write(
+                conversation_transport(data) if conversation else data
+            )
+            return 0
+
+    manifest = _checkpoint_artifact_path(checkpoint, "render", "manifest")
+    audit = _checkpoint_artifact_path(
+        checkpoint, "audit-news-candidates", "candidate_audit"
+    )
+    brief = _checkpoint_artifact_path(checkpoint, "render", "brief")
+    if manifest is None or audit is None or brief is None:
+        return emit_resume_decision(
+            checkpoint,
+            "render",
+            "canonical publish inputs 缺少 checkpoint binding",
+        )
+
+    publish_output = io.StringIO()
+    publish_errors = io.StringIO()
+    args = argparse.Namespace(
+        checkpoint=str(checkpoint_path),
+        manifest=str(manifest),
+        audit=str(audit),
+        source_pool=str(ROOT / "news-source-pool.json"),
+        brief=str(brief),
+        output_dir=str(receipt_path.parent),
+    )
+    with redirect_stdout(publish_output), redirect_stderr(publish_errors):
+        result = publish(args)
+    if result == 0:
+        return deliver(receipt_path, checkpoint_path, conversation)
+
+    detail = publish_errors.getvalue().strip() or publish_output.getvalue().strip()
+    return emit_resume_decision(
+        checkpoint,
+        "validate",
+        detail or "canonical publisher requires repair",
+    )
+
+
 def main() -> int:
-    p=argparse.ArgumentParser(); p.add_argument("--verify-receipt"); p.add_argument("--deliver-receipt"); p.add_argument("--checkpoint")
+    p=argparse.ArgumentParser(); p.add_argument("--verify-receipt"); p.add_argument("--deliver-receipt"); p.add_argument("--resume-before-deliver"); p.add_argument("--checkpoint")
     p.add_argument("--conversation-transport", action="store_true")
     p.add_argument("--manifest"); p.add_argument("--audit"); p.add_argument("--source-pool", default=str(ROOT/"news-source-pool.json")); p.add_argument("--brief"); p.add_argument("--output-dir")
     a=p.parse_args()
+    if a.resume_before_deliver:
+        if not a.checkpoint: p.error("--resume-before-deliver 必須同時提供 --checkpoint")
+        return resume_before_deliver(
+            Path(a.resume_before_deliver),
+            Path(a.checkpoint),
+            a.conversation_transport,
+        )
     if a.deliver_receipt:
         if not a.checkpoint: p.error("--deliver-receipt 必須同時提供 --checkpoint")
         return deliver(Path(a.deliver_receipt), Path(a.checkpoint), a.conversation_transport)

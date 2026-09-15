@@ -66,10 +66,18 @@ def _visual_paths(manifest: dict[str, Any]) -> dict[str, Path]:
 
 def _runtime_revalidation_errors(root: Path) -> list[str]:
     """Called *inside* the canonical publisher immediately before it emits bytes."""
-    if "--deliver-receipt" not in sys.argv:
+    delivery_flag = next(
+        (
+            flag
+            for flag in ("--resume-before-deliver", "--deliver-receipt")
+            if flag in sys.argv
+        ),
+        None,
+    )
+    if delivery_flag is None:
         return []
     errors: list[str] = []
-    receipt_arg, checkpoint_arg = _arg("--deliver-receipt"), _arg("--checkpoint")
+    receipt_arg, checkpoint_arg = _arg(delivery_flag), _arg("--checkpoint")
     if not receipt_arg or not checkpoint_arg:
         return ["canonical delivery 必須同時提供 receipt 與目前 checkpoint"]
     receipt = _json(Path(receipt_arg), "release receipt", errors)
@@ -141,7 +149,7 @@ def _runtime_revalidation_errors(root: Path) -> list[str]:
     return errors
 
 
-def validate_repository(root: Path) -> list[str]:
+def validate_repository(root: Path, *, runtime_delivery: bool = True) -> list[str]:
     errors: list[str] = []
     scripts = root / "scripts"
     publisher = scripts / "publish_news_brief.py"
@@ -161,12 +169,13 @@ def validate_repository(root: Path) -> list[str]:
     else:
         text = prompt.read_text(encoding="utf-8")
         marker = "DELIVERY_GATE_CANONICAL=scripts/publish_news_brief.py"
-        deliver = "--deliver-receipt <release-dir>/release-receipt.json --checkpoint <checkpoint> --conversation-transport"
+        deliver = "--resume-before-deliver <release-dir>/release-receipt.json --checkpoint <checkpoint> --conversation-transport"
         if text.count(marker) != 1:
             errors.append("daily-schedule-prompt.md 必須且只能宣告一次 DELIVERY_GATE_CANONICAL")
         if text.count(deliver) != 1:
-            errors.append("daily-schedule-prompt.md 必須且只能宣告一次 canonical receipt 交付命令")
-    errors += _runtime_revalidation_errors(root)
+            errors.append("daily-schedule-prompt.md 必須且只能宣告一次 canonical resume/delivery 命令")
+    if runtime_delivery:
+        errors += _runtime_revalidation_errors(root)
     return errors
 
 

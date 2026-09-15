@@ -18,7 +18,7 @@ class PipelineContractTests(unittest.TestCase):
             install,
         )
         self.assertIn(
-            "<bundled-python> scripts/publish_news_brief.py --deliver-receipt "
+            "<bundled-python> scripts/publish_news_brief.py --resume-before-deliver "
             "<release-dir>/release-receipt.json --checkpoint <checkpoint> "
             "--conversation-transport",
             install,

@@ -5,6 +5,8 @@ description: Orchestrate the complete daily news brief with verified runtime-cap
 
 # 每日新聞主控
 
+`RESUME_BEFORE_REPLY_GATE`：在任何使用者可見回覆前，full-runtime 必須執行 `<bundled-python> scripts/publish_news_brief.py --resume-before-deliver <release-dir>/release-receipt.json --checkpoint <checkpoint> --conversation-transport`。`action=resume_required` 是同一 run 的內部續跑決策，不是 blocker；執行回傳的第一個 `target_stage` 後重呼此命令。required stages 已完成但 receipt 缺少或失效時，命令自動重建 canonical release／receipt。只有本命令輸出的 Reader bytes 可成為最後回覆；只有 bounded same-stage recovery 真正耗盡時才可回覆精簡 blocker。不得手工輸出 Reader。
+
 `CHAT_CONTINUATION_IS_NOT_SCHEDULED_OCCURRENCE_GATE`：只有 Scheduled Task 控制面真正觸發並提供可核對的 `scheduled_for`，才可建立或恢復 occurrence／run。一般對話中的「重新執行」、「再跑一次」或貼上舊結果不是 task trigger；manual、single-run、test 與 resume 只指帶有 `scheduled_for` 的實際 task occurrence。缺少 authority 時不得 fresh resolve main、不得建立或恢復 run、不得執行新聞 discovery，也不得輸出 Reader；只能回覆精簡 `lifecycle blocker receipt`。
 
 `VERIFIED_SCHEDULED_HOST_START_FALLBACK`：`scheduled_for` 若由宿主結構化 metadata 提供，仍是第一權威。只有能驗證本訊息確由 Scheduled Task 宿主觸發、能取得同一控制面的 exact task ID，且能取得該次首次實際執行時間時，才可把該首次實際執行時間正規化存入既有 `scheduled_for` 欄位，並保存 `occurrence_authority.source=verified_host_start_fallback`、task ID 與原始時間。一般對話、人工 follow-up、訊息建立時間、模型看到的現在時間、排程預定字串或缺少 exact task ID 都不得使用此 fallback，也不得建立或恢復 run。

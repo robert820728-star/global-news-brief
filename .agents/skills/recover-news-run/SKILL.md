@@ -76,6 +76,8 @@ mobile-native ledger 可由同一 Scheduled Task occurrence 從 first incomplete
 
 full-runtime 只有所有 required stages 都為 `completed`、candidate audit 與 manifest selected ids 一一對應、讀者版與 manifest 一致、所有宣稱 ready 或 `claim_critical=true` 的附件存在且視覺驗證通過、沒有 unresolved recovery target 時，才可交給 `scripts/publish_news_brief.py`。mobile-native 則要求 run-scoped audit 的 selected ids 與 Reader 守恆、上述 artifact boundaries 已綁定、沒有 unresolved recovery target，才可進 `delivery-handoff`。來源確實沒有合格圖片時的非關鍵 omitted 視覺不是 recovery target；已確認圖片的交付失敗則是 recovery target，不論 `claim_critical`。恢復工具本身永遠不直接對使用者輸出草稿或 release。
 
+最後回覆前以 `publish_news_brief.py --resume-before-deliver` 取得唯一決策。`resume_required` 必須回到同一 run 的 `target_stage`，不是向使用者宣告失敗；required stages 已完成但 receipt 缺少或失效時，由該命令自動重建再交付。只有 bounded recovery 耗盡才允許 blocker receipt。
+
 
 ## Conditional pre-manifest recovery boundary
 

@@ -357,6 +357,114 @@ def publish_command(checkpoint, manifest, audit, brief, release_dir):
 
 
 class PublisherTests(unittest.TestCase):
+    def test_resume_before_deliver_continues_first_incomplete_stage_without_emitting_manual_reader(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint = news_run_checkpoint.create_checkpoint(
+                RUN_ID,
+                "2026-08-13T06:00:00+08:00",
+                "2026-08-14T06:00:00+08:00",
+            )
+            for stage in ("source-scan", "preprocess-news-candidates"):
+                news_run_checkpoint.mark_stage(checkpoint, stage, "running")
+                artifacts = []
+                for name in news_run_checkpoint.REQUIRED_STAGE_ARTIFACTS[stage]:
+                    artifact = root / f"{stage}-{name}.json"
+                    artifact.write_text("{}", encoding="utf-8")
+                    artifacts.append(f"{name}={artifact}")
+                news_run_checkpoint.mark_stage(
+                    checkpoint, stage, "completed", artifacts
+                )
+            checkpoint_path = root / "checkpoint.json"
+            news_run_checkpoint.save(checkpoint_path, checkpoint)
+            manual_reader = root / "latest-reader.md"
+            manual_reader.write_text("# 手工 Reader 不得交付", encoding="utf-8")
+
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(PUBLISHER),
+                    "--resume-before-deliver",
+                    str(root / "release" / "release-receipt.json"),
+                    "--checkpoint",
+                    str(checkpoint_path),
+                    "--conversation-transport",
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+            self.assertEqual(0, result.returncode, result.stderr)
+            decision = json.loads(result.stdout)
+            self.assertEqual("resume_required", decision["action"])
+            self.assertEqual("select-news-events", decision["target_stage"])
+            self.assertTrue(decision["continue_required"])
+            self.assertFalse(decision["reader_delivery_authorized"])
+            self.assertNotIn("手工 Reader", result.stdout)
+
+    def test_resume_before_deliver_rebuilds_missing_receipt_and_delivers(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint, _, _, brief = prepare_inputs(root)
+            receipt = root / "release" / "release-receipt.json"
+
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(PUBLISHER),
+                    "--resume-before-deliver",
+                    str(receipt),
+                    "--checkpoint",
+                    str(checkpoint),
+                    "--conversation-transport",
+                ],
+                capture_output=True,
+                check=False,
+            )
+
+            self.assertEqual(0, result.returncode, result.stderr.decode())
+            self.assertTrue(receipt.is_file())
+            self.assertEqual(
+                publish_news_brief.conversation_transport(Path(brief).read_bytes()),
+                result.stdout,
+            )
+
+    def test_resume_before_deliver_rebuilds_invalid_receipt_and_delivers(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint, manifest, audit, brief = prepare_inputs(root)
+            release_dir = root / "release"
+            published = subprocess.run(
+                publish_command(checkpoint, manifest, audit, brief, release_dir),
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(0, published.returncode, published.stderr)
+            receipt = release_dir / "release-receipt.json"
+            receipt.write_text("{}", encoding="utf-8")
+
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(PUBLISHER),
+                    "--resume-before-deliver",
+                    str(receipt),
+                    "--checkpoint",
+                    str(checkpoint),
+                    "--conversation-transport",
+                ],
+                capture_output=True,
+                check=False,
+            )
+
+            self.assertEqual(0, result.returncode, result.stderr.decode())
+            self.assertEqual(
+                publish_news_brief.conversation_transport(Path(brief).read_bytes()),
+                result.stdout,
+            )
+
     def test_candidate_mapping_rejects_nonvalidated_manifest_grade(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
