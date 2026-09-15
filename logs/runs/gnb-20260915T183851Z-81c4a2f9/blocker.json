@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "run_id": "gnb-20260915T183851Z-81c4a2f9",
+  "task_id": "6aa98734e52c8191a127de35f968c387",
+  "scheduled_for": "2026-09-15T18:03:12Z",
+  "main_sha": "d6b6bb8670e670559d32a5c0a255d659671becd1",
+  "execution_mode": "full-runtime",
+  "window": {
+    "start": "2026-09-14T18:38:51Z",
+    "end": "2026-09-15T18:38:51Z"
+  },
+  "status": "failed_closed",
+  "current_stage": "source-scan",
+  "last_completed_stage": "bootstrap-workspace",
+  "source_discovery": {
+    "raw_rows": 20393,
+    "gdelt_rows": 19513,
+    "cna_rows": 349,
+    "chinanews_rows": 531,
+    "configured_routes_complete": 3
+  },
+  "article_hydration": {
+    "batch_count": 1020,
+    "terminal_content_ready": 877,
+    "outside_window": 3,
+    "unresolved": 19513,
+    "by_source": {
+      "cna": {
+        "content_ready": 349
+      },
+      "chinanews": {
+        "content_ready": 528,
+        "outside_window": 3
+      },
+      "gdelt": {
+        "unresolved": 19513
+      }
+    }
+  },
+  "earliest_blocker": {
+    "code": "GDELT_HYDRATION_SOURCE_BOUNDARY_DEADLOCK",
+    "message": "The pinned canonical hydrate_source_rows.py rejects every GDELT publisher URL because SOURCE_ROOTS has no gdelt mapping, while source-row admission requires article evidence for every discovery row.",
+    "deterministic_error": "ValueError: hydration URL must remain on configured gdelt source site",
+    "bounded_attempts": 3,
+    "affected_rows": 19513
+  },
+  "publisher_decision": {
+    "action": "resume_required",
+    "target_stage": "source-scan",
+    "reader_delivery_authorized": false
+  },
+  "remaining": [
+    "source_row_admissions",
+    "preprocess-news-candidates",
+    "select-news-events",
+    "audit-news-candidates",
+    "manifest",
+    "verification",
+    "maps",
+    "charts",
+    "images",
+    "render",
+    "release",
+    "canonical bundle"
+  ],
+  "reader_delivered": false
+}
