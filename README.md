@@ -4,15 +4,19 @@
 
 ## 執行環境
 
-`SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE`：名稱保留作相容識別；實際門檻是同一 Scheduled Task 宿主完成任一條已獨立驗證的端到端可見媒體路徑，並非強制使用 screenshot。
+`USABLE_FIRST_SCHEDULE_INSTALL_GATE`：提交前驗證完整 canonical prompt，並以單一 create／update 同時提交每天 06:00、帳號時區、目前對話與 `enabled=true`；控制面成功回傳 exact task ID 即完成可用安裝。
+
+`POST_INSTALL_DIAGNOSTICS_GATE`：saved-prompt／timezone／next-run readback 與 visible-media smoke 是安裝後診斷。缺失時標記 `verification_partial`，不得暫停、停用、刪除、重建或另建正式 task。
+
+`SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE`：名稱保留作相容識別；實際用途是安裝後診斷同一 Scheduled Task 宿主的可見媒體路徑，並非 recurrence eligibility gate。
 
 `CHAT_CONTINUATION_IS_NOT_SCHEDULED_OCCURRENCE_GATE`：只有 Scheduled Task 控制面真正觸發並提供可核對的 `scheduled_for`，才可建立或恢復 occurrence／run。一般對話中的「重新執行」、「再跑一次」或貼上舊結果不是 task trigger；manual、single-run、test 與 resume 只指帶有 `scheduled_for` 的實際 task occurrence。缺少 authority 時不得 fresh resolve main、不得建立或恢復 run、不得執行新聞 discovery，也不得輸出 Reader；只能回覆精簡 `lifecycle blocker receipt`。
 
 `EVERY_DAILY_NEWS_EXECUTION_GATE`／`VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE`：manual, single-run, test, first-run, recurring, or resume 使用相同新聞與逐則可見圖片門檻。依獨立 capability probe，完整本機媒體鏈可交付本機附件；ChatGPT Scheduled Task 也可使用原生圖片卡或已實測可用的頁面圖片區域截圖。不要求原始檔或原畫質，且不得由能開頁面推導能截圖。
 
-`SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`／`SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE`／`SCHEDULE_PROMPT_EXACT_ID_READBACK_ONLY_GATE`：先完成互斥入口狀態解析；第一個 mutation 才以最新版完整範本 create／update saved prompt。控制面支援同一 namespace 的 exact task ID readback 時必須讀回逐字核對；沒有 exact-ID view 時，由提交前核對證明完整 prompt payload，正式 create／update 結果核對 task ID、成功狀態、排程時間、時區及目前對話。scope 不明的一般 list 空結果不得推翻 create 成功，也不得盲建重複排程。其後以同一 Scheduled Task 工具執行面獨立探測並完成至少一條端到端可見媒體路徑：可驗證的來源 bytes→解碼／雜湊→本機媒體交付、原生圖片卡，或已實測可用的頁面圖片區域截圖；不需要 repository bootstrap 或台灣底圖。失敗時保留最新版 prompt 並暫停 task。
+`SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`／`SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE`／`SCHEDULE_PROMPT_EXACT_ID_READBACK_ONLY_GATE`：先完成互斥入口狀態解析；第一個 mutation 以最新版完整範本與完整 schedule desired state create／update。正式成功回傳 exact task ID 後保持 `enabled=true`。可用的 exact-ID readback 用於增加證據；缺失或截斷記為 `verification_partial`，一般 list 空結果不得推翻成功回傳。其後的可見媒體 smoke 只診斷路由，不改變正式 task。
 
-`INSTALL_CONTROL_PLANE_FAST_PATH`／`SINGLETON_SCHEDULE_INSTALL_GATE`：canonical 安裝使用 `ensure_singleton`，入口狀態互斥。`new_without_exact_id` 先取得 authoritative task inventory；`known_exact_id_resume` 只重讀或更新同一 ID；`create_outcome_unknown` 只查明原 operation identity。後兩者不得重新 inventory／create；`multiple_present` 或 `unknown` 不得盲建、不得宣稱完成。
+`INSTALL_CONTROL_PLANE_FAST_PATH`／`SINGLETON_SCHEDULE_INSTALL_GATE`：canonical 安裝使用 `ensure_singleton`。`new_without_exact_id` 先取得 authoritative inventory；`known_exact_id_resume` 對同一 ID 冪等提交 desired state；`create_outcome_unknown` 只查明原 operation。後兩者不得重新 inventory／create；`multiple_present` 或無 exact ID 的 `unknown` 不得盲建。
 
 `IMMUTABLE_INSTALL_MAIN_RESOLUTION_GATE`：可貼入新對話的安裝入口必須先用兩個 fresh nonce 交叉解析 main，再只從兩端點同意的 immutable 40 字元 SHA 讀取 `INSTALL.md` 與 template。mutable `/main/` 不得作為安裝權威，避免 GitHub raw cache 讓已修正的 singleton 規則被舊版 lifecycle 文字覆蓋。
 
@@ -30,11 +34,11 @@
 
 > 每日新聞排程
 >
-> `IMMUTABLE_INSTALL_MAIN_RESOLUTION_GATE`：先各產生一個 fresh UTC nonce，分別讀取 `https://api.github.com/repos/robert820728-star/global-news-brief/branches/main?cache_bust=<nonce-a>` 與 `https://api.github.com/repos/robert820728-star/global-news-brief/commits/main?cache_bust=<nonce-b>`。兩者必須回傳相同的 40 字元 SHA；若不同，用兩個新 nonce 重試整組一次，仍不同就回報兩個值並停止，不得猜測。之後只從 `https://raw.githubusercontent.com/robert820728-star/global-news-brief/<resolved-main-sha>/INSTALL.md` 讀取安裝契約，並從同一 `<resolved-main-sha>` 讀取 template 與安裝檔；mutable /main 不得作為本次安裝權威。
+> 請依 GitHub repository `robert820728-star/global-news-brief` 最新 main 的 `INSTALL.md`，完整安裝並確保只有一個「每日新聞」ChatGPT Scheduled Task。
 >
-> 本次安裝意圖：ensure_singleton。區域：台灣、中國、世界。監控類型：預設。依該 immutable `INSTALL.md` 的 `INSTALL_CONTROL_PLANE_FAST_PATH`，把同一 SHA 的 `scheduled-task-prompt-template.md` 全文只替換允許的兩個 placeholder 並驗證。只有 new_without_exact_id 的第一個控制面動作是 authoritative task inventory：存在唯一符合任務就取得 exact ID 並 update_existing；明確不存在才以完整 prompt create 一次；多筆相符記為 multiple_present；無法取得權威清單記為 unknown。known_exact_id_resume 直接重讀同一 ID；create_outcome_unknown 只查明原操作。multiple_present／unknown 不得盲建、不得宣稱安裝完成，也不得讀新聞 runtime 文件。請確保目前對話只有一個每天 06:00、使用目前帳號／對話時區、結果回覆目前對話的循環 Scheduled Task。取得 exact ID 後，所有 readback、可見圖片 smoke、啟用與 next-run 核對只綁定該 ID；create 結果不明時不得再次 create。smoke 通過才啟用，最後回覆 exact task ID、saved-prompt 驗證、時區、enabled、next run 與目前對話 delivery 證據。
+> 設定：區域＝台灣、中國、世界；監控類型＝預設；每天 06:00；目前帳號時區；結果回覆目前這個對話。
 >
-> `INSTALL_CONTEXT_LOSS_RECOVERY_GATE`：上下文截斷時沿用已鎖定 SHA 與 exact ID，從該 SHA 重建 prompt/fingerprint，重讀同 ID 最終狀態；不得重跑 inventory／create 或換 main。
+> 請 fresh resolve 最新 main，完整遵循 `INSTALL.md` 的 canonical prompt、安裝與驗證流程。不得使用縮短版 prompt；若已有符合排程就更新，不得建立重複排程。完成後回覆 exact task ID、saved prompt 驗證、時區、enabled、next run time 與同對話 delivery 證據；無法取得的安裝後診斷欄位請標記 `verification_partial`，不得因此停用已成功建立或更新的排程。
 
 安裝時確認兩項內容偏好與 Scheduled Task 自身的時間／時區：
 

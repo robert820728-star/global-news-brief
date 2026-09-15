@@ -387,17 +387,21 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("validate_canonical_reader", text)
             self.assertNotIn("validate_canonical_sectioned_layout", text)
 
-    def test_production_schedule_without_full_runtime_uses_same_host_screenshot_route(self):
+    def test_production_schedule_separates_install_ack_from_runtime_media_route(self):
         prompt = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
 
         for requirement in (
             "SCHEDULED_HOST_CAPABILITY_ROUTING",
+            "USABLE_FIRST_SCHEDULE_INSTALL_GATE",
+            "POST_INSTALL_DIAGNOSTICS_GATE",
             "SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE",
             "SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE",
-            "does not require a verified workspace",
+            "A successful control-plane response with the exact task ID acknowledges usable installation",
+            "must not pause, disable, delete, recreate, or duplicate the formal task",
             "route the same occurrence to `mobile-chatgpt-daily-prompt.md`",
         ):
             self.assertIn(requirement, prompt)
+        self.assertNotIn("after that same host passed the installation smoke", prompt)
         self.assertNotIn("maps/generated/taiwan-counties-yellow-v2.png", prompt)
         self.assertIn("FORMAL_DAILY_TASK_RUNTIME_IMMUTABILITY_GATE", prompt)
         self.assertLess(
@@ -581,7 +585,7 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("scripts/resolve_bundled_python.py", workflow)
         self.assertIn("scripts/fetch_source_routes.py", workflow)
 
-    def test_mobile_prompt_and_start_prompt_require_same_host_visible_screenshot(self):
+    def test_mobile_start_delegates_saved_prompt_and_keeps_smoke_diagnostic(self):
         start = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
         daily = (ROOT / "mobile-chatgpt-daily-prompt.md").read_text(encoding="utf-8")
 
@@ -593,7 +597,8 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn(requirement, daily)
         self.assertIn("SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE", start)
         self.assertIn("SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE", start)
-        self.assertIn("verified workspace", start)
+        self.assertIn("不是排程啟用前置條件", start)
+        self.assertIn("verification_partial", start)
         for forbidden in ("powershell", "bootstrap capsule", "git clone"):
             self.assertNotIn(forbidden, daily)
 
@@ -1355,7 +1360,7 @@ class PipelineContractTests(unittest.TestCase):
             self.assertIn("DEFERRED", document)
             self.assertIn("不得標記整輪失敗", document)
 
-    def test_every_canonical_reader_run_requires_same_host_visible_media(self):
+    def test_runtime_reader_requires_visible_media_without_blocking_install_ack(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         template = (ROOT / "scheduled-task-prompt-template.md").read_text(
             encoding="utf-8"
@@ -1369,10 +1374,15 @@ class PipelineContractTests(unittest.TestCase):
         daily = (ROOT / "daily-schedule-prompt.md").read_text(encoding="utf-8")
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
 
-        for document in (install, template, start, daily, readme):
+        for document in (install, template, daily, readme):
             self.assertIn("EVERY_DAILY_NEWS_EXECUTION_GATE", document)
             self.assertIn("VISIBLE_MEDIA_SCHEDULE_ELIGIBILITY_GATE", document)
             self.assertIn("manual, single-run, test, first-run, recurring, or resume", document)
+
+        for document in (install, start, daily, readme):
+            self.assertIn("USABLE_FIRST_SCHEDULE_INSTALL_GATE", document)
+            self.assertIn("POST_INSTALL_DIAGNOSTICS_GATE", document)
+            self.assertIn("verification_partial", document)
 
         for document in (install, start, daily, readme):
             self.assertIn("SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE", document)
@@ -1384,6 +1394,8 @@ class PipelineContractTests(unittest.TestCase):
         self.assertIn("不得在 discovery 後宣告 NATIVE_MEDIA_UNAVAILABLE", mobile)
         self.assertIn("直接截圖", start)
         self.assertIn("實際可見", start)
+        self.assertIn("不是排程啟用前置條件", start)
+        self.assertNotIn("task 暫停", install)
 
         for document in (install, template, start):
             self.assertNotIn("maps/generated/taiwan-counties-yellow-v2.png", document)

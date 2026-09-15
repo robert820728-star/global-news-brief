@@ -31,7 +31,7 @@
 
 `SCHEDULED_OCCURRENCE_SINGLE_RUN_GATE`
 
-以本 Scheduled Task 真正觸發的 occurrence 建立或接續唯一 `run_id`，從實際 executor 啟動時刻固定精確 24 小時窗。相同 occurrence 必須從 first incomplete stage 接續；不得建立 replacement run、重跑已完成的 discovery／評分／驗證、沿用前輪候選或把未完成 reader 當成完成。安裝時的同宿主截圖 smoke 必須已通過；每次 occurrence 在 discovery 前只確認宿主原生圖片／截圖工具本身仍可呼叫，不以任何單次新聞圖片查詢能否命中來判定 capability。
+以本 Scheduled Task 真正觸發的 occurrence 建立或接續唯一 `run_id`，從實際 executor 啟動時刻固定精確 24 小時窗。相同 occurrence 必須從 first incomplete stage 接續；不得建立 replacement run、重跑已完成的 discovery／評分／驗證、沿用前輪候選或把未完成 reader 當成完成。安裝後的同宿主圖片 smoke 只是路由診斷，不是 occurrence 前置權威；每次 occurrence 在 discovery 前獨立確認宿主原生圖片／截圖工具本身仍可呼叫，不以安裝 smoke 或任何單次新聞圖片查詢能否命中來判定 capability。
 
 ## 2. 新聞 discovery、評分與驗證
 

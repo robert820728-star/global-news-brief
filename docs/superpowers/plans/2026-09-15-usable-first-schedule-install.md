@@ -25,6 +25,7 @@
 - Modify: `README.md`
 - Modify: `mobile-chatgpt-start-prompt.md`
 - Modify: `daily-schedule-prompt.md`
+- Modify: `scheduled-task-prompt-template.md`
 
 **Interfaces:**
 - Consumes: existing `ensure_singleton` entry states and canonical install payload.

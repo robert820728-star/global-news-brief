@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class SchedulePromptControlPlaneTests(unittest.TestCase):
-    def test_every_paste_ready_starter_pins_singleton_install_contract_immutably(self):
+    def test_every_paste_ready_starter_delegates_to_fresh_install_contract(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         mobile = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(
@@ -28,30 +28,28 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
         for name, starter in starters.items():
             with self.subTest(document=name):
                 for requirement in (
-                    "IMMUTABLE_INSTALL_MAIN_RESOLUTION_GATE",
-                    "/branches/main?cache_bust=<nonce-a>",
-                    "/commits/main?cache_bust=<nonce-b>",
-                    "40 字元 SHA",
-                    "<resolved-main-sha>/INSTALL.md",
-                    "本次安裝意圖：ensure_singleton",
-                    "authoritative task inventory",
-                    "multiple_present",
-                    "mutable /main",
+                    "robert820728-star/global-news-brief",
+                    "fresh resolve 最新 main",
+                    "完整遵循",
+                    "台灣、中國、世界",
+                    "每天 06:00",
+                    "目前這個對話",
+                    "不得建立重複排程",
                 ):
                     self.assertIn(requirement, starter)
+
+                self.assertNotIn("new_without_exact_id", starter)
+                self.assertNotIn("authoritative task inventory", starter)
 
     def test_singleton_starter_can_adopt_or_create_without_blind_duplication(self):
         starter = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
         prompt = starter.split("```text", 1)[1].split("```", 1)[0]
 
-        self.assertIn("ensure_singleton", prompt)
-        self.assertIn("authoritative task inventory", prompt)
-        self.assertIn("存在唯一符合任務", prompt)
-        self.assertIn("明確不存在", prompt)
-        self.assertIn("multiple_present", prompt)
-        self.assertIn("unknown", prompt)
+        self.assertIn("只有一個", prompt)
+        self.assertIn("若已有符合排程就更新", prompt)
+        self.assertIn("不得建立重複排程", prompt)
         self.assertNotIn("本次安裝意圖：create_new", prompt)
-        self.assertNotIn("anti-duplicate 只禁止第二次 create", prompt)
+        self.assertNotIn("authoritative task inventory", prompt)
 
     def test_install_payload_builder_keeps_diagnostics_outside_saved_prompt(self):
         documents = {
@@ -79,7 +77,7 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
             example["smoke_fixture"]["expected_sha256"],
         )
 
-    def test_prompt_verification_is_capability_aware_without_becoming_best_effort(self):
+    def test_prompt_verification_is_capability_aware_and_nonblocking_after_ack(self):
         documents = {
             name: (ROOT / name).read_text(encoding="utf-8")
             for name in (
@@ -99,12 +97,12 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
         install = documents["INSTALL.md"]
         for requirement in (
             "支援 saved-prompt readback",
-            "明確不提供 saved-prompt readback",
-            "task ID",
+            "exact task ID",
             "完整 prompt",
             "每天 06:00",
             "目前對話",
-            "不得盲建重複排程",
+            "verification_partial",
+            "不得倒判 create／update 失敗",
         ):
             with self.subTest(requirement=requirement):
                 self.assertIn(requirement, install)
@@ -112,7 +110,7 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
         self.assertNotIn("再讀回並逐字比較；", install)
         self.assertNotIn("先更新並讀回完整 task prompt", install)
 
-    def test_only_exact_id_same_control_plane_readback_can_negate_create_success(self):
+    def test_only_exact_id_same_control_plane_can_contradict_create_success(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
         self.assertIn("SCHEDULE_PROMPT_EXACT_ID_READBACK_ONLY_GATE", install)
         for requirement in (
@@ -124,13 +122,14 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
             with self.subTest(requirement=requirement):
                 self.assertIn(requirement, install)
 
-        self.assertIn("只有 exact-ID view 明確回傳不存在或內容不一致", install)
+        self.assertIn("exact-ID view 明確回傳不存在時才把安裝改列失敗", install)
+        self.assertIn("內容不一致時只對同一 ID 冪等重送", install)
 
     def test_paste_ready_starter_is_concise_and_capability_aware(self):
         starter = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
         prompt = starter.split("```text", 1)[1].split("```", 1)[0].strip()
 
-        self.assertLess(len(prompt), 1400)
+        self.assertLess(len(prompt), 700)
         for requirement in (
             "每天 06:00",
             "台灣、中國、世界",
@@ -140,9 +139,9 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
         ):
             self.assertIn(requirement, starter)
 
-        self.assertIn("同一控制面的 exact task ID", prompt)
-        self.assertIn("正式 create／update 回傳", prompt)
-        self.assertIn("一般 list／search 空結果", prompt)
+        self.assertIn("fresh resolve 最新 main", prompt)
+        self.assertIn("完整遵循 INSTALL.md", prompt)
+        self.assertIn("不得建立重複排程", prompt)
         self.assertNotIn("仍不一致或無法讀回時，不得宣稱排程設置完成", starter)
 
     def test_fresh_conversation_uses_capability_aware_singleton_transaction(self):
@@ -151,7 +150,7 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
         prompt = starter.split("```text", 1)[1].split("```", 1)[0].strip()
 
         self.assertIn("SINGLETON_SCHEDULE_INSTALL_GATE", install)
-        self.assertIn("本次安裝意圖：ensure_singleton", prompt)
+        self.assertIn("只有一個", prompt)
 
         for requirement in (
             "present",
@@ -159,8 +158,8 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
             "multiple_present",
             "unknown",
             "authoritative task inventory",
-            "唯一符合任務",
-            "明確不存在",
+            "恰有一個",
+            "證明不存在",
             "不得盲建",
             "不得再次 create",
             "update_existing 必須先有 exact task ID",
@@ -170,7 +169,7 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
                 self.assertIn(requirement, install)
 
         self.assertNotIn("create_new 不得把同名 list／search 當成首次 create 的必要前置", install)
-        self.assertNotIn("第一次 create 前不得呼叫 list／search／inventory", prompt)
+        self.assertNotIn("authoritative task inventory", prompt)
 
     def test_install_fast_path_reaches_control_plane_before_runtime_contracts(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
@@ -199,7 +198,7 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
         smoke = install.index("SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE")
         self.assertLess(update, smoke)
         self.assertIn("舊 prompt 不得繼續啟用", install)
-        self.assertIn("後續 smoke 失敗時保留最新版 prompt 並暫停", install)
+        self.assertIn("不得因後續 smoke／readback 診斷失敗而被暫停", install)
 
     def test_install_smoke_does_not_require_repository_bootstrap(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
@@ -241,33 +240,26 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
                 self.assertIn("不能單獨否定", document)
                 self.assertIn("不得宣稱 smoke 通過", document)
 
-    def test_relative_one_time_schedule_requires_persisted_future_trigger_evidence(self):
+    def test_relative_one_time_schedule_uses_one_acknowledged_mutation(self):
         install = (ROOT / "INSTALL.md").read_text(encoding="utf-8")
 
         self.assertIn("RELATIVE_ONE_TIME_SCHEDULE_ANCHOR_GATE", install)
         for requirement in (
-            "對話開始時間",
-            "安裝 smoke 完成後",
-            "啟用前",
             "當下控制面時間",
-            "next_run_time",
-            "非 null 時",
-            "仍晚於讀回當下時間",
-            "為 null 時，安裝尚未驗證",
-            "不得宣稱排程已完成",
-            "停用同一 exact task ID",
-            "一次 fresh-create fallback",
             "最終絕對執行時間",
-            "再次讀回",
-            "仍為 null",
-            "trigger／persistence failure",
-            "不得等待已錯過的時間點",
+            "同一 mutation",
+            "enabled=true",
+            "成功回傳 exact task ID",
+            "next_run_time",
+            "verification_partial",
+            "不得因 null／缺失 readback 停用",
+            "不得用人工 follow-up 冒充 Scheduled Task occurrence",
+            "正式每日 06:00 排程不適用",
         ):
             with self.subTest(requirement=requirement):
                 self.assertIn(requirement, install)
 
-        self.assertNotIn("為 null 時不得停用", install)
-        self.assertNotIn("不得把 null 單獨判定為觸發失敗", install)
+        self.assertNotIn("一次 fresh-create fallback", install)
 
     def test_saved_task_template_probes_media_routes_independently(self):
         prompt = (ROOT / "scheduled-task-prompt-template.md").read_text(encoding="utf-8")
@@ -379,13 +371,11 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
             "上下文截斷",
             "同一安裝 transaction",
             "已鎖定的 immutable SHA",
-            "已取得的 exact task ID",
-            "重新取得",
-            "重建 canonical prompt",
-            "saved-prompt fingerprint",
+            "exact task ID 仍可識別",
+            "重建 canonical prompt 與 fingerprint",
             "enabled",
-            "timezone",
-            "next_run_time",
+            "每天 06:00",
+            "帳號時區",
             "目前對話",
             "不得重新 inventory",
             "不得再次 create",
@@ -394,12 +384,12 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
             with self.subTest(requirement=requirement):
                 self.assertIn(requirement, install)
 
-        self.assertIn("readback 回傳內容遺失不得授權 update", install)
-        self.assertIn("重新讀取同一 exact task ID", install)
+        self.assertIn("known_exact_id_resume 可對同一 exact task ID 冪等提交", install)
+        self.assertIn("readback 遺失只記為 `verification_partial`", install)
         for name, document in starters.items():
             with self.subTest(starter=name):
-                self.assertIn("INSTALL_CONTEXT_LOSS_RECOVERY_GATE", document)
-                self.assertIn("不得重跑 inventory／create 或換 main", document)
+                self.assertIn("POST_INSTALL_DIAGNOSTICS_GATE", document)
+                self.assertIn("verification_partial", document)
 
     def test_control_plane_entry_is_state_disjoint_after_context_loss(self):
         documents = {
@@ -424,7 +414,7 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
             install,
         )
         self.assertIn(
-            "known_exact_id_resume 只重讀或更新同一 exact task ID",
+            "known_exact_id_resume 只處理同一 exact task ID",
             install,
         )
         self.assertIn(
@@ -440,6 +430,62 @@ class SchedulePromptControlPlaneTests(unittest.TestCase):
             install,
         )
         self.assertNotIn("控制面第一步必須先把", install)
+
+    def test_acknowledged_install_is_usable_before_optional_diagnostics(self):
+        documents = {
+            name: (ROOT / name).read_text(encoding="utf-8")
+            for name in (
+                "INSTALL.md",
+                "README.md",
+                "mobile-chatgpt-start-prompt.md",
+                "daily-schedule-prompt.md",
+            )
+        }
+
+        for name, document in documents.items():
+            with self.subTest(document=name):
+                self.assertIn("USABLE_FIRST_SCHEDULE_INSTALL_GATE", document)
+                self.assertIn("POST_INSTALL_DIAGNOSTICS_GATE", document)
+                self.assertIn("verification_partial", document)
+
+        install = documents["INSTALL.md"]
+        self.assertIn("成功回傳 exact task ID", install)
+        self.assertIn("enabled=true", install)
+        self.assertIn("同一 exact task ID 冪等", install)
+        self.assertIn("不得暫停、停用、刪除、重建或另建正式 task", install)
+        self.assertNotIn("smoke 通過才啟用", install)
+        self.assertNotIn("後續 smoke 失敗時保留最新版 prompt 並暫停", install)
+        self.assertNotIn("暫停 smoke 失敗的 candidate", install)
+        self.assertNotIn("readback 回傳內容遺失不得授權 update", install)
+
+    def test_paste_ready_starter_delegates_internal_state_machine_to_install(self):
+        starter = (ROOT / "mobile-chatgpt-start-prompt.md").read_text(encoding="utf-8")
+        prompt = starter.split("```text", 1)[1].split("```", 1)[0].strip()
+
+        self.assertLess(len(prompt), 700)
+        for requirement in (
+            "robert820728-star/global-news-brief",
+            "台灣、中國、世界",
+            "監控類型：預設",
+            "每天 06:00",
+            "目前這個對話",
+            "fresh resolve 最新 main",
+            "完整遵循 INSTALL.md",
+            "不得建立重複排程",
+        ):
+            with self.subTest(requirement=requirement):
+                self.assertIn(requirement, prompt)
+
+        for internal_detail in (
+            "IMMUTABLE_INSTALL_MAIN_RESOLUTION_GATE",
+            "new_without_exact_id",
+            "known_exact_id_resume",
+            "create_outcome_unknown",
+            "multiple_present",
+            "authoritative task inventory",
+        ):
+            with self.subTest(internal_detail=internal_detail):
+                self.assertNotIn(internal_detail, prompt)
 
 
 if __name__ == "__main__":

@@ -8,13 +8,13 @@
 2. 每輪重新解析最新 `main`，同一輪固定使用一個經雙端點確認的 commit。
 3. 任何每日新聞執行，不論手動、單次、測試、首次執行、循環 occurrence 或恢復，都使用相同的新聞與可見圖片門檻；依本輪獨立 capability probe，完整本機媒體鏈可交付本機附件，否則 ChatGPT Scheduled Task 使用另一條已驗證的原生媒體路徑。頁面可開啟不得推導頁面圖片區域可截圖。
 4. 新聞發現使用 GDELT、中央社與中新社三條 discovery routes；事件驗證依事件與主張角色動態選取原始、官方／主要及真正獨立的證據。
-5. 首次安裝或修正時先完整提交最新 task prompt，並依 Scheduled Task 控制面實際提供的驗證能力確認保存結果；再在建立或更新排程的目前對話，以獨立 capability probe 完成至少一條來源 bytes→本機媒體交付、原生圖片卡或已實測可用的頁面圖片區域截圖端到端路徑，通過後才啟用循環排程並執行一次完整測試。這是安裝期宿主能力測試，不是 Scheduled Task occurrence，也不要求立即觸發指定 task ID。
+5. 首次安裝或修正以單一 canonical create／update 直接提交完整 task prompt、每天 06:00、目前帳號時區、目前對話 delivery 與 `enabled=true`。控制面成功回傳 exact task ID 即完成可用安裝；saved-prompt readback、next-run readback 與圖片 smoke 是安裝後診斷，缺失或失敗不得反向停用已成功的正式排程。
 
 `VERIFIED_SCHEDULED_HOST_START_FALLBACK`：`scheduled_for` 若由宿主結構化 metadata 提供，仍是第一權威。只有能驗證本訊息確由 Scheduled Task 宿主觸發、能取得同一控制面的 exact task ID，且能取得該次首次實際執行時間時，才可把該首次實際執行時間正規化存入既有 `scheduled_for` 欄位，並保存 `occurrence_authority.source=verified_host_start_fallback`、task ID 與原始時間。一般對話、人工 follow-up、訊息建立時間、模型看到的現在時間、排程預定字串或缺少 exact task ID 都不得使用此 fallback，也不得建立或恢復 run。
 
-`FORMAL_DAILY_TASK_RUNTIME_IMMUTABILITY_GATE`：排程生命週期分成安裝／修復控制面與執行期 occurrence。只有在尚未開始 occurrence 的安裝／修復控制面，依 `SCHEDULE_TASK_SINGLETON_STATE_MACHINE` 鎖定 exact task ID 後，才可合法 create、update、暫停 smoke 失敗的 candidate 或重新啟用；一旦 occurrence 取得 authority，正式每日 06:00 task 即不可變。執行期 occurrence 不論成功、失敗、等待、超時或 fail-closed，都不得對正式 task 執行 `create／update／pause／disable／delete／reschedule／replace`，不得建立 replacement task；只能更新同一 run 的 ledger／blocker／artifact，並維持 task ID、saved prompt、帳號時區、每日 06:00 recurrence、同對話 delivery 與 enabled 狀態不變。執行期任何錯誤都以 run failure/recovery 表示，不得停用正式 task。
+`FORMAL_DAILY_TASK_RUNTIME_IMMUTABILITY_GATE`：排程生命週期分成安裝／修復控制面與執行期 occurrence。只有在尚未開始 occurrence 的安裝／修復控制面，依 `SCHEDULE_TASK_SINGLETON_STATE_MACHINE` 鎖定 exact task ID 後，才可合法 create 或 update canonical desired state；成功 acknowledgement 後保持 `enabled=true`，安裝後診斷不得暫停或停用。使用者明確要求變更排程時，才可在新的安裝／修復 transaction 更新同一 exact task ID。一旦 occurrence 取得 authority，正式每日 06:00 task 即不可變。執行期 occurrence 不論成功、失敗、等待、超時或 fail-closed，都不得對正式 task 執行 `create／update／pause／disable／delete／reschedule／replace`，不得建立 replacement task；只能更新同一 run 的 ledger／blocker／artifact，並維持 task ID、saved prompt、帳號時區、每日 06:00 recurrence、同對話 delivery 與 enabled 狀態不變。執行期任何錯誤都以 run failure/recovery 表示，不得停用正式 task。
 
-`INSTALL_CONTEXT_LOSS_RECOVERY_GATE`：控制面入口狀態互斥：new_without_exact_id 才以 authoritative task inventory 作為第一個控制面操作；known_exact_id_resume 只重讀或更新同一 exact task ID；create_outcome_unknown 只依原 operation identity 查明第一次結果。上下文截斷、compaction 或工具回傳內容遺失，不得單獨把安裝判為失敗或 `INSTALL VERIFICATION INCOMPLETE`。只要同一安裝 transaction 已鎖定的 immutable SHA 與已取得的 exact task ID 仍可由目前對話、正式 task 回傳或 task 卡識別，就沿用兩者，不得改用新 main、不得重新 inventory、不得再次 create。從已鎖定的 immutable SHA 重新取得 `INSTALL.md`、`scheduled-task-prompt-template.md` 與兩個安裝 scripts，依相同區域／監控替換重建 canonical prompt、install receipt 與 saved-prompt fingerprint；再重新讀取同一 exact task ID 的 saved prompt（若控制面提供）、`enabled`、`timezone`、`next_run_time` 及目前對話 binding。readback 回傳內容遺失不得授權 update；只有重新讀取同一 exact task ID 後明確證明 saved prompt 不一致，才可依既有 exact-ID update 路徑修正。完整 prompt 不需要依賴模型記憶保存，immutable source 與 exact-ID control-plane state 才是恢復權威。若 exact task ID 本身不可恢復，依原 operation identity 查明既有操作，不得另建任務。
+`INSTALL_CONTEXT_LOSS_RECOVERY_GATE`：控制面入口狀態互斥：new_without_exact_id 才以 authoritative task inventory 作為第一個控制面操作；known_exact_id_resume 只處理同一 exact task ID；create_outcome_unknown 只依原 operation identity 查明第一次結果。上下文截斷、compaction 或工具回傳內容遺失，不得單獨把安裝判為失敗。只要同一安裝 transaction 已鎖定的 immutable SHA 與 exact task ID 仍可識別，就沿用兩者，不得改用新 main、不得重新 inventory、不得再次 create。從已鎖定 SHA 重建 canonical prompt 與 fingerprint 後，known_exact_id_resume 可對同一 exact task ID 冪等提交完整 desired state（prompt、每天 06:00、帳號時區、目前對話與 `enabled=true`）；成功回傳 exact task ID 即恢復可用安裝。readback 遺失只記為 `verification_partial`，不阻止同 ID 冪等 update，也不授權 create。若 exact task ID 不可恢復，只能依原 operation identity 查明既有操作，不得另建任務。
 
 ## 使用者啟動指令
 
@@ -27,7 +27,7 @@ python scripts/build_scheduled_task_install_payload.py --template scheduled-task
 python scripts/verify_scheduled_task_install.py --template scheduled-task-prompt-template.md --saved-prompt /tmp/news-task-install/saved-prompt.txt --receipt /tmp/news-task-install/install-receipt.json --expected-main-sha <fresh-40-character-main-sha>
 ```
 
-若控制面提供 exact task ID readback，另把完整 readback 存成 UTF-8 純文字並加上 `--readback <path>` 再驗一次；verifier 非零退出時禁止啟用 task。這個 verifier 使縮短 launcher、截斷、extension 污染、錯 main 或錯 readback 在 occurrence 前即被拒絕。
+若控制面提供 exact task ID readback，可把完整 readback 存成 UTF-8 純文字並加上 `--readback <path>` 再驗一次。提交前 verifier 非零退出時不得送出 mutation；create／update 已成功後的 readback 缺失或工具中斷只記為 `verification_partial`，不得停用或重建正式 task。readback 明確顯示不一致時，只對同一 exact task ID 冪等重送 canonical desired state。
 
 `REMOTE_ACQUISITION_BRIDGE_GATE`：Scheduled Task 已證明 GitHub issue #3 寫入、Actions 與 `run-logs` 讀取能力，但缺少 CNA POST／中新社日索引、全球搜尋證據持久化或來源圖片 bytes transport 時，可在 issue #3 建立唯一 `gnb-remote-acquisition:v1` JSON request。request 必須綁定同一 `run_id`、fresh `main_sha` 與精確 24 小時 window；GitHub Actions 只以 default-branch 同 SHA 執行 canonical source/media scripts，結果只寫入 `run-logs/logs/runs/<run_id>/remote-acquisition/`。來源 scan 只接受 `cna`／`chinanews`。GDELT archive 不送入 connector；primary routes 耗盡後，宿主已完成的 bounded global web search 可用 `web_fallback_materialize` 分批提交（每批 1–20 筆），每批必須保存 search provider/query/evidence URL、primary failure evidence、搜尋順位、原始文章 URL 與窗內發稿時間。bridge 先保存 append-only running receipt，再物化可重算 snapshot、`web_fallback.json` 與 source coverage，固定 `coverage_complete=false`／`degraded_partial`，之後回到同一 source-scan 與 article hydration，不得冒充 GDELT 完整 coverage。外部 fallback 文章 hydration 只允許 public HTTPS，redirect／override 不得離開已驗證文章 host。圖片以 GitHub connector `encoding=base64` 讀回，重新做 decode/hash 後才交給已實測成功的 local attachment handoff。Actions 成功、artifact URL、base64 字串或本機檔案本身都不得直接算圖片交付；最終仍須非文字 media block 與可見像素。任何橋接能力缺失都保持原 stage fail-closed。
 
@@ -64,13 +64,11 @@ python scripts/verify_scheduled_task_install.py --template scheduled-task-prompt
 
 在全新對話貼上：
 
-> 每日新聞排程
+> 請依 GitHub repository `robert820728-star/global-news-brief` 最新 main 的 `INSTALL.md`，完整安裝並確保只有一個「每日新聞」ChatGPT Scheduled Task。
 >
-> `IMMUTABLE_INSTALL_MAIN_RESOLUTION_GATE`：先各產生一個 fresh UTC nonce，分別讀取 `https://api.github.com/repos/robert820728-star/global-news-brief/branches/main?cache_bust=<nonce-a>` 與 `https://api.github.com/repos/robert820728-star/global-news-brief/commits/main?cache_bust=<nonce-b>`。兩者必須回傳相同的 40 字元 SHA；若不同，用兩個新 nonce 重試整組一次，仍不同就回報兩個值並停止，不得猜測。之後只從 `https://raw.githubusercontent.com/robert820728-star/global-news-brief/<resolved-main-sha>/INSTALL.md` 讀取安裝契約，並從同一 `<resolved-main-sha>` 讀取 template 與安裝檔；mutable /main 不得作為本次安裝權威。
+> 設定：區域＝台灣、中國、世界；監控類型＝預設；每天 06:00；目前帳號時區；結果回覆目前這個對話。
 >
-> 本次安裝意圖：ensure_singleton。區域：台灣、中國、世界。監控類型：預設。依該 immutable `INSTALL.md` 的 `INSTALL_CONTROL_PLANE_FAST_PATH`，把同一 SHA 的 `scheduled-task-prompt-template.md` 全文只替換允許的兩個 placeholder 並驗證。只有 new_without_exact_id 的第一個控制面動作是 authoritative task inventory：存在唯一符合任務就取得 exact ID 並 update_existing；明確不存在才以完整 prompt create 一次；多筆相符記為 multiple_present；無法取得權威清單記為 unknown。known_exact_id_resume 直接重讀同一 ID；create_outcome_unknown 只查明原操作。multiple_present／unknown 不得盲建、不得宣稱安裝完成，也不得讀新聞 runtime 文件。請確保目前對話只有一個每天 06:00、使用目前帳號／對話時區、結果回覆目前對話的循環 Scheduled Task。取得 exact ID 後，所有 readback、可見圖片 smoke、啟用與 next-run 核對只綁定該 ID；create 結果不明時不得再次 create。smoke 通過才啟用，最後回覆 exact task ID、saved-prompt 驗證、時區、enabled、next run 與目前對話 delivery 證據。
->
-> `INSTALL_CONTEXT_LOSS_RECOVERY_GATE`：上下文截斷時沿用已鎖定 SHA 與 exact ID，從該 SHA 重建 prompt/fingerprint，重讀同 ID 最終狀態；不得重跑 inventory／create 或換 main。
+> 請 fresh resolve 最新 main，完整遵循 `INSTALL.md` 的 canonical prompt、安裝與驗證流程。不得使用縮短版 prompt；若已有符合排程就更新，不得建立重複排程。完成後回覆 exact task ID、saved prompt 驗證、時區、enabled、next run time 與同對話 delivery 證據；無法取得的安裝後診斷欄位請標記 `verification_partial`，不得因此停用已成功建立或更新的排程。
 
 收到後，以本文件為入口直接開始。使用者不必理解 YAML、三碼代碼、排程語法、schema 或 Git blob。
 
@@ -201,7 +199,15 @@ python scripts/verify_scheduled_task_install.py --template scheduled-task-prompt
 
 `SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`
 
-建立或修正 Scheduled Task 時，先依互斥入口狀態完成 authoritative inventory、exact-ID resume 或原 operation reconciliation；入口狀態解析完成後的第一個 mutation，必須把當下最新 `scheduled-task-prompt-template.md` 全文作為 create／update 的 task instruction，並依 `SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE` 驗證正式結果。不得先 bootstrap repository、取得 verified workspace 或執行新聞流程。既有 task 若保存舊 prompt，舊 prompt 不得繼續啟用，也不得因任何 smoke／bootstrap 失敗而被保留。後續 smoke 失敗時保留最新版 prompt 並暫停 task，不得留下舊 prompt 繼續執行。
+建立或修正 Scheduled Task 時，先依互斥入口狀態完成 authoritative inventory、exact-ID resume 或原 operation reconciliation；入口狀態解析完成後的第一個 mutation，必須把當下最新 `scheduled-task-prompt-template.md` 全文、每天 06:00、帳號時區、目前對話 delivery 與 `enabled=true` 一次提交。不得先 bootstrap repository、取得 verified workspace 或執行新聞流程。舊 prompt 不得繼續啟用；已成功套用最新版 prompt 的正式 task 也不得因後續 smoke／readback 診斷失敗而被暫停。
+
+`USABLE_FIRST_SCHEDULE_INSTALL_GATE`
+
+提交前 canonical payload 驗證通過，且 Scheduled Task 控制面對 create／update 成功回傳 exact task ID，即完成可用安裝。這個 acknowledgement 證明該次 desired-state mutation 已被控制面接受；後續 readback 可增加證據，但缺少非通用欄位、回傳截斷或診斷工具失敗不得撤銷成功、不得把 task 改回 disabled。只有 create／update 明確失敗、沒有 exact task ID，或同一 exact-ID view 明確證明 task 不存在，才屬未完成安裝。
+
+`POST_INSTALL_DIAGNOSTICS_GATE`
+
+saved prompt、`timezone`、`next_run_time`、目前對話 binding 的額外 readback，以及 visible-media smoke，均在成功 create／update 後執行並逐欄回報。未取得的欄位標記 `verification_partial`；不得暫停、停用、刪除、重建或另建正式 task。圖片能力由每次 occurrence 自己 probe，安裝後 smoke 只提供路由診斷，不是 recurrence eligibility gate。
 
 `IMMUTABLE_INSTALL_MAIN_RESOLUTION_GATE`
 
@@ -209,35 +215,35 @@ python scripts/verify_scheduled_task_install.py --template scheduled-task-prompt
 
 `INSTALL_CONTROL_PLANE_FAST_PATH`
 
-第一次 create／update 前只讀安裝必要檔案：`INSTALL.md`、`scheduled-task-prompt-template.md`、`scripts/build_scheduled_task_install_payload.py`、`scripts/verify_scheduled_task_install.py`，以及使用者要求測試時的 `scheduled-task-test-extension.example.json`。完成 canonical outbound payload 的本機核對後，`new_without_exact_id` 的下一個產品動作是 authoritative inventory，再依四態結果執行第一次 mutation；`known_exact_id_resume` 的下一個產品動作是同 ID readback，只有明確 mismatch 才 update；`create_outcome_unknown` 的下一個產品動作是原 operation reconciliation。三者都不得先讀新聞 runtime 文件、bootstrap、skills、schemas、來源規則或執行新聞流程。task 已取得 exact ID 且完成安裝驗證後，真正 occurrence 才依 `INSTALL.md` 的權責順序讀取 runtime 契約。
+第一次 create／update 前只讀安裝必要檔案：`INSTALL.md`、`scheduled-task-prompt-template.md`、`scripts/build_scheduled_task_install_payload.py`、`scripts/verify_scheduled_task_install.py`，以及使用者要求測試時的 `scheduled-task-test-extension.example.json`。完成 canonical outbound payload 核對後，`new_without_exact_id` 先做 authoritative inventory；`known_exact_id_resume` 直接對同一 exact task ID 冪等提交 canonical desired state；`create_outcome_unknown` 只查明原 operation。三者都不得先讀新聞 runtime 文件、bootstrap、skills、schemas、來源規則或執行新聞流程。控制面成功回傳 exact task ID 後即進入安裝後診斷；真正 occurrence 才讀取 runtime 契約。
 
 `SINGLETON_SCHEDULE_INSTALL_GATE`
 
 目標是不得盲建重複排程；inventory 無法形成權威四態證據時不得用 create 猜測。
 
-canonical 安裝意圖預設固定為 `ensure_singleton`，並先分類互斥入口狀態。`new_without_exact_id` 在任何 create／update 前以相同 Scheduled Task 控制面的 authoritative task inventory 建立四態 receipt：`present` 表示恰有一個名稱、對話、排程型態與 06:00 recurrence 相符的任務，取得其 exact task ID 後執行一次 `update_existing`；`absent` 必須由權威清單明確證明不存在，才可用完整 canonical prompt 執行一次 create；`multiple_present` 必須保留所有相符 exact IDs 並停止自動 mutation；`unknown` 表示控制面沒有提供可驗證清單或結果不可判讀，必須保存 actual control-plane error，不得盲建、不得宣稱安裝完成。`known_exact_id_resume` 只重讀或更新同一 exact task ID，不重新 inventory；`create_outcome_unknown` 只依原 operation identity 查明第一次結果，不重新 create。update_existing 必須先有 exact task ID；只有同名標題、聊天文字或非權威搜尋結果不得授權 update。create 正式回傳 task ID 與成功狀態後，後續所有 readback、smoke、schedule 與 enable 都只綁該 ID。若 create 回傳遭截斷、沒有 task ID 或結果不明，保存 `outcome_unknown`、actual control-plane error 與可取得的 operation identity；同一安裝不得再次 create，只能由相同控制面查明第一次結果或要求使用者在「已排程」檢視。使用者若明確提供 exact task ID，即進入 `known_exact_id_resume`；額外建立第二個任務不屬 singleton 安裝流程。
+canonical 安裝意圖預設固定為 `ensure_singleton`，並先分類互斥入口狀態。`new_without_exact_id` 在任何 create／update 前以相同 Scheduled Task 控制面的 authoritative task inventory 建立四態 receipt：`present` 表示恰有一個名稱、對話、排程型態與 06:00 recurrence 相符的任務，取得其 exact task ID 後執行一次 `update_existing`；`absent` 必須由權威清單明確證明不存在，才可用完整 canonical prompt 執行一次 create；`multiple_present` 必須保留所有相符 exact IDs 並停止自動 mutation；`unknown` 表示控制面沒有提供可驗證清單或結果不可判讀，必須保存 actual control-plane error，不得盲建。`known_exact_id_resume` 對同一 exact task ID 冪等更新，不重新 inventory；`create_outcome_unknown` 只依原 operation identity 查明第一次結果，不重新 create。update_existing 必須先有 exact task ID。create／update 正式回傳 exact task ID 與成功狀態後，task 保持 `enabled=true`；後續診斷只綁該 ID。若 create 回傳遭截斷、沒有 task ID 或結果不明，保存 `outcome_unknown`、actual control-plane error 與 operation identity；同一安裝不得再次 create，只能查明第一次結果。使用者若明確提供 exact task ID，即進入 `known_exact_id_resume`。
 
 `SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE`
 
-提交前必須只替換「區域」與「監控類型」兩個 placeholder，對替換後的完整 prompt 做全文、字元數與雜湊核對，並把該完整 prompt 作為單一 create／update payload；不得提交摘要、節錄、短 launcher 或只貼檔案連結。若控制面支援 saved-prompt readback，建立或更新後必須讀回並與提交全文逐字比較，只允許 CRLF／LF 與檔尾換行差異；不一致時更新同一 task 後重讀，仍不一致即失敗。若控制面明確不提供 saved-prompt readback，不得只因缺少這項非通用能力宣告失敗，也不得謊稱已逐字讀回；此時由提交前核對證明完整 prompt 已作為未摘要且未截斷的 outbound payload，正式 create／update 回傳則必須至少證明 task ID、成功建立或更新、每天 06:00 與目前帳號／對話時區。若 create／update 動作是在目前對話發出，而且目前對話內的正式 task 回傳或 task 卡顯示相同 exact task ID，即是目前對話 delivery destination 的控制面證據；不要求不存在的 destination 欄位。其他對話的結果、一般 list／search 或只有自然語言聲稱均不能取代這項證據。任何一項沒有上述相應證據可核對即失敗。`multiple_present`／`unknown` 不得改用 create 猜測；第一次 create 結果不明時也不得再次 create。
+提交前必須只替換「區域」與「監控類型」兩個 placeholder，對替換後的完整 prompt 做全文、字元數與雜湊核對，並把該完整 prompt 作為單一 create／update payload；不得提交摘要、節錄、短 launcher 或只貼檔案連結。正式 mutation 必須同時提交每天 06:00、目前帳號時區、目前對話與 `enabled=true`。控制面成功回傳 exact task ID 後即承認安裝；若支援 saved-prompt readback，再讀回逐字比較。沒有 readback 或額外欄位時不得謊稱已驗證，應逐欄標記 `verification_partial`，但不得倒判 create／update 失敗。若目前對話內的正式 task 回傳或 task 卡顯示相同 exact task ID，即是目前對話 delivery 的可用證據，不要求不存在的 destination 欄位。`multiple_present`／`unknown` 不得改用 create 猜測；第一次 create 結果不明時也不得再次 create。
 
 這個分流只承認控制面實際提供的證據：create／update 回傳不能冒充 saved bytes 的逐字讀回；但在控制面明確不提供 readback 時，完整 outbound payload 的預先核對與正式成功回傳是允許的安裝驗證邊界。一般對話文字、自行聲稱「應該已保存」或只有排程名稱都不算正式結果。
 
 `SCHEDULE_PROMPT_EXACT_ID_READBACK_ONLY_GATE`
 
-只有與 create／update 相同帳號、workspace、task namespace 及同一控制面的 exact task ID view，才算可推翻正式建立結果的 saved-task readback。建立回傳若已提供 task ID 與成功狀態，另一個 scope 不明的一般 list／search 回傳空集合，不得推翻正式 create／update 成功回傳，也不得觸發第二次 create；它只能記為 readback scope 不一致。若相同控制面提供 exact-ID view，就必須以 create／update 回傳的 ID 查詢：只有 exact-ID view 明確回傳不存在或內容不一致，才判定持久化驗證失敗。若沒有 exact-ID view，則依前段 capability-aware 邊界完成安裝驗證，不得自行發明「獨立讀回機制」當成硬門檻。
+只有與 create／update 相同帳號、workspace、task namespace 及同一控制面的 exact task ID view，才可對成功 acknowledgement 提出矛盾證據。另一個 scope 不明的一般 list／search 回傳空集合不得推翻正式 create／update 成功回傳，也不得觸發第二次 create。exact-ID view 明確回傳不存在時才把安裝改列失敗；內容不一致時只對同一 ID 冪等重送 canonical desired state。沒有 exact-ID view 時記為 `verification_partial`，不得自行發明讀回機制或停用 task。
 
 `SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE`
 
-prompt 已依控制面能力完成上述驗證後，才在建立或更新排程的目前對話直接執行一次即時圖片 smoke：使用目前 ChatGPT 可用的原生圖片卡，或開啟可追溯的公開頁面後直接截圖其中的圖片區域，並確認目前對話實際出現可見像素。這是安裝期宿主能力測試，不是 Scheduled Task occurrence；不要求立即觸發指定 task ID，也不得因控制面沒有「立即執行 occurrence」介面而判定 smoke 無法執行。不得要求 verified workspace、pinned loader、repository bootstrap、台灣底圖、原圖下載或原畫質。外部 URL、Markdown 熱連結、路徑字串、圖說或破圖框不算通過。成功後才啟用 recurrence；失敗時最新版 prompt 必須保留且 task 維持暫停，不得回退舊 prompt。
+控制面成功回傳 exact task ID 後，可在建立或更新排程的目前對話直接執行一次即時圖片 smoke：使用目前 ChatGPT 可用的原生圖片卡，或開啟可追溯公開頁面後直接截圖圖片區域，並確認目前對話實際出現可見像素。這是安裝後路由診斷，不是 Scheduled Task occurrence；不要求立即觸發指定 task ID，也不得要求 verified workspace、repository bootstrap、台灣底圖、原圖下載或原畫質。外部 URL、Markdown 熱連結、路徑字串、圖說或破圖框不算 smoke 通過，但 smoke 失敗只記錄不可用路徑，不得更改正式 recurrence 或 `enabled=true`。
 
 `NON_TEXT_SMOKE_OUTPUT_GATE`
 
-安裝 smoke 的同一則 assistant 回覆必須實際包含可見的非文字 image/media content block 或真實附件。若回覆只有字面序列化的 `!:chatgpt-content-reference{...}`、`image_ref`、Markdown、URL、圖說或路徑，一律不得宣稱 smoke 通過。`attachments=[]` 僅是 metadata，不能單獨否定 exact-thread PrintWindow 已證明的真正圖片像素；若 metadata 為空且也沒有可見像素證據，才必須更正為失敗、保持同一 task 暫停，並改用另一條已驗證媒體路徑。不得把文字 token、工具內部 reference 或「畫面如下」當成可見像素。
+安裝後 smoke 的同一則 assistant 回覆必須實際包含可見的非文字 image/media content block 或真實附件。若回覆只有字面序列化的 `!:chatgpt-content-reference{...}`、`image_ref`、Markdown、URL、圖說或路徑，不得宣稱 smoke 通過，並把該路徑記為不可用。`attachments=[]` 僅是 metadata，不能單獨否定 exact-thread PrintWindow 已證明的真正圖片像素。smoke 判定不得暫停、停用、刪除、重建或另建正式 task。
 
 `RELATIVE_ONE_TIME_SCHEDULE_ANCHOR_GATE`
 
-建立「五分鐘後」等相對時間的單次 Scheduled Task 時，延遲不得從對話開始時間、開始讀取 repository 或開始安裝時計算。必須先完成完整 prompt 提交與驗證，並在上述安裝 smoke 完成後，只於啟用前取得當下控制面時間，將同一 exact task ID 的執行時間更新為「當下控制面時間＋使用者指定延遲」後再啟用。create／enable 後立刻依同一控制面讀回 exact task ID；若控制面回傳的 `next_run_time` 為非 null 時，它必須仍晚於讀回當下時間。若 `next_run_time` 為 null 時，安裝尚未驗證，且不得宣稱排程已完成：先停用同一 exact task ID 並讀回確認未啟用，再允許一次 fresh-create fallback，使用同一份已驗證的完整 prompt、以當下控制面時間加上使用者指定延遲所得的最終絕對執行時間，在單一 create 中直接提交最終 schedule 與 enabled 狀態，不得再次 update／重錨原 task。fresh-create 後必須再次讀回新的 exact task ID；若 `next_run_time` 仍為 null、已在過去或無法證明 task 已啟用，必須停用該 fallback task、判定 trigger／persistence failure並明確回報尚未安裝，不得等待已錯過的時間點、以早於 DTSTART 的 durable ledger 冒充同一 occurrence、宣稱對話靜默等於背景執行，或用人工 follow-up 冒充 Scheduled Task occurrence。任何 fallback 前一個 task 都必須已確認停用，新的 bounded 測試 task 不得與舊 task 重疊，也不得修改正式每日 06:00 排程。
+建立「五分鐘後」等相對時間的單次 Scheduled Task 時，以送出單一 create／update 前的當下控制面時間計算最終絕對執行時間，並在同一 mutation 提交 prompt、schedule 與 `enabled=true`。成功回傳 exact task ID 即完成可用安裝；`next_run_time` 可讀回時必須晚於讀回當下時間，不可讀回時標記 `verification_partial`。不得因 null／缺失 readback 停用或 fresh-create replacement，也不得用人工 follow-up 冒充 Scheduled Task occurrence。正式每日 06:00 排程不適用此單次測試規則，且永不因測試修改。
 
 | 項目 | `full-runtime` | `mobile-native` |
 |---|---|---|
@@ -261,7 +267,7 @@ prompt 已依控制面能力完成上述驗證後，才在建立或更新排程�
 
 ChatGPT Scheduled Task 不得只收到「請讀 INSTALL」的短 launcher。建立或修正每日排程時，必須讀取當下最新 `main` 的 [scheduled-task-prompt-template.md](scheduled-task-prompt-template.md)，將該檔全文原樣完整複製為 task prompt；只有使用者明確指定的「區域」與「監控類型」兩個 placeholder 可以替換。排程時間與時區由 Scheduled Task 的 schedule 欄位保存，不寫進新聞規則文字。
 
-`SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`：不得用執行能力檢查阻擋 prompt 升級。先提交完整 task prompt 並依 `SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE` 驗證控制面結果，再依 `SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE` 在建立或更新排程的目前對話直接測試原生圖片／截圖交付；這不是 Scheduled Task occurrence，不要求立即觸發指定 task ID。smoke 通過才啟用 recurrence。既有舊 prompt 必須先被取代，不能因 smoke 失敗繼續啟用。
+`SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE`：不得用執行能力檢查阻擋 prompt 升級或 schedule 啟用。先以完整 task prompt 與 `enabled=true` 提交單一 mutation；控制面成功回傳 exact task ID 後，再依 `SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE` 在建立或更新排程的目前對話直接測試原生圖片／截圖交付。這不是 Scheduled Task occurrence，也不是 recurrence eligibility gate；診斷失敗不得修改正式 task。
 
 這份完整 task prompt 直接攜帶不可省略的最低執行包絡，包括 fresh main、單一 run、全球 coverage、Public Value V2、獨立驗證、逐則圖片取得與四層 fallback、可見圖片交付、三段式 Reader、同 run 恢復及回覆原對話；同時每輪仍須讀取最新版 repository 取得完整細節。建立者不得摘要、縮短、重寫成一句「嚴格依 INSTALL 執行」，也不得只貼檔案連結。
 
@@ -483,7 +489,7 @@ mobile-native 沒有 checkpoint 或 manifest。查證不足時依 `VERIFICATION_
 
 排程建立後立即手動執行一次，至少檢查：
 
-- `SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE` 已先提交最新版完整 prompt，且 `SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE` 已依控制面是否提供 saved-prompt readback 完成相應驗證；`SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE` 再在建立或更新排程的目前對話直接截圖公開頁面的圖片區域或交付原生圖片卡，且目前對話實際可見。這是安裝期測試，不是 Scheduled Task occurrence，不要求立即觸發指定 task ID；失敗時最新版 prompt 保留、task 暫停，不得恢復舊 prompt。
+- `SCHEDULE_PROMPT_UPDATE_PRECEDES_SMOKE_GATE` 已先提交最新版完整 prompt，且 `SCHEDULE_PROMPT_CAPABILITY_AWARE_VERIFICATION_GATE` 已依控制面是否提供 saved-prompt readback 完成相應驗證；`SAME_SCHEDULED_HOST_VISIBLE_SCREENSHOT_SMOKE_GATE` 再在建立或更新排程的目前對話直接截圖公開頁面的圖片區域或交付原生圖片卡，且目前對話實際可見。這是安裝後路由診斷，不是 Scheduled Task occurrence，也不是 recurrence eligibility gate；不要求立即觸發指定 task ID。失敗或缺少 readback 時最新版 prompt 與 `enabled=true` 保留，結果記為 `verification_partial`，不得暫停、停用、刪除、重建或恢復舊 prompt。
 
 - fresh main 經雙端點與 fresh nonce 解析，同輪沒有混用 SHA。
 - bootstrap receipt 在 checkpoint 前通過；checkpoint init 含 `--bootstrap-receipt`。
