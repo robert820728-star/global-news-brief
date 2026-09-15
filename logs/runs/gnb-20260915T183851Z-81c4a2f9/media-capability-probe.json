@@ -1,0 +1,26 @@
+{
+  "run_id": "gnb-20260915T183851Z-81c4a2f9",
+  "probed_at": "2026-09-15T18:45:00Z",
+  "page_open": {
+    "available": true,
+    "evidence": "https://www.cna.com.tw/ opened as text/html"
+  },
+  "native_image_search": {
+    "available": true,
+    "native_non_text_result_available": false,
+    "evidence": "image query returned source records only; no callable native media object was exposed"
+  },
+  "webpage_region_screenshot": {
+    "available": false,
+    "evidence": "HTML screenshot call rejected because web screenshot is not enabled"
+  },
+  "source_media_byte_fetch": {
+    "available": true,
+    "evidence_sha256": "ccdd246bd658e7f4a64ee33ab6548408c9043e2395858695fe8620acc177f110"
+  },
+  "local_attachment_media_handoff": {
+    "available": true,
+    "evidence": "local JPEG rendered as a non-text image tool output in the current occurrence"
+  },
+  "selected_route": "verified_local_media_pipeline"
+}
