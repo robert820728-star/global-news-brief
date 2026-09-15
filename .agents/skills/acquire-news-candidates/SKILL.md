@@ -11,6 +11,8 @@ description: Use when a daily-news run needs a fresh, auditable rolling-window c
 
 Use `news-source-pool.json.discovery_sources` for the canonical routes: GDELT plus CNA and China News Service. A failed regional supplement is recorded as degraded and does not block another covered section. When the run includes the fallback/global section, a configured `primary_aggregator` is preferred. If every configured primary route is unavailable after its archive, DOC and valid-cache chain is exhausted, verified cross-source global results may enter the same audit as the reserved `web_fallback` row. That row must preserve its search evidence and every admitted URL, remain `coverage_complete=false` / `coverage_status=degraded_partial`, and never impersonate GDELT or satisfy configured-route completeness. Regional supplements alone still cannot turn missing global discovery into a zero-event result. Deduplicate and score before any C-or-higher event is independently verified; collect images only after verification.
 
+GDELT is an aggregator, so an admitted GDELT candidate may use the original publisher's public HTTPS URL as its canonical article URL. Hydration must bind that row to the canonical hostname and reject cross-host overrides or redirects. CNA and China News Service remain restricted to their configured source-domain boundaries.
+
 ## Same-source recovery order
 
 `SAME_SOURCE_RECOVERY_ORDER`

@@ -24,6 +24,7 @@ DATE_KEYS = {
     "pubdate", "publishdate", "date", "dcterms.date", "parsely-pub-date",
 }
 SOURCE_ROOTS = {"cna": "cna.com.tw", "chinanews": "chinanews.com.cn"}
+PUBLIC_ARTICLE_SOURCES = {"gdelt", "web_fallback"}
 
 
 class MetaParser(HTMLParser):
@@ -136,7 +137,12 @@ def body_date(text: str) -> tuple[datetime | None, str | None]:
     return None, None
 
 
-def _same_source(url: str, source_id: str) -> bool:
+def _same_source(
+    url: str,
+    source_id: str,
+    *,
+    verified_article_url: str | None = None,
+) -> bool:
     root = SOURCE_ROOTS.get(source_id)
     try:
         parts = urlsplit(url)
@@ -144,14 +150,24 @@ def _same_source(url: str, source_id: str) -> bool:
         port = parts.port
     except ValueError:
         return False
-    public_fallback = source_id == "web_fallback" and _public_https_parts(parts)
+    if source_id in PUBLIC_ARTICLE_SOURCES:
+        if not _public_https_parts(parts):
+            return False
+        if verified_article_url is None:
+            return True
+        try:
+            verified_parts = urlsplit(verified_article_url)
+        except ValueError:
+            return False
+        return bool(
+            _public_https_parts(verified_parts)
+            and host == (verified_parts.hostname or "").rstrip(".").lower()
+        )
     return bool(
-        public_fallback or (
         root and parts.scheme.lower() == "https"
         and parts.username is None and parts.password is None
         and port in {None, 443}
         and (host == root or host.endswith("." + root))
-        )
     )
 
 
@@ -196,8 +212,16 @@ def _decode(data: bytes, content_type: str) -> str:
     return data.decode("utf-8", errors="replace")
 
 
-def fetch(url: str, source_id: str) -> tuple[bytes, str, str]:
-    if not _same_source(url, source_id):
+def fetch(
+    url: str,
+    source_id: str,
+    *,
+    verified_article_url: str | None = None,
+) -> tuple[bytes, str, str]:
+    verified_url = verified_article_url or url
+    if not _same_source(url, source_id, verified_article_url=verified_url):
+        if source_id in PUBLIC_ARTICLE_SOURCES:
+            raise ValueError("hydration URL must remain on the verified article host")
         raise ValueError(f"hydration URL must remain on configured {source_id} source site")
     req = urllib.request.Request(
         url,
@@ -216,13 +240,10 @@ def fetch(url: str, source_id: str) -> tuple[bytes, str, str]:
         raise ValueError("article response exceeds maximum size")
     if ctype not in {"text/html", "application/xhtml+xml"}:
         raise ValueError(f"unsupported content type {ctype}")
-    if not _same_source(final, source_id):
+    if not _same_source(final, source_id, verified_article_url=verified_url):
+        if source_id in PUBLIC_ARTICLE_SOURCES:
+            raise ValueError("article redirect left the verified article host")
         raise ValueError("article redirect left the configured source boundary")
-    if source_id == "web_fallback":
-        initial_host = (urlsplit(url).hostname or "").lower()
-        final_host = (urlsplit(final).hostname or "").lower()
-        if initial_host != final_host:
-            raise ValueError("web fallback article redirect left the verified article host")
     return data, final, ctype_header or ctype
 
 
@@ -259,7 +280,11 @@ def hydrate(
             "source_id": source_id,
         }
         try:
-            data, final, ctype = fetch(requested_url, source_id)
+            data, final, ctype = fetch(
+                requested_url,
+                source_id,
+                verified_article_url=canonical_url,
+            )
             content_hash = hashlib.sha256(data).hexdigest()
             text = _decode(data, ctype)
             excerpt = model_excerpt(text)

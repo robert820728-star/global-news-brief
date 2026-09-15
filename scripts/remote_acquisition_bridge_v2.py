@@ -33,6 +33,7 @@ ROW_ID_RE = re.compile(r"^row-[0-9a-f]{24}$")
 TERMINAL_ROW_STATUSES = {"content_ready", "outside_window", "unresolved_exhausted"}
 ATTEMPT_ROW_STATUSES = TERMINAL_ROW_STATUSES | {"unresolved"}
 SOURCE_ROOTS = {"cna": "cna.com.tw", "chinanews": "chinanews.com.cn"}
+PUBLIC_ARTICLE_SOURCES = {"gdelt", "web_fallback"}
 
 
 def _request_sha256(value: dict[str, Any]) -> str:
@@ -40,7 +41,12 @@ def _request_sha256(value: dict[str, Any]) -> str:
     return hashlib.sha256(payload).hexdigest()
 
 
-def _same_source(url: str, source_id: str) -> bool:
+def _same_source(
+    url: str,
+    source_id: str,
+    *,
+    verified_article_url: str | None = None,
+) -> bool:
     root = SOURCE_ROOTS.get(source_id)
     try:
         parts = urlsplit(url)
@@ -48,6 +54,16 @@ def _same_source(url: str, source_id: str) -> bool:
         port = parts.port
     except ValueError:
         return False
+    if source_id in PUBLIC_ARTICLE_SOURCES:
+        try:
+            v1._require_public_https_url(url, "article URL")
+            if verified_article_url is None:
+                return True
+            v1._require_public_https_url(verified_article_url, "verified article URL")
+        except ValueError:
+            return False
+        verified_host = (urlsplit(verified_article_url).hostname or "").rstrip(".").lower()
+        return host == verified_host
     return bool(
         root
         and parts.scheme.lower() == "https"
@@ -375,12 +391,14 @@ def _validate_fetch_overrides(request: dict[str, Any], canonical: dict[str, dict
     for row_id, url in request.get("fetch_overrides", {}).items():
         item = canonical[row_id]
         source_id = str(item.get("source_id", ""))
-        if source_id == "web_fallback":
+        if source_id in PUBLIC_ARTICLE_SOURCES:
             v1._require_public_https_url(url, f"fetch_overrides[{row_id}]")
-            canonical_host = (urlsplit(str(item.get("canonical_url", ""))).hostname or "").lower()
-            override_host = (urlsplit(str(url)).hostname or "").lower()
-            if canonical_host != override_host:
-                raise ValueError(f"fetch override for {row_id} left the verified fallback article host")
+            if not _same_source(
+                str(url),
+                source_id,
+                verified_article_url=str(item.get("canonical_url", "")),
+            ):
+                raise ValueError(f"fetch override for {row_id} left the verified article host")
         elif not _same_source(str(url), source_id):
             raise ValueError(f"fetch override for {row_id} left the configured {source_id} source site")
 

@@ -3,6 +3,7 @@ import tempfile
 import unittest
 import urllib.error
 from datetime import datetime
+from email.message import Message
 from pathlib import Path
 from unittest.mock import patch
 
@@ -18,6 +19,27 @@ WINDOW = {
 }
 ROW_ID = "row-" + "1" * 24
 CANONICAL = "https://www.cna.com.tw/news/aopl/202609060006.aspx"
+GDELT_CANONICAL = "https://publisher.example/world/story-1"
+
+
+class FakeResponse:
+    def __init__(self, data: bytes, final_url: str, content_type: str = "text/html; charset=utf-8"):
+        self._data = data
+        self._final_url = final_url
+        self.headers = Message()
+        self.headers["Content-Type"] = content_type
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, traceback):
+        return False
+
+    def geturl(self):
+        return self._final_url
+
+    def read(self, _limit):
+        return self._data
 
 
 def source_candidates():
@@ -38,6 +60,15 @@ def source_candidates():
             "title": "fixture",
         }],
     }
+
+
+def gdelt_source_candidates():
+    value = source_candidates()
+    item = value["items"][0]
+    item["source_id"] = "gdelt"
+    item["url"] = GDELT_CANONICAL
+    item["canonical_url"] = GDELT_CANONICAL
+    return value
 
 
 def relevance_gate():
@@ -143,6 +174,43 @@ class HydrateSourceRowsTests(unittest.TestCase):
         self.assertEqual("unresolved", row["status"])
         self.assertEqual(64, len(row["content_sha256"]))
         self.assertEqual(CANONICAL, row["article_body_evidence_url"])
+
+    def test_gdelt_hydrates_the_external_public_publisher_article(self):
+        data = b'<meta property="article:published_time" content="2026-09-06T04:59:00+08:00"><p>body</p>'
+        response = FakeResponse(data, GDELT_CANONICAL)
+        with patch.object(hydration.urllib.request, "urlopen", return_value=response):
+            row = hydration.hydrate(gdelt_source_candidates(), [ROW_ID], self.start, self.end)[0]
+        self.assertEqual("content_ready", row["status"])
+        self.assertEqual(GDELT_CANONICAL, row["actual_url"])
+
+    def test_gdelt_rejects_redirect_away_from_verified_article_host(self):
+        response = FakeResponse(b"<html></html>", "https://other.example/story-1")
+        with patch.object(hydration.urllib.request, "urlopen", return_value=response):
+            with self.assertRaisesRegex(ValueError, "verified article host"):
+                hydration.fetch(GDELT_CANONICAL, "gdelt")
+
+    def test_gdelt_rejects_fetch_override_away_from_verified_article_host(self):
+        canonical = {ROW_ID: gdelt_source_candidates()["items"][0]}
+        with self.assertRaisesRegex(ValueError, "verified article host"):
+            bridge._validate_fetch_overrides(
+                {"fetch_overrides": {ROW_ID: "https://other.example/story-1"}},
+                canonical,
+            )
+        with patch.object(hydration.urllib.request, "urlopen") as urlopen:
+            row = hydration.hydrate(
+                gdelt_source_candidates(),
+                [ROW_ID],
+                self.start,
+                self.end,
+                fetch_overrides={ROW_ID: "https://other.example/story-1"},
+            )[0]
+        self.assertEqual("unresolved", row["status"])
+        self.assertIn("verified article host", row["error"])
+        urlopen.assert_not_called()
+
+    def test_cna_still_rejects_external_publisher_host(self):
+        with self.assertRaisesRegex(ValueError, "configured cna source site"):
+            hydration.fetch(GDELT_CANONICAL, "cna")
 
 
 class SourceRowAdmissionTerminalTests(unittest.TestCase):
