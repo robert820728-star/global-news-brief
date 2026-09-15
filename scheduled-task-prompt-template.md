@@ -7,6 +7,8 @@
 
 在撰寫任何使用者可見回覆前，full-runtime 必須執行唯一控制入口：`<bundled-python> scripts/publish_news_brief.py --resume-before-deliver <release-dir>/release-receipt.json --checkpoint <checkpoint> --conversation-transport`。若 stdout 是 `action=resume_required`，它是內部續跑指令而不是 blocker 或使用者回覆；保持同一 occurrence／run，執行 `target_stage`，再重呼本命令。若 required stages 都已完成而 receipt 缺少或失效，本命令會自動重建 canonical release／receipt。只有本命令授權輸出的 Reader bytes 可成為最後回覆；只有 bounded same-stage recovery 真正耗盡時才可回覆精簡 blocker。不得手工撰寫、降級或繞過 publisher 輸出 Reader。
 
+`RECOVER_BEFORE_REFUSAL_GATE`：validator、hash、identity、conservation、transport、持久化、render、receipt 或可見媒體檢查失敗時，先回到 `target_stage`，以相同 run／SHA／window 重做失敗動作並保留仍有效的上游 artifact。相同錯誤最多三次；未耗盡前不得向使用者輸出 blocker。只有外部權限、不可恢復 occurrence 身分、不可取得 immutable bytes 或持續不可用必要 transport 在三次後仍成立，才可回精簡 blocker receipt。
+
 `CHAT_CONTINUATION_IS_NOT_SCHEDULED_OCCURRENCE_GATE`
 
 只有 Scheduled Task 控制面真正觸發並提供可核對的 `scheduled_for`，才可建立或恢復 occurrence／run。一般對話中的「重新執行」、「再跑一次」、貼上舊結果或任何同義 follow-up 都不是 Scheduled Task trigger，也不能繼承前次 occurrence authority；本檔中的 manual、single-run、test 與 resume 只指控制面已建立且帶有 `scheduled_for` 的實際 task occurrence。在取得這項 authority 前，不得 fresh resolve main、不得建立或恢復 run、不得執行新聞 discovery、評分、查證或圖片工作，也不得輸出 Reader；只能回覆精簡 `lifecycle blocker receipt`，指出缺少 `scheduled_for`、未啟動新聞管線，並要求由真正 task trigger 重新進入。receipt 不得包含新聞候選、新聞表格、降級／診斷 Reader 或任何 occurrence 已執行的暗示。
@@ -145,7 +147,7 @@ Reader 必須包含本輪所有 C 級以上 validated 事件，來源連結與�
 
 每個 stage 只有在最新版契約要求的 artifact／結構驗證通過後才可完成。單一路徑失敗、沒有特定工具名稱、搜尋卡沒有 image ref、GitHub 某次讀取 timeout 或圖片需要換來源，都不是最早不可恢復 blocker；先執行同 stage 的合法 fallback 與有限重試。失敗時從 first incomplete stage 接續，不得把失敗硬說成完成，也不得因後段失敗重跑已完成前段。
 
-`PENDING_CANDIDATE_AUDIT_WORK_IS_NOT_BLOCKER_GATE`：candidate audit 開始時及每次 checkpoint commit 後呼叫 `candidate_audit_status`，讀取 exact run 的 `candidate-audit-work/progress.json`，只執行其唯一 `next_operation`，等待 durable commit，再從**第一個未完成**單元接續。待處理 row／batch 數、已耗模型時間、context 大小或 token 顧慮只是 `in_progress`，不是不可恢復 blocker；不得只因仍有 review／score 工作就回報失敗、重掃 discovery、另建 run，並且**不得停用**本 exact task。只有具體 identity、hash、conservation、validator 或 transport failure 才可 fail-closed。
+`PENDING_CANDIDATE_AUDIT_WORK_IS_NOT_BLOCKER_GATE`：candidate audit 開始時及每次 checkpoint commit 後呼叫 `candidate_audit_status`，讀取 exact run 的 `candidate-audit-work/progress.json`，只執行其唯一 `next_operation`，等待 durable commit，再從**第一個未完成**單元接續。待處理 row／batch 數、已耗模型時間、context 大小或 token 顧慮只是 `in_progress`，不是不可恢復 blocker；不得只因仍有 review／score 工作就回報失敗、重掃 discovery、另建 run，並且**不得停用**本 exact task。具體 identity、hash、conservation、validator 或 transport failure 必須先回到 owning stage 重做失敗動作；三次有界恢復耗盡後，只有外部權限／身分／完整性仍無法成立才可回 blocker。
 
 `CURRENT_CONVERSATION_DELIVERY_GATE`
 

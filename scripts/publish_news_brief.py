@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Canonical fail-closed release and delivery gate for the daily news brief."""
+"""Canonical recover-before-refusal release controller for the daily news brief."""
 from __future__ import annotations
 
 import argparse, hashlib, io, json, os, re, sys, tempfile
@@ -145,11 +145,10 @@ def attachment_errors(manifest: dict) -> list[str]:
     return errors
 
 
-def candidate_errors(
-    audit: dict, manifest: dict, source_pool: dict,
-    source_row_admissions: dict | None = None,
+def candidate_manifest_errors(
+    audit: dict, manifest: dict, source_pool: dict
 ) -> list[str]:
-    errors = manage_candidate_audit.validate(audit, source_pool, source_row_admissions)
+    errors: list[str] = []
     runs = audit.get("runs", [])
     if not runs: return errors + ["候選稽核沒有本輪紀錄"]
     scope_codes = [
@@ -200,6 +199,15 @@ def candidate_errors(
         if event.get("grade") != candidate.get("provisional_grade"):
             errors.append(f"{event_id} manifest.grade 必須等於 validated_grade")
     return errors
+
+
+def candidate_errors(
+    audit: dict, manifest: dict, source_pool: dict,
+    source_row_admissions: dict | None = None,
+) -> list[str]:
+    return manage_candidate_audit.validate(
+        audit, source_pool, source_row_admissions
+    ) + candidate_manifest_errors(audit, manifest, source_pool)
 
 
 def checkpoint_errors(cp: dict, manifest: dict, audit: dict, paths: dict[str, Path]) -> list[str]:
@@ -256,21 +264,81 @@ def discovery_coverage_summary(audit: dict) -> dict:
     }
 
 
+def publication_validation_groups(
+    cp: dict,
+    manifest: dict,
+    audit: dict,
+    pool: dict,
+    row_admissions: dict | None,
+    paths: dict[str, Path],
+    brief: str,
+) -> list[tuple[str, list[str]]]:
+    """Return validation failures with the stage/action that owns their repair."""
+    return [
+        (
+            "repository-recovery",
+            gate_check.validate_repository(ROOT, runtime_delivery=False),
+        ),
+        ("checkpoint-recovery", checkpoint_errors(cp, manifest, audit, paths)),
+        (
+            "audit-news-candidates",
+            manage_candidate_audit.validate(audit, pool, row_admissions),
+        ),
+        (
+            "materialize-manifest",
+            candidate_manifest_errors(audit, manifest, pool),
+        ),
+        ("collect-news-images", attachment_errors(manifest)),
+        ("build-news-maps", validate_map_decisions.validate(manifest)),
+        ("render", validate_news_brief.validate_canonical_reader(manifest, brief)),
+    ]
+
+
+def release_recovery_error(target: str, message: str, code: int = 2) -> int:
+    print("RELEASE NEEDS REPAIR", file=sys.stderr)
+    print(f"RECOVERY TARGET: {target}", file=sys.stderr)
+    print("-", message, file=sys.stderr)
+    return code
+
 def publish(args) -> int:
     out = Path(args.output_dir); invalidate_release(out)
     paths = {"checkpoint": Path(args.checkpoint), "manifest": Path(args.manifest), "audit": Path(args.audit),
              "source_pool": Path(args.source_pool), "brief": Path(args.brief)}
     missing = [k for k,p in paths.items() if not p.is_file()]
-    if missing: print("RELEASE BLOCKED: 缺少 " + ", ".join(missing), file=sys.stderr); return 2
-    if not paths["brief"].read_text(encoding="utf-8").strip(): print("RELEASE BLOCKED: 讀者版草稿為空", file=sys.stderr); return 2
+    if missing:
+        targets = {
+            "checkpoint": "checkpoint-recovery",
+            "manifest": "materialize-manifest",
+            "audit": "audit-news-candidates",
+            "source_pool": "repository-recovery",
+            "brief": "render",
+        }
+        return release_recovery_error(
+            targets[missing[0]], "缺少 " + ", ".join(missing)
+        )
+    loaders = (
+        ("checkpoint-recovery", "checkpoint", checkpoint_lib.load),
+        ("materialize-manifest", "manifest", validate_news_brief.load_json),
+        ("audit-news-candidates", "audit", validate_news_brief.load_json),
+        ("repository-recovery", "source_pool", validate_news_brief.load_json),
+    )
+    loaded: dict[str, dict] = {}
+    for target, name, loader in loaders:
+        try:
+            loaded[name] = loader(paths[name])
+        except (OSError, UnicodeError, ValueError, json.JSONDecodeError) as error:
+            return release_recovery_error(target, f"{name} 無法讀取：{error}")
+    cp = loaded["checkpoint"]
+    manifest = loaded["manifest"]
+    audit = loaded["audit"]
+    pool = loaded["source_pool"]
     try:
-        cp = checkpoint_lib.load(paths["checkpoint"])
-        manifest = validate_news_brief.load_json(paths["manifest"])
-        audit = validate_news_brief.load_json(paths["audit"])
-        pool = validate_news_brief.load_json(paths["source_pool"])
-        brief_bytes = paths["brief"].read_bytes(); brief = brief_bytes.decode("utf-8")
-    except (OSError, UnicodeError, ValueError, json.JSONDecodeError) as error:
-        print(f"RELEASE BLOCKED: {error}", file=sys.stderr); return 2
+        brief_bytes = paths["brief"].read_bytes()
+        brief = brief_bytes.decode("utf-8")
+    except (OSError, UnicodeError) as error:
+        return release_recovery_error("render", f"讀者版無法讀取：{error}")
+    if not brief.strip():
+        return release_recovery_error("render", "讀者版草稿為空")
     row_admissions = None
     row_binding = (
         cp.get("stage_evidence", {}).get("source-scan", {})
@@ -282,18 +350,20 @@ def publish(args) -> int:
             row_admissions = validate_news_brief.load_json(row_path)
             paths["source_row_admissions"] = row_path
         except (OSError, ValueError, json.JSONDecodeError) as error:
-            print(f"RELEASE BLOCKED: source-row admissions: {error}", file=sys.stderr)
-            return 2
-    # Publication creates the receipt, so delivery-time receipt revalidation is
-    # intentionally deferred until the subsequent deliver() call.
-    errors = gate_check.validate_repository(ROOT, runtime_delivery=False)
-    errors += checkpoint_errors(cp, manifest, audit, paths)
-    errors += candidate_errors(audit, manifest, pool, row_admissions)
-    errors += attachment_errors(manifest)
-    errors += validate_map_decisions.validate(manifest)
-    errors += validate_news_brief.validate_canonical_reader(manifest, brief)
+            return release_recovery_error(
+                "source-scan", f"source-row admissions 無法讀取：{error}"
+            )
+    groups = publication_validation_groups(
+        cp, manifest, audit, pool, row_admissions, paths, brief
+    )
+    errors = [error for _, group_errors in groups for error in group_errors]
     if errors:
         print("RELEASE NEEDS REPAIR", file=sys.stderr)
+        print(
+            "RECOVERY TARGET:",
+            next(target for target, group_errors in groups if group_errors),
+            file=sys.stderr,
+        )
         for error in errors: print("-", error, file=sys.stderr)
         return 1
     release = out / RELEASE_NAME; receipt_path = out / RECEIPT_NAME
@@ -365,7 +435,7 @@ def validate_receipt(path: Path, expected_cp: Path | None) -> tuple[list[str], d
 def verify(path: Path, cp: Path | None) -> int:
     errors, receipt, _ = validate_receipt(path, cp)
     if errors:
-        print("DELIVERY BLOCKED", file=sys.stderr)
+        print("DELIVERY NEEDS RECOVERY", file=sys.stderr)
         for e in errors: print("-", e, file=sys.stderr)
         return 1
     print("DELIVERY AUTHORIZED", receipt["authorized_release_sha256"]); return 0
@@ -374,7 +444,7 @@ def verify(path: Path, cp: Path | None) -> int:
 def deliver(path: Path, cp: Path, conversation: bool = False) -> int:
     errors, _, data = validate_receipt(path, cp)
     if errors or data is None:
-        print("DELIVERY BLOCKED", file=sys.stderr)
+        print("DELIVERY NEEDS RECOVERY", file=sys.stderr)
         for e in errors or ["release bytes 不可用"]: print("-", e, file=sys.stderr)
         return 1
     sys.stdout.buffer.write(conversation_transport(data) if conversation else data); return 0
@@ -416,17 +486,24 @@ def first_resume_stage(checkpoint: dict) -> tuple[str | None, str | None]:
 
 
 def emit_resume_decision(
-    checkpoint: dict, target_stage: str, reason: str
+    checkpoint: dict | None, target_stage: str, reason: str
 ) -> int:
     print(json.dumps({
         "action": "resume_required",
-        "run_id": checkpoint.get("run_id"),
+        "run_id": checkpoint.get("run_id") if checkpoint else None,
         "target_stage": target_stage,
         "reason": reason,
         "continue_required": True,
         "reader_delivery_authorized": False,
+        "blocker_allowed": False,
+        "recovery_attempt_limit": 3,
     }, ensure_ascii=False))
     return 0
+
+
+def recovery_target_from_publish_output(detail: str) -> str:
+    match = re.search(r"^RECOVERY TARGET:\s*([^\s]+)", detail, re.MULTILINE)
+    return match.group(1) if match else "publication-recovery"
 
 
 def resume_before_deliver(
@@ -441,8 +518,11 @@ def resume_before_deliver(
     try:
         checkpoint = checkpoint_lib.load(checkpoint_path)
     except (OSError, ValueError, json.JSONDecodeError) as error:
-        print(f"DELIVERY RECOVERY BLOCKED: checkpoint 無法讀取：{error}", file=sys.stderr)
-        return 2
+        return emit_resume_decision(
+            None,
+            "checkpoint-recovery",
+            f"checkpoint 無法讀取：{error}",
+        )
 
     target_stage, reason = first_resume_stage(checkpoint)
     if target_stage is not None:
@@ -481,12 +561,19 @@ def resume_before_deliver(
     with redirect_stdout(publish_output), redirect_stderr(publish_errors):
         result = publish(args)
     if result == 0:
-        return deliver(receipt_path, checkpoint_path, conversation)
+        delivery_result = deliver(receipt_path, checkpoint_path, conversation)
+        if delivery_result == 0:
+            return 0
+        return emit_resume_decision(
+            checkpoint,
+            "delivery-revalidation",
+            "delivery revalidation failed; redo delivery validation",
+        )
 
     detail = publish_errors.getvalue().strip() or publish_output.getvalue().strip()
     return emit_resume_decision(
         checkpoint,
-        "validate",
+        recovery_target_from_publish_output(detail),
         detail or "canonical publisher requires repair",
     )
 
@@ -505,7 +592,11 @@ def main() -> int:
         )
     if a.deliver_receipt:
         if not a.checkpoint: p.error("--deliver-receipt 必須同時提供 --checkpoint")
-        return deliver(Path(a.deliver_receipt), Path(a.checkpoint), a.conversation_transport)
+        return resume_before_deliver(
+            Path(a.deliver_receipt),
+            Path(a.checkpoint),
+            a.conversation_transport,
+        )
     if a.verify_receipt: return verify(Path(a.verify_receipt), Path(a.checkpoint) if a.checkpoint else None)
     missing=[n for n in ("checkpoint","manifest","audit","brief","output_dir") if not getattr(a,n)]
     if missing: p.error("publish 缺少必要參數："+", ".join("--"+n.replace("_","-") for n in missing))

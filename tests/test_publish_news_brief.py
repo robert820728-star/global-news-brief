@@ -1,10 +1,13 @@
 import hashlib
+import io
 import json
 import subprocess
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
+from unittest import mock
 
 from PIL import Image
 
@@ -357,6 +360,110 @@ def publish_command(checkpoint, manifest, audit, brief, release_dir):
 
 
 class PublisherTests(unittest.TestCase):
+    def test_resume_before_deliver_turns_unreadable_checkpoint_into_recovery_action(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint = root / "checkpoint.json"
+            checkpoint.write_text("not-json", encoding="utf-8")
+
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(PUBLISHER),
+                    "--resume-before-deliver",
+                    str(root / "release" / "release-receipt.json"),
+                    "--checkpoint",
+                    str(checkpoint),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+            self.assertEqual(0, result.returncode, result.stderr)
+            decision = json.loads(result.stdout)
+            self.assertEqual("resume_required", decision["action"])
+            self.assertEqual("checkpoint-recovery", decision["target_stage"])
+            self.assertFalse(decision["blocker_allowed"])
+
+    def test_legacy_deliver_receipt_uses_resume_controller(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint = news_run_checkpoint.create_checkpoint(
+                RUN_ID,
+                "2026-08-13T06:00:00+08:00",
+                "2026-08-14T06:00:00+08:00",
+            )
+            checkpoint_path = root / "checkpoint.json"
+            news_run_checkpoint.save(checkpoint_path, checkpoint)
+
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(PUBLISHER),
+                    "--deliver-receipt",
+                    str(root / "release" / "release-receipt.json"),
+                    "--checkpoint",
+                    str(checkpoint_path),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+            self.assertEqual(0, result.returncode, result.stderr)
+            decision = json.loads(result.stdout)
+            self.assertEqual("source-scan", decision["target_stage"])
+            self.assertFalse(decision["reader_delivery_authorized"])
+
+    def test_publish_validation_failure_resumes_owning_stage(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint_path, _, _, brief = prepare_inputs(root)
+            brief = Path(brief)
+            brief.write_text("# invalid reader", encoding="utf-8")
+            checkpoint = news_run_checkpoint.load(checkpoint_path)
+            checkpoint["stage_evidence"]["render"]["artifacts"]["brief"][
+                "sha256"
+            ] = hashlib.sha256(brief.read_bytes()).hexdigest()
+            news_run_checkpoint.save(checkpoint_path, checkpoint)
+
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(PUBLISHER),
+                    "--resume-before-deliver",
+                    str(root / "release" / "release-receipt.json"),
+                    "--checkpoint",
+                    str(checkpoint_path),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+            self.assertEqual(0, result.returncode, result.stderr)
+            decision = json.loads(result.stdout)
+            self.assertEqual("render", decision["target_stage"])
+            self.assertNotEqual("validate", decision["target_stage"])
+
+    def test_post_publish_delivery_failure_becomes_recovery_action(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint_path, _, _, _ = prepare_inputs(root)
+            output = io.StringIO()
+            with mock.patch.object(publish_news_brief, "deliver", return_value=1):
+                with redirect_stdout(output):
+                    result = publish_news_brief.resume_before_deliver(
+                        root / "release" / "release-receipt.json",
+                        checkpoint_path,
+                    )
+
+            self.assertEqual(0, result)
+            decision = json.loads(output.getvalue())
+            self.assertEqual("delivery-revalidation", decision["target_stage"])
+            self.assertFalse(decision["blocker_allowed"])
+
     def test_resume_before_deliver_continues_first_incomplete_stage_without_emitting_manual_reader(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -630,7 +737,7 @@ class PublisherTests(unittest.TestCase):
                 receipt["authorized_release_sha256"], hashlib.sha256(canonical_bytes).hexdigest()
             )
 
-    def test_delivery_rejects_receipt_from_different_checkpoint(self):
+    def test_delivery_replans_receipt_from_different_checkpoint(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             checkpoint, manifest, audit, brief = prepare_inputs(root)
@@ -648,8 +755,12 @@ class PublisherTests(unittest.TestCase):
                  str(release_dir / "release-receipt.json"), "--checkpoint", str(other_path)],
                 capture_output=True, check=False,
             )
-            self.assertNotEqual(delivered.returncode, 0)
-            self.assertEqual(delivered.stdout, b"")
+            self.assertEqual(delivered.returncode, 0, delivered.stderr.decode())
+            decision = json.loads(delivered.stdout.decode("utf-8"))
+            self.assertEqual(decision["action"], "resume_required")
+            self.assertEqual(decision["run_id"], "run-other")
+            self.assertEqual(decision["target_stage"], "source-scan")
+            self.assertFalse(decision["reader_delivery_authorized"])
 
     def test_publish_invalidates_stale_release_before_failed_attempt(self):
         with tempfile.TemporaryDirectory() as directory:

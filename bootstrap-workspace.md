@@ -93,7 +93,7 @@ If the host does not provide a path, run `python3 scripts/resolve_bundled_python
   --bootstrap-receipt <workspace>/bootstrap-workspace.json
 ```
 
-`news_run_checkpoint.py init` is fail-closed and rechecks the bootstrap receipt plus current executable workspace bytes. No checkpoint means no news pipeline and no reader-facing brief.
+`news_run_checkpoint.py init` rejects invalid bootstrap state and rechecks the bootstrap receipt plus current executable workspace bytes. A missing checkpoint first returns to Stage -1 and redoes the verified bootstrap/checkpoint action on the same pinned SHA; it does not authorize a hand-written brief or an immediate user-visible refusal. Only three exhausted bounded attempts caused by external authority, permissions, or unavailable immutable bytes may produce a blocker receipt.
 
 ## Transport policy
 

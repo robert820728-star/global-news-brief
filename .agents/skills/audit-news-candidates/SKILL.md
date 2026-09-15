@@ -42,7 +42,7 @@ description: Maintain a rolling fourteen-day audit of all news candidates, inclu
 
 `MOBILE_CANDIDATE_AUDIT_CHECKPOINT_TRANSPORT`：mobile-native 的模型工作不得只存在於單次對話上下文。使用 `mobile_candidate_audit_bridge.py` 保存 exact run／main／window 綁定的 row-review 與 event-score batches；每批只允許 byte-equivalent idempotent replay，衝突覆寫必須拒絕。`materialize_mobile_candidate_audit.py finalize` 只有在完整 row/event universe 已 terminal 時才可組裝 `candidate-audit.json`，且必須通過現有 canonical validator 後才能綁定 artifact。
 
-`PENDING_CANDIDATE_AUDIT_WORK_IS_NOT_BLOCKER_GATE`：以 `candidate_audit_status` 的 durable `candidate-audit-work/progress.json` 作唯一 resume controller，每次只處理 `next_operation` 指向的**第一個未完成** review／score 單元，確認 commit 後再查狀態。待處理 row／batch 數、已耗模型時間、context 大小或 token 顧慮都不是不可恢復 blocker；不得只因 pending work 回報失敗、重新 discovery、建立 replacement run，亦**不得停用** exact task。只有 progress 或下一操作回傳具體 identity、conservation、validator 或 transport failure 才可 fail-closed。
+`PENDING_CANDIDATE_AUDIT_WORK_IS_NOT_BLOCKER_GATE`：以 `candidate_audit_status` 的 durable `candidate-audit-work/progress.json` 作唯一 resume controller，每次只處理 `next_operation` 指向的**第一個未完成** review／score 單元，確認 commit 後再查狀態。待處理 row／batch 數、已耗模型時間、context 大小或 token 顧慮都不是不可恢復 blocker；不得只因 pending work 回報失敗、重新 discovery、建立 replacement run，亦**不得停用** exact task。progress 或下一操作回傳 identity、conservation、validator 或 transport failure 時，先重做其 owning stage 動作；三次有界恢復耗盡後，只有外部權限／身分／完整性仍無法成立才可回 blocker。
 
 `MOBILE_NATIVE_COMPACT_DURABLE_AUDIT`
 
