@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.1.0",
+  "run_id": "gnb-20260915T183851Z-81c4a2f9",
+  "window_start": "2026-09-14T18:38:51Z",
+  "window_end": "2026-09-15T18:38:51Z",
+  "created_at": "2026-09-15T13:44:12-05:00",
+  "updated_at": "2026-09-15T14:11:51-05:00",
+  "bootstrap": {
+    "repository": "robert820728-star/global-news-brief",
+    "commit_sha": "d6b6bb8670e670559d32a5c0a255d659671becd1",
+    "materialization_method": "github-connector-capsule",
+    "receipt": {
+      "path": "/workspace/scratch/ff913a2c0412/gnb-run-81c4/workspace/bootstrap-workspace.json",
+      "sha256": "152196140cf5f6e14c5e51dd59916bfb6157640881987124b916f700f452a86e",
+      "size": 102047
+    }
+  },
+  "bootstrap_required": true,
+  "stage_status": {
+    "source-scan": "failed",
+    "preprocess-news-candidates": "pending",
+    "select-news-events": "pending",
+    "audit-news-candidates": "pending",
+    "materialize-manifest": "pending",
+    "verify-news-events": "pending",
+    "build-news-maps": "pending",
+    "build-news-charts": "pending",
+    "collect-news-images": "pending",
+    "render": "pending"
+  },
+  "stage_evidence": {
+    "source-scan": {
+      "recorded_at": "2026-09-15T14:11:51-05:00",
+      "status": "failed",
+      "message": "GDELT article hydration is structurally blocked: hydrate_source_rows.py rejects publisher URLs because SOURCE_ROOTS has no gdelt mapping; 19513 rows unresolved after three bounded attempts",
+      "artifacts": {}
+    }
+  },
+  "recovery": {
+    "status": "pending",
+    "max_attempts_per_target": 3,
+    "attempts": [],
+    "unresolved_targets": []
+  }
+}
